@@ -1,0 +1,8 @@
+class Attendance < ActiveRecord::Base
+  belongs_to :student
+  belongs_to :klass
+  
+  def student_id=(student)
+    super(student) unless student==""
+  end
+end

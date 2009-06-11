@@ -1,0 +1,27 @@
+﻿<td align="center">
+<% form_for :klass,
+            :url => { :action=>'update' },
+            :html => { :method=>'post' } do |f| %>
+<% @klass_course = klass.course_id == nil ? nil : Course.find( klass.course_id ).to_s %> 
+<% @klass_teacher = klass.teacher_id == nil ? nil : Teacher.find( klass.teacher_id ).to_s %> 
+<% @klass_classroom = klass.classroom_id == nil ? nil : Classroom.find( klass.classroom_id ).to_s %> 
+<%= Course.find( klass.course_id ).to_s.split[-1] %>
+</td>
+<td><%= klass.start_time %></td>
+<td></td>
+<td>
+  <%= f.select :classroom, @classrooms.map{ |elem| elem.to_s }, { :selected=>@klass_classroom, :prompt => "クラスを選んで" }, { :onchange => 'this.form.submit();' } %>
+</td>
+<td>
+<%= f.select :teacher, @teachers.map{ |elem| elem.to_s }, { :selected=>@klass_teacher, :prompt => "講師を選んで" }, { :onchange => 'this.form.submit();' } %>
+
+<% end %>
+</td>
+    
+
+
+<td><%= h klass.id %></td>
+<td><%= link_to 'Show', klass %></td>
+<td><%= link_to 'Edit', edit_klass_path(klass) %></td>
+<td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?',
+  :method => :delete %></td>

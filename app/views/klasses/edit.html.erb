@@ -1,0 +1,13 @@
+﻿<div class="form">
+<%= error_messages_for :klass %>
+<fieldset>
+<legend>Editing クラス</legend>
+
+<% form_for(@klass) do |f| %>
+  <%= render :partial=>"form", :locals => { :f=>f, :label_text=>"Update", :klass_date=>"" } %>
+<% end %>
+
+<%= link_to 'Show', @klass %> |
+<%= link_to 'Back', klasses_path %>
+</fieldset>
+</div>

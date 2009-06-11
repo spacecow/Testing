@@ -1,0 +1,28 @@
+﻿<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>受講生編集 - <%= @student %></legend>
+<table><tr>
+<td>
+  <strong>講座</strong>
+	<% form_for :student, :url => update_courses_students_path( :id=>@student ), :html => { :method => :post } do |f| %>
+		<p>
+		  <%= render :partial=>"course" %>
+		</p>
+		<p>
+		  <%= f.hidden_field :created_at %>
+		  <%= f.submit "Update" %>
+		</p>
+	<% end %>
+</td>
+<td valign="top">
+	<p>
+		<div id="classes">
+		</div>
+	</p>
+</td></tr></table>
+
+<%= link_to 'Show', @student %> |
+<%= link_to 'Back', people_path %>
+</fieldset>
+</div>

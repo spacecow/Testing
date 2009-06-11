@@ -1,0 +1,22 @@
+class AttendancesController < ApplicationController
+  def edit
+    @attendance = Attendance.find(params[:id])
+  end
+ 
+  def update
+    @attendance = Attendance.find(params[:id])
+    params[:attendance][:chosen] = ( params[:attendance][:student_id] == "" ? 0 : 1 )
+
+    respond_to do |format|
+      if @attendance.update_attributes(params[:attendance])
+        flash[:notice] = 'Attendance was successfully updated.'
+        format.html { redirect_to( klasses_path ) }
+        format.xml  { head :ok }
+      else
+        session[:error] = "You cannot change student yet."
+        format.html { redirect_to( klasses_path ) }
+        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+end

@@ -1,0 +1,82 @@
+﻿<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>新しい受講生</legend>
+<% form_for(@student) do |f_student| %>
+  <% fields_for "student[person_attributes][]", @student.person do |f_person| %>
+		<p>
+		  <label for="user_name">ユーザー名</label>
+		  <%= f_person.text_field :user_name %>
+		</p>
+		<p>
+		  <label for="password">パスワード</label>
+		  <%= f_person.text_field :password %>
+		</p>
+		<p>
+		  <label for="name">名前*</label>
+		  <%= f_person.text_field :family_name, :size=>20 %>
+		  <%= f_person.text_field :first_name, :size=>20 %>
+		</p>
+		<p>
+		  <label for="name_kana">名前 (フリガナ)*</label>
+		  <%= f_person.text_field :family_name_kana, :size=>20 %>
+		  <%= f_person.text_field :first_name_kana, :size=>20 %>
+		</p>
+		<p>
+		  <label for="gender">性別*</label>
+		  <table><tr>
+		    <td bgcolor="#AAAAFF"><%= f_person.radio_button :gender, 1 %>男性</td>
+		    <td bgcolor="#FFAAAA"><%= f_person.radio_button :gender, 2 %>女性</td>
+		  </tr></table>
+		</p>
+		<p>
+		  <label for="mobile_phone">携帯電話番号</label>
+		  <%= f_person.text_field :mobile_phone, :size=>20 %>
+		</p>
+		<p>
+		  <label for="home_phone">固定電話番号</label>
+		  <%= f_person.text_field :home_phone, :size=>20 %>
+		</p>
+		<p>
+		  <label for="mail_address_mobile">携帯電話用アドレス*</label>
+		  <%= f_person.text_field :mail_address_mobile %>
+		</p>
+		<p>
+		  <label for="mail_address_pc">ＰＣ用アドレス</label>
+		  <%= f_person.text_field :mail_address_pc %>
+		</p>
+		<p>
+		  <label for="address1">住所</label>
+		  <%= f_person.text_field :address1 %>
+		</p>
+		<p>
+		  <label for="address2">二番目の住所</label>
+		  <%= f_person.text_field :address2 %>
+		</p>
+		<p>
+		  <label for="ritei">利用停止</label>
+		  <table><tr>
+		    <td bgcolor="#AAAAFF"><%= f_person.radio_button :ritei, false %>OFF</td>
+		    <td bgcolor="#FFAAAA"><%= f_person.radio_button :ritei, true %>ON</td>
+		  </tr></table>
+		</p>
+		<p>
+		  <label for="inactive">退会</label>
+		  <table><tr>
+		    <td bgcolor="#AAAAFF"><%= f_person.radio_button :inactive, false %>OFF</td>
+		    <td bgcolor="#FFAAAA"><%= f_person.radio_button :inactive, true %>ON</td>
+		  </tr></table>
+		</p>	
+		<p>
+		  <label for="note">備考</label>
+		  <%= f_person.text_area :note, :rows=>8 %>
+		</p>
+		<p>
+		  <%= f_person.hidden_field :status, :value => 2 %> 
+		  <%= f_person.submit "Create", :class=>"submit" %>
+		</p>
+	<% end %>
+	<%= link_to 'Back', students_path %>
+<% end %>
+</fieldset>
+</div>

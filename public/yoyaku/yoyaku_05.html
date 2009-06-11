@@ -1,0 +1,313 @@
+<html>
+<head>
+<title>
+Yoyaku Project - Template Klasses
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Classes</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold class course:references \
+  teacher:references classroom:references capacity:integer \
+  date:datetime start_time:time end_time:time title:string \
+  description:text cancel:boolean mail_sending:integer note:text</span>
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/classes
+      exists  app/views/layouts/
+      exists  test/functional/
+      exists  test/unit/
+      exists  public/stylesheets/
+      create  app/views/classes/index.html.erb
+      create  app/views/classes/show.html.erb
+      create  app/views/classes/new.html.erb
+      create  app/views/classes/edit.html.erb
+      create  app/views/layouts/classes.html.erb
+   identical  public/stylesheets/scaffold.css
+      create  app/controllers/classes_controller.rb
+      create  test/functional/classes_controller_test.rb
+      create  app/helpers/classes_helper.rb
+       route  map.resources :classes
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/class.rb
+      create    test/unit/class_test.rb
+      create    test/fixtures/classes.yml
+      exists    db/migrate
+      create    db/migrate/20090510150711_create_classes.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in D:/ruby/yoyaku)
+==  CreateClasses: migrating ==================================================
+-- create_table(:classes)
+   -> 0.0780s
+==  CreateClasses: migrated (0.0780s) =========================================
+</pre>
+Split each course name one by one, save away the first element, allowing
+them only to be unique and do a for-each on the resulting array:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_05/index.html.erb.txt">yoyaku/app/views/klasses/index.html.erb</a></div>
+...
+
+&lt;table>
+<span class="highlight">&lt;% @courses.map{ |elem| elem.name.split[0] }.uniq.each do |e| %></span>
+  &lt;tr>
+    &lt;td>&lt;%= e %>&lt;/td>
+  &lt;/tr>
+&lt;% end %>
+&lt;/table>
+
+...
+</pre>
+Keep the objects in the code and let their display be of type string. Then,
+the controller knows how to properly translate the param string into their
+objects when saved. The value in the drop list is selected according to
+previous selections. If it however is nil, the prompt will be shown:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_05/_form.html.erb.txt">yoyaku/app/views/klasses/_form.html.erb</a></div>
+&lt;p>
+  &lt;label for="course">\u8B1B\u5EA7&lt;/label>
+  &lt;%= f.select :course_id,
+    <span class="highlight">Course.find( :all ).map{|e| [e, e.id]},
+    :prompt => "\u8B1B\u5EA7\u3092\u9078\u3093\u3067",
+    :selected => @klass.course ? @klass.course.id : nil %></span>
+&lt;/p>
+&lt;p>
+  &lt;label for="teacher">\u8B1B\u5E2B&lt;/label>
+  &lt;%= f.select :teacher_id,
+    Teacher.find(
+      :all,
+      :conditions => ["person_id = people.id"],
+      :include => :person ).map{|e| [e, e.id]},
+    :prompt => "\u8B1B\u5E2B\u3092\u9078\u3093\u3067",
+    :selected => @klass.teacher ? @klass.teacher.id : nil %> 
+&lt;/p>
+&lt;p>
+  &lt;label for="classroom">\u6559\u5BA4&lt;/label>
+  &lt;%= f.select :classroom_id,
+    Classroom.find( :all ).map{|e| [e, e.id]},
+    :prompt => "\u6559\u5BA4\u3092\u9078\u3093\u3067",
+    :selected => @klass.classroom ? @klass.classroom.id : nil %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :capacity %>
+  &lt;%= f.text_field :capacity, :size=>5 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :mail_sending %>
+  &lt;%= f.text_field :mail_sending, :size=>5 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :date %>
+  &lt;%= f.date_select :date %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :start_time %>
+  &lt;%= f.time_select :start_time %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :end_time %>
+  &lt;%= f.time_select :end_time %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :title %>
+  &lt;%= f.text_field :title, :size=>20 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :description %>
+  &lt;%= f.text_area :description, :rows=>8 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :cancel %>
+  &lt;table>&lt;tr>
+    &lt;td bgcolor="#AAAAFF">&lt;%= f.radio_button :cancel, false %>OFF&lt;/td>
+    &lt;td bgcolor="#FFAAAA">&lt;%= f.radio_button :cancel, true %>ON&lt;/td>
+  &lt;/tr>&lt;/table>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :note %>
+  &lt;%= f.text_area :note, :rows=>8 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.submit label_text, :class=>"submit" %>
+&lt;/p>
+</pre>
+
+<pre class="code">
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  UpdateTemplateClassToLookLikeKlass: migrating =============================
+-- add_column(:template_classes, :teacher_id, :integer)
+   -> 0.6210s
+-- add_column(:template_classes, :classroom_id, :integer)
+   -> 0.6300s
+-- add_column(:template_classes, :capacity, :integer)
+   -> 0.5710s
+-- add_column(:template_classes, :start_time, :time)
+   -> 0.6510s
+-- add_column(:template_classes, :end_time, :time)
+   -> 0.8810s
+-- add_column(:template_classes, :mail_sending, :integer, {:limit=>1})
+   -> 0.2410s
+==  UpdateTemplateClassToLookLikeKlass: migrated (3.5950s) ====================
+</pre>
+Pass the default date as a string in the <span class="var">params</span> hash. Split it up to
+year, month and day for the default paramater and set their orders:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_05/_form.html.erb.txt">yoyaku/app/views/klasses/_form.html.erb</a></div>
+...
+
+&lt;p>
+  &lt;%= f.label :date %>
+  <span class="highlight">&lt;% parsed_date = klass_date.split("-") %></span>
+  &lt;%= f.date_select :date,
+    <span class="highlight">:default => {
+      :year=>parsed_date[0],
+      :month=>parsed_date[1],
+      :day=>parsed_date[2] },
+    :order=>[ :month, :day, :year ]</span> %>
+&lt;/p>
+
+...
+</pre>
+<h2>Date Validation</h2>
+Add a validation for the date:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_05/klass.rb.txt">yoyaku/app/models/klass.rb</a
+></div>
+class Klass &lt; ActiveRecord::Base
+  belongs_to :course
+  belongs_to :teacher
+  belongs_to :classroom
+
+  validates_presence_of :course_id
+  <span class="highlight">validates_date :date</span>
+end
+</pre>
+However, this validation is not a part of the official Rails library.
+Install the plugin:
+
+<pre class="code">
+yoyaku><span class="typing">ruby script/plugin install \
+  http://svn.viney.net.nz/things/rails/plugins/validates_date_time</span>
++ ./CHANGELOG
++ ./MIT-LICENSE
++ ./README
++ ./Rakefile
++ ./init.rb
++ ./lib/multiparameter_attributes.rb
++ ./lib/parser.rb
++ ./lib/validates_date_time.rb
++ ./test/abstract_unit.rb
++ ./test/database.yml
++ ./test/date_test.rb
++ ./test/date_time_test.rb
++ ./test/fixtures/en.yml
++ ./test/fixtures/people.yml
++ ./test/fixtures/person.rb
++ ./test/schema.rb
++ ./test/time_test.rb
+</pre>
+<h2>Default Classes</h2>
+When a date is listed for the first time, all <span class="class">Template Classes</span> for
+that particular day are created as <span class="class">Klasses</span> with default values:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_05/index.html.erb.txt">yoyaku/app/views/klasses/index.html.erb</a></div>
+...
+
+<span class="highlight">&lt;% if !Klass.find( :first, :conditions => [ "date = ?", klass_date ]) %>
+  &lt;% TemplateClass.find( :all,
+    :conditions => [ "day = ?",klass_date.strftime("%A") ]).each do |t| %>
+    &lt;% Klass.new(
+      :course_id=>t.course_id,
+      :teacher_id=>t.teacher_id,
+      :classroom_id=>t.classroom_id,
+      :capacity=>t.capacity,
+      :date=>klass_date,
+      :start_time=>t.course_time.start_time,
+      :end_time=>t.course_time.end_time,
+      :title=>t.title,
+      :description=>t.description,
+      :cancel=>t.inactive,
+      :mail_sending=>t.mail_sending,
+      :note=>t.note ).save %>
+  &lt;% end %>
+&lt;% end %></span>
+
+...
+</pre>
+If the system is still under test, this code might generate a lot of dummy
+<span class="class">Klass</span>:es that just take up space. Empty the table once in a while with:
+
+<pre class="code">
+mysql> <span class="typing">truncate table klasses;</span>
+Query OK, 21 rows affected (0.34 sec)
+</pre>
+<h2>Some Layout</h2>
+<pre class="code">
+<div class="path"><a href="yoyaku_05/index.html.erb.txt">yoyaku/app/views/klasses/index.html.erb</a></div>
+...
+
+&lt;% if !Klass.find( :first, :conditions => [ "date = ?", klass_date ]) %>
+  &lt;% TemplateClass.find( :all,
+    :conditions => [ "day = ?",klass_date.strftime("%A") ]).each do |t| %>
+    &lt;% Klass.new(
+      ...
+        :note=>t.note,
+        <span class="highlight">:tostring=> t.course.name+"-"+
+                    t.course_time.start_time.to_s(:time)+"-"+
+                    t.course_time.end_time.to_s(:time)</span>
+       ).save %>
+  &lt;% end %>
+&lt;% end %>
+
+...
+</pre>
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_04.html">Part 04 - People</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_06.html">Part 06 - Teachers</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

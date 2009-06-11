@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>
+Rails - Testing
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Rails - Testing</h1>
+<doc tags=["rails","testing","autotest","zentest","diff.exe"] title="Testing">
+Autotest is included in ZenTest, but I got an error message before when I
+tried to install ZenTest:
+
+<pre class="code">
+yoyaku><span class="typing">gem install ZenTest</span>
+ERROR:  While executing gem ... (Errno::EACCES)
+    Permission denied - c:/ruby/lib/ruby/gems/1.8/gems/ZenTest-4.0.0/.autotest
+</pre>
+I spend two hours hacking my own computer reseting my admin password in order
+to log in as admin and do the installation. That was what I thought the error
+message said. Instead just do an uninstallation and install it again:
+
+<pre class="code">
+yoyaku><span class="typing">gem uninstall ZenTest</span>
+Remove executables:
+        autotest, multigem, multiruby, multiruby_setup, unit_diff, zentest
+
+in addition to the gem? [Yn]
+Removing autotest
+Removing multigem
+Removing multiruby
+Removing multiruby_setup
+Removing unit_diff
+Removing zentest
+Successfully uninstalled ZenTest-4.0.0
+
+yoyaku><span class="typing">gem install ZenTest</span>
+Successfully installed ZenTest-4.0.0
+1 gem installed
+Installing ri documentation for ZenTest-4.0.0...
+Installing RDoc documentation for ZenTest-4.0.0...
+</pre>
+If autotest complaints about the home variable, set it:
+
+<pre class="code">
+yoyaku><span class="typing">autotest</span>
+loading autotest/rails
+c:/ruby/lib/ruby/gems/1.8/gems/ZenTest-4.0.0/lib/autotest.rb:194:in `expand_path
+': couldn't find HOME environment -- expanding `~/.autotest' (ArgumentError)
+
+yoyaku><span class="typing">set home=C:\Johan\Ruby\Rails\yoyaku</span>
+
+yoyaku><span class="typing">set home</span>
+home=C:\Johan\Ruby\Rails\yoyaku
+HOMEDRIVE=C:
+HOMEPATH=\Documents and Settings\Johan
+</pre>
+On windows, whenever errors are generated:
+<pre class="code">
+c:/ruby/lib/ruby/gems/1.8/gems/ZenTest-4.0.0/lib/unit_diff.rb:232:in ``': No suc
+h file or directory - diff.exe -u C:/DOCUME~1/cogo/LOCALS~1/Temp/expect.3600.0 C
+:/DOCUME~1/cogo/LOCALS~1/Temp/butwas.3600.0 (Errno::ENOENT)
+</pre>
+You need to install diff.exe through <a href="http://gnuwin32.sourceforge.net/packages/diffutils.htm">DiffUtils</a>.
+
+After installation, right-click on "My Computer" -> Properties ->
+Advanced -> Environment Variables, find "Path" and add
+"C:\Program Files\GnuWin32\bin".
+
+<hr>
+Don't forget to copy your tables over to the test database:
+
+<pre class="code">
+yoyaku><span class="typing">rake db:test:prepare</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+</pre>
+</doc>
+
+<doc tags=["rails","testing","environment","Shoulda"] title="Environment file">
+<pre class="code">
+D:\ruby\yoyaku>rake gems RAILS_ENV='test'
+(in D:/ruby/yoyaku)
+
+I = Installed
+F = Frozen
+R = Framework (loaded before rails starts)
+</pre>
+Add this code in the environment file for testing to make sure that
+<i>Shoulda</i> is installed on the computer the tests are run on:
+<pre class="code">
+<div class="path"><a href="testing/test.rb.txt">yoyaku/config/environments/test.rb</a></div>
+...
+
+<span class="highlight">config.gem 'thoughtbot-shoulda', :lib => 'Shoulda', \
+  :source => "http://gems.github.com"</span>
+</pre>
+This shows up for autotest:
+<pre class="code">
+Missing these required gems:
+  thoughtbot-shoulda
+
+You're running:
+  ruby 1.8.6.287 at c:/ruby/bin/ruby.exe
+  rubygems 1.3.1 at C:/Documents and Settings/cogo/.gem/ruby/1.8, c:/ruby/lib/ru
+by/gems/1.8
+
+Run `rake gems:install` to install the missing gems.
+</pre>
+<pre class="code">
+\yoyaku><span class="typing">rake gems:install RAILS_ENV='test'</span>
+(in D:/ruby/yoyaku)
+gem.bat install thoughtbot-shoulda --source http://gems.github.com
+Successfully installed thoughtbot-shoulda-2.10.1
+1 gem installed
+Installing ri documentation for thoughtbot-shoulda-2.10.1...
+Installing RDoc documentation for thoughtbot-shoulda-2.10.1...
+</pre>
+
+</doc>
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+

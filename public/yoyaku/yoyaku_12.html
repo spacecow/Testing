@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>
+Yoyaku Project - Users
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Registration</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate model registration \
+  student:references course:references cancel:boolean note:text</span>
+      exists  app/models/
+      exists  test/unit/
+      exists  test/fixtures/
+      create  app/models/registration.rb
+      create  test/unit/registration_test.rb
+      create  test/fixtures/registrations.yml
+      exists  db/migrate
+      create  db/migrate/20090528050848_create_registrations.rb
+
+yoyaku><span class="typing">ruby script/generate model courses_student \
+  student:references course:references</span>
+      exists  app/models/
+      exists  test/unit/
+      exists  test/fixtures/
+      create  app/models/courses_student.rb
+      create  test/unit/courses_student_test.rb
+      create  test/fixtures/courses_students.yml
+      exists  db/migrate
+      create  db/migrate/20090528051021_create_courses_students.rb
+</pre>
+
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>

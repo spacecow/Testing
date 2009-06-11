@@ -1,0 +1,48 @@
+<% if klass_group[0].date >= Date.current %>
+	<table cellpadding="1" cellspacing="1">
+	  <tr>
+	    <td colspan="2" align="center">
+	      <strong><%= klass_group[0].date.strftime("%x") %>: <%= klass_group[0].date.strftime("%A") %><br/></strong>
+	    </td>
+	    <td>
+	      <% if clearance?(3) %>
+	        <strong>Cancel</strong>
+	      <% end %>
+	    </td>
+	  </tr>
+	  <% hash={} %>
+	  <% klass_group.sort_by(&:start_time).each do |klass| %>
+	    <% if true %>
+	      <% hash[klass.to_s] = klass %>
+	      <tr>
+		    	<td>
+		    	  <%= check_box_tag "student[klass_ids][]", klass.id, @student.klasses.include?(klass), :disabled=>!clearance?(3)&&@student.klasses.include?(klass) ? true : false %>
+		    	  <% if !clearance?(3)&&@student.klasses.include?(klass) %>
+		    	    <%= hidden_field_tag "student[klass_ids][]", klass.id %>
+		    	  <% end %>
+		    	</td>
+		    	<td>
+		    	  <%= klass %>
+		    	</td>
+		    	<td align="center">
+				    <% if @student.klasses.include?(klass) && clearance?(3) %>
+					    <% fields_for_attendance( @student.find_attendance_by_klass_id( klass )) do |f| %>
+		            <%= f.check_box :cancel %>
+		          <% end %>					    	
+		        <% end %>
+		    	</td>
+			 </tr>
+	    <% end %>
+	  <% end %>
+	</table>
+	<br />
+<% else %>
+  <% klass_group.sort_by(&:start_time).each do |klass| %>
+    <% if @student.klasses.include?( klass ) %>
+      <% if clearance?(3) || !@student.is_canceled?( klass ) %>
+        <%= klass.date.strftime("%x")+": "+klass.to_s+" "+( @student.is_canceled?( klass ) ? "<i>canceled</i>" : "" ) %><br />
+      <% end %>
+      <%= hidden_field_tag "student[klass_ids][]", klass.id %>
+    <% end %>
+  <% end %>
+<% end %>

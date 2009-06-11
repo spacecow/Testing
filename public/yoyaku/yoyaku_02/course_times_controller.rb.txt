@@ -1,0 +1,87 @@
+class CourseTimesController < ApplicationController
+  # GET /course_times
+  # GET /course_times.xml
+  def index
+    @course_times = CourseTime.find(:all, :order=>'text' )
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @course_times }
+    end
+  end
+
+  # GET /course_times/1
+  # GET /course_times/1.xml
+  def show
+    @course_time = CourseTime.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @course_time }
+    end
+  end
+
+  # GET /course_times/new
+  # GET /course_times/new.xml
+  def new
+    @course_time = CourseTime.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @course_time }
+    end
+  end
+
+  # GET /course_times/1/edit
+  def edit
+    @course_time = CourseTime.find(params[:id])
+  end
+
+  # POST /course_times
+  # POST /course_times.xml
+  def create
+    @course_time = CourseTime.new(params[:course_time])
+    @course_time.text = @course_time.to_s
+
+    respond_to do |format|
+      if @course_time.save
+        flash[:notice] = 'CourseTime was successfully created.'
+        format.html { redirect_to(@course_time) }
+        format.xml  { render :xml => @course_time, :status => :created, :location => @course_time }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @course_time.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /course_times/1
+  # PUT /course_times/1.xml
+  def update
+    @course_time = CourseTime.find(params[:id])
+
+    respond_to do |format|
+      if @course_time.update_attributes(params[:course_time])
+        @course_time.update_attribute( :text, @course_time.to_s )
+        flash[:notice] = 'CourseTime was successfully updated.'
+        format.html { redirect_to(@course_time) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @course_time.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /course_times/1
+  # DELETE /course_times/1.xml
+  def destroy
+    @course_time = CourseTime.find(params[:id])
+    @course_time.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(course_times_url) }
+      format.xml  { head :ok }
+    end
+  end
+end

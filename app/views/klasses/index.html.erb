@@ -1,0 +1,72 @@
+<% if @attendance %>
+  <%= error_messages_for :attendance %>
+<% end %>
+
+<h1><%= @klass_date.strftime("%A") %></h1>
+
+<% form_for :klass,
+            :url => { :action=>'index' },
+            :html => { :method=>'get' } do |f| %>
+  <%= select_tag :month, options_for_select( Date::MONTHNAMES, @month ),
+    :onchange => "this.form.submit();", :selected=>@month %>
+
+  <%= select_tag :day, options_for_select( 1..31, @day.to_i ),
+    :onchange => "this.form.submit();", :selected=>@day %>
+
+  <%= select_tag :year, options_for_select( 2005..2020, @year.to_i ),
+    :onchange => "this.form.submit();", :selected=>@year %>
+<% end %>
+
+<br />
+<br />
+
+<% if clearance?(2) %>
+	<% if @klass_groups.size == 0 %>
+	  <% TemplateClass.find( :all,
+	    :conditions => [ "day = ?",@klass_date.strftime("%A") ]).each do |t| %>    
+	    <% Klass.new(
+					:course_id=>t.course_id,
+					:teacher_id=>t.teacher_id,
+					:classroom_id=>t.classroom_id,
+					:capacity=>t.capacity,      
+					:date=>@klass_date,
+					:start_time=>t.course_time.start_time,
+					:end_time=>t.course_time.end_time,
+					:title=>t.title,
+					:description=>t.description,
+					:cancel=>t.inactive,
+					:mail_sending=>t.mail_sending,
+					:note=>t.note,
+					:tostring=> t.course.name+"-"+
+					            t.course_time.start_time.to_s(:time)+"-"+
+					            t.course_time.end_time.to_s(:time)
+		     ).save %>
+	  <% end %>
+	<% end %>
+<% end %>
+
+<% @keys = sort_in_mogi_order @klass_groups.keys %>
+<% @keys.each do |key| %>
+  <div id="table">
+    <%= render :partial=>"course", :locals=>{ :course_klasses=>@klass_groups[key], :klass_date=>@klass_date, :classrooms=>@classrooms, :teachers=>@teachers, :collition=>@collition } %><br />
+  </div>
+<% end %>
+
+<%= link_to 'New klass', new_klass_path( :klass_date=>@klass_date ) %>
+
+<% if clearance?(1) %>
+	<table>
+	<% Klass.find( :all, :include=>'course' ).each do |klass| %>
+	  <tr>
+	    <td><%=h klass.date.strftime("%x") %></td>
+	    <td><%=h klass.course.name %></td>
+	    <td><%=h klass.course.inactive %></td>
+	    <td><%= link_to 'Show', klass %></td>
+	    <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
+	    <td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?',
+	      :method => :delete %>
+	    </td>
+	  </tr>
+	<% end %>
+	</table>
+<% end %>

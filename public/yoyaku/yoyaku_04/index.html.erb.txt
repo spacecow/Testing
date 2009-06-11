@@ -1,0 +1,33 @@
+﻿ <div id="list">
+<h1>上場<%= @category %></h1>
+
+<table><tr>
+<td>
+  <label for="searchtext">Live Search:</label>
+  <%= hinted_text_field_tag :searchtext, @searchtext, "検索したい語句を打ち込む", :size=>30 %>
+  <%= observe_field(
+        :searchtext,
+        :frequency => 0.25,
+        :update => :search_hits,
+        :url => { :action => :live_search, :category => @category },
+        :with => 'search_text' ) %>
+</td>
+<td>
+  <% form_for :template_class,
+              :url => { :action=>'index' },
+              :html => { :method=>'get' } do |f| %>
+    <label for="category">Category:</label>
+    <%= select_tag :category,
+      options_for_select( ["全部の人", "講師", "受講生"], @category ),
+      :onchange => "this.form.submit();" %>
+  <% end %>
+</td>
+</tr></table><br />
+<div id="search_hits"></div>
+
+
+</div>
+<br />
+
+<%= link_to '新しい講師', new_teacher_path, :class=>'link' %> | 
+<%= link_to '新しい受講生', new_student_path, :class=>'link' %>

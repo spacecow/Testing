@@ -1,0 +1,56 @@
+&lt;% form_for(klass) do |f| %>
+  &lt;td class="table-units">
+    &lt;%= klass.start_time.to_s( :time ) %>~&lt;%= klass.end_time.to_s( :time ) %>
+  &lt;/td>
+  &lt;td class="table-units">
+    &lt;!-- no units -->
+  &lt;/td>
+  &lt;td>
+    &lt;%= f.select :classroom_id,
+      Classroom.find( :all ).map{|e| [e, e.id]},
+    { :prompt => "?",
+      :selected => klass.classroom ? klass.classroom.id : nil },
+    { :class => "table-units",
+      :onchange => 'this.form.submit();' } %>
+  &lt;/td>
+  &lt;td>
+    &lt;%= f.select :teacher_id,
+          Teacher.find( :all,
+            :conditions => ["person_id = people.id"],
+            :include => :person ).map{|e| [e, e.id]},
+          { :prompt => "講師を選んで",
+            :selected => klass.teacher ? klass.teacher.id : nil },
+          { :class => "table-units",
+            :onchange => 'this.form.submit();' } %>
+  &lt;/td>
+&lt;% end %>
+  &lt;% student_classes = klass.student_classes.all %>
+  &lt;% student_classes.each do |student_class| %>
+    &lt;td class="table-units">
+      &lt;% form_for(student_class) do |f2| %>
+        &lt;%= f2.select :student_id,
+          Student.find(
+            :all,
+            :conditions => ["person_id = people.id"],
+            :include => :person ).map{|e| [e, e.id]},
+          {},
+          { :class => 'table-units',
+            :onchange => 'this.form.submit();' } %>
+      &lt;% end %>
+    &lt;/td>
+  &lt;% end %>
+  &lt;% (8-student_classes.size).times do |no| %>
+    &lt;td>
+      &lt;% if no==0 %>
+        &lt;%= link_to '+',
+              new_student_class_path(
+                :klass=>klass
+              ),
+            :class=>"grid" %>
+      &lt;% end %>
+    &lt;/td>
+  &lt;% end %>
+&lt;/td>
+&lt;td class="table-units">
+  &lt;%= h klass.id %>&nbsp;&lt;%= link_to '見', klass %>&nbsp;&lt;%= link_to '変', edit_klass_path(klass) %>&nbsp;&lt;%= link_to '消', klass, :confirm => 'Are you sure?', :method => :delete %>
+&lt;/td>

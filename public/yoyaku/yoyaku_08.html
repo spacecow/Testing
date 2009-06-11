@@ -1,0 +1,89 @@
+
+<html>
+<head>
+<title>
+Yoyaku Project - Students
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Students</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold student person:references</span>
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/students
+      exists  app/views/layouts/
+      exists  test/functional/
+      exists  test/unit/
+      exists  public/stylesheets/
+      create  app/views/students/index.html.erb
+      create  app/views/students/show.html.erb
+      create  app/views/students/new.html.erb
+      create  app/views/students/edit.html.erb
+      create  app/views/layouts/students.html.erb
+      create  public/stylesheets/scaffold.css
+      create  app/controllers/students_controller.rb
+      create  test/functional/students_controller_test.rb
+      create  app/helpers/students_helper.rb
+       route  map.resources :students
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/student.rb
+      create    test/unit/student_test.rb
+      create    test/fixtures/students.yml
+      exists    db/migrate
+      create    db/migrate/20090520064434_create_students.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  CreateStudents: migrating =================================================
+-- create_table(:students)
+   -> 0.4900s
+==  CreateStudents: migrated (0.4900s) ========================================
+</pre>
+
+tasks.build will only create the model in memory where as tasks.create will save it to the database. I don't want to save it to the database yet in case validation fails (it will be saved later when the project is saved) so I use tasks.build.
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_07.html">Part 07 - Classroom</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_09.html">Part 09 - Student Classes</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

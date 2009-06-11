@@ -1,0 +1,33 @@
+﻿<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>受講生編集 - <%= @student %></legend>
+<table><tr>
+<td>
+	<% form_for :student, @student, :url=>{ :action=>"add_course" } do |f1| %>
+		<p>
+		  <% Course.all.group_by(&:category).each do |category,course_group| %>
+			  <% course_group.sort_by(&:name).each do |course| %>
+				  <div>
+				    <%= check_box_tag "student[course_ids][]", course.id, @student.courses.include?(course) %>
+				    <%= course.name %>
+				  </div>
+				<% end %>
+		  <% end %>
+		</p>
+		<p>
+		  <%= f1.submit "Update" %>
+		</p>
+	<% end %>
+</td>
+<td valign="top">
+	<p>
+		<div id="classes">
+		</div>
+	</p>
+</td></tr></table>
+
+<%= link_to 'Show', @student %> |
+<%= link_to 'Back', people_path %>
+</fieldset>
+</div>

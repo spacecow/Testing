@@ -1,0 +1,110 @@
+
+<html>
+<head>
+<title>
+Yoyaku Project - Course Times
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Course Times</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold course_time start_time:time \
+  end_time:time text:string</span>
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/course_times
+      exists  app/views/layouts/
+      exists  test/functional/
+      exists  test/unit/
+      exists  public/stylesheets/
+      create  app/views/course_times/index.html.erb
+      create  app/views/course_times/show.html.erb
+      create  app/views/course_times/new.html.erb
+      create  app/views/course_times/edit.html.erb
+      create  app/views/layouts/course_times.html.erb
+   identical  public/stylesheets/scaffold.css
+      create  app/controllers/course_times_controller.rb
+      create  test/functional/course_times_controller_test.rb
+      create  app/helpers/course_times_helper.rb
+       route  map.resources :course_times
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/course_time.rb
+      create    test/unit/course_time_test.rb
+      create    test/fixtures/course_times.yml
+      exists    db/migrate
+      create    db/migrate/20090506053152_create_course_times.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in D:/ruby/rails/yoyaku)
+==  CreateCourseTimes: migrating ==============================================
+-- create_table(:course_times)
+   -> 0.1570s
+==  CreateCourseTimes: migrated (0.1570s) =====================================
+</pre>
+In order to display the time intervals in a sorted manner, add the
+<span class="param">:order</span> parameter to the controller:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_02/course_times_controller.rb.txt">yoyaku/app/controllers/course_times_controller.rb</a></div>
+class CourseTimesController &lt; ApplicationController
+  # GET /course_times
+  # GET /course_times.xml
+  def index
+    @course_times = CourseTime.find(:all, <span class="highlight">:order=>'text'</span> )
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @course_times }
+    end
+  end
+
+  ...
+
+end
+</pre>
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_01.html">Part 01 - Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_03.html">Part 03 - Template Classes</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

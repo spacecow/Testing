@@ -1,0 +1,89 @@
+﻿<p>
+  <b>User name:</b>
+  <%=h @person.user_name %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%=h @person.password %>
+</p>
+
+<p>
+  <b>Family name:</b>
+  <%=h @person.family_name %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%=h @person.first_name %>
+</p>
+
+<p>
+  <b>Family name kana:</b>
+  <%=h @person.family_name_kana %>
+</p>
+
+<p>
+  <b>First name kana:</b>
+  <%=h @person.first_name_kana %>
+</p>
+
+<p>
+  <b>Gender:</b>
+  <%=h @person.gender == 1 ? "男性" : "女性" %>
+</p>
+
+<p>
+  <b>Address1:</b>
+  <%=h @person.address1 %>
+</p>
+
+<p>
+  <b>Address2:</b>
+  <%=h @person.address2 %>
+</p>
+
+<p>
+  <b>Home phone:</b>
+  <%=h @person.home_phone %>
+</p>
+
+<p>
+  <b>Handy phone:</b>
+  <%=h @person.mobile_phone %>
+</p>
+
+<p>
+  <b>Mail address1:</b>
+  <%=h @person.mail_address_mobile %>
+</p>
+
+<p>
+  <b>Mail address2:</b>
+  <%=h @person.mail_address_pc %>
+</p>
+
+<p>
+  <b>Ritei:</b>
+  <%=h @person.ritei %>
+</p>
+
+<p>
+  <b>Last login:</b>
+  <%=h @person.last_login %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @person.note %>
+</p>
+
+<p>
+  <b>ToString:</b>
+  <%=h @person.tostring %>
+</p>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', @person.status==nil ? people_path : @person.status==1 ? teachers_path : students_path %>
+ 

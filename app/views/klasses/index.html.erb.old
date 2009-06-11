@@ -1,0 +1,114 @@
+﻿<% klass_date = DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i ) %>
+<h1><%= klass_date.strftime("%A") %></h1>
+
+<% form_for :klass,
+            :url => { :action=>'index' },
+            :html => { :method=>'get' } do |f| %>
+  <%= select_tag :month, options_for_select( Date::MONTHNAMES, @month ),
+    :onchange => "this.form.submit();", :selected=>@month %>
+
+  <%= select_tag :day, options_for_select( 1..31, @day.to_i ),
+    :onchange => "this.form.submit();", :selected=>@day %>
+
+  <%= select_tag :year, options_for_select( 2005..2020, @year.to_i ),
+    :onchange => "this.form.submit();", :selected=>@year %>
+<% end %>
+
+<% if !Klass.find( :first, :conditions => [ "date = ?", klass_date ]) %>
+  <% TemplateClass.find( :all,
+    :conditions => [ "day = ?",klass_date.strftime("%A") ]).each do |t| %>
+    <% Klass.new(
+				:course_id=>t.course_id,
+				:teacher_id=>t.teacher_id,
+				:classroom_id=>t.classroom_id,
+				:capacity=>t.capacity,      
+				:date=>klass_date,
+				:start_time=>t.course_time.start_time,
+				:end_time=>t.course_time.end_time,
+				:title=>t.title,
+				:description=>t.description,
+				:cancel=>t.inactive,
+				:mail_sending=>t.mail_sending,
+				:note=>t.note,
+				:tostring=> t.course.name+"-"+
+				            t.course_time.start_time.to_s(:time)+"-"+
+				            t.course_time.end_time.to_s(:time)
+	     ).save %>
+  <% end %>
+<% end %>
+<% if Klass.find( :first, :conditions => [ "date = ?", klass_date ]) %>
+	<% Course.find(
+	     :all,
+	     :conditions => [ "klasses.course_id = courses.id and klasses.date = ?", klass_date ],
+	     :include => 'klasses'
+	   ).map{ |elem| elem.name.split[0] }.uniq.each do |e| %>
+	<div id="table">
+	<br />
+	<table border="1">
+	  <tr>
+	    <td class="table-title" colspan="2"><%= e+"コース" %></td>
+	  </tr>
+	  <tr>
+		  <th class="table-topics" rowspan="2">授業</th>
+			<th class="table-topics" rowspan="2">時間</th>
+			<th class="table-topics" rowspan="2">ユニット</th>
+			<th class="table-topics" rowspan="2">部屋</th>
+			<th class="table-topics" rowspan="2">講師</th>
+	    <td class="table-topics" colspan="8">受講生</td>
+	  </tr>
+	  <tr>
+	    <% 8.times do |no| %>
+	      <td class="table-topics"><%= no+1 %></td>
+	    <% end %>
+	  </tr>
+	  <% @string_klasses = Klass.find( :all,
+	    :conditions=>["course_id = courses.id and courses.name like ? and date = ?", e+"%", klass_date ],
+	    :include=>'course',
+	    :order=>'start_time' ).map{|elem| elem.tostring }.uniq %>
+	  <% @string_klasses.each do |string_klass| %>
+		  <% @klasses = Klass.find_all_by_tostring( string_klass, :conditions => [ "date = ?", klass_date ]) %>
+		  <tr>
+		    <th rowspan="<%= @klasses.size %>">
+          <%= string_klass.split('-')[0].split[-1] %>&nbsp;<%= link_to '+',
+          { :action=>'add_course',
+            :id=>'add_course',
+            :course_id=>Course.find_by_name( string_klass.split('-')[0] ),
+            :start_time=>string_klass.split('-')[1],
+            :end_time=>string_klass.split('-')[2],
+            :year=>@year,
+            :month=>@month,
+            :day=>@day },
+            :class=>"grid" %>              
+		    </th>
+		  <% @klasses.each do |klass| %>
+			  <%= render :partial=>"klass", :locals=>{ :klass=>klass, :year=>@year, :month=>@month, :day=>@day } %>
+			</tr>
+			<tr>
+		  <% end %>
+		<% end %>
+	</table>
+	</div>
+	<% end %>
+<% end %>
+
+<br />
+<br />
+
+<%= link_to 'New klass', new_klass_path( :klass_date=>klass_date ) %>
+
+<% if admin? %>
+	<table>
+	<% Klass.find( :all, :include=>'course' ).each do |klass| %>
+	  <tr>
+	    <td><%=h klass.date.strftime("%x") %></td>
+	    <td><%=h klass.course.name %></td>
+	    <td><%=h klass.course.inactive %></td>
+	    <td><%= link_to 'Show', klass %></td>
+	    <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
+	    <td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?',
+	      :method => :delete %>
+	    </td>
+	  </tr>
+	<% end %>
+	</table>
+<% end %>

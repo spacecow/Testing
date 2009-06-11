@@ -1,0 +1,247 @@
+/* Global styles */
+td.schedule{
+	border-right: solid black 1px;
+	border-left: solid black 1px;
+	border-bottom: solid black 1px;
+	border-top: solid black 1px;
+}
+td.schedule-right{
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+	border-top: solid black 1px;
+}
+td.schedule-down{
+	border-right: solid black 1px;
+	border-left: solid black 1px;
+	border-bottom: solid black 1px;
+}
+td.schedule-only-down{
+	border-bottom: solid black 1px;
+}
+td.schedule-only-right-and-down{
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+}
+
+#notice { background-color: #A4E7A0; border: 1px solid #26722D; }  
+#error { background-color: #F0A8A8; border: 1px solid #900; }  
+#notice, #error { width: 90%; margin: 0 auto 10px auto; padding: 5px; }  
+#notice p, #error p { margin-left: 20px; padding: 0; font-size: .75em; color: #000; }  
+#notice a, #error a { text-decoration: none; padding: 0 3px; }  
+#notice a { border: 1px solid #26722D; color: #26722D; }  
+#error a { border: 1px solid #900; color: #900; }  
+#notice a:hover, #error a:hover { color: #333; border: 1px solid #333; } 
+
+/* Styles for main page */
+#banner{
+  background: #0099cc;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-bottom: 4px solid;
+  font: small-caps 50px/50px serif;
+  color: #000080;
+  text-align: center;
+}
+#banner img{
+  float: left;
+}
+#columns{
+  background: #9999ff;
+}
+#side{
+  float: left;
+  padding-top: 28px;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  width: 10em;
+  background: #9999ff;
+  font-weight: bold;
+}
+#side a{
+  color: #00ffff;
+  font-size: small;
+}
+#main{
+  margin-left: 15em;
+  padding-top: 4ex;
+  padding-left: 2em;
+  background: white;
+}
+h1{
+  font: 150% sans-serif;
+  color: #226;
+  border-bottom: 3px dotted #77d;
+}
+h3{
+  font: sans-serif;
+  color: #226;
+  border-bottom: 3px dotted #77d;
+}
+#side .list{
+	font-size: x-small;
+	color: #fff;
+}
+
+
+
+#list .list-inactive{
+  color: #777;
+}
+#list .list-name{
+  font-weight: bold;
+  font-size: larger;
+}
+#list .list-actions{
+  font-size: x-small;
+  text-align: right;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#list .list-topics{
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  background: gray;
+}
+#list .list-units{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#list .list-category{
+  font-weight: bold;
+}
+#list .list-line-even{
+  background: #ffccff;
+}
+#list .list-line-odd{
+  background: #d0d0d0;
+}
+#list .list-line-woman{
+  background: #ffcccc;
+}
+#list .list-line-man{
+  background: #ccccff;
+}
+
+
+#table .table-course{
+  border: 1px solid black;
+}
+#table .table-title{
+  background: grey;
+  font-weight: bold;
+  color: white;
+}
+#table .table-topics{
+  font-size: small;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+  text-align: center;
+  background: #cccccc;
+}
+#table .table-topics-sub{
+  font-size: small;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+  text-align: center;
+  background: #dddddd;
+}
+#table .table-units{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#table .drop-box-woman{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color:#ffcccc;
+}
+#table .drop-box-man{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color:#ccccff;
+}
+#table .drop-box-empty{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color:#eeeeee;
+}  
+
+
+/* Styles for the order form */
+.form fieldset{
+	background: #efe;
+	border: 1px solid #000080;
+}
+.form legend{
+  color: #fff;
+  background: #9999ff;
+  font-family: sans-serif;
+  padding: 0.2em 1em;
+  border: 1px solid #000080;
+}
+.form label{
+  width: 10em;
+  float: left;
+  text-align: right;
+  margin-right: 0.5em;
+  display: block;
+}
+.form .submit{ margin-left: 5.5em; }
+
+
+
+
+a.grid{
+	text-decoration: none;
+	font-size: x-small;
+	font: sans-serif;
+}
+a.link{
+	text-decoration: none;
+	font-size: smaller;
+	font: sans-serif;
+}
+
+
+/* The error box */
+.fieldWithErrors{
+	padding: 4px;
+	background-color: red;
+}
+
+#errorExplanation{
+	width: 400px;
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 12px;
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+	margin: -7px;
+	background-color: #c00;
+	color: #fff;
+}
+
+#errorExplanation p{
+	color: #333;
+	margin-bottom: 0;
+	padding: 5px;
+}
+
+#errorExplanation ul li{
+	font-size: 12px;
+	list-style: square;
+}

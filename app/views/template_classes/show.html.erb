@@ -1,0 +1,59 @@
+﻿<p>
+  <b>講座:</b>
+  <%=h @template_class.course %>
+</p>
+
+<p>
+  <b>講師:</b>
+  <%=h @template_class.teacher %>
+</p>
+
+<p>
+  <b>部屋:</b>
+  <%=h @template_class.classroom %>
+</p>
+
+<p>
+  <b>Capacity:</b>
+  <%=h @template_class.capacity %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%=h @template_class.day %>
+</p>
+
+<p>
+  <b>Course time:</b>
+  <%=h @template_class.start_time.to_s( :time ) %> -- <%=h @template_class.end_time.to_s( :time ) %>
+</p>
+
+
+<p>
+  <b>Title:</b>
+  <%=h @template_class.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @template_class.description %>
+</p>
+
+<p>
+  <b>Inactive:</b>
+  <%=h @template_class.inactive %>
+</p>
+
+<p>
+  <b>Mail Sending:</b>
+  <%=h @template_class.mail_sending %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @template_class.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_template_class_path(@template_class) %> |
+<%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>

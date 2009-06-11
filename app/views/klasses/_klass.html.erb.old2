@@ -1,0 +1,65 @@
+<% form_for(klass) do |f_klass| %>
+	<td class="table-units">
+	  <%= klass.start_time.to_s( :time ) %>~<%= klass.end_time.to_s( :time ) %>
+	</td>
+	<td class="table-units">
+	  <!-- no units -->
+	</td>
+	<td>
+	  <%= f_klass.select :classroom_id,
+	    Classroom.find( :all ).map{|e| [e, e.id]},
+	  { :prompt => "?",
+	    :selected => klass.classroom ? klass.classroom.id : nil },
+	  { :class => "table-units",
+	    :onchange => 'this.form.submit();' } %>
+	</td>
+	<td>
+	  <%= f_klass.select :teacher_id,
+	        Teacher.find( :all,
+	          :conditions => ["person_id = people.id"],
+				    :include => :person ).map{|e| [e, e.id]},
+				  { :prompt => "講師を選んで",
+				    :selected => klass.teacher ? klass.teacher.id : nil },
+				  { :class => "table-units",
+				    :onchange => 'this.form.submit();' } %>
+	</td>
+<% end %>
+<% student_classes = klass.student_classes.all %>
+<% student_classes.each do |student_class| %>
+  <td class="table-units">
+    <% form_for(student_class) do |f_student_class| %>
+      <table cellpadding="0" cellspacing="0"><tr>
+      <td class="table-units">
+       <%= link_to '-', student_class, :class => 'grid', :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+      <td>
+	      <%= f_student_class.select :student_id,
+	        Student.find(
+	          :all,
+	          :conditions => ["person_id = people.id"],
+	          :include => :person ).map{|e| [e, e.id]},
+	        { :prompt => "受講生を選んで" },
+	        { :class => 'table-units',
+	          :onchange => 'this.form.submit();' } %>
+      </td>
+      </tr></table>
+    <% end %>
+  </td>
+<% end %>
+<% (8-student_classes.size).times do |no| %>
+  <td>
+    <% if no==0 %>
+      &nbsp;<%= link_to '+',
+          { :action=>'add_student',
+            :id=> 'add_student',
+            :klass_id=>klass.id,
+            :year=>year,
+            :month=>month,
+            :day=>day },
+            :class=>"grid" %>
+    <% end %>
+  </td>
+<% end %>
+<td class="table-units">
+	<%= h klass.id %>&nbsp;<%= link_to '見', klass %>&nbsp;<%= link_to '変', edit_klass_path(klass) %>&nbsp;<%= link_to '消', klass, :confirm => 'Are you sure?', :method => :delete %>
+</td>

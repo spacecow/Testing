@@ -1,0 +1,20 @@
+﻿<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>受講生編集 - <%= @student %></legend>
+<table><tr>
+<td valign="top" width="100">
+  <%= render :partial=>"show_courses", :locals=>{ :add_enter=>false } %>
+</td>
+<td valign="top">
+  <%= render :partial=>"show_klasses" %>
+</td>
+</tr></table>
+
+<br />
+
+<%= link_to 'Edit', :action=>"edit_klasses", :id=>@student %> |
+<%= link_to 'Back', people_path %>
+
+</fieldset>
+</div>

@@ -1,0 +1,38 @@
+&lt;p>
+  &lt;b>Course:&lt;/b>
+  &lt;%=h @template_class.course %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Course time:&lt;/b>
+  &lt;%=h @template_class.course_time %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Day:&lt;/b>
+  &lt;%=h @template_class.day %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Title:&lt;/b>
+  &lt;%=h @template_class.title %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Description:&lt;/b>
+  &lt;%=h @template_class.description %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Inactive:&lt;/b>
+  &lt;%=h @template_class.inactive %>
+&lt;/p>
+
+&lt;p>
+  &lt;b>Note:&lt;/b>
+  &lt;%=h @template_class.note %>
+&lt;/p>
+
+
+&lt;%= link_to 'Edit', edit_template_class_path(@template_class) %> |
+&lt;%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>

@@ -1,0 +1,178 @@
+.header{
+  font-size: 180%;
+  font-weight: bold;
+}
+
+.main
+{
+   width: 550;
+   padding: 10px;
+   margin: 20px;
+   color: #000000;
+   background-color: #FFFFFF;
+   border: 2px solid #000080;
+}
+.code
+{
+   width: 550;
+   padding: 10px;
+   margin: 20px;
+   color: #000080;
+   font-size: 11px;
+   font-weight: normal;
+   line-height: 14px;
+   background-color: #EEEEEE;
+   border: 2px solid #000080;
+}
+.code .typing{
+  font-size: 120%;
+  font-weight: bold;
+}
+.code .path{
+	font-size: 120%;
+	padding: 2px 5px 4px 5px;
+	background-color: #567896;
+	color: #ffffff;
+	border: 1px solid #000000;
+}
+.code .path A:link{
+	text-decoration: none;
+	color: #ffffff;
+}
+.code .path A:visited{
+	text-decoration: none;
+	color: #ffffff;
+}
+.code .path A:active{
+	text-decoration: none;
+	color: #ffffff;
+}
+.code .test{
+	font-size: 120%;
+	padding: 2px 5px 4px 5px;
+	margin-top: 10px;
+	margin-bottom: -12px;
+	background-color: #567896;
+	color: #ffffff;
+	border: 1px solid #000000;
+}
+.code .test A:link{
+	text-decoration: none;
+	color: #ffffff;
+}
+.code .test A:visited{
+	text-decoration: none;
+	color: #ffffff;
+}
+.code .test A:active{
+	text-decoration: none;
+	color: #ffffff;
+} 
+.fact{
+   width: 550;
+   padding: 10px;
+   margin: 20px;
+   color: #FFFFFF;
+   background-color: #567896;
+   border: 2px solid #000000;
+}
+.fact .title{
+	font-size: 150%;
+	margin-bottom: 0px;
+	padding-bottom: 10px;	
+	border-bottom: 5px dotted #fff;
+	font-weight: bold;
+}
+.subsection{
+  font: small-caps 50px/50px serif;
+	font-weight: bold;
+	font-size: 140%;
+	padding-top: 25px;	
+  padding-bottom: 20px;	
+}
+.txt{
+	font-size: 150%;
+}
+.math
+{
+   font-family: times, times new roman, serif;
+   font-weight: normal;
+   font-style: italic;
+   font-size: 14px;
+}
+.class{ color: #567896; font-weight: bold; }
+.table{ color: #567896; }
+.method{ color: #567896; font-weight: bold; }
+.object{ color: #567896; font-weight: bold; }
+.var{ color: #567896; font-weight: bold; }
+.param{ color: #567896; font-weight: bold; }
+.tag{ font-style: italic }
+.file{ font-style: italic; }
+.highlight{ color: #FF0000; }
+.path{ font-style: italic; }
+.test{ font-style: italic; }
+
+div.htmltooltip{
+position: absolute; /*leave this and next 3 values alone*/
+z-index: 1000;
+left: -1000px;
+top: -1000px;
+background: #567896;
+border: 2px dotted black;
+color: white;
+padding: 3px;
+width: 250px; /*width of tooltip*/
+}
+
+a.info{
+    position:relative; /*this is the key*/
+    background-color:#567896;
+    color:#ffffff;
+    text-decoration:none
+ }
+
+a.info:hover{
+	z-index:25;
+	background-color:#ffffff;
+	color: #000000;
+}
+
+a.info span{display: none}
+
+a.info:hover span{ /*the span will display just on :hover state*/
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 2px 5px 4px 5px;
+    display: block;
+    position: absolute;
+    text-align: center;
+    top:2em; left: 2em;
+    border:2px solid #000000;
+    background-color: #567896; color:#ffffff;
+}
+
+span.link {
+    	position: relative;
+}
+
+    span.link a span {
+    	display: none;
+}
+
+span.link a:hover {
+    	font-size: 99%;
+    	font-color: #000000;
+}
+
+span.link a:hover span { 
+    display: block; 
+    	position: absolute; 
+    	margin-top: 10px; 
+    	margin-left: -10px; 
+	    width: 175px; padding: 5px; 
+    	z-index: 100; 
+    	color: #000000; 
+    	background: #FFFFAA; 
+    	font: 12px "Arial", sans-serif;
+    	text-align: left; 
+    	text-decoration: none;
+}

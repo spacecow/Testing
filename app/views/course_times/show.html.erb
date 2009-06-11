@@ -1,0 +1,13 @@
+<p>
+  <b>Start time:</b>
+  <%=h @course_time.start_time.to_s( :time ) %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%=h @course_time.end_time.to_s( :time ) %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_time_path(@course_time) %> |
+<%= link_to 'Back', course_times_path %>

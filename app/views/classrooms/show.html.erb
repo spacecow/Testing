@@ -1,0 +1,28 @@
+<p>
+  <b>Name:</b>
+  <%=h @classroom.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%=h @classroom.address %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @classroom.description %>
+</p>
+
+<p>
+  <b>Inactive:</b>
+  <%=h @classroom.inactive %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @classroom.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_classroom_path(@classroom) %> |
+<%= link_to 'Back', classrooms_path %>

@@ -1,0 +1,11 @@
+﻿<div class="form">
+<%= error_messages_for :person %>
+<fieldset>
+<legend><%= params[:status] %>編集</legend>
+<% form_for(@person) do |f| %>
+  <%= render :partial => "form", :locals => { :f=>f, :status=>params[:status], :label_text=>"Update" } %>
+<% end %>
+<%= link_to 'Show', @person %> |
+<%= link_to 'Back', @person.status==nil ? people_path : @person.status==1 ? teachers_path : students_path %>
+</fieldset>
+</div>

@@ -1,0 +1,67 @@
+<td class="table-units">
+  <%= klass.time_interval %>
+</td>
+<td>
+
+
+
+
+
+
+
+
+
+
+</td>
+<td>
+  <% form_for(klass) do |f| %>
+    <% if clearance?(2) %>
+      <%= f.collection_select :classroom_id,
+          ( classrooms - collitions.map{|e| e.classroom } + ( klass.classroom ? [klass.classroom] : [] )).sort_by(&:name),
+            :id,
+            :name,
+          { :include_blank=>true },
+          { :onchange => 'this.form.submit();',
+            :class => klass.classroom ? "table-units" : "drop-box-empty" } %>
+    <% else %>
+      <center><%= klass.classroom ? klass.classroom.name : "?" %></center>
+    <% end %>
+</td>
+<td>
+	  <% if clearance?(2) %>
+	    <%= f.collection_select :teacher_id,
+	        ( teachers - collitions.map{|e| e.teacher } + ( klass.teacher ? [klass.teacher] : [] )).sort_by(&:name),
+	          :id,
+	          :name,
+	        { :include_blank=>true },
+	        { :onchange => 'this.form.submit();',
+	          :class => klass.teacher ? ( klass.teacher_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
+	  <% else %>
+	    <center><%= klass.teacher ? klass.teacher.name : "?" %></center>
+	  <% end %>
+  <% end %>
+</td>
+<% attendances = klass.attendances.reject(&:cancel) %>
+<% if attendances.size >0 %>
+	<% attendances.each do |attendance| %>
+    <% form_for(attendance) do |f| %>	
+			<td>
+        <%= f.select :student_id,
+          available_students.map{|e| [e.name,e.id]} +
+            ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
+            [[@line.student.name,@line.student.id]] +
+            @moves.map{|e| [e.student.name, e.student.id]},
+          { :include_blank=>true,
+            :selected=>attendance.chosen ? attendance.student.id : nil },
+          { :onchange => 'this.form.submit();',
+            :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
+        <%= hidden_field_tag :relations, klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s}.join(',') %>
+        <%= hidden_field_tag :date, klass_date %>
+			</td>
+	  <% end %>
+	<% end %>
+<% end %>
+<% (8-attendances.size).times do |student| %>
+  <td>
+  </td>
+<% end %>

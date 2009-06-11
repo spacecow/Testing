@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>
+Yoyaku Project - Users
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Users</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold user name:string \
+  hashed_password:string salt:string check:string</span>
+  
+yoyaku><span class="typing">rake db:migrate</span>
+(in D:/ruby/yoyaku)
+==  CreateUsers: migrating ====================================================
+-- create_table(:users)
+   -> 0.0780s
+==  CreateUsers: migrated (0.0780s) ===========================================  
+</pre>
+<h2>Filtering Sensitive Logs</h2>
+<doc tags=["rails","log","filter"] title="Filtering Sensitive Logs">
+By default, Rails stores all submitted parameters in plain text in
+the logs:
+
+<pre class="code">
+Processing UsersController#create (for 127.0.0.1 at 2009-05-25 01:24:59) [POST]
+Session ID: ...
+Parameters: {"user"=>{"name"=>"johan", <span class="highlight">"password_confirmation"=>"sercret",
+  "password"=>"sercret"</span>}, "commit"=>"Add User", "authenticity_token"=>"..."}
+</pre>
+Filter this so it doesn't show up in the log file by uncomment:
+<pre class="code">
+<div class="path"><a href="yoyaku_11/application.rb.txt">yoyaku/app/controllers/application.rb</a></div>
+# Filters added to this controller apply to all controllers in the application.
+# Likewise, all the methods added will be available for all controllers.
+
+class ApplicationController &lt; ActionController::Base
+  ...
+  # See ActionController::Base for details
+  # Uncomment this to filter the contents of submitted sensitive data parameters
+  # from your application log (in this case, all fields with names like "password").
+  <span class="highlight">filter_parameter_logging :password</span>
+end
+</pre>
+Resulting in a log-file entry:
+
+<pre class="code">
+Processing UsersController#create (for 127.0.0.1 at 2009-05-25 01:32:31) [POST]
+Session ID: ...
+Parameters: {"user"=>{"name"=>"johan", <span class="highlight">"password_confirmation"=>"[FILTERED]",
+"password"=>"[FILTERED]"</span>}, "commit"=>"Add User", "action"=>"create",
+  "authenticity_token"=>"...", "controller"=>"users"}
+</pre>
+</doc>
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>

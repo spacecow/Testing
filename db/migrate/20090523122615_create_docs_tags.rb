@@ -1,0 +1,14 @@
+class CreateDocsTags < ActiveRecord::Migration
+  def self.up
+    create_table :docs_tags, :id => false do |t|
+      t.references :doc
+      t.references :tag
+
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :docs_tags
+  end
+end

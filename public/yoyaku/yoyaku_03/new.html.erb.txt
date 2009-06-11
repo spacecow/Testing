@@ -1,0 +1,64 @@
+<div class="form">
+<%= error_messages_for :template_class %>
+
+<fieldset>
+<legend>New Template Class</legend>
+
+<% form_for(@template_class) do |f| %>
+  <table width="500"><tr>
+  <td>
+    <%= f.label :course %>
+    <% if @course %>
+      <%= f.text_field :course, :value=>Course.find( @course ),
+                                :readonly=>true %>
+    <% else %>
+      <%= f.select :course,
+                   @courses,
+                   :prompt => "Select a course" %>
+    <% end %>
+  </td>
+  <td>
+    <%= f.label :inactive %>
+    <%= f.check_box :inactive %>
+  </td></tr></table>
+  <p>
+    <label for="course_time">Time</label>
+    <% if @time %>
+      <%= f.text_field :course_time, :value=>CourseTime.find( @time ),
+                                     :readonly=>true %>
+    <% else %>
+      <%= f.select :course_time,
+                   @times,
+                   :prompt => "Select a time" %>
+    <% end %>
+  </p>
+  <p>
+    <%= f.label :day %>
+    <% if @template_day %>
+      <%= f.text_field :day, :value=>@template_day, :readonly=>true %>
+    <% else %>
+      <%= f.select :day,
+                   @days %>
+    <% end %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :note %>
+    <%= f.text_area :note %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', template_classes_path( :template_day=>@template_day ) %>
+</fieldset>
+</div>

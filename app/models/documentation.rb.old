@@ -1,0 +1,53 @@
+require 'rubygems'
+require 'activerecord'
+require 'tag.rb'
+require 'doc.rb'
+require 'docs_tag.rb'
+
+ActiveRecord::Base.establish_connection(
+  :adapter => 'mysql',
+  :host => '127.0.0.1',
+  :database => 'yoyaku_development'
+)
+
+tag_hash = {}
+
+filenames = Dir[ 'C:/Johan/Ruby/Rails/yoyaku/public/yoyaku/*.html' ]
+#filenames = Dir[ 'D:/ruby/yoyaku/public/yoyaku/*.html' ]
+
+i_tags = 0;
+i_docs = 0;
+filenames.each do |filename|
+	#filename = '..\..\public\yoyaku\habtm_checkboxes.html'
+	File.open filename, 'r' do |f|
+	  b_contents = false;
+	  contents = ""
+	  tags = ""
+		title = ""
+	  f.readlines.each do |line|
+	    if line =~ /<doc/
+	      line.split[1] =~ /.+\[(.+)\]/
+	      p tags = $1.split( "," ).map{|e| e[1,e.length-2]}
+	      line =~ /.+title="(.+)"/
+	      p title = $1
+	      b_contents = true;
+	    elsif line =~ /<\/doc>/
+	      b_contents = false
+	      Doc.new( :title=>title, :contents=>contents ).save
+	      i_docs+=1
+	      tags.each do |tag|
+	        unless tag_hash[tag]
+	          Tag.new( :name=>tag ).save           
+	          i_tags+=1
+	          tag_hash[tag] = i_tags
+	        end
+	        i_tag = tag_hash[tag]
+	        DocsTag.new( :doc_id=>i_docs, :tag_id=>i_tag ).save
+	      end 
+	    elsif b_contents
+	      contents += line
+	    end
+	  end
+	end
+end
+

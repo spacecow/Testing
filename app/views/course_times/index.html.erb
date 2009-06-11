@@ -1,0 +1,24 @@
+<div id="list">
+<h1>Listing Course Times</h1>
+
+<table cellpadding="5" cellspacing="0">
+<% @course_times.each do |course_time| %>
+  <tr valign="top" class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
+    <td>
+	    <%= h course_time.start_time.to_s( :time ) %> -- <%= h course_time.end_time.to_s( :time ) %><br />
+    </td>
+
+	  <td class="list-actions">	    
+	    <%= link_to 'Show', course_time %>
+	    <%= link_to 'Edit', edit_course_time_path(course_time) %>
+	    <% if clearance?(1) %>
+	      <%= link_to 'Destroy', course_time, :confirm => 'Are you sure?', :method => :delete %>
+	    <% end %>
+	  </td>
+  </tr>
+<% end %>
+</table>
+</div>
+<br />
+
+<%= link_to 'New course_time', new_course_time_path %>

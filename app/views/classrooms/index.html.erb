@@ -1,0 +1,28 @@
+<h1>Listing classrooms</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Description</th>
+    <th>Inactive</th>
+    <th>Note</th>
+  </tr>
+
+<% for classroom in @classrooms %>
+  <tr>
+    <td><%=h classroom.name %></td>
+    <td><%=h classroom.address %></td>
+    <td><%=h classroom.description %></td>
+    <td><%=h classroom.inactive %></td>
+    <td><%=h classroom.note %></td>
+    <td><%= link_to 'Show', classroom %></td>
+    <td><%= link_to 'Edit', edit_classroom_path(classroom) %></td>
+    <td><%= link_to 'Destroy', classroom, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New classroom', new_classroom_path %>

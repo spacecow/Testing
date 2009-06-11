@@ -1,0 +1,45 @@
+﻿<table cellpadding="0" cellspacing="1">
+  <tr>
+    <td class="list-topics">名前</td>
+    <td class="list-topics">携帯電話</td>
+    <td class="list-topics">携帯アドレス</td>
+  </tr>
+  <% if category == "全部の人" %>
+    <% ppl = Person.find :all,
+    :conditions => [ "tostring like (?)", "%"+searchtext+"%" ],
+    :order => 'family_name_kana' %>
+  <% elsif category == "講師" %>
+    <% ppl = Person.find :all,
+    :conditions => [ "tostring like (?) and teachers.person_id = people.id", "%"+searchtext+"%" ],
+    :include => "teachers",
+    :order => 'family_name_kana' %>
+  <% elsif category == "受講生" %>
+  　　<% ppl = Person.find :all,
+    :conditions => [ "tostring like (?) and students.person_id = people.id", "%"+searchtext+"%" ],
+    :include => "students",
+    :order => 'family_name_kana' %>
+  <% end %>
+  <% ppl.each do |person| %>
+    <% if person.gender == 1 %>
+      <tr valign="top" class="list-line-man">
+    <% else %>
+      <tr valign="top" class="list-line-woman">
+    <% end %>  
+    <td class="list-units">
+      <%= h person.family_name %> <%= h person.first_name %>
+    </td>
+    <td class="list-units">
+      <%= h person.mobile_phone %>
+    </td>
+    <td class="list-units">
+      <%= h person.mail_address_mobile %>
+    </td>
+    <td class="list-actions">
+      <%= link_to '見', person %>
+      <%= link_to '変', edit_person_path(person) %>
+      <%= link_to '消', person, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+
+  </tr>
+<% end %>
+</table>

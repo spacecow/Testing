@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>
+Yoyaku Project - Students Classes
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>HABTM Checkboxes</h1>
+<doc tags=["rails","checkbox","habtm"] title="HABTM Checkboxes">
+A join-table has to be generated, where the name of the table is very
+important. It has to be the name of the other two model tables in
+alphabetical order separated by an underscore. There is also no id
+column in the table. This is the only case were you don't want to
+have an id column. You cannot add multiple columns to the join-table,
+you only have the two foreign keys joining the two tables:
+<pre class="code">
+<div class="path"><a href="habtm_checkboxes/20090523122615_create_docs_tags.rb.txt">yoyaku/db/migrate/20090523122615_create_docs_tags.rb</a></div>
+class CreateDocsTags &lt; ActiveRecord::Migration
+  def self.up
+    create_table :docs_tags, :id => false do |t|
+      t.references :doc
+      t.references :tag
+
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :docs_tags
+  end
+end
+</pre>
+<pre class="code">
+<div class="path"><a href="habtm_checkboxes/_form.html.erb.txt">yoyaku/app/views/docs/_form.html.erb</a></div>
+&lt;p>
+  &lt;%= f.label :title %>&lt;br />
+  &lt;%= f.text_field :title %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :url %>&lt;br />
+  &lt;%= f.text_field :url %>
+&lt;/p>
+&lt;p>
+&lt;% Tag.all.each do |tag| %>
+  &lt;%= check_box_tag "doc[tag_ids][]", tag.id, @doc.tags.include?(tag) %>
+  &lt;%= tag.name %>
+&lt;/p>
+&lt;% end %>
+&lt;p>
+  &lt;%= f.submit label_text %>
+&lt;/p>
+</pre>
+The <span class="method">tag_ids</span> method accepts an array of ids, so:
+
+doc.tag_ids = [1, 2, 3]
+
+Will set tags with ids 1, 2 and 3 to that doc. Normally in Rails
+forms you put the name of the attribute in square brackets and use
+that as the name of the field:
+
+doc[tag_ids]
+
+This way Rails knows it's an attribute of doc. But if you just did
+this, it would take only one check box value and set that:
+
+doc.tag_ids = 1
+
+But here the <span class="method">tag_ids</span> method expects an array, so you need those
+empty square brackets in the name of the check box. Rails will then
+gather up all values with this same name and place them in an array.
+This is what the empty square brackets do:
+
+doc[tag_ids][]
+
+With HMT you actually have a join-model instead of just a join-table.
+When to choose HMT instead of HABTM is when this questions are answered <i>yes</i>:
+<li>Do I need to store extra information in the join?</li>
+<li>Do I need to treat the join as its own model?</li>
+</doc>
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_08.html">Part 08 - Students</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_10.html">Part 10 - Student Courses</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>

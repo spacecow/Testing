@@ -1,0 +1,88 @@
+﻿
+<html>
+<head>
+<title>
+Yoyaku Project - Classrooms
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Classrooms</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold classroom name:string \
+  address:string description:text inactive:boolean note:text</span>
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/classrooms
+      exists  app/views/layouts/
+      exists  test/functional/
+      exists  test/unit/
+      exists  public/stylesheets/
+      create  app/views/classrooms/index.html.erb
+      create  app/views/classrooms/show.html.erb
+      create  app/views/classrooms/new.html.erb
+      create  app/views/classrooms/edit.html.erb
+      create  app/views/layouts/classrooms.html.erb
+   identical  public/stylesheets/scaffold.css
+      create  app/controllers/classrooms_controller.rb
+      create  test/functional/classrooms_controller_test.rb
+      create  app/helpers/classrooms_helper.rb
+       route  map.resources :classrooms
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/classroom.rb
+      create    test/unit/classroom_test.rb
+      create    test/fixtures/classrooms.yml
+      exists    db/migrate
+      create    db/migrate/20090512114908_create_classrooms.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  CreateClassrooms: migrating ===============================================
+-- create_table(:classrooms)
+   -> 0.3600s
+==  CreateClassrooms: migrated (0.3600s) ======================================
+</pre>
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_06.html">Part 06 - Teachers</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_08.html">Part 08 - Students</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

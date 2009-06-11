@@ -1,0 +1,57 @@
+<% collition[time_klasses[0].time_interval] = Klass.find_all_by_date( klass_date, :conditions=>[ "(start_time<=? and end_time>=?) or (start_time<=? and end_time>=?)", time_klasses[0].start_time, time_klasses[0].start_time, time_klasses[0].end_time, time_klasses[0].end_time ], :include=>[ :classroom, { :teacher=>:person }]) %>    
+
+.all( :conditions=>[ "(start_time<=? and end_time>=?) or (start_time<=? and end_time>=?)", time_klasses[0].start_time, time_klasses[0].start_time, time_klasses[0].end_time, time_klasses[0].end_time ] ) %>    
+
+<%= f.select :classroom_id, classrooms.map{|e| [e.name,e.id]}-( collitions.map{|e| e.classroom_id ? [e.classroom.name,e.classroom.id] : nil }.compact - ( klass.classroom ? [[klass.classroom.name,klass.classroom.id]] : [[]] )), { :selected=>klass.classroom ? klass.classroom.id : nil, :include_blank=>true }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+  
+	    <% if !collition[time_klasses[0].time_interval] %>
+	      <% collition[time_klasses[0].time_interval] = @klasses.reject{|e| !(( e.start_time <= time_klasses[0].start_time and e.end_time >= time_klasses[0].start_time ) or ( e.start_time <= time_klasses[0].end_time and e.end_time >= time_klasses[0].end_time ))} %>
+	    <% end %>
+	    <% collitions = collition[time_klasses[0].time_interval] %>
+
+
+
+    <% available_students = [] %>
+    <% time_klasses.each do |klass| %>
+      <% klass.attendances.reject(&:chosen).each do |attendance| %>
+        <% available_students += [ attendance.student ] %>
+      <% end %>
+    <% end %>
+    <% time_klasses.each do |klass| %>
+      <%= render :partial=>"klass", :locals=>{ :klass=>klass, :classrooms=>classrooms, :teachers=>teachers, :collitions=>collitions, :available_students=>available_students } %>
+  </tr>
+  <tr>
+    <% end %>
+  </tr>
+  
+  
+  
+  
+
+<td>
+	  <% if clearance?(2) %>
+	    <%= f.select :teacher_id, [nil]+teachers.map{|e| [e.name,e.id]}-( collitions.map{|e| e.teacher_id ? [e.teacher.name,e.teacher.id] : nil }.compact - ( klass.teacher ? [[klass.teacher.name,klass.teacher.id]] : [[]] )), { :selected=>klass.teacher ? klass.teacher.id : nil }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+	  <% else %>
+	    <center><%= klass.teacher ? klass.teacher.name : "?" %></center>
+	  <% end %>
+  <% end %>
+</td>
+<% attendances = klass.attendances.reject(&:cancel) %>
+<% if attendances.size >0 %>
+	<% attendances.each do |attendance| %>
+    <% form_for(attendance) do |f| %>	
+			<td>
+			  <%= f.select :student_id, available_students.map{|e| [e.name,e.id]}+( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [[]]), { :selected=>attendance.student ? ( attendance.chosen ? attendance.student.id : nil ) : nil, :include_blank=>true }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+        <%= hidden_field_tag :relations, klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s}.join(',') %>
+			</td>
+	  <% end %>
+	<% end %>
+<% end %>
+<% (8-attendances.size).times do |student| %>
+  <td>
+  </td>
+<% end %>
+
+
+			  <%= f.select :student_id, available_students.map{|e| [e.name,e.id]}+( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [[]]), { :selected=>attendance.student ? ( attendance.chosen ? attendance.student.id : nil ) : nil, :include_blank=>true }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+        <%= hidden_field_tag :relations, klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s}.join(',') %>

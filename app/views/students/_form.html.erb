@@ -1,0 +1,54 @@
+﻿<p>
+  <label for="course">講座</label>
+  <%= f.select :course, @courses, :prompt => "講座を選んで" %>
+</p>
+<p>
+  <label for="course">講師</label>
+  <%= f.select :teacher, @teachers, :prompt => "講師を選んで" %> 
+</p>
+<p>
+  <label for="classroom">教室</label>
+  <%= f.select :classroom, @classrooms, :prompt => "教室を選んで" %>
+</p>
+<p>
+  <%= f.label :capacity %>
+  <%= f.text_field :capacity, :size=>5 %>
+</p>
+<p>
+  <%= f.label :mail_sending %>
+  <%= f.text_field :mail_sending, :size=>5 %>
+</p>
+<p>
+  <%= f.label :date %>
+  <%= f.date_select :date %>
+</p>
+<p>
+  <%= f.label :start_time %>
+  <%= f.time_select :start_time %>
+</p>
+<p>
+  <%= f.label :end_time %>
+  <%= f.time_select :end_time %>
+</p>
+<p>
+  <%= f.label :title %>
+  <%= f.text_field :title, :size=>20 %>
+</p>
+<p>
+  <%= f.label :description %>
+  <%= f.text_area :description, :rows=>8 %>
+</p>
+<p>
+  <%= f.label :cancel %>
+  <table><tr>
+    <td bgcolor="#AAAAFF"><%= f.radio_button :cancel, false %>OFF</td>
+    <td bgcolor="#FFAAAA"><%= f.radio_button :cancel, true %>ON</td>
+  </tr></table>
+</p>
+<p>
+  <%= f.label :note %>
+  <%= f.text_area :note, :rows=>8 %>
+</p>
+<p>
+  <%= f.submit "Create", :class=>"submit" %>
+</p>

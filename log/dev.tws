@@ -1,0 +1,10 @@
+[Window]
+Top=183
+Left=473
+Height=570
+Width=780
+[Files]
+0=D:\ruby\yoyaku\log\development.log
+[0]
+Highlights=Completed in$^$$0080FFFF$^$Y$^$Text#|#Parameters$^$$00F8E607$^$Y$^$Text#|#SELECT$^$$00034EFC$^$Y$^$Text
+Filters=

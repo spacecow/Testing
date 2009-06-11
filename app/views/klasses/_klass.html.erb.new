@@ -1,0 +1,10 @@
+<td class="table-units">
+  <%= klass.time_interval %>
+</td>
+<td>
+  <%= rooms %>-<%= klass.classroom%>
+  <% ( rooms - [[klass.classroom.name,klass.classroom.id]] ) if klass.classroom %>
+</td>
+<td>
+  <%= select :classroom_id, :id, Classroom.find( :all ).map{|e| [e.name,e.id]}-( rooms - ( klass.classroom ? [[klass.classroom.name,klass.classroom.id]] : [[]] )) %>
+</td>

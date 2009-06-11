@@ -1,0 +1,45 @@
+<div class="form">
+<%= error_messages_for :template_class %>
+
+<fieldset>
+<legend>Editing Template Class</legend>
+
+<% form_for(@template_class) do |f| %>
+  <table width="500"><tr>
+  <td>
+    <%= f.label :course %>
+      <%= f.text_field :course, :readonly=>true %>
+  </td>
+  <td>
+    <%= f.label :inactive %>
+    <%= f.check_box :inactive %>
+  </td></tr></table>
+  <p>
+    <label for="course_time">Time</label>
+    <%= f.text_field :course_time, :readonly=>true %>
+  </p>
+  <p>
+    <%= f.label :day %>
+    <%= f.text_field :day, :readonly=>true %>
+  </p>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :note %>
+    <%= f.text_area :note %>
+  </p>
+  <p>
+    <%= f.submit "Update", :class=>"submit" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @template_class %> |
+<%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>
+</fieldset>
+</div>

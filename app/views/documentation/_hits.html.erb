@@ -1,0 +1,7 @@
+<% Doc.find(
+     :all,
+     :conditions => [ "docs.id = docs_tags.doc_id and docs_tags.tag_id = tags.id and tags.name like (?) or docs.title like (?)", "%"+searchtext+"%", "%"+searchtext+"%" ],
+     :include => 'tags'
+   ).each do |doc| %>
+  <li><%= link_to_remote doc.title+"  ["+doc.tags.map(&:name).join(", ")+"]", :url => { :action=>'display_document', :doc_id=>doc.id } %></li>
+<% end %>

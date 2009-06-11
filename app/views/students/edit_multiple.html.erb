@@ -1,0 +1,43 @@
+<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>倍数受講生編集 - <%= @student %></legend>
+<table><tr>
+<td>
+	<% form_for :student, :url => update_multiple_students_path, :html => { :method => :put } do |f| %>
+	  <ul>
+	    <% @students.each do |student| %>
+	      <li>
+	        <%= hidden_field_tag "student_ids[]", student.id %>
+	        <%= h student.name %>
+	      </li>
+	    <% end %>
+	  </ul>
+		<strong>講座</strong>
+		<p>
+			<% Course.all.group_by(&:category).each do |category,course_group| %>
+			  <% course_group.sort_by(&:name).each do |course| %>
+				  <div>
+				    <%= check_box_tag "student[course_ids][]", course.id %>
+				    <%= course.name %>
+				  </div>
+				<% end %>
+			<% end %>
+		</p>
+		<p>
+		  <%= f.hidden_field :created_at %>
+		  <%= f.submit "Update" %>
+		</p>
+	<% end %>
+</td>
+<td valign="top">
+	<p>
+		<div id="classes">
+		</div>
+	</p>
+</td></tr></table>
+
+<%= link_to 'Show', @student %> |
+<%= link_to 'Back', people_path %>
+</fieldset>
+</div>

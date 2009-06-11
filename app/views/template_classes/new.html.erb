@@ -1,0 +1,13 @@
+<div class="form">
+<%= error_messages_for :template_class %>
+
+<fieldset>
+<legend>New Template Class</legend>
+
+<% form_for(@template_class) do |f| %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text=>'Create' } %>
+<% end %>
+
+<%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>
+</fieldset>
+</div>

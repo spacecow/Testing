@@ -1,0 +1,326 @@
+
+<html>
+<head>
+<title>
+Yoyaku Project - People
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - People</h1>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate migration add_inactive_to_person \
+  inactive:boolean</span>
+      exists  db/migrate
+      create  db/migrate/20090512095933_add_inactive_to_person.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  AddInactiveToPerson: migrating ============================================
+-- add_column(:people, :inactive, :boolean)
+   -> 0.3900s
+==  AddInactiveToPerson: migrated (0.3900s) ===================================
+</pre>
+
+<pre class="code">
+<div class="path"><a href="yoyaku_04/20090509102806_create_people.rb.txt">yoyaku/db/migrate/20090509102806_create_people.rb</a></div>
+class CreatePeople &lt; ActiveRecord::Migration
+  def self.up
+    create_table :people do |t|
+      t.string :user_name
+      t.string :password
+      t.string :family_name
+      t.string :first_name
+      t.string :family_name_kana
+      t.string :first_name_kana
+      t.integer :gender, :limit=>1
+      t.string :address1
+      t.string :address2
+      t.string :home_phone, :limit=>10
+      t.string :mobile_phone, :limit=>11
+      t.string :mail_address_mobile
+      t.string :mail_address_pc
+      t.boolean :ritei
+      t.datetime :last_login
+      t.text :note
+
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :people
+  end
+end
+</pre>
+
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate migration add_status_to_person \
+  status:integer</span>
+      exists  db/migrate
+      create  db/migrate/20090512104601_add_status_to_person.rb
+</pre>
+
+<pre class="code">
+<div class="path"><a href="yoyaku_04/20090512104601_add_status_to_person.rb.txt">yoyaku/db/migrate/20090512104601_add_status_to_person.rb</a></div>
+class AddStatusToPerson &lt; ActiveRecord::Migration
+  def self.up
+    add_column :people, :status, :integer, <span class="highlight">:limit=>2</span>
+  end
+
+  def self.down
+    remove_column :people, :status
+  end
+end
+</pre>
+
+<pre class="code">
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  AddStatusToPerson: migrating ==============================================
+-- add_column(:people, :status, :integer, {:limit=>2})
+   -> 2.2230s
+==  AddStatusToPerson: migrated (2.2330s) =====================================
+</pre>
+
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate migration add_tostring_to_person \
+  tostring:string</span>
+      exists  db/migrate
+      create  db/migrate/20090513140420_add_tostring_to_person.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+==  AddTostringToPerson: migrating ============================================
+-- add_column(:people, :tostring, :string)
+   -> 0.9220s
+==  AddTostringToPerson: migrated (0.9220s) ===================================
+</pre>
+<h2>Live Search (AJAX)</h2>
+<div class="fact">
+<div class="title">AJAX</div>
+A typical user interface displays the current list on a web page
+followed by an input field in which the user can type the text of a
+new item. When the user clicks on a Create New Item button, the app
+actually creates and inserts the new item into the list.
+
+At this point, a traditional web application sends the value of the
+input field to the server. The server then acts upon the data
+(usually by updating a database) and responds by sending back a new
+web page that displays an updated list that now contains the new
+item. This uses a lot of bandwidth, because most of the new page is
+exactly the same as the old one. The performance of this web app
+degrades as the list gets longer.
+
+In contrast, an Ajax web application sends the input field to the
+server in the background and updates the affected portion of the
+current web page in place. This dramatically increases the
+responsiveness of the user interface and makes it feel much more
+like a desktop application.
+
+</div>
+This code snippet monitors the value of a text field named searchtext.
+Every quarter of a second, Rails checks the field for changes. If the
+field has changed, the browser will make an Ajax call to the
+live_search action handler, displaying the results in the search_hits
+div:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_04/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+&lt;div id="list">
+&lt;h1>Listing People&lt;/h1>
+<span class="highlight">&lt;label for="searchtext">Live Search:&lt;/label>
+&lt;%= text_field_tag :searchtext %>
+&lt;%= observe_field(
+      :searchtext,
+      :frequency => 0.25,
+      :update => :search_hits,
+      :url => { :action => :live_search },
+      :with => 'search_text' ) %>
+&lt;p>Search Results:&lt;/p>
+&lt;div id="search_hits">&lt;/div></span>
+
+...
+
+&lt;/div>
+</pre>
+In the controller a partial is created and what was written in the
+search field is passed along:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_04/people_controller.rb.txt">yoyaku/app/controllers/people_controller.rb</a></div>
+class PeopleController &lt; ApplicationController
+  <span class="highlight">def live_search
+    render :partial => 'list',
+      :locals => { :searchtext => params[:search_text] }
+  end</span>
+
+  ...
+</pre>
+Include the search-string when collecting information from the database and
+display the result in a list, the colour of thw row according to gender:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/_list.html.erb.txt">yoyaku/app/views/people/_list.html.erb</a></div>
+&lt;table cellpadding="0" cellspacing="0">
+  &lt;tr>
+    &lt;td class="list-topics">&lt;/td>
+    &lt;td class="list-topics">Name&lt;/td>
+    &lt;td class="list-topics">Cell Phone&lt;/td>
+    &lt;td class="list-topics">Cell Address&lt;/td>
+  &lt;/tr>
+&lt;% Person.find( :all,
+     <span class="highlight">:conditions => [ "tostring like ?", "%"+searchtext+"%" ]</span>
+   ).each do |person| %>
+    <span class="highlight">&lt;% if person.gender == 1 %>
+      &lt;tr valign="top" class="list-line-man">
+    &lt;% else %>
+      &lt;tr valign="top" class="list-line-woman">
+    &lt;% end %>
+    &lt;td class="list-units"></span>
+      ...
+    &lt;/td>
+&lt;% end %>
+&lt;/table>
+</pre>
+<h2>Include category</h2>
+Make it optional to search for categories i.e. <i>people, teachers, students</i>.
+Pass that category to the search and place both fields inside a table to
+line them up and make it look prettier:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+&lt;div id="list">
+&lt;h1>Listing <span class="highlight">&lt;%= @category %></span>&lt;/h1>
+&lt;table>&lt;tr>
+&lt;td>
+  &lt;label for="searchtext">Live Search:&lt;/label>
+  &lt;%= text_field_tag :searchtext, nil, :size=>30 %>
+  &lt;%= observe_field(
+        :searchtext,
+        :frequency => 0.25,
+        :update => :search_hits,
+        :url => { :action => :live_search, <span class="highlight">:category => @category</span> },
+        :with => 'search_text' ) %>
+&lt;/td>
+&lt;td>
+  <span class="highlight">&lt;% form_for :template_class,
+              :url => { :action=>'index' },
+              :html => { :method=>'get' } do |f| %>
+    &lt;label for="category">Category:&lt;/label>
+    &lt;%= select_tag :category,
+      options_for_select( ["people", "teachers", "students"], @category ),
+      :onchange => "this.form.submit();" %>
+  &lt;% end %></span>
+&lt;/td>
+&lt;/tr>&lt;/table>&lt;br />
+&lt;div id="search_hits">&lt;/div>
+
+...
+
+&lt;/div>
+</pre>
+Search for people, teachers or students according to what <span class="var">@category</span>
+is set to:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/_list.html.erb.txt">yoyaku/app/views/people/_list.html.erb</a></div>
+&lt;table cellpadding="0" cellspacing="1">
+  &lt;tr>
+    &lt;td class="list-topics">Name&lt;/td>
+    &lt;td class="list-topics">Cell Phone&lt;/td>
+    &lt;td class="list-topics">Cell Address&lt;/td>
+  &lt;/tr>
+  <span class="highlight">&lt;% if category == "people" %>
+    &lt;% ppl = Person.find :all,
+    :conditions => [ "tostring like (?)", "%"+searchtext+"%" ],
+    :order => 'family_name_kana' %>
+  &lt;% elsif category == "teachers" %>
+    &lt;% ppl = Person.find :all,
+    :conditions => [ "tostring like (?) and teachers.person_id = people.id",
+                     "%"+searchtext+"%" ],
+    :include => "teachers",
+    :order => 'family_name_kana' %>
+  &lt;% elsif category == "students" %>
+    &lt;% ppl = Person.find :all,
+    :conditions => [ "tostring like (?) and students.person_id = people.id",
+                     "%"+searchtext+"%" ],
+    :include => "students",
+    :order => 'family_name_kana' %>
+  &lt;% end %>
+  &lt;% ppl.each do |person| %></span>
+    ...
+  &lt;% end %>
+</pre>
+<h2>Include hint</h2>
+<pre class="code">
+<div class="path"><a href="yoyaku_04/people_helper.rb.txt">yoyaku/app/helpers/people_helper.rb</a></div>
+module PeopleHelper
+  <span class="highlight">def hinted_text_field_tag( name,
+      value = nil,
+      hint = "Click and enter text",
+      options={}
+    )
+    value = value.nil? ? hint : value
+    text_field_tag name,
+      value,
+    { :onclick => "if($(this).value == '#{hint}'){$(this).value = ''}",
+      :onblur => "if($(this).value == ''){$(this).value = '#{hint}'}"
+    }.update(options.stringify_keys)
+  end</span>
+end
+</pre>
+<pre class="code">
+<div class="path"><a href="yoyaku_04/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+&lt;div id="list">
+&lt;h1>List &lt;%= @category %>&lt;/h1>
+
+&lt;table>&lt;tr>
+&lt;td>
+  &lt;label for="searchtext">Live Search:&lt;/label>
+  <span class="highlight">&lt;%= hinted_text_field_tag :searchtext,
+    @searchtext,
+    "Type in your search",
+    :size=>30 %></span>
+&lt;/td>
+...
+&lt;/tr>&lt;/table>
+...
+&lt;/div>
+</pre>
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_02.html">Part 02 - Course Times</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_04.html">Part 04 - Classes (...to come...)</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

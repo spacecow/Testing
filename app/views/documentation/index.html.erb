@@ -1,0 +1,12 @@
+<h1>Search documents</h1>
+
+<label for="searchtext">Live Search:</label>
+<%= hinted_text_field_tag :searchtext, @searchtext, "searchword", :size=>30 %>
+<%= observe_field(
+      :searchtext,
+      :frequency => 0.25,
+      :update => :search_hits,
+      :url => { :action => :live_search },
+      :with => 'search_text' ) %><p>
+<div id="search_hits"></div>
+<div id="document"></div>

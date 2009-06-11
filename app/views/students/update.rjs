@@ -1,0 +1,11 @@
+page.alert(@course)
+@klass_groups.sort.each do |day,klass_group|
+  page.insert_html :bottom, :classes, "<strong>"+klass_group[0].date.strftime("%x")+": "+klass_group[0].date.strftime("%A")+"<br/></strong>"
+  hash = {}
+  klass_grouped = klass_group.sort_by(&:start_time).each do |klass|
+    if( !hash[klass.tostring] )
+      hash[klass.tostring] = klass
+    	page.insert_html :bottom, :classes, :partial=>'klass', :object => klass, :fuck=>klass
+    end
+  end
+end

@@ -1,0 +1,58 @@
+﻿<p>
+  <b>Course:</b>
+  <%=h @klass.course %>
+</p>
+
+<p>
+  <b>Teacher:</b>
+  <%=h @klass.teacher %>
+</p>
+
+<p>
+  <b>Classroom:</b>
+  <%=h @klass.classroom %>
+</p>
+
+<p>
+  <b>Capacity:</b>
+  <%=h @klass.capacity %>
+</p>
+
+<p>
+  <b>日付:</b>
+  <%=h @klass.date.strftime("%x") %>
+</p>
+
+<p>
+  <b>Course time:</b>
+  <%=h @klass.start_time.to_s( :time ) %>~<%=h @klass.end_time.to_s( :time ) %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @klass.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @klass.description %>
+</p>
+
+<p>
+  <b>Cancel:</b>
+  <%=h @klass.cancel %>
+</p>
+
+<p>
+  <b>Mail sending:</b>
+  <%=h @klass.mail_sending %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%=h @klass.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_klass_path(@klass) %> |
+<%= link_to 'Back', klasses_path %>

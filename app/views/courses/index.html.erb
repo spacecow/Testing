@@ -1,0 +1,31 @@
+<div id="list">
+<h1>Listing courses</h1>
+
+<table cellpadding="5" cellspacing="0">
+<% @courses_groups.each do |categroy, course_group| %>
+	<% course_group.each do |course| %>
+	  <tr valign="top" class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
+	    <td>	
+	    <% if( course.inactive ) %>
+				<td style="color: silver">
+	    <% else %>
+	    	<td style="color: black">
+	    <% end %>
+	    	<%= h course.name %>
+	    </td>
+	
+		  <td class="list-actions">
+		    <%= link_to 'Show', course %>
+		    <%= link_to 'Edit', edit_course_path( course ) %>
+		    <% if clearance?(1) %>
+		      <%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %>
+		    <% end %>
+		  </td>
+	  </tr>
+	<% end %>
+<% end %>
+</table>
+</div>
+<br />
+
+<%= link_to 'New course', new_course_path %>

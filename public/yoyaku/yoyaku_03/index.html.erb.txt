@@ -1,0 +1,95 @@
+﻿<h1>Listing Template Classes</h1>
+
+<% form_for :template_class,
+            :url => { :action=>'index' },
+            :html => { :method=>'get' } do |f| %>
+  <%= select_tag :template_day,
+    options_for_select( @days, @template_day ),
+    :onchange => "this.form.submit();" %>
+<% end %>
+<br />
+
+<% @weekday_times = CourseTime.find(
+  :all,
+  :include=>'template_classes', 
+  :conditions => [ "template_classes.day = ?", @template_day ], 
+  :order=>'course_times.start_time, course_times.end_time DESC' ) %>
+
+<% if @weekday_times.size != 0 %>
+<table cellpadding="5" cellspacing="0" border="1">
+  <tr>
+    <td></td>
+    <% @weekday_times.each do |time| %> 
+    <td>
+      <%= h time.start_time.to_s( :time ) %> <%= "--" %> <%= h time.end_time.to_s( :time ) %>
+    </td>
+    <% end %>
+  </tr>
+  <% @courses.each do |course| %>
+  <tr>
+    <td width="100">
+      <%= link_to '+', new_template_class_path(
+        :course=>course,
+        :template_day=>@template_day ),
+      :class=>"grid" %>
+      <%= h course.name %> </td> <% @weekday_times.each do |time| %>
+
+      <% @templates = TemplateClass.find(
+        :all,
+        :conditions => [ "course_id = ? and course_time_id = ? and day = ?",
+          course.id, time.id, @template_day ]) %>
+
+      <% if @templates.size!=0 %>
+        <td align="right" bgcolor="gray" >
+        <% @templates.each do |template| %>
+          <%= link_to '+', new_template_class_path(
+                  :course=>course,
+                  :time=>time,
+                  :template_day=>@template_day ),
+                :class=>"grid" %>
+          <%= link_to '見', template, :class=>"grid" %>
+          <%= link_to '変', edit_template_class_path( template ),
+            :class=>"grid" %>
+          <%= link_to '消', template, :confirm => 'Are you sure?',
+                                            :method => "delete",
+                                            :class=>"grid"  %>
+          <br />
+        <% end %>
+      <% else %>
+        <td align="right">
+        <%= link_to '+', new_template_class_path( :course=>course,
+                                                  :time=>time,
+                                                  :template_day=>@template_day ),
+                                                    :class=>"grid" %>
+      <% end %>
+    </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>                          
+<% end %>
+
+<br />
+<%= link_to 'New template_class', new_template_class_path( :template_day=>@template_day ) %>
+
+<% if admin? %>
+  <table>
+  <% @template_classes.each do |template_class| %>
+    <tr>
+      <td><%=h template_class.course %></td>
+      <td><%=h template_class.course_time %></td>
+      <td><%=h template_class.day %></td>
+      <td><%=h template_class.title %></td>
+      <td><%=h template_class.description %></td>
+      <td><%=h template_class.inactive %></td>
+      <td><%=h template_class.note %></td>
+      <td><%= link_to 'Show', template_class %></td>
+      <td><%= link_to 'Edit', edit_template_class_path(template_class) %></td>
+      <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
+        :method => :delete
+          %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>

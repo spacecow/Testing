@@ -1,0 +1,808 @@
+
+<html>
+<head>
+<title>
+Yoyaku Project - Template Classes
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Yoyaku Project - Template Classes</h1>
+Create a template classes for each weekday, so that each weekday is
+created with the usual classes for that day. This saves some manual
+effort of creating the regular classes. Ofcourse, in the real
+schedule, classes can be added and deleted freely. The template
+classes is just here to save some time.
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate scaffold template_class \
+  course:references course_time:references day:string \
+  title:string description:text inactive:boolean note:text</span>
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/template_classes
+      exists  app/views/layouts/
+      exists  test/functional/
+      exists  test/unit/
+      exists  public/stylesheets/
+      create  app/views/template_classes/index.html.erb
+      create  app/views/template_classes/show.html.erb
+      create  app/views/template_classes/new.html.erb
+      create  app/views/template_classes/edit.html.erb
+      create  app/views/layouts/template_classes.html.erb
+   identical  public/stylesheets/scaffold.css
+      create  app/controllers/template_classes_controller.rb
+      create  test/functional/template_classes_controller_test.rb
+      create  app/helpers/template_classes_helper.rb
+       route  map.resources :template_classes
+  dependency  model
+      exists    app/models/
+      exists    test/unit/
+      exists    test/fixtures/
+      create    app/models/template_class.rb
+      create    test/unit/template_class_test.rb
+      create    test/fixtures/template_classes.yml
+      exists    db/migrate
+      create    db/migrate/20090506063956_create_template_classes.rb
+
+yoyaku><span class="typing">rake db:migrate</span>
+(in D:/ruby/yoyaku)
+==  CreateTemplateClasses: migrating ==========================================
+-- create_table(:template_classes)
+   -> 0.0620s
+==  CreateTemplateClasses: migrated (0.0620s) =================================
+</pre>
+<h2>Index Page</h2>
+To be able to use the stored courses and times in the database,
+they have to be loaded by the controller:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+  <span class="highlight">before_filter :load_classes_and_times</span>
+
+  ...
+  
+private
+  <span class="highlight">def load_classes_and_times
+    @courses = Course.all
+    @times = CourseTime.all
+  end</span>
+end
+</pre>
+On the <i>index</i>- page, show a grid for the courses and times. Except
+from the usual way of being able to add an empty template class,
+implement a way to add a template class anywhere in the grid, making
+it inherit the course name and time interval:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/index.html.erb.txt">yoyaku/app/views/template_classes/index.html.erb</a></div>
+&lt;h1>Listing Template Classes&lt;/h1>
+
+&lt;table cellpadding="5" cellspacing="0" border="1">
+  &lt;tr>
+    &lt;td>&lt;/td>
+    &lt;% @times.each do |time| %>
+    &lt;td>
+      &lt;%= h time.start_time.to_s( :time ) %>
+      &lt;%= "--" %>
+      &lt;%= h time.end_time.to_s( :time ) %>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% @courses.each do |course| %>
+  &lt;tr>
+    &lt;td>
+      &lt;%= h course.name %>
+    &lt;/td>
+    &lt;% @times.each do |time| %>
+    &lt;td align="right">
+      <span class="highlight">&lt;%= link_to '+', new_template_class_path( :course=>course, :time=>time ),
+        :class=>"grid"
+      %></span>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% end %>
+&lt;/table>
+&lt;br />
+&lt;table>
+&lt;% @template_classes.each do |template_class| %>
+  &lt;tr>
+    &lt;td>&lt;%=h template_class.course %>&lt;/td>
+    &lt;td>&lt;%=h template_class.course_time %>&lt;/td>
+    &lt;td>&lt;%=h template_class.day %>&lt;/td>
+    &lt;td>&lt;%=h template_class.title %>&lt;/td>
+    &lt;td>&lt;%=h template_class.description %>&lt;/td>
+    &lt;td>&lt;%=h template_class.inactive %>&lt;/td>
+    &lt;td>&lt;%=h template_class.note %>&lt;/td>
+    &lt;td>&lt;%= link_to 'Show', template_class %>&lt;/td>
+    &lt;td>&lt;%= link_to 'Edit', edit_template_class_path(template_class) %>&lt;/td>
+    &lt;td>&lt;%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
+      :method => :delete %>&lt;/td>
+  &lt;/tr>
+&lt;% end %>
+&lt;/table>
+&lt;br />
+
+&lt;%= link_to 'New template_class', new_template_class_path %>
+</pre>
+<h2>New Page</h2>
+Pass the course name and the time interval to the <i>new</i>-page. They have
+to be stored in the controller:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+
+  ...
+
+  # GET /template_classes/new
+  # GET /template_classes/new.xml
+  def new
+    @template_class = TemplateClass.new
+    <span class="highlight">@course = params[ :course ]
+    @time = params[ :time ]</span>
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @template_class }
+    end
+  end
+
+  ...
+
+</pre>
+Make the link part of a class in order to manipulate its appearance:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/yoyaku.css.txt">yoyaku/public/stylesheets/yoyaku.css</a></div>
+...
+
+<span class="highlight">a.grid{
+  text-decoration: none;
+  font-size: small;
+}</span>
+
+...
+
+</pre>
+If a course and a time interval is passed, create a readonly text
+field with an initialized value, otherwise create a drop field from
+where one can choose course/time:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/new.html.erb.txt">yoyaku/app/views/template_classes/new.html.erb</a></div>
+&lt;div class="form">
+&lt;%= error_messages_for :template_class %>
+
+&lt;fieldset>
+&lt;legend>New Template Class&lt;/legend>
+
+&lt;% form_for(@template_class) do |f| %>
+  <span class="highlight">&lt;table width="500">&lt;tr>
+  &lt;td>
+    &lt;%= f.label :course %>
+    &lt;% if @course %>
+      &lt;%= f.text_field :course, :value=>Course.find( @course ),
+                                :readonly=>true %>
+    &lt;% else %>
+      &lt;%= f.select :course,
+                   @courses,
+                   :prompt => "Select a course" %>
+    &lt;% end %>
+  &lt;/td>
+  &lt;td>
+    &lt;%= f.label :inactive %>
+    &lt;%= f.check_box :inactive %>
+  &lt;/td>&lt;/tr>&lt;/table>
+  &lt;p>
+    &lt;label for="course_time">Time&lt;/label>
+    &lt;% if @time %>
+      &lt;%= f.text_field :course_time, :value=>CourseTime.find( @time ),
+                                     :readonly=>true %>
+    &lt;% else %>
+      &lt;%= f.select :course_time,
+                   @times,
+                   :prompt => "Select a time" %>
+    &lt;% end %>
+  &lt;/p></span>
+  &lt;p>
+    &lt;%= f.label :day %>
+    &lt;%= f.text_field :day %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.label :title %>
+    &lt;%= f.text_field :title %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.label :description %>
+    &lt;%= f.text_area :description %>
+  &lt;/p>
+
+  &lt;p>
+    &lt;%= f.label :note %>
+    &lt;%= f.text_area :note %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.submit "Create" %>
+  &lt;/p>
+&lt;% end %>
+
+&lt;%= link_to 'Back', template_classes_path %>
+&lt;/fieldset>
+&lt;/div>
+</pre>
+The relations have to be saved and also the parameters one by one:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+
+  ...
+
+  # POST /template_classes
+  # POST /template_classes.xml
+  def create
+    <span class="highlight">@template_class = TemplateClass.new
+
+    course = Course.find_by_name( params[:template_class][:course] )
+    course.template_classes &lt;&lt; @template_class
+
+    time = CourseTime.find_by_text( params[:template_class][:course_time] )
+    time.template_classes &lt;&lt; @template_class
+
+    @template_class.day = params[:template_class][:day]
+    @template_class.title = params[:template_class][:title]
+    @template_class.description = params[:template_class][:description]
+    @template_class.inactive = params[:template_class][:inactive]
+    @template_class.note = params[:template_class][:note]</span>
+
+    respond_to do |format|
+      ...
+    end
+  end
+
+  ...
+
+end
+</pre>
+In order to make it easier to search on course times, an extra column
+was added to its table, which stores the time interval as clear text:
+Edit the controller so that <span class="method">text</span> will be initialized and updated:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/course_times_controller.rb.txt">yoyaku/app/controllers/course_times_controller.rb</a></div>
+class CourseTimesController &lt; ApplicationController
+
+  ...
+
+  # POST /course_times
+  # POST /course_times.xml
+  def create
+    @course_time = CourseTime.new(params[:course_time])
+    <span class="highlight">@course_time.text = @course_time.to_s</span>
+
+    ...
+
+  end
+
+  # PUT /course_times/1
+  # PUT /course_times/1.xml
+  def update
+    @course_time = CourseTime.find(params[:id])
+
+    respond_to do |format|
+      if @course_time.update_attributes(params[:course_time])
+        <span class="highlight">@course_time.update_attribute( :text, @course_time.to_s )</span>
+        ...
+      else
+        ...
+      end
+    end
+  end
+
+  ...
+
+end
+</pre>
+<h2>Edit Page</h2>
+For the time being, let the course and the time references be locked
+when editing:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/edit.html.erb.txt">yoyaku/app/views/templae_classes/edit.html.erb</a></div>
+&lt;div class="form">
+&lt;%= error_messages_for :template_class %>
+
+&lt;fieldset>
+&lt;legend>Editing Template Class&lt;/legend>
+
+&lt;% form_for(@template_class) do |f| %>
+  &lt;table width="500">&lt;tr>
+  &lt;td>
+    &lt;%= f.label :course %>
+    <span class="highlight">&lt;%= f.text_field :course, :readonly=>true %></span>
+  &lt;/td>
+  &lt;td>
+    &lt;%= f.label :inactive %>
+    &lt;%= f.check_box :inactive %>
+  &lt;/td>&lt;/tr>&lt;/table>  
+  &lt;p>
+    &lt;label for="course_time">Time&lt;/label>
+    <span class="highlight">&lt;%= f.text_field :course_time, :readonly=>true %></span>
+  &lt;/p>
+  
+  ...
+  
+&lt;% end %>
+
+&lt;%= link_to 'Show', @template_class %> |
+&lt;%= link_to 'Back', template_classes_path %>
+&lt;/fieldset>
+&lt;/div>
+</pre>
+Update the parameters in the controller one by one:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+
+  ...
+
+  # PUT /template_classes/1
+  # PUT /template_classes/1.xml
+  def update
+    @template_class = TemplateClass.find(params[:id])
+
+    respond_to do |format|
+      <span class="highlight">if true
+        @template_class.update_attribute
+          ( :day, params[ :template_class ][ :day ])
+        @template_class.update_attribute
+          ( :title, params[ :template_class ][ :title ])
+        @template_class.update_attribute
+          ( :description, params[ :template_class ][ :description ])
+        @template_class.update_attribute
+          ( :inactive, params[ :template_class ][ :inactive ])
+        @template_class.update_attribute
+          ( :note, params[ :template_class ][ :note ])</span>
+
+        ...
+        
+      end
+    end
+  end
+
+  ...
+
+end
+</pre>
+Make some adjustments to the index file so that an entry will be
+added into the correct spot in the grid:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/index.html.erb.txt">yoyaku/app/views/template_classes/index.html.erb</a></div>
+&lt;h1>Listing Template Classes&lt;/h1>
+
+&lt;table cellpadding="5" cellspacing="0" border="1">
+  &lt;tr>
+    &lt;td>&lt;/td>
+    &lt;% @times.each do |time| %>
+    &lt;td>
+      &lt;%= h time.start_time.to_s( :time ) %>
+      &lt;%= "--" %>
+      &lt;%= h time.end_time.to_s( :time ) %>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% @courses.each do |course| %>
+  &lt;tr>
+    &lt;td>
+      &lt;%= h course.name %>
+    &lt;/td>
+    &lt;% @times.each do |time| %>
+
+      <span class="highlight">&lt;% @template = TemplateClass.find( :all, :conditions =>
+        [ "course_id = ? and course_time_id = ?", course.id, time.id ]) %>
+
+      &lt;% if @template.size==1 %>
+        &lt;td align="right" bgcolor="gray" >
+          &lt;%= link_to 'Show', @template, :class=>"grid" %>
+          &lt;%= link_to 'Edit', edit_template_class_path( @template ),
+            :class=>"grid" %>
+          &lt;%= link_to 'Destroy', @template, :confirm => 'Are you sure?',
+                                               :method => "delete",
+                                               :class=>"grid"  %>
+      &lt;% else %></span>
+        &lt;td align="right">
+        &lt;%= link_to '+', new_template_class_path( :course=>course,
+                                                     :time=>time ),
+                                                     :class=>"grid" %>
+      <span class="highlight">&lt;% end %></span>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% end %>
+&lt;/table>
+&lt;br />
+
+&lt;%= link_to 'New template_class', new_template_class_path %>
+</pre>
+<h2>Add choice of weekday</h2>
+Add a drop menu were the day of the week can be chosen and also
+update the grid whenever that happends (<span class="method">onchange</span>). Further, add a
+search of the day into the <span class="method">find</span> method, so that the template class
+is not only showing up according to course and time, but also day.
+Finally, pass <span class="var">@template_day</span> along to the new-page:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/index.html.erb.txt">yoyaku/app/views/template_classes/index.html.erb</a></div>
+&lt;h1>Listing Template Classes&lt;/h1>
+
+<span class="highlight">&lt;% form_for :template_class,
+            :url => { :action=>'index' },
+            :html => { :method=>'get' } do |f| %>
+  &lt;%= select_tag :template_day, options_for_select( @days, @template_day ),
+    { :onchange => "this.form.submit();"} %>
+&lt;% end %></span>
+
+&lt;table cellpadding="5" cellspacing="0" border="1">
+  &lt;tr>
+    ...
+  &lt;tr>
+    &lt;td>
+      &lt;%= h course.name %>
+    &lt;/td>
+    &lt;% @times.each do |time| %>
+
+      <span class="highlight">&lt;% @template = TemplateClass.find(
+        :all,
+        :conditions => [ "course_id = ? and course_time_id = ? and day = ?",
+          course.id, time.id, @template_day ]) %></span>
+
+      &lt;% if @template.size==1 %>
+        ...
+      &lt;% else %>
+    &lt;td align="right">
+        &lt;%= link_to '+', new_template_class_path(
+          :course=>course,
+          :time=>time,
+          <span class="highlight">:template_day=>@template_day</span> ),
+            :class=>"grid" %>
+      &lt;% end %>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% end %>
+&lt;/table>
+
+...
+
+<%= link_to 'New template_class', new_template_class_path(
+  <span class="highlight"> :template_day=>@template_day </span>) %>
+</pre>
+The array of days is defined in the controller:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+  
+  ...
+  
+private
+  def load_classes_and_times
+    @courses = Course.all
+    @times = CourseTime.all
+    <span class="highlight">@days = [['Choose a day'], ['Monday'], ['Tuesday'], ['Wednesday'],
+      ['Thursday'], ['Friday'], ['Saturday'], ['Sunday']]</span>
+  end
+end
+
+</pre>
+The weekday has to be saved in a temporary variable between linking
+in order to be used at the index and new page:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+
+  ...
+  
+  def index
+    @template_classes = TemplateClass.find(:all)
+    <span class="highlight">@template_day = params[ :template_day ]</span>
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @template_classes }
+    end
+  end
+
+  ...
+
+  def new
+    @template_class = TemplateClass.new
+    @course = params[ :course ]
+    @time = params[ :time ]
+    <span class="highlight">@template_day = params[ :template_day ]</span>
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @template_class }
+    end
+  end
+
+  ...
+
+end
+</pre>
+
+Whether a weekday is chosen (a readonly text field) or not (a drop
+menu) at the index page, modify the new page:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/new.html.erb.txt">yoyaku/app/views/template_classes/new.html.erb</a></div>
+...
+
+&lt;% form_for(@template_class) do |f| %>
+
+  ...
+
+  &lt;p>
+    &lt;%= f.label :day %>
+    <span class="highlight">&lt;% if @template_day %>
+      &lt;%= f.text_field :day, :value=>@template_day, :readonly=>true %>
+    &lt;% else %>
+      &lt;%= f.select :day,
+                   @days,
+                   :prompt => "Select a day" %>
+    &lt;% end %></span>
+  &lt;/p>
+
+  ...
+
+&lt;% end %>
+
+...
+</pre>
+And make the day-field be <span class="method">readonly</span> at the edit page:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/edit.html.erb.txt">yoyaku/app/views/template_classes/edit.html.erb</a></div>
+...
+
+&lt;% form_for(@template_class) do |f| %>
+
+  ...
+
+  &lt;p>
+    &lt;%= f.label :day %>
+    &lt;%= f.text_field :day, <span class="highlight">:readonly=>true</span> %>
+  &lt;/p>
+
+  ...
+
+&lt;% end %>
+
+...
+</pre>
+<h2>Create a more effective grid</h2>
+Only list the times for each day where there is a template class.
+Further, make the time intervals appear in order:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/index.html.erb.txt">yoyaku/app/views/template_classes/index.html.erb</a></div>
+...
+
+<span class="highlight">&lt;% @weekday_times = CourseTime.find(
+  :all,
+  :include=>'template_classes',
+  :conditions => [ "template_classes.day = ?", @template_day ],
+  :order=>'text' ) %></span>
+
+&lt;table cellpadding="5" cellspacing="0" border="1">
+  &lt;tr>
+    &lt;td>&lt;/td>
+    &lt;% <span class="highlight">@weekday_times</span>.each do |time| %>
+    &lt;td>
+      &lt;%= h time.start_time.to_s( :time ) %>
+      &lt;%= "--" %>
+      &lt;%= h time.end_time.to_s( :time ) %>
+    &lt;/td>
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% @courses.each do |course| %>
+  &lt;tr>
+    &lt;td>
+      &lt;%= h course.name %>
+    &lt;/td>
+    &lt;% <span class="highlight">@weekday_times</span>.each do |time| %>
+
+      ...
+
+    &lt;% end %>
+  &lt;/tr>
+  &lt;% end %>
+&lt;/table>
+
+...
+</pre>
+<h2>Link back to index page</h2>
+In stead of linking back to the show page (since the author thinks
+it is unecessary), link to the index page. Also make sure to pass
+along the weekday variable to the <span class="var">params[ :template_day ]</span>, so that
+the correct weekday can be shown:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+
+  ...
+
+  def create
+    ...
+
+    respond_to do |format|
+      if @template_class.save
+        ...
+        format.html { redirect_to( <span class="highlight">template_classes_path
+          ( :template_day=>@template_class.day )</span>) }
+        ...
+      end
+    end
+  end
+
+  def update
+    ...
+    
+    respond_to do |format|
+      if true
+        ...
+        format.html { redirect_to( <span class="highlight">template_classes_path
+          ( :template_day=>@template_class.day )</span>) }
+        ...
+      else
+        ...
+      end
+    end
+  end
+
+  def destroy
+    ...
+    respond_to do |format|
+      format.html { redirect_to( template_classes_path
+        ( <span class="highlight">:template_day=>@template_class.day</span> )) }
+      ...
+    end
+  end
+
+  ...
+end
+</pre>
+Also let the back links on the individual pages (<i>new</i>, <i>edit</i>, <i>show</i>),
+link back to the index page. Make sure to pass along the weekday
+variable to <span class="var">params[ :template_day ]</span> so that the correct weekday can
+be shown:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/new.html.erb.txt">yoyaku/app/views/template_classes/new.html.erb</a></div>
+&lt;div class="form">
+
+  ...
+
+&lt;%= link_to 'Back', <span class="highlight">template_classes_path( :template_day=>@template_day</span> ) %>
+...
+&lt;/div>
+</pre>
+<pre class="code">
+<div class="path"><a href="yoyaku_03/edit.html.erb.txt">yoyaku/app/views/template_classes/edit.html.erb</a></div>
+&lt;div class="form">
+
+  ...
+  
+&lt;%= link_to 'Show', @template_class %> |
+&lt;%= link_to 'Back', <span class="highlight">template_classes_path
+  ( :template_day=>@template_class.day )</span> %>
+...
+&lt;/div>
+</pre>
+<pre class="code">
+<div class="path"><a href="yoyaku_03/show.html.erb.txt">yoyaku/app/views/template_classes/show.html.erb</a></div>
+...
+
+&lt;%= link_to 'Edit', edit_template_class_path(@template_class) %> |
+&lt;%= link_to 'Back', <span class="highlight">template_classes_path
+  ( :template_day=>@template_class.day )</span> %>
+</pre>
+<h2>Eager Loading</h2>
+<doc tags=["rails","performance","active-record"] title="Eager Loading">
+One way to improve performance is to cut down on the number of SQL queries.
+This code displays some extra listing for the admin. Without <i>eager loading</i>
+a new SQL query is sent to the database every time the associations <span class="var">course</span>
+and <span class="var">course_time</span> are called:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/index.html.erb.txt">yoyaku/app/views/template_classes/index.html.erb</a></div>
+&lt;h1>Listing Template Classes&lt;/h1>
+
+...
+
+&lt;% if admin? %>
+  &lt;table>
+  &lt;% @template_classes.each do |template_class| %>
+    &lt;tr>
+      &lt;td>&lt;%=h <span class="highlight">template_class.course</span> %>&lt;/td>
+      &lt;td>&lt;%=h <span class="highlight">template_class.course_time</span> %>&lt;/td>
+      &lt;td>&lt;%=h template_class.day %>&lt;/td>
+      &lt;td>&lt;%=h template_class.title %>&lt;/td>
+      &lt;td>&lt;%=h template_class.description %>&lt;/td>
+      &lt;td>&lt;%=h template_class.inactive %>&lt;/td>
+      &lt;td>&lt;%=h template_class.note %>&lt;/td>
+      &lt;td>&lt;%= link_to 'Show', template_class %>&lt;/td>
+      &lt;td>&lt;%= link_to 'Edit', edit_template_class_path(template_class) %>&lt;/td>
+      &lt;td>&lt;%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
+        :method => :delete %>
+      &lt;/td>
+    &lt;/tr>
+  &lt;% end %>
+  &lt;/table>
+&lt;% end %>
+</pre>
+With a simple option, a join statement is constructed for you that fetches
+all the associations at the same time as it fetches the <span class="var">template classes</span>.
+Observe that the name of the association is included, not the name of the
+model:
+
+<pre class="code">
+<div class="path"><a href="yoyaku_03/template_classes_controller.rb.txt">yoyaku/app/controllers/template_classes_controller.rb</a></div>
+class TemplateClassesController &lt; ApplicationController
+  ...
+
+  def index
+    @template_classes = TemplateClass.find( :all, <span class="highlight">:include=>['course','course_time']</span> )
+    ...
+  end
+...
+end
+</pre>
+</doc>
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_02.html">Part 02 - Course Times</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_04.html">Part 04 - Classes (...to come...)</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

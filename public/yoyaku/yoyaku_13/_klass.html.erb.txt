@@ -1,0 +1,35 @@
+<td class="table-units">
+  <%= klass.time_interval %>
+</td>
+<td>
+</td>
+<td>
+  <% form_for(klass) do |f| %>
+    <% if clearance?(2) %>
+      <%= f.select :classroom_id, classrooms.map{|e| [e.name,e.id]}-( collitions.map{|e| e.classroom_id ? [e.classroom.name,e.classroom.id] : nil }.compact - ( klass.classroom ? [[klass.classroom.name,klass.classroom.id]] : [[]] )), { :selected=>klass.classroom ? klass.classroom.id : nil, :prompt=>'?' }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+    <% else %>
+      <center><%= klass.classroom ? klass.classroom.name : "?" %></center>
+    <% end %>
+</td>
+<td>
+    <% if clearance?(2) %>
+      <%= f.select :teacher_id, [nil]+teachers.map{|e| [e.name,e.id]}-( collitions.map{|e| e.teacher_id ? [e.teacher.name,e.teacher.id] : nil }.compact - ( klass.teacher ? [[klass.teacher.name,klass.teacher.id]] : [[]] )), { :selected=>klass.teacher ? klass.teacher.id : nil }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+    <% else %>
+      <center><%= klass.teacher ? klass.teacher.name : "?" %></center>
+    <% end %>
+  <% end %>
+</td>
+<% attendances = klass.attendances.reject(&:cancel) %>
+<% if attendances.size >0 %>
+  <% attendances.each do |attendance| %>
+    <% form_for(attendance) do |f| %>  
+      <td>
+        <%= f.select :student_id, available_students.map{|e| [e.name,e.id]}, { :selected=>attendance.student ? ( attendance.chosen ? attendance.student.id : nil ) : nil, :include_blank=>true }, { :onchange => 'this.form.submit();', :class=>"table-units" } %>
+      </td>
+    <% end %>
+  <% end %>
+<% end %>
+<% (8-attendances.size).times do |student| %>
+  <td>
+  </td>
+<% end %>

@@ -1,0 +1,31 @@
+﻿<p>
+  <label for="student">受講生</label>
+  <%= f.select :student_id,
+    Student.find(
+      :all,
+      :conditions => ["person_id = people.id"],
+      :include => :person ).map{|e| [e, e.id]},
+      :prompt => "受講生を選んで",
+      :selected => @student_class.student ? @student_class.student.id : nil %> 
+</p>
+<p>
+  <label for="klass">クラス</label>
+  <%= f.select :klass_id,
+    Klass.find( :all ).map{|e| [e.tostring, e.id]},
+      :prompt => "クラスを選んで",
+      :selected => @student_class.klass ? @student_class.klass.id : params[:klass] ? Klass.find( params[:klass] ).id : nil %> 
+</p>
+<p>
+	<%= f.label :cancel %>
+	<table><tr>
+	  <td bgcolor="#AAAAFF"><%= f.radio_button :cancel, false %>OFF</td>
+	  <td bgcolor="#FFAAAA"><%= f.radio_button :cancel, true %>ON</td>
+	</tr></table>
+	</p>
+<p>
+  <label for="note">備考</label>
+  <%= f.text_area :note, :rows=>8 %>
+</p>
+<p>
+  <%= f.submit label_text, :class=>"submit" %>
+</p>

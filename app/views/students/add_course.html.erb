@@ -1,0 +1,27 @@
+﻿<h1>Listing Student</h1>
+
+Name:<br />
+<%=h @student.name %><p>
+Courses:
+<% @student.courses.each do |course| %>
+  <li><%= course.name %></li>
+<% end %>
+
+<% form_for(@student) do |f1| %>
+	<p>
+	  <% @klass_groups.sort.each do |day,klass_group| %>
+	    <strong><%= klass_group[0].date.strftime("%x") %>: <%= klass_group[0].date.strftime("%A") %><br/></strong>
+	    <% hash={} %>
+	    <% klass_group.sort_by(&:start_time).each do |klass| %>
+		    <% if !hash[klass.tostring] %>
+		      <% hash[klass.tostring] = klass %>
+		    	<%= check_box_tag "student[klass_ids][]", klass.id, @student.klasses.include?(klass) %>
+		    	<%= klass.tostring %><br />
+		    <% end %>
+      <% end %>
+	  <% end %>
+	</p>
+	<p>
+	  <%= f1.submit "Update" %>
+	</p>
+<% end %>

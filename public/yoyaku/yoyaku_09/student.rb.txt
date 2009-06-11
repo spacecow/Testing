@@ -1,0 +1,9 @@
+class Student < ActiveRecord::Base
+  belongs_to :person
+  has_many :student_classes
+  has_many :klasses, :through=>:student_classes
+
+  def to_s
+    "#{person}"
+  end
+end

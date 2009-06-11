@@ -1,0 +1,76 @@
+C:\Johan\Ruby\Rails\yoyaku>gem install webrat
+ERROR:  While executing gem ... (Zlib::BufError)
+    buffer error
+    
+http://gnuwin32.sourceforge.net/downlinks/zlib-bin-zip.php
+
+
+
+http://code.google.com/p/msysgit/downloads/list
+Git-1.6.3.2-preview20090608.exe
+
+Install it and include it in your path
+
+C:\Johan\Ruby\Rails\yoyaku>git --version
+git version 1.6.3.2.1299.gee46c
+
+C:\Johan\Ruby\Rails\yoyaku>git config --global user.name "Johan Sveholm"
+fatal: $HOME not set
+
+C:\Documents and Settings\Johan>set home
+HOMEDRIVE=C:
+HOMEPATH=\Documents and Settings\Johan
+
+You can set it yourself to where you want git to store the .gitconfig
+file. Do this in Settings->System->Advanced->Environment Variables,
+section User variables. You can set it to %HOMEDRIVE%%HOMEPATH%  in order
+point it somewhere below C:\Documents and Settings.
+
+C:\Documents and Settings\Johan>set home
+HOME=C:\Documents and Settings\Johan
+HOMEDRIVE=C:
+HOMEPATH=\Documents and Settings\Johan
+
+C:\Johan\Ruby\Rails\yoyaku>git config --global user.name "Johan Sveholm"
+C:\Johan\Ruby\Rails\yoyaku>git config --global user.email 'jsveholm@gmail.com'
+
+C:\Johan\Ruby\Rails\yoyaku>git config --list
+core.symlinks=false
+core.autocrlf=true
+color.diff=auto
+pack.packsizelimit=2g
+help.format=html
+user.name=Johan Sveholm
+user.email='jsveholm@gmail.com'
+
+C:\Johan\Ruby\Rails\yoyaku>git config --global alias.co checkout
+
+C:\Johan\Ruby\Rails\yoyaku>git init
+Initialized empty Git repository in C:/Johan/Ruby/Rails/yoyaku/.git/
+
+C:\Johan\Ruby\Rails\yoyaku>ls -a
+.            Translation.bak    db      tmp
+..           Yoyaku.tdl         doc     vendor
+.gem         Yoyaku_Log.csv     lib     virtual attribute.rtf
+.git         app                log     yoyaku.sql
+README       backup             public  yoyaku2.sql
+Rakefile     complex_forms.rtf  script
+Translation  config             test
+
+C:\Johan\Ruby\Rails\yoyaku>tree .git
+Lista over mappar i miljovariabeln PATH
+Volymens serienummer ar 2031-2B9D
+C:\JOHAN\RUBY\RAILS\YOYAKU\.GIT
+├─hooks
+├─info
+├─objects
+│  ├─info
+│  └─pack
+└─refs
+    ├─heads
+    └─tags
+    
+
+C:\Johan\Ruby\Rails\yoyaku>touch .gitignore
+
+C:\Johan\Ruby\Rails\yoyaku>git config --global apply.whitespace nowarn

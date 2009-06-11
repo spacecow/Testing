@@ -1,0 +1,31 @@
+﻿<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend>受講生編集 - <%= @student %></legend>
+<table><tr>
+<td valign="top" width="100">
+  <%= render :partial=>"show_course", :locals=>{ :add_enter=>true } %>
+</td>
+<td>
+  <strong>クラス</strong>
+	<% form_for :student, :url=>{ :action=>"update_classes", :id=>@student } do |f| %>
+		<p>
+		  <% @klass_groups.sort.each do |day,klass_group| %>
+        <%= render :partial => "edit_klass", :locals => { :klass_group=>klass_group } %>
+		  <% end %>
+		</p>
+		<p>
+		  <%= f.hidden_field :created_at %>
+		  <%= f.submit "Update" %>
+		</p>		
+  <% end %>
+</td>
+</tr></table>
+
+<br/>
+
+<%= link_to 'Edit', :action=>"edit_courses", :id=>@student %> |
+<%= link_to 'Back', people_path %>
+
+</fieldset>
+</div>

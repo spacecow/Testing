@@ -1,0 +1,20 @@
+<strong>講座</strong>
+<p>
+	<table cellpadding="1" cellspacing="1">
+	  <tr>
+	    <td>
+        <% if add_enter %>&nbsp;<% end %>
+	    </td>
+	  </tr>
+    <% @student.courses.each do |course| %>
+		  <tr>
+		    <td>
+				  <%= check_box_tag "student[course_ids][]", course.id, @student.courses.include?(course), :disabled=>true %>
+				</td>
+				<td>  
+				  <%= course.name %>
+				</td>
+			</tr>
+	  <% end %>
+	</table>
+</p>

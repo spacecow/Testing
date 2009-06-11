@@ -1,0 +1,8 @@
+kurosawa_attendance:
+  klass_id: 1
+  student_id: 1
+
+mao_attendance:
+  klass_id: 2
+  student_id: 2
+  cancel: 1    
