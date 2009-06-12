@@ -10,6 +10,8 @@ http://code.google.com/p/msysgit/downloads/list
 Git-1.6.3.2-preview20090608.exe
 
 Install it and include it in your path
+C:\Program\Git\bin as well as C:\Program\Git\cmd
+to be able to use gitk
 
 C:\Johan\Ruby\Rails\yoyaku>git --version
 git version 1.6.3.2.1299.gee46c
@@ -74,3 +76,7 @@ C:\JOHAN\RUBY\RAILS\YOYAKU\.GIT
 C:\Johan\Ruby\Rails\yoyaku>touch .gitignore
 
 C:\Johan\Ruby\Rails\yoyaku>git config --global apply.whitespace nowarn
+
+
+reseting a merge:
+git reset --hard ORIG_HEAD

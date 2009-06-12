@@ -28,13 +28,21 @@ class KlassesController < ApplicationController
   # GET /klasses
   # GET /klasses.xml
   def index
-    #@attendance = Attendance.find(params[:attendance]) if params[:attendance]
-    
+    if params[:date]
+	    @klass_date = DateTime.parse( params[:date] )
+	    @month = Date::MONTHNAMES[ @klass_date.month ]
+	    @day = @klass_date.day
+	    @year = @klass_date.year
+	    p "----------"+@month.to_s+" "+@day.to_s+" "+@year.to_s
+    else
     @month = params[:month] ? params[:month] : Date::MONTHNAMES[ Date.current.month ]
     @day = params[:day] ? params[:day] : Date.current.day
     @year = params[:year] ? params[:year] : Date.current.year
+	    @klass_date = DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i )
+    end
     
-    @klass_date = params[:date] ? DateTime.parse( params[:date] ) : DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i )
+    #@attendance = Attendance.find(params[:attendance]) if params[:attendance]
+    
     @line = Attendance.find(1, :include => { :student => :person })
     @moves = Attendance.find( :all, :conditions=>[ "id in (?)", [2,3,4,5]], :include => { :student => :person })
     
@@ -145,10 +153,15 @@ class KlassesController < ApplicationController
   # DELETE /klasses/1.xml
   def destroy
     @klass = Klass.find(params[:id])
+    if !@klass.attendances.empty?
+      flash[:error] = "Move away all students from the class before deleting."
+      redirect_to klasses_path( :date => params[:date] )
+      return
+    end
     @klass.destroy
 
     respond_to do |format|
-      format.html { redirect_to(klasses_url) }
+      format.html { redirect_to klasses_path( :date => params[:date] )}
       format.xml  { head :ok }
     end
   end

@@ -2,25 +2,11 @@
   <%= klass.time_interval %>
 </td>
 <td>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <%= link_to '-', klass_path( klass, :date=>klass_date ),
+        :confirm => 'Are you sure?' +
+        ( klass.attendances.empty? ? "" : "\nNOTE: Move away all students from the class before deleting." ),
+        :method => :delete,
+        :class=>"grid" %>
 </td>
 <td>
   <% form_for(klass) do |f| %>
@@ -59,12 +45,13 @@
           available_students.map{|e| [e.name,e.id]} +
             ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
             [[@line.student.name,@line.student.id]] +
-            @moves.map{|e| [e.student.name, e.student.id]},
+            @moves.reject{|e| no_place_to_move.include?( e.student_name.split[2].to_i )}.map{|e| [e.student.name, e.student.id]},
           { :include_blank=>true,
             :selected=>attendance.chosen ? attendance.student.id : nil },
           { :onchange => 'this.form.submit();',
             :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
         <%= hidden_field_tag :relations, klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s}.join(',') %>
+        <%= hidden_field_tag :klass_relations, klass_relations.join(',') %>
         <%= hidden_field_tag :date, klass_date %>
 			</td>
 	  <% end %>

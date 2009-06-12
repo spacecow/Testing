@@ -2,5 +2,6 @@ log/*.log
 tmp/**/*
 backup/*
 Yoyaku.tdl
+Yoyaku_Log.csv
 *.bak
 config/database.yml
