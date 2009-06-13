@@ -1,5 +1,4 @@
 class StudentsController < ApplicationController
-  skip_before_filter :authorize
   
   def index
     redirect_to :controller=>'people', :category=>"受講生"
@@ -26,7 +25,7 @@ class StudentsController < ApplicationController
 	    :include=>'course' ).group_by{|e| e.date.strftime("%x")}        
   end
   
-  def update_classes
+  def update_klasses
     params[:student][:klass_ids] ||= []
     @student = Student.find( params[:id] )
     @student.update_attributes(params[:student])
@@ -52,5 +51,12 @@ class StudentsController < ApplicationController
     end
       flash[:notice] = "Updated students."
       redirect_to students_path
+  end
+
+private
+  def authorize
+  	unless clearance?(3) || current_user.student.id == params[:id].to_i
+      redirect_to edit_klasses_students_path( :id => current_user.student.id )
+    end
   end
 end

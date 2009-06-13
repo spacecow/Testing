@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :attendances
 	map.resources :tags
   map.resources :docs
-  map.resources :students, :collection => { :edit_multiple => :post, :update_multiple => :put, :edit_courses => :get, :update_courses => :put }
+  map.resources :students, :collection => { :edit_multiple => :post, :update_multiple => :put, :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
   map.resources :classrooms
   map.resources :teachers
   map.resources :klasses

@@ -8,7 +8,7 @@
 </td>
 <td>
   <strong>クラス</strong>
-	<% form_for :student, :url=>{ :action=>"update_classes", :id=>@student } do |f| %>
+	<% form_for :student, :url => update_klasses_students_path( :id=>@student ), :html => { :method => :post } do |f| %>
 		<p>
 		  <% @klass_groups.sort.each do |day,klass_group| %>
         <%= render :partial => "edit_klass", :locals => { :klass_group=>klass_group } %>

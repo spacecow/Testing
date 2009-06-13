@@ -47,7 +47,7 @@ protected
 
 private
   def current_user
-    session[:user] ||= Person.find_by_user_name( session[:user_name] )
+    session[:user] ||= Person.find_by_user_name( session[:user_name], :include => 'student' )
   end  
 
   def logged_in?
