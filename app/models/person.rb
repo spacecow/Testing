@@ -47,8 +47,12 @@ class Person < ActiveRecord::Base
   end
 
   def name
-    if first_name == "-----"
+  	if first_name == "-----" && family_name == "-----"
       "----------"
+	elsif family_name == "Cancel"
+	  "Cancel"
+	elsif family_name == "Delete"
+      "Delete"
     else
       "#{family_name} #{first_name}"
     end

@@ -22,6 +22,14 @@ class AttendancesController < ApplicationController
 	          params[:attendance][:student_id] = @attendance.student_id
 	        end
 	      end
+		  elsif student.name == "Cancel"
+	        @attendance.update_attribute( :cancel, 1 )
+		  	redirect_to( klasses_path( :date => params[:date] ))
+	      return
+		  elsif student.name == "Delete"
+		  	@attendance.destroy
+	        redirect_to( klasses_path( :date => params[:date] ))
+	      return
 		  else
 	      params[:attendance][:chosen] = 1
 		    if( @attendance.student_id != new_student_id.to_i )

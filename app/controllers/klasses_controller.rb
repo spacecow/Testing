@@ -45,6 +45,7 @@ class KlassesController < ApplicationController
     
     @line = Attendance.find(1, :include => { :student => :person })
     @moves = Attendance.find( :all, :conditions=>[ "id in (?)", [2,3,4,5]], :include => { :student => :person })
+    @options = Attendance.find( :all, :conditions=>[ "id in (?)", [6,7]], :include => { :student => :person })
     
     
     @klasses = Klass.find_all_by_date( @klass_date, :include=>[ :course, :classroom, :teacher, :attendances, { :students => :person }])

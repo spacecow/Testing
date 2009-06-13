@@ -11,7 +11,7 @@
   <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?) and students.person_id = people.id", "%"+searchtext+"%" ],
   :include => "student",
-  :order => 'family_name_kana' ).reject{|e| e.name=="----------" || e.name.starts_with?( 'Move to' )} %>
+  :order => 'family_name_kana' ).reject{|e| e.name=="---- ------" || e.name.starts_with?( 'Move t o' )} %>
 <% end %>	
 
 <% if ppl.size > 0 %>
@@ -37,7 +37,7 @@
 			    <td></td>
 			  <% end %>
 		    <td class="list-units">
-		    	<%= h person.family_name %> <%= h person.first_name %>
+		    	<%= h person.name %>
 		    </td>
 		    <td class="list-units">
 		      <%= h person.mobile_phone %>

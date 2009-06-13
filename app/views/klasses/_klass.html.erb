@@ -47,8 +47,10 @@
           available_students.map{|e| [e.name,e.id]} +
             ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
             [[@line.student.name,@line.student.id]] +
-            @moves.reject{|e| no_place_to_move.include?( e.student_name.split[2].to_i )}.map{|e| [e.student.name, e.student.id]},
-          { :include_blank=>true,
+            @moves.reject{|e| no_place_to_move.include?( e.student_name.split[2].to_i )}.map{|e| [e.student.name, e.student.id]} +
+            [[@line.student.name,@line.student.id]] +
+            @options.map{|e| [e.student.name, e.student.id]},
+          { :include_blank=>true,            
             :selected=>attendance.chosen ? attendance.student.id : nil },
           { :onchange => 'this.form.submit();',
             :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
