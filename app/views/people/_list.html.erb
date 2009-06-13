@@ -1,7 +1,7 @@
 ﻿<% if category == "全部の人" %>
-  <% ppl = Person.find :all,
+  <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?)", "%"+searchtext+"%" ],
-  :order => 'family_name_kana' %>
+  :order => 'family_name_kana' ).reject{|e| e.name=="----------" || e.name.starts_with?( 'Move to' )} %>
 <% elsif category == "講師" %>
   <% ppl = Person.find :all,
   :conditions => [ "tostring like (?) and teachers.person_id = people.id", "%"+searchtext+"%" ],
@@ -12,7 +12,7 @@
   :conditions => [ "tostring like (?) and students.person_id = people.id", "%"+searchtext+"%" ],
   :include => "student",
   :order => 'family_name_kana' ).reject{|e| e.name=="----------" || e.name.starts_with?( 'Move to' )} %>
-<% end %>
+<% end %>	
 
 <% if ppl.size > 0 %>
   <% form_tag edit_multiple_students_path do %>
@@ -29,7 +29,13 @@
 		    <% else %>
 		      <tr valign="top" class="list-line-woman">
 		    <% end %>  
-		    <td class="list-units"><%= check_box_tag "student_ids[]", person.student.id %></td>
+				<% if person.student %>
+			    <td class="list-units">
+			      <%= check_box_tag "student_ids[]", person.student.id %>
+			    </td>
+			  <% else %>
+			    <td></td>
+			  <% end %>
 		    <td class="list-units">
 		    	<%= h person.family_name %> <%= h person.first_name %>
 		    </td>

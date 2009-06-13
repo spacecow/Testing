@@ -1,7 +1,7 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
-en:
+jp:
   klasses:
     flash:
-      try_to_delete_klass_with_students: "Move away all students from the class before deleting."
+      try_to_delete_klass_with_students: "クラスを消す前に全部の受講生を除いて下さい" 

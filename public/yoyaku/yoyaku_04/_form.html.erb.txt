@@ -1,0 +1,80 @@
+﻿&lt;p>
+  &lt;label for="user_name">ユーザー名&lt;/label>
+  &lt;%= f.text_field :user_name %>
+&lt;/p>
+&lt;p>
+  &lt;label for="password">パスワード&lt;/label>
+  &lt;%= f.text_field :password %>
+&lt;/p>
+&lt;p>
+  &lt;label for="name">名前*&lt;/label>
+  &lt;%= f.text_field :family_name, :size=>13 %>
+  &lt;%= f.text_field :first_name, :size=>12 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="name_kana">名前 (フリガナ)*&lt;/label>
+  &lt;%= f.text_field :family_name_kana, :size=>13 %>
+  &lt;%= f.text_field :first_name_kana, :size=>12 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="gender">性別*&lt;/label>
+  &lt;table>&lt;tr>
+    &lt;td bgcolor="#AAAAFF">&lt;%= f.radio_button :gender, 1 %>男性&lt;/td>
+    &lt;td bgcolor="#FFAAAA">&lt;%= f.radio_button :gender, 2 %>女性&lt;/td>
+  &lt;/tr>&lt;/table>
+&lt;/p>
+&lt;p>
+  &lt;label for="mobile_phone">携帯電話番号&lt;/label>
+  &lt;%= f.text_field :mobile_phone, :size=>20 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="home_phone">固定電話番号&lt;/label>
+  &lt;%= f.text_field :home_phone, :size=>20 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="mail_address_mobile">携帯電話用アドレス*&lt;/label>
+  &lt;%= f.text_field :mail_address_mobile %>
+&lt;/p>
+&lt;p>
+  &lt;label for="mail_address_pc">ＰＣ用アドレス&lt;/label>
+  &lt;%= f.text_field :mail_address_pc %>
+&lt;/p>
+&lt;p>
+  &lt;label for="address1">住所&lt;/label>
+  &lt;%= f.text_field :address1 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="address2">二番目の住所&lt;/label>
+  &lt;%= f.text_field :address2 %>
+&lt;/p>
+&lt;p>
+  &lt;label for="ritei">利用停止&lt;/label>
+  &lt;table>&lt;tr>
+    &lt;td bgcolor="#AAAAFF">&lt;%= f.radio_button :ritei, false %>OFF&lt;/td>
+    &lt;td bgcolor="#FFAAAA">&lt;%= f.radio_button :ritei, true %>ON&lt;/td>
+  &lt;/tr>&lt;/table>
+&lt;/p>
+&lt;p>
+  &lt;label for="inactive">&lt;%= status=="講師" ? "退職" : "退会" %>&lt;/label>
+  &lt;table>&lt;tr>
+    &lt;td bgcolor="#AAAAFF">&lt;%= f.radio_button :inactive, false %>OFF&lt;/td>
+    &lt;td bgcolor="#FFAAAA">&lt;%= f.radio_button :inactive, true %>ON&lt;/td>
+  &lt;/tr>&lt;/table>
+&lt;/p>  
+&lt;p>
+  &lt;label for="note">備考&lt;/label>
+  &lt;%= f.text_area :note, :rows=>8, :cols=>27 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :language, "言語" %>
+  &lt;%= f.select :language, [['Japanese', 'jp'], ['English', 'en']] %>
+&lt;/p>
+&lt;p>
+  &lt;% if status=="受講生" %>
+    &lt;%= f.hidden_field :linked_student %>
+  &lt;% elsif status=="講師" %>
+    &lt;%= f.hidden_field :linked_teacher %>
+  &lt;% end %>
+  &lt;%= hidden_field_tag :status, status %>
+  &lt;%= f.submit label_text, :class=>"submit" %>
+&lt;/p>

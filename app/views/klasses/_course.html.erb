@@ -39,12 +39,14 @@
 	    <% collitions = collition[time_klasses[0].time_interval] %>
 	    
 	    <% available_students = [] %>
+	    <% attendance_relations = [] %>
 	    <% klass_relations = [] %>
 	    <% time_klasses.each_with_index do |klass,i| %>
 	      <% klass.attendances.reject(&:chosen).each do |attendance| %>
 	        <% available_students += [ attendance.student ] %>
 	      <% end %>
 	      <% klass_relations += [(i+1).to_s+"->"+klass.id.to_s] %>
+	      <% attendance_relations += klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s} %>
 	    <% end %>
       
       <% no_place_to_move =[] %>
@@ -61,6 +63,7 @@
                        :klass_date=>klass_date,
                        :klass=>klass,
                        :klass_relations => klass_relations,
+                       :attendance_relations => attendance_relations,
                        :classrooms=>classrooms,
                        :teachers=>teachers,
                        :collitions=>collitions,

@@ -37,7 +37,7 @@ protected
       return true
     elsif level>=2 && session[:user_name] == "komatsu_aya"
       return true
-		elsif level>=3 && session[:user_name] == "thomas_osburg"
+    elsif level>=3 && session[:user_name] == "thomas_osburg"
       return true
     elsif level>=4
       return true
@@ -56,6 +56,5 @@ private
 
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'jp'
-    p I18n.locale
   end  
 end

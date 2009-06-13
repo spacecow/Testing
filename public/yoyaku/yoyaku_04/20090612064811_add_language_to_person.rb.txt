@@ -1,4 +1,4 @@
-class AddLanguageToPerson < ActiveRecord::Migration
+class AddLanguageToPerson &lt; ActiveRecord::Migration
   def self.up
     add_column :people, :language, :string, :default => 'jp'
   end

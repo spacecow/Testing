@@ -66,10 +66,14 @@ class PeopleController < ApplicationController
   # PUT /people/1.xml
   def update
     @person = Person.find(params[:id])
-
+    
     respond_to do |format|
       if @person.update_attributes(params[:person])
         @person.update_attribute( :tostring, @person.to_s )
+	    if @person.user_name == session[:user_name]
+		  session[:user] = Person.find_by_user_name( session[:user_name] )		
+	    end
+
        # if @person.teacher != nil
 	    #    flash[:notice] = 'Teacher was successfully updated.'
 	   #     format.html { redirect_to( teachers_path ) }

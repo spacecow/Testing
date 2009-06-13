@@ -1,3 +1,17 @@
+<html>
+<head>
+<title>
+Git on Windows
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Git on Windows</h1>
+<doc tags=["rails","git"] title="Tail on Windows">
 C:\Johan\Ruby\Rails\yoyaku>gem install webrat
 ERROR:  While executing gem ... (Zlib::BufError)
     buffer error
@@ -5,38 +19,53 @@ ERROR:  While executing gem ... (Zlib::BufError)
 http://gnuwin32.sourceforge.net/downlinks/zlib-bin-zip.php
 
 
+Go to:
+<i>http://code.google.com/p/msysgit/downloads/list</i>
 
-http://code.google.com/p/msysgit/downloads/list
-Git-1.6.3.2-preview20090608.exe
+and download the latest version. I got:
+<i>Git-1.6.3.2-preview20090608.exe</i>
 
 Install it and include it in your path
-C:\Program\Git\bin as well as C:\Program\Git\cmd
-to be able to use gitk
+<i>...\Git\bin</i> as well as
+<i>...\Git\cmd</i> to be able to use gitk
 
-C:\Johan\Ruby\Rails\yoyaku>git --version
+You can see the version number with:
+<pre class="code">
+yoyaku><span class="typing">git --version</span>
 git version 1.6.3.2.1299.gee46c
-
-C:\Johan\Ruby\Rails\yoyaku>git config --global user.name "Johan Sveholm"
+</pre>
+<pre class="code">
+yoyaku><span class="typing">git config --global user.name "Johan Sveholm"</span>
 fatal: $HOME not set
-
-C:\Documents and Settings\Johan>set home
+</pre>
+The <span class="var">HOME</span> variable is not set as you can see:
+<pre class="code">
+><span class="typing">set home</span>
 HOMEDRIVE=C:
 HOMEPATH=\Documents and Settings\Johan
+</pre>
+That can be set by right-clicking on <i>My Computer</i> and choose
+Properties->Advanced->Environment Variables and add <span class="var">HOME</span> if it is not
+added already. Set it to <i>%HOMEDRIVE%%HOMEPATH%</i> in order to point it
+somewhere below <span class="file">C:\Documents and Settings</span>. This is where Git stores
+the .gitconfig file. 
 
-You can set it yourself to where you want git to store the .gitconfig
-file. Do this in Settings->System->Advanced->Environment Variables,
-section User variables. You can set it to %HOMEDRIVE%%HOMEPATH%  in order
-point it somewhere below C:\Documents and Settings.
-
-C:\Documents and Settings\Johan>set home
+Now check home again:
+<pre class="code">
+><span class="typing">set home</span>
 HOME=C:\Documents and Settings\Johan
 HOMEDRIVE=C:
 HOMEPATH=\Documents and Settings\Johan
-
-C:\Johan\Ruby\Rails\yoyaku>git config --global user.name "Johan Sveholm"
-C:\Johan\Ruby\Rails\yoyaku>git config --global user.email 'jsveholm@gmail.com'
-
-C:\Johan\Ruby\Rails\yoyaku>git config --list
+</pre>
+And set:
+<pre class="code">
+yoyaku><span class="typing">git config --global user.name "Johan Sveholm"</span>
+yoyaku><span class="typing">git config --global user.email 'jsveholm@gmail.com'</span>
+yoyaku><span class="typing">git config --global alias.co checkout</span>
+</pre>
+<h3>Laptop</h3>
+<pre class="code">
+yoyaku><span class="typing">git config --list</span>
 core.symlinks=false
 core.autocrlf=true
 color.diff=auto
@@ -44,11 +73,39 @@ pack.packsizelimit=2g
 help.format=html
 user.name=Johan Sveholm
 user.email='jsveholm@gmail.com'
-
-C:\Johan\Ruby\Rails\yoyaku>git config --global alias.co checkout
-
-C:\Johan\Ruby\Rails\yoyaku>git init
+alias.co=checkout
+</pre>
+<h3>Stationary</h3>
+<pre class="code">
+yoyaku><span class="typing">git config --list</span>
+core.symlinks=false
+core.autocrlf=true
+color.diff=auto
+pack.packsizelimit=2g
+help.format=html
+user.name=Johan Sveholm
+user.email=jsveholm@gmail.com
+alias.co=checkout
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.symlinks=false
+core.ignorecase=true
+</pre>
+<pre class="code">
+yoyaku><span class="typing">git init</span>
 Initialized empty Git repository in C:/Johan/Ruby/Rails/yoyaku/.git/
+</pre>
+<pre class="code">
+yoyaku><span class="typing">doskey gbc=git branch --color</span>
+yoyaku><span class="typing">doskey gb=git branch</span>
+yoyaku><span class="typing">doskey /macros</span>
+gb=git branch
+gbc=git branch --color
+</pre>
+
+
 
 C:\Johan\Ruby\Rails\yoyaku>ls -a
 .            Translation.bak    db      tmp
@@ -63,14 +120,14 @@ C:\Johan\Ruby\Rails\yoyaku>tree .git
 Lista over mappar i miljovariabeln PATH
 Volymens serienummer ar 2031-2B9D
 C:\JOHAN\RUBY\RAILS\YOYAKU\.GIT
-â”œâ”€hooks
-â”œâ”€info
-â”œâ”€objects
-â”‚  â”œâ”€info
-â”‚  â””â”€pack
-â””â”€refs
-    â”œâ”€heads
-    â””â”€tags
+„¥„Ÿhooks
+„¥„Ÿinfo
+„¥„Ÿobjects
+„   „¥„Ÿinfo
+„   „¤„Ÿpack
+„¤„Ÿrefs
+    „¥„Ÿheads
+    „¤„Ÿtags
     
 
 C:\Johan\Ruby\Rails\yoyaku>touch .gitignore
@@ -80,3 +137,22 @@ C:\Johan\Ruby\Rails\yoyaku>git config --global apply.whitespace nowarn
 
 reseting a merge:
 git reset --hard ORIG_HEAD
+</doc>
+
+
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>

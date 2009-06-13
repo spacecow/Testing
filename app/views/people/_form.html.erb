@@ -66,6 +66,10 @@
   <%= f.text_area :note, :rows=>8, :cols=>27 %>
 </p>
 <p>
+  <%= f.label :language, "言語" %>
+  <%= f.select :language, [['Japanese', 'jp'], ['English', 'en']] %>
+</p>
+<p>
   <% if status=="受講生" %>
     <%= f.hidden_field :linked_student %>
   <% elsif status=="講師" %>

@@ -154,7 +154,7 @@ class KlassesController < ApplicationController
   def destroy
     @klass = Klass.find(params[:id])
     if !@klass.attendances.empty?
-      flash[:error] = "Move away all students from the class before deleting."
+      flash[:error] = t 'klasses.flash.try_to_delete_klass_with_students'
       redirect_to klasses_path( :date => params[:date] )
       return
     end

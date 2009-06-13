@@ -289,6 +289,126 @@ end
 ...
 &lt;/div>
 </pre>
+<h2>Internationalisation</h2>
+<doc tags=["rails","I18n"] title="Internationalisation">
+Set the default language to something (I have Japanese) but let it depend on
+what the loggin in user has chosen:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/application.rb.txt">yoyaku/app/controllers/application.rb</a></div>
+# Filters added to this controller apply to all controllers in the application.
+# Likewise, all the methods added will be available for all controllers.
+
+class ApplicationController &lt; ActionController::Base
+  <span class="highlight">before_filter :set_user_language</span>
+
+  ...
+
+private
+  def current_user
+    session[:user] ||= Person.find_by_user_name( session[:user_name] )
+  end  
+
+  def logged_in?
+    session[:user_name] != nil
+  end
+
+  <span class="highlight">def set_user_language
+    I18n.locale = logged_in? ? current_user.language : 'jp'
+  end</span>
+end
+</pre>
+<h3>Creating Locals</h3>
+Each language's texts are stored in a YAML file and there will be an English
+file by default called <span class="file">en.yml</span>. Note that the YAML keys can be nested so we
+can split the texts up in sections:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/en.yml.txt">yoyaku/config/locales/en.yml</a
+></div>
+# Sample localization file for English. Add more files in this directory for oth
+er locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for star
+ting points.
+
+en:
+  klasses:
+    flash:
+      try_to_delete_klass_with_students: "Move away all students from the class \
+before deleting."
+</pre>
+Create one for Japanese:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/jp.yml.txt">yoyaku/config/locales/jp.yml</a></div>
+# Sample localization file for English. Add more files in this directory for oth
+er locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for star
+ting points.
+
+jp:
+  klasses:
+    flash:
+      try_to_delete_klass_with_students: "&lt;&lt;Japanese language>>"
+</pre>
+<h3>Add a Language Field</h3>
+In order for the user to be able to choose his prefered language, add a
+column to the model:
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate migration add_language_to_person \
+  language:string</span>
+</pre>
+Further, set the default value to <i>Japanese</i>, since that is what we want:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/20090612064811_add_language_to_person.rb.txt">yoyaku/db/migrate/20090612064811_add_language_to_person.rb</a></div>
+class AddLanguageToPerson &lt; ActiveRecord::Migration
+  def self.up
+    add_column :people, :language, :string, <span class="highlight">:default => 'jp'</span>
+  end
+
+  def self.down
+    remove_column :people, :language
+  end
+end
+</pre>
+Add the option to choose language to the user in the form:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/_form.html.erb.txt">yoyaku/app/views/people/_form.html.erb</a></div>
+...
+
+<span class="highlight">&lt;p>
+  &lt;%= f.label :language, "Language" %>
+  &lt;%= f.select :language, [['Japanese', 'jp'], ['English', 'en']] %>
+&lt;/p></span>
+
+...
+</pre>
+<h3>Adding Placeholders</h3>
+Now that we have the YAML files for each language we can replace the
+hard-coded text in the page with placeholders that point to the translations.
+Rails provides a method called <span class="method">t</span> which takes the identifier of the
+translation as an argument:
+<pre class="code">
+<div class="path"><a href="yoyaku_04/_klass.html.erb.txt">yoyaku/app/views/klasses/_klass.html.erb</a></div>
+&lt;td class="table-units">
+  &lt;%= klass.time_interval %>
+&lt;/td>
+&lt;td>
+  &lt;%= link_to '-', klass_path( klass, :date=>klass_date ),
+        :confirm => 'Are you sure?' +
+        ( klass.attendances.empty? ?
+            "" :
+            "\nNOTE: "+<span class="highlight">t('klasses.flash.try_to_delete_klass_with_students')</span> ),
+        :method => :delete,
+        :class=>"grid" %>
+&lt;/td>
+&lt;td>
+  &lt;!-- classroom -->
+&lt;/td>
+&lt;td>
+  &lt;!-- teacher -->
+&lt;/td>
+  &lt;!-- students -->
+</pre>
+Or in the controller:
+</doc>
 <hr>
 
 <table><tr>

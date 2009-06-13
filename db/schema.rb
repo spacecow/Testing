@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090604041126) do
+ActiveRecord::Schema.define(:version => 20090612064811) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20090604041126) do
     t.string   "hashed_password"
     t.string   "salt"
     t.string   "check"
+    t.string   "language",                          :default => "jp"
   end
 
   create_table "registrations", :force => true do |t|
