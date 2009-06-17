@@ -1,7 +1,7 @@
 ﻿<% if category == "全部の人" %>
   <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?)", "%"+searchtext+"%" ],
-  :order => 'family_name_kana' ).reject{|e| e.name=="----------" || e.name.starts_with?( 'Move to' )} %>
+  :order => 'family_name_kana' ) %>
 <% elsif category == "講師" %>
   <% ppl = Person.find :all,
   :conditions => [ "tostring like (?) and teachers.person_id = people.id", "%"+searchtext+"%" ],
@@ -11,7 +11,7 @@
   <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?) and students.person_id = people.id", "%"+searchtext+"%" ],
   :include => "student",
-  :order => 'family_name_kana' ).reject{|e| e.name=="---- ------" || e.name.starts_with?( 'Move t o' )} %>
+  :order => 'family_name_kana' ) %>
 <% end %>	
 
 <% if ppl.size > 0 %>

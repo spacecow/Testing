@@ -56,6 +56,5 @@ private
 
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'jp'
-    p I18n.locale
   end  
 end
