@@ -1,0 +1,117 @@
+1
+
+@mafumafu	
+Scenario Outline: My Mafumafu Reservation Page
+  Given the following teacher record
+  |	user_name 		|	password	|	language	|
+  |	johan_sveholm	|	secret		|	en				|
+	|	komatsu_aya		|	secret		| ja				|
+	|	thomas_osburg	|	secret		|	en				|
+	Given the following student record
+	| id	| user_name				|	password	|	family_name	|	first_name	| language	|
+	|	1		|	kurosawa_akira	|	secret		|	•àV					|	–¾						|	en				|
+	Given the following course records
+	|	id	|	name		|
+	|	1		|	“ü–å I		|
+	|	2		|	“ü–å II	|
+	|	3		|	‰‹‰ I		|
+	Given the following klass record
+	|	id	| course	| date 					|	start_time	|	end_time	|
+	|	1		|	“ü–å I		|	current date	| 11:00				|	12:00			|
+	|	2		|	“ü–å II	|	current date	| 11:00				|	12:00			|
+	|	3		|	“ü–å I		|	current date	| 11:00				|	12:00			|
+	|	4		|	“ü–å I		|	06/01/09			| 11:10				|	12:00			|
+	|	5		|	“ü–å II	|	06/02/09			| 11:00				|	12:00			|
+	|	6		|	‰‹‰ I		|	current date	| 13:00				|	13:30			|
+	Given the following courses student records
+	|	course_id	|	student_id	|
+	|	1					|	1						|
+	|	2					|	1						|
+	Given the following attendance record
+	|	klass_id	|	student_id	| cancel	|
+	|	4					|	1						|	0				|
+	|	5					|	1						|	1				|
+	Given I am logged in as "<login>" with password "<password>"
+	When I <extra>
+	Then I should have 2 attendances
+	And I should see '<title>'" - •àV –¾"
+	And I should <link1> 'show' within "links"
+	And I should <link2> 'courses.title' within "links"
+	And I should see todays date
+	And I should see todays day
+	And I should see "“ü–å I: 11:00~12:00"
+	And I should see "“ü–å II: 11:00~12:00"
+	And I should not see "13:00~13:30"
+	And I should not see "06/01/09"
+	When I check "“ü–å I: 11:00~12:00"
+	When I check "“ü–å II: 11:00~12:00"
+	And I press 'reserve'
+	# RESERVE
+	Then I should see 'info'" - •àV –¾"
+	And I should see "“ü–å I: 11:00~12:00"
+	And I should see "“ü–å II: 11:00~12:00"
+	And I should see 'history'
+	And I should see "06/01/09 “ü–å I: 11:10~12:00"
+	And I should <cancel>
+	And I should have 4 attendances
+	When I follow 'klasses.title' within "links"
+	And I should see 'reserve'" - •àV –¾"
+	And I <extra2>
+	And I press 'reserve'
+	# CANCEL
+	And I should <cancel2>
+	And I should see "“ü–å II: 11:00~12:00"
+	And I should have 4 attendances
+	When I follow 'klasses.title' within "links"
+	And <extra3>
+	And I press 'reserve'
+	# DELETE
+	And I should not see "“ü–å I: 11:00~12:00"
+	And I should see "“ü–å II: 11:00~12:00"	
+	Then I should have <no> attendances
+	Examples:
+	|	login						|	password	|	extra									| title		|	link1		|	link2		|	cancel 																				|	extra2									|	cancel2															|	extra3																		| no	|
+	|	johan_sveholm		|	secret		|	go to student 1 page	|	reserve	|	see			|	see			| see "06/02/09 “ü–å II: 11:00~12:00 "'canceled'	|	check 'cancel'					|	see "“ü–å I: 11:00~12:00 "'canceled'	|	I uncheck "“ü–å I: 11:00~12:00"						|	3		|
+	|	komatsu_aya			|	secret		|	go to student 1 page	|	reserve	|	see			|	see			|	see "06/02/09 “ü–å II: 11:00~12:00 "'canceled'	|	check 'cancel'					|	see "“ü–å I: 11:00~12:00 "'canceled'	|	I uncheck "“ü–å I: 11:00~12:00"						|	3		|
+	|	kurosawa_akira	|	secret		|	should see "•àV –¾"		|	reserve	|	see			|	not see	|	not see "06/02/09"														|	should not see 'cancel'	|	not see "“ü–å I: 11:00~12:00 "				|	the 'cancel' checkbox should be checked		|	4		|
+
+Scenario Outline: My Mafumafu Info Page
+  Given the following teacher record
+  |	user_name 		|	password	|	language	|
+  |	johan_sveholm	|	secret		|	en				|
+	|	komatsu_aya		|	secret		| ja				|
+	|	thomas_osburg	|	secret		|	en				|
+	Given the following student record
+	| id	| user_name				|	password	|	family_name	|	first_name	|
+	|	1		|	kurosawa_akira	|	secret		|	•àV					|	–¾						|
+	
+	Given I have courses titled "“ü–å I"
+	Given the following klass record
+	|	id	| course	| date 					|
+	|	1		|	“ü–å I		|	current date	|
+	|	2		|	“ü–å I		| 06/01/09			|
+	|	3		|	“ü–å I 	| 06/02/09			|
+	Given the following attendance record
+	|	klass_id	|	student_id	|	cancel	|
+	|	1					|	1						|	0				|
+	|	2					|	1						|	0				|
+	|	3					|	1						|	1				|
+	|	1					|	2						|	0				|
+	|	2					|	2						|	0				|
+	|	3					|	2						|	0				|	
+	Given I am logged in as "<login>" with password "<password>"
+	When I <extra1>
+	And I should <akira> "•àV –¾"
+	And I <extra2>
+	Then I should see todays day
+	And I should see "06/01/09"
+	And I should <cancel> "06/02/09"
+	And I should <link1> 'courses.title' within "links"
+	And I should <link2> 'klasses.title' within "links"
+	Examples:
+	|	login						|	password	|	extra1								|	akira		| extra2						|	link1		|	link2		|	cancel	|
+	|	johan_sveholm		|	secret		|	go to student 1 page	|	see			|	follow 'show'			|	see			|	see			|	see			|
+	|	komatsu_aya			|	secret		|	go to student 1 page	|	see			|	follow 'show'			|	see			|	see			|	see			|
+	|	thomas_osburg		|	secret		|	go to student 1 page	|	see			|	should see 'show'	|	not see	|	not see	|	see			|
+	|	kurosawa_akira	|	secret		|	should see 'reserve'	|	see			|	follow 'show'			|	not see	|	see			|	not see	|
+	|	koda_kumiko			|	secret		|	go to student 1 page	|	not see	|	follow 'show'			|	not see	|	see			|	see			|

@@ -1,0 +1,50 @@
+<div class="klasses">
+<% unless @teacher.klasses.empty? %>
+	<table>
+		<tr>
+			<th align="left">
+				<h3><%= t('klasses.title') %></h3>
+			</th>
+		</tr>
+		<% @klass_groups.sort.each do |date,klass_group| %>
+			<tr>
+		    <td>
+		      <strong><%= date %>: <%= klass_group[0].date.strftime("%A") %><br/></strong>
+		    </td>
+		  </tr>
+			<% klass_group.sort_by(&:start_time).each do |klass| %>
+			  <tr>
+	        <div class="klass_<%= klass.id %>">
+	        	<%= render :partial=>"show_klass", :locals => { :klass => klass } %>
+	        </div>
+				</tr>
+			<% end %>
+		<% end %>
+	</table><br />
+<% end %>
+</div>
+<div class="history">
+<% unless @history_groups.empty? %>
+	<table>
+		<tr>
+			<th align="left">
+				<h4><%= t('history') %></h4>
+			</th>
+		</tr>
+		<% @history_groups.sort.each do |date,history_group| %>
+			<tr>
+		    <td>
+		      <strong><%= date %>: <%= history_group[0].date.strftime("%A") %><br/></strong>
+		    </td>
+		  </tr>
+			<% history_group.sort_by(&:start_time).each do |klass| %>
+			  <tr>
+	        <div class="klass_<%= klass.id %>">
+	        	<%= render :partial=>"show_klass", :locals => { :klass => klass } %>
+	        </div>
+				</tr>
+			<% end %>
+		<% end %>
+	</table><br />
+<% end %>
+</div>

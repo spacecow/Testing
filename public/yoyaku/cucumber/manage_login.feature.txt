@@ -1,0 +1,19 @@
+Scenario Outline: Login Valid Admin
+  Given I go to the &lt;page>
+  When I fill in 'login.user_name' with "&lt;login>"
+  And I fill in 'login.password' with "&lt;password>"
+  And I press 'login.button'
+  Then I should &lt;action>
+  
+  Examples:
+    | page            | login          | password | action                                     |
+    | login page      | johan_sveholm  | secret   | see todays day                             |
+    | login page      | kurosawa_akira | secret   | see "黒澤 明"                               |
+    | login page      | johan_sveholm  | wrong    | see 'login.flash.invalid_user_or_password' |
+    | list of courses | johan_sveholm  | secret   | see "Listing courses"                       |
+    
+Scenario: Redirection
+  Given I am logged in as "johan_sveholm" with password "secret"
+  When I am on the list of template klasses
+  And I select "Monday" from "template_day"
+  

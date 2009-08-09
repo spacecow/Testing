@@ -1,0 +1,21 @@
+<table>
+	<tr>
+		<th align="left">
+			<% unless @teacher.courses.empty? %>
+				<h3><%= t('courses.title') %></h3>
+			<% end %>
+		</th>
+	</tr>
+	<% @keys.each do |key| %>
+		<% @courses[key].each do |course| %>
+		  <tr>
+		    <label>		    
+		    	<td>
+					  <%= check_box_tag "teacher[course_ids][]", course.id, @teacher.courses.include?( course ), :disabled=>true %>
+					  <%= course.name %>
+					</td>
+				</label>				
+			</tr>	
+		<% end %>
+	<% end %>
+</table>

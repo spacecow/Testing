@@ -1,0 +1,39 @@
+<td class="table-units">
+  <%= template_klass.time_interval %>
+</td>
+<td>
+  <%= link_to t( 'show' ), template_klass, :class => "grid" %>
+  <%= link_to t( 'edit' ), edit_template_class_path( template_klass ), :class => "grid" %>
+	<%= link_to t( 'delete' ), template_class_path( template_klass ),
+        :confirm => 'Are you sure?',
+        :method => :delete,
+        :class=>"grid" %>	
+</td>
+<td>
+  <% form_for(template_klass) do |f| %>
+    <% if clearance?(2) %>
+      <%= f.collection_select :classroom_id,
+          ( @classrooms - collisions.map{|e| e.classroom } + ( template_klass.classroom ? [template_klass.classroom] : [] )).sort_by(&:name),
+            :id,
+            :name,
+          { :include_blank=>true },
+          { :onchange => 'this.form.submit();',
+            :class => template_klass.classroom ? "table-units" : "template-drop-box-empty" } %>
+    <% else %>
+      <center><%= klass.classroom ? klass.classroom.name : "?" %></center>
+    <% end %>
+</td>
+<td>
+	  <% if clearance?(2) %>
+	    <%= f.collection_select :teacher_id,
+	        ( teachers - collisions.map{|e| e.teacher } + ( template_klass.teacher ? [template_klass.teacher] : [] )).sort_by(&:name),
+	          :id,
+	          :name,
+	        { :include_blank=>true },
+	        { :onchange => 'this.form.submit();',
+	          :class => template_klass.teacher ? ( template_klass.teacher_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "template-drop-box-empty" } %>
+	  <% else %>
+	    <center><%= klass.teacher ? klass.teacher.name : "?" %></center>
+	  <% end %>
+  <% end %>
+</td>

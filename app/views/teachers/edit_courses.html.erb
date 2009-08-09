@@ -1,0 +1,43 @@
+<div class="form">
+<%= error_messages_for :student %>
+<fieldset>
+<legend><%= t('teacher') %> - <%= @teacher %></legend>
+
+<div class="courses">
+<table>
+	<tr>
+		<th align="left">
+			<% unless @courses.empty? %>
+				<h3><%= t('courses.title') %></h3>
+			<% end %>
+		</th>
+	</tr>
+	<% form_for :teacher, :url => update_courses_teacher_path( @teacher ), :html => { :method => :put } do |f| %>
+		<% @keys.each do |key| %>
+			<% @courses[key].each do |course| %>
+				<tr>
+					<td>
+						<div class="<%= course %>">
+		  				<%= render :partial=>"course", :locals => { :course => course } %>
+		  			</div>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td>
+				<br />
+			  <%= f.hidden_field :created_at %>
+			  <%= f.submit t('update') %>
+			</td>
+		</tr>
+	<% end %>
+</table><br />
+</div>
+
+<div class="links">
+	<%= link_to t('info'), @teacher %>
+</div>
+
+</fieldset>
+</div>

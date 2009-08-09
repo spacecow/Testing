@@ -1,0 +1,28 @@
+<div class="form">
+<%= error_messages_for :teacher %>
+<fieldset>
+<legend><%= t('info') %> - <%= @teacher %></legend>
+
+<table>
+	<tr>
+		<div class="courses">
+			<% if clearance <=3 %>
+				<td valign="top" width="80">
+					<%= render :partial=>"show_courses" %>
+				</td>
+			<% end %>
+		</div>		
+		<td>
+			<%= render :partial=>"show_klasses" %>
+		</td>
+	</tr>	
+</table>
+
+<div class="links">
+	<% if clearance <=2 %>
+		<%= link_to t('courses.title'), edit_courses_teacher_path( @teacher ) %>
+	<% end %>
+</div>
+
+</fieldset>
+</div>

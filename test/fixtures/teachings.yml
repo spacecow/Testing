@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  teacher: 
+  course: 
+  cost: 1
+  note: MyText
+
+two:
+  teacher: 
+  course: 
+  cost: 1
+  note: MyText

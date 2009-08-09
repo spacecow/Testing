@@ -1,0 +1,6 @@
+<label>
+	<%= check_box_tag "teacher[course_ids][]", course.id, @teacher.courses.include?( course ) %>
+	<%= course.name %>
+</label>
+<%= @teacher.teachings.map{|e| e.course_id == course.id ?
+	"<i>"+e.cost.to_s+"円</i> "+link_to( t('edit'), edit_teaching_path( e ), :class=>:grid ) : "" } %>

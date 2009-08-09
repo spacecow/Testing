@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>
+Cucumber
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Cucumber</h1>
+<doc tags=["rails","Cucumber"] title="Cucumber">
+This is the code we are going to transform into Cucumber code:
+<pre class="code">
+<div class="path"><a href="cucumber/staff_stories_test.rb.txt">yoyaku/test/integration/staff_stories_test.rb</a></div>
+require File.dirname(__FILE__)+'/../test_helper'
+
+class StaffStoriesTest &lt; ActionController::IntegrationTest
+  fixtures :all
+
+  context "A user" do
+    should "be redirected to the page he tried to visit before he was forced tolog in" do
+      get "/courses"
+      assert_redirected_to :controller => "admin", :action => "login"
+      post "/admin/login", :user_name => people(:johan).user_name, :password =>'secret'
+      assert_redirected_to courses_path
+    end
+    should "be taken to the default admin page if user is admin" do
+      post "/admin/login", :user_name => people(:johan).user_name, :password =>'secret'
+      assert_redirected_to klasses_path
+    end
+    should "be taken to the user page if user is not an admin" do
+      post "/admin/login", :user_name => people(:kurosawa).user_name, :password => 'secret'
+      assert_redirected_to edit_klasses_students_path( :id => people(:kurosawa).student.id )
+    end
+
+    should "get logged in if he inserts correct data in the login section" do
+      visit login_path
+      fill_in "Name", :with => "johan_sveholm"
+      fill_in "Password", :with => "secret"
+      click_button "Login"
+      assert_contain DateTime.current.strftime("%A")
+    end
+  end
+end
+</pre>
+First, set up the testing environment:
+<pre class="code">
+<div class="path"><a href="cucumber/test.rb.txt">yoyaku/config/environments/test.rb</a></div>
+...
+
+config.gem 'thoughtbot-shoulda', :lib => 'Shoulda', :version => '2.10.1', \
+  :source => "http://gems.github.com"
+config.gem "rspec", :lib => false, :version => ">=1.2.6"
+config.gem "rspec-rails", :lib => false, :version => ">=1.2.6"
+config.gem "webrat", :lib => false, :version => ">=0.4.4"
+config.gem "cucumber", :lib => false, :version => ">=0.3.11"
+</pre>
+Make sure all gems are installed:
+<pre class="code">
+yoyaku><span class="typing">rake gems:install RAILS_ENV=test</span>
+(in D:/ruby/yoyaku)
+</pre>
+Now set up cucumber:
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate cucumber</span>
+      create  features/step_definitions
+      create  features/step_definitions/webrat_steps.rb
+      create  config/environments/cucumber.rb
+      create  features/support
+      create  features/support/env.rb
+      create  features/support/paths.rb
+      exists  lib/tasks
+      create  lib/tasks/cucumber.rake
+      create  script/cucumber
+</pre>
+Create a scenario:
+<pre class="code">
+<div class="path"><a href="cucumber/manage_login.feature.txt">yoyaku/features/manage_login.feature</a></div>
+Scenario: Login Valid User
+  Given I am on the login page
+  When I fill in "User Name" with "johan_sveholm"
+  And I fill in "Password" with "secret"
+  And I press "Login"
+  Then I should see todays day
+</pre>
+Only the last line has to be defined:
+<pre class="code">
+<div class="path"><a href="cucumber/login_steps.rb.txt">yoyaku/features/step_definitions/login_steps.rb</a></div>
+Then /^I should see todays day$/ do
+  response.should contain( DateTime.current.strftime("%A"))
+end
+</pre>
+Create mapping from "the login page" to a path:
+<pre class="code">
+<div class="path"><a href="cucumber/paths.rb.txt">yoyaku/features/support/paths.rb</a></div>
+module NavigationHelpers
+  ...
+  def path_to(page_name)
+    case page_name
+
+    when /the homepage/
+      '/'
+    <span class="highlight">when /the login page/
+      login_path</span>
+    ...
+  end
+end
+
+World(NavigationHelpers)
+</pre> 
+<pre class="code">
+<div class="path"><a href="cucumber/manage_login.feature.txt">yoyaku/features/manage_login.feature</a></div>
+Scenario: Login Valid Admin
+  Given I am on the login page
+  When I fill in 'login.user_name' with "johan_sveholm"
+  And I fill in 'login.password' with "secret"
+  And I press 'login.button'
+  Then I should be on the list of klasses
+  And I should see todays day
+
+Scenario: Login Valid Student
+  Given I am on the login page
+  When I fill in 'login.user_name' with "kurosawa_akira"
+  And I fill in 'login.password' with "secret"
+  And I press 'login.button'
+  Then I should see "Kurosawa Akira"
+
+Scenario: Login Inalid User
+  Given I am on the login page
+  When I fill in 'login.user_name' with "johan_sveholm"
+  And I fill in 'login.password' with "wrong"
+  And I press 'login.button'
+  Then I should see 'login.flash.invalid_user_or_password'
+
+Scenario: Redirection to Page after Login
+  Given I go to the list of courses
+  And I should be on the login page
+  When I fill in 'login.user_name' with "johan_sveholm"
+  And I fill in 'login.password' with "secret"
+  And I press 'login.button'
+  Then I should be on the list of courses
+</pre>
+<pre class="code">
+<div class="path"><a href="cucumber/manage_login.feature.txt">yoyaku/features/ma
+nage_login.feature</a></div>
+Scenario Outline: Login Options and Actions
+  Given I go to the <span class="highlight">&lt;page></span>
+  When I fill in 'login.user_name' with "<span class="highlight">&lt;login></span>"
+  And I fill in 'login.password' with "<span class="highlight">&lt;password></span>"
+  And I press 'login.button'
+  Then I should <span class="highlight">&lt;action></span>
+
+  <span class="highlight">Examples:
+  | page            | login          | password | action                                     |
+  | login page      | johan_sveholm  | secret   | see todays day                             |
+  | login page      | kurosawa_akira | secret   | see "kurosawa akira"                       |
+  | login page      | johan_sveholm  | wrong    | see 'login.flash.invalid_user_or_password' |
+  | list of courses | johan_sveholm  | secret   | see "Listing courses"                      |</span>
+
+Scenario: Redirection
+  Given I am logged in as "johan_sveholm" with password "secret"
+  When I am on the list of template klasses
+  And I select "Monday" from "template_day"
+  </pre>
+</doc>
+<h1>Factory</h1>
+<doc tags=["rails","Factory"] title="Factory">
+Include the gem FactoryGirl in your <span class="file">environments/test.rb</span> file:
+<pre class="code">
+<div class="path"><a href="cucumber/test.rb.txt">yoyaku/config/environments/test.rb</a></div>
+...
+<span class="highlight">config.gem "thoughtbot-factory_girl", :lib => "factory_girl", \
+  :source => "http://gems.github.com"</span>
+...
+</pre>
+And install it:
+<pre class="code">yoyaku><span class="typing">rake gems:install RAILS_ENV=test</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+gem.bat install thoughtbot-factory_girl --source http://gems.github.com
+Successfully installed thoughtbot-factory_girl-1.2.1
+1 gem installed
+Installing ri documentation for thoughtbot-factory_girl-1.2.1...
+Installing RDoc documentation for thoughtbot-factory_girl-1.2.1...
+</pre>
+<pre class="code">
+yoyaku><span class="typing">ruby script/generate cucumber</span>
+      exists  features/step_definitions
+   identical  features/step_definitions/webrat_steps.rb
+overwrite config/environments/cucumber.rb? (enter "h" for help) [Ynaqdh] y
+       force  config/environments/cucumber.rb
+      exists  features/support
+overwrite features/support/env.rb? (enter "h" for help) [Ynaqdh] y
+       force  features/support/env.rb
+overwrite features/support/paths.rb? (enter "h" for help) [Ynaqdh] n
+        skip  features/support/paths.rb
+      exists  lib/tasks
+   identical  lib/tasks/cucumber.rake
+   identical  script/cucumber
+</pre>
+If that does not work, include the gem yourself:
+<pre class="code">
+<div class="path"><a href="cucumber/cucumber.rb.txt">yoyaku/config/environments/cucumber.rb</a></div>
+
+config.gem "cucumber", :lib => false, :version => ">=0.3.11" \
+  unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
+config.gem "webrat", :lib => false, :version => ">=0.4.4" \
+  unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
+config.gem "rspec", :lib => false, :version => ">=1.2.6" \
+  unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
+config.gem "rspec-rails", :lib => 'spec/rails', :version => ">=1.2.6" \
+  unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+<span class="highlight">config.gem "thoughtbot-factory_girl", :lib => 'factory_girl', :version => ">=1.2.1" \
+  unless File.directory?(File.join(Rails.root, 'vendor/plugins/thoughtbot-factory_girl'))</span>
+</pre>
+</doc>
+<hr>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
