@@ -1,19 +1,23 @@
 class TeachersController < ApplicationController
-  # GET /teachers
-  # GET /teachers.xml
+	before_filter :authorize, :except=>[:show]
+
   def index
     redirect_to :controller=>'people', :category=>"講師"
   end
 
-  # GET /teachers/1
-  # GET /teachers/1.xml
   def show
-    @teacher = Teacher.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @teacher }
-    end
+	  if clearance == 3
+	  elsif unauthorized_regular_user params[:id].to_i
+  		redirect_to default_page
+ 			flash[:error] = t('people.error.unauthorized_access')
+  		return
+  	end
+    @teacher = Teacher.find( params[:id], :include=>[ :person, { :klasses=>:course }, :courses ])
+    @courses = @teacher.courses.group_by( &:category )
+  	@sorting = Sorting.new
+  	@keys = @sorting.sort_in_mogi_order( @courses.keys )
+    @klass_groups = @teacher.klasses.reject{|e| e.date < Date.current }.group_by{|e| e.date.strftime("%x")}
+    @history_groups = @teacher.klasses.reject{|e| e.date >= Date.current }.group_by{|e| e.date.strftime("%x")}
   end
 
   # GET /teachers/new
@@ -68,15 +72,40 @@ class TeachersController < ApplicationController
     end
   end
 
-  # DELETE /teachers/1
-  # DELETE /teachers/1.xml
-  def destroy
-    @teacher = Teacher.find(params[:id])
-    @teacher.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(teachers_url) }
-      format.xml  { head :ok }
+	def edit_courses
+  	@teacher = Teacher.find( params[:id], :include=>[ :person, :courses ])
+  	@courses = Course.all.group_by( &:category )
+  	@sorting = get_sorting
+  	@keys = @sorting.sort_in_mogi_order( @courses.keys )
+	end
+	
+	def update_courses
+    params[:teacher][:course_ids] ||= []
+    @teacher = Teacher.find( params[:id] )
+    @teacher.update_attributes(params[:teacher])
+    redirect_to @teacher
+	end
+  
+private
+  def authorize
+    if !logged_in?
+      session[:original_uri] = request.request_uri
+      flash[:notice] = "Please log in"
+      redirect_to :controller=>:admin, :action=>:login
+    elsif clearance >= 3
+      redirect_to default_page( Teacher.find( params[:id] ).person.id )
+      flash[:error] = t('people.error.unauthorized_access') unless clearance == 3
     end
+  end  
+
+	def unauthorized_regular_user( id )
+  	if clearance >= 4
+  		if current_user.student.nil?
+  			return current_user.teacher.id != id
+  		else
+  			return true
+  		end
+  	end
+  	false
   end
 end

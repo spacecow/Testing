@@ -1,15 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :attendances
-	map.resources :tags
-  map.resources :docs
-  map.resources :students, :collection => { :edit_multiple => :post, :update_multiple => :put, :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
   map.resources :classrooms
-  map.resources :teachers
-  map.resources :klasses
-  map.resources :people
-  map.resources :template_classes
-  map.resources :course_times
   map.resources :courses
+  map.resources :course_times
+  map.resources :docs
+  map.resources :klasses, :collection => { :add_course => :get }
+  map.resources :people
+  map.resources :students, :collection => { :edit_multiple => :post, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
+	map.resources :tags
+  map.resources :teachers, :member => { :edit_courses => :get, :update_courses => :put }
+  map.resources :teachings
+  map.resources :template_classes, :collection => { :add_course => :get }
+  map.login 'login', :controller => 'admin', :action => 'login'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

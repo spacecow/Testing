@@ -1,67 +1,68 @@
 ﻿<p>
-  <label for "course_id">講座</label>
-    <%= f.select :course_id,
-      Course.find( :all ).map{|e| [e, e.id]},
-      :prompt => "講座を選んで",
-      :selected => @template_class.course ? @template_class.course.id : ( params[ :course ] ? Course.find( params[ :course ] ).id : nil ) %>  </p>
+  <%= f.label :course_id, t( 'course' ) %>
+  <%= f.select :course_id,
+    Course.find( :all ).map{|e| [e, e.id]},
+    :prompt => "講座を選んで",
+    :selected => @template_class.course ? @template_class.course.id : ( params[ :course ] ? Course.find( params[ :course ] ).id : nil ) %>  </p>
 </p>
 <p>
-  <label for="teacher_id">講師</label>
+  <%= f.label :teacher_id, t( 'teacher' ) %>
   <%= f.select :teacher_id,
     Teacher.find(
       :all,
       :conditions => ["person_id = people.id"],
       :include => :person ).map{|e| [e, e.id]},
-    :prompt => "講師を選んで",
-    :selected => @template_class.teacher ? @template_class.teacher.id : nil %>
+    	:prompt => "講師を選んで",
+    	:selected => @template_class.teacher ? @template_class.teacher.id : nil %>
 </p>
 <p>
-  <label for="classroom_id">部屋</label>
+  <%= f.label :classroom_id, t( 'classroom' ) %>
   <%= f.select :classroom_id,
     Classroom.find( :all ).map{|e| [e, e.id]},
     :prompt => "部屋を選んで",
     :selected => @template_class.classroom ? @template_class.classroom.id : nil %>
 </p>
 <p>
-  <label for="capacity">Capacity</label>
+	<%= f.label :capacity, t( 'capacity' ) %>
   <%= f.text_field :capacity, :size=>5 %>
 </p>
 <p>
-  <%= f.label :day %>
+  <%= f.label :day, t( 'day' ) %>
   <%= f.select :day,
     @days,
     :prompt => "Select a day",
     :selected => @template_class.day || params[:template_day] %>
 </p>
 <p>
-  <label for="course_time_id">時間</label>
-  <%= f.select :course_time_id,
-    CourseTime.find( :all, :order=>"start_time, end_time" ).map{|e| [e, e.id]},
-    :prompt => "時間を選んで",
-    :selected => @template_class.course_time ? @template_class.course_time.id : ( params[ :time ] ? CourseTime.find( params[ :time ]).id : nil ) %>
+  <%= f.label :start_time_string, t( 'start_time' ) %>
+  <%= f.text_field :start_time_string, :size=>5 %>
 </p>
 <p>
-  <%= f.label :title %>
+  <%= f.label :end_time_string, t( 'end_time' ) %>
+  <%= f.text_field :end_time_string, :size=>5 %>
+</p>
+<p>
+  <%= f.label :title, t( 'title' ) %>
   <%= f.text_field :title %>
 </p>
 <p>
-  <%= f.label :mail_sending %>
+  <%= f.label :mail_sending, t( 'mail_sending' ) %>
   <%= f.text_field :mail_sending %>
 </p>
 <p>
-  <%= f.label :inactive %>
+  <%= f.label :inactive, t( 'inactive' ) %>
   <table><tr>
     <td bgcolor="#AAAAFF"><%= f.radio_button :inactive, false %>OFF</td>
     <td bgcolor="#FFAAAA"><%= f.radio_button :inactive, true %>ON</td>
   </tr></table>
 </p>
 <p>
-  <%= f.label :description %>
-  <%= f.text_area :description, :rows=>8 %>
+  <%= f.label :description, t( 'description' ) %>
+  <%= f.text_area :description, :rows=>8, :cols=>27 %>
 </p>
 <p>
-  <%= f.label :note %>
-  <%= f.text_area :note, :rows=>8 %>
+  <%= f.label :note, t( 'note' ) %>
+  <%= f.text_area :note, :rows=>8, :cols=>27 %>
 </p>
 <p>
   <%= f.submit label_text, :class=>"submit" %>

@@ -12,8 +12,12 @@ ActiveRecord::Base.establish_connection(
 
 tag_hash = {}
 
-filenames = Dir[ 'C:/Johan/Ruby/Rails/yoyaku/public/yoyaku/*.html' ]
-#filenames = Dir[ 'D:/ruby/yoyaku/public/yoyaku/*.html' ]
+#filenames = Dir[ 'C:/Johan/Ruby/Rails/yoyaku/public/yoyaku/*.html' ]
+filenames = Dir[ 'D:/ruby/yoyaku/public/yoyaku/*.html' ]
+
+Doc.delete_all
+Tag.delete_all
+DocsTag.delete_all
 
 i_tags = 0;
 i_docs = 0;

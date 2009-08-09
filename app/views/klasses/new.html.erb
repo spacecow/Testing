@@ -1,12 +1,12 @@
 ﻿<div class="form">
 <%= error_messages_for :klass %>
 <fieldset>
-<legend>新しいクラス</legend>
+<legend><%= t( 'klasses.new' ) %></legend>
 
 <% form_for(@klass) do |f| %>
-  <%= render :partial=>"form", :locals => { :f=>f, :label_text=>"Create", :klass_date=>@klass_date } %>
+  <%= render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
 <% end %>
 
-<%= link_to 'Back', klasses_path %>
+<%= link_to t('back'), klasses_path %>
 </fieldset>
 </div>

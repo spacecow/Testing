@@ -1,23 +1,75 @@
 <p>
-  <b>Name:</b>
+  <b><%= t( 'name' ) %>: </b>
   <%=h @course.name %>
 </p>
 
 <p>
-  <b>Description:</b>
+  <b><%= t( 'description' ) %>: </b>
   <%=h @course.description %>
 </p>
 
 <p>
-  <b>Inactive:</b>
+  <b><%= t( 'inactive' ) %>: </b>
   <%=h @course.inactive %>
 </p>
 
 <p>
-  <b>Note:</b>
+  <b><%= t( 'note' ) %>: </b>
   <%=h @course.note %>
 </p>
 
+<p>
+<table border="0" cellspacing="0" cellpadding="5">
+	<tr><td>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr><th align="left"><h3><%= t( 'klasses.title' ) %></h3></th></tr>
+			<% @course.klasses.group_by{|e| e.date.strftime("%x")}.sort.each do |date,klass_group| %>
+				<tr><td><strong><%= klass_group[0].date.strftime("%x") %>: <%= t( 'date.day_names' )[klass_group[0].date.strftime("%w").to_i] %></strong><br /></td></tr>
+				<% klass_group.sort_by(&:start_time).each do |klass| %>
+					<div class="klass_<%= klass.id %>">
+						<tr>
+							<td>
+								(<%= klass.attendances.size %>)
+								<%= klass.time_interval %>
+								<%= link_to t( 'show' ), klass, :class => "grid" %>
+								<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
+								<%= link_to t( 'delete' ), klass,
+											:confirm => 'Are you sure?'+
+											( !klass.attendances.empty? ?
+													"\n"+t('note')+": "+t('klasses.flash.try_to_delete_klass_with_students') :
+													""
+											),
+											:method => :delete,
+											:class => "grid" %>	
+							</td>
+						</tr>
+					</div>
+				<% end %>
+			<% end %>
+		</table>
+	</td>
+	<td valign="top">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr><th align="left"><h3><%= t( 'template_klasses.title' ) %></h3></th></tr>
+			<% @keys.each do |key| %>
+				<tr><td><strong><%= @template_klass_groups[key][0].day %></strong></td></tr>
+				<% @template_klass_groups[key].sort_by(&:start_time).each do |template_klass| %>
+					<div class="template_klass_<%= template_klass.id %>">
+						<tr>
+							<td>
+								<%= template_klass.time_interval %>
+								<%= link_to t( 'show' ), template_klass, :class => "grid" %>
+								<%= link_to t( 'edit' ), edit_template_class_path(template_klass), :class => "grid" %>
+								<%= link_to t( 'delete' ), template_klass, :confirm => 'Are you sure?', :method => :delete, :class => "grid" %>
+							</td>
+						</tr>
+					</div>
+				<% end %>
+			<% end %>
+		</table>	
+	</td></tr>
+</table>
+</p>
 
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

@@ -1,31 +1,47 @@
 <div id="list">
-<h1>Listing courses</h1>
+<h1><%= t( 'courses.listing' ) %></h1>
 
 <table cellpadding="5" cellspacing="0">
-<% @courses_groups.each do |categroy, course_group| %>
-	<% course_group.each do |course| %>
-	  <tr valign="top" class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
-	    <td>	
-	    <% if( course.inactive ) %>
-				<td style="color: silver">
-	    <% else %>
-	    	<td style="color: black">
-	    <% end %>
-	    	<%= h course.name %>
-	    </td>
-	
-		  <td class="list-actions">
-		    <%= link_to 'Show', course %>
-		    <%= link_to 'Edit', edit_course_path( course ) %>
-		    <% if clearance?(1) %>
-		      <%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %>
-		    <% end %>
-		  </td>
-	  </tr>
+
+<% @keys.each do |key| %>
+	<% @courses_groups[key].each do |course| %>
+		<div class="course_<%= course.id %>">
+			<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+				<td>	
+		    	<%= h course.name %>
+		    </td>
+			  <td class="list-actions">
+			    <%= link_to t( 'show' ), course %>
+			    <%= link_to t( 'edit' ), edit_course_path( course ) %>
+			    <%= link_to t( 'delete' ),
+			       course,
+			      :confirm => 'Are you sure?'+
+        		( !course.template_classes.empty? && !course.klasses.empty? ?
+	              "\n"+t('notice')+": "+
+	              t('courses.flash.try_to_delete_course_with_template_classes')+
+	              " ("+course.template_classes.size.to_s+")"+"\n"+
+	              t('courses.flash.try_to_delete_course_with_klasses')+
+	              " ("+course.klasses.size.to_s+")" :
+                ( !course.template_classes.empty? ?
+			              "\n"+t('note')+": "+
+			              t('courses.flash.try_to_delete_course_with_template_classes')+
+			              " ("+course.template_classes.size.to_s+")" :
+			              ( !course.klasses.empty? ?
+					              "\n"+t('note')+": "+
+					              t('courses.flash.try_to_delete_course_with_klasses')+
+					              " ("+course.klasses.size.to_s+")" :
+					              ""
+			              )
+                )
+            ),
+			      :method => :delete %>
+			  </td>
+		  </tr>
+	  </div>
 	<% end %>
 <% end %>
 </table>
 </div>
 <br />
 
-<%= link_to 'New course', new_course_path %>
+<%= link_to t( 'courses.new' ), new_course_path %>

@@ -1,5 +1,6 @@
 kurosawa:
   id: 1
+  person_id: 3
   
 mao:
   id: 2

@@ -1,5 +1,9 @@
 kurosawa_class:
   id: 1
+  date: 2009-06-20 00:00:00
+  course_id: 1
   
 mao_class:
   id: 2
+  date: 2009-06-20 00:00:00
+  course_id: 1

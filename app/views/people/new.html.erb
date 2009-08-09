@@ -1,11 +1,11 @@
 ﻿<div class="form">
 <%= error_messages_for :person %>
 <fieldset>
-<legend>新しい<%= params[:status] %></legend>
+<legend><%= t('new') %> <%= params[:status]=="講師" ? t('teacher') : t('student') %></legend>
 <% form_for(@person) do |f| %>
-  <%= render :partial => "form", :locals => { :f=>f, :status=>params[:status], :label_text=>"Create" } %>
+  <%= render :partial => "form", :locals => { :f=>f, :status=>params[:status], :label_text=>t('create') } %>
 <% end %>
 
-<%= link_to 'Back', @person.status==nil ? people_path : @person.status==1 ? teachers_path : students_path %>
+<%= link_to t('back'), @person.status==nil ? people_path : @person.status==1 ? teachers_path : students_path %>
 </fieldset>
 </div>

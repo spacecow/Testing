@@ -22,4 +22,8 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.delivery_method = :test
 
 config.gem 'thoughtbot-shoulda', :lib => 'Shoulda', :version => '2.10.1', :source => "http://gems.github.com"
-config.gem 'webrat', :version => ">=0.4.4"
+config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
+config.gem "rspec", :lib => false, :version => ">=1.2.6"
+config.gem "rspec-rails", :lib => false, :version => ">=1.2.6"
+config.gem "webrat", :lib => false, :version => ">=0.4.4"
+config.gem "cucumber", :lib => false, :version => ">=0.3.11"

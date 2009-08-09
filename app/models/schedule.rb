@@ -20,6 +20,5 @@ class Schedule
     hours = time_parts[0].to_i + ( minutes + time_parts[-1].to_i )/60;
     minutes = ( minutes + time_parts[-1].to_i )%60;
     minutes == 0 ? "#{hours}:00" : "#{hours}:#{minutes}"
-    
   end
 end

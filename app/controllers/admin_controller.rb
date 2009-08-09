@@ -10,13 +10,13 @@ class AdminController < ApplicationController
         session[:user_name] = user.user_name
         uri = session[:original_uri]
         session[:original_uri] = nil
-        unless clearance?(3)
-          redirect_to :controller=>'students', :action=>'edit_klasses', :id=>user.student.id
+        if clearance >= 4
+          redirect_to ( user.student.nil? ? user.teacher : edit_klasses_student_path( user.student.id ))
         else
           redirect_to( uri || klasses_path )
         end
       else
-        flash.now[:notice] = "Invalid user"
+        flash.now[:error] = t 'login.flash.invalid_user_or_password'
       end
     end
   end

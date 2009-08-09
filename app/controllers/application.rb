@@ -4,7 +4,9 @@
 class ApplicationController < ActionController::Base
   before_filter :authorize, :except=>[:login,:logout]
   before_filter :set_user_language
+  helper_method :clearance
   helper_method :clearance?
+  helper_method :current_user
 
   session :session_key => '_yoyaku_session_id'
   layout "courses"
@@ -21,14 +23,12 @@ class ApplicationController < ActionController::Base
 
 protected
   def authorize
-    unless logged_in?
+    if !logged_in?
       session[:original_uri] = request.request_uri
       flash[:notice] = "Please log in"
       redirect_to :controller=>:admin, :action=>:login
-    else
-      unless clearance?(2)
-        redirect_to :controller=>:klasses, :action=>"index"
-      end
+    elsif clearance >= 4
+      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
     end
   end
     
@@ -44,17 +44,61 @@ protected
     end
     return false
   end
+  
+  def clearance
+		if session[:user_name] == "johan_sveholm"
+      return 1
+    elsif session[:user_name] == "komatsu_aya"
+      return 2
+		elsif session[:user_name] == "thomas_osburg"
+			return 3
+		end
+		return 4
+  end
 
 private
+	def association_delete_error_message( association, mess )
+		if !association.empty?
+			return mess + ' (' + association.size.to_s + ')'
+		end
+	end
+	
+	def association_delete_error_messages( associations, messes )
+		errors = []
+		associations.each_with_index do |association,i|
+			errors.push association_delete_error_message( associations[i], messes[i] )
+		end
+		errors.compact
+	end	
+
   def current_user
     session[:user] ||= Person.find_by_user_name( session[:user_name], :include => 'student' )
   end  
+
+  def default_page( person_id )
+  	if clearance == 3
+  		person = Person.find( person_id, :include=>[ :student,:teacher ])
+  		if( person.student.nil? )
+  			person.teacher
+  		else
+  			person.student
+  		end
+  	else
+	  	current_user.student.nil? ?
+	  		current_user.teacher :
+	  		edit_klasses_student_path( current_user.student.id )
+	  end
+	end
 
   def logged_in?
     session[:user_name] != nil
   end
 
   def set_user_language
-    I18n.locale = logged_in? ? current_user.language : 'jp'
+    I18n.locale = logged_in? ? current_user.language : 'ja'
   end  
+  
+  def get_sorting
+		session[:sorting] ||= Sorting.new
+	end
 end

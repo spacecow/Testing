@@ -2,7 +2,98 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  address: "Address"
+  address2: "Second address"
+  back: "Back"
+  cancel: "Cancel"
+  canceled: "canceled"
+  capacity: "Capacity"
+  classroom: "Classroom"
+  cost: "Cost"
+  course: "Course"
+  create: "Create"
+  created: " was successfully created"
+  day: "Day"
+  delete: "Del"
+  description: "Description"
+  edit: "Edit"
+  end_time: "End Time"
+  gender: "Gender"
+  history: "History"
+  home_phone: "Home phone"
+  inactive: "Inactive"
+  inactive_student: "Inactive"
+  inactive_teacher: "Inactive"
+  info: "Info"
+  klass_date: "Date"
+  klass_time: "Time"
+  language: "Language"
+  listing: "Listing"  
+  mail_address_mobile: "Mail address (mobile)"
+  mail_address_pc: "Mail address (pc)"
+  mail_sending: "Mail Sending"
+  mobile_phone: "Mobile phone"
+  name: "Name"
+  name_kana: "Name (katakana)"
+  new: "New"
   note: "Note"
+  notice: "Note"
+  password: "Password"
+  reserve: "Reserve"
+  show: "Info"
+  start_time: "Start Time"
+  student: "Student"
+  suspended: "Suspended"
+  teacher: "Teacher"
+  title: "Title"
+  update: "Update"
+  user_name: "User name"
+  classrooms:
+    title: "Classrooms"
+  courses:
+    new: "New course"
+    listing: "Listing Courses"
+    title: "Courses"
+    flash:
+      try_to_delete_course_with_template_classes: "Delete all template classes depending on this course first"
+      try_to_delete_course_with_klasses: "Delete all classes depending on this course first"
+  documentation:
+    title: "Documentation"
+  docs:
+    title: "Docs"
   klasses:
+    new: "New Class"
+    title: "Classes"
+    listing: "Listing Classes"
+    editing: "Editing Class"
     flash:
       try_to_delete_klass_with_students: "Move away all students from the class before deleting."
+  login:
+    title: "Please log in"
+    user_name: "User name"
+    password: "Password"
+    button: "Login"
+    flash:
+      invalid_user_or_password: "User name or password invalid"
+  logout:
+    title: "Logout"
+  mymafumafu:
+    title: "My Mafumafu Page"
+  people:
+    title: "People"
+    error:
+      unauthorized_access: "Unauthorized access."
+  students:
+    title: "Students"
+  tags:
+    title: "Tags"
+  teachers:
+    title: "Teachers"
+    error:
+      delete_teacher_with_courses: "Delete all courses depending on this teacher first"
+      delete_teacher_with_classes: "Delete all classes depending on this teacher first"
+  template_klasses:
+    editing: "Editing Template Class"
+    title: "Template Classes"
+    listing: "Listing Template Classes"
+    new: "New Template Class"

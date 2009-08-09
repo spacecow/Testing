@@ -1,3 +1,14 @@
+body
+{
+  background-color: #4B7399;
+}
+#login{
+  margin-left: 5em;
+  margin-right: 5em;
+  padding-top: 4ex;
+  padding-left: 2em;
+  background-color: #4B7399;
+}
 /* Global styles */
 td.schedule{
 	border-right: solid black 1px;
@@ -36,9 +47,9 @@ td.schedule-only-right-and-down{
 #banner{
   background: #0099cc;
   padding-top: 10px;
-  padding-bottom: 20px;
-  border-bottom: 4px solid;
-  font: small-caps 50px/50px serif;
+  padding-bottom: 10px;
+  border-bottom: 2px solid;
+  font: small-caps 15px/15px serif;
   color: #000080;
   text-align: center;
 }
@@ -62,7 +73,8 @@ td.schedule-only-right-and-down{
   font-size: small;
 }
 #main{
-  margin-left: 15em;
+  margin-left: 5em;
+  margin-right: 5em;
   padding-top: 4ex;
   padding-left: 2em;
   background: white;
@@ -73,6 +85,11 @@ h1{
   border-bottom: 3px dotted #77d;
 }
 h3{
+  font: sans-serif;
+  color: #226;
+  border-bottom: 3px dotted #77d;
+}
+h4{
   font: sans-serif;
   color: #226;
   border-bottom: 3px dotted #77d;
@@ -125,11 +142,39 @@ h3{
 }
 
 
+#table .template-table-title{
+	background: grey;
+  font-weight: bold;
+  color: white;
+}
+#table .template-table-topics{
+  font-size: small;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+  text-align: center;
+  background: #cccccc;
+}
+#table .template-table-topics-sub{
+  font-size: small;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+  text-align: center;
+  background: #dddddd;
+}
+#table .template-drop-box-empty{
+  font-size: x-small;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color: #eeeeee;
+}
+
 #table .table-course{
   border: 1px solid black;
 }
 #table .table-title{
-  background: grey;
+  background: #33ccff;;
   font-weight: bold;
   color: white;
 }
@@ -139,7 +184,7 @@ h3{
   padding-right: 5px;
   font-weight: bold;
   text-align: center;
-  background: #cccccc;
+  background: #99ddff;
 }
 #table .table-topics-sub{
   font-size: small;
@@ -147,7 +192,7 @@ h3{
   padding-right: 5px;
   font-weight: bold;
   text-align: center;
-  background: #dddddd;
+  background: #cceeff;
 }
 #table .table-units{
   font-size: x-small;
@@ -158,19 +203,19 @@ h3{
   font-size: x-small;
   padding-left: 3px;
   padding-right: 3px;
-  background-color:#ffcccc;
+  background-color: #ffcccc;
 }
 #table .drop-box-man{
   font-size: x-small;
   padding-left: 3px;
   padding-right: 3px;
-  background-color:#ccccff;
+  background-color: #ccccff;
 }
 #table .drop-box-empty{
   font-size: x-small;
   padding-left: 3px;
   padding-right: 3px;
-  background-color:#eeeeee;
+  background-color: #ddffff;
 }  
 
 
@@ -178,6 +223,7 @@ h3{
 .form fieldset{
 	background: #efe;
 	border: 1px solid #000080;
+	margin-right: 35px;
 }
 .form legend{
   color: #fff;
@@ -193,7 +239,7 @@ h3{
   margin-right: 0.5em;
   display: block;
 }
-.form .submit{ margin-left: 5.5em; }
+.form .submit{ margin-left: 165px; }
 
 
 
@@ -244,4 +290,36 @@ a.link{
 #errorExplanation ul li{
 	font-size: 12px;
 	list-style: square;
+}
+
+
+
+#nav, #nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#nav a {
+	display: block;
+	width: 10em;
+	text-decoration: none;
+	color: #000080;
+}
+
+#nav li {
+	float: left;
+	width: 10em;
+}
+
+#nav li ul {
+	position: absolute;
+	width: 10em;
+	left: -999em;
+}
+
+#nav li:hover ul {
+	left: auto;
+	background: #0099cc;
+	border-bottom: 2px solid;
 }

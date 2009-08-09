@@ -24,7 +24,7 @@ class KlassesController < ApplicationController
       :month=>params[:month],
       :day=>params[:day]
   end
-  
+
   # GET /klasses
   # GET /klasses.xml
   def index
@@ -33,12 +33,11 @@ class KlassesController < ApplicationController
 	    @month = Date::MONTHNAMES[ @klass_date.month ]
 	    @day = @klass_date.day
 	    @year = @klass_date.year
-	    p "----------"+@month.to_s+" "+@day.to_s+" "+@year.to_s
     else
-    @month = params[:month] ? params[:month] : Date::MONTHNAMES[ Date.current.month ]
-    @day = params[:day] ? params[:day] : Date.current.day
-    @year = params[:year] ? params[:year] : Date.current.year
-	    @klass_date = DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i )
+	    @month = params[:month] ? params[:month] : Date::MONTHNAMES[ Date.current.month ]
+	    @day = params[:day] ? params[:day] : Date.current.day
+	    @year = params[:year] ? params[:year] : Date.current.year
+		  @klass_date = DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i )
     end
     
     #@attendance = Attendance.find(params[:attendance]) if params[:attendance]
@@ -47,13 +46,37 @@ class KlassesController < ApplicationController
     @moves = [["Move to 1","Move to 1"],["Move to 2","Move to 2"],["Move to 3","Move to 3"],["Move to 4","Move to 4"]]
     @options = [["Cancel","Cancel"],["Delete","Delete"]]
     
-    
     @klasses = Klass.find_all_by_date( @klass_date, :include=>[ :course, :classroom, :teacher, :attendances, { :students => :person }])
+    if clearance?(2)
+			if @klasses.size == 0
+	  		TemplateClass.find( :all, :conditions => [ "day = ?", @klass_date.strftime("%A") ]).each do |t|
+	    		Klass.new(
+						:course_id=>t.course_id,
+						:teacher_id=>t.teacher_id,
+						:classroom_id=>t.classroom_id,
+						:capacity=>t.capacity,      
+						:date=>@klass_date,
+						:start_time=>t.start_time,
+						:end_time=>t.end_time,
+						:title=>t.title,
+						:description=>t.description,
+						:cancel=>t.inactive,
+						:mail_sending=>t.mail_sending,
+						:note=>t.note,
+						:tostring=> t.course.name+"-"+
+						            t.start_time.to_s(:time)+"-"+
+						            t.end_time.to_s(:time)
+		    	).save
+	  		end
+	  	end
+	  	@klasses = Klass.find_all_by_date( @klass_date, :include=>[ :course, :classroom, { :teacher=> :person }, :attendances, { :students => :person }])
+		end
+
     @klass_groups = @klasses.group_by{|e| e.course.category }
     
     #_groups = Klass.find_all_by_date( @klass_date, :include=>['course','classroom',{ :teacher=>:person }, :students ]).group_by{|e| e.course.category 
     @classrooms = Classroom.all
-    @teachers = Teacher.find( :all, :include=>'person' )
+    @teachers = Teacher.find( :all, :include=>[:person,:courses] )
     
     @collition = {}
 
@@ -115,7 +138,7 @@ class KlassesController < ApplicationController
         @klass.update_attribute( :tostring, @klass.course.name+"-"+@klass.start_time.to_s(:time)+"-"+@klass.end_time.to_s(:time))
         
         flash[:notice] = 'Klass was successfully created.'
-        format.html { redirect_to( @klass ) }
+        format.html { redirect_to klasses_path( :date => @klass.date ) }
         format.xml  { render :xml => @klass, :status => :created, :location => @klass }
       else
         format.html { render :action => "new" }
@@ -167,12 +190,12 @@ class KlassesController < ApplicationController
     end
   end
 
-protected
-  def authorize
-    unless session[:user_name]
-      session[:original_uri] = request.request_uri
-      flash[:notice] = "Please log in"
-      redirect_to :controller=>:admin, :action=>:login
-    end
-  end
+#protected
+#  def authorize
+#    unless session[:user_name]
+#      session[:original_uri] = request.request_uri
+#      flash[:notice] = "Please log in"
+#      redirect_to :controller=>:admin, :action=>:login
+#    end
+#  end
 end

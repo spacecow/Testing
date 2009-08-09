@@ -1,4 +1,4 @@
-<strong>講座</strong>
+<strong><%= t('courses.title') %></strong>
 <p>
 	<table cellpadding="1" cellspacing="1">
 	  <tr>
@@ -8,12 +8,14 @@
 	  </tr>
     <% @student.courses.each do |course| %>
 		  <tr>
+		  	<label>
 		    <td>
 				  <%= check_box_tag "student[course_ids][]", course.id, @student.courses.include?(course), :disabled=>true %>
 				</td>
 				<td>  
 				  <%= course.name %>
 				</td>
+				</label>
 			</tr>
 	  <% end %>
 	</table>

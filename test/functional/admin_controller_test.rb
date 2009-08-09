@@ -19,21 +19,21 @@ class AdminControllerTest < ActionController::TestCase
   end
   
   def test_index_with_user
-    get :index, {}, { :user_name => people(:johan).user_name }
+    get :index, {}, { :user_name => people(:aya).user_name }
     assert_response :success
     assert_template "index"
   end
   
   def test_login
-    johan = people(:johan)
-    post :login, :user_name => johan.user_name, :password => 'secret'
+    aya = people(:aya)
+    post :login, :user_name => aya.user_name, :password => 'secret'
     assert_redirected_to :controller => "klasses", :action => "index"
-    assert_equal johan.user_name, session[:user_name]    
+    assert_equal aya.user_name, session[:user_name]    
   end
   
   def test_bad_password
-    johan = people(:johan)
-    post :login, :user_name => johan.user_name, :password => 'wrong'
+    aya = people(:aya)
+    post :login, :user_name => aya.user_name, :password => 'wrong'
     assert_template "login"
   end  
 end

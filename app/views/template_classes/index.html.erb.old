@@ -1,51 +1,60 @@
-<h1>Listing Template Classes</h1>
+ï»¿<h1>Listing <%= @template_day %>'s Template Classes</h1>
 
 <% form_for :template_class,
             :url => { :action=>'index' },
             :html => { :method=>'get' } do |f| %>
-  <%= select_tag :template_day, options_for_select( @days, @template_day ),
-    { :onchange => "this.form.submit();"} %>
+  <%= select_tag :template_day,
+    options_for_select( @days, @template_day ),
+    :onchange => "this.form.submit();" %>
 <% end %>
 <br />
 
 <% @weekday_times = CourseTime.find(
   :all,
-  :include=>'template_classes',
-  :conditions => [ "template_classes.day = ?", @template_day ],
-  :order=>'start_time, end_time DESC' ) %>
-             
-<% if @weekday_times.size != 0 %>             
+  :include=>'template_classes', 
+  :conditions => [ "template_classes.day = ?", @template_day ], 
+  :order=>'course_times.start_time, course_times.end_time DESC' ) %>
+
+<% if @weekday_times.size != 0 %>
 <table cellpadding="5" cellspacing="0" border="1">
   <tr>
     <td></td>
-    <% @weekday_times.each do |time| %>
+    <% @weekday_times.each do |time| %> 
     <td>
-      <%= h time.start_time.to_s( :time ) %>
-      <%= "--" %>
-      <%= h time.end_time.to_s( :time ) %>
+      <%= h time.start_time.to_s( :time ) %> <%= "--" %> <%= h time.end_time.to_s( :time ) %>
     </td>
     <% end %>
   </tr>
   <% @courses.each do |course| %>
   <tr>
-    <td>
-      <%= h course.name %>
-    </td>
-    <% @weekday_times.each do |time| %>
+    <td width="100">
+      <%= link_to '+', new_template_class_path(
+        :course=>course,
+        :template_day=>@template_day ),
+      :class=>"grid" %>
+      <%= h course.name %> </td> <% @weekday_times.each do |time| %>
 
-      <% @template = TemplateClass.find(
+      <% @templates = TemplateClass.find(
         :all,
         :conditions => [ "course_id = ? and course_time_id = ? and day = ?",
           course.id, time.id, @template_day ]) %>
 
-      <% if @template.size==1 %>
+      <% if @templates.size!=0 %>
         <td align="right" bgcolor="gray" >
-          <%= link_to 'Show', @template, :class=>"grid" %>
-          <%= link_to 'Edit', edit_template_class_path( @template ),
+        <% @templates.each do |template| %>
+          <%= link_to '+', new_template_class_path(
+                  :course=>course,
+                  :time=>time,
+                  :template_day=>@template_day ),
+                :class=>"grid" %>
+          <%= link_to 'è¦‹', template, :class=>"grid" %>
+          <%= link_to 'å¤‰', edit_template_class_path( template ),
             :class=>"grid" %>
-          <%= link_to 'Destroy', @template, :confirm => 'Are you sure?',
+          <%= link_to 'æ¶ˆ', template, :confirm => 'Are you sure?',
                                             :method => "delete",
                                             :class=>"grid"  %>
+          <br />
+        <% end %>
       <% else %>
         <td align="right">
         <%= link_to '+', new_template_class_path( :course=>course,
@@ -57,118 +66,30 @@
     <% end %>
   </tr>
   <% end %>
-</table>
-
-<br />
-<br />
-
-	<% colwidth=5 %>
-	<% start_time = @weekday_times[0].start_time.to_s( :time ) %>
-	<% end_time   = @weekday_times[-1].end_time.to_s( :time ) %>
-	<% columns = @schedule.no_of_ten_minutes( start_time,end_time ) %>
-	<table cellspacing="0" border="0">
-	  <tr>
-	    <td class="schedule" width="82"></td>
-	    <% @i=0 %>
-	    <% no_col_countdown = 0 %>
-			<% while @i<columns %>				
-			  <% if @schedule.whole_hour( start_time, @i ) %>
-			    <td class="schedule-right" width="4*<%= colwidth %>" colspan="4"><%= @schedule.add_minutes( start_time, @i*10 ) %></td>
-			    <% no_col_countdown = 4 %>
-			  <% elsif no_col_countdown > 1 %>
-			    <% no_col_countdown = no_col_countdown-1 %>
-			  <% else %>
-			    <td class="schedule-right" width="<%= colwidth %>"></td>
-			  <% end %>
-			  <% @i = @i+1 %>
-			<% end %>
-	  </tr>
-	  <% @courses.each do |course| %>
-	  <tr>
-	    <td class="schedule-down" width="82">
-	      <%= h course.name %>
-	      <% course_times = CourseTime.find(
-  				:all,
-  				:include=>'template_classes',
-  				:conditions => [ "template_classes.day = ? and template_classes.course_id = ?", @template_day, course.id ],
-  				:order=>'start_time, end_time DESC' ) %>
-	    </td>
-	    <% @i=0 %>
-	    <% schedule_time = @start_time %>
-	    <% course_times.each do |time| %>
-		    <% no_col_countdown = 0 %>
-				<% while @i<columns %>
-					<% schedule_time = @schedule.add_minutes( start_time, @i*10 ) %>
-				  <% if schedule_time == time.start_time.to_s( :time ) %>
-			      <% no_col_countdown = @schedule.no_of_ten_minutes( time.start_time.to_s( :time ),time.end_time.to_s( :time )) %>
-			      <% template = TemplateClass.find(
-              :all,
-              :conditions => [ "course_id = ? and course_time_id = ? and day = ?",
-                course.id, time.id, @template_day ]) %>
-			      <% if @schedule.whole_hour( start_time, @i ) || @i==0 %>
-			        <td class="schedule-only-right-and-down" width="<%= no_col_countdown %>*<%= colwidth %>" colspan="<%= no_col_countdown %>" bgcolor="gray" align="right">
-			      <% else %>
-			        <td class="schedule-down" width="<%= no_col_countdown %>*<%= colwidth %>" colspan="<%= no_col_countdown %>" bgcolor="gray" align="right">
-			      <% end %>
-			        <br />
-			        <%= link_to 'Œ©', template, :class=>"grid" %>
-              <%= link_to '•Ï', edit_template_class_path( template ), :class=>"grid" %>
-              <%= link_to 'Á', template,
-                :confirm => 'Are you sure?',
-                :method => "delete",
-                :class=>"grid"  %>
-						</td>
-					<% elsif no_col_countdown > 1 %>
-			      <% no_col_countdown = no_col_countdown - 1 %>
-          <% elsif no_col_countdown == 1 %>
-            <% no_col_countdown = no_col_countdown - 1 %>
-            <% break %>
-            <%= "break" %>
-          <% else %>
-            <% if @schedule.whole_hour( start_time, @i+1 ) %>
-              <td class="schedule-only-right-and-down" width="<%= colwidth %>"></td>
-            <% else %>
-              <td class="schedule-only-down" width="<%= colwidth %>"></td>
-            <% end %>
-  		    <% end %>
-				  <% @i = @i+1 %>
-				<% end %>
-		  <% end %>
-			<% while @i<columns %>
-			  <% if @schedule.whole_hour( start_time, @i+1 ) || @i == columns-1 %>
-          <td class="schedule-only-right-and-down"></td>
-        <% else %>
-          <td class="schedule-only-down"></td>
-        <% end %>
-			  <% @i = @i+1 %>
-			<% end %>		  
-	  </tr>
-	  <% end %>
-	</table>
-                                
-<br />
-<br />                                
-                                
+</table>                          
 <% end %>
+
 <br />
 <%= link_to 'New template_class', new_template_class_path( :template_day=>@template_day ) %>
-<table>
-<% @template_classes.each do |template_class| %>
-  <tr>
-    <td><%=h template_class.course %></td>
-    <td><%=h template_class.course_time %></td>
-    <td><%=h template_class.day %></td>
-    <td><%=h template_class.title %></td>
-    <td><%=h template_class.description %></td>
-    <td><%=h template_class.inactive %></td>
-    <td><%=h template_class.note %></td>
-    <td><%= link_to 'Show', template_class %></td>
-    <td><%= link_to 'Edit', edit_template_class_path(template_class) %></td>
-    <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
-      :method => :delete
-        %>
-    </td>
-  </tr>
+
+<% if clearance?(1) %>
+	<table>
+	<% @template_classes.each do |template_class| %>
+	  <tr>
+	    <td><%=h template_class.course %></td>
+	    <td><%=h template_class.course_time %></td>
+	    <td><%=h template_class.day %></td>
+	    <td><%=h template_class.title %></td>
+	    <td><%=h template_class.description %></td>
+	    <td><%=h template_class.inactive %></td>
+	    <td><%=h template_class.note %></td>
+	    <td><%= link_to 'Show', template_class %></td>
+	    <td><%= link_to 'Edit', edit_template_class_path(template_class) %></td>
+	    <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
+	      :method => :delete
+	        %>
+	    </td>
+	  </tr>
+	<% end %>
+	</table>
 <% end %>
-</table>
-<br />

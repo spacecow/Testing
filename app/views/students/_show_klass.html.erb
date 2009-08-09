@@ -1,12 +1,16 @@
+<label>
 <td>
-  <%= check_box_tag "student[klasse_ids][]", attendance.klass_id, @student.klasses.include?(attendance.klass), :disabled=>true %>
-</td>
-<td>
-  <%= attendance.klass %>
+  <% if attendance.cancel && clearance?(3) %>
+  	<%= check_box_tag "student[klasse_ids][]", attendance.klass_id, @student.klasses.include?(attendance.klass), :disabled=>true %>
+	<% elsif !attendance.cancel %>
+		<%= check_box_tag "student[klasse_ids][]", attendance.klass_id, @student.klasses.include?(attendance.klass), :disabled=>true %>
+	<% end %>
 </td>
 <td>
   <% if attendance.cancel && clearance?(3) %>
-    <i>canceled</i>
-  <% end %>
+		<%= attendance.klass %> <i><%= t('canceled') %></i>
+	<% elsif !attendance.cancel %>
+		<%= attendance.klass %>
+	<% end %>
 </td>
-
+</label>

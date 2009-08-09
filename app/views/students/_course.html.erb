@@ -1,8 +1,14 @@
-<% Course.all.group_by(&:category).each do |category,course_group| %>
-  <% course_group.sort_by(&:name).each do |course| %>
-	  <div>
-	    <%= check_box_tag "student[course_ids][]", course.id, @student.courses.include?(course) %>
-	    <%= course.name %>
-	  </div>
+<table cellpadding="0" cellspacing="0">
+	<% @keys.each do |key| %>
+		<% @course_groups[key].each do |course| %>
+		  <tr>
+		  	<label>
+			  	<td>
+				    <%= check_box_tag "student[course_ids][]", course.id, @student.courses.include?(course) %>
+				    <%= course.name %>
+				  </td>
+		  	</label>
+		  </tr>
+		<% end %>
 	<% end %>
-<% end %>
+</table>

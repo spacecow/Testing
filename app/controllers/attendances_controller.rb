@@ -4,7 +4,7 @@ class AttendancesController < ApplicationController
   end
  
   def update
-    @attendance = Attendance.find(params[:id])
+    @attendance = Attendance.find(params[:id], :include=>:klass )
     
     option = params[:attendance][:student_id]
     if option == "line"
@@ -18,13 +18,20 @@ class AttendancesController < ApplicationController
           params[:attendance][:student_id] = @attendance.student_id
         end
       end
+      if @attendance.update_attributes( params[:attendance] )
+        redirect_to( klasses_path( :date => @attendance.klass.date ))
+      else
+        session[:error] = "You cannot change student yet."
+        redirect_to( klasses_path )
+      end
+      return
 	  elsif option == "Cancel"
-        @attendance.update_attribute( :cancel, 1 )
+      @attendance.update_attribute( :cancel, 1 ) if @attendance.chosen == true
 	  	redirect_to( klasses_path( :date => params[:date] ))
       return
 	  elsif option == "Delete"
-	  	@attendance.destroy
-        redirect_to( klasses_path( :date => params[:date] ))
+	  	@attendance.destroy if @attendance.chosen == true
+      redirect_to( klasses_path( :date => params[:date] ))
       return
 	  else
       params[:attendance][:chosen] = 1
@@ -33,6 +40,10 @@ class AttendancesController < ApplicationController
     new_student_id = params[:attendance][:student_id]
     if new_student_id == ""
       params[:attendance][:chosen] = 0
+    elsif busy_student?( new_student_id, @attendance.klass.date, @attendance.klass.start_time, @attendance.klass.end_time )
+    	redirect_to( klasses_path( :date => @attendance.klass.date ))
+    	flash[:error] = Student.find( new_student_id ).name+" is not available for this class"
+    	return
     else
 	    if( @attendance.student_id != new_student_id.to_i )
 	      # must include time interval also
@@ -60,5 +71,15 @@ class AttendancesController < ApplicationController
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
+  end
+  
+  def busy_student?( student_id, date, start_time, end_time )
+  	Klass.find_all_by_date( date,
+  		:conditions =>[
+  			"(( start_time <= ? and end_time >= ? ) or ( start_time <= ? and end_time >= ? )) and attendances.chosen = ? and attendances.cancel = ? and students.id = ?",
+  			start_time, start_time, end_time, end_time, true, false, student_id
+  		],
+  		:include => :students
+  	).size > 0
   end
 end

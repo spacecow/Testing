@@ -2,7 +2,7 @@
   <%= error_messages_for :attendance %>
 <% end %>
 
-<h1><%= @klass_date.strftime("%A") %></h1>
+<h1><%= t('klasses.listing') %> - <%= @klass_date.strftime("%A") %></h1>
 
 <% form_for :klass,
             :url => { :action=>'index' },
@@ -20,39 +20,20 @@
 <br />
 <br />
 
-<% if clearance?(2) %>
-	<% if @klass_groups.size == 0 %>
-	  <% TemplateClass.find( :all,
-	    :conditions => [ "day = ?",@klass_date.strftime("%A") ]).each do |t| %>    
-	    <% Klass.new(
-					:course_id=>t.course_id,
-					:teacher_id=>t.teacher_id,
-					:classroom_id=>t.classroom_id,
-					:capacity=>t.capacity,      
-					:date=>@klass_date,
-					:start_time=>t.course_time.start_time,
-					:end_time=>t.course_time.end_time,
-					:title=>t.title,
-					:description=>t.description,
-					:cancel=>t.inactive,
-					:mail_sending=>t.mail_sending,
-					:note=>t.note,
-					:tostring=> t.course.name+"-"+
-					            t.course_time.start_time.to_s(:time)+"-"+
-					            t.course_time.end_time.to_s(:time)
-		     ).save %>
-	  <% end %>
-	<% end %>
-<% end %>
+
 
 <% @keys = sort_in_mogi_order @klass_groups.keys %>
 <% @keys.each do |key| %>
   <div id="table">
-    <%= render :partial=>"course", :locals=>{ :course_klasses=>@klass_groups[key], :klass_date=>@klass_date, :classrooms=>@classrooms, :teachers=>@teachers, :collition=>@collition } %><br />
+    <%= render :partial=>"course", :locals=>{
+    			:course_klasses=>@klass_groups[key],
+    			:klass_date=>@klass_date,
+    			:classrooms=>@classrooms,
+    			:collition=>@collition } %><br />
   </div>
 <% end %>
 
-<%= link_to 'New klass', new_klass_path( :klass_date=>@klass_date ) %>
+<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ) %>
 
 <% if clearance?(1) %>
 	<table>

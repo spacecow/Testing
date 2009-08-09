@@ -1,4 +1,4 @@
-﻿<h1>Listing Template Classes</h1>
+﻿<h1><%= t( 'template_klasses.listing' ) %></h1>
 
 <% form_for :template_class,
             :url => { :action=>'index' },
@@ -9,70 +9,21 @@
 <% end %>
 <br />
 
-<% @weekday_times = CourseTime.find(
-  :all,
-  :include=>'template_classes', 
-  :conditions => [ "template_classes.day = ?", @template_day ], 
-  :order=>'course_times.start_time, course_times.end_time DESC' ) %>
-
-<% if @weekday_times.size != 0 %>
-<table cellpadding="5" cellspacing="0" border="1">
-  <tr>
-    <td></td>
-    <% @weekday_times.each do |time| %> 
-    <td>
-      <%= h time.start_time.to_s( :time ) %> <%= "--" %> <%= h time.end_time.to_s( :time ) %>
-    </td>
-    <% end %>
-  </tr>
-  <% @courses.each do |course| %>
-  <tr>
-    <td width="100">
-      <%= link_to '+', new_template_class_path(
-        :course=>course,
-        :template_day=>@template_day ),
-      :class=>"grid" %>
-      <%= h course.name %> </td> <% @weekday_times.each do |time| %>
-
-      <% @templates = TemplateClass.find(
-        :all,
-        :conditions => [ "course_id = ? and course_time_id = ? and day = ?",
-          course.id, time.id, @template_day ]) %>
-
-      <% if @templates.size!=0 %>
-        <td align="right" bgcolor="gray" >
-        <% @templates.each do |template| %>
-          <%= link_to '+', new_template_class_path(
-                  :course=>course,
-                  :time=>time,
-                  :template_day=>@template_day ),
-                :class=>"grid" %>
-          <%= link_to '見', template, :class=>"grid" %>
-          <%= link_to '変', edit_template_class_path( template ),
-            :class=>"grid" %>
-          <%= link_to '消', template, :confirm => 'Are you sure?',
-                                            :method => "delete",
-                                            :class=>"grid"  %>
-          <br />
-        <% end %>
-      <% else %>
-        <td align="right">
-        <%= link_to '+', new_template_class_path( :course=>course,
-                                                  :time=>time,
-                                                  :template_day=>@template_day ),
-                                                    :class=>"grid" %>
-      <% end %>
-    </td>
-    <% end %>
-  </tr>
-  <% end %>
-</table>                          
+<% @keys = sort_in_mogi_order @template_groups.keys %>
+<% @keys.each do |key| %>
+  <div id="table">
+    <%= render :partial=>"course",
+    			:locals=>{
+    				:course_klasses => @template_groups[key],
+    				:collision => @collision	
+    			} %><br />
+  </div>
 <% end %>
 
 <br />
-<%= link_to 'New template_class', new_template_class_path( :template_day=>@template_day ) %>
+<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ) %>
 
-<% if clearance?(1) %>
+<% if clearance?(1) && @template_classes %>
 	<table>
 	<% @template_classes.each do |template_class| %>
 	  <tr>

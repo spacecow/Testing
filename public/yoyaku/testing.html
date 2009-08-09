@@ -132,8 +132,79 @@ Installing ri documentation for webrat-0.4.4...
 Installing RDoc documentation for nokogiri-1.3.1-x86-mswin32...
 Installing RDoc documentation for webrat-0.4.4...
 </pre>
-</doc>
 
+<pre class="code">
+<div class="path"><a href="testing/test.rb.txt">yoyaku/config/environments/test.rb</a></div>
+...
+
+config.gem 'thoughtbot-shoulda', :lib => 'Shoulda', :version => '>=2.10.1', \
+  :source => "http://gems.github.com"
+<span class="highlight">config.gem 'webrat', :version => ">=0.4.4"</span>
+</pre>
+Once Webrat is installed we will need to configure it to work with Rails.
+We'll have to tell Webrat that it's going to be used in a Rails application.
+We'll need to add the following code right at the end of the
+<span class="file">test_helper.rb</span> file:
+<pre class="code">
+<div class="path"><a href="testing/test_helper.rb.txt">yoyaku/test/test_helper.rb</a></div>
+...
+
+class Test::Unit::TestCase
+  ...
+end
+
+<span class="highlight">Webrat.configure do |config|
+  config.mode = :rails
+end</span>
+</pre>
+</doc>
+<h2>Writing Tests</h2>
+Create a user that passes all the validations:
+<pre class="code">
+<div class="path"><a href="testing/staff_stories_test.rb.txt">yoyaku/test/integration/staff_stories_test.rb</a></div>
+require File.dirname(__FILE__)+'/../test_helper'
+
+class StaffStoriesTest &lt; ActionController::IntegrationTest
+  fixtures :all
+
+  context "A user" do
+    <span class="highlight">Person.create!(
+          :user_name =>"johan_sveholm",
+          :password => "secret",
+          :gender => 1,
+          :family_name => "Sveholm",
+          :first_name => "Johan",
+          :family_name_kana => "subehorumu",
+          :first_name_kana => "yohan",
+          :mail_address_mobile => "jsveholm@softbank.ne.jp" )</span>
+  end
+end
+</pre>
+Use Webrat's <span class="method">visit</span> method to go to an URL:
+<pre class="code">
+<div class="path"><a href="testing/staff_stories_test.rb.txt">yoyaku/test/integration/staff_stories_test.rb</a></div>
+...
+
+class StaffStoriesTest &lt; ActionController::IntegrationTest
+  ...
+  
+  context "A user" do
+    ...  
+    should "get logged in if he inserts correct data in the login section" do
+      <span class="highlight">visit login_path</span>
+    end
+  end
+end
+</pre>
+Use a named route, defined in:
+<pre class="code">
+<div class="path"><a href="testing/routes.rb.txt">yoyaku/config/routes.rb</a></div>
+ActionController::Routing::Routes.draw do |map|
+  ...
+  <span class="highlight">map.login 'login', :controller => 'admin', :action => 'login'</span>
+  ...
+end
+</pre>
 <hr>
 
 <table><tr>

@@ -2,8 +2,11 @@ class Course < ActiveRecord::Base
   has_and_belongs_to_many :students
   has_many :template_classes
   has_many :klasses
-  
+  has_many :teachings
+  has_many :teachers, :through=>:teachings
+    
   validates_presence_of :name
+  validates_uniqueness_of :name
   
   
   def category

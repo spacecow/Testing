@@ -1,11 +1,13 @@
 ﻿<div class="form">
 <%= error_messages_for :student %>
 <fieldset>
-<legend>受講生編集 - <%= @student %></legend>
+<legend><%= t('info') %> - <%= @student %></legend>
 <table><tr>
-<td valign="top" width="100">
-  <%= render :partial=>"show_courses", :locals=>{ :add_enter=>false } %>
-</td>
+<% if clearance <= 3 %>
+	<td valign="top" width="100">
+	  <%= render :partial=>"show_courses", :locals=>{ :add_enter=>false } %>
+	</td>
+<% end %>	
 <td valign="top">
   <%= render :partial=>"show_klasses" %>
 </td>
@@ -13,8 +15,14 @@
 
 <br />
 
-<%= link_to 'Edit', :action=>"edit_klasses", :id=>@student %> |
-<%= link_to 'Back', people_path %>
+<div class="links">
+	<% if clearance <=2 %>
+		<%= link_to t('courses.title'), edit_courses_student_path( @student ) %> |
+	<% end %>
+	<% unless clearance == 3 %>
+		<%= link_to t('reserve'), edit_klasses_student_path( @student ) %>
+	<% end %>
+</div>
 
 </fieldset>
 </div>

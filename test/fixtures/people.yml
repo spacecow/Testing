@@ -1,7 +1,19 @@
 <% SALT = "NaCl" unless defined?( SALT ) %>
 
-johan:
+aya:
   id: 1
+  user_name: komatsu_aya
+  salt: <%= SALT %>
+  hashed_password: <%= Person.encrypted_password( 'secret', SALT ) %>
+johan:
+  id: 2
   user_name: johan_sveholm
   salt: <%= SALT %>
   hashed_password: <%= Person.encrypted_password( 'secret', SALT ) %>
+kurosawa:
+  id: 3
+  first_name: 明
+  family_name: 黒澤
+  user_name: kurosawa_akira
+  salt: <%= SALT %>
+  hashed_password: <%= Person.encrypted_password( 'secret', SALT ) %>  

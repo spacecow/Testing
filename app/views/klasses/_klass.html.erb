@@ -2,11 +2,13 @@
   <%= klass.time_interval %>
 </td>
 <td>
-  <%= link_to '-', klass_path( klass, :date=>klass_date ),
+	<%= link_to t( 'show' ), klass, :class => "grid" %>
+	<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
+  <%= link_to t('delete'), klass_path( klass, :date=>klass_date ),
         :confirm => 'Are you sure?' +
         ( klass.attendances.empty? ?
             "" :
-            "\n"+t('note')+": "+t('klasses.flash.try_to_delete_klass_with_students') ),
+            "\n"+t('notice')+": "+t('klasses.flash.try_to_delete_klass_with_students') ),
         :method => :delete,
         :class=>"grid" %>
 </td>
@@ -43,13 +45,12 @@
 	<% attendances.each do |attendance| %>
     <% form_for(attendance) do |f| %>	
 			<td>
+				<% moves = @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} %>
         <%= f.select :student_id,
           available_students.map{|e| [e.name,e.id]} +
             ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
-            @line +
-            @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} +
-            @line +
-            @options,
+            ( !moves.empty? ? @line + moves : [] ) +
+            ( attendance.chosen ? @line + @options : [] ),
           { :include_blank=>true,            
             :selected=>attendance.chosen ? attendance.student.id : nil },
           { :onchange => 'this.form.submit();',

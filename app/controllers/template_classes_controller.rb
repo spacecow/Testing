@@ -1,34 +1,41 @@
 class TemplateClassesController < ApplicationController
   before_filter :load_classes_and_times
- 
-  # GET /template_classes
-  # GET /template_classes.xml
+  
+  def add_course
+  	TemplateClass.create!(
+  		:day => params[ :template_day ],
+  		:course_id => params[ :course_id ],
+  		:start_time => params[ :start_time ],
+  		:end_time => params[ :end_time ]
+  	)
+		redirect_to template_classes_path( :template_day => params[ :template_day ])
+	end
+  
   def index
-    @template_classes = TemplateClass.find( :all, :include=>['course','course_time'] )
     @template_day = params[ :template_day ] || Date.current.strftime( "%A" )
-		@schedule = find_schedule 
-		
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @template_classes }
-    end
+    @template_klasses = TemplateClass.find_all_by_day( @template_day, :include => [ :course, :course_time, :classroom, { :teacher=>:person }])
+    @template_groups = @template_klasses.group_by{|e| e.course.category }
+
+		@classrooms = Classroom.all
+		@teachers = Teacher.find( :all, :include => :person )
+		@collision = {}
   end
 
   # GET /template_classes/1
   # GET /template_classes/1.xml
   def show
-    @template_class = TemplateClass.find(params[:id])
+    @template_klass = TemplateClass.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @template_class }
+      format.xml  { render :xml => @template_klass }
     end
   end
 
   # GET /template_classes/new
   # GET /template_classes/new.xml
   def new
-    @template_class = TemplateClass.new( :inactive=>false )
+    @template_class = TemplateClass.new()
     #@course = params[ :course ]
     #@time = params[ :time ]
     #@template_day = params[ :template_day ]
@@ -48,10 +55,6 @@ class TemplateClassesController < ApplicationController
   # POST /template_classes.xml
   def create
     @template_class = TemplateClass.new( params[ :template_class ])
-    if params[:template_class][:course_time_id] != ""
-	    @template_class.start_time = Time.parse( CourseTime.find( params[:template_class][:course_time_id] ).to_s.split[0] )
-	    @template_class.end_time = Time.parse( CourseTime.find( params[:template_class][:course_time_id] ).to_s.split[-1] )
-	  end
 
     respond_to do |format|
       if @template_class.save
@@ -69,14 +72,13 @@ class TemplateClassesController < ApplicationController
   # PUT /template_classes/1.xml
   def update
     @template_class = TemplateClass.find(params[:id])
-    @template_class.start_time = Time.parse( CourseTime.find( params[:template_class][:course_time_id] ).to_s.split[0] )
-    @template_class.end_time = Time.parse( CourseTime.find( params[:template_class][:course_time_id] ).to_s.split[-1] )
 
     respond_to do |format|
       if @template_class.update_attributes(params[:template_class])          
-        flash[:notice] = 'TemplateClass was successfully updated.'
-        #format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
-        format.html { redirect_to( @template_class ) }
+
+        format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
+        #format.html { redirect_to template_classes_path }
+        #format.html { redirect_to( @template_class, :template_day=>@template_class.day ) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -4,36 +4,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Courses: <%= controller.action_name %></title>
+  <title>Mafumafu: <%= controller.action_name %></title>
   <%= stylesheet_link_tag 'yoyaku' %>
   <%= stylesheet_link_tag 'rails' %>
   <%= javascript_include_tag :defaults %>
 </head>
-<body id="movie">
-  <div id="columns">
-    <div id="side">
-      <a href="/klasses">クラス</a><br />
-      <a href="/people">全部の人</a><br />
-      <a href="/teachers">講師</a><br />
-      <a href="/students">受講生</a><br />
-      <br />
-      <a href="/template_classes">テンプレート・クラス</a><br />
-      <br />
-      <a href="/courses">講座</a><br />
-      <a href="/classrooms">部屋</a><br />
-      <a href="/course_times">時間</a><br />
-
-	    <br />
-      <a href="/admin/logout">ログアウト</a><br />
-      <% if clearance?(1) %>
-        <br />
-        <a href="/documentation">Documentation</a><br />
-        <a href="/docs">Docs</a><br />
-        <a href="/tags">Tags</a><br />
-      <% end %>
-
-
-    </div>
+<body>
+  <div id="banner" class="banner">
+		<table border="0" align="center"><tr><td>
+			<ul id="nav">
+				<% if clearance <= 3 %>
+					<li><a href="/people"><%= t('people.title') %></a>
+						<ul>
+							<li>------------------</li>
+							<li><%= link_to t('teachers.title'), people_path( :category=>"講師" ) %></li>
+							<li><%= link_to t('students.title'), people_path( :category=>"受講生" ) %></a></li>
+						</ul>
+					</li>
+			
+					<li><a href="/klasses"><%= t('klasses.title') %></a>
+						<ul>
+							<li>------------------</li>
+							<li><a href="/template_classes"><%= t('template_klasses.title') %></a></li>
+							<li><a href="/courses"><%= t('courses.title') %></a></li>
+							<li><a href="/classrooms"><%= t('classrooms.title') %></a></li>
+						</ul>
+					</li>
+				<% end %>
+				
+				<li><%= link_to t('mymafumafu.title'), current_user.student.nil? ? teacher_path( current_user.teacher.id ) : edit_klasses_student_path( current_user.student.id ) %></a>
+					<ul>
+						<li>------------------</li>
+						<li><a href="/admin/logout"><%= t('logout.title') %></a></li>
+					</ul>
+				</li>
+				
+				<% if clearance == 1 %>
+					<li><a href="/documentation"><%= t('documentation.title') %></a>
+						<ul>
+							<li>------------------</li>
+							<li><a href="/docs"><%= t('docs.title') %></a></li>
+							<li><a href="/tags"><%= t('tags.title') %></a></li>
+						</ul>
+					</li>
+				<% end %>
+			</ul>
+		</td></tr></table>
+  </div>		
     <div id="main">
       <%- flash.each do |key, msg| -%>  
         <div id="<%= key %>">  
@@ -43,6 +60,7 @@
         </div>
       <%- end -%> 
       <%= yield :layout %>
+      <br />
     </div>
   </div>
 </body>

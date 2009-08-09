@@ -52,7 +52,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        flash[:notice] = ( @person.teacher!=nil ? 'Teacher' : 'Student' )+' was successfully created.'
+        flash[:notice] = ( @person.teacher!=nil ? t('teacher') : t('student') )+t('created')
 	      format.html { redirect_to( session[:redirect] || people_path ) }
         format.xml  { render :xml => @person, :status => :created, :location => @person }
       else
@@ -96,6 +96,19 @@ class PeopleController < ApplicationController
   # DELETE /people/1.xml
   def destroy
     @person = Person.find(params[:id])
+    
+    errors = association_delete_error_messages(
+    	[@person.teacher.courses, @person.teacher.klasses],
+    	[t( 'teachers.error.delete_teacher_with_courses' ),
+    	 t( 'teachers.error.delete_teacher_with_classes' )])
+		
+		if( !errors.empty? )
+      flash[:error] = errors.join("\n")
+      redirect_to people_path
+      return
+    end
+
+    @person = Person.find(params[:id])
     if @person.teacher != nil
       @person.teacher.destroy
     end
@@ -105,17 +118,18 @@ class PeopleController < ApplicationController
     @person.destroy
 
     respond_to do |format|
+    	flash[:notice] = 'Teacher was successfully deleted'
       format.html { redirect_to(session[:redirect] || people_url) }
       format.xml  { head :ok }
     end
   end
 
-protected
-  def authorize
-    unless Person.find_by_user_name( session[:user_name] )
-      session[:original_uri] = request.request_uri
-      flash[:notice] = "Please log in"
-      redirect_to :controller=>:admin, :action=>:login
-    end
-  end
+#protected
+#  def authorize
+#    unless Person.find_by_user_name( session[:user_name] )
+#      session[:original_uri] = request.request_uri
+#      flash[:notice] = "Please log in"
+#      redirect_to :controller=>:admin, :action=>:login
+#    end
+#  end
 end 

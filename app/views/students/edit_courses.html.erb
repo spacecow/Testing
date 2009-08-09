@@ -1,28 +1,25 @@
 ﻿<div class="form">
 <%= error_messages_for :student %>
 <fieldset>
-<legend>受講生編集 - <%= @student %></legend>
+<legend><%= t('student') %> - <%= @student %></legend>
 <table><tr>
 <td>
-  <strong>講座</strong>
-	<% form_for :student, :url => update_courses_students_path( :id=>@student ), :html => { :method => :post } do |f| %>
+  <strong><%= t('courses.title') %></strong>
+	<% form_for :student, :url => update_courses_student_path( @student ), :html => { :method => :put } do |f| %>
 		<p>
 		  <%= render :partial=>"course" %>
 		</p>
 		<p>
 		  <%= f.hidden_field :created_at %>
-		  <%= f.submit "Update" %>
+		  <%= f.submit t('update') %>
 		</p>
 	<% end %>
 </td>
-<td valign="top">
-	<p>
-		<div id="classes">
-		</div>
-	</p>
-</td></tr></table>
+</tr></table>
 
-<%= link_to 'Show', @student %> |
-<%= link_to 'Back', people_path %>
+<div class="links">
+	<%= link_to t('info'), @student %> |
+	<%= link_to t('reserve'), edit_klasses_student_path( @student ) %>
+</div>
 </fieldset>
 </div>

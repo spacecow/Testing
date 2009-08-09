@@ -1,18 +1,38 @@
-<strong>クラス</strong>
+<strong><%= t('klasses.title') %></strong>
 <p>
 	<table>
 		<% @attendance_groups.sort.each do |day,attendance_group| %>
-		  <tr>
+			<tr>
 		    <td colspan="3">
 		      <strong><%= attendance_group[0].klass.date.strftime("%x") %>: <%= attendance_group[0].klass.date.strftime("%A") %><br/></strong>
 		    </td>
 		  </tr>
 			<% attendance_group.sort_by{|e| e.klass.start_time}.each do |attendance| %>
 			  <tr>
-	        <%= render :partial=>"show_klass", :locals=>{ :attendance=>attendance } %>
+	        <div class="klass_<%= attendance.klass.id %>">
+	        	<%= render :partial=>"show_klass", :locals=>{ :attendance=>attendance } %>
+	        </div>
 				</tr>
 			<% end %>
 		<% end %>
-	</table>
+	</table><br />
+	<% if !@history_groups.empty? %>
+		<table>
+			<tr><td><strong><%= t('history') %></strong></td></tr>
+			<% @history_groups.sort.each do |day,history_group| %>
+			  <% history_group.sort_by{|e| e.klass.start_time}.each do |attendance| %>
+			    <tr>
+			    	<div class="klass_<%= attendance.klass.id %>">
+			    		<% if attendance.cancel && clearance < 4 %>
+			    			<td><%= attendance.klass.date.strftime("%x")+" "+attendance.klass.to_s+" "+("<i>"+t('canceled')+"</i>") %><br /></td>
+			    		<% elsif !attendance.cancel %>
+			    			<td><%= attendance.klass.date.strftime("%x")+" "+attendance.klass.to_s %><br /></td>
+			    		<% end %>
+			  		</div>
+			    </tr>
+			  <% end %>
+			<% end %>		
+		</table>
+	<% end %>
 </p>
 

@@ -18,60 +18,65 @@
   </tr>
   <tr><td colspan="13" class="table-course"></td></tr>
   <% @time_groups = course_klasses.group_by{|e| e.time_interval } %>
-  <% @time_groups.sort.each do |time, time_klasses| %>
-    <tr>
-	    <th rowspan="<%= time_klasses.size %>">
-	      <%= time_klasses[0].course_level %>&nbsp;<%= link_to '+',
-	          { :action=>'add_course',
-	            :id=>'add_course',
-	            :course_id=>time_klasses[0].course.id,
-	            :start_time=>time_klasses[0].start_time,
-	            :end_time=>time_klasses[0].end_time,
-	            :year=>@year,
-	            :month=>@month,
-	            :day=>@day },
-	            :class=>"grid" %>     
-	    </th>
-
-      <% if !collition[time_klasses[0].time_interval] %>
-	    <% collition[time_klasses[0].time_interval] = @klasses.reject{|e| !(( e.start_time <= time_klasses[0].start_time and e.end_time >= time_klasses[0].start_time ) or ( e.start_time <= time_klasses[0].end_time and e.end_time >= time_klasses[0].end_time ))} %>
-	    <% end %>
-	    <% collitions = collition[time_klasses[0].time_interval] %>
-	    
-	    <% available_students = [] %>
-	    <% attendance_relations = [] %>
-	    <% klass_relations = [] %>
-	    <% time_klasses.each_with_index do |klass,i| %>
-	      <% klass.attendances.reject(&:chosen).each do |attendance| %>
-	        <% available_students += [ attendance.student ] %>
-	      <% end %>
-	      <% klass_relations += [(i+1).to_s+"->"+klass.id.to_s] %>
-	      <% attendance_relations += klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s} %>
-	    <% end %>
-      
-      <% no_place_to_move =[] %>
-      <% 4.times do |i| %>
-        <% if time_klasses.size <= i %>
-          <% no_place_to_move += [i+1] %>
-        <% end %>
-      <% end %>
-      
-      <% time_klasses.each_with_index do |klass,i| %>
-        <%= render :partial=>"klass",
-                     :locals=>{
-                       :no_place_to_move => no_place_to_move+[i+1],
-                       :klass_date=>klass_date,
-                       :klass=>klass,
-                       :klass_relations => klass_relations,
-                       :attendance_relations => attendance_relations,
-                       :classrooms=>classrooms,
-                       :teachers=>teachers,
-                       :collitions=>collitions,
-                       :available_students=>available_students } %>
-    </tr>
-    <tr>
-      <% end %>
+  <% @time_groups.sort.each do |time, time_klasses_and_levels| %>
+		<% time_klasses_and_levels.group_by{|e| e.course_level }.sort.each do |level,time_klasses| %>
+	    <div class="<%= time_klasses[0].course_category %>_<%= time_klasses[0].course_level %>_<%= time_klasses[0].stripped_time_interval %>">
+		  	<tr>
+			    <th rowspan="<%= time_klasses.size %>">
+			      <%= time_klasses[0].course_level %>&nbsp;<%= link_to '+',
+			      			add_course_klasses_path(
+				            :start_time=>time_klasses[0].start_time,
+				            :end_time=>time_klasses[0].end_time,
+				            :course_id=>time_klasses[0].course_id,
+				            :year=>@year,
+				            :month=>@month,
+				            :day=>@day
+			          	),
+			            :class=>"grid" %>     
+			    </th>
+		
+		      <% if !collition[time_klasses[0].time_interval] %>
+			    <% collition[time_klasses[0].time_interval] = @klasses.reject{|e| !(( e.start_time <= time_klasses[0].start_time and e.end_time >= time_klasses[0].start_time ) or ( e.start_time <= time_klasses[0].end_time and e.end_time >= time_klasses[0].end_time ))} %>
+			    <% end %>
+			    <% collitions = collition[time_klasses[0].time_interval] %>
+			    
+			    <% available_students = [] %>
+			    <% attendance_relations = [] %>
+			    <% klass_relations = [] %>
+			    <% time_klasses.each_with_index do |klass,i| %>
+			      <% klass.attendances.reject(&:chosen).each do |attendance| %>
+			        <% available_students += [ attendance.student ] %>
+			      <% end %>
+			      <% klass_relations += [(i+1).to_s+"->"+klass.id.to_s] %>
+			      <% attendance_relations += klass.attendances.map{|e| e.id.to_s+"->"+e.student.id.to_s} %>
+			    <% end %>
+		      
+		      <% no_place_to_move =[] %>
+		      <% 4.times do |i| %>
+		        <% if time_klasses.size <= i %>
+		          <% no_place_to_move += [i+1] %>
+		        <% end %>
+		      <% end %>
+		      
+		      <% time_klasses.each_with_index do |klass,i| %>
+		        <div class="klass_<%= klass.id %>">
+		      		<%= render :partial=>"klass",
+			                     :locals=>{
+			                       :no_place_to_move => no_place_to_move+[i+1],
+			                       :klass_date=>klass_date,
+			                       :klass=>klass,
+			                       :klass_relations => klass_relations,
+			                       :attendance_relations => attendance_relations,
+			                       :classrooms=>classrooms,
+			                       :teachers=>@teachers.reject{|e| !e.courses.include?( klass.course )},
+			                       :collitions=>collitions,
+			                       :available_students=>available_students } %>
+		    		</tr>
+		    		<tr>
+		      <% end %>
+		    </tr>
+		  </div>
     <tr><td colspan="13" class="table-course"></td></tr>
-  </tr>
+    <% end %>  
   <% end %>
 </table>

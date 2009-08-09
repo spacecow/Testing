@@ -1,59 +1,46 @@
 ﻿<p>
-  <b>講座:</b>
-  <%=h @template_class.course %>
+  <b><%= t('course') %>: </b><%= link_to h(@template_klass.course), @template_klass.course ? @template_klass.course : "" %>
 </p>
 
 <p>
-  <b>講師:</b>
-  <%=h @template_class.teacher %>
+  <b><%= t('teacher') %>: </b><%= link_to h(@template_klass.teacher), @template_klass.teacher ? @template_klass.teacher : "" %>
 </p>
 
 <p>
-  <b>部屋:</b>
-  <%=h @template_class.classroom %>
+  <b><%= t('classroom') %>: </b><%= link_to h(@template_klass.classroom), @template_klass.classroom ? @template_klass.classroom : "" %>
 </p>
 
 <p>
-  <b>Capacity:</b>
-  <%=h @template_class.capacity %>
+  <b><%= t('capacity') %>: </b><%=h @template_klass.capacity %>
 </p>
 
 <p>
-  <b>Day:</b>
-  <%=h @template_class.day %>
+  <b><%= t('day') %>: </b><%=h @template_klass.day %>
 </p>
 
 <p>
-  <b>Course time:</b>
-  <%=h @template_class.start_time.to_s( :time ) %> -- <%=h @template_class.end_time.to_s( :time ) %>
-</p>
-
-
-<p>
-  <b>Title:</b>
-  <%=h @template_class.title %>
+  <b><%= t('klass_time') %>: </b><%=h @template_klass.time_interval %>
 </p>
 
 <p>
-  <b>Description:</b>
-  <%=h @template_class.description %>
+  <b><%= t('title') %>: </b><%=h @template_klass.title %>
 </p>
 
 <p>
-  <b>Inactive:</b>
-  <%=h @template_class.inactive %>
+  <b><%= t('description') %>: </b><%=h @template_klass.description %>
 </p>
 
 <p>
-  <b>Mail Sending:</b>
-  <%=h @template_class.mail_sending %>
+  <b><%= t('inactive') %>: </b><%=h @template_klass.inactive %>
 </p>
 
 <p>
-  <b>Note:</b>
-  <%=h @template_class.note %>
+  <b><%= t('mail_sending') %>: </b><%=h @template_klass.mail_sending %>
 </p>
 
+<p>
+  <b><%= t('note') %>: </b><%=h @template_klass.note %>
+</p>
 
-<%= link_to 'Edit', edit_template_class_path(@template_class) %> |
-<%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>
+<%= link_to t('edit'), edit_template_class_path(@template_klass) %> |
+<%= link_to t('back'), template_classes_path( :template_day=>@template_klass.day ) %>

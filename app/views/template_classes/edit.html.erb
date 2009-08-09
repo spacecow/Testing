@@ -2,13 +2,13 @@
 <%= error_messages_for :template_class %>
 
 <fieldset>
-<legend>Editing Template Class</legend>
+<legend><%= t('template_klasses.editing') %></legend>
 
 <% form_for(@template_class) do |f| %>
-  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text=>'Update' } %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t('update') } %>
 <% end %>
 
-<%= link_to 'Show', @template_class %> |
-<%= link_to 'Back', template_classes_path( :template_day=>@template_class.day ) %>
+<%= link_to t('show'), @template_class %> |
+<%= link_to t('back'), template_classes_path( :template_day=>@template_class.day ) %>
 </fieldset>
 </div>

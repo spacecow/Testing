@@ -47,7 +47,7 @@
 		    </td>
 			  <td class="list-actions">
 			    <% @status = person.teacher==nil ? "受講生" : "講師" %>
-			    <%= link_to '見', edit_courses_students_path( :id => person.student ) %>
+			    <%= link_to '見', person.student.nil? ? edit_courses_teacher_path( person.teacher ): edit_courses_student_path( person.student ) %>
 			    <%= link_to '変', edit_person_path(person, :status=>@status ) %>
 			    <% if clearance?(1) %>
 			      <%= link_to '消', person, :status=>@status, :confirm => 'Are you sure?', :method => :delete %>

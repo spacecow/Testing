@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090612064811) do
+ActiveRecord::Schema.define(:version => 20090719052342) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -91,14 +91,14 @@ ActiveRecord::Schema.define(:version => 20090612064811) do
     t.integer  "course_id"
     t.integer  "teacher_id"
     t.integer  "classroom_id"
-    t.integer  "capacity"
+    t.integer  "capacity",                  :default => 0
     t.datetime "date"
     t.time     "start_time"
     t.time     "end_time"
     t.string   "title"
     t.text     "description"
-    t.boolean  "cancel"
-    t.integer  "mail_sending"
+    t.boolean  "cancel",                    :default => false
+    t.integer  "mail_sending", :limit => 1, :default => 0
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20090612064811) do
     t.string   "hashed_password"
     t.string   "salt"
     t.string   "check"
-    t.string   "language",                          :default => "jp"
+    t.string   "language",                          :default => "ja"
   end
 
   create_table "registrations", :force => true do |t|
@@ -176,22 +176,31 @@ ActiveRecord::Schema.define(:version => 20090612064811) do
     t.datetime "updated_at"
   end
 
+  create_table "teachings", :force => true do |t|
+    t.integer  "teacher_id"
+    t.integer  "course_id"
+    t.integer  "cost",       :default => 1500
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "template_classes", :force => true do |t|
     t.integer  "course_id"
     t.integer  "course_time_id"
     t.string   "day"
     t.string   "title"
     t.text     "description"
-    t.boolean  "inactive"
+    t.boolean  "inactive",                    :default => false
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "teacher_id"
     t.integer  "classroom_id"
-    t.integer  "capacity"
+    t.integer  "capacity",                    :default => 0
     t.time     "start_time"
     t.time     "end_time"
-    t.integer  "mail_sending",   :limit => 1
+    t.integer  "mail_sending",   :limit => 1, :default => 0
   end
 
 end
