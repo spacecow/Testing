@@ -20,6 +20,8 @@ module NavigationHelpers
     	classrooms_path
     when /the list of klasses/
     	klasses_path
+    when /the list of classes/
+    	klasses_path
     when /the list of people/
     	people_path
     when /the list of students/
@@ -40,12 +42,28 @@ module NavigationHelpers
     	edit_courses_teacher_path( $1 )
     when /teacher ([0-9]+) info page/
     	teacher_path( Teacher.find($1) )
+		when /the multi course page of teacher "(.+)"/
+			edit_multiple_teachers_path
+		when /the info page of student "(.+)"/
+    	student_path( 
+	    	Student.first(
+	    		:conditions=>["people.user_name=?", $1],
+	    		:include=>:person
+	    	)
+    	)
+		when /the course page of student "(.+)"/
+    	edit_courses_student_path( 
+	    	Student.first(
+	    		:conditions=>["people.user_name=?", $1],
+	    		:include=>:person
+	    	)
+    	)
 		when /the reserve page of student "(.+)"/
     	edit_klasses_student_path( 
 	    	Student.first(
 	    		:conditions=>["people.user_name=?", $1],
 	    		:include=>:person
-	    	).id
+	    	)
     	)
 		when /the course page of teacher "(.+)"/
     	edit_courses_teacher_path( 
@@ -53,9 +71,9 @@ module NavigationHelpers
     			:first,
     			:conditions=>["people.user_name=?", $1],
     			:include=>:person
-    		).id
-    	)
-		when /the info page of teacher "(.+)"/
+    		)
+    	)    	
+    when /the info page of teacher "(.+)"/
     	teacher_path( 
     		Teacher.find(
     			:first,

@@ -97,13 +97,20 @@ class PeopleController < ApplicationController
   def destroy
     @person = Person.find(params[:id])
     
-    errors = association_delete_error_messages(
-    	[@person.teacher.courses, @person.teacher.klasses],
-    	[t( 'teachers.error.delete_teacher_with_courses' ),
-    	 t( 'teachers.error.delete_teacher_with_classes' )])
-		
+    if @person.student.nil?
+	    errors = association_delete_error_messages(
+	    	[@person.teacher.courses, @person.teacher.klasses],
+	    	[t( 'teachers.error.delete_teacher_with_courses' ),
+	    	 t( 'teachers.error.delete_teacher_with_classes' )])
+	  else
+	    errors = association_delete_error_messages(
+	    	[@person.student.courses, @person.student.klasses],
+	    	[t( 'students.error.delete_student_with_courses' ),
+	    	 t( 'students.error.delete_student_with_classes' )])
+		end
+				
 		if( !errors.empty? )
-      flash[:error] = errors.join("\n")
+      flash[:error] = errors.join("<br />")
       redirect_to people_path
       return
     end
@@ -118,7 +125,11 @@ class PeopleController < ApplicationController
     @person.destroy
 
     respond_to do |format|
-    	flash[:notice] = 'Teacher was successfully deleted'
+    	if @person.student.nil?
+    		flash[:notice] = 'Teacher was successfully deleted'
+    	else
+    		flash[:notice] = 'Student was successfully deleted'
+    	end
       format.html { redirect_to(session[:redirect] || people_url) }
       format.xml  { head :ok }
     end

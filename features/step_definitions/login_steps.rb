@@ -1,8 +1,8 @@
-Given /^I am logged in as "([^\"]*)" with password "([^\"]*)"$/ do |username, password|
-	visit login_path
-  fill_in "ユーザー名", :with => username
-  fill_in "パスワード", :with => password
-  click_button "ログイン"
+Given /^I am logged in as "([^\"]*)"(?: with password "([^\"]*)")?$/ do |username, password|
+	Given "I go to the login page"
+  	And "I fill in \'login\.user_name\' with \"#{username}\""
+  	And "I fill in \'login\.password\' with \"" + ( password || "secret" ) + "\""
+  	And "I press \'login\.button\'"
 end
 
 Then /^I should be redirected to the "login" page$/ do

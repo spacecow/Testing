@@ -1,0 +1,43 @@
+<div class="form">
+<%= error_messages_for :teacher %>
+<fieldset>
+<legend><%= t('multi') %><%= t('edit') %><%= t('teachers.title') %></legend>
+
+<% form_for :teacher, :url => update_multiple_teachers_path, :html => { :method => :put } do |f| %>		
+	<table>
+		<tr valign="top">
+			<div class="courses">
+				<% unless @courses.empty? %>
+					<td align="left">
+						<h3><%= t('courses.title') %></h3>
+						<% @keys.each do |key| %>
+							<% @courses[key].each do |course| %>
+								<label style="text-align: left;">
+									<%= check_box_tag "teacher[course_ids][]", course.id %>
+									<%= h course %><p>
+								</label>
+							<% end %>
+						<% end %>
+					</td>
+				<% end %>
+			</div>
+			<div class="teachers">
+				<td align="left">
+					<h3><%= t('teachers.title') %></h3>
+					<ul>
+						<% @teachers.each do |teacher| %>
+							<%= hidden_field_tag "teacher_ids[]", teacher.id %>
+							<li><%= h teacher.name %></li>
+						<% end %>
+					</ul>					
+				</td>
+			</div>
+		</tr>
+	</table><br />
+	<%= f.hidden_field :created_at %>
+	<%= f.submit t('update') %>
+<% end %>
+
+
+</fieldset>
+</div>

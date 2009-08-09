@@ -2,11 +2,13 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  before_filter :authorize, :except=>[:login,:logout]
+  before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
+  before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_user_language
   helper_method :clearance
   helper_method :clearance?
   helper_method :current_user
+  helper_method :association_delete_error_messages
 
   session :session_key => '_yoyaku_session_id'
   layout "courses"
@@ -25,12 +27,22 @@ protected
   def authorize
     if !logged_in?
       session[:original_uri] = request.request_uri
-      flash[:notice] = "Please log in"
+      flash[:notice] = t('login.title')
+      redirect_to :controller=>:admin, :action=>:login
+    elsif clearance >= 3
+      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
+    end
+  end
+  
+  def authorize_view
+    if !logged_in?
+      session[:original_uri] = request.request_uri
+      flash[:notice] = t('login.title')
       redirect_to :controller=>:admin, :action=>:login
     elsif clearance >= 4
       redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
     end
-  end
+	end
     
   def clearance?(level)
     if level>=1 && session[:user_name] == "johan_sveholm"
@@ -75,8 +87,11 @@ private
     session[:user] ||= Person.find_by_user_name( session[:user_name], :include => 'student' )
   end  
 
-  def default_page( person_id )
+  def default_page( person_id=-1 )
   	if clearance == 3
+  		if person_id == -1
+  			return klasses_path
+  		end
   		person = Person.find( person_id, :include=>[ :student,:teacher ])
   		if( person.student.nil? )
   			person.teacher
@@ -95,7 +110,7 @@ private
   end
 
   def set_user_language
-    I18n.locale = logged_in? ? current_user.language : 'ja'
+    I18n.locale = logged_in? ? current_user.language : 'en'
   end  
   
   def get_sorting

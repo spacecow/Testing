@@ -1,0 +1,42 @@
+<table cellpadding="0" cellspacing="1">
+  <tr>
+    <td></td>
+    <td class="list-topics"><%= t('name') %></td>
+    <td class="list-topics"><%= t('mobile_phone') %></td>
+    <td class="list-topics"><%= t('mail_address_mobile') %></td>
+  </tr>
+  <% ppl.each do |person| %>
+    <% if person.gender == 1 %>
+      <tr valign="top" class="list-line-man">
+    <% else %>
+      <tr valign="top" class="list-line-woman">
+    <% end %>  
+    <td class="list-units">
+      <%= check_box_tag "student_ids[]", person.student.id %>
+    </td>
+    <td class="list-units">
+    	<%= h person.name %>
+    </td>
+    <td class="list-units">
+      <%= h person.mobile_phone %>
+    </td>
+    <td class="list-units">
+      <%= h person.mail_address_mobile %>
+    </td>
+	  <td class="list-actions">
+	    <% @status = person.teacher==nil ? "受講生" : "講師" %>
+	    <%= link_to t('info'), edit_courses_student_path( person.student ) %>
+	    <%= link_to t('edit'), edit_person_path( person, :status=>@status ) %>
+	    <%= link_to t('delete'), person,
+	    			:status=>@status,
+	    			:method => :delete,
+	    			:confirm => "Are you sure?\n"+
+		    			association_delete_error_messages(
+  							[ person.student.courses, person.student.klasses ],
+  							[ t( 'students.error.delete_student_with_courses' ),
+  	 							t( 'students.error.delete_student_with_classes' )]).join("\n") %>
+	  </td>
+  </tr>
+<% end %>
+</table><br />
+<%= submit_tag t('edit') %>

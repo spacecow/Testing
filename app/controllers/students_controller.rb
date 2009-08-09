@@ -1,20 +1,13 @@
 class StudentsController < ApplicationController
-#  before_filter :authorize
+	before_filter :authorize, :except=>[:show,:index,:edit_klasses,:update_klasses]
   
   def index
-    redirect_to :controller=>'people', :category=>"受講生"
+  	flash[:notice] = flash[:notice] if flash[:notice]
+  	flash[:error] = flash[:error] if flash[:error]
+    redirect_to people_path( :category=>t('students.title'))
   end
   
   def edit_courses
-  	if clearance == 3
-  		redirect_to Student.find( params[:id] )
-  		flash[:error] = t('people.error.unauthorized_access')
-  		return
-  	elsif clearance >= 4
-  		redirect_to default_page
-  		flash[:error] = t('people.error.unauthorized_access')
-  		return
-  	end
   	@student = Student.find( params[:id], :include=>'courses' )
   	@sorting = Sorting.new
   	@course_groups = Course.all.group_by( &:category )
@@ -45,6 +38,14 @@ class StudentsController < ApplicationController
   end
   
   def update_klasses
+  	if clearance == 3
+  		redirect_to Student.find( params[:id] )
+  		return
+  	elsif unauthorized_user params[:id].to_i
+  		redirect_to default_page
+  		flash[:error] = t('people.error.unauthorized_access')
+  		return
+  	end
     params[:student][:klass_ids] ||= []
     @student = Student.find( params[:id] )
     @student.update_attributes(params[:student])
@@ -65,7 +66,15 @@ class StudentsController < ApplicationController
   end
   
   def edit_multiple
+    if params[:student_ids].nil?
+  		flash[:error] = t('students.error.select')
+  		redirect_to students_path
+  		return
+  	end    
     @students = Student.find( params[:student_ids] )
+  	@courses = Course.all.group_by( &:category )
+  	@sorting = get_sorting
+  	@keys = @sorting.sort_in_mogi_order( @courses.keys )    
   end 
   
   def update_multiple
@@ -74,8 +83,8 @@ class StudentsController < ApplicationController
     @students.each do |student|
       student.update_attributes!( params[:student] )
     end
-      flash[:notice] = "Updated students."
-      redirect_to students_path
+    flash[:notice] = t('students.updated')
+    redirect_to students_path
   end
 
 private
@@ -84,8 +93,18 @@ private
       session[:original_uri] = request.request_uri
       flash[:notice] = "Please log in"
       redirect_to :controller=>:admin, :action=>:login
+    elsif clearance >= 3
+      if params[:id].nil?
+      	redirect_to default_page
+      else
+      	redirect_to default_page( Student.find( params[:id] ).person.id )
+      end
+      flash[:error] = t('people.error.unauthorized_access')
     end
-  end
+  end  
+  
+  def authorize_view
+	end
 
 	def unauthorized_user( id )
   	if clearance >= 4

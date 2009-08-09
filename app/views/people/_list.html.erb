@@ -1,13 +1,13 @@
-﻿<% if category == "全部の人" %>
+﻿<% if category == t('people.title') %>
   <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?)", "%"+searchtext+"%" ],
   :order => 'family_name_kana' ) %>
-<% elsif category == "講師" %>
+<% elsif category == t('teachers.title') %>
   <% ppl = Person.find :all,
   :conditions => [ "tostring like (?) and teachers.person_id = people.id", "%"+searchtext+"%" ],
   :include => "teacher",
   :order => 'family_name_kana' %>
-<% elsif category == "受講生" %>
+<% elsif category == t('students.title') %>
   <% ppl = Person.find( :all,
   :conditions => [ "tostring like (?) and students.person_id = people.id", "%"+searchtext+"%" ],
   :include => "student",
@@ -15,49 +15,17 @@
 <% end %>	
 
 <% if ppl.size > 0 %>
-  <% form_tag edit_multiple_students_path do %>
-		<table cellpadding="0" cellspacing="1">
-		  <tr>
-		    <td></td>
-		    <td class="list-topics">名前</td>
-		    <td class="list-topics">携帯電話</td>
-		    <td class="list-topics">携帯アドレス</td>
-		  </tr>
-		  <% ppl.each do |person| %>
-		    <% if person.gender == 1 %>
-		      <tr valign="top" class="list-line-man">
-		    <% else %>
-		      <tr valign="top" class="list-line-woman">
-		    <% end %>  
-				<% if person.student %>
-			    <td class="list-units">
-			      <%= check_box_tag "student_ids[]", person.student.id %>
-			    </td>
-			  <% else %>
-			    <td></td>
-			  <% end %>
-		    <td class="list-units">
-		    	<%= h person.name %>
-		    </td>
-		    <td class="list-units">
-		      <%= h person.mobile_phone %>
-		    </td>
-		    <td class="list-units">
-		      <%= h person.mail_address_mobile %>
-		    </td>
-			  <td class="list-actions">
-			    <% @status = person.teacher==nil ? "受講生" : "講師" %>
-			    <%= link_to '見', person.student.nil? ? edit_courses_teacher_path( person.teacher ): edit_courses_student_path( person.student ) %>
-			    <%= link_to '変', edit_person_path(person, :status=>@status ) %>
-			    <% if clearance?(1) %>
-			      <%= link_to '消', person, :status=>@status, :confirm => 'Are you sure?', :method => :delete %>
-			    <% end %>
-			  </td>
-		  </tr>
-		<% end %>
-		</table>
-		<%= submit_tag "Edit" %>
-	<% end %>
+  <% if category == t('students.title') %>
+  	<% form_tag edit_multiple_students_path do %>
+  		<%= render :partial => "list_students", :locals => { :ppl => ppl } %>
+  	<% end %>
+  <% elsif category == t('teachers.title') %>
+  	<% form_tag edit_multiple_teachers_path do %>
+  		<%= render :partial => "list_teachers", :locals => { :ppl => ppl } %>
+  	<% end %>
+  <% else %>
+  	<%= render :partial => "list_people", :locals => { :ppl => ppl } %>
+  <% end %>
 <% else %>
   No hits.
 <% end %>

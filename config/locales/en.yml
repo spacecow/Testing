@@ -8,6 +8,7 @@ en:
   cancel: "Cancel"
   canceled: "canceled"
   capacity: "Capacity"
+  category: "Category"
   classroom: "Classroom"
   cost: "Cost"
   course: "Course"
@@ -15,8 +16,9 @@ en:
   created: " was successfully created"
   day: "Day"
   delete: "Del"
+  deleted: " was successfylly deleted"
   description: "Description"
-  edit: "Edit"
+  edit: "Edit "
   end_time: "End Time"
   gender: "Gender"
   history: "History"
@@ -28,11 +30,12 @@ en:
   klass_date: "Date"
   klass_time: "Time"
   language: "Language"
-  listing: "Listing"  
+  listing: "Listing "  
   mail_address_mobile: "Mail address (mobile)"
   mail_address_pc: "Mail address (pc)"
   mail_sending: "Mail Sending"
   mobile_phone: "Mobile phone"
+  multi: "Multi "
   name: "Name"
   name_kana: "Name (katakana)"
   new: "New"
@@ -40,6 +43,7 @@ en:
   notice: "Note"
   password: "Password"
   reserve: "Reserve"
+  search: "Search"
   show: "Info"
   start_time: "Start Time"
   student: "Student"
@@ -77,6 +81,7 @@ en:
       invalid_user_or_password: "User name or password invalid"
   logout:
     title: "Logout"
+    notice: "Successfully logged out"
   mymafumafu:
     title: "My Mafumafu Page"
   people:
@@ -85,13 +90,22 @@ en:
       unauthorized_access: "Unauthorized access."
   students:
     title: "Students"
+    new: "New Student"
+    updated: "Students updated"
+    error:
+      delete_student_with_courses: "Delete all courses depending on this student first"
+      delete_student_with_classes: "Delete all classes depending on this student first"
+      select: "Please select students"
   tags:
     title: "Tags"
   teachers:
     title: "Teachers"
+    new: "New Teacher"
+    updated: "Teachers updated"
     error:
       delete_teacher_with_courses: "Delete all courses depending on this teacher first"
       delete_teacher_with_classes: "Delete all classes depending on this teacher first"
+      select: "Please select teachers"
   template_klasses:
     editing: "Editing Template Class"
     title: "Template Classes"

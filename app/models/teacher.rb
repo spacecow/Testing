@@ -4,6 +4,8 @@ class Teacher < ActiveRecord::Base
   has_many :teachings
   has_many :courses, :through=>:teachings
 
+	named_scope :user, lambda { |user| { :conditions=>["people.user_name=?",user], :include=>:person }}
+
   def gender
     person.gender
   end

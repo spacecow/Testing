@@ -1,8 +1,11 @@
 class TeachersController < ApplicationController
-	before_filter :authorize, :except=>[:show]
+	before_filter :authorize, :except=>[:show,:index]
+	before_filter :authorize_view, :only=>[:index,:show]
 
   def index
-    redirect_to :controller=>'people', :category=>"講師"
+  	flash[:notice] = flash[:notice] if flash[:notice]
+  	flash[:error] = flash[:error] if flash[:error]
+    redirect_to people_path( :category=>t('teachers.title'))
   end
 
   def show
@@ -36,6 +39,28 @@ class TeachersController < ApplicationController
   # GET /teachers/1/edit
   def edit
     @teacher = Teacher.find(params[:id])
+  end
+
+  def edit_multiple
+    if params[:teacher_ids].nil?
+  		flash[:error] = t('teachers.error.select')
+  		redirect_to teachers_path
+  		return
+  	end
+    @teachers = Teacher.find( params[:teacher_ids] )
+  	@courses = Course.all.group_by( &:category )
+  	@sorting = get_sorting
+  	@keys = @sorting.sort_in_mogi_order( @courses.keys )
+  end 
+
+  def update_multiple
+    params[:teacher][:course_ids] ||= []
+    @teachers = Teacher.find( params[:teacher_ids] )
+    @teachers.each do |teacher|
+      teacher.update_attributes!( params[:teacher] )
+    end
+    flash[:notice] = "Teachers updated"
+    redirect_to teachers_path
   end
 
   # POST /teachers
@@ -93,10 +118,17 @@ private
       flash[:notice] = "Please log in"
       redirect_to :controller=>:admin, :action=>:login
     elsif clearance >= 3
-      redirect_to default_page( Teacher.find( params[:id] ).person.id )
-      flash[:error] = t('people.error.unauthorized_access') unless clearance == 3
+      if params[:id].nil?
+      	redirect_to default_page
+      else
+      	redirect_to default_page( Teacher.find( params[:id] ).person.id )
+      end
+      flash[:error] = t('people.error.unauthorized_access')
     end
   end  
+  
+  def authorize_view
+	end
 
 	def unauthorized_regular_user( id )
   	if clearance >= 4

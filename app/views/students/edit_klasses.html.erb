@@ -8,6 +8,7 @@
   <%= render :partial=>"show_courses", :locals=>{ :add_enter=>false	 } %>
 </td>
 <% end %>
+<div class="classes">
 <td>
   <strong><%= t('klasses.title') %></strong>
 	<% form_for :student, :url => update_klasses_student_path( @student ), :html => { :method => :put } do |f| %>
@@ -22,6 +23,9 @@
 		</p>		
   <% end %>
 </td>
+</div>
+<div class="history">
+</div>
 </tr></table>
 
 <br/>

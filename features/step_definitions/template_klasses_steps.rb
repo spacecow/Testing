@@ -1,12 +1,19 @@
 Given /^the following template klass records?$/ do |table|
   table.hashes.each do |hash|
-  	course = Course.find_by_name( hash.delete( "course" ))
-  	hash[ :course_id ] = course.id
-  	day = hash.delete( "day" )
-  	hash[ :day ] = ( day == "current day" ? Date.current.strftime("%A") : day ) if day  	
-  	Factory( :template_class,hash )
+  	template_hash = {}
+  	hash.keys.each do |key|
+  		template_hash[key] = hash[key] unless key=="course"
+  	end
+  	if hash[:course]
+	  	course = Course.find_by_name( hash[:course] )
+	  	template_hash[ :course_id ] = course.id
+	  end
+  	#day = template_hash.delete( "day" )
+  	template_hash[ :day ] = ( hash[:day] == "current day" ? Date.current.strftime("%A") : hash[:day] ) if hash[:day]
+  	Factory( :template_class,template_hash )
 	end
 end
+
 
 #When /^I follow "([^\"]*)" in row no ([0-9]+) containing template klass with course "([^\"]*)" and time interval "([^\"]*)"$/ do |link, no, name, interval|
 #  start_time = interval.split('~')[0]

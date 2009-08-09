@@ -17,8 +17,8 @@
 					<li><a href="/people"><%= t('people.title') %></a>
 						<ul>
 							<li>------------------</li>
-							<li><%= link_to t('teachers.title'), people_path( :category=>"講師" ) %></li>
-							<li><%= link_to t('students.title'), people_path( :category=>"受講生" ) %></a></li>
+							<li><%= link_to t('teachers.title'), people_path( :category=>t('teachers.title') ) %></li>
+							<li><%= link_to t('students.title'), people_path( :category=>t('students.title') ) %></a></li>
 						</ul>
 					</li>
 			

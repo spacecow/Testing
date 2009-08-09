@@ -1,13 +1,13 @@
 ﻿<p>
-  <b><%= t('course') %>: </b><%= link_to @klass.course, @klass.course ? @klass.course : "" %>
+  <b><%= t('course') %>: </b><%= link_to h( @klass.course ), @klass.course ? @klass.course : "" %>
 </p>
 
 <p>
-  <b><%= t('teacher') %>: </b><%= link_to @klass.teacher, @klass.teacher ? @klass.teacher : "" %>
+  <b><%= t('teacher') %>: </b><%= link_to h( @klass.teacher ), @klass.teacher ? @klass.teacher : "" %>
 </p>
 
 <p>
-  <b><%= t('classroom') %>: </b><%= link_to @klass.classroom, @klass.classroom ? @klass.classroom : "" %>
+  <b><%= t('classroom') %>: </b><%= link_to h( @klass.classroom ), @klass.classroom ? @klass.classroom : "" %>
 </p>
 
 <p>
@@ -43,5 +43,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_klass_path(@klass) %> |
-<%= link_to 'Back', klasses_path %>
+<%= link_to t('edit'), edit_klass_path(@klass) %> |
+<%= link_to t('back'), klasses_path %>

@@ -1,6 +1,5 @@
 class Sorting
   def sort_by_day( array )
-  	p array
     (0...array.size).each do |i|
       %w[Sunday Saturday Friday Thursday Wednesday Tuesday Monday].each do |cat|
         if array.map.include?( cat )

@@ -1,10 +1,10 @@
 ﻿<div id="list">
 <%= error_messages_for :person %>
-<h1>上場<%= @category %></h1>
+<h1><%= t('listing') %><%= @category %></h1>
 
 <table><tr>
 <td>
-  <label for="searchtext">Search</label>
+  <label for="searchtext"><%= t('search') %>:</label>
   <%= text_field_tag :searchtext, @searchtext, :size=>30 %>
 	<%= observe_field(
 	      :searchtext,
@@ -17,9 +17,9 @@
 	<% form_for :template_class,
 	            :url => { :action=>'index' },
 	            :html => { :method=>'get' } do |f| %>
-	  <label for="category">Category:</label>
+	  <label for="category"><%= t('category') %>:</label>
 	  <%= select_tag :category,
-	    options_for_select( ["全部の人", "講師", "受講生"], @category ),
+	    options_for_select( [t('people.title'), t('teachers.title'), t('students.title')], @category ),
 	    :onchange => "this.form.submit();" %>
 	<% end %>
 </td>
@@ -30,5 +30,5 @@
 </div>
 <br />
 
-<%= link_to '新しい講師', new_person_path( :status=> '講師' ), :class=>'link' %> | 
-<%= link_to '新しい受講生', new_person_path( :status=>'受講生' ), :class=>'link' %>
+<%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :class=>'link' %> | 
+<%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :class=>'link' %>

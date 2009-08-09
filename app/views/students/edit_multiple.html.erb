@@ -1,43 +1,43 @@
 <div class="form">
 <%= error_messages_for :student %>
 <fieldset>
-<legend>倍数受講生編集 - <%= @student %></legend>
-<table><tr>
-<td>
-	<% form_for :student, :url => update_multiple_students_path, :html => { :method => :put } do |f| %>
-	  <ul>
-	    <% @students.each do |student| %>
-	      <li>
-	        <%= hidden_field_tag "student_ids[]", student.id %>
-	        <%= h student.name %>
-	      </li>
-	    <% end %>
-	  </ul>
-		<strong>講座</strong>
-		<p>
-			<% Course.all.group_by(&:category).each do |category,course_group| %>
-			  <% course_group.sort_by(&:name).each do |course| %>
-				  <div>
-				    <%= check_box_tag "student[course_ids][]", course.id %>
-				    <%= course.name %>
-				  </div>
-				<% end %>
-			<% end %>
-		</p>
-		<p>
-		  <%= f.hidden_field :created_at %>
-		  <%= f.submit "Update" %>
-		</p>
-	<% end %>
-</td>
-<td valign="top">
-	<p>
-		<div id="classes">
-		</div>
-	</p>
-</td></tr></table>
+<legend><%= t('multi') %><%= t('edit') %><%= t('students.title') %></legend>
 
-<%= link_to 'Show', @student %> |
-<%= link_to 'Back', people_path %>
+<% form_for :student, :url => update_multiple_students_path, :html => { :method => :put } do |f| %>		
+	<table>
+		<tr valign="top">
+			<div class="courses">
+				<% unless @courses.empty? %>
+					<td align="left">
+						<h3><%= t('courses.title') %></h3>
+						<% @keys.each do |key| %>
+							<% @courses[key].each do |course| %>
+								<label style="text-align: left;">
+									<%= check_box_tag "student[course_ids][]", course.id %>
+									<%= h course %><p>
+								</label>
+							<% end %>
+						<% end %>
+					</td>
+				<% end %>
+			</div>
+			<div class="students">
+				<td align="left">
+					<h3><%= t('students.title') %></h3>
+					<ul>
+						<% @students.each do |student| %>
+							<%= hidden_field_tag "student_ids[]", student.id %>
+							<li><%= h student.name %></li>
+						<% end %>
+					</ul>					
+				</td>
+			</div>
+		</tr>
+	</table><br />
+	<%= f.hidden_field :created_at %>
+	<%= f.submit t('update') %>
+<% end %>
+
+
 </fieldset>
 </div>

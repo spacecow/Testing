@@ -23,7 +23,7 @@ class AdminController < ApplicationController
 
   def logout
     reset_session
-    flash[:notice] = 'Successfully logged out'
+    flash[:notice] = t('logout.notice')
     redirect_to :action=>'login'
   end
 

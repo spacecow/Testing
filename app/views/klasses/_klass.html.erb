@@ -43,23 +43,27 @@
 <% attendances = klass.attendances.reject(&:cancel) %>
 <% if attendances.size >0 %>
 	<% attendances.each do |attendance| %>
-    <% form_for(attendance) do |f| %>	
-			<td>
-				<% moves = @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} %>
-        <%= f.select :student_id,
-          available_students.map{|e| [e.name,e.id]} +
-            ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
-            ( !moves.empty? ? @line + moves : [] ) +
-            ( attendance.chosen ? @line + @options : [] ),
-          { :include_blank=>true,            
-            :selected=>attendance.chosen ? attendance.student.id : nil },
-          { :onchange => 'this.form.submit();',
-            :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
-        <%= hidden_field_tag :relations, attendance_relations.join(',') %>
-        <%= hidden_field_tag :klass_relations, klass_relations.join(',') %>
-        <%= hidden_field_tag :date, klass_date %>
-			</td>
-	  <% end %>
+    <% if clearance <= 2 %>
+	    <% form_for(attendance) do |f| %>	
+				<td>
+					<% moves = @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} %>
+	        <%= f.select :student_id,
+	          available_students.map{|e| [e.name,e.id]} +
+	            ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
+	            ( !moves.empty? ? @line + moves : [] ) +
+	            ( attendance.chosen ? @line + @options : [] ),
+	          { :include_blank=>true,            
+	            :selected=>attendance.chosen ? attendance.student.id : nil },
+	          { :onchange => 'this.form.submit();',
+	            :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
+	        <%= hidden_field_tag :relations, attendance_relations.join(',') %>
+	        <%= hidden_field_tag :klass_relations, klass_relations.join(',') %>
+	        <%= hidden_field_tag :date, klass_date %>
+				</td>
+		  <% end %>
+		<% else %>
+			<td><center><%= attendance.chosen ? attendance.student.name : "?" %></center></td>
+		<% end %>
 	<% end %>
 <% end %>
 <% (8-attendances.size).times do |student| %>

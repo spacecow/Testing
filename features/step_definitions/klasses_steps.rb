@@ -1,33 +1,26 @@
-Then /^I should have ([0-9]+) klasse?s?$/ do |count|
-  Klass.count.should == count.to_i
-end
-
-Then /^teacher "([^\"]*)" should have ([0-9]+) klasse?s?$/ do |user,count|
-  Klass.count( :all,
-  	:conditions => ["people.user_name = ?",user ],
-  	:include => { :teacher => :person }
-  ).should == count.to_i
-end
-
 Given /^the following klass records?$/ do |table|
   table.hashes.each do |hash|
-  	course_name = hash.delete( "course" )
-  	if course_name
-  		course = Course.find_by_name( course_name )
-  		hash[ :course_id ] = course.id
+  	klass_hash = {}
+  	hash.keys.map(&:to_sym).each do |key|
+  		case
+  			when key == :course
+  				klass_hash[:course_id] = Course.find_by_name( hash[:course] ).id
+  			when key == :teacher
+  				klass_hash[:teacher_id] = Teacher.user( hash[:teacher] ).first.id
+  			when key == :date
+  				klass_hash[:date] = ( hash[:date] == "current date" ?
+  					DateTime.current.strftime("%x") :
+  					hash[:date] )
+  			else
+  				klass_hash[key] = hash[key]
+  		end
   	end
-  	user_name = hash.delete( "teacher" )
-  	if user_name
-	  	teacher = Teacher.find( :first,
-	  		:conditions => [ "person_id = people.id and people.user_name = ?", user_name ],
-	  		:include => :person
-	    )
-	  	hash[ :teacher_id ] = teacher.id
-	  end
-	  date = hash.delete( "date" )
-  	hash[ :date ] = ( date == "current date" ? DateTime.current.strftime("%x") : date ) if date
-  	Factory( :klass,hash )
+  	Factory( :klass,klass_hash )
 	end
+end
+
+Then /^I should have ([0-9]+) klasse?s?$/ do |count|
+  Klass.count.should == count.to_i
 end
 
 When /^I follow "([^\"]*)" within klass ([0-9]+)$/ do |link, no|
@@ -61,4 +54,16 @@ Then /^class "([^\"]*)" should have a teacher$/ do |name|
 	Klass.first(
 		:conditions => ["courses.name=?",name],
 		:include => :course ).teacher.should_not be_nil
+end
+
+#Only works if only one class is assigned to that specific course
+Then /^class "([^\"]*)" should have ([0-9]+) students?$/ do |name,no|
+	if name.to_i > 0
+		klass_id = name
+		Klass.find( klass_id ).students.count.should == no.to_i
+	else
+		Klass.first(
+			:conditions => ["courses.name=?",name],
+			:include => :course ).students.count.should == no.to_i
+	end
 end

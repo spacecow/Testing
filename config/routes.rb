@@ -6,9 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :docs
   map.resources :klasses, :collection => { :add_course => :get }
   map.resources :people
-  map.resources :students, :collection => { :edit_multiple => :post, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
+  map.resources :students, :collection => { :edit_multiple => :get, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
 	map.resources :tags
-  map.resources :teachers, :member => { :edit_courses => :get, :update_courses => :put }
+  map.resources :teachers, :collection => { :edit_multiple => :get, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put }
   map.resources :teachings
   map.resources :template_classes, :collection => { :add_course => :get }
   map.login 'login', :controller => 'admin', :action => 'login'

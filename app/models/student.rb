@@ -5,6 +5,8 @@ class Student < ActiveRecord::Base
   has_many :attendances
   has_many :klasses, :through=>:attendances
   
+	named_scope :user, lambda { |user| { :conditions=>["people.user_name=?",user], :include=>:person }}  
+  
   after_update :save_attendances
 
   def existing_attendance_attributes=(attendance_attributes)

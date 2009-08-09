@@ -8,6 +8,7 @@ ja:
   cancel: "キャンセル"
   canceled: "キャンセル"
   capacity: "CAPACITY"
+  category: "カテゴリー"
   classroom: "部屋"
   course: "講座"
   create: "創造"
@@ -32,6 +33,7 @@ ja:
   mail_address_pc: "ＰＣ用アドレス"
   mail_sending: "MAIL SENDING"
   mobile_phone: "携帯電話番号"
+  multi: "倍数"
   name: "名前"
   name_kana: "名前 (カタカナ)"
   new: "新しい"
@@ -39,6 +41,7 @@ ja:
   notice: "注意"
   password: "パスワード"
   reserve: "予約"
+  search: "検索"
   show: "表示"
   start_time: "開始の時間"
   student: "受講生"
@@ -64,16 +67,18 @@ ja:
     title: "クラス"
     listing: "上場クラス"
     flash:
-      try_to_delete_klass_with_students: "クラスを消す前に全部の受講生を除いて下さい"
+      try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
     title: "ログインして下さい"
     user_name: "ユーザー名"
     password: "パスワード"
     button: "ログイン"
+    notice: "が首尾よくログインされました"
     flash:
       invalid_user_or_password: "無効ユーザーかパスワード"
   logout:
     title: "ログアウト"
+    notice: "が首尾よくログアウトされました"
   mymafumafu:
     title: "マイまふまふページ"
   people:
@@ -82,10 +87,22 @@ ja:
       unauthorized_access: "不正アクセス"
   students:
     title: "受講生"
+    new: "新しい受講生"
+    updated: "受講生が更新されました"
+    error:
+      delete_student_with_courses: "受講生を削除する前に全部の関係がある講座を除いて下さい"
+      delete_student_with_classes: "受講生を削除する前に全部の関係があるクラスを除いて下さい"    
+      select: "受講生を選択して下さい"
   tags:
     title: "TAGS"
   teachers:
-    title: "教師"
+    title: "講師"
+    new: "新しい講師"
+    updated: "講師が更新されました"
+    error:
+      delete_teacher_with_courses: "講師を削除する前に全部の関係がある講座を除いて下さい"
+      delete_teacher_with_classes: "講師を削除する前に全部の関係があるクラスを除いて下さい"
+      select: "講師を選択して下さい"
   template_klasses:
     new: "新しいテンプレート・クラス"  
     listing: "上場テンプレート・クラス"
