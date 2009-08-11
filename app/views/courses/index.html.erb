@@ -1,7 +1,7 @@
 <div id="list">
 <h1><%= t( 'courses.listing' ) %></h1>
 
-<table cellpadding="5" cellspacing="0">
+<table cellpadding="2" cellspacing="1">
 
 <% @keys.each do |key| %>
 	<% @courses_groups[key].each do |course| %>
@@ -44,4 +44,4 @@
 </div>
 <br />
 
-<%= link_to t( 'courses.new' ), new_course_path %>
+<%= link_to t( 'courses.new' ), new_course_path, :class=>"link" %><br />

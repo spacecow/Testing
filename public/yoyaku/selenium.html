@@ -26,8 +26,61 @@ From git://github.com/paytonrules/selenium-on-rails
  * branch            HEAD       -> FETCH_HEAD
 </pre>
 
+<pre class="code">
+yoyaku><span class="typing">gem install Selenium</span>
+Successfully installed Selenium-1.1.14
+1 gem installed
+Installing ri documentation for Selenium-1.1.14...
+Installing RDoc documentation for Selenium-1.1.14...
+</pre>
+Unfortunately the jar that the Selenium gem (version 1.1.14) comes with does not work with Firefox 3. So we have to get the latest jar from the Selenium-RC site:
+Download the <a href="http://seleniumhq.org/download/">Selenium RC Beta 2</a>.
+
+Once you have extracted the download we copy:
+selenium-remote-control-1.0.1/selenium-server-1.0.1/selenium-server.jar
+Over the jar that was installed with the Selenium gem:
+C:/ruby/lib/ruby/gems/1.8/gems/Selenium-1.1.14/lib/selenium/openqa/selenium-server.jar.txt
+
+
+<pre class="code">
+yoyaku><span class="typing">selenium</span>
+java  -jar c:/ruby/lib/ruby/gems/1.8/gems/Selenium-1.1.14/lib/selenium/openqa/se
+lenium-server.jar.txt
+13:10:02.727 INFO - Java: Sun Microsystems Inc. 11.0-b16
+13:10:02.727 INFO - OS: Windows XP 5.1 x86
+13:10:02.897 INFO - v1.0.1 [2696], with Core v@VERSION@ [@REVISION@]
+13:10:03.097 INFO - Version Jetty/5.1.x
+13:10:03.097 INFO - Started HttpContext[/selenium-server/driver,/selenium-server
+/driver]
+13:10:03.107 INFO - Started HttpContext[/selenium-server,/selenium-server]
+13:10:03.107 INFO - Started HttpContext[/,/]
+13:10:03.458 INFO - Started SocketListener on 0.0.0.0:4444
+13:10:03.458 INFO - Started org.mortbay.jetty.Server@126e85f
+</pre>
+
+<pre class="code">
+yoyaku><span class="typing">cucumber examples/selenium/features/</span>
+Feature: Search
+  In order to learn more
+  As an information seeker
+  I want to find more information
+
+  Scenario: Find what I'm looking for              # examples/selenium/features/
+search.feature:6
+    Given I am on the Google search page           # examples/selenium/features/
+step_definitons/search_steps.rb:1
+    When I search for "rspec"                      # examples/selenium/features/
+step_definitons/search_steps.rb:5
+    Then I should see a link to http://rspec.info/ # examples/selenium/features/
+step_definitons/search_steps.rb:11
+
+1 scenario (1 passed)
+3 steps (3 passed)
+2m1.315s
+</pre>
 </doc>
 
+http://www.glenn-roberts.com/2009/04/test/
 
 
 <hr>

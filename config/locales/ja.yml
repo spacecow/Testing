@@ -51,11 +51,15 @@ ja:
   update: "更新"
   user_name: "ユーザー名"
   classrooms:
+    editing: "教室編集"
+    listing: "上場教室"
+    new: "新しい教室"
     title: "教室"
   courses:
-    title: "講座"
+    editing: "講座編集"
     listing: "上場講座"
     new: "新しい講座"
+    title: "講座"
     flash:
       try_to_delete_course_with_template_classes: "Delete all template classes depending on this course first"
       try_to_delete_course_with_klasses: "Delete all klasses depending on this course first"
@@ -66,6 +70,7 @@ ja:
   klasses:
     title: "クラス"
     listing: "上場クラス"
+    new: "新しいクラス"
     flash:
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:

@@ -2,13 +2,13 @@
 <%= error_messages_for :course %>
 
 <fieldset>
-<legend>Editing Course</legend>
+<legend><%= t('courses.editing') %></legend>
 
 <% form_for(@course) do |f| %>
-  <%= render :partial => "form", :locals => { :f=>f, :label_text=>"Update" } %>
+  <%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
 <% end %>
 
-<%= link_to 'Show', @course %> |
-<%= link_to 'Back', courses_path %>
+<%= link_to t('show'), @course, :class=>"link" %> |
+<%= link_to t('back'), courses_path, :class=>"link" %>
 </fieldset>
 </div>

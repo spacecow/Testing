@@ -1,32 +1,14 @@
-<h1>Editing classroom</h1>
+<div class="form">
+<%= error_messages_for :classroom %>
+
+<fieldset>
+<legend><%= t('classrooms.editing') %></legend>
 
 <% form_for(@classroom) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :inactive %><br />
-    <%= f.check_box :inactive %>
-  </p>
-  <p>
-    <%= f.label :note %><br />
-    <%= f.text_area :note %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
 <% end %>
 
-<%= link_to 'Show', @classroom %> |
-<%= link_to 'Back', classrooms_path %>
+<%= link_to t('show'), @classroom, :class=>"link"%> |
+<%= link_to t('back'), classrooms_path, :class=>"link" %>
+</fieldset>
+</div>

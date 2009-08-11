@@ -33,7 +33,7 @@
   </div>
 <% end %>
 
-<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ) %>
+<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ), :class=>"link" %><br />
 
 <% if clearance?(1) %>
 	<table>

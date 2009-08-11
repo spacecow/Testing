@@ -1,28 +1,28 @@
 <p>
-  <b>Name:</b>
+  <b><%= t('name') %>:</b>
   <%=h @classroom.name %>
 </p>
 
 <p>
-  <b>Address:</b>
+  <b><%= t('address') %>:</b>
   <%=h @classroom.address %>
 </p>
 
 <p>
-  <b>Description:</b>
+  <b><%= t('description') %>:</b>
   <%=h @classroom.description %>
 </p>
 
 <p>
-  <b>Inactive:</b>
+  <b><%= t('inactive') %>:</b>
   <%=h @classroom.inactive %>
 </p>
 
 <p>
-  <b>Note:</b>
+  <b><%= t('note') %>:</b>
   <%=h @classroom.note %>
 </p>
 
 
-<%= link_to 'Edit', edit_classroom_path(@classroom) %> |
-<%= link_to 'Back', classrooms_path %>
+<%= link_to t('edit'), edit_classroom_path(@classroom), :class=>"link" %> |
+<%= link_to t('back'), classrooms_path, :class=>"link" %><br />

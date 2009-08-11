@@ -21,7 +21,7 @@
 <% end %>
 
 <br />
-<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ) %>
+<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
 
 <% if clearance?(1) && @template_classes %>
 	<table>
@@ -36,9 +36,7 @@
 	    <td><%=h template_class.note %></td>
 	    <td><%= link_to 'Show', template_class %></td>
 	    <td><%= link_to 'Edit', edit_template_class_path(template_class) %></td>
-	    <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?',
-	      :method => :delete
-	        %>
+	    <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?', :method => :delete %>
 	    </td>
 	  </tr>
 	<% end %>

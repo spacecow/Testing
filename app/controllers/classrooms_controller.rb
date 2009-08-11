@@ -62,7 +62,7 @@ class ClassroomsController < ApplicationController
     respond_to do |format|
       if @classroom.update_attributes(params[:classroom])
         flash[:notice] = 'Classroom was successfully updated.'
-        format.html { redirect_to(@classroom) }
+        format.html { redirect_to classrooms_path }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

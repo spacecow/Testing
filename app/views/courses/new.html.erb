@@ -2,12 +2,12 @@
 <%= error_messages_for :course %>
 
 <fieldset>
-<legend>新しい講座</legend>
+<legend><%= t('courses.new') %></legend>
 
 <% form_for(@course) do |f| %>
-  <%= render :partial => "form", :locals => { :f=>f, :label_text=>"Create" } %>
+  <%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
 <% end %>
 
-<%= link_to 'Back', courses_path %>
+<%= link_to t('back'), courses_path, :class=>"link" %>
 </fieldset>
 </div>
