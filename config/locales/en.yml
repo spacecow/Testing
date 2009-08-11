@@ -53,8 +53,12 @@ en:
   update: "Update"
   user_name: "User name"
   classrooms:
+    editing: "Editing Classroom"
+    listing: "Listing Classrooms"
+    new: "New Classroom"
     title: "Classrooms"
   courses:
+    editing: "Editing Course"
     new: "New course"
     listing: "Listing Courses"
     title: "Courses"

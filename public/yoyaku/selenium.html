@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>
-Git on Windows
+Selenium
 </title>
 <link rel=StyleSheet href="rails.css" type="text/css" media=screen>
 <script type="text/javascript" src="scripts/tooltips.js"></script>
@@ -10,8 +10,8 @@ Git on Windows
 <body>
 <table><tr><td width="300">
 <pre class="main">
-<h1>Git on Windows</h1>
-<doc tags=["rails","git"] title="Tail on Windows">
+<h1>Selenium</h1>
+<doc tags=["rails","selenium"] title="Selenium">
 <pre class="code">
 yoyaku><span class="typing">ruby script/plugin install \
   git://github.com/paytonrules/selenium-on-rails.git</span>
@@ -33,15 +33,19 @@ Successfully installed Selenium-1.1.14
 Installing ri documentation for Selenium-1.1.14...
 Installing RDoc documentation for Selenium-1.1.14...
 </pre>
-Unfortunately the jar that the Selenium gem (version 1.1.14) comes with does not work with Firefox 3. So we have to get the latest jar from the Selenium-RC site:
-Download the <a href="http://seleniumhq.org/download/">Selenium RC Beta 2</a>.
+Unfortunately the jar that the Selenium gem (version 1.1.14) comes
+with does not work with Firefox 3. The latst jar can be downloaded
+from the Selenium-RC site.Download the <a href="http://seleniumhq.org/download/">Selenium RC Beta 2</a>.
 
-Once you have extracted the download we copy:
-selenium-remote-control-1.0.1/selenium-server-1.0.1/selenium-server.jar
-Over the jar that was installed with the Selenium gem:
-C:/ruby/lib/ruby/gems/1.8/gems/Selenium-1.1.14/lib/selenium/openqa/selenium-server.jar.txt
+Once it is downloaded, extract...
 
+<i>selenium-remote-control-1.0.1/selenium-server-1.0.1/
+selenium-server.jar</i>
 
+...over the jar that was installed with the Selenium gem...
+
+<i>C:/ruby/lib/ruby/gems/1.8/gems/Selenium-1.1.14/lib/selenium/openqa/
+selenium-server.jar.txt</i>
 <pre class="code">
 yoyaku><span class="typing">selenium</span>
 java  -jar c:/ruby/lib/ruby/gems/1.8/gems/Selenium-1.1.14/lib/selenium/openqa/se
