@@ -1,0 +1,26 @@
+<p>
+  <%= f.label :name, t('name') %>
+  <%= f.text_field :name %>
+</p>
+<p>
+  <%= f.label :address, t('address') %>
+  <%= f.text_field :address %>
+</p>
+<p>
+  <%= f.label :description, t('description') %>
+  <%= f.text_area :note, :rows=>8, :cols=>27 %>
+</p>
+<p>
+  <%= f.label :inactive, t('inactive') %>
+  <table><tr>
+    <td bgcolor="#AAAAFF"><%= f.radio_button :inactive, false %>OFF</td>
+    <td bgcolor="#FFAAAA"><%= f.radio_button :inactive, true %>ON</td>
+  </tr></table>
+</p>
+<p>
+  <%= f.label :note, t('note') %>
+  <%= f.text_area :note, :rows=>8, :cols=>27 %>
+</p>
+<p>
+  <%= f.submit label_text, :class=>"submit" %>
+</p>
