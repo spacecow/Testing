@@ -42,4 +42,6 @@ end
 
 Webrat.configure do |config|
 	config.mode = :selenium  #:rails
+  config.application_environment = :test  
+  config.application_framework = :rails  	
 end

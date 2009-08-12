@@ -18,7 +18,9 @@ Cucumber::Rails.bypass_rescue
 require 'webrat'
 
 Webrat.configure do |config|
-  config.mode = :rails
+	config.mode = :selenium  #:rails
+  config.application_environment = :test  
+  config.application_framework = :rails  	
 end
 
 require 'cucumber/rails/rspec'

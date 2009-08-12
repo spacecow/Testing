@@ -3,7 +3,7 @@
     <legend><%= t 'login.title' %></legend>
     <% form_tag do %>
       <p>
-        <label for="user_name"><%= t 'login.user_name' %></label>
+        <label for="user_name" name="user_name"><%= t 'login.user_name' %></label>
         <%= text_field_tag :user_name, params[:user_name] %>
       </p>
       <p>
