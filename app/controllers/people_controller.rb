@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
   # GET /people.xml
   def index
     @people = Person.find(:all)
-    @category = params[:category] || "全部の人"
+    @category = params[:category] || t('people.title')
     session[:redirect] = request.request_uri
 
     respond_to do |format|

@@ -18,9 +18,7 @@ Cucumber::Rails.bypass_rescue
 require 'webrat'
 
 Webrat.configure do |config|
-	config.mode = :selenium  #:rails
-  config.application_environment = :test  
-  config.application_framework = :rails  	
+  config.mode = :rails
 end
 
 require 'cucumber/rails/rspec'
@@ -32,3 +30,5 @@ Klass.delete_all
 Student.delete_all
 Teacher.delete_all
 Person.delete_all
+Attendance.delete_all
+Teaching.delete_all

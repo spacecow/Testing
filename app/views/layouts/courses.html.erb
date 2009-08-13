@@ -14,7 +14,7 @@
 		<table border="0" align="center"><tr><td>
 			<ul id="nav">
 				<% if clearance <= 3 %>
-					<li><a href="/people"><%= t('people.title') %></a>
+					<li><%= link_to t('people.title'), people_path %></a>
 						<ul>
 							<li>------------------</li>
 							<li><%= link_to t('teachers.title'), people_path( :category=>t('teachers.title') ) %></li>

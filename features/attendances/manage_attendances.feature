@@ -9,6 +9,8 @@ Given I have courses titled "Java I, Java II, Java III, Ruby I"
   |	user_name				|	password	|	first_name	|	family_name	|
   |	kurosawa_akira	|	secret		|	Akira				|	Kurosawa		|
 	And that student "kurosawa_akira" has class "1"
+	And student "kurosawa_akira" should have 1 class
+	And class "1" should have 1 student
 
 Scenario Outline: Admin see non-chosen attendances
 When I am logged in as "<user>"

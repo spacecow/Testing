@@ -1,4 +1,4 @@
-Given 'I am on the Google search page' do
+Given 'Im on the Google search page' do
   @browser.open('http://www.google.com/')
 end
 
