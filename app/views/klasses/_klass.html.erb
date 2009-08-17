@@ -26,7 +26,7 @@
       <center><%= klass.classroom ? klass.classroom.name : "?" %></center>
     <% end %>
 </td>
-<td>
+<td id="teacher">
 	  <% if clearance?(2) %>
 	    <%= f.collection_select :teacher_id,
 	        ( teachers - collitions.map{|e| e.teacher } + ( klass.teacher ? [klass.teacher] : [] )).sort_by(&:name),
@@ -42,10 +42,11 @@
 </td>
 <% attendances = klass.attendances.reject(&:cancel) %>
 <% if attendances.size >0 %>
-	<% attendances.each do |attendance| %>
+	<% attendances.each_with_index do |attendance,i| %>
     <% if clearance <= 2 %>
 	    <% form_for(attendance) do |f| %>	
-				<td>
+				<div class="attendance_<%= attendance.id %>">
+				<td id="student_<%= i+1 %>">
 					<% moves = @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} %>
 	        <%= f.select :student_id,
 	          available_students.map{|e| [e.name,e.id]} +
@@ -60,6 +61,7 @@
 	        <%= hidden_field_tag :klass_relations, klass_relations.join(',') %>
 	        <%= hidden_field_tag :date, klass_date %>
 				</td>
+				</div>
 		  <% end %>
 		<% else %>
 			<td><center><%= attendance.chosen ? attendance.student.name : "?" %></center></td>
@@ -67,6 +69,6 @@
 	<% end %>
 <% end %>
 <% (8-attendances.size).times do |student| %>
-  <td>
+  <td id="student_<%= student+attendances.size+1 %>" >
   </td>
 <% end %>

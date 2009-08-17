@@ -17,6 +17,7 @@ environments:
 
 browsers:
   # Windows
+  chrome: "C:\Program Files\Google\Chrome\Application\chrome.exe"
   firefox: 'c:\Program Files\Mozilla Firefox\firefox.exe'
   ie: 'c:\Program Files\Internet Explorer\iexplore.exe'
 

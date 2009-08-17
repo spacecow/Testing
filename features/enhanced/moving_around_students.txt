@@ -1,0 +1,35 @@
+Run1
+Sakurai Kazutoshi, Kurosawa Akira, Asada Mao
+1 Kurosawa Akira
+2 (Sakurai Kazutoshi), Asada Mao
+3
+--------------------------------------------
+Run 2
+Kurosawa Akira, Sakurai Kazutoshi, Asada Mao
+1 (Sakurai Kazutoshi)
+2 Kurosawa Akira
+3 Asada Mao
+--------------------------------------------
+Run 3
+Kurosawa Akira, Asada Mao, Sakurai Kazutoshi
+1 
+2 
+3 Kurosawa Akira, Asada Mao, Sakurai Kazutoshi
+--------------------------------------------
+Run 4
+Kurosawa Akira, (Asada Mao), Sakurai Kazutoshi
+1 Kurosawa Akira
+2 
+3 Sakurai Kazutoshi
+--------------------------------------------
+Run 5
+Kurosawa Akira, (Asada Mao)
+1 
+2 Kurosawa Akira
+3 
+--------------------------------------------
+Run 6
+(Asada Mao)
+1 
+2
+3 

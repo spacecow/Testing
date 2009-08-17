@@ -1,0 +1,29 @@
+Run 1
+Java
+1 (Sveholm Johan), (Komatsu Aya), (Osburg Thomas)
+2 (Sveholm Johan), (Komatsu Aya), (Osburg Thomas)
+3 (Sveholm Johan), (Komatsu Aya), (Osburg Thomas)
+6 (Komatsu Aya)
+9 (Komatsu Aya)
+Ruby
+1 (Osburg Thomas)
+-------------------------------------------------
+Run 2
+Java
+1 (Sveholm Johan)
+2 (Sveholm Johan)
+3 (Sveholm Johan)
+6 Komatsu Aya
+9 
+Ruby
+1 Osburg Thomas
+-------------------------------------------------
+Run 3
+Java
+1 (Sveholm Johan)
+2 (Sveholm Johan)
+3 (Sveholm Johan)
+6 (Komatsu Aya)
+9 
+Ruby
+1 Osburg Thomas
