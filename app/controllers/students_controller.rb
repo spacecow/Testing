@@ -81,7 +81,7 @@ class StudentsController < ApplicationController
     params[:student][:course_ids] ||= []
     @students = Student.find( params[:student_ids] )
     @students.each do |student|
-      student.update_attributes!( params[:student] )
+      student.update_attributes!( params[:student].reject{ |k,v| v.blank? })
     end
     flash[:notice] = t('students.updated')
     redirect_to students_path

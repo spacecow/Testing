@@ -31,11 +31,26 @@ Examples:
 	|	user					|
 	|	johan_sveholm	|
 	|	komatsu_aya		|
-	
+
+Scenario Outline: Update multiple students with blank courses should generate no change
+Given I have courses titled "Java, Prolog, Fortran, Cpp"
+	And that student "kurosawa_akira" has courses "Java, Prolog"
+	And that student "asada_mao" has course "Cpp"
+	And I am logged in as "<user>" with password "secret"
+When I multiselect students "kurosawa_akira, sakurai_kazutoshi, asada_mao"
+	And I press 'update'
+Then student "kurosawa_akira" should have courses "Java, Prolog"
+	And student "asada_mao" should have courses "Cpp"
+	And student "sakurai_kazutoshi" should have 0 courses
+Examples:
+	|	user					|
+	|	johan_sveholm	|
+	|	komatsu_aya		|
+
 Scenario Outline: Update courses for multiple students
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
-And I multiselect students "kurosawa_akira, sakurai_kazutoshi"
+	And I multiselect students "kurosawa_akira, sakurai_kazutoshi"
 	And I check "Java"
 	And I check "Prolog"
 	And I press 'update'
@@ -47,7 +62,7 @@ Examples:
 	|	johan_sveholm	|
 	|	komatsu_aya		|
 
-Scenario Outline: Cancel courses for multiple stkudents
+Scenario Outline: Cancel courses for multiple students (with box "no students"!!)
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
 	And that students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"

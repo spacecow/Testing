@@ -59,7 +59,7 @@ After do
   @browser.stop
 end
 
- "after all"
+# "after all"
 at_exit do
   @browser.close rescue nil
 end
