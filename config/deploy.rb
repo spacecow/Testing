@@ -1,5 +1,5 @@
 set :application, "yoyaku"
-set :deploy_to, "/home/deploy/app"
+set :deploy_to, "/home/deploy/app/yoyaku"
 
 role :app, "74.207.244.236"
 role :web, "74.207.244.236"
@@ -25,3 +25,9 @@ namespace :deploy do
   end
 end
 
+# For deploying a database.yml file.
+namespace :deploy do
+	task :after_update_code, :roles => :app do
+	  run "ln -nfs #{deploy_to}/shared/system/database.yml #{release_path}/config/database.yml"
+	end
+end
