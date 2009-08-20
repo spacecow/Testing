@@ -11,7 +11,7 @@ Given the following student record
 |	kurosawa_akira	|	secret		|
 Given I go to the list of teachers
 
-Scenario Outline: No selected teachers
+Scenario Outline: No selected teachers should generate an error message
 Given I am logged in as "<user>" with password "secret"
 When I multiselect teachers ""
 Then I should be redirected to the list of people
@@ -21,7 +21,6 @@ Examples:
 |	johan_sveholm	|
 |	komatsu_aya		|
 	
-@thomas
 Scenario Outline: Observers cannot multiselect
 Given I am logged in as "<user>" with password "secret"
 When I go to the multi course page of teacher "komatsu_aya"
@@ -43,6 +42,21 @@ Examples:
 	|	johan_sveholm	|
 	|	komatsu_aya		|
 	
+Scenario Outline: Update multiple teachers with blank courses should generate no change
+Given I have courses titled "Java, Prolog, Fortran, Cpp"
+	And that teacher "johan_sveholm" has courses "Java, Prolog"
+	And that teacher "prince_philip" has course "Cpp"
+	And I am logged in as "<user>" with password "secret"
+When I multiselect teachers "johan_sveholm, thomas_osburg, prince_philip"
+	And I press 'update'
+Then teacher "johan_sveholm" should have courses "Java, Prolog"
+	And teacher "prince_philip" should have courses "Cpp"
+	And teacher "thomas_osburg" should have 0 courses
+Examples:
+	|	user					|
+	|	johan_sveholm	|
+	|	komatsu_aya		|
+
 Scenario Outline: Update courses for multiple teachers
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
@@ -63,6 +77,7 @@ Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
 	And that teachers "johan_sveholm, thomas_osburg" has courses "Fortran, Cpp"
 When I multiselect teachers "johan_sveholm, komatsu_aya"
+	And I check 'courses.none'
 	And I press 'update'
 Then teachers "johan_sveholm, komatsu_aya" should have 0 courses
 	And teacher "thomas_osburg" should have courses "Fortran, Cpp"

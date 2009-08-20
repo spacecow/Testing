@@ -61,6 +61,7 @@ en:
     editing: "Editing Course"
     new: "New course"
     listing: "Listing Courses"
+    none: "No courses"
     title: "Courses"
     flash:
       try_to_delete_course_with_template_classes: "Delete all template classes depending on this course first"

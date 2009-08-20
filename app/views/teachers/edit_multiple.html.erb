@@ -7,30 +7,14 @@
 	<table>
 		<tr valign="top">
 			<div class="courses">
-				<% unless @courses.empty? %>
-					<td align="left">
-						<h3><%= t('courses.title') %></h3>
-						<% @keys.each do |key| %>
-							<% @courses[key].each do |course| %>
-								<label style="text-align: left;">
-									<%= check_box_tag "teacher[course_ids][]", course.id %>
-									<%= h course %><p>
-								</label>
-							<% end %>
-						<% end %>
-					</td>
-				<% end %>
+				<%= render :partial => "people/show_multiple_courses",
+				           :locals => { :update_param => "teacher[course_ids][]" } %>
 			</div>
 			<div class="teachers">
-				<td align="left">
-					<h3><%= t('teachers.title') %></h3>
-					<ul>
-						<% @teachers.each do |teacher| %>
-							<%= hidden_field_tag "teacher_ids[]", teacher.id %>
-							<li><%= h teacher.name %></li>
-						<% end %>
-					</ul>					
-				</td>
+				<%= render :partial => "people/show_multiple_people",
+				           :locals => { :people => @teachers,
+				                        :update_param => "teacher_ids[]",
+				                        :title => t('teachers.title') } %>
 			</div>
 		</tr>
 	</table><br />

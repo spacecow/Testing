@@ -44,6 +44,8 @@ module NavigationHelpers
     	teacher_path( Teacher.find($1) )
 		when /the multi course page of teacher "(.+)"/
 			edit_multiple_teachers_path
+		when /the multi course page of student "(.+)"/
+			edit_multiple_students_path
 		when /the info page of student "(.+)"/
     	student_path( 
 	    	Student.first(

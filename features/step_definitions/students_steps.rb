@@ -31,7 +31,7 @@ Given /^that students? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,c
 end
 
 Given /^that student "([^\"]*)" has classe?s? "([^\"]*)"$/ do |username,classes|
-  student = find_student( username )
+  student = Student.user( username ).first
   classes.split(', ').each do |course|
   	if course.to_i > 0
   		student.klasses << Klass.find( course )
@@ -41,8 +41,8 @@ Given /^that student "([^\"]*)" has classe?s? "([^\"]*)"$/ do |username,classes|
   end
 end
 
-Given /^that student "([^\"]*)" has classe?s? "([^\"]*)" canceled$/ do |user,classes|
-  student = find_student( user )
+Given /^that student "([^\"]*)" has classe?s? "([^\"]*)" canceled$/ do |username,classes|
+  student = Student.user( username ).first
   classes.split(', ').each do |course|
   	if course.to_i > 0
   		class_id = course
@@ -65,8 +65,8 @@ Then /^students? "([^\"]*)" should have courses? "([^\"]*)"$/ do |users,courses|
 	end
 end
 
-Then /^student "([^\"]*)" should have ([0-9]+) classe?s?$/ do |user,no|
-	find_student( user ).klasses.count.should == no.to_i
+Then /^student "([^\"]*)" should have ([0-9]+) classe?s?$/ do |username,no|
+	Student.user( username ).first.klasses.count.should == no.to_i
 end
 
 Then /^I should have ([0-9]+) students?$/ do |count|
@@ -81,15 +81,15 @@ Then /^I should see the "([^\"]*)" page of "([^\"]*)"$/ do |page,name|
   response.should contain( I18n.translate( page )+" - #{name}" )
 end
 
-def find_student( user )
-	Student.first(
-		:conditions=>["people.user_name=?", user],
-		:include=>:person )
-end
-
-Given /^I multiselect students "([^\"]*)"$/ do |users|
+When /^I multiselect students "([^\"]*)"$/ do |users|
 	visit edit_multiple_students_path(
 		:student_ids => users.split(', ').map{ |e| Student.user( e ).first }
 	)
 	#Seline code
 end
+
+When /^I multiselect no students$/ do
+	When "I multiselect students \"\""
+end
+
+#- F - U - N - C - T - I - O - N - S -----------------------------------------------------

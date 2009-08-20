@@ -7,34 +7,17 @@
 	<table>
 		<tr valign="top">
 			<div class="courses">
-				<% unless @courses.empty? %>
-					<td align="left">
-						<h3><%= t('courses.title') %></h3>
-						<% @keys.each do |key| %>
-							<% @courses[key].each do |course| %>
-								<label style="text-align: left;">
-									<%= check_box_tag "student[course_ids][]", course.id %>
-									<%= h course %><p>
-								</label>
-							<% end %>
-						<% end %>
-					</td>
-				<% end %>
+				<%= render :partial => "people/show_multiple_courses",
+				           :locals => { :update_param => "student[course_ids][]" } %>
 			</div>
 			<div class="students">
-				<td align="left">
-					<h3><%= t('students.title') %></h3>
-					<ul>
-						<% @students.each do |student| %>
-							<%= hidden_field_tag "student_ids[]", student.id %>
-							<li><%= h student.name %></li>
-						<% end %>
-					</ul>					
-				</td>
+				<%= render :partial => "people/show_multiple_people",
+				           :locals => { :people => @students,
+				                        :update_param => "student_ids[]",
+				                        :title => t('students.title') } %>
 			</div>
 		</tr>
 	</table><br />
-	<%= f.hidden_field :created_at %>
 	<%= f.submit t('update') %>
 <% end %>
 

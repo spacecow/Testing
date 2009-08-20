@@ -57,7 +57,11 @@ class TeachersController < ApplicationController
     params[:teacher][:course_ids] ||= []
     @teachers = Teacher.find( params[:teacher_ids] )
     @teachers.each do |teacher|
-      teacher.update_attributes!( params[:teacher] )
+      if params[:no_courses].nil?
+      	teacher.update_attributes!( params[:teacher].reject{ |k,v| v.blank? })
+      else
+      	teacher.update_attributes!( params[:teacher] )
+      end
     end
     flash[:notice] = "Teachers updated"
     redirect_to teachers_path

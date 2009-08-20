@@ -10,32 +10,9 @@
     [32mAnd the following student record[0m
       | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfirst_name[0m[0m |[0m [32mfamily_name[0m[0m |[0m
       | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32mAkira     [0m[0m |[0m [32mKurosawa   [0m[0m |[0m
-    [32mAnd that student "[32m[1mkurosawa_akira[0m[0m[32m" has class "[32m[1m1[0m[0m[32m"[0m
-    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" should have [32m[1m1[0m[0m[32m class[0m
-    [32mAnd class "[32m[1m1[0m[0m[32m" should have [32m[1m1[0m[0m[32m student[0m
-
-  Scenario Outline: Admin see non-chosen attendances
-    [36mWhen I am logged in as "<user>"[0m
-    [36mThen I should see "Kurosawa Akira" within "klass_1"[0m
-
-    Examples: 
-      | [36m[1muser         [0m[0m[36m[0m |[0m
-      | [32mjohan_sveholm[0m[0m |[0m
-      | [32mkomatsu_aya  [0m[0m |[0m
-
-  Scenario: Observer dont see non-chosen attendances
-    [32mWhen I am logged in as "[32m[1mthomas_osburg[0m[0m[32m"[0m
-    [32mThen I should not see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
-
-  Scenario Outline: Regular users get redirected
-    [36mWhen I am logged in as "<user>"[0m
-    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
-
-    Examples: 
-      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
-      | [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
-      | [32mprince_philip [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
-
-5 scenarios ([32m5 passed[0m)
-45 steps ([32m45 passed[0m)
-0m1.250s
+    [31mAnd that student "[31m[1mkurosawa_akira[0m[0m[31m" has class "[31m[1m1[0m[0m[31m"[0m
+[31m      undefined method `find_student' for #<ActionController::Integration::Session:0x70625a0> (NoMethodError)
+      ./features/step_definitions/students_steps.rb:34:in `/^that student "([^\"]*)" has classe?s? "([^\"]*)"$/'
+      features/plain/attendances/manage_attendances.feature:11:in `And that student "kurosawa_akira" has class "1"'[0m
+    [36mAnd student "[36m[1mkurosawa_akira[0m[0m[36m" should have [36m[1m1[0m[0m[36m class[0m
+    [36mAnd class "[36m[1m1[0m[0m[36m" should have [36m[1m1[0m[0m[36m student[0m

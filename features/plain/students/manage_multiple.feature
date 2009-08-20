@@ -4,6 +4,8 @@ Given the following teacher records
 |	user_name			|	password	| family_name	| first_name	|
 |	johan_sveholm	|	secret		|	Sveholm			|	Johan				|
 |	komatsu_aya		|	secret		|	Komatsu			|	Aya					|
+|	thomas_osburg	|	secret		|	Osburg			|	Thomas			|
+|	prince_philip	|	secret		|	Prince			|	Philip			|
 Given the following student records
 |	user_name					|	password	| family_name	| first_name	|
 |	kurosawa_akira		|	secret		|	Kurosawa		|	Akira				|
@@ -11,15 +13,25 @@ Given the following student records
 |	asada_mao					|	secret		|	Asada				|	Mao					|
 Given I go to the list of teachers
 
-Scenario Outline: No selected teachers
+Scenario Outline: No selected teachers should generate an error message
 Given I am logged in as "<user>" with password "secret"
-When I multiselect students ""
+When I multiselect no students
 Then I should be redirected to the list of people
 	And I should see 'students.error.select'
 Examples:
 	|	user					|
 	|	johan_sveholm	|
 	|	komatsu_aya		|
+
+Scenario Outline: Observers cannot multiselect
+Given I am logged in as "<user>" with password "secret"
+When I go to the multi course page of student "asada_mao"
+Then I should be redirected to the <default>
+Examples:
+|	user						|	default																		|
+|	thomas_osburg		|	list of classes														|
+|	prince_philip		|	info page of teacher "prince_philip"			|
+|	kurosawa_akira	|	reserve page of student "kurosawa_akira"	|
 
 Scenario Outline: List selected students
 Given I am logged in as "<user>" with password "secret"
@@ -62,11 +74,12 @@ Examples:
 	|	johan_sveholm	|
 	|	komatsu_aya		|
 
-Scenario Outline: Cancel courses for multiple students (with box "no students"!!)
+Scenario Outline: Cancel courses for multiple students
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
 	And that students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"
 When I multiselect students "kurosawa_akira, asada_mao"
+	And I check 'courses.none'
 	And I press 'update'
 Then students "kurosawa_akira, asada_mao" should have 0 courses
 	And student "sakurai_kazutoshi" should have courses "Fortran, Cpp"

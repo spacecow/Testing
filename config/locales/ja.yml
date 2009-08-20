@@ -59,6 +59,7 @@ ja:
     editing: "講座編集"
     listing: "上場講座"
     new: "新しい講座"
+    no: "講座無し"
     title: "講座"
     flash:
       try_to_delete_course_with_template_classes: "Delete all template classes depending on this course first"
