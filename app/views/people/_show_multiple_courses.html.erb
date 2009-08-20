@@ -1,0 +1,17 @@
+<% unless @courses.empty? %>
+	<td align="left">
+		<h3><%= t('courses.title') %></h3>
+		<% @keys.each do |key| %>
+			<% @courses[key].each do |course| %>
+				<label style="text-align: left;">
+					<%= check_box_tag update_param, course.id %>
+					<%= h course %><p>
+				</label>
+			<% end %>
+		<% end %>
+		<label style="text-align: left;">
+			<%= check_box_tag "no_courses" %>
+			<%= t('courses.none') %><p>						
+		</label>
+	</td>
+<% end %>

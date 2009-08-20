@@ -1,0 +1,9 @@
+<td align="left">
+	<h3><%= title %></h3>
+	<ul>
+		<% people.each do |person| %>
+			<%= hidden_field_tag update_param, person.id %>
+			<li><%= h person.name %></li>
+		<% end %>
+	</ul>					
+</td>
