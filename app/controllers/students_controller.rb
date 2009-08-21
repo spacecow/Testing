@@ -78,12 +78,12 @@ class StudentsController < ApplicationController
   end 
   
   def update_multiple
-    params[:student][:course_ids] ||= [] rescue nil
+  	params[:student] ||= { "course_ids"=>[] }
     @students = Student.find( params[:student_ids] )
     @students.each do |student|
-      if !params[:no_courses].nil?
-      	student.update_attributes!( params[:student] ) #erase
-      elsif params[:student].nil?
+      if params[:no_courses] != nil
+      	student.update_attributes!( params[:student]) #erase
+      else
       	student.update_attributes!( params[:student].reject{ |k,v| v.blank? })
       end
     end
