@@ -150,10 +150,10 @@ class KlassesController < ApplicationController
   # PUT /klasses/1
   # PUT /klasses/1.xml
   def update
-    @klass = Klass.find(params[:id])
+    @klass = Klass.find( params[:id] )
 
     respond_to do |format|
-      if @klass.update_attributes(params[:klass])
+      if @klass.update_attributes( params[:klass] )
       @klass.update_attribute( :tostring, @klass.course.name+"-"+@klass.start_time.to_s(:time)+"-"+@klass.end_time.to_s(:time) )
         format.html {
         	redirect_to(

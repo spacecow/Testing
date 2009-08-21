@@ -86,3 +86,19 @@ Examples:
 	|	user					|
 	|	johan_sveholm	|
 	|	komatsu_aya		|
+
+Scenario Outline: Cancel courses for multiple teachers but keep one course
+Given I have courses titled "Java, Prolog, Fortran, Cpp"
+	And I am logged in as "<user>" with password "secret"
+	And that teachers "johan_sveholm, thomas_osburg" have courses "Fortran, Cpp"
+When I multiselect teachers "johan_sveholm, komatsu_aya"
+	And I check "Fortran"
+	And I check 'courses.none'
+	And I press 'update'
+Then teachers "johan_sveholm, komatsu_aya" should have courses "Fortran"
+	And teacher "thomas_osburg" should have courses "Fortran, Cpp"
+	And I should see 'teachers.updated'
+Examples:
+	|	user					|
+	|	johan_sveholm	|
+	|	komatsu_aya		|

@@ -28,7 +28,7 @@ Given /^I have teachers? "([^\"]*)"$/ do |users|
 end
 
 
-Given /^that teachers? "([^\"]*)" has courses? "([^\"]*)"$/ do |users,courses|
+Given /^that teachers? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,courses|
 	users.split(', ').map{|e| find_teacher( e )}.each do |teacher|
 	  courses.split(', ').each do |course|
 	  	teacher.courses << Course.find_by_name( course )

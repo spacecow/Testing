@@ -61,7 +61,7 @@ def clickAndWait( locator )
   page_load
 end
 
-def get_class( class_no )
+def get_visual_class( class_no )
   index = 1;
   course_klasses = Klass.all( :conditions=>[ "courses.name like (?)", "Java%" ], :include=>'course' )
   @time_groups = course_klasses.group_by{|e| e.time_interval }
@@ -77,7 +77,7 @@ end
 
 def get_student_no( username, class_no )
 	attendance = Attendance.find_by_student_id( Student.user( username ))
-  get_class( class_no ).attendances.reject(&:cancel).index( attendance )+1
+  get_visual_class( class_no ).attendances.reject(&:cancel).index( attendance )+1
 end
 
 def get_student_locator( class_no, student_no )

@@ -4,6 +4,8 @@ class Klass < ActiveRecord::Base
   belongs_to :classroom
   has_many :attendances
   has_many :students, :through => :attendances
+
+	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}  
   
   validates_presence_of :course_id, :date, :start_time, :end_time
 
@@ -52,4 +54,12 @@ class Klass < ActiveRecord::Base
   def to_s
     course_name + (": ") + time_interval
   end
+  
+protected
+	def validate_on_update
+		if course_id != Klass.find( id ).course_id
+      errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_teacher') ) if !teacher.nil?
+      errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_students') ) if !students.empty?
+		end
+	end
 end

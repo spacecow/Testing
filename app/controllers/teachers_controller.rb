@@ -54,13 +54,13 @@ class TeachersController < ApplicationController
   end 
 
   def update_multiple
-    params[:teacher][:course_ids] ||= []
+    params[:teacher] ||= { "course_ids"=>[] }
     @teachers = Teacher.find( params[:teacher_ids] )
     @teachers.each do |teacher|
-      if params[:no_courses].nil?
-      	teacher.update_attributes!( params[:teacher].reject{ |k,v| v.blank? })
-      else
+      if params[:no_courses] != nil
       	teacher.update_attributes!( params[:teacher] )
+      else
+      	teacher.update_attributes!( params[:teacher].reject{ |k,v| v.blank? })
       end
     end
     flash[:notice] = "Teachers updated"

@@ -82,7 +82,7 @@ class StudentsController < ApplicationController
     @students = Student.find( params[:student_ids] )
     @students.each do |student|
       if params[:no_courses] != nil
-      	student.update_attributes!( params[:student]) #erase
+      	student.update_attributes!( params[:student] ) #erase
       else
       	student.update_attributes!( params[:student].reject{ |k,v| v.blank? })
       end

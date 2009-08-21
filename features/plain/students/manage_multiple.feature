@@ -92,7 +92,7 @@ Examples:
 Scenario Outline: Cancel courses for multiple students but keep one course
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
-	And that students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"
+	And that students "kurosawa_akira, sakurai_kazutoshi" have courses "Fortran, Cpp"
 When I multiselect students "kurosawa_akira, asada_mao"
 	And I check "Fortran"
 	And I check 'courses.none'

@@ -75,8 +75,11 @@ en:
     title: "Classes"
     listing: "Listing Classes"
     editing: "Editing Class"
+    error:
+      edit_courses_with_teacher: "Cancel teacher before changing class"
+      edit_courses_with_students: "Cancel students before changing class"
     flash:
-      try_to_delete_klass_with_students: "Move away all students from the class before deleting."
+      try_to_delete_klass_with_students: "Move away all students from the class before deleting"
   login:
     title: "Please log in"
     user_name: "User name"

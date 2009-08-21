@@ -19,8 +19,24 @@ Given /^the following klass records?$/ do |table|
 	end
 end
 
-Then /^I should have ([0-9]+) klasse?s?$/ do |count|
-  Klass.count.should == count.to_i
+Given /^the following class records?$/ do |table|
+  table.hashes.each do |hash|
+		date = hash.delete( "date" )
+  	hash[ :date ] = ( date == "current date" ? DateTime.current.strftime("%x") : date ) if date
+		Factory( :klass,hash )
+	end
+end
+
+Given /^I have no classes$/ do
+  Klass.delete_all
+end
+
+Given /^class "([^\"]*)" has teacher "([^\"]*)"$/ do |name, user_name|
+  get_class( name ).update_attribute( :teacher_id, Teacher.user( user_name ).first.id )
+end
+
+Given /^class "([^\"]*)" has student "([^\"]*)"$/ do |name, user_name|
+  get_class( name ).students << Student.user( user_name ).first
 end
 
 When /^I follow "([^\"]*)" within klass ([0-9]+)$/ do |link, no|
@@ -37,16 +53,8 @@ When /^I follow '([^\"]*)' within klass ([0-9]+)$/ do |link,no|
 	end
 end
 
-Given /^I have no classes$/ do
-  Klass.delete_all
-end
-
-Given /^the following class records?$/ do |table|
-  table.hashes.each do |hash|
-		date = hash.delete( "date" )
-  	hash[ :date ] = ( date == "current date" ? DateTime.current.strftime("%x") : date ) if date
-		Factory( :klass,hash )
-	end
+Then /^I should have ([0-9]+) klasse?s?$/ do |count|
+  Klass.count.should == count.to_i
 end
 
 #Only works if only one class is assigned to that specific course
@@ -66,4 +74,16 @@ Then /^class "([^\"]*)" should have ([0-9]+) students?$/ do |name,no|
 			:conditions => ["courses.name=?",name],
 			:include => :course ).students.count.should == no.to_i
 	end
+end
+
+Then /^I have ([0-9]+) classe?s? "([^\"]*)"$/ do |no, name|
+  Klass.course_name( name ).size.should == no.to_i
+end
+
+#- F - U - N - C - T - I - O - N - S -----------------------------------------------------
+
+def get_class( name )
+	if name.to_i > 0
+  	return Klass.find( name )
+  end
 end
