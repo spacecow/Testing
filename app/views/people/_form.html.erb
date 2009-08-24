@@ -20,8 +20,8 @@
 <p>
   <label for="gender"><%= t('gender') %>*</label>
   <table><tr>
-    <td bgcolor="#AAAAFF"><%= f.radio_button :gender, 1 %>男性</td>
-    <td bgcolor="#FFAAAA"><%= f.radio_button :gender, 2 %>女性</td>
+    <td bgcolor="#AAAAFF"><%= f.radio_button :gender, 1 %><%= t('male') %></td>
+    <td bgcolor="#FFAAAA"><%= f.radio_button :gender, 2 %><%= t('female') %></td>
   </tr></table>
 </p>
 <p>

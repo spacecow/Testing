@@ -30,15 +30,16 @@ Given /^that students? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,c
 	end
 end
 
-Given /^that student "([^\"]*)" has classe?s? "([^\"]*)"$/ do |username,classes|
-  student = Student.user( username ).first
-  classes.split(', ').each do |course|
-  	if course.to_i > 0
-  		student.klasses << Klass.find( course )
-  	else
-  		student.klasses << Factory( :klass, { :course_id => Course.find_by_name( course ).id })
-  	end
-  end
+Given /^that students? "([^\"]*)" (?:has|have) classe?s? "([^\"]*)"$/ do |users,classes|
+  users.split(', ').map{|e| Student.user( e ).first}.each do |student|
+	  classes.split(', ').each do |course|
+	  	if course.to_i > 0
+	  		student.klasses << Klass.find( course )
+	  	else
+	  		student.klasses << Factory( :klass, { :course_id => Course.find_by_name( course ).id })
+	  	end
+	  end
+	end
 end
 
 Given /^that student "([^\"]*)" has classe?s? "([^\"]*)" canceled$/ do |username,classes|
@@ -65,8 +66,10 @@ Then /^students? "([^\"]*)" should have courses? "([^\"]*)"$/ do |users,courses|
 	end
 end
 
-Then /^student "([^\"]*)" should have ([0-9]+) classe?s?$/ do |username,no|
-	Student.user( username ).first.klasses.count.should == no.to_i
+Then /^students? "([^\"]*)" should have ([0-9]+) classe?s?$/ do |users,no|
+	users.split(', ').map{|e| Student.user( e ).first}.each do |student|
+		student.klasses.count.should == no.to_i
+	end
 end
 
 Then /^I should have ([0-9]+) students?$/ do |count|

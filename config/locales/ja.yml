@@ -18,6 +18,7 @@ ja:
   description: "記述"
   edit: "編集"
   end_time: "終わりの時間"
+  female: "女性"
   gender: "性別"
   history: "過去"
   home_phone: "固定電話番号"
@@ -25,10 +26,12 @@ ja:
   inactive_student: "退会"
   inactive_teacher: "退職"
   info: "情報"
+  klass: "クラス"
   klass_date: "日付"
   klass_time: "時間"
   language: "言語"
   listing: "編集"
+  male: "男性"
   mail_address_mobile: "携帯電話用アドレス"
   mail_address_pc: "ＰＣ用アドレス"
   mail_sending: "MAIL SENDING"
@@ -39,6 +42,8 @@ ja:
   new: "新しい"
   note: "備考"
   notice: "注意"
+  offu: "OFF"
+  onu: "ON" 
   password: "パスワード"
   reserve: "予約"
   search: "検索"
@@ -49,7 +54,11 @@ ja:
   teacher: "講師"
   title: "タイトル"
   update: "更新"
+  uncancel: "ウンキャンセル"  
   user_name: "ユーザー名"
+  attendances:
+    editing: "出席編集"  
+    title: "出席"
   classrooms:
     editing: "教室編集"
     listing: "上場教室"
@@ -92,8 +101,9 @@ ja:
     error:
       unauthorized_access: "不正アクセス"
   students:
-    title: "受講生"
+    editing: "テンプレート・クラス編集"
     new: "新しい受講生"
+    title: "受講生"
     updated: "受講生が更新されました"
     error:
       delete_student_with_courses: "受講生を削除する前に全部の関係がある講座を除いて下さい"

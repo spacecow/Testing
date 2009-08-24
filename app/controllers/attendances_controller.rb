@@ -1,8 +1,17 @@
 class AttendancesController < ApplicationController
   def edit
-    @attendance = Attendance.find(params[:id])
+    @attendance = Attendance.find( params[:id] )
   end
  
+ 	def show
+ 		@attendance = Attendance.find( params[:id], :include => [{ :student=>:person }, { :klass=>:course } ])
+	end
+	
+ 	def edit
+ 		@attendance = Attendance.find( params[:id], :include => [{ :student=>:person }, { :klass=>:course } ])
+	end
+
+
   def update
     @attendance = Attendance.find(params[:id], :include=>:klass )
     
@@ -27,11 +36,27 @@ class AttendancesController < ApplicationController
       return
 	  elsif option == "Cancel"
       @attendance.update_attribute( :cancel, 1 ) if @attendance.chosen == true
-	  	redirect_to( klasses_path( :date => params[:date] ))
+	  	if params[:redirect]
+				redirect_to( edit_klass_path( @attendance.klass ))
+			else
+			  redirect_to( klasses_path( :date => params[:date] ))
+			end
+      return
+	  elsif option == "Uncancel"
+      @attendance.update_attribute( :cancel, 0 ) if @attendance.chosen == true
+	  	if params[:redirect]
+				redirect_to( edit_klass_path( @attendance.klass ))
+			else
+			  redirect_to( klasses_path( :date => params[:date] ))
+			end
       return
 	  elsif option == "Delete"
 	  	@attendance.destroy if @attendance.chosen == true
-      redirect_to( klasses_path( :date => params[:date] ))
+      if params[:redirect]
+      	redirect_to( edit_klass_path( @attendance.klass ))
+      else
+      	redirect_to( klasses_path( :date => params[:date] ))
+      end
       return
 	  else
       params[:attendance][:chosen] = 1
@@ -63,7 +88,7 @@ class AttendancesController < ApplicationController
     end    
     respond_to do |format|
       if @attendance.update_attributes(params[:attendance])
-        format.html { redirect_to( klasses_path( :date => params[:date] )) }
+      	format.html { redirect_to( klasses_path( :date => params[:date] )) }        	
         format.xml  { head :ok }
       else
         session[:error] = "You cannot change student yet."

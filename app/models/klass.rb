@@ -9,6 +9,7 @@ class Klass < ActiveRecord::Base
   
   validates_presence_of :course_id, :date, :start_time, :end_time
 
+	# To be able to edit time with a textfield
 	def end_time_string
 		end_time.to_s(:time) if end_time
 	end
@@ -26,6 +27,7 @@ class Klass < ActiveRecord::Base
 		self.start_time = Time.parse( start_time_str ) if start_time_str != ""
 	rescue ArgumentError
 	end
+	#-----------------------------------------------
   
   def time_interval
     start_time.to_s(:time)+"~"+end_time.to_s(:time)
@@ -51,6 +53,10 @@ class Klass < ActiveRecord::Base
     teacher.gender
   end
 
+	def full_description
+		course_name + (": ") + time_interval + ", " + date.strftime("%x")
+	end
+	
   def to_s
     course_name + (": ") + time_interval
   end
@@ -58,7 +64,7 @@ class Klass < ActiveRecord::Base
 protected
 	def validate_on_update
 		if course_id != Klass.find( id ).course_id
-      errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_teacher') ) if !teacher.nil?
+      errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_teacher') ) if !teacher_id.nil?
       errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_students') ) if !students.empty?
 		end
 	end

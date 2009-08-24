@@ -7,6 +7,11 @@ class StudentsController < ApplicationController
     redirect_to people_path( :category=>t('students.title'))
   end
   
+  def edit
+  	person = Student.find( params[:id] ).person.id
+		redirect_to edit_person_path( person, :status=>t('students.editing'))
+	end
+  
   def edit_courses
   	@student = Student.find( params[:id], :include=>'courses' )
   	@sorting = Sorting.new

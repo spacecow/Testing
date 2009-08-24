@@ -15,36 +15,71 @@ Given the following klass records
 |	1		|	Java I	|
 |	2		|	Java I	|
 |	3		|	Ruby I	|
-Given class "2" has teacher "prince_philip"
-Given class "3" has student "kurosawa_akira"
+|	4		|	Ruby I	|
+Given classes "2, 4" have teacher "prince_philip"
+Given classes "3, 4" have student "kurosawa_akira"
 Given I am logged in as "johan_sveholm"
 	And I go to the list of classes
 
 Scenario: Try to change course with blank class
 	And I follow 'edit' within "klass_1"
+	And I should not see 'students.title' within "students"
 When I select "Ruby I" from 'course'
 	And I press 'update'
 Then I have 1 class "Java I"
-	And I have 2 classes "Ruby I"
+	And I have 3 classes "Ruby I"
 	And I should not see 'klasses.error.edit_courses_with_teacher'
 	
 Scenario: Try to change course with existing teacher	
 	And I follow 'edit' within "klass_2"
+	And I should not see 'students.title' within "students"
 When I select "Ruby I" from 'course'
 	And I press 'update'
 Then I have 2 classes "Java I"
-	And I have 1 class "Ruby I"
+	And I have 2 class "Ruby I"
 	And I should see 'klasses.error.edit_courses_with_teacher'
-When I select "" from 'teacher'
+When I select no teacher
 	And I press 'update'
 Then I have 1 class "Java I"
-	And I have 2 classes "Ruby I"
+	And I have 3 classes "Ruby I"
 	And I should not see 'klasses.error.edit_courses_with_teacher'
 	
 Scenario: Try to change course with existing students
 	And I follow 'edit' within "klass_3"
+	And I should see 'students.title' within "students"
 When I select "Java I" from 'course'
 	And I press 'update'
 Then I have 2 classes "Java I"
-	And I have 1 class "Ruby I"
+	And I have 2 class "Ruby I"
 	And I should see 'klasses.error.edit_courses_with_students'
+	
+Scenario: Try to change course with existing teacher and students
+	And I follow 'edit' within "klass_4"
+	And I should see 'students.title' within "students"
+When I select "Java I" from 'course'
+	And I press 'update'
+Then I have 2 classes "Java I"
+	And I have 2 class "Ruby I"
+	And I should see 'klasses.error.edit_courses_with_teacher'
+	And I should see 'klasses.error.edit_courses_with_students'	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

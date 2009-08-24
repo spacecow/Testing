@@ -1,0 +1,26 @@
+<div class="form">
+<fieldset>
+<legend><%= t('attendances.title') %></legend>
+
+<p>
+  <b><%= t('student') %>: </b><%= link_to h( @attendance.student ), @attendance.student ? @attendance.student : "" %>
+</p>
+
+<p>
+  <b><%= t('klass') %>: </b><%= link_to h( @attendance.klass.full_description ), @attendance.klass ? @attendance.klass : "" %>
+</p>
+
+<p>
+  <b><%= t('cancel') %>:</b>
+  <%=h @attendance.cancel %>
+</p>
+
+<p>
+  <b><%= t('note') %>:</b>
+  <%=h @attendance.note %>
+</p>
+
+<%= link_to t('edit'), edit_attendance_path( @attendance ), :class=>:link %>
+
+</fieldset>
+</div>

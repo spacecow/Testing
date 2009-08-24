@@ -1,7 +1,7 @@
 ﻿<div class="form">
 <%= error_messages_for :person %>
 <fieldset>
-<legend><%= params[:status] %>編集</legend>
+<legend><%= params[:status] %> - <%= @person.name %></legend>
 <% form_for(@person) do |f| %>
   <%= render :partial => "form", :locals => { :f=>f, :status=>params[:status], :label_text=>"Update" } %>
 <% end %>

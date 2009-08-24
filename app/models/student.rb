@@ -44,5 +44,9 @@ class Student < ActiveRecord::Base
 
   def is_canceled?( klass )
     find_attendance_by_klass_id( klass ).cancel
-  end  
+  end
+  
+  def username
+		person.user_name
+	end  
 end

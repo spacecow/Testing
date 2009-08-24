@@ -31,12 +31,16 @@ Given /^I have no classes$/ do
   Klass.delete_all
 end
 
-Given /^class "([^\"]*)" has teacher "([^\"]*)"$/ do |name, user_name|
-  get_class( name ).update_attribute( :teacher_id, Teacher.user( user_name ).first.id )
+Given /^classe?s? "([^\"]*)" (?:has|have) teacher "([^\"]*)"$/ do |names, user_name|
+  names.split(', ').each do |name|
+  	get_class( name ).update_attribute( :teacher_id, Teacher.user( user_name ).first.id )
+  end
 end
 
-Given /^class "([^\"]*)" has student "([^\"]*)"$/ do |name, user_name|
-  get_class( name ).students << Student.user( user_name ).first
+Given /^classe?s? "([^\"]*)" (?:has|have) student "([^\"]*)"$/ do |names, user_name|
+  names.split(', ').each do |name|
+  	get_class( name ).students << Student.user( user_name ).first
+  end
 end
 
 When /^I follow "([^\"]*)" within klass ([0-9]+)$/ do |link, no|
@@ -51,6 +55,10 @@ When /^I follow '([^\"]*)' within klass ([0-9]+)$/ do |link,no|
 	within ".klass_#{klass.id}" do
 		click_link I18n.translate(link)
 	end
+end
+
+When /^I select no teacher$/ do
+  When "I select \"\" from 'teacher'"
 end
 
 Then /^I should have ([0-9]+) klasse?s?$/ do |count|
