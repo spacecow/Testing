@@ -3,22 +3,21 @@
 		<td>
 			<p>
 			  <%= f.label :course_id, t( 'course' ) %>
-			  <%= f.select :course_id,
-			    @courses.map{|e| [e, e.id]},
+			  <%= f.collection_select :course_id,
+			    Course.all, :id, :name,
 			    :include_blank => true %>
 			</p>
 			<p>
 			  <%= f.label :teacher_id, t( 'teacher' ) %>
-			  <%= f.select :teacher_id,
-			    @teachers.map{|e| [e, e.id]},
+			  <%= f.collection_select :teacher_id,
+			    Teacher.all( :include=>:person ), :id, :name,
 			      :include_blank => true %> 
-			</p>
+			</p>			
 			<p>
 			  <%= f.label :classroom_id, t( 'classroom' ) %>
-			  <%= f.select :classroom_id,
-			    @classrooms.map{|e| [e, e.id]},
-			    :include_blank => true,
-			    :selected => @klass.classroom ? @klass.classroom.id : nil %>
+			  <%= f.collection_select :classroom_id,
+			    Classroom.all, :id, :name,
+			    :include_blank => true %>
 			</p>
 			<p>
 			  <%= f.label :capacity, t( 'capacity' ) %>

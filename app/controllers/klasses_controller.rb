@@ -123,13 +123,12 @@ class KlassesController < ApplicationController
 
   # GET /klasses/1/edit
   def edit
-  	@klass = Klass.find(params[:id], :include => [ :course, :teacher, :classroom, { :students => :person }])
-    @courses = Course.all
-    @teachers = Teacher.find :all,
-      :conditions => ["person_id = people.id"],
-      :include => :person
-    @classrooms = Classroom.all
-
+  	@klass = Klass.find( params[:id],
+  		:include=>[
+  			{ :students=>:person },
+  			:teacher,
+  			:course,
+  			:classroom ])
   end
 
   # POST /klasses
@@ -160,12 +159,12 @@ class KlassesController < ApplicationController
   # PUT /klasses/1
   # PUT /klasses/1.xml
   def update
-  	@klass = Klass.find(params[:id], :include => [ :course, :teacher, :classroom, { :students => :person }])
-    @courses = Course.all
-    @teachers = Teacher.find :all,
-      :conditions => ["person_id = people.id"],
-      :include => :person
-    @classrooms = Classroom.all
+  	@klass = Klass.find( params[:id],
+  		:include=>[
+  			{ :students=>:person },
+  			:teacher,
+  			:course,
+  			:classroom ])
 
     respond_to do |format|
       if @klass.update_attributes( params[:klass] )
