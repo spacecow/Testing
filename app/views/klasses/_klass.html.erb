@@ -3,14 +3,16 @@
 </td>
 <td>
 	<%= link_to t( 'show' ), klass, :class => "grid" %>
-	<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
-  <%= link_to t('delete'), klass_path( klass, :date=>klass_date ),
-        :confirm => 'Are you sure?' +
-        ( klass.attendances.empty? ?
-            "" :
-            "\n"+t('notice')+": "+t('klasses.flash.try_to_delete_klass_with_students') ),
-        :method => :delete,
-        :class=>"grid" %>
+	<%  if clearance < 3 %>
+		<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
+	  <%= link_to t('delete'), klass_path( klass, :date=>klass_date ),
+	        :confirm => 'Are you sure?' +
+	        ( klass.attendances.empty? ?
+	            "" :
+	            "\n"+t('notice')+": "+t('klasses.flash.try_to_delete_klass_with_students') ),
+	        :method => :delete,
+	        :class=>"grid" %>
+	<% end %>
 </td>
 <td>
   <% form_for(klass) do |f| %>
@@ -23,7 +25,7 @@
           { :onchange => 'this.form.submit();',
             :class => klass.classroom ? "table-units" : "drop-box-empty" } %>
     <% else %>
-      <center><%= klass.classroom ? klass.classroom.name : "?" %></center>
+      <center style="font-size: small;"><%= klass.classroom ? klass.classroom.name : "" %></center>
     <% end %>
 </td>
 <td id="teacher">
@@ -36,7 +38,7 @@
 	        { :onchange => 'this.form.submit();',
 	          :class => klass.teacher ? ( klass.teacher_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
 	  <% else %>
-	    <center><%= klass.teacher ? klass.teacher.name : "?" %></center>
+	    <center style="font-size: small;"><%= klass.teacher ? klass.teacher.name : "" %></center>
 	  <% end %>
   <% end %>
 </td>
@@ -64,7 +66,7 @@
 				</div>
 		  <% end %>
 		<% else %>
-			<td><center><%= attendance.chosen ? attendance.student.name : "?" %></center></td>
+			<td><center style="font-size: small;"><%= attendance.chosen ? attendance.student.name : "?" %></center></td>
 		<% end %>
 	<% end %>
 <% end %>

@@ -46,6 +46,8 @@ module NavigationHelpers
 			edit_multiple_teachers_path
 		when /the multi course page of student "(.+)"/
 			edit_multiple_students_path
+		when /the edit page of class "(.+)"/
+			edit_klass_path( $1 )
 		when /the info page of student "(.+)"/
     	student_path( 
 	    	Student.first(

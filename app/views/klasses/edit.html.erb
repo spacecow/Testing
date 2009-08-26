@@ -7,7 +7,7 @@
   <%= render :partial=>"form", :locals => { :f=>f, :label_text => t('update'), :klass_date=>"" } %>
 <% end %>
 
-<%= link_to t('show'), @klass %> |
-<%= link_to t('back'), klasses_path %>
+<%= link_to t('show'), @klass, :class=>:link %> |
+<%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
 </fieldset>
 </div>

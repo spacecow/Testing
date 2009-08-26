@@ -25,6 +25,10 @@ Then /^I should see "([^\']*)"'([^\']*)'$/ do |text1,text2|
   response.should contain(text1+I18n.translate( text2 ))
 end
 
+Then /^I should see "([^\']*)"'([^\']*)''([^\']*)'$/ do |text1,text2,text3|
+  response.should contain(text1+I18n.translate( text2 )+I18n.translate( text3 ))
+end
+
 Then /^I should see '([^\"]*)'"([^\"]*)"$/ do |text1,text2|
 	response.should contain(I18n.translate( text1 )+text2 )
 end

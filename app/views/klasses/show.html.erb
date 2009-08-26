@@ -1,47 +1,75 @@
-﻿<p>
-  <b><%= t('course') %>: </b><%= link_to h( @klass.course ), @klass.course ? @klass.course : "" %>
-</p>
+﻿<div class="form">
+<fieldset>
+<legend><%= t('klass') %></legend>
+<table cellpadding="10">
+	<tr>
+		<td>
+			<p>
+			  <b><%= t('course') %>: </b><%= link_to h( @klass.course ), @klass.course ? @klass.course : "" %>
+			</p>
+			
+			<p>
+			  <b><%= t('teacher') %>: </b><%= link_to h( @klass.teacher ), @klass.teacher ? @klass.teacher : "" %>
+			</p>
+			
+			<p>
+			  <b><%= t('classroom') %>: </b><%= link_to h( @klass.classroom ), @klass.classroom ? @klass.classroom : "" %>
+			</p>
+			
+			<p>
+			  <b><%= t('capacity') %>: </b><%=h @klass.capacity %>
+			</p>
+			
+			<p>
+			  <b><%= t('klass_date') %>: </b><%=h @klass.date.strftime("%x") %>
+			</p>
+			
+			<p>
+			  <b><%= t('klass_time') %>: </b><%=h @klass.time_interval %>
+			</p>
+			
+			<p>
+			  <b><%= t('title') %>: </b><%=h @klass.title %>
+			</p>
+			
+			<p>
+			  <b><%= t('mail_sending') %>: </b><%=h @klass.mail_sending %>
+			</p>
+			
+			<p>
+			  <b><%= t('cancel') %>: </b><%=h @klass.cancel %>
+			</p>
+			
+			<p>
+			  <b><%= t('description') %>: </b><%=h @klass.description %>
+			</p>
+			
+			<p>
+			  <b><%= t('note') %>: </b><%=h @klass.note %>
+			</p>
+		</td>
+		<td valign="top">
+			<div class="students">
+				<% unless @klass.students.empty? %>
+					<h3><%= t('students.title') %></h3>
+					<% @klass.attendances.each do |attendance| %>
+						<div class="<%= attendance.student.username %>">
+							<% if attendance.chosen %>
+								<li>
+									<% if attendance.cancel %><i>(<% end %>
+									<%= link_to h( attendance.student ), attendance %>
+									<% if attendance.cancel %>)</i><% end %>
+								</li>
+							<% end %>
+						</	div>
+					<% end %>
+				<% end %>
+			</div>
+		</td>		
+	</tr>
+</table>
 
-<p>
-  <b><%= t('teacher') %>: </b><%= link_to h( @klass.teacher ), @klass.teacher ? @klass.teacher : "" %>
-</p>
-
-<p>
-  <b><%= t('classroom') %>: </b><%= link_to h( @klass.classroom ), @klass.classroom ? @klass.classroom : "" %>
-</p>
-
-<p>
-  <b><%= t('capacity') %>: </b><%=h @klass.capacity %>
-</p>
-
-<p>
-  <b><%= t('klass_date') %>: </b><%=h @klass.date.strftime("%x") %>
-</p>
-
-<p>
-  <b><%= t('klass_time') %>: </b><%=h @klass.time_interval %>
-</p>
-
-<p>
-  <b><%= t('title') %>: </b><%=h @klass.title %>
-</p>
-
-<p>
-  <b><%= t('description') %>: </b><%=h @klass.description %>
-</p>
-
-<p>
-  <b><%= t('cancel') %>: </b><%=h @klass.cancel %>
-</p>
-
-<p>
-  <b><%= t('mail_sending') %>: </b><%=h @klass.mail_sending %>
-</p>
-
-<p>
-  <b><%= t('note') %>: </b><%=h @klass.note %>
-</p>
-
-
-<%= link_to t('edit'), edit_klass_path(@klass) %> |
-<%= link_to t('back'), klasses_path %>
+<%= link_to t('edit'), edit_klass_path( @klass ), :class=>:link %> |
+<%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
+</fieldset>
+</div>

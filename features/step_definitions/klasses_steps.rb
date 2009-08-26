@@ -61,7 +61,7 @@ When /^I select no teacher$/ do
   When "I select \"\" from 'teacher'"
 end
 
-Then /^I should have ([0-9]+) klasse?s?$/ do |count|
+Then /^I should have ([0-9]+) [ck]lasse?s?$/ do |count|
   Klass.count.should == count.to_i
 end
 
