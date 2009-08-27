@@ -109,11 +109,6 @@ class KlassesController < ApplicationController
   def new
     @klass = Klass.new()
 		@klass_date = params[ :klass_date ]
-    @courses = Course.all
-    @teachers = Teacher.find :all,
-      :conditions => ["person_id = people.id"],
-      :include => :person
-    @classrooms = Classroom.all		
 		
     respond_to do |format|
       format.html # new.html.erb
@@ -136,11 +131,6 @@ class KlassesController < ApplicationController
   def create
     @klass = Klass.new( params[ :klass ])
     @klass_date = @klass.date.to_s
-    @courses = Course.all
-    @teachers = Teacher.find :all,
-      :conditions => ["person_id = people.id"],
-      :include => :person
-    @classrooms = Classroom.all
     
     respond_to do |format|
       if @klass.save
