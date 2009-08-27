@@ -10,7 +10,7 @@ Given I have courses titled "Java I, Java II, Java III, Ruby I"
   |	kurosawa_akira	|	secret		|	Akira				|	Kurosawa		|
   | asada_mao				|	secret		|	Mao					|	Asada				|
   |	koda_kumiko			|	secret		|	Kumiko			|	Koda				|
-	And that students "kurosawa_akira, asada_mao, koda_kumiko" have class "1"
+	And students "kurosawa_akira, asada_mao, koda_kumiko" have class "1"
 	And students "kurosawa_akira, koda_kumiko" have class "1" chosen
 	And students "kurosawa_akira, asada_mao, koda_kumiko" should have 1 class
 	And class "1" should have 3 students

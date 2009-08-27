@@ -95,7 +95,7 @@ class TemplateClassesController < ApplicationController
     @template_class.destroy
 
     respond_to do |format|
-      format.html { redirect_to(template_classes_path( :template_day=>@template_class.day )) }
+      format.html { redirect_to :back } #(template_classes_path( :template_day=>@template_class.day )) }
       format.xml  { head :ok }
     end
   end

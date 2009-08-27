@@ -1,6 +1,6 @@
 @template_klasses
 Scenario Outline: Delete Template Classes
-  Given I have courses titled "入門 I, 入門 II"
+  Given I have courses titled "Java I, Java II"
   Given the following teacher record
   |	id	| user_name     | password |
   |	1		| johan_sveholm | secret   |  

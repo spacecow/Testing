@@ -180,16 +180,21 @@ class KlassesController < ApplicationController
   # DELETE /klasses/1
   # DELETE /klasses/1.xml
   def destroy
-    @klass = Klass.find(params[:id])
-    if !@klass.attendances.empty?
-      flash[:error] = t 'klasses.flash.try_to_delete_klass_with_students'
-      redirect_to klasses_path( :date => params[:date] )
+    @klass = Klass.find( params[:id] )
+
+		error = association_delete_error_message(
+			@klass.attendances,
+			t('klasses.error.try_to_delete_klass_with_students' ))
+										
+		if( !error.blank? )
+      flash[:error] = error
+      redirect_to :back #klasses_path( :date => params[:date] )
       return
     end
+    
     @klass.destroy
-
     respond_to do |format|
-      format.html { redirect_to klasses_path( :date => params[:date] )}
+      format.html { redirect_to :back } #klasses_path( :date => params[:date] )}
       format.xml  { head :ok }
     end
   end

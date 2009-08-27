@@ -13,11 +13,11 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-  	@sorting = Sorting.new
     @course = Course.find(params[:id])
+  	@sorting = Sorting.new
     @template_klass_groups = @course.template_classes.group_by( &:day )
-    @keys = @sorting.sort_by_day @template_klass_groups.keys
-
+    @keys = @sorting.sort_by_day @template_klass_groups.keys    
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @course }
@@ -38,6 +38,9 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
+  	@sorting = Sorting.new
+    @template_klass_groups = @course.template_classes.group_by( &:day )
+    @keys = @sorting.sort_by_day @template_klass_groups.keys    
   end
 
   # POST /courses
@@ -78,26 +81,19 @@ class CoursesController < ApplicationController
   # DELETE /courses/1.xml
   def destroy
     @course = Course.find(params[:id])
-    if !@course.template_classes.empty? && !@course.klasses.empty?
-      flash[:error] = t( 'courses.flash.try_to_delete_course_with_template_classes' )+
-      	' ('+@course.template_classes.size.to_s+')'+"<br />"+
-      	t( 'courses.flash.try_to_delete_course_with_klasses' )+
-      	' ('+@course.klasses.size.to_s+')'
-      redirect_to courses_path
-      return
-    elsif !@course.template_classes.empty?
-      flash[:error] = t( 'courses.flash.try_to_delete_course_with_template_classes' )+
-      	' ('+@course.template_classes.size.to_s+')'
-      redirect_to courses_path
-      return
-    elsif !@course.klasses.empty?
-      flash[:error] = t( 'courses.flash.try_to_delete_course_with_klasses' )+
-      	' ('+@course.klasses.size.to_s+')'
+
+    errors = association_delete_error_messages(
+    	[@course.template_classes, @course.klasses],
+    	[t( 'courses.error.try_to_delete_course_with_template_classes' ),
+    	 t( 'courses.error.try_to_delete_course_with_klasses' )])
+	    	 
+		if( !errors.empty? )
+      flash[:error] = errors.join("<br />")
       redirect_to courses_path
       return
     end
-    @course.destroy
 
+    @course.destroy
     respond_to do |format|
       format.html { redirect_to(courses_url) }
       format.xml  { head :ok }

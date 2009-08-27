@@ -22,7 +22,7 @@ When /^I try to delete student "([^\"]*)"$/ do |user|
 	# fill in "Search" with " "
 end
 
-Given /^that students? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,courses|
+Given /^students? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,courses|
   users.split(', ').map{|e| Student.user( e ).first}.each do |student|
 	  courses.split(', ').each do |course|
 	  	student.courses << Course.find_by_name( course )
@@ -30,7 +30,7 @@ Given /^that students? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,c
 	end
 end
 
-Given /^that students? "([^\"]*)" (?:has|have) classe?s? "([^\"]*)"$/ do |users,classes|
+Given /^students? "([^\"]*)" (?:has|have) classe?s? "([^\"]*)"$/ do |users,classes|
   users.split(', ').map{|e| Student.user( e ).first}.each do |student|
 	  classes.split(', ').each do |course|
 	  	if course.to_i > 0
@@ -42,7 +42,7 @@ Given /^that students? "([^\"]*)" (?:has|have) classe?s? "([^\"]*)"$/ do |users,
 	end
 end
 
-Given /^that student "([^\"]*)" has classe?s? "([^\"]*)" canceled$/ do |username,classes|
+Given /^student "([^\"]*)" has classe?s? "([^\"]*)" canceled$/ do |username,classes|
   student = Student.user( username ).first
   classes.split(', ').each do |course|
   	if course.to_i > 0
@@ -69,6 +69,13 @@ end
 Then /^students? "([^\"]*)" should have ([0-9]+) classe?s?$/ do |users,no|
 	users.split(', ').map{|e| Student.user( e ).first}.each do |student|
 		student.klasses.count.should == no.to_i
+	end
+end
+
+Then /^student "([^\"]*)" should have class "([^\"]*)"$/ do |username,klass|
+  student = Student.user( username ).first
+  if name.to_i > 0
+		student.klasses.include?( Klass.find( name )).should == true
 	end
 end
 

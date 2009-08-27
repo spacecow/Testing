@@ -9,7 +9,7 @@
 	        :confirm => 'Are you sure?' +
 	        ( klass.attendances.empty? ?
 	            "" :
-	            "\n"+t('notice')+": "+t('klasses.flash.try_to_delete_klass_with_students') ),
+	            "\n"+t('notice')+": "+t('klasses.error.try_to_delete_klass_with_students') ),
 	        :method => :delete,
 	        :class=>"grid" %>
 	<% end %>

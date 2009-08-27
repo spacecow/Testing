@@ -46,8 +46,8 @@ Examples:
 
 Scenario Outline: Update multiple students with blank courses should generate no change
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
-	And that student "kurosawa_akira" has courses "Java, Prolog"
-	And that student "asada_mao" has course "Cpp"
+	And student "kurosawa_akira" has courses "Java, Prolog"
+	And student "asada_mao" has course "Cpp"
 	And I am logged in as "<user>" with password "secret"
 When I multiselect students "kurosawa_akira, sakurai_kazutoshi, asada_mao"
 	And I press 'update'
@@ -77,7 +77,7 @@ Examples:
 Scenario Outline: Cancel courses for multiple students
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
-	And that students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"
+	And students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"
 When I multiselect students "kurosawa_akira, asada_mao"
 	And I check 'courses.none'
 	And I press 'update'
@@ -92,7 +92,7 @@ Examples:
 Scenario Outline: Cancel courses for multiple students but keep one course
 Given I have courses titled "Java, Prolog, Fortran, Cpp"
 	And I am logged in as "<user>" with password "secret"
-	And that students "kurosawa_akira, sakurai_kazutoshi" have courses "Fortran, Cpp"
+	And students "kurosawa_akira, sakurai_kazutoshi" have courses "Fortran, Cpp"
 When I multiselect students "kurosawa_akira, asada_mao"
 	And I check "Fortran"
 	And I check 'courses.none'

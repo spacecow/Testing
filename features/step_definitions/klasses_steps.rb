@@ -27,6 +27,12 @@ Given /^the following class records?$/ do |table|
 	end
 end
 
+Given /^I have classes "([^\"]*)"$/ do |courses|
+  Given "the following klass records", table(
+    ([ "course" ] + courses.split(', ')).map{|e| [e]}
+  )
+end
+
 Given /^I have no classes$/ do
   Klass.delete_all
 end
@@ -71,6 +77,21 @@ Then /^class "([^\"]*)" should have a teacher$/ do |name|
 		:conditions => ["courses.name=?",name],
 		:include => :course ).teacher.should_not be_nil
 end
+
+Then /^class "([^\"]*)" should have teacher "([^\"]*)"$/ do |klass,username|
+  teacher = Teacher.user( username ).first
+  if name.to_i > 0
+  	Klass.find( name ).teacher.should == teacher
+	end
+end
+
+Then /^class "([^\"]*)" should have student "([^\"]*)"$/ do |klass,username|
+  student = Student.user( username ).first
+  if name.to_i > 0
+  	Klass.find( name ).students.include?( student ).shoudl == true
+	end
+end
+
 
 #Only works if only one class is assigned to that specific course
 Then /^class "([^\"]*)" should have ([0-9]+) students?$/ do |name,no|

@@ -26,7 +26,7 @@ Examples:
 Scenario Outline: Try to delete a student with course associations
 Given I am logged in as "<user>" with password "secret"
 	And I have courses titled "Ruby on Rails, Python"
-	And that student "kurosawa_akira" has course "Ruby on Rails"
+	And student "kurosawa_akira" has course "Ruby on Rails"
 When I try to delete student "kurosawa_akira"
 Then I should see an error 'students.error.delete_student_with_courses'
 	And student "kurosawa_akira" should have 1 course
@@ -42,8 +42,8 @@ Examples:
 Scenario Outline: Try to delete a student with course&class associations
 Given I am logged in as "<user>" with password "secret"
 	And I have courses titled "Ruby on Rails, Python"
-	And that student "kurosawa_akira" has course "Ruby on Rails"
-	And that student "kurosawa_akira" has class "Ruby on Rails"
+	And student "kurosawa_akira" has course "Ruby on Rails"
+	And student "kurosawa_akira" has class "Ruby on Rails"
 When I try to delete student "kurosawa_akira"
 Then I should see an error 'students.error.delete_student_with_courses'
 	And I should see an error 'students.error.delete_student_with_classes'

@@ -16,9 +16,9 @@ Scenario Outline: Admins Reserve Classes
 	|	4		|	Java I	|	06/01/09			| 11:10				|	12:00			|
 	|	5		|	Java II	|	06/02/09			| 11:10				|	12:00			|
 	|	6		|	Ruby I	|	current date	| 13:00				|	13:30			|
-	Given that student "kurosawa_akira" has courses "Java I, Java II"
-		And that student "kurosawa_akira" has classes "4, 5"
-		And that student "kurosawa_akira" has class "5" canceled
+	Given student "kurosawa_akira" has courses "Java I, Java II"
+		And student "kurosawa_akira" has classes "4, 5"
+		And student "kurosawa_akira" has class "5" canceled
 		And I am logged in as "<login>" with password "<password>"
 		And I go to the reserve page of student "kurosawa_akira"
 		And the "Java I" checkbox should be checked

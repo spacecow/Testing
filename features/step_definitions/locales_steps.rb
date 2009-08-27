@@ -46,13 +46,17 @@ Then /^I should not see "([^\']*)"'([^\']*)'$/ do |text1,text2|
   response.should_not contain(text1+I18n.translate( text2 ))
 end
 
+Then /^I should not see "([^\']*)"'([^\']*)''([^\']*)'$/ do |text1,text2,text3|
+  response.should_not contain(text1+I18n.translate( text2 )+I18n.translate( text3 ))
+end
+
 When /^I select "([^\"]*)" from '([^\"]*)'$/ do |value, field|
   select(value, :from => I18n.translate( field ))
 end
 
 When /^I follow '([^\"]*)' within "([^\"]*)"$/ do |link, text|
-  within ".#{text}" do
-		click_link I18n.translate(link)
+  within ".#{text}" do |scope|
+		scope.click_link I18n.translate(link)
 	end
 end
 

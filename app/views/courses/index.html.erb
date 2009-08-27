@@ -5,39 +5,25 @@
 
 <% @keys.each do |key| %>
 	<% @courses_groups[key].each do |course| %>
-		<div class="course_<%= course.id %>">
-			<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-				<td>	
-		    	<%= h course.name %>
-		    </td>
-			  <td class="list-actions">
-			    <%= link_to t( 'show' ), course %>
-			    <%= link_to t( 'edit' ), edit_course_path( course ) %>
-			    <%= link_to t( 'delete' ),
-			       course,
-			      :confirm => 'Are you sure?'+
-        		( !course.template_classes.empty? && !course.klasses.empty? ?
-	              "\n"+t('notice')+": "+
-	              t('courses.flash.try_to_delete_course_with_template_classes')+
-	              " ("+course.template_classes.size.to_s+")"+"\n"+
-	              t('courses.flash.try_to_delete_course_with_klasses')+
-	              " ("+course.klasses.size.to_s+")" :
-                ( !course.template_classes.empty? ?
-			              "\n"+t('note')+": "+
-			              t('courses.flash.try_to_delete_course_with_template_classes')+
-			              " ("+course.template_classes.size.to_s+")" :
-			              ( !course.klasses.empty? ?
-					              "\n"+t('note')+": "+
-					              t('courses.flash.try_to_delete_course_with_klasses')+
-					              " ("+course.klasses.size.to_s+")" :
-					              ""
-			              )
-                )
-            ),
-			      :method => :delete %>
-			  </td>
-		  </tr>
-	  </div>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+			<td>	
+	    	<%= h course.name %>
+	    </td>
+		  <td class="list-actions">
+		  	<div class="<%= course.category %>_<%= course.level %>">
+		    <%= link_to t( 'show' ), course %>
+		    <%= link_to t( 'edit' ), edit_course_path( course ) %>
+		    <%= link_to t( 'delete' ),
+		       course,
+		      :confirm => "Are you sure?\n"+
+        	 	association_delete_error_messages(
+						[ course.template_classes, course.klasses ],
+						[ t( 'courses.error.try_to_delete_course_with_template_classes' ),
+ 							t( 'courses.error.try_to_delete_course_with_klasses' )]).join("\n"),
+		      :method => :delete %>
+		    </div>
+		  </td>
+	  </tr>
 	<% end %>
 <% end %>
 </table>

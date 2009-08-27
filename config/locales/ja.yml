@@ -74,7 +74,7 @@ ja:
     new: "新しい講座"
     no: "講座無し"
     title: "講座"
-    flash:
+    error:
       try_to_delete_course_with_template_classes: "Delete all template classes depending on this course first"
       try_to_delete_course_with_klasses: "Delete all klasses depending on this course first"
   documentation:
@@ -85,7 +85,7 @@ ja:
     title: "クラス"
     listing: "上場クラス"
     new: "新しいクラス"
-    flash:
+    error:
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
     title: "ログインして下さい"

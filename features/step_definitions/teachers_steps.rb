@@ -70,6 +70,14 @@ Then /^teacher "([^\"]*)" should have ([0-9]+) classe?s?$/ do |user,no|
 	find_teacher( user ).klasses.count.should == no.to_i
 end
 
+Then /^teacher "([^\"]*)" should have class "([^\"]*)"$/ do |username,klass|
+  teacher = Teacher.user( username ).first
+  if name.to_i > 0
+		teacher.klasses.include?( Klass.find( name )).should == true
+	end
+end
+
+
 When /^I try to delete teacher "([^\"]*)"$/ do |user|
 	post "/people/destroy", :id => Person.find_by_user_name( user ).id
 	# Selenium

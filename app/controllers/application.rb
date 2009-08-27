@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :clearance?
   helper_method :current_user
   helper_method :association_delete_error_messages
+  helper_method :association_delete_error_message
 
   session :session_key => '_yoyaku_session_id'
   layout "courses"
@@ -73,12 +74,14 @@ private
 		if !association.empty?
 			return mess + ' (' + association.size.to_s + ')'
 		end
+		""
 	end
 	
 	def association_delete_error_messages( associations, messes )
 		errors = []
 		associations.each_with_index do |association,i|
-			errors.push association_delete_error_message( associations[i], messes[i] )
+			mess = association_delete_error_message( associations[i], messes[i] )
+			errors.push mess unless mess == ""
 		end
 		errors.compact
 	end	
