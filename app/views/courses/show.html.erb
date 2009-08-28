@@ -21,7 +21,9 @@
   <%=h @course.note %>
 </p>
 
-<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
+<% if clearance<3 %>
+	<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
+<% end %>
 <%= link_to t('back'), courses_path, :class=>"link" %><br />	
 
 <table border="0" cellspacing="0" cellpadding="5">
@@ -63,7 +65,9 @@
 </table>
 </p>
 
-<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
+<% if clearance<3 %>
+	<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
+<% end %>
 <%= link_to t('back'), courses_path, :class=>"link" %><br />	
 
 </fieldset>

@@ -58,6 +58,7 @@ en:
   student: "Student"
   suspended: "Suspended"
   teacher: "Teacher"
+  template_class: "Template Class"
   title: "Title"
   uncancel: "Uncancel"
   unit: "Unit"

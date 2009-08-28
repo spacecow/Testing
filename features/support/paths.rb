@@ -18,20 +18,22 @@ module NavigationHelpers
     	courses_path
     when /the list of classrooms/
     	classrooms_path
-    when /the list of klasses/
+    when /the list of [ck]lasses/
     	klasses_path
-    when /the list of classes/
-    	klasses_path
+    when /the "(.+)" list of classes/
+    	klasses_path( :date => DateTime.parse( $1 ))
     when /the list of people/
     	people_path
     when /the list of students/
     	students_path
     when /the list of teachers/
     	teachers_path
-    when /the list of template klasses/
+    when /the list of template [ck]lasses/
     	template_classes_path
-    when /the list of template_klasses/
+    when /the list of template_[ck]lasses/
     	template_classes_path    	
+    when /the "(.+)" list of template [ck]lasses/
+    	template_classes_path( :template_day => $1 )
     when /student ([0-9]+) reserve page/
     	edit_klasses_student_path( $1 )
     when /student ([0-9]+) course page/

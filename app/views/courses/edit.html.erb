@@ -24,7 +24,7 @@
 							<td style="font-size: x-small">
 								(<%= klass.attendances.size %>)
 								<%= link_to h( klass.time_interval ), klass, :class => "grid" %>
-								<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
+								<%= link_to t( 'edit' ), edit_klass_path( klass, :redirect => "courses" ), :class => "grid" %>
 								<%= link_to t( 'delete' ), klass,
 									:confirm => "Are you sure?\n"+
 										association_delete_error_message(
@@ -49,7 +49,7 @@
 						<tr>
 							<td style="font-size: x-small">
 								<%= link_to h( template_klass.time_interval ), template_klass, :class => "grid" %>
-								<%= link_to t( 'edit' ), edit_template_class_path(template_klass), :class => "grid" %>
+								<%= link_to t( 'edit' ), edit_template_class_path( template_klass, :redirect => "courses" ), :class => "grid" %>
 								<%= link_to t( 'delete' ), template_klass, :confirm => 'Are you sure?', :method => :delete, :class => "grid" %>
 							</td>
 						</tr>

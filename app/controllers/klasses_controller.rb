@@ -13,10 +13,6 @@ class KlassesController < ApplicationController
                params[:day].to_i ),
       :start_time=>Time.parse( params[:start_time ]),
       :end_time=>Time.parse( params[:end_time ]),
-			:tostring=>
-			  Course.find( params[:course_id] ).name+"-"+
-			  params[:start_time]+"-"+
-			  params[:end_time],
 			:cancel=>false
     ).save
     redirect_to :action=>'index',
@@ -62,10 +58,7 @@ class KlassesController < ApplicationController
 						:description=>t.description,
 						:cancel=>t.inactive,
 						:mail_sending=>t.mail_sending,
-						:note=>t.note,
-						:tostring=> t.course.name+"-"+
-						            t.start_time.to_s(:time)+"-"+
-						            t.end_time.to_s(:time)
+						:note=>t.note
 		    	).save
 	  		end
 	  	end
@@ -134,8 +127,6 @@ class KlassesController < ApplicationController
     
     respond_to do |format|
       if @klass.save
-        @klass.update_attribute( :tostring, @klass.course.name+"-"+@klass.start_time.to_s(:time)+"-"+@klass.end_time.to_s(:time))
-        
         flash[:notice] = 'Klass was successfully created.'
         format.html { redirect_to klasses_path( :date => @klass.date ) }
         format.xml  { render :xml => @klass, :status => :created, :location => @klass }
@@ -158,17 +149,13 @@ class KlassesController < ApplicationController
 
     respond_to do |format|
       if @klass.update_attributes( params[:klass] )
-      @klass.update_attribute( :tostring, @klass.course.name+"-"+@klass.start_time.to_s(:time)+"-"+@klass.end_time.to_s(:time) )
-        format.html {
-        	redirect_to(
-        	  klasses_path(
-        	    :year=>@klass.date.year,
-        	    :month=>Date::MONTHNAMES[@klass.date.mon],
-        	    :day=>@klass.date.day
-        	  )
-        	)
-        }
-
+	      format.html{
+	      	if params[:redirect] == "courses"
+	      		redirect_to edit_course_path( @klass.course_id )
+					else
+						redirect_to klasses_path( :date => @klass.date )
+					end
+	        }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

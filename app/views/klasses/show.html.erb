@@ -69,7 +69,9 @@
 	</tr>
 </table>
 
-<%= link_to t('edit'), edit_klass_path( @klass ), :class=>:link %> |
+<% if clearance<3 %>
+	<%= link_to t('edit'), edit_klass_path( @klass ), :class=>:link %> |
+<% end %>
 <%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
 </fieldset>
 </div>

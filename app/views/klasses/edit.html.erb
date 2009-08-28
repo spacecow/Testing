@@ -5,6 +5,7 @@
 
 <% form_for(@klass) do |f| %>
   <%= render :partial=>"form", :locals => { :f=>f, :label_text => t('update'), :klass_date=>"" } %>
+	<%= hidden_field_tag :redirect, params[:redirect] %>
 <% end %>
 
 <%= link_to t('show'), @klass, :class=>:link %> |

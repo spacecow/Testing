@@ -1,4 +1,8 @@
-﻿<p>
+﻿<div class="form">
+<fieldset>
+<legend><%= t('template_class') %></legend>
+
+<p>
   <b><%= t('course') %>: </b><%= link_to h(@template_klass.course), @template_klass.course ? @template_klass.course : "" %>
 </p>
 
@@ -42,5 +46,10 @@
   <b><%= t('note') %>: </b><%=h @template_klass.note %>
 </p>
 
-<%= link_to t('edit'), edit_template_class_path(@template_klass) %> |
-<%= link_to t('back'), template_classes_path( :template_day=>@template_klass.day ) %>
+<% if clearance<3 %>
+	<%= link_to t('edit'), edit_template_class_path(@template_klass), :class=>:link %> |
+<% end %>
+<%= link_to t('back'), template_classes_path( :template_day=>@template_klass.day ), :class=>:link %>
+
+</fieldset>
+</div>

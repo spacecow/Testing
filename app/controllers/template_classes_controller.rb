@@ -75,10 +75,13 @@ class TemplateClassesController < ApplicationController
 
     respond_to do |format|
       if @template_class.update_attributes(params[:template_class])          
-
-        format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
-        #format.html { redirect_to template_classes_path }
-        #format.html { redirect_to( @template_class, :template_day=>@template_class.day ) }
+      	format.html{
+	      	if params[:redirect] == "courses"
+	      		redirect_to edit_course_path( @template_class.course_id )
+					else
+						redirect_to( template_classes_path( :template_day=>@template_class.day ))
+					end
+				}
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -55,6 +55,7 @@ ja:
   student: "受講生"
   suspended: "利用停止"
   teacher: "講師"
+  template_class: "テンプレート・クラス"
   title: "タイトル"
   update: "更新"
   uncancel: "ウンキャンセル"  
