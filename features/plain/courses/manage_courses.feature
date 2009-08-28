@@ -10,10 +10,15 @@ Given I have courses titled "Java I, Java II, Rails II, Ruby I, Fortran I"
 	|	Java I		|	06/30/09	| 11:00				| 11:50			|
 	|	Rails II	|	07/01/09	|	12:00				|	14:00			|
 	And I go to the list of courses
-	And I have teacher "johan_sveholm"
-	And I am logged in as "johan_sveholm"
+	And I have teachers "johan_sveholm, thomas_osburg"
 	
+
+Scenario: Restrict access for observer on index page
+When I am logged in as "thomas_osburg"
+Then I should not see 'edit' within "Java_I"
+
 Scenario Outline: Trying to Delete Courses
+Given I am logged in as "johan_sveholm"
 When I follow 'delete' within "<delete>"
 Then I should <error_1> 'courses.error.try_to_delete_course_with_template_classes'
 	And I should <error_2> 'courses.error.try_to_delete_course_with_klasses'	
@@ -32,6 +37,7 @@ Examples:
 |	Fortran_I	|	see			|	not see	|	see			|	see			|	see			|	see			|	see			|	5				|
 
 Scenario Outline: Displaying Associations
+Given I am logged in as "johan_sveholm"
 When I follow 'show' within "<show>"
 Then I should <day_1> "Friday"
 	And I should <time_1> "11:00~12:00"

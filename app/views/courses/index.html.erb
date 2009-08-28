@@ -1,32 +1,39 @@
 <div id="list">
 <h1><%= t( 'courses.listing' ) %></h1>
 
-<table cellpadding="2" cellspacing="1">
-
-<% @keys.each do |key| %>
-	<% @courses_groups[key].each do |course| %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-			<td>	
-	    	<%= h course.name %>
-	    </td>
-		  <td class="list-actions">
-		  	<div class="<%= course.category %>_<%= course.level %>">
-		    <%= link_to t( 'show' ), course %>
-		    <%= link_to t( 'edit' ), edit_course_path( course ) %>
-		    <%= link_to t( 'delete' ),
-		       course,
-		      :confirm => "Are you sure?\n"+
-        	 	association_delete_error_messages(
-						[ course.template_classes, course.klasses ],
-						[ t( 'courses.error.try_to_delete_course_with_template_classes' ),
- 							t( 'courses.error.try_to_delete_course_with_klasses' )]).join("\n"),
-		      :method => :delete %>
-		    </div>
-		  </td>
-	  </tr>
-	<% end %>
-<% end %>
+<% mid = Course.count/2 %>
+<table>
+	<tr>
+		<td>
+			<table cellpadding="2" cellspacing="1">
+			<% index=0 %>
+			<% @keys.each do |key| %>
+				<% break if index > mid %>
+				<% @courses_groups[key].each do |course| %>
+					<% index += 1 %>
+					<%= render :partial => "list_course_groups",
+							:locals => { :key=>key, :index=>index, :course=>course } %>
+				<% end %>
+			<% end %>
+			</table>
+		</td>
+		<td valign="top">
+			<table cellpadding="2" cellspacing="1">
+			<% index=0 %>
+			<% @keys.each do |key| %>
+				<% @courses_groups[key].each do |course| %>
+					<% index += 1 %>
+					<% if index > mid %>
+						<%= render :partial => "list_course_groups",
+								:locals => { :key=>key, :index=>index, :course=>course } %>
+					<% end %>
+				<% end %>
+			<% end %>
+			</table>
+		</td>
+	</tr>
 </table>
+
 </div>
 <br />
 

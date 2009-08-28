@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:id], :include=>[ :klasses, :template_classes ])
   	@sorting = Sorting.new
     @template_klass_groups = @course.template_classes.group_by( &:day )
     @keys = @sorting.sort_by_day @template_klass_groups.keys    
