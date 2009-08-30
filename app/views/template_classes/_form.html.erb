@@ -1,26 +1,21 @@
 ﻿<p>
   <%= f.label :course_id, t( 'course' ) %>
-  <%= f.select :course_id,
-    Course.find( :all ).map{|e| [e, e.id]},
-    :prompt => "講座を選んで",
-    :selected => @template_class.course ? @template_class.course.id : ( params[ :course ] ? Course.find( params[ :course ] ).id : nil ) %>  </p>
+  <%= f.collection_select :course_id,
+    Course.all, :id, :name,
+    { :include_blank => true },
+    :onchange => 'this.form.submit();' %>
 </p>
 <p>
   <%= f.label :teacher_id, t( 'teacher' ) %>
-  <%= f.select :teacher_id,
-    Teacher.find(
-      :all,
-      :conditions => ["person_id = people.id"],
-      :include => :person ).map{|e| [e, e.id]},
-    	:prompt => "講師を選んで",
-    	:selected => @template_class.teacher ? @template_class.teacher.id : nil %>
+  <%= f.collection_select :teacher_id,
+    @teachers, :id, :name,
+    :include_blank => true %>
 </p>
 <p>
   <%= f.label :classroom_id, t( 'classroom' ) %>
-  <%= f.select :classroom_id,
-    Classroom.find( :all ).map{|e| [e, e.id]},
-    :prompt => "部屋を選んで",
-    :selected => @template_class.classroom ? @template_class.classroom.id : nil %>
+  <%= f.collection_select :classroom_id,
+    Classroom.all, :id, :name,
+    :include_blank => true %>
 </p>
 <p>
 	<%= f.label :capacity, t( 'capacity' ) %>

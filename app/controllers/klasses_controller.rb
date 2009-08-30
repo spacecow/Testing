@@ -102,6 +102,7 @@ class KlassesController < ApplicationController
   def new
     @klass = Klass.new()
 		@klass_date = params[ :klass_date ]
+		@teachers = []
 		
     respond_to do |format|
       format.html # new.html.erb
@@ -117,6 +118,9 @@ class KlassesController < ApplicationController
   			:teacher,
   			:course,
   			:classroom ])
+		@teachers = Teacher.all(
+			:conditions=>["courses.name = ?", Course.find( @klass.course_id ).name],
+		  :include=>[:person, :courses])      			
   end
 
   # POST /klasses
@@ -124,7 +128,12 @@ class KlassesController < ApplicationController
   def create
     @klass = Klass.new( params[ :klass ])
     @klass_date = @klass.date.to_s
-    
+		@teachers = []
+		if !params[:klass][:course_id].blank?
+			@teachers = Teacher.all(
+				:conditions=>["courses.name = ?", Course.find( params[:klass][:course_id] ).name],
+			  :include=>[:person, :courses])    
+		end
     respond_to do |format|
       if @klass.save
         flash[:notice] = 'Klass was successfully created.'
@@ -146,7 +155,11 @@ class KlassesController < ApplicationController
   			:teacher,
   			:course,
   			:classroom ])
-
+		course_id = params[:klass][:course_id].nil? ? @klass.course_id : params[:klass][:course_id]
+		@teachers = Teacher.all(
+			:conditions=>["courses.name = ?", Course.find( course_id ).name],
+		  :include=>[:person, :courses])    
+			  
     respond_to do |format|
       if @klass.update_attributes( params[:klass] )
 	      format.html{

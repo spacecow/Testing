@@ -7,29 +7,50 @@ Given 'I am logged in as "(.+)" AJAX' do |user|
   @browser.is_text_present( I18n.translate( 'klasses.listing' )).should be_true
 end
 
-When /^I choose "([^\"]*)" for class ([0-9]+) as student ([0-9]+)$/ do |name, class_no, student_no|
-  selectAndWait( get_student_locator( class_no, student_no ), name )
+When /^I browse to "([^\"]*)"$/ do |page|
+	@browser.open page
 end
-	
-When /^I select "([^\"]*)" for "([^\"]*)" class ([0-9]+) as teacher$/ do |name, category, class_no|
- 	selectAndWait( get_teacher_locator( category, class_no ), name )
-end
-
-When /^I unselect teacher for "([^\"]*)" class ([0-9]+)$/ do |category, class_no|
- 	When "I select \"\" for \"#{category}\" class #{class_no} as teacher"
-end
-
-When /^I move "([^\"]*)" from class ([0-9]+) to class ([0-9]+)$/ do |username, class_1, class_2|
-  selectAndWait( get_student_locator( class_1, get_student_no( username, class_1 )), "Move to #{class_2}" )
-end	
 
 When /^I cancel "([^\"]*)" for class ([0-9]+)$/ do |username, class_no|
   selectAndWait( get_student_locator( class_no, get_student_no( username, class_no )), "Cancel" )
 end	
 
+When /^I click link '([^\"]*)'$/ do |link|
+  #clickAndWait( I18n.translate( 'klasses.new' ))
+  clickAndWait "//div[@id='links']/a"
+end
+
+Given /^I click link '([^\"]*)' for "([^\"]*)" template class ([0-9]+)$/ do |link, category, class_no|
+	clickAndWait get_edit_locator( category, class_no )
+end
+
+When /^I click button "([^\"]*)"$/ do |button|
+  clickAndWait button
+end
+
+When /^I choose "([^\"]*)" for class ([0-9]+) as student ([0-9]+)$/ do |name, class_no, student_no|
+  selectAndWait( get_student_locator( class_no, student_no ), name )
+end
+	
 When /^I delete "([^\"]*)" for class ([0-9]+)$/ do |username, class_no|
   selectAndWait( get_student_locator( class_no, get_student_no( username, class_no )), "Delete" )
 end	
+
+When /^I move "([^\"]*)" from class ([0-9]+) to class ([0-9]+)$/ do |username, class_1, class_2|
+  selectAndWait( get_student_locator( class_1, get_student_no( username, class_1 )), "Move to #{class_2}" )
+end	
+
+When /^I select "([^\"]*)" for "([^\"]*)" class ([0-9]+) as teacher$/ do |name, category, class_no|
+ 	selectAndWait( get_teacher_locator( category, class_no ), name )
+end
+
+Then /^I select option "([^\"]*)" from "([^\"]*)"$/ do |option, locator|
+  selectAndWait( locator, option )
+end
+
+When /^I unselect teacher for "([^\"]*)" class ([0-9]+)$/ do |category, class_no|
+ 	When "I select \"\" for \"#{category}\" class #{class_no} as teacher"
+end
 
 Then /^I should see "([^\"]*)" for class ([0-9]+) as student ([0-9]+)$/ do |name, class_no, student_no|
   @browser.get_selected_label( get_student_locator( class_no, student_no )).should == name
@@ -37,6 +58,13 @@ end
 
 Then /^I should see teacher options "([^\"]*)" for "([^\"]*)" class ([0-9]+)$/ do |names, category, class_no|
 	name_array = @browser.get_select_options( get_teacher_locator( category, class_no ))
+	names.split(', ').each do |name|
+		name_array.include?( name ).should be_true
+	end
+end
+
+Then /^I should see options "([^\"]*)" for "([^\"]*)"$/ do |names, locator|
+	name_array = @browser.get_select_options( locator )
 	names.split(', ').each do |name|
 		name_array.include?( name ).should be_true
 	end
@@ -78,6 +106,12 @@ end
 def get_student_no( username, class_no )
 	attendance = Attendance.find_by_student_id( Student.user( username ))
   get_visual_class( class_no ).attendances.reject(&:cancel).index( attendance )+1
+end
+
+def get_edit_locator( category, class_no )
+	tr_i = ( 4+class_no.to_i ).to_s
+	#"//table[@id='JavaCourse']/tbody/tr[#{tr_i}]/td[@id='links']"
+	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='links']/a[2]"
 end
 
 def get_student_locator( class_no, student_no )

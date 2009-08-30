@@ -20,8 +20,6 @@
 <br />
 <br />
 
-
-
 <% @keys = sort_in_mogi_order @klass_groups.keys %>
 <% @keys.each do |key| %>
   <div id="table">
@@ -33,7 +31,9 @@
   </div>
 <% end %>
 
-<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ), :class=>"link" %><br />
+<div id="links">
+	<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ), :class=>"link" %><br />
+</div>
 
 <% if clearance?(1) %>
 	<table>

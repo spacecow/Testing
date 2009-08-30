@@ -14,9 +14,9 @@ Given I have courses titled "Java I, Java II, Java III, Ruby I"
   |	kurosawa_akira		|	secret		|	Akira				|	Kurosawa		|
   |	asada_mao					|	secret		|	Mao					|	Asada				|
   |	sakurai_kazutoshi	|	secret		|	Kazutoshi		|	Sakurai			|
-	And that student "kurosawa_akira" has class "1"
-	And that student "asada_mao" has class "1"
-	And that student "sakurai_kazutoshi" has class "1"
+	And student "kurosawa_akira" has class "1"
+	And student "asada_mao" has class "1"
+	And student "sakurai_kazutoshi" has class "1"
 	And I am logged in as "johan_sveholm" AJAX
 When I choose "Kurosawa Akira" for class 1 as student 2
 	And I choose "Asada Mao" for class 1 as student 3

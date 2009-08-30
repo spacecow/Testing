@@ -25,10 +25,28 @@ Given /^I have template classes "([^\"]*)"$/ do |courses|
   )
 end
 
+Given /^template classe?s? "([^\"]*)" (?:has|have) teacher "([^\"]*)"$/ do |names, username|
+  names.split(', ').each do |name|
+  	get_template_class( name ).update_attribute( :teacher_id, Teacher.user( username ).first.id )
+  end
+end
+
 Given /^I should have ([0-9]+) template [ck]lasse?s?$/ do |count|
   TemplateClass.count.should == count.to_i
 end
 
 Given /^I should have ([0-9]+) teachers?$/ do |count|
   Teacher.count.should == count.to_i
+end
+
+Then /^I should have ([0-9]+) template classe?s? "([^\"]*)"$/ do |no, name|
+  TemplateClass.course_name( name ).size.should == no.to_i
+end
+
+#- F - U - N - C - T - I - O - N - S -----------------------------------------------------
+
+def get_template_class( name )
+	if name.to_i > 0
+  	return TemplateClass.find( name )
+  end
 end

@@ -5,13 +5,14 @@
 			  <%= f.label :course_id, t( 'course' ) %>
 			  <%= f.collection_select :course_id,
 			    Course.all, :id, :name,
-			    :include_blank => true %>
+			    { :include_blank => true },
+			    :onchange => 'this.form.submit();' %>
 			</p>
 			<p>
 			  <%= f.label :teacher_id, t( 'teacher' ) %>
 			  <%= f.collection_select :teacher_id,
-			    Teacher.all( :include=>:person ), :id, :name,
-			      :include_blank => true %> 
+			    @teachers, :id, :name,
+		      :include_blank => true %> 
 			</p>			
 			<p>
 			  <%= f.label :classroom_id, t( 'classroom' ) %>

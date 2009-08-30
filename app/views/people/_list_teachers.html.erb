@@ -10,10 +10,14 @@
       <tr valign="top" class="list-line-man">
     <% else %>
       <tr valign="top" class="list-line-woman">
-    <% end %>  
-    <td class="list-units">
-      <%= check_box_tag "teacher_ids[]", person.teacher.id %>
-    </td>
+    <% end %>
+    <% if clearance < 3 %>
+	    <td class="list-units">
+	      <%= check_box_tag "teacher_ids[]", person.teacher.id %>
+	    </td>
+	  <% else %>
+	  	<td></td>
+	  <% end %>
     <td class="list-units">
     	<%= h person.name %>
     </td>

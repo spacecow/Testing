@@ -20,8 +20,12 @@
   </div>
 <% end %>
 
-<br />
-<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
+<div id="links">
+	<% if clearance < 3 %>
+		<br />
+		<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
+	<% end %>
+</div>
 
 <% if clearance?(1) && @template_classes %>
 	<table>

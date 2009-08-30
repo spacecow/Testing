@@ -36,9 +36,7 @@ class TemplateClassesController < ApplicationController
   # GET /template_classes/new.xml
   def new
     @template_class = TemplateClass.new()
-    #@course = params[ :course ]
-    #@time = params[ :time ]
-    #@template_day = params[ :template_day ]
+		@teachers = []
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,13 +47,21 @@ class TemplateClassesController < ApplicationController
   # GET /template_classes/1/edit
   def edit
     @template_class = TemplateClass.find(params[:id])
+		@teachers = Teacher.all(
+			:conditions=>["courses.name = ?", Course.find( @template_class.course_id ).name],
+		  :include=>[:person, :courses])      		    
   end
 
   # POST /template_classes
   # POST /template_classes.xml
   def create
     @template_class = TemplateClass.new( params[ :template_class ])
-
+		@teachers = []
+		if !params[:template_class][:course_id].blank?
+			@teachers = Teacher.all(
+				:conditions=>["courses.name = ?", Course.find( params[:template_class][:course_id] ).name],
+			  :include=>[:person, :courses])    
+		end
     respond_to do |format|
       if @template_class.save
         flash[:notice] = 'TemplateClass was successfully created.'

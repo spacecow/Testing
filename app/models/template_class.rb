@@ -4,6 +4,8 @@ class TemplateClass < ActiveRecord::Base
   belongs_to :teacher
   belongs_to :classroom
   
+	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}    
+  
   validates_presence_of :course_id, :start_time, :end_time
   validates_format_of :day,
     :with => %r{\wday},
