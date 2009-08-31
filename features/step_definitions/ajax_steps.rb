@@ -1,10 +1,8 @@
 Given 'I am logged in as "(.+)" AJAX' do |user|
-  @browser.open('admin/login/')
-  @browser.is_text_present( I18n.translate( 'login.title' )).should be_true
+  Given "I browse to \"login\""
   @browser.type 'user_name', user
   @browser.type 'password', "secret"
-  clickAndWait "commit"
-  @browser.is_text_present( I18n.translate( 'klasses.listing' )).should be_true
+  Given "I click button \"commit\""
 end
 
 When /^I browse to "([^\"]*)"$/ do |page|
@@ -78,6 +76,15 @@ Then /^I should not see any students for class ([0-9]+)$/ do |class_no|
   @browser.is_element_present( get_student_locator( class_no, 1 )).should be_false
 end
 
+Then /^I should see text '([^\"]*)'$/ do |text|
+	@browser.is_text_present( text ).should be_true
+end
+
+Then /^I should not see text '([^\"]*)'$/ do |text|
+	@browser.is_text_present( text ).should_not be_true
+end
+
+
 When /wait/ do
 	sleep 10
 end	
@@ -124,8 +131,8 @@ def get_teacher_locator( category, class_no )
 	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='teacher']/select"
 end
 
-def page_load( time='5000' )
-	@browser.wait_for_page_to_load('5000')
+def page_load( time='10000' )
+	@browser.wait_for_page_to_load( time )
 end
 
 def selectAndWait( locator, selection )

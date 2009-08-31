@@ -87,6 +87,7 @@ ja:
     listing: "上場クラス"
     new: "新しいクラス"
     error:
+      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
     title: "ログインして下さい"
@@ -125,10 +126,12 @@ ja:
       delete_teacher_with_classes: "講師を削除する前に全部の関係があるクラスを除いて下さい"
       select: "講師を選択して下さい"
   template_klasses:
-    new: "新しいテンプレート・クラス"  
-    listing: "上場テンプレート・クラス"
     editing: "テンプレート・クラス編集"
+    listing: "上場テンプレート・クラス"
+    new: "新しいテンプレート・クラス"  
     title: "テンプレート・クラス"
+    error:
+      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
   date:
     formats:
       default: "%Y/%m/%d"
