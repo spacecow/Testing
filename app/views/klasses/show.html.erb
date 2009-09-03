@@ -5,9 +5,9 @@
 	<tr>
 		<td>
 			<p>
-			  <b><%= t('course') %>: </b><%= link_to h( @klass.course ), @klass.course ? @klass.course : "" %>
+			  <b><%= t('course') %>: </b><%= clearance < 4 ? ( link_to h( @klass.course ), @klass.course ? @klass.course : "" ) : h( @klass.course ) %>
 			</p>
-			
+<% if clearance < 4 %>			
 			<p>
 			  <b><%= t('teacher') %>: </b><%= link_to h( @klass.teacher ), @klass.teacher ? @klass.teacher : "" %>
 			</p>
@@ -19,7 +19,7 @@
 			<p>
 			  <b><%= t('capacity') %>: </b><%=h @klass.capacity %>
 			</p>
-			
+<% end %>			
 			<p>
 			  <b><%= t('klass_date') %>: </b><%=h @klass.date.strftime("%x") %>
 			</p>
@@ -31,7 +31,7 @@
 			<p>
 			  <b><%= t('title') %>: </b><%=h @klass.title %>
 			</p>
-			
+<% if clearance < 4 %>			
 			<p>
 			  <b><%= t('mail_sending') %>: </b><%=h @klass.mail_sending %>
 			</p>
@@ -39,7 +39,7 @@
 			<p>
 			  <b><%= t('cancel') %>: </b><%=h @klass.cancel %>
 			</p>
-			
+<% end %>			
 			<p>
 			  <b><%= t('description') %>: </b><%=h @klass.description %>
 			</p>
@@ -50,18 +50,20 @@
 		</td>
 		<td valign="top">
 			<div class="students">
-				<% unless @klass.students.empty? %>
+				<% unless @klass.students.empty? || clearance > 3 %>
 					<h3><%= t('students.title') %></h3>
 					<% @klass.attendances.each do |attendance| %>
 						<div class="<%= attendance.student.username %>">
-							<% if attendance.chosen %>
-								<li>
-									<% if attendance.cancel %><i>(<% end %>
+							<li>
+								<% if attendance.cancel %>
+									<i>(<%= link_to h( attendance.student ), attendance %> <%= t('canceled') %>)</i>
+								<% elsif !attendance.chosen %>
+									<i>(<%= link_to h( attendance.student ), attendance %>)</i>
+								<% else %>
 									<%= link_to h( attendance.student ), attendance %>
-									<% if attendance.cancel %>)</i><% end %>
-								</li>
-							<% end %>
-						</	div>
+								<% end %>
+							</li>
+						</div>
 					<% end %>
 				<% end %>
 			</div>

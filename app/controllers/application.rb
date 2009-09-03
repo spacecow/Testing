@@ -87,8 +87,16 @@ private
 	end	
 
   def current_user
-    session[:user] ||= Person.find_by_user_name( session[:user_name], :include => 'student' )
-  end  
+		session[:user] ||= Person.find_by_user_name( session[:user_name], :include => [{ :student=>:klasses },{ :teacher=>:klasses }])
+  end
+  
+  def current_user_status
+		if current_user.teacher.nil?
+			current_user.student
+		else
+			current_user.teacher
+		end
+	end  
 
   def default_page( person_id=-1 )
   	if clearance == 3
@@ -111,6 +119,12 @@ private
   def logged_in?
     session[:user_name] != nil
   end
+
+	def login_redirection
+    session[:original_uri] = request.request_uri
+    flash[:notice] = t('login.title')
+    redirect_to :controller=>:admin, :action=>:login
+	end
 
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'en'

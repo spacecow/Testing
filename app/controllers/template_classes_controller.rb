@@ -78,6 +78,7 @@ class TemplateClassesController < ApplicationController
   # PUT /template_classes/1.xml
   def update
     @template_class = TemplateClass.find(params[:id])
+    course_id = @template_class.course_id
 
     respond_to do |format|
       if @template_class.update_attributes(params[:template_class])          
@@ -90,7 +91,13 @@ class TemplateClassesController < ApplicationController
 				}
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html{
+		      @template_class.update_attribute( :course_id, course_id )          
+					@teachers = Teacher.all(
+						:conditions=>["courses.name = ?", Course.find( course_id ).name],
+						:include=>[:person, :courses]) 
+        	render :action => "edit"
+        }
         format.xml  { render :xml => @template_class.errors, :status => :unprocessable_entity }
       end
     end

@@ -18,7 +18,7 @@ When /^I click link '([^\"]*)'$/ do |link|
   clickAndWait "//div[@id='links']/a"
 end
 
-Given /^I click link '([^\"]*)' for "([^\"]*)" template class ([0-9]+)$/ do |link, category, class_no|
+Given /^I click link '([^\"]*)' for "([^\"]*)" (?:template )?class ([0-9]+)$/ do |link, category, class_no|
 	clickAndWait get_edit_locator( category, class_no )
 end
 
@@ -44,6 +44,10 @@ end
 
 Then /^I select option "([^\"]*)" from "([^\"]*)"$/ do |option, locator|
   selectAndWait( locator, option )
+end
+
+Then /^I select option blank from "([^\"]*)"$/ do |locator|
+	@browser.select( locator, "" )
 end
 
 When /^I unselect teacher for "([^\"]*)" class ([0-9]+)$/ do |category, class_no|
@@ -77,7 +81,7 @@ Then /^I should not see any students for class ([0-9]+)$/ do |class_no|
 end
 
 Then /^I should see text '([^\"]*)'$/ do |text|
-	@browser.is_text_present( text ).should be_true
+	@browser.is_text_present( I18n.translate( text )).should be_true
 end
 
 Then /^I should not see text '([^\"]*)'$/ do |text|
@@ -117,7 +121,6 @@ end
 
 def get_edit_locator( category, class_no )
 	tr_i = ( 4+class_no.to_i ).to_s
-	#"//table[@id='JavaCourse']/tbody/tr[#{tr_i}]/td[@id='links']"
 	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='links']/a[2]"
 end
 
@@ -131,7 +134,7 @@ def get_teacher_locator( category, class_no )
 	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='teacher']/select"
 end
 
-def page_load( time='10000' )
+def page_load( time='60000' )
 	@browser.wait_for_page_to_load( time )
 end
 

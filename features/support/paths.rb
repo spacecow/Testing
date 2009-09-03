@@ -52,13 +52,10 @@ module NavigationHelpers
 			edit_klass_path( $1 )
 		when /the edit page of course "(.+)"/
 			edit_course_path( Course.find_by_name( $1 ))			
+		when /the info page of class "(.+)"/
+			klass_path( Klass.find( $1 ))
 		when /the info page of student "(.+)"/
-    	student_path( 
-	    	Student.first(
-	    		:conditions=>["people.user_name=?", $1],
-	    		:include=>:person
-	    	)
-    	)
+    	student_path( Student.user( $1 ).first )
 		when /the course page of student "(.+)"/
     	edit_courses_student_path( 
 	    	Student.first(
@@ -66,7 +63,7 @@ module NavigationHelpers
 	    		:include=>:person
 	    	)
     	)
-		when /the reserve page of student "(.+)"/
+		when /the reserve page (?:of|for) student "(.+)"/
     	edit_klasses_student_path( 
 	    	Student.first(
 	    		:conditions=>["people.user_name=?", $1],

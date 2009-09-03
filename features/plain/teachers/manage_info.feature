@@ -1,16 +1,19 @@
-@info_teachers
-
+@teacher_info
 Background:
-Given the following teacher records
-|	user_name 		|	password	|
-|	prince_philip	|	secret		|
-|	chris_the_man	|	secret		|
-|	johan_sveholm	|	secret		|
-|	komatsu_aya		|	secret		|
-|	thomas_osburg	|	secret		|
-Given the following student record
-|	user_name				|	password	|
-|	kurosawa_akira	|	secret		|
+Given I have teachers "prince_philip, chris_the_man, johan_sveholm, komatsu_aya, thomas_osburg"
+Given I have student "kurosawa_akira"
+
+Scenario: A teacher should be able to redirect himself to the show page of each class
+Given I have course "Java I"
+	And teacher "prince_philip" has course "Java I"
+	And the following class record
+	| id	|	course	|
+	|	1		|	Java I	|
+	And teacher "prince_philip" has class "1"
+	And I am logged in as "prince_philip"
+	And I should be redirected to the info page of teacher "prince_philip"
+When I follow "Java I: 12:00~15:00" within "classes"
+Then I should be redirected to the info page of class "1"
 
 Scenario Outline: Teacher has no courses and no classes
 Given I have no courses
@@ -29,7 +32,7 @@ Examples:
 
 Scenario Outline: Teacher has courses
 Given I have courses titled "Java, Prolog"
-	And that teacher "prince_philip" has course "Prolog"
+	And teacher "prince_philip" has course "Prolog"
 When I am logged in as "<user>" with password "secret"
 	And I go to the info page of teacher "<name>"
 Then I should <view> 'courses.title' within "courses"
@@ -43,8 +46,8 @@ Examples:
 
 Scenario Outline: Regular teacher has classes and courses
 Given I have courses titled "Java"
-	And that teacher "chris_the_man" has course "Java"
-	And that teacher "chris_the_man" has class "Java"
+	And teacher "chris_the_man" has course "Java"
+	And teacher "chris_the_man" has class "Java"
 When I am logged in as "<user>" with password "secret"
 	And I go to the info page of teacher "<name>"
 Then I should see 'klasses.title' within "klasses"
@@ -61,8 +64,8 @@ Examples:
 
 Scenario Outline: Regular teacher has history
 Given I have courses titled "Java"
-	And that teacher "chris_the_man" has course "Java"
-	And that teacher "chris_the_man" had class "Java" yesterday
+	And teacher "chris_the_man" has course "Java"
+	And teacher "chris_the_man" had class "Java" yesterday
 When I am logged in as "<user>" with password "secret"
 	And I go to the info page of teacher "<name>"
 Then I should see 'klasses.title' within "klasses"

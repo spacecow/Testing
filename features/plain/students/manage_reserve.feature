@@ -1,4 +1,16 @@
-@admin
+@student_reserve
+Scenario: A student should be able to redirect himself to the show page of each class
+Given I have course "Java I"
+	And I have student "kurosawa_akira"
+	And student "kurosawa_akira" has course "Java I"
+	And the following class record
+	| id	|	course	|
+	|	1		|	Java I	|
+	And I am logged in as "kurosawa_akira"
+	And I should be redirected to the reserve page for student "kurosawa_akira"
+When I follow "Java I: 12:00~15:00" within "classes"
+	And I should be redirected to the info page of class "1"
+
 Scenario Outline: Admins Reserve Classes
   Given I have courses titled "Java I, Java II, Ruby I"
   Given the following teacher record

@@ -10,9 +10,2035 @@
     [32mAnd the following student record[0m
       | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfirst_name[0m[0m |[0m [32mfamily_name[0m[0m |[0m
       | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32mAkira     [0m[0m |[0m [32mKurosawa   [0m[0m |[0m
-    [31mAnd that student "[31m[1mkurosawa_akira[0m[0m[31m" has class "[31m[1m1[0m[0m[31m"[0m
-[31m      undefined method `find_student' for #<ActionController::Integration::Session:0x70625a0> (NoMethodError)
-      ./features/step_definitions/students_steps.rb:34:in `/^that student "([^\"]*)" has classe?s? "([^\"]*)"$/'
-      features/plain/attendances/manage_attendances.feature:11:in `And that student "kurosawa_akira" has class "1"'[0m
-    [36mAnd student "[36m[1mkurosawa_akira[0m[0m[36m" should have [36m[1m1[0m[0m[36m class[0m
-    [36mAnd class "[36m[1m1[0m[0m[36m" should have [36m[1m1[0m[0m[36m student[0m
+      | [32masada_mao     [0m[0m |[0m [32msecret  [0m[0m |[0m [32mMao       [0m[0m |[0m [32mAsada      [0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKumiko    [0m[0m |[0m [32mKoda       [0m[0m |[0m
+    [32mAnd students "[32m[1mkurosawa_akira, asada_mao, koda_kumiko[0m[0m[32m" have class "[32m[1m1[0m[0m[32m"[0m
+    [32mAnd students "[32m[1mkurosawa_akira, koda_kumiko[0m[0m[32m" have class "[32m[1m1[0m[0m[32m" chosen[0m
+    [32mAnd students "[32m[1mkurosawa_akira, asada_mao, koda_kumiko[0m[0m[32m" should have [32m[1m1[0m[0m[32m class[0m
+    [32mAnd class "[32m[1m1[0m[0m[32m" should have [32m[1m3[0m[0m[32m students[0m
+
+  Scenario Outline: Admin see non-chosen attendances
+    [36mWhen I am logged in as "<user>"[0m
+    [36mThen I should see "Kurosawa Akira" within "klass_1"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario: Observer dont see non-chosen attendances
+    [32mWhen I am logged in as "[32m[1mthomas_osburg[0m[0m[32m"[0m
+    [32mThen I should not see "[32m[1mAsada Mao[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
+
+  Scenario Outline: Regular users get redirected
+    [36mWhen I am logged in as "<user>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+
+  Scenario: List students on the class edit page
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mAsada Mao[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+
+  Scenario: Info page
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1minfo[0m[0m[32m' within "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mattendances.title[0m[0m[32m' within "[32m[1mform[0m[0m[32m"[0m
+
+  Scenario: Edit page
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mattendances.editing[0m[0m[32m' within "[32m[1mform[0m[0m[32m"[0m
+
+  Scenario: Cancel
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1mcancel[0m[0m[32m' within "[32m[1mkoda_kumiko[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mcancel[0m[0m[32m' within "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1muncancel[0m[0m[32m' within "[32m[1mkoda_kumiko[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1muncancel[0m[0m[32m' within "[32m[1mkoda_kumiko[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mcancel[0m[0m[32m' within "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mcancel[0m[0m[32m' within "[32m[1mkoda_kumiko[0m[0m[32m"[0m
+
+  Scenario: Delete
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mThen I should not see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mAsada Mao[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mkoda_kumiko[0m[0m[32m"[0m
+    [32mThen I should not see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mAsada Mao[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mstudents[0m[0m[32m"[0m
+
+[36m@change_courses[0m
+
+
+  Background: 
+    [32mGiven I have courses titled "[32m[1mJava I, Ruby I[0m[0m[32m"[0m
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32msecret  [0m[0m |[0m [32mOsburg     [0m[0m |[0m [32mThomas    [0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32msecret  [0m[0m |[0m [32mPrince     [0m[0m |[0m [32mPhilip    [0m[0m |[0m
+    [32mGiven the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfirst_name[0m[0m |[0m [32mfamily_name[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32mAkira     [0m[0m |[0m [32mKurosawa   [0m[0m |[0m
+    [32mGiven the following klass records[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mJava I[0m[0m |[0m
+      | [32m3 [0m[0m |[0m [32mRuby I[0m[0m |[0m
+      | [32m4 [0m[0m |[0m [32mRuby I[0m[0m |[0m
+    [32mGiven classes "[32m[1m2, 4[0m[0m[32m" have teacher "[32m[1mprince_philip[0m[0m[32m"[0m
+    [32mGiven classes "[32m[1m3, 4[0m[0m[32m" have student "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+
+  Scenario: Observer or regular user tries to edit class
+    [32mGiven I am logged in as "[32m[1mthomas_osburg[0m[0m[32m"[0m
+    [32mWhen I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mThen I should not see '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+
+  Scenario Outline: Observer or regular user tries to edit class
+    [36mGiven I am logged in as "<user>"[0m
+    [36mWhen I go to the edit page of class "1"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+
+  Scenario: Try to change course with blank class
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mstudents.title[0m[0m[32m' within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mWhen I select "[32m[1mRuby I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I have [32m[1m1[0m[0m[32m class "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd I have [32m[1m3[0m[0m[32m classes "[32m[1mRuby I[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mklasses.error.edit_courses_with_teacher[0m[0m[32m'[0m
+
+  Scenario: Try to change course with existing teacher
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mstudents.title[0m[0m[32m' within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mWhen I select "[32m[1mRuby I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [31mThen I have [31m[1m2[0m[0m[31m classes "[31m[1mJava I[0m[0m[31m"[0m
+[31m      expected: 2,
+           got: 1 (using ==)
+      Diff:
+      @@ -1,2 +1,2 @@
+      -2
+      +1
+       (Spec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/klasses_steps.rb:136:in `/^I have ([0-9]+) classe?s? "([^\"]*)"$/'
+      features/plain/classes/change_courses.feature:55:in `Then I have 2 classes "Java I"'[0m
+    [36mAnd I have [36m[1m2[0m[0m[36m class "[36m[1mRuby I[0m[0m[36m"[0m
+    [36mAnd I should see '[36m[1mklasses.error.edit_courses_with_teacher[0m[0m[36m'[0m
+    [36mWhen I select no teacher[0m
+    [36mAnd I press '[36m[1mupdate[0m[0m[36m'[0m
+    [36mThen I have [36m[1m1[0m[0m[36m class "[36m[1mJava I[0m[0m[36m"[0m
+    [36mAnd I have [36m[1m3[0m[0m[36m classes "[36m[1mRuby I[0m[0m[36m"[0m
+    [36mAnd I should not see '[36m[1mklasses.error.edit_courses_with_teacher[0m[0m[36m'[0m
+
+  Scenario: Try to change course with existing students
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_3[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mstudents.title[0m[0m[32m' within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mWhen I select "[32m[1mJava I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I have [32m[1m2[0m[0m[32m classes "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd I have [32m[1m2[0m[0m[32m class "[32m[1mRuby I[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mklasses.error.edit_courses_with_students[0m[0m[32m'[0m
+
+  Scenario: Try to change course with existing teacher and students
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_4[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mstudents.title[0m[0m[32m' within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mWhen I select "[32m[1mJava I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I have [32m[1m2[0m[0m[32m classes "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd I have [32m[1m2[0m[0m[32m class "[32m[1mRuby I[0m[0m[32m"[0m
+    [31mAnd I should see '[31m[1mklasses.error.edit_courses_with_teacher[0m[0m[31m'[0m
+[31m      expected the following element's content to include "Cancel teacher before changing course":
+      Mafumafu: update
+      			People
+      						------------------
+      							Teachers
+      							Students
+      					Classes
+      						------------------
+      							Template Classes
+      							Courses
+      							Classrooms
+      				My Mafumafu Page
+      					------------------
+      						Logout
+      					Documentation
+      						------------------
+      							Docs
+      							Tags
+            ﻿
+      1 error prohibited this klass from being savedThere were problems with the following fields:Cancel students before changing course
+      Editing Class
+        ﻿
+      			  Course
+      			  Java IRuby I
+      			  Teacher
+      			  Classroom
+      			  Capacity
+      			  Date
+      			  JanuaryFebruaryMarchAprilMayJuneJulyAugustSeptemberOctoberNovemberDecember1234567891011121314151617181920212223242526272829303120042005200620072008200920102011201220132014
+      			  Start Time
+      			  End Time
+      			  Title
+      			  Mail Sending
+      			  Cancel
+      			  OFF
+      			    ON
+      			  Description
+      			  Note
+      					Students
+      							div>
+      Info |
+      Back
+       (Spec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/locales_steps.rb:21:in `/^I should see '([^]*)'$/'
+      features/plain/classes/change_courses.feature:84:in `And I should see 'klasses.error.edit_courses_with_teacher''[0m
+    [36mAnd I should see '[36m[1mklasses.error.edit_courses_with_students[0m[0m[36m'[0m
+
+[36m@create_classes[0m
+
+
+  Background: 
+    [32mGiven I have courses titled "[32m[1mJava I, Ruby I, Fortran I[0m[0m[32m"[0m
+    [32mAnd the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+    [32mAnd the following klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m [32mdate    [0m[0m |[0m [32mteacher      [0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m [32m08/26/09[0m[0m |[0m [32mjohan_sveholm[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mJava I[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m13:00   [0m[0m |[0m [32m08/26/09[0m[0m |[0m [32mkomatsu_aya  [0m[0m |[0m
+    [32mAnd the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" has class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+
+  Scenario: Add a Class after getting Errors
+    [32mGiven I go to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I should not see "[32m[1mFortran[0m[0m[32m"'[32m[1mblank[0m[0m[32m''[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mWhen I follow '[32m[1mklasses.new[0m[0m[32m'[0m
+    [32mThen I should see '[32m[1mklasses.new[0m[0m[32m' within "[32m[1mform[0m[0m[32m"[0m
+    [32mWhen I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mThen I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mAnd I should see "[32m[1mCourse [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1mStart time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1mEnd time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mWhen I fill in '[32m[1mstart_time[0m[0m[32m' with "[32m[1m13:00[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mend_time[0m[0m[32m' with "[32m[1m15:00[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mThen I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mAnd I should see "[32m[1mCourse [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should not see "[32m[1mStart time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should not see "[32m[1mEnd time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mWhen I select "[32m[1mFortran I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mThen I should see '[32m[1mklasses.listing[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1mFortran[0m[0m[32m"'[32m[1mblank[0m[0m[32m''[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1m13:00~15:00[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m3[0m[0m[32m classes[0m
+
+  Scenario: Delete Classes
+    [32mGiven I go to [32m[1mthe "08/26/2009" list of classes[0m[0m[32m[0m
+    [32mAnd I should see '[32m[1mklasses.listing[0m[0m[32m'"[32m[1m - Wednesday[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I should see '[32m[1mklasses.listing[0m[0m[32m'"[32m[1m - Wednesday[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mklasses.error.try_to_delete_klass_with_students[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mAnd class "[32m[1m1[0m[0m[32m" should have teacher "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd class "[32m[1m2[0m[0m[32m" should have teacher "[32m[1mkomatsu_aya[0m[0m[32m"[0m
+    [32mAnd class "[32m[1m2[0m[0m[32m" should have student "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m teachers[0m
+    [32mAnd teacher "[32m[1mjohan_sveholm[0m[0m[32m" should have class "[32m[1m1[0m[0m[32m"[0m
+    [32mAnd teacher "[32m[1mkomatsu_aya[0m[0m[32m" should have class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m student[0m
+    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" should have class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m attendance[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I should see '[32m[1mklasses.listing[0m[0m[32m'"[32m[1m - Wednesday[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mklasses.error.try_to_delete_klass_with_students[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m klass[0m
+    [32mAnd class "[32m[1m2[0m[0m[32m" should have teacher "[32m[1mkomatsu_aya[0m[0m[32m"[0m
+    [32mAnd class "[32m[1m2[0m[0m[32m" should have student "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m teachers[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m student[0m
+    [32mAnd teacher "[32m[1mjohan_sveholm[0m[0m[32m" should have class "[32m[1m1[0m[0m[32m"[0m
+    [32mAnd teacher "[32m[1mkomatsu_aya[0m[0m[32m" should have class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" should have class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m attendance[0m
+
+  Scenario: Duplicate a Generated Class
+    [32mGiven I go to [32m[1mthe "08/26/2009" list of classes[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m klasses[0m
+    [32mWhen I follow "[32m[1m+[0m[0m[32m" within "[32m[1mJava_I_1100_1200[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m3[0m[0m[32m klasses[0m
+    [32mWhen I follow '[32m[1mshow[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mcourse[0m[0m[32m'"[32m[1m: Java I[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mteacher[0m[0m[32m'"[32m[1m: Sveholm Johan[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mcapacity[0m[0m[32m'"[32m[1m: 0[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1m08/26/09[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mklass_time[0m[0m[32m'"[32m[1m: 11:00~12:00[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mcancel[0m[0m[32m'"[32m[1m: false[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mmail_sending[0m[0m[32m'"[32m[1m: 0[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1mback[0m[0m[32m'[0m
+    [32mThen I should be redirected to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mWhen I follow '[32m[1mshow[0m[0m[32m' within klass [32m[1m3[0m[0m[32m[0m
+    [32mThen I should see '[32m[1mcourse[0m[0m[32m'"[32m[1m: Java I[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mteacher[0m[0m[32m'"[32m[1m: Sveholm Johan[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mcapacity[0m[0m[32m'"[32m[1m: 0[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1m08/26/09[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mklass_time[0m[0m[32m'"[32m[1m: 11:00~12:00[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mcancel[0m[0m[32m'"[32m[1m: false[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mmail_sending[0m[0m[32m'"[32m[1m: 0[0m[0m[32m"[0m
+
+  Scenario: Edit a class and show the result
+    [32mGiven I go to [32m[1mthe "08/26/2009" list of classes[0m[0m[32m[0m
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mnote[0m[0m[32m' with "[32m[1mSomething important[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mtitle[0m[0m[32m' with "[32m[1mSome title[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I should be redirected to [32m[1mthe list of classes[0m[0m[32m[0m
+    [32mWhen I follow '[32m[1mshow[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mtitle[0m[0m[32m'"[32m[1m: Some title[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mnote[0m[0m[32m'"[32m[1m: Something important[0m[0m[32m"[0m
+
+[36m@class_show[0m
+
+
+  Background: 
+    [32mGiven I have courses "[32m[1mJava I, Ruby I[0m[0m[32m"[0m
+    [32mAnd the following class record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mRuby I[0m[0m |[0m
+    [32mAnd I have teacher "[32m[1mprince_philip, johan_sveholm[0m[0m[32m"[0m
+    [32mAnd the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mKurosawa   [0m[0m |[0m [32mAkira     [0m[0m |[0m
+      | [32masada_mao     [0m[0m |[0m [32mAsada      [0m[0m |[0m [32mMao       [0m[0m |[0m
+
+  Scenario Outline: How the regular users see class's show page
+    [36mGiven teacher "prince_philip" has course "Java I"[0m
+    [36mAnd teacher "prince_philip" has class "1"[0m
+    [36mAnd student "kurosawa_akira" has course "Java I"[0m
+    [36mAnd student "kurosawa_akira" has class "1"[0m
+    [36mAnd I am logged in as "<user>"[0m
+    [36mAnd I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mWhen I follow "<course>: 12:00~15:00" within "classes"[0m
+    [36mThen I should be redirected to the info page of class "<no>"[0m
+    [36mAnd I should not see 'teacher' within "form"[0m
+    [36mAnd I should not see 'classroom' within "form"[0m
+    [36mAnd I should not see 'capacity' within "form"[0m
+    [36mAnd I should not see 'mail_sending' within "form"[0m
+    [36mAnd I should not see 'cancel' within "form"[0m
+    [36mAnd I should not see 'students.title' within "students"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m [36m[1mcourse[0m[0m[36m[0m |[0m [36m[1mno[0m[0m[36m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m [32mJava I[0m[0m |[0m [32m1 [0m[0m |[0m
+[31m      expected the following element's content to not include "Students":
+      
+      					Students
+       (Spec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/locales_steps.rb:71:in `__instance_exec0'
+      (eval):2:in `within'
+      ./features/step_definitions/locales_steps.rb:70:in `/^I should not see '([^\"]*)' within "([^\"]*)"$/'
+      features/plain/classes/manage_info.feature:28:in `And I should not see 'students.title' within "students"'[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m [31mRuby I[0m[0m |[0m [36m2 [0m[0m |[0m
+[31m      Could not find link with text or title or id "Ruby I: 12:00~15:00" (Webrat::NotFoundError)
+      (eval):2:in `click_link'
+      ./features/step_definitions/other_steps.rb:11:in `__instance_exec0'
+      (eval):2:in `within'
+      ./features/step_definitions/other_steps.rb:10:in `/^I follow "([^\"]*)" within "([^\"]*)"$/'
+      features/plain/classes/manage_info.feature:21:in `When I follow "<course>: 12:00~15:00" within "classes"'[0m
+
+  Scenario: Regular users should not be able to see the show page of classes based on courses they do not belong to
+
+  Scenario: If there are chosen students, they and the student title should be visible
+    [32mGiven class "[32m[1m1[0m[0m[32m" has chosen students "[32m[1mkurosawa_akira, asada_mao[0m[0m[32m"[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe info page of class "1"[0m[0m[32m[0m
+    [32mAnd I should see '[32m[1mstudents.title[0m[0m[32m' within "[32m[1mstudents[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKurosawa Akira[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mAsada Mao[0m[0m[32m"[0m
+
+  Scenario: If there are no students, student title should not be visible
+
+  Scenario: If there are only canceled students, student title should not be visible
+    [32mGiven class "[32m[1m2[0m[0m[32m" has canceled students "[32m[1mkurosawa_akira, asada_mao[0m[0m[32m"[0m
+
+  Scenario: If there are chosen but canceled students, student title should not be visible
+
+[36m@classes_in_courses[0m
+
+
+  Background: 
+    [32mGiven I have courses titled "[32m[1mJava I, Ruby I, Fortran I[0m[0m[32m"[0m
+    [32mAnd the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+    [32mAnd the following klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mteacher      [0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mjohan_sveholm[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mkomatsu_aya  [0m[0m |[0m
+    [32mAnd the following template klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mteacher      [0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mjohan_sveholm[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mkomatsu_aya  [0m[0m |[0m
+    [32mAnd the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" has class "[32m[1m2[0m[0m[32m"[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe list of courses[0m[0m[32m[0m
+    [32mAnd I follow '[32m[1medit[0m[0m[32m' within "[32m[1mJava_I[0m[0m[32m"[0m
+
+  Scenario: Delete classes
+    [32mGiven I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mAnd I should see '[32m[1mklasses.error.try_to_delete_klass_with_students[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m classes[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mAnd I should not see '[32m[1mklasses.error.try_to_delete_klass_with_students[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m class[0m
+
+  Scenario: Edit a class and show the result
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mnote[0m[0m[32m' with "[32m[1mSomething important[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mtitle[0m[0m[32m' with "[32m[1mSome title[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mWhen I follow "[32m[1m12:00~15:00[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mtitle[0m[0m[32m'"[32m[1m: Some title[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mnote[0m[0m[32m'"[32m[1m: Something important[0m[0m[32m"[0m
+
+  Scenario: Delete template classes
+    [32mGiven I should have [32m[1m2[0m[0m[32m template classes[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m template class[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mtemplate_klass_2[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m0[0m[0m[32m template classes[0m
+
+  Scenario: Edit a template class and show the result
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mnote[0m[0m[32m' with "[32m[1mSomething important[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mtitle[0m[0m[32m' with "[32m[1mSome title[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I should be redirected to [32m[1mthe edit page of course "Java I"[0m[0m[32m[0m
+    [32mWhen I follow "[32m[1m12:00~15:00[0m[0m[32m" within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mtitle[0m[0m[32m'"[32m[1m: Some title[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mnote[0m[0m[32m'"[32m[1m: Something important[0m[0m[32m"[0m
+
+[36m@courses[0m
+
+
+  Background: 
+    [32mGiven I have courses titled "[32m[1mJava I, Java II, Rails II, Ruby I, Fortran I[0m[0m[32m"[0m
+    [32mAnd the following template klass record[0m
+      | [32mcourse   [0m[0m |[0m [32mday     [0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m
+      | [32mJava I   [0m[0m |[0m [32mFriday  [0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32mFortran I[0m[0m |[0m [32mSaturday[0m[0m |[0m [32m13:00     [0m[0m |[0m [32m13:50   [0m[0m |[0m
+    [32mAnd the following klass records[0m
+      | [32mcourse  [0m[0m |[0m [32mdate    [0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m
+      | [32mJava I  [0m[0m |[0m [32m06/30/09[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m11:50   [0m[0m |[0m
+      | [32mRails II[0m[0m |[0m [32m07/01/09[0m[0m |[0m [32m12:00     [0m[0m |[0m [32m14:00   [0m[0m |[0m
+    [32mAnd I go to [32m[1mthe list of courses[0m[0m[32m[0m
+    [32mAnd I have teachers "[32m[1mjohan_sveholm, thomas_osburg[0m[0m[32m"[0m
+
+  Scenario: Restrict access for observer on index page
+    [32mWhen I am logged in as "[32m[1mthomas_osburg[0m[0m[32m"[0m
+    [32mThen I should not see '[32m[1medit[0m[0m[32m' within "[32m[1mJava_I[0m[0m[32m"[0m
+
+  Scenario Outline: Trying to Delete Courses
+    [36mGiven I am logged in as "johan_sveholm"[0m
+    [36mWhen I follow 'delete' within "<delete>"[0m
+    [36mThen I should <error_1> 'courses.error.try_to_delete_course_with_template_classes'[0m
+    [36mAnd I should <error_2> 'courses.error.try_to_delete_course_with_klasses'[0m
+    [36mAnd I should <item_1> "Java I"[0m
+    [36mAnd I should <item_2> "Java II"[0m
+    [36mAnd I should <item_3> "Rails II"[0m
+    [36mAnd I should <item_4> "Ruby I"[0m
+    [36mAnd I should <item_5> "Fortran I"[0m
+    [36mAnd I should have <courses> courses[0m
+
+    Examples: 
+      | [36m[1mdelete   [0m[0m[36m[0m |[0m [36m[1merror_1[0m[0m[36m[0m |[0m [36m[1merror_2[0m[0m[36m[0m |[0m [36m[1mitem_1[0m[0m[36m[0m |[0m [36m[1mitem_2 [0m[0m[36m[0m |[0m [36m[1mitem_3[0m[0m[36m[0m |[0m [36m[1mitem_4 [0m[0m[36m[0m |[0m [36m[1mitem_5[0m[0m[36m[0m |[0m [36m[1mcourses[0m[0m[36m[0m |[0m
+      | [32mJava_I   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32m5      [0m[0m |[0m
+      | [32mJava_II  [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee   [0m[0m |[0m [32mnot see[0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32m4      [0m[0m |[0m
+      | [32mRails_II [0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32m5      [0m[0m |[0m
+      | [32mRuby_I   [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32mnot see[0m[0m |[0m [32msee   [0m[0m |[0m [32m4      [0m[0m |[0m
+      | [32mFortran_I[0m[0m |[0m [32msee    [0m[0m |[0m [32mnot see[0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee   [0m[0m |[0m [32m5      [0m[0m |[0m
+
+  Scenario Outline: Displaying Associations
+    [36mGiven I am logged in as "johan_sveholm"[0m
+    [36mWhen I follow 'show' within "<show>"[0m
+    [36mThen I should <day_1> "Friday"[0m
+    [36mAnd I should <time_1> "11:00~12:00"[0m
+    [36mAnd I should <day_2> "Saturday"[0m
+    [36mAnd I should <time_2> "13:00~13:50"[0m
+    [36mAnd I should <day_3> "Tuesday"[0m
+    [36mAnd I should <time_3> "11:00~11:50"[0m
+    [36mAnd I should <day_4> "Wednesday"[0m
+    [36mAnd I should <time_4> "12:00~14:00"[0m
+
+    Examples: 
+      | [36m[1mshow     [0m[0m[36m[0m |[0m [36m[1mday_1  [0m[0m[36m[0m |[0m [36m[1mtime_1 [0m[0m[36m[0m |[0m [36m[1mday_2  [0m[0m[36m[0m |[0m [36m[1mtime_2 [0m[0m[36m[0m |[0m [36m[1mday_3  [0m[0m[36m[0m |[0m [36m[1mtime_3 [0m[0m[36m[0m |[0m [36m[1mday_4  [0m[0m[36m[0m |[0m [36m[1mtime_4 [0m[0m[36m[0m |[0m
+      | [32mJava_I   [0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m
+      | [32mJava_II  [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m
+      | [32mRails_II [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mRuby_I   [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m
+      | [32mFortran_I[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m
+
+[36m@klasses[0m
+
+
+  Scenario: 
+    [32mGiven I have courses titled "[32m[1m入門 I, 入門 II[0m[0m[32m"[0m
+    [32mGiven the following teacher record[0m
+      | [32mid[0m[0m |[0m [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mGiven the following student record[0m
+      | [32mid[0m[0m |[0m [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfirst_name[0m[0m |[0m [32mfamily_name[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32mAkira     [0m[0m |[0m [32mKurosawa   [0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mkoda_kumiko   [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKumiko    [0m[0m |[0m [32mKoda       [0m[0m |[0m
+      | [32m3 [0m[0m |[0m [32masae_mao      [0m[0m |[0m [32msecret  [0m[0m |[0m [32mMao       [0m[0m |[0m [32mAdae       [0m[0m |[0m
+    [32mGiven the following attendance record[0m
+      | [32mklass_id[0m[0m |[0m [32mstudent_id[0m[0m |[0m
+      | [32m1       [0m[0m |[0m [32m1         [0m[0m |[0m
+      | [32m2       [0m[0m |[0m [32m2         [0m[0m |[0m
+      | [32m3       [0m[0m |[0m [32m3         [0m[0m |[0m
+    [32mGiven the following klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32m入門 I  [0m[0m |[0m [32m13:00     [0m[0m |[0m [32m15:00   [0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32m入門 I  [0m[0m |[0m [32m13:00     [0m[0m |[0m [32m15:00   [0m[0m |[0m
+      | [32m3 [0m[0m |[0m [32m入門 II [0m[0m |[0m [32m13:00     [0m[0m |[0m [32m15:00   [0m[0m |[0m
+    [32mWhen I go to [32m[1mthe list of klasses[0m[0m[32m[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m" with password "[32m[1msecret[0m[0m[32m"[0m
+    [32mThen I should see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mAdae Mao[0m[0m[32m" within "[32m[1mklass_1[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mAdae Mao[0m[0m[32m" within "[32m[1mklass_2[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mKurosawa Akira[0m[0m[32m" within "[32m[1mklass_3[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1mKoda Kumiko[0m[0m[32m" within "[32m[1mklass_3[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1mAdae Mao[0m[0m[32m" within "[32m[1mklass_3[0m[0m[32m"[0m
+
+  Scenario Outline: Chosen Teachers and Classrooms cannot be chosen again at the same Time
+    [36mGiven I have courses titled "入門 I, 入門 II"[0m
+    [36mGiven I have the following classroom records[0m
+      | [36mid[0m[0m |[0m [36mname  [0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mroom_1[0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mroom_2[0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36mroom_3[0m[0m |[0m
+    [36mGiven the following teacher record[0m
+      | [36mid[0m[0m |[0m [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfirst_name[0m[0m |[0m [36mfamily_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36mJohan     [0m[0m |[0m [36mSveholm    [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mali_bumba    [0m[0m |[0m [36msecret  [0m[0m |[0m [36mAli       [0m[0m |[0m [36mBumba      [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36mk1_loser     [0m[0m |[0m [36msecret  [0m[0m |[0m [36mK1        [0m[0m |[0m [36mLoser      [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m [36mteacher_id[0m[0m |[0m [36mclassroom_id[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m13:00     [0m[0m |[0m [36m15:00   [0m[0m |[0m [36m1         [0m[0m |[0m [36m1           [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m14:00     [0m[0m |[0m [36m16:00   [0m[0m |[0m [36m2         [0m[0m |[0m [36m2           [0m[0m |[0m
+    [36mGiven the following template klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m [36mteacher_id[0m[0m |[0m [36mclassroom_id[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m13:00     [0m[0m |[0m [36m15:00   [0m[0m |[0m [36m1         [0m[0m |[0m [36m1           [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m14:00     [0m[0m |[0m [36m16:00   [0m[0m |[0m [36m2         [0m[0m |[0m [36m2           [0m[0m |[0m
+    [36mGiven that teacher "johan_sveholm" has course "入門 I"[0m
+    [36mAnd that teacher "ali_bumba" has courses "入門 I, 入門 II"[0m
+    [36mAnd that teacher "k1_loser" has course "入門 II"[0m
+    [36mWhen I go to the list of <object>es[0m
+    [36mAnd I am logged in as "johan_sveholm" with password "secret"[0m
+    [36mThen I should be redirected to the list of <object>es[0m
+    [36mAnd I should see "Sveholm Johan" within "<object>_1"[0m
+    [36mAnd I should not see "Bumba Ali" within "<object>_1"[0m
+    [36mAnd I should not see "Loser K1" within "<object>_1"[0m
+    [36mAnd I should see "room_1" within "<object>_1"[0m
+    [36mAnd I should not see "room_2" within "<object>_1"[0m
+    [36mAnd I should see "room_3" within "<object>_1"[0m
+    [36mAnd I should not see "Sveholm Johan" within "<object>_2"[0m
+    [36mAnd I should see "Bumba Ali" within "<object>_2"[0m
+    [36mAnd I should see "Loser K1" within "<object>_2"[0m
+    [36mAnd I should not see "room_1" within "<object>_2"[0m
+    [36mAnd I should see "room_2" within "<object>_2"[0m
+    [36mAnd I should see "room_3" within "<object>_2"[0m
+
+    Examples: 
+      | [36m[1mobject        [0m[0m[36m[0m |[0m
+      | [36mklass         [0m[0m |[0m
+      | [36mtemplate_klass[0m[0m |[0m
+
+[36m@login[0m
+
+
+  Scenario Outline: Login Options and Actions
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m [36mjp      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven I go to the <page>[0m
+    [36mWhen I fill in 'login.user_name' with "<login>"[0m
+    [36mAnd I fill in 'login.password' with "<password>"[0m
+    [36mAnd I press 'login.button'[0m
+    [36mThen I should see <action>[0m
+
+    Examples: 
+      | [36m[1mpage           [0m[0m[36m[0m |[0m [36m[1mlogin         [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m [36m[1maction                                [0m[0m[36m[0m |[0m
+      | [32mlogin page     [0m[0m |[0m [32mjohan_sveholm [0m[0m |[0m [32mwrong   [0m[0m |[0m [32m'login.flash.invalid_user_or_password'[0m[0m |[0m
+      | [32mlogin page     [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32m"黒澤 明"                                [0m[0m |[0m
+      | [32mlist of courses[0m[0m |[0m [32mjohan_sveholm [0m[0m |[0m [32msecret  [0m[0m |[0m [32m'courses.listing'                     [0m[0m |[0m
+      | [32mlogin page     [0m[0m |[0m [32mjohan_sveholm [0m[0m |[0m [32msecret  [0m[0m |[0m [32mtodays day                            [0m[0m |[0m
+      | [32mlogin page     [0m[0m |[0m [32mkomatsu_aya   [0m[0m |[0m [32msecret  [0m[0m |[0m [32mtodays day                            [0m[0m |[0m
+      | [32mlogin page     [0m[0m |[0m [32mthomas_osburg [0m[0m |[0m [32msecret  [0m[0m |[0m [32mtodays day                            [0m[0m |[0m
+
+  Scenario Outline: Menu Listing
+    [36mGiven the following teacher records[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mThen I should <staff_menu> 'people.title' within "banner"[0m
+    [36mAnd I should <staff_menu> 'klasses.title' within "banner"[0m
+    [36mAnd I should see 'mymafumafu.title' within "banner"[0m
+    [36mAnd I should <johan_menu> 'documentation.title' within "banner"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mstaff_menu[0m[0m[36m[0m |[0m [36m[1mjohan_menu[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm [0m[0m |[0m [32msee       [0m[0m |[0m [32msee       [0m[0m |[0m
+      | [32mkomatsu_aya   [0m[0m |[0m [32msee       [0m[0m |[0m [32mnot see   [0m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32msee       [0m[0m |[0m [32mnot see   [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mnot see   [0m[0m |[0m [32mnot see   [0m[0m |[0m
+
+  Scenario: Redirection
+    [32mGiven the following teacher record[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mGiven I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m" with password "[32m[1msecret[0m[0m[32m"[0m
+    [32mWhen I am on [32m[1mthe list of template klasses[0m[0m[32m[0m
+    [32mAnd I select "[32m[1mMonday[0m[0m[32m" from "[32m[1mtemplate_day[0m[0m[32m"[0m
+
+  Scenario: Before accessing pages you have to be logged in
+    [32mGiven the following student record[0m
+      | [32mid[0m[0m |[0m [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32m黒澤         [0m[0m |[0m [32m明         [0m[0m |[0m
+    [32mWhen I go to [32m[1mthe list of people[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of teachers[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of students[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of klasses[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of template klasses[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of courses[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of course times[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mthe list of classrooms[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+    [32mWhen I go to [32m[1mstudent 1 course page[0m[0m[32m[0m
+    [32mThen I should be redirected to [32m[1mthe login page[0m[0m[32m[0m
+
+[36m@redirect[0m
+
+
+  Scenario Outline: Playground for staff
+    [36mGiven the following teacher records[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the list of klasses[0m
+    [36mThen I should be on the list of klasses[0m
+    [36mWhen I go to the list of template klasses[0m
+    [36mThen I should be on the list of template klasses[0m
+    [36mWhen I go to the list of courses[0m
+    [36mThen I should be on the list of courses[0m
+    [36mWhen I go to the list of course times[0m
+    [36mThen I should be on the list of course times[0m
+    [36mWhen I go to the list of classrooms[0m
+    [36mThen I should be on the list of classrooms[0m
+    [36mWhen I go to the list of people[0m
+    [36mThen I should be on the list of people[0m
+    [36mWhen I go to the list of students[0m
+    [36mThen I should be on the list of people[0m
+    [36mWhen I go to the list of teachers[0m
+    [36mThen I should be on the list of people[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m
+
+  Scenario Outline: Redirections for regular users
+    [36mGiven the following student records[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the list of klasses[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of template klasses[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of courses[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of course times[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of classrooms[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of people[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of students[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+    [36mWhen I go to the list of teachers[0m
+    [36mThen I should be redirected to the reserve page of student "<user>"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m
+
+  Scenario Outline: Staff admin can see individual user's pages
+    [36mGiven the following teacher records[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following student records[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the student <no> course page[0m
+    [36mThen I should see the "student" page of "<name>"[0m
+    [36mWhen I go to the student <no> reserve page[0m
+    [36mThen I should see the "reserve" page of "<name>"[0m
+    [36mWhen I go to the student <no> info page[0m
+    [36mThen I should see the "info" page of "<name>"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mno[0m[0m[36m[0m |[0m [36m[1mname  [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32m1 [0m[0m |[0m [32m黒澤 明  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32m2 [0m[0m |[0m [32m神田 來未子[0m[0m |[0m
+
+  Scenario Outline: Staff viewer can only see other user's info Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following student records[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "thomas_osburg" with password "secret"[0m
+    [36mWhen I go to the student <no> reserve page[0m
+    [36mThen I should be retransfered to the "info" page of "<name>"[0m
+    [36mWhen I go to the student <no> course page[0m
+    [36mThen I should be retransfered to the "info" page of "<name>"[0m
+    [36mWhen I go to the student <no> info page[0m
+    [36mThen I should see the "info" page of "<name>"[0m
+
+    Examples: 
+      | [36m[1mno[0m[0m[36m[0m |[0m [36m[1mname  [0m[0m[36m[0m |[0m
+      | [32m1 [0m[0m |[0m [32m黒澤 明  [0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32m神田 來未子[0m[0m |[0m
+
+  Scenario Outline: Regular Users cannot see other student's Mafumafu Page
+    [36mGiven the following teacher records[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36mprince_philip[0m[0m |[0m [36msecret  [0m[0m |[0m [36mPrince     [0m[0m |[0m [36mPhilip    [0m[0m |[0m
+      | [36mchris_the_man[0m[0m |[0m [36msecret  [0m[0m |[0m [36mThe Man    [0m[0m |[0m [36mChris     [0m[0m |[0m
+    [36mGiven the following student records[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the reserve page of student "<student>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+    [36mWhen I go to the course page of student "<student>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+    [36mWhen I go to the info page of student "<student>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mstudent       [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mkoda_kumiko   [0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mchris_the_man [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mchris_the_man [0m[0m |[0m [32mkoda_kumiko   [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32mkoda_kumiko   [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+
+  Scenario Outline: Regular Students cannot see all of their Mafumafu Pages
+    [36mGiven the following student records[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the student <no> reserve page[0m
+    [36mThen I should not see 'people.error.unauthorized_access'[0m
+    [36mWhen I go to the student <no> course page[0m
+    [36mThen I should be retransfered to the "reserve" page of "<name>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+    [36mWhen I go to the student <no> info page[0m
+    [36mThen I should not see 'people.error.unauthorized_access'[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mno[0m[0m[36m[0m |[0m [36m[1mname  [0m[0m[36m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32m1 [0m[0m |[0m [32m黒澤 明  [0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32m2 [0m[0m |[0m [32m神田 來未子[0m[0m |[0m
+
+[36m@mafumafu[0m
+
+
+  Scenario Outline: Users that can reach My Mafumafu Course Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "secret"[0m
+    [36mWhen I go to student 1 course page[0m
+    [36mThen I should see the "student" page of "黒澤 明"[0m
+    [36mAnd I should see 'info' within "links"[0m
+    [36mAnd I should see 'reserve' within "links"[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Users that cannot reach My Mafumafu Course Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mWhen I go to student 1 course page[0m
+    [36mThen I should see <view>[0m
+
+    Examples: 
+      | [36m[1mlogin         [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m [36m[1mview                [0m[0m[36m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32msecret  [0m[0m |[0m [32m'info'" - 黒澤 明"     [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32m'reserve'" - 黒澤 明"  [0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32msecret  [0m[0m |[0m [32m'reserve'" - 神田 來未子"[0m[0m |[0m
+
+  Scenario Outline: Choose courses
+    [36mGiven I have courses titled "入門 I, 入門 II, 初級 I"[0m
+    [36mGiven the following teacher records[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mAnd I go to student 1 course page[0m
+    [36mAnd the "入門 I" checkbox should not be checked[0m
+    [36mAnd the "入門 II" checkbox should not be checked[0m
+    [36mAnd the "初級 I" checkbox should not be checked[0m
+    [36mAnd I check "入門 I"[0m
+    [36mAnd I check "入門 II"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen I should see the "reserve" page of "黒澤 明"[0m
+    [36mAnd the "入門 I" checkbox should be checked[0m
+    [36mAnd the "入門 II" checkbox should be checked[0m
+    [36mWhen I follow 'courses.title' within "links"[0m
+    [36mThen I should see the "student" page of "黒澤 明"[0m
+    [36mAnd the "入門 I" checkbox should be checked[0m
+    [36mAnd the "入門 II" checkbox should be checked[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+
+  Scenario Outline: Users that can reach My Mafumafu Reserve Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mWhen I go to student 1 reserve page[0m
+    [36mThen I should see 'reserve'" - 黒澤 明"[0m
+    [36mAnd I should see 'info' within "links"[0m
+    [36mAnd I should <link> 'courses.title' within "links"[0m
+
+    Examples: 
+      | [36m[1mlogin         [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m [36m[1mlink   [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm [0m[0m |[0m [32msecret  [0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mkomatsu_aya   [0m[0m |[0m [32msecret  [0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32mnot see[0m[0m |[0m
+
+  Scenario Outline: Users that cannot reach My Mafumafu Reserve Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m [36m神田         [0m[0m |[0m [36m來未子       [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mWhen I go to student 1 reserve page[0m
+    [36mThen I should see <view>[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m [36m[1mview                [0m[0m[36m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32msecret  [0m[0m |[0m [32m'info'" - 黒澤 明"     [0m[0m |[0m
+      | [32mkoda_kumiko  [0m[0m |[0m [32msecret  [0m[0m |[0m [32m'reserve'" - 神田 來未子"[0m[0m |[0m
+
+  [36m@mafumafu[0m
+  Scenario Outline: Admins Reserve Classes
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven the following course records[0m
+      | [36mid[0m[0m |[0m [36mname [0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II[0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m初級 I [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mdate        [0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m4 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m06/01/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m5 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m06/02/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m6 [0m[0m |[0m [36m初級 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m13:00     [0m[0m |[0m [36m13:30   [0m[0m |[0m
+    [36mGiven the following courses student records[0m
+      | [36mcourse_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m
+      | [36m1        [0m[0m |[0m [36m1         [0m[0m |[0m
+      | [36m2        [0m[0m |[0m [36m1         [0m[0m |[0m
+    [36mGiven the following attendance record[0m
+      | [36mklass_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m [36mcancel[0m[0m |[0m
+      | [36m4       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m5       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mAnd I go to student 1 reserve page[0m
+    [36mAnd the "入門 I" checkbox should be checked[0m
+    [36mAnd the "入門 II" checkbox should be checked[0m
+    [36mAnd the "入門 I: 11:00~12:00" checkbox should not be checked[0m
+    [36mAnd the "入門 II: 11:00~12:00" checkbox should not be checked[0m
+    [36mAnd I should see todays date[0m
+    [36mAnd I should see todays day[0m
+    [36mAnd I should not see "06/01/09"[0m
+    [36mAnd I should not see "06/02/09"[0m
+    [36mAnd I should not see "11:10~12:00"[0m
+    [36mAnd I should not see "初級"[0m
+    [36mAnd I should not see "13:00~13:30"[0m
+    [36mAnd I should have 2 attendances[0m
+    [36mWhen I check "入門 I: 11:00~12:00"[0m
+    [36mAnd I press 'reserve'[0m
+    [36mThen I should see 'info'" - 黒澤 明"[0m
+    [36mAnd the "入門 I" checkbox should be checked[0m
+    [36mAnd the "入門 II" checkbox should be checked[0m
+    [36mAnd the "入門 I: 11:00~12:00" checkbox should be checked[0m
+    [36mAnd I should see 'history'[0m
+    [36mAnd I should see "06/01/09 入門 I: 11:10~12:00"[0m
+    [36mAnd I should see "06/02/09 入門 II: 11:10~12:00 "'canceled'[0m
+    [36mAnd I should have 3 attendances[0m
+    [36mWhen I follow 'reserve' within "links"[0m
+    [36mThen I should see 'reserve'" - 黒澤 明"[0m
+    [36mAnd the "入門 I: 11:00~12:00" checkbox should be checked[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+
+  Scenario: User Reserves Classes
+    [32mGiven the following student record[0m
+      | [32mid[0m[0m |[0m [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m [32m黒澤         [0m[0m |[0m [32m明         [0m[0m |[0m
+    [32mGiven the following course records[0m
+      | [32mid[0m[0m |[0m [32mname [0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32m入門 I [0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32m入門 II[0m[0m |[0m
+      | [32m3 [0m[0m |[0m [32m初級 I [0m[0m |[0m
+    [32mGiven the following klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mdate        [0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32m入門 I  [0m[0m |[0m [32mcurrent date[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32m入門 II [0m[0m |[0m [32mcurrent date[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32m3 [0m[0m |[0m [32m入門 I  [0m[0m |[0m [32mcurrent date[0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32m4 [0m[0m |[0m [32m入門 I  [0m[0m |[0m [32m06/01/09    [0m[0m |[0m [32m11:10     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32m5 [0m[0m |[0m [32m入門 II [0m[0m |[0m [32m06/02/09    [0m[0m |[0m [32m11:10     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+      | [32m6 [0m[0m |[0m [32m初級 I  [0m[0m |[0m [32mcurrent date[0m[0m |[0m [32m13:00     [0m[0m |[0m [32m13:30   [0m[0m |[0m
+    [32mGiven the following courses student records[0m
+      | [32mcourse_id[0m[0m |[0m [32mstudent_id[0m[0m |[0m
+      | [32m1        [0m[0m |[0m [32m1         [0m[0m |[0m
+      | [32m2        [0m[0m |[0m [32m1         [0m[0m |[0m
+    [32mGiven the following attendance record[0m
+      | [32mklass_id[0m[0m |[0m [32mstudent_id[0m[0m |[0m [32mcancel[0m[0m |[0m
+      | [32m4       [0m[0m |[0m [32m1         [0m[0m |[0m [32m0     [0m[0m |[0m
+      | [32m5       [0m[0m |[0m [32m1         [0m[0m |[0m [32m1     [0m[0m |[0m
+    [32mGiven I am logged in as "[32m[1mkurosawa_akira[0m[0m[32m" with password "[32m[1msecret[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mstudent 1 reserve page[0m[0m[32m[0m
+    [32mAnd the "[32m[1m入門 I: 11:00~12:00[0m[0m[32m" checkbox should not be checked[0m
+    [32mAnd the "[32m[1m入門 II: 11:00~12:00[0m[0m[32m" checkbox should not be checked[0m
+    [32mAnd I should see [32m[1mtodays[0m[0m[32m [32m[1mdate[0m[0m[32m[0m
+    [32mAnd I should see [32m[1mtodays[0m[0m[32m [32m[1mday[0m[0m[32m[0m
+    [32mAnd I should not see "[32m[1m06/01/09[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1m06/02/09[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1m11:10~12:00[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1m初級[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1m13:00~13:30[0m[0m[32m"[0m
+    [32mWhen I check "[32m[1m入門 I: 11:00~12:00[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mreserve[0m[0m[32m'[0m
+    [32mThen I should see '[32m[1minfo[0m[0m[32m'"[32m[1m - 黒澤 明[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1m06/01/09 入門 I: 11:10~12:00[0m[0m[32m"[0m
+    [32mAnd I should not see "[32m[1m06/02/09 入門 II: 11:10~12:00[0m[0m[32m"[0m
+    [32mWhen I follow '[32m[1mreserve[0m[0m[32m' within "[32m[1mlinks[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mreserve[0m[0m[32m'"[32m[1m - 黒澤 明[0m[0m[32m"[0m
+    [32mAnd the "[32m[1m入門 I: 11:00~12:00[0m[0m[32m" checkbox should be checked[0m
+
+  Scenario Outline: Admins Cancel Classes
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven the following course records[0m
+      | [36mid[0m[0m |[0m [36mname [0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II[0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m初級 I [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mdate        [0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m4 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m06/01/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m5 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m06/02/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m6 [0m[0m |[0m [36m初級 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m13:00     [0m[0m |[0m [36m13:30   [0m[0m |[0m
+    [36mGiven the following courses student records[0m
+      | [36mcourse_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m
+      | [36m1        [0m[0m |[0m [36m1         [0m[0m |[0m
+      | [36m2        [0m[0m |[0m [36m1         [0m[0m |[0m
+    [36mGiven the following attendance record[0m
+      | [36mklass_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m [36mcancel[0m[0m |[0m
+      | [36m1       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m4       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m5       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mAnd I go to student 1 reserve page[0m
+    [36mAnd I should have 3 attendances[0m
+    [36mWhen I check 'cancel'[0m
+    [36mAnd I press 'reserve'[0m
+    [36mThen I should see 'info'" - 黒澤 明"[0m
+    [36mAnd the "入門 I: 11:00~12:00 "'canceled' checkbox should be checked[0m
+    [36mAnd I should have 3 attendances[0m
+    [36mWhen I follow 'reserve' within "links"[0m
+    [36mThen I should see 'reserve'" - 黒澤 明"[0m
+    [36mAnd the 'cancel' checkbox should be checked[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+
+  Scenario Outline: Admins Remove Classes
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven the following course records[0m
+      | [36mid[0m[0m |[0m [36mname [0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II[0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m初級 I [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mdate        [0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m4 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m06/01/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m5 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m06/02/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m6 [0m[0m |[0m [36m初級 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m13:00     [0m[0m |[0m [36m13:30   [0m[0m |[0m
+    [36mGiven the following courses student records[0m
+      | [36mcourse_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m
+      | [36m1        [0m[0m |[0m [36m1         [0m[0m |[0m
+      | [36m2        [0m[0m |[0m [36m1         [0m[0m |[0m
+    [36mGiven the following attendance record[0m
+      | [36mklass_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m [36mcancel[0m[0m |[0m
+      | [36m1       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+      | [36m2       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m4       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m5       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "<password>"[0m
+    [36mAnd I go to student 1 reserve page[0m
+    [36mAnd I should have 4 attendances[0m
+    [36mWhen I uncheck "入門 I: 11:00~12:00"[0m
+    [36mAnd I press 'reserve'[0m
+    [36mThen I should see 'info'" - 黒澤 明"[0m
+    [36mAnd I should not see "入門 I: 11:00~12:00"[0m
+    [36mAnd I should see "入門 II: 11:00~12:00"[0m
+    [36mAnd I should have 3 attendances[0m
+    [36mWhen I follow 'reserve' within "links"[0m
+    [36mThen I should see 'reserve'" - 黒澤 明"[0m
+    [36mAnd the "入門 I: 11:00~12:00" checkbox should not be checked[0m
+    [36mAnd the "入門 II: 11:00~12:00" checkbox should be checked[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+
+  Scenario Outline: My Mafumafu Info Page
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m [36mlanguage[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m [36mja      [0m[0m |[0m
+      | [36mthomas_osburg[0m[0m |[0m [36msecret  [0m[0m |[0m [36men      [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36mid[0m[0m |[0m [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m [36mfamily_name[0m[0m |[0m [36mfirst_name[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m [36m黒澤         [0m[0m |[0m [36m明         [0m[0m |[0m
+    [36mGiven the following course records[0m
+      | [36mid[0m[0m |[0m [36mname [0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II[0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m初級 I [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse[0m[0m |[0m [36mdate        [0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m4 [0m[0m |[0m [36m入門 I  [0m[0m |[0m [36m06/01/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m5 [0m[0m |[0m [36m入門 II [0m[0m |[0m [36m06/02/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m6 [0m[0m |[0m [36m初級 I  [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m13:00     [0m[0m |[0m [36m13:30   [0m[0m |[0m
+    [36mGiven the following courses student records[0m
+      | [36mcourse_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m
+      | [36m1        [0m[0m |[0m [36m1         [0m[0m |[0m
+      | [36m2        [0m[0m |[0m [36m1         [0m[0m |[0m
+    [36mGiven the following attendance record[0m
+      | [36mklass_id[0m[0m |[0m [36mstudent_id[0m[0m |[0m [36mcancel[0m[0m |[0m
+      | [36m1       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+      | [36m2       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m4       [0m[0m |[0m [36m1         [0m[0m |[0m [36m0     [0m[0m |[0m
+      | [36m5       [0m[0m |[0m [36m1         [0m[0m |[0m [36m1     [0m[0m |[0m
+    [36mGiven I am logged in as "<login>" with password "secret"[0m
+    [36mWhen I go to student 1 reserve page[0m
+    [36mAnd I <extra>[0m
+    [36mThen I should see 'info'" - 黒澤 明"[0m
+    [36mAnd I should <cancel> "入門 I: 11:00~12:00 "'canceled'[0m
+    [36mAnd the "入門 II: 11:00~12:00" checkbox should be checked[0m
+    [36mAnd I should see 'history'[0m
+    [36mAnd I should see "06/01/09 入門 I: 11:10~12:00"[0m
+    [36mAnd I should <cancel> "06/02/09 入門 II: 11:10~12:00 "'canceled'[0m
+    [36mAnd I should <link> 'courses.title' within "links"[0m
+    [36mAnd I should <link2> 'reserve' within "links"[0m
+
+    Examples: 
+      | [36m[1mlogin         [0m[0m[36m[0m |[0m [36m[1mextra                       [0m[0m[36m[0m |[0m [36m[1mlink   [0m[0m[36m[0m |[0m [36m[1mlink2  [0m[0m[36m[0m |[0m [36m[1mcancel [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm [0m[0m |[0m [32mfollow 'info' within "links"[0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mkomatsu_aya   [0m[0m |[0m [32mfollow 'info' within "links"[0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32mshould see 'courses.title'  [0m[0m |[0m [32mnot see[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mfollow 'info' within "links"[0m[0m |[0m [32mnot see[0m[0m |[0m [32msee    [0m[0m |[0m [32mnot see[0m[0m |[0m
+
+[36m@template[0m
+
+
+  Scenario: Duplicate a Template Class
+    [32mGiven I have courses titled "[32m[1m入門 I, 入門 II[0m[0m[32m"[0m
+    [32mGiven the following teacher record[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mlanguage[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32men      [0m[0m |[0m
+    [32mGiven the following template klass record[0m
+      | [32mcourse[0m[0m |[0m [32mstart_time[0m[0m |[0m [32mend_time[0m[0m |[0m
+      | [32m入門 I  [0m[0m |[0m [32m11:00     [0m[0m |[0m [32m12:00   [0m[0m |[0m
+    [32mGiven I go to [32m[1mthe list of template klasses[0m[0m[32m[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m" with password "[32m[1msecret[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m template klass[0m
+    [32mWhen I follow "[32m[1m+[0m[0m[32m" within "[32m[1m入門_I_1100_1200[0m[0m[32m"[0m
+    [32mThen I should have [32m[1m2[0m[0m[32m template klasses[0m
+
+  Scenario: Add a Template Class after getting Errors
+    [32mGiven I have courses titled "[32m[1m入門 I, 入門 II[0m[0m[32m"[0m
+    [32mGiven the following teacher record[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mlanguage[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32men      [0m[0m |[0m
+    [32mGiven I go to [32m[1mthe list of template klasses[0m[0m[32m[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m" with password "[32m[1msecret[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m0[0m[0m[32m template klasses[0m
+    [32mWhen I follow '[32m[1mtemplate_klasses.new[0m[0m[32m'[0m
+    [32mAnd I should see '[32m[1mtemplate_klasses.new[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m0[0m[0m[32m template klasses[0m
+    [32mThen I should see "[32m[1mCourse [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1mStart time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1mEnd time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mWhen I fill in '[32m[1mstart_time[0m[0m[32m' with "[32m[1m13:00[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mend_time[0m[0m[32m' with "[32m[1m15:00[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mAnd I should have [32m[1m0[0m[0m[32m template klasses[0m
+    [32mThen I should see "[32m[1mCourse [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should not see "[32m[1mStart time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mAnd I should not see "[32m[1mEnd time [0m[0m[32m"'[32m[1mactiverecord.errors.messages.blank[0m[0m[32m'[0m
+    [32mWhen I select "[32m[1m入門 I[0m[0m[32m" from '[32m[1mcourse[0m[0m[32m'[0m
+    [32mAnd I press '[32m[1mcreate[0m[0m[32m'[0m
+    [32mThen I should see '[32m[1mtemplate_klasses.listing[0m[0m[32m'[0m
+    [32mAnd I should see "[32m[1m入門コース[0m[0m[32m"[0m
+    [32mAnd I should see "[32m[1m13:00~15:00[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m template klass[0m
+
+[36m@people[0m
+
+
+  Scenario: Observer's index page
+    [32mGiven I have teacher "[32m[1mthomas_osburg[0m[0m[32m"[0m
+    [32mAnd I am logged in as "[32m[1mthomas_osburg[0m[0m[32m"[0m
+    [32mWhen I go to [32m[1mthe list of people[0m[0m[32m[0m
+    [32mThen I should not see '[32m[1mstudents.new[0m[0m[32m' within "[32m[1mlinks[0m[0m[32m"[0m
+    [32mAnd I should not see '[32m[1mteachers.new[0m[0m[32m' within "[32m[1mlinks[0m[0m[32m"[0m
+
+  Scenario Outline: Admin's index page
+    [36mGiven I have teachers "johan_sveholm, komatsu_aya"[0m
+    [36mAnd I am logged in as "<user>"[0m
+    [36mWhen I go to the list of people[0m
+    [36mThen I should see 'students.new' within "links"[0m
+    [36mAnd I should see 'teachers.new' within "links"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Regular users should not be able to see index page
+    [36mGiven I have teacher "prince_philip"[0m
+    [36mAnd I have student "kurosawa_akira"[0m
+    [36mAnd I am logged in as "<user>"[0m
+    [36mWhen I go to the list of people[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+
+[36m@delete_students[0m
+
+
+  Background: 
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mGiven the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mAnd I go to [32m[1mthe list of students[0m[0m[32m[0m
+
+  Scenario Outline: Delete a student with no associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I should have 3 persons[0m
+    [36mAnd I should have 2 teachers[0m
+    [36mAnd I should have 1 student[0m
+    [36mWhen I try to delete student "kurosawa_akira"[0m
+    [36mThen I should see a notice "Student was successfully deleted"[0m
+    [36mAnd I should have 2 persons[0m
+    [36mAnd I should have 2 teachers[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Try to delete a student with course associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I have courses titled "Ruby on Rails, Python"[0m
+    [36mAnd student "kurosawa_akira" has course "Ruby on Rails"[0m
+    [36mWhen I try to delete student "kurosawa_akira"[0m
+    [36mThen I should see an error 'students.error.delete_student_with_courses'[0m
+    [36mAnd student "kurosawa_akira" should have 1 course[0m
+    [36mAnd course "Ruby on Rails" should have 1 student[0m
+    [36mAnd course "Python" should have 0 students[0m
+    [36mAnd I should have 1 courses_student[0m
+    [36mAnd I should have 2 courses[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Try to delete a student with course&class associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I have courses titled "Ruby on Rails, Python"[0m
+    [36mAnd student "kurosawa_akira" has course "Ruby on Rails"[0m
+    [36mAnd student "kurosawa_akira" has class "Ruby on Rails"[0m
+    [36mWhen I try to delete student "kurosawa_akira"[0m
+    [36mThen I should see an error 'students.error.delete_student_with_courses'[0m
+    [36mAnd I should see an error 'students.error.delete_student_with_classes'[0m
+    [36mAnd student "kurosawa_akira" should have 1 class[0m
+    [36mAnd class "Ruby on Rails" should have 1 student[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+[36m@multiple_students[0m
+
+
+  Background: 
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32msecret  [0m[0m |[0m [32mOsburg     [0m[0m |[0m [32mThomas    [0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32msecret  [0m[0m |[0m [32mPrince     [0m[0m |[0m [32mPhilip    [0m[0m |[0m
+    [32mGiven the following student records[0m
+      | [32muser_name        [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mkurosawa_akira   [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKurosawa   [0m[0m |[0m [32mAkira     [0m[0m |[0m
+      | [32msakurai_kazutoshi[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSakurai    [0m[0m |[0m [32mKazutoshi [0m[0m |[0m
+      | [32masada_mao        [0m[0m |[0m [32msecret  [0m[0m |[0m [32mAsada      [0m[0m |[0m [32mMao       [0m[0m |[0m
+    [32mGiven I go to [32m[1mthe list of teachers[0m[0m[32m[0m
+
+  Scenario Outline: No selected teachers should generate an error message
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect no students[0m
+    [36mThen I should be redirected to the list of people[0m
+    [36mAnd I should see 'students.error.select'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Observers cannot multiselect
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the multi course page of student "asada_mao"[0m
+    [36mThen I should be redirected to the <default>[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault                                 [0m[0m[36m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32mlist of classes                         [0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo page of teacher "prince_philip"    [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve page of student "kurosawa_akira"[0m[0m |[0m
+
+  Scenario Outline: List selected students
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I multiselect students "kurosawa_akira, sakurai_kazutoshi"[0m
+    [36mAnd I should see "Kurosawa Akira" within "students"[0m
+    [36mAnd I should see "Sakurai Kazutoshi" within "students"[0m
+    [36mAnd I should not see "Asada Mao" within "students"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Update multiple students with blank courses should generate no change
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd student "kurosawa_akira" has courses "Java, Prolog"[0m
+    [36mAnd student "asada_mao" has course "Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect students "kurosawa_akira, sakurai_kazutoshi, asada_mao"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen student "kurosawa_akira" should have courses "Java, Prolog"[0m
+    [36mAnd student "asada_mao" should have courses "Cpp"[0m
+    [36mAnd student "sakurai_kazutoshi" should have 0 courses[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Update courses for multiple students
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I multiselect students "kurosawa_akira, sakurai_kazutoshi"[0m
+    [36mAnd I check "Java"[0m
+    [36mAnd I check "Prolog"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen students "kurosawa_akira, sakurai_kazutoshi" should have courses "Java, Prolog"[0m
+    [36mAnd student "asada_mao" should have 0 courses[0m
+    [36mAnd I should see 'students.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Cancel courses for multiple students
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd students "kurosawa_akira, sakurai_kazutoshi" has courses "Fortran, Cpp"[0m
+    [36mWhen I multiselect students "kurosawa_akira, asada_mao"[0m
+    [36mAnd I check 'courses.none'[0m
+    [36mAnd I press 'update'[0m
+    [36mThen students "kurosawa_akira, asada_mao" should have 0 courses[0m
+    [36mAnd student "sakurai_kazutoshi" should have courses "Fortran, Cpp"[0m
+    [36mAnd I should see 'students.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Cancel courses for multiple students but keep one course
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd students "kurosawa_akira, sakurai_kazutoshi" have courses "Fortran, Cpp"[0m
+    [36mWhen I multiselect students "kurosawa_akira, asada_mao"[0m
+    [36mAnd I check "Fortran"[0m
+    [36mAnd I check 'courses.none'[0m
+    [36mAnd I press 'update'[0m
+    [36mThen students "kurosawa_akira, asada_mao" should have course "Fortran"[0m
+    [36mAnd student "sakurai_kazutoshi" should have courses "Fortran, Cpp"[0m
+    [36mAnd I should see 'students.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+[36m@student_reserve[0m
+
+
+  Scenario: A student should be able to redirect himself to the show page of each class
+    [32mGiven I have course "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd I have student "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd student "[32m[1mkurosawa_akira[0m[0m[32m" has course "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd the following class record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m
+    [32mAnd I am logged in as "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+    [32mAnd I should be redirected to [32m[1mthe reserve page for student "kurosawa_akira"[0m[0m[32m[0m
+    [32mWhen I follow "[32m[1mJava I: 12:00~15:00[0m[0m[32m" within "[32m[1mclasses[0m[0m[32m"[0m
+    [32mAnd I should be redirected to [32m[1mthe info page of class "1"[0m[0m[32m[0m
+
+  Scenario Outline: Admins Reserve Classes
+    [36mGiven I have courses titled "Java I, Java II, Ruby I"[0m
+    [36mGiven the following teacher record[0m
+      | [36muser_name    [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following student record[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven the following klass record[0m
+      | [36mid[0m[0m |[0m [36mcourse [0m[0m |[0m [36mdate        [0m[0m |[0m [36mstart_time[0m[0m |[0m [36mend_time[0m[0m |[0m
+      | [36m1 [0m[0m |[0m [36mJava I [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m2 [0m[0m |[0m [36mJava II[0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m3 [0m[0m |[0m [36mJava I [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m11:00     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m4 [0m[0m |[0m [36mJava I [0m[0m |[0m [36m06/01/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m5 [0m[0m |[0m [36mJava II[0m[0m |[0m [36m06/02/09    [0m[0m |[0m [36m11:10     [0m[0m |[0m [36m12:00   [0m[0m |[0m
+      | [36m6 [0m[0m |[0m [36mRuby I [0m[0m |[0m [36mcurrent date[0m[0m |[0m [36m13:00     [0m[0m |[0m [36m13:30   [0m[0m |[0m
+    [36mGiven student "kurosawa_akira" has courses "Java I, Java II"[0m
+    [36mAnd student "kurosawa_akira" has classes "4, 5"[0m
+    [36mAnd student "kurosawa_akira" has class "5" canceled[0m
+    [36mAnd I am logged in as "<login>" with password "<password>"[0m
+    [36mAnd I go to the reserve page of student "kurosawa_akira"[0m
+    [36mAnd the "Java I" checkbox should be checked[0m
+    [36mAnd the "Java II" checkbox should be checked[0m
+    [36mAnd the "Java I: 11:00~12:00" checkbox should not be checked[0m
+    [36mAnd the "Java II: 11:00~12:00" checkbox should not be checked[0m
+    [36mAnd I should see todays date within "classes"[0m
+    [36mAnd I should see todays day within "classes"[0m
+    [36mAnd I should not see "06/01/09" within "history"[0m
+    [36mAnd I should not see "06/02/09" within "history"[0m
+    [36mAnd I should not see "11:10~12:00" within "history"[0m
+    [36mAnd I should not see "初級" within "classes"[0m
+    [36mAnd I should not see "13:00~13:30" within "classes"[0m
+    [36mAnd I should have 2 attendances[0m
+    [36mWhen I check "Java I: 11:00~12:00"[0m
+    [36mAnd I press 'reserve'[0m
+    [36mThen I should be redirected to the info page of student "kurosawa_akira"[0m
+    [36mAnd the "Java I" checkbox should be checked[0m
+    [36mAnd the "Java II" checkbox should be checked[0m
+    [36mAnd the "Java I: 11:00~12:00" checkbox should be checked[0m
+    [36mAnd I should see 'history'[0m
+    [36mAnd I should see "06/01/09 Java I: 11:10~12:00" within "history"[0m
+    [36mAnd I should see "06/02/09 Java II: 11:10~12:00 "'canceled'[0m
+    [36mAnd I should have 3 attendances[0m
+    [36mWhen I follow 'reserve' within "links"[0m
+    [36mThen I should be redirected to the reserve page of student "kurosawa_akira"[0m
+    [36mAnd the "Java I: 11:00~12:00" checkbox should be checked[0m
+
+    Examples: 
+      | [36m[1mlogin        [0m[0m[36m[0m |[0m [36m[1mpassword[0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+
+
+
+[36m@delete_teachers[0m
+
+
+  Background: 
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mAnd I go to [32m[1mthe list of teachers[0m[0m[32m[0m
+
+  Scenario Outline: Delete a teacher with no associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I should have 3 persons[0m
+    [36mAnd I should have 3 teachers[0m
+    [36mWhen I try to delete teacher "prince_philip"[0m
+    [36mThen I should see a notice "Teacher was successfully deleted"[0m
+    [36mAnd I should have 2 teachers[0m
+    [36mAnd I should have 2 persons[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Try to delete a teacher with course associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I have courses titled "Ruby on Rails, Python"[0m
+    [36mAnd that teacher "prince_philip" has course "Ruby on Rails"[0m
+    [36mWhen I try to delete teacher "prince_philip"[0m
+    [36mThen I should see an error 'teachers.error.delete_teacher_with_courses'[0m
+    [36mAnd teacher "prince_philip" should have 1 course[0m
+    [36mAnd course "Ruby on Rails" should have 1 teacher[0m
+    [36mAnd course "Python" should have 0 teachers[0m
+    [36mAnd I should have 1 teaching[0m
+    [36mAnd I should have 2 courses[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Try to delete a teacher with course&class associations
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I have courses titled "Ruby on Rails, Python"[0m
+    [36mAnd that teacher "prince_philip" has course "Ruby on Rails"[0m
+    [36mAnd that teacher "prince_philip" has class "Ruby on Rails"[0m
+    [36mWhen I try to delete teacher "prince_philip"[0m
+    [36mThen I should see an error 'teachers.error.delete_teacher_with_courses'[0m
+    [36mAnd I should see an error 'teachers.error.delete_teacher_with_classes'[0m
+    [36mAnd teacher "prince_philip" should have 1 course[0m
+    [36mAnd course "Ruby on Rails" should have 1 teacher[0m
+    [36mAnd course "Python" should have 0 teachers[0m
+    [36mAnd I should have 1 teaching[0m
+    [36mAnd I should have 2 courses[0m
+    [36mAnd teacher "prince_philip" should have 1 class[0m
+    [36mAnd class "Ruby on Rails" should have a teacher[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+[36m@teacher_info[0m
+
+
+  Background: 
+    [32mGiven I have teachers "[32m[1mprince_philip, chris_the_man, johan_sveholm, komatsu_aya, thomas_osburg[0m[0m[32m"[0m
+    [32mGiven I have student "[32m[1mkurosawa_akira[0m[0m[32m"[0m
+
+  Scenario: A teacher should be able to redirect himself to the show page of each class
+    [32mGiven I have course "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd teacher "[32m[1mprince_philip[0m[0m[32m" has course "[32m[1mJava I[0m[0m[32m"[0m
+    [32mAnd the following class record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m
+    [32mAnd teacher "[32m[1mprince_philip[0m[0m[32m" has class "[32m[1m1[0m[0m[32m"[0m
+    [32mAnd I am logged in as "[32m[1mprince_philip[0m[0m[32m"[0m
+    [32mAnd I should be redirected to [32m[1mthe info page of teacher "prince_philip"[0m[0m[32m[0m
+    [32mWhen I follow "[32m[1mJava I: 12:00~15:00[0m[0m[32m" within "[32m[1mclasses[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe info page of class "1"[0m[0m[32m[0m
+
+  Scenario Outline: Teacher has no courses and no classes
+    [36mGiven I have no courses[0m
+    [36mAnd I have no classes[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the info page of teacher "<name>"[0m
+    [36mThen I should not see 'courses.title' within "courses"[0m
+    [36mAnd I should not see 'klasses.title' within "klasses"[0m
+    [36mAnd I should not see 'history' within "history"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mname         [0m[0m[36m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32mprince_philip[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32mprince_philip[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32mprince_philip[0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32mprince_philip[0m[0m |[0m
+
+  Scenario Outline: Teacher has courses
+    [36mGiven I have courses titled "Java, Prolog"[0m
+    [36mAnd teacher "prince_philip" has course "Prolog"[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the info page of teacher "<name>"[0m
+    [36mThen I should <view> 'courses.title' within "courses"[0m
+    [36mAnd I should <view> "Prolog" within "courses"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mname         [0m[0m[36m[0m |[0m [36m[1mview   [0m[0m[36m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32mprince_philip[0m[0m |[0m [32mnot see[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32mprince_philip[0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32mprince_philip[0m[0m |[0m [32msee    [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32mprince_philip[0m[0m |[0m [32msee    [0m[0m |[0m
+
+  Scenario Outline: Regular teacher has classes and courses
+    [36mGiven I have courses titled "Java"[0m
+    [36mAnd teacher "chris_the_man" has course "Java"[0m
+    [36mAnd teacher "chris_the_man" has class "Java"[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the info page of teacher "<name>"[0m
+    [36mThen I should see 'klasses.title' within "klasses"[0m
+    [36mAnd I should see todays day within "klasses"[0m
+    [36mAnd I should see todays date within "klasses"[0m
+    [36mAnd I should see "Java" within "klasses"[0m
+    [36mAnd I should not see 'history' within "history"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mname         [0m[0m[36m[0m |[0m
+      | [32mchris_the_man[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+
+  Scenario Outline: Regular teacher has history
+    [36mGiven I have courses titled "Java"[0m
+    [36mAnd teacher "chris_the_man" has course "Java"[0m
+    [36mAnd teacher "chris_the_man" had class "Java" yesterday[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the info page of teacher "<name>"[0m
+    [36mThen I should see 'klasses.title' within "klasses"[0m
+    [36mAnd I should not see "Java" within "klasses"[0m
+    [36mAnd I should see 'history' within "history"[0m
+    [36mAnd I should see "Java" within "history"[0m
+    [36mAnd I should see yesterdays day within "history"[0m
+    [36mAnd I should see yesterdays date within "history"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mname         [0m[0m[36m[0m |[0m
+      | [32mchris_the_man[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32mchris_the_man[0m[0m |[0m
+
+  Scenario Outline: Admins see links on teacher's Info Page
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the info page of teacher "prince_philip"[0m
+    [36mWhen I follow 'courses.title' within "links"[0m
+    [36mThen I should be on the course page of teacher "prince_philip"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Other than admins see no links on teacher's Info Page
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the info page of teacher "prince_philip"[0m
+    [36mThen I should not see 'courses.title' within "links"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m
+
+  Scenario Outline: Regular Users cannot see other teacher's info pages
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the info page of teacher "<teacher>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mteacher      [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mchris_the_man [0m[0m |[0m [32mprince_philip[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32mchris_the_man[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mprince_philip[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mchris_the_man[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+
+[36m@multiple_teachers[0m
+
+
+  Background: 
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32msecret  [0m[0m |[0m [32mOsburg     [0m[0m |[0m [32mThomas    [0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32msecret  [0m[0m |[0m [32mPrince     [0m[0m |[0m [32mPhilip    [0m[0m |[0m
+    [32mGiven the following student record[0m
+      | [32muser_name     [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32msecret  [0m[0m |[0m
+    [32mGiven I go to [32m[1mthe list of teachers[0m[0m[32m[0m
+
+  Scenario Outline: No selected teachers should generate an error message
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect teachers ""[0m
+    [36mThen I should be redirected to the list of people[0m
+    [36mAnd I should see 'teachers.error.select'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Observers cannot multiselect
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the multi course page of teacher "komatsu_aya"[0m
+    [36mThen I should be redirected to the <default>[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mdefault                                 [0m[0m[36m[0m |[0m
+      | [32mthomas_osburg [0m[0m |[0m [32mlist of classes                         [0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32minfo page of teacher "prince_philip"    [0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mreserve page of student "kurosawa_akira"[0m[0m |[0m
+
+  Scenario Outline: List selected teachers
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect teachers "johan_sveholm, thomas_osburg"[0m
+    [36mThen I should see "Sveholm Johan" within "teachers"[0m
+    [36mAnd I should not see "Komatsu Aya" within "teachers"[0m
+    [36mAnd I should see "Osburg Thomas" within "teachers"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Update multiple teachers with blank courses should generate no change
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd that teacher "johan_sveholm" has courses "Java, Prolog"[0m
+    [36mAnd that teacher "prince_philip" has course "Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect teachers "johan_sveholm, thomas_osburg, prince_philip"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen teacher "johan_sveholm" should have courses "Java, Prolog"[0m
+    [36mAnd teacher "prince_philip" should have courses "Cpp"[0m
+    [36mAnd teacher "thomas_osburg" should have 0 courses[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Update courses for multiple teachers
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I multiselect teachers "johan_sveholm, thomas_osburg"[0m
+    [36mAnd I check "Java"[0m
+    [36mAnd I check "Prolog"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen teachers "johan_sveholm, thomas_osburg" should have courses "Java, Prolog"[0m
+    [36mAnd teacher "komatsu_aya" should have 0 courses[0m
+    [36mAnd I should see 'teachers.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Cancel courses for multiple teachers
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd that teachers "johan_sveholm, thomas_osburg" has courses "Fortran, Cpp"[0m
+    [36mWhen I multiselect teachers "johan_sveholm, komatsu_aya"[0m
+    [36mAnd I check 'courses.none'[0m
+    [36mAnd I press 'update'[0m
+    [36mThen teachers "johan_sveholm, komatsu_aya" should have 0 courses[0m
+    [36mAnd teacher "thomas_osburg" should have courses "Fortran, Cpp"[0m
+    [36mAnd I should see 'teachers.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Cancel courses for multiple teachers but keep one course
+    [36mGiven I have courses titled "Java, Prolog, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd that teachers "johan_sveholm, thomas_osburg" have courses "Fortran, Cpp"[0m
+    [36mWhen I multiselect teachers "johan_sveholm, komatsu_aya"[0m
+    [36mAnd I check "Fortran"[0m
+    [36mAnd I check 'courses.none'[0m
+    [36mAnd I press 'update'[0m
+    [36mThen teachers "johan_sveholm, komatsu_aya" should have courses "Fortran"[0m
+    [36mAnd teacher "thomas_osburg" should have courses "Fortran, Cpp"[0m
+    [36mAnd I should see 'teachers.updated'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+[36m@teachings[0m
+
+
+  Background: 
+    [32mGiven the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mchris_the_man[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m
+      | [32mthomas_osburg[0m[0m |[0m [32msecret  [0m[0m |[0m
+
+  Scenario Outline: Regular teacher has no courses and no classes
+    [36mGiven I have no courses[0m
+    [36mWhen I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the course page of teacher "chris_the_man"[0m
+    [36mThen I should not see 'courses.title' within "courses"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m [36m[1mname         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [36mchris_the_man[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [36mprince_philip[0m[0m |[0m
+
+  Scenario Outline: Chosing Courses on the Teacher Course Page
+    [36mGiven I have courses titled "Java I, Java VI, Fortran, Cpp"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the course page of teacher "prince_philip"[0m
+    [36mAnd I should see 'courses.title' within "courses"[0m
+    [36mAnd the "Java I" checkbox should not be checked[0m
+    [36mAnd the "Java VI" checkbox should not be checked[0m
+    [36mAnd the "Fortran" checkbox should not be checked[0m
+    [36mAnd the "Cpp" checkbox should not be checked[0m
+    [36mWhen I check "Java I"[0m
+    [36mAnd I check "Fortran"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen the "Java I" checkbox should be checked[0m
+    [36mAnd the "Fortran" checkbox should be checked[0m
+    [36mAnd I should not see "Java VI"[0m
+    [36mAnd I should not see "Cpp"[0m
+    [36mWhen I follow 'courses.title' within "links"[0m
+    [36mThen the "Java I" checkbox should be checked[0m
+    [36mAnd the "Java VI" checkbox should not be checked[0m
+    [36mAnd the "Fortran" checkbox should be checked[0m
+    [36mAnd the "Cpp" checkbox should not be checked[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Deleting Courses on the Teacher Course Page
+    [36mGiven I have courses titled "Java I, Java VI, Fortran, Cpp"[0m
+    [36mAnd that teacher "prince_philip" has courses "Java I, Fortran"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the course page of teacher "prince_philip"[0m
+    [36mAnd the "Java I" checkbox should be checked[0m
+    [36mAnd the "Java VI" checkbox should not be checked[0m
+    [36mAnd the "Fortran" checkbox should be checked[0m
+    [36mAnd the "Cpp" checkbox should not be checked[0m
+    [36mWhen I uncheck "Java I"[0m
+    [36mAnd I uncheck "Fortran"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen I should not see 'courses.title' within "courses"[0m
+    [36mAnd I should not see "Java I" within "courses"[0m
+    [36mAnd I should not see "Java VI" within "courses"[0m
+    [36mAnd I should not see "Fortran" within "courses"[0m
+    [36mAnd I should not see "Cpp" within "courses"[0m
+    [36mWhen I follow 'courses.title' within "links"[0m
+    [36mThen the "Java I" checkbox should not be checked[0m
+    [36mAnd the "Java VI" checkbox should not be checked[0m
+    [36mAnd the "Fortran" checkbox should not be checked[0m
+    [36mAnd the "Cpp" checkbox should not be checked[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Edit Teachings on the Teacher Course Page
+    [36mGiven I have courses titled "Ruby, Pascal"[0m
+    [36mAnd that teacher "johan_sveholm" has courses "Ruby, Pascal"[0m
+    [36mAnd I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the course page of teacher "johan_sveholm"[0m
+    [36mAnd I should see "1500" within "Ruby"[0m
+    [36mAnd I follow 'edit' within "Ruby"[0m
+    [36mWhen I fill in 'cost' with "1600"[0m
+    [36mAnd I press 'update'[0m
+    [36mThen I should see "1600" within "Ruby"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [36mjohan_sveholm[0m[0m |[0m
+      | [36mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Links on the Teacher Course Page
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mAnd I go to the course page of teacher "prince_philip"[0m
+    [36mWhen I follow 'info' within "links"[0m
+    [36mThen I should be on the info page of teacher "prince_philip"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m
+
+  Scenario Outline: Regular Teachers cannot see their own course page
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the course page of teacher "<user>"[0m
+    [36mThen I should be redirected to the info page of teacher "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m
+      | [32mchris_the_man[0m[0m |[0m
+
+  Scenario Outline: Regular Users cannot see other teacher's course pages
+    [36mGiven the following student records[0m
+      | [36muser_name     [0m[0m |[0m [36mpassword[0m[0m |[0m
+      | [36mkurosawa_akira[0m[0m |[0m [36msecret  [0m[0m |[0m
+      | [36mkoda_kumiko   [0m[0m |[0m [36msecret  [0m[0m |[0m
+    [36mGiven I am logged in as "<user>" with password "secret"[0m
+    [36mWhen I go to the course page of teacher "<teacher>"[0m
+    [36mThen I should be redirected to the <default> page of <status> "<user>"[0m
+    [36mAnd I should see 'people.error.unauthorized_access'[0m
+
+    Examples: 
+      | [36m[1muser          [0m[0m[36m[0m |[0m [36m[1mteacher      [0m[0m[36m[0m |[0m [36m[1mdefault[0m[0m[36m[0m |[0m [36m[1mstatus [0m[0m[36m[0m |[0m
+      | [32mchris_the_man [0m[0m |[0m [32mprince_philip[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mprince_philip [0m[0m |[0m [32mchris_the_man[0m[0m |[0m [32minfo   [0m[0m |[0m [32mteacher[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mprince_philip[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mkurosawa_akira[0m[0m |[0m [32mchris_the_man[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32mprince_philip[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+      | [32mkoda_kumiko   [0m[0m |[0m [32mchris_the_man[0m[0m |[0m [32mreserve[0m[0m |[0m [32mstudent[0m[0m |[0m
+
+  Scenario Outline: Staff Viewer cannot see other teacher's course pages
+    [36mGiven I am logged in as "thomas_osburg" with password "secret"[0m
+    [36mWhen I go to the course page of teacher "<user>"[0m
+    [36mThen I should be redirected to the info page of teacher "<user>"[0m
+
+    Examples: 
+      | [36m[1muser         [0m[0m[36m[0m |[0m
+      | [32mchris_the_man[0m[0m |[0m
+      | [32mprince_philip[0m[0m |[0m
+
+[36m@template_classes[0m
+
+
+  Background: 
+    [32mGiven I have courses titled "[32m[1mJava I, Ruby I, Fortran I[0m[0m[32m"[0m
+    [32mAnd the following teacher records[0m
+      | [32muser_name    [0m[0m |[0m [32mpassword[0m[0m |[0m [32mfamily_name[0m[0m |[0m [32mfirst_name[0m[0m |[0m
+      | [32mjohan_sveholm[0m[0m |[0m [32msecret  [0m[0m |[0m [32mSveholm    [0m[0m |[0m [32mJohan     [0m[0m |[0m
+      | [32mkomatsu_aya  [0m[0m |[0m [32msecret  [0m[0m |[0m [32mKomatsu    [0m[0m |[0m [32mAya       [0m[0m |[0m
+    [32mAnd the following template klass record[0m
+      | [32mid[0m[0m |[0m [32mcourse[0m[0m |[0m [32mteacher      [0m[0m |[0m [32mday   [0m[0m |[0m
+      | [32m1 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mjohan_sveholm[0m[0m |[0m [32mSunday[0m[0m |[0m
+      | [32m2 [0m[0m |[0m [32mJava I[0m[0m |[0m [32mkomatsu_aya  [0m[0m |[0m [32mSunday[0m[0m |[0m
+    [32mAnd I am logged in as "[32m[1mjohan_sveholm[0m[0m[32m"[0m
+    [32mAnd I go to [32m[1mthe "Sunday" list of template classes[0m[0m[32m[0m
+
+  Scenario: Delete Template Classes
+    [32mGiven I should have [32m[1m2[0m[0m[32m template classes[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe list of template classes[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m1[0m[0m[32m template class[0m
+    [32mWhen I follow '[32m[1mdelete[0m[0m[32m' within "[32m[1mtemplate_klass_2[0m[0m[32m"[0m
+    [32mThen I should be redirected to [32m[1mthe list of template classes[0m[0m[32m[0m
+    [32mAnd I should have [32m[1m0[0m[0m[32m template classes[0m
+
+  Scenario: Edit a template class and show the result
+    [32mWhen I follow '[32m[1medit[0m[0m[32m' within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mnote[0m[0m[32m' with "[32m[1mSomething important[0m[0m[32m"[0m
+    [32mAnd I fill in '[32m[1mtitle[0m[0m[32m' with "[32m[1mSome title[0m[0m[32m"[0m
+    [32mAnd I press '[32m[1mupdate[0m[0m[32m'[0m
+    [32mThen I should be redirected to [32m[1mthe list of template classes[0m[0m[32m[0m
+    [32mWhen I follow '[32m[1minfo[0m[0m[32m' within "[32m[1mtemplate_klass_1[0m[0m[32m"[0m
+    [32mThen I should see '[32m[1mtitle[0m[0m[32m'"[32m[1m: Some title[0m[0m[32m"[0m
+    [32mAnd I should see '[32m[1mnote[0m[0m[32m'"[32m[1m: Something important[0m[0m[32m"[0m
+    [32mAnd I should have [32m[1m2[0m[0m[32m template classes[0m
+
+[31mFailing Scenarios:[0m
+[31mcucumber features/plain/classes/change_courses.feature:48[0m[90m # Scenario: Try to change course with existing teacher[0m
+[31mcucumber features/plain/classes/change_courses.feature:75[0m[90m # Scenario: Try to change course with existing teacher and students[0m
+
+198 scenarios ([31m4 failed[0m, [33m16 undefined[0m, [32m178 passed[0m)
+2322 steps ([31m4 failed[0m, [36m169 skipped[0m, [33m24 undefined[0m, [32m2125 passed[0m)
+2m41.673s
+[33m
+You can implement step definitions for undefined steps with these snippets:
+
+Given /^that teacher "([^\"]*)" has course "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+
+Given /^that teacher "([^\"]*)" has courses "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+
+Given /^that teacher "([^\"]*)" has class "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+
+Given /^that teachers "([^\"]*)" has courses "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+
+Given /^that teachers "([^\"]*)" have courses "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end[0m
+

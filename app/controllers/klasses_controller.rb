@@ -1,4 +1,6 @@
 class KlassesController < ApplicationController  
+  before_filter :authorize_view, :only=>[:index,:live_search]
+  
   def add_student
     StudentClass.new( :klass_id=>params[:klass_id], :cancel=>false ).save
     redirect_to :action=>'index', :year=>params[:year], :month=>params[:month], :day=>params[:day]
@@ -89,7 +91,22 @@ class KlassesController < ApplicationController
   # GET /klasses/1
   # GET /klasses/1.xml
   def show
-    @klass = Klass.find(params[:id])
+  	@klass = Klass.find( params[:id], :include=>:course )
+
+		registered_courses = current_user_status.courses.map(&:name)
+	  klasses = Klass.all(
+	    :conditions=>["courses.name in (?) and date >= ?", registered_courses, Date.current ],
+	    :include=>'course' )	  
+  	
+  	if !logged_in?
+  		login_redirection	
+  		return
+  	elsif clearance == 4
+  		unless current_user_status.klasses.include?( @klass ) || klasses.include?( @klass )  			
+  			redirect_to default_page
+  			return
+  		end
+  	end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -155,10 +172,7 @@ class KlassesController < ApplicationController
   			:teacher,
   			:course,
   			:classroom ])
-		course_id = params[:klass][:course_id].nil? ? @klass.course_id : params[:klass][:course_id]
-		@teachers = Teacher.all(
-			:conditions=>["courses.name = ?", Course.find( course_id ).name],
-		  :include=>[:person, :courses])    
+		course_id = @klass.course_id
 			  
     respond_to do |format|
       if @klass.update_attributes( params[:klass] )
@@ -171,7 +185,13 @@ class KlassesController < ApplicationController
 	        }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html{
+        	@klass.update_attribute( :course_id, course_id )
+        	@teachers = Teacher.all(
+						:conditions=>["courses.name = ?", Course.find( course_id ).name],
+					  :include=>[:person, :courses])    
+					render :action => "edit"
+        }
         format.xml  { render :xml => @klass.errors, :status => :unprocessable_entity }
       end
     end
@@ -199,7 +219,6 @@ class KlassesController < ApplicationController
     end
   end
 
-#protected
 #  def authorize
 #    unless session[:user_name]
 #      session[:original_uri] = request.request_uri

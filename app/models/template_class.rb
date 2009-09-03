@@ -57,7 +57,7 @@ protected
 	def validate_on_update
 		if course_id != TemplateClass.find( id ).course_id
       p "Inside"
-      errors.add_to_base( I18n.translate( 'template_classes.error.edit_courses_with_teacher' )) unless teacher_id.nil?
+      errors.add_to_base( I18n.translate( 'template_klasses.error.edit_courses_with_teacher' )) unless teacher_id.nil?
       #errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_students') ) if !students.empty?
 		end
 	end

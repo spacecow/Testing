@@ -28,7 +28,7 @@ Given /^I have teachers? "([^\"]*)"$/ do |users|
 end
 
 
-Given /^that teachers? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,courses|
+Given /^teachers? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,courses|
 	users.split(', ').map{|e| find_teacher( e )}.each do |teacher|
 	  courses.split(', ').each do |course|
 	  	teacher.courses << Course.find_by_name( course )
@@ -36,14 +36,18 @@ Given /^that teachers? "([^\"]*)" (?:has|have) courses? "([^\"]*)"$/ do |users,c
 	end
 end
 
-Given /^that teacher "([^\"]*)" has classe?s? "([^\"]*)"$/ do |username,classes|
+Given /^teacher "([^\"]*)" has classe?s? "([^\"]*)"$/ do |username,classes|
   teacher = find_teacher( username )
   classes.split(', ').each do |course|
-  	teacher.klasses << Factory( :klass, { :course_id => Course.find_by_name( course ).id })
+  	if course.to_i > 0
+  		teacher.klasses << Klass.find( course )
+  	else #Creates a new class with that course
+  		teacher.klasses << Factory( :klass, { :course_id => Course.find_by_name( course ).id })
+  	end
   end
 end
 
-Given /^that teacher "([^\"]*)" had classe?s? "([^\"]*)" yesterday$/ do |username,classes|
+Given /^teacher "([^\"]*)" had classe?s? "([^\"]*)" yesterday$/ do |username,classes|
   teacher = find_teacher( username )
   classes.split(', ').each do |course|
   	teacher.klasses << Factory( :klass, {

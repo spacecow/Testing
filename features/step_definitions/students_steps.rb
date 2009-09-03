@@ -5,6 +5,7 @@ Given /^the following student records?$/ do |table|
   		person_hash[key] = hash[key] unless key=="id"
   	end		
   	password = person_hash.delete "password"
+  	password ||= "secret"
   	person_hash["salt"] = SALT
   	person_hash["hashed_password"] = Person.encrypted_password( password, SALT )
   	person = Factory( :person,person_hash )
@@ -13,6 +14,17 @@ Given /^the following student records?$/ do |table|
   	student_hash[:person_id] = person.id
   	student_hash[:id] = hash[:id] if hash[:id]
   	Factory( :student,student_hash )
+  end
+end
+
+Given /^I have students? "([^\"]*)"$/ do |users|
+	users.split(', ').each do |user|
+		person_hash = {}
+		person_hash[:user_name] = user
+  	person_hash[:salt] = SALT
+  	person_hash[:hashed_password] = Person.encrypted_password( "secret", SALT )
+  	person = Factory( :person,person_hash )
+  	Factory( :student,{ :person_id => person.id })
   end
 end
 

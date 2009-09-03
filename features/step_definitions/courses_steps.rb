@@ -6,7 +6,7 @@ Given /^the following course records?$/ do |table|
   end
 end
 
-Given /^I have courses titled "(.+)"$/ do |titles|
+Given /^I have courses? (?:titled )?"(.+)"$/ do |titles|
   titles.split(', ').each do |title|
   	Course.create!( :name=>title )	
   end
