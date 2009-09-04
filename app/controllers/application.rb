@@ -48,7 +48,8 @@ protected
   def clearance?(level)
     if level>=1 && session[:user_name] == "johan_sveholm"
       return true
-    elsif level>=2 && session[:user_name] == "komatsu_aya"
+    elsif level>=2 && ( session[:user_name] == "aya" || session[:user_name] == "maki" || session[:user_name] == "umetsu" ||
+    	session[:user_name] == "ikue" || session[:user_name] == "thomas" || session[:user_name] == "mogi" )
       return true
 		elsif level>=3 && session[:user_name] == "thomas_osburg"
       return true
@@ -61,7 +62,8 @@ protected
   def clearance
 		if session[:user_name] == "johan_sveholm"
       return 1
-    elsif session[:user_name] == "komatsu_aya"
+    elsif( session[:user_name] == "aya" || session[:user_name] == "maki" || session[:user_name] == "umetsu" ||
+    	session[:user_name] == "ikue" || session[:user_name] == "thomas" || session[:user_name] == "mogi" )
       return 2
 		elsif session[:user_name] == "thomas_osburg"
 			return 3
