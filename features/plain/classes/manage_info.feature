@@ -1,4 +1,4 @@
-@class_show
+@class_info
 Background:
 Given I have courses "Java I, Ruby I"
 	And the following class record
@@ -48,7 +48,6 @@ Examples:
 |	prince_philip		|	info		|	teacher	|	Java I	|	1		|
 |	kurosawa_akira	|	reserve	|	student	|	Ruby I	|	2		|
 
-@access_denied
 Scenario: Regular users should not be able to see the show page of classes they cannot choose
 Given student "kurosawa_akira" has course "Ruby I"
 	And student "kurosawa_akira" has class "3"
@@ -62,7 +61,9 @@ Then I should be redirected to the reserve page of student "kurosawa_akira"
 	And I should see 'people.error.unauthorized_access'
 	
 Scenario Outline: If there are no students, student title should not be visible		
-Given I am logged in as "<user>"
+Given teacher "prince_philip" has course "Java I"
+	And student "kurosawa_akira" has course "Java I"
+	And I am logged in as "<user>"
 When I go to the info page of class "1"
 Then I should not see 'students.title' within "students"
 Examples:
@@ -74,11 +75,13 @@ Examples:
 |	prince_philip		|
 	
 Scenario Outline: Non-chosen students should be (visible) for admin&observer
-Given class "2" has student "kurosawa_akira"
+Given teacher "prince_philip" has course "Ruby I"
+	And students "kurosawa_akira, asada_mao" have course "Ruby I"
+	And class "2" has student "kurosawa_akira"
 	And I am logged in as "<user>"
 When I go to the info page of class "2"
 Then I should <view> 'students.title' within "students"
-	And I should <view> "(Kurosawa Akira)"
+	And I should <view> "(Kurosawa Akira)" within "students"
 Examples:
 |	user						|	view		|
 |	johan_sveholm		|	see			|
@@ -88,12 +91,14 @@ Examples:
 |	prince_philip		|	not see	|
 	
 Scenario Outline: Chosen students should be visible for admin&observer
-Given class "1" has chosen students "kurosawa_akira, asada_mao"
+Given teacher "prince_philip" has course "Java I"
+	And students "kurosawa_akira, asada_mao" have course "Java I"
+	And class "1" has chosen students "kurosawa_akira, asada_mao"
 	And I am logged in as "<user>"
 When I go to the info page of class "1"
 Then I should <view> 'students.title' within "students"
-	And I should <view> "Kurosawa Akira"
-	And I should <view> "Asada Mao"
+	And I should <view> "Kurosawa Akira" within "students"
+	And I should <view> "Asada Mao" within "students"
 Examples:
 |	user						|	view		|
 |	johan_sveholm		|	see			|
@@ -103,12 +108,14 @@ Examples:
 |	prince_philip		|	not see	|
 
 Scenario Outline: Canceled students should be (visible) for admin&observer
-Given class "2" has canceled students "kurosawa_akira, asada_mao"
+Given teacher "prince_philip" has course "Ruby I"
+	And students "kurosawa_akira, asada_mao" have course "Ruby I"
+	And class "2" has canceled students "kurosawa_akira, asada_mao"
 	And I am logged in as "<user>"
 When I go to the info page of class "2"
 Then I should <view> 'students.title' within "students"
-	And I should <view> "(Kurosawa Akira "'canceled'
-	And I should <view> "(Asada Mao "'canceled'
+	And I should <view> "(Kurosawa Akira "'canceled' within "students"
+	And I should <view> "(Asada Mao "'canceled' within "students"
 Examples:
 |	user						|	view		|
 |	johan_sveholm		|	see			|

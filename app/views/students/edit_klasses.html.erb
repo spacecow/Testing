@@ -31,9 +31,9 @@
 <br/>
 
 <div class="links">
-	<%= link_to t('info'), @student %>
+	<%= link_to t('info'), @student, :class=>"link" %>
 	<% if clearance?(3) %>
-		| <%= link_to t('courses.title'), edit_courses_student_path( @student ) %>
+		| <%= link_to t('courses.title'), edit_courses_student_path( @student ), :class=>"link" %>
 	<% end %>
 </div>
 </fieldset>

@@ -23,7 +23,7 @@ Examples:
 Scenario Outline: Try to delete a teacher with course associations
 Given I am logged in as "<user>" with password "secret"
 	And I have courses titled "Ruby on Rails, Python"
-	And that teacher "prince_philip" has course "Ruby on Rails"
+	And teacher "prince_philip" has course "Ruby on Rails"
 When I try to delete teacher "prince_philip"
 Then I should see an error 'teachers.error.delete_teacher_with_courses'
 	And teacher "prince_philip" should have 1 course
@@ -39,8 +39,8 @@ Examples:
 Scenario Outline: Try to delete a teacher with course&class associations
 Given I am logged in as "<user>" with password "secret"
 	And I have courses titled "Ruby on Rails, Python"
-	And that teacher "prince_philip" has course "Ruby on Rails"
-	And that teacher "prince_philip" has class "Ruby on Rails"
+	And teacher "prince_philip" has course "Ruby on Rails"
+	And teacher "prince_philip" has class "Ruby on Rails"
 When I try to delete teacher "prince_philip"
 Then I should see an error 'teachers.error.delete_teacher_with_courses'
 	And I should see an error 'teachers.error.delete_teacher_with_classes'

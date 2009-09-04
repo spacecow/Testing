@@ -92,17 +92,17 @@ class KlassesController < ApplicationController
   # GET /klasses/1.xml
   def show
   	@klass = Klass.find( params[:id], :include=>:course )
-
-		registered_courses = current_user_status.courses.map(&:name)
-	  klasses = Klass.all(
-	    :conditions=>["courses.name in (?) and date >= ?", registered_courses, Date.current ],
-	    :include=>'course' )	  
   	
   	if !logged_in?
-  		login_redirection	
+  		login_redirection
   		return
   	elsif clearance == 4
+			registered_courses = current_user_status.courses.map(&:name)
+		  klasses = Klass.all(
+		    :conditions=>["courses.name in (?) and date >= ?", registered_courses, Date.current ],
+		    :include=>'course' )	    	
   		unless current_user_status.klasses.include?( @klass ) || klasses.include?( @klass )  			
+  			flash[:error] = t('people.error.unauthorized_access')
   			redirect_to default_page
   			return
   		end

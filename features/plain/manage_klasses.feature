@@ -52,9 +52,9 @@ Scenario Outline: Chosen Teachers and Classrooms cannot be chosen again at the s
 	|	id	|	course	|	start_time	|	end_time	| teacher_id	| classroom_id	|
 	|	1		|	入門 I		|	13:00				| 15:00			|	1						|	1							|
 	|	2		|	入門 II	|	14:00				| 16:00			|	2						|	2							|
-	Given that teacher "johan_sveholm" has course "入門 I"
-	  And that teacher "ali_bumba" has courses "入門 I, 入門 II"
-	  And that teacher "k1_loser" has course "入門 II"
+	Given teacher "johan_sveholm" has course "入門 I"
+	  And teacher "ali_bumba" has courses "入門 I, 入門 II"
+	  And teacher "k1_loser" has course "入門 II"
 	When I go to the list of <object>es
 		And I am logged in as "johan_sveholm" with password "secret"
 	Then I should be redirected to the list of <object>es

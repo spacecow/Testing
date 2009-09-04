@@ -75,21 +75,15 @@
 					<h3><%= t('students.title') %></h3>
 					<% @klass.attendances.each do |attendance| %>
 						<div class="<%= attendance.student.username %>">
-							<% if attendance.chosen %>
-								<li>
-									<% if attendance.cancel %><i>(<% end %>
-									<%= h attendance.student %>
-									<%= link_to t('show'), attendance, :class=>"grid" %>
-									<%= link_to t('edit'), edit_attendance_path( attendance ), :class=>"grid" %>
-									<% if attendance.cancel %>
-										<%= link_to t('uncancel'), attendance_path( attendance, :attendance => { :student_id => "Uncancel" }, :redirect => "klass" ), :method => :put, :class => :grid %>
-									<% else %>
-										<%= link_to t('cancel'), attendance_path( attendance, :attendance => { :student_id => t('cancel') }, :redirect => "klass" ), :method => :put, :class => :grid %>
-									<% end %>
-									<%= link_to t('delete'), attendance_path( attendance, :attendance => { :student_id => t('destroy') }, :redirect => "klass" ), :method => :put, :class => :grid %>
-									<% if attendance.cancel %>)</i><% end %>
-								</li>
-							<% end %>
+							<li>
+								<% if !attendance.chosen %>
+									<i>(<%= link_to h( attendance.student ), attendance %> <%= link_to t('choose'), attendance_path( attendance, :attendance => { :student_id => attendance.student_id.to_s }, :redirect => "klass" ), :method => :put, :class => :grid %>)</i>
+								<% elsif attendance.cancel %>
+									<i>(<%= link_to h( attendance.student ), attendance %> <%= link_to t('show'), attendance, :class=>"grid" %> <%= link_to t('edit'), edit_attendance_path( attendance ), :class=>"grid" %> <%= link_to t('uncancel'), attendance_path( attendance, :attendance => { :student_id => "Uncancel" }, :redirect => "klass" ), :method => :put, :class => :grid %> <%= link_to t('delete'), attendance_path( attendance, :attendance => { :student_id => t('destroy') }, :redirect => "klass" ), :confirm=>t('sure?'), :method => :put, :class => :grid %>)</i>
+								<% else %>
+									<%= link_to h( attendance.student ), attendance %> <%= link_to t('show'), attendance, :class=>"grid" %> <%= link_to t('edit'), edit_attendance_path( attendance ), :class=>"grid" %> <%= link_to t('cancel'), attendance_path( attendance, :attendance => { :student_id => t('cancel') }, :redirect => "klass" ), :method => :put, :class => :grid %> <%= link_to t('delete'), attendance_path( attendance, :attendance => { :student_id => t('destroy') }, :redirect => "klass" ), :confirm=>t('sure?'), :method => :put, :class => :grid %> <%= link_to t('unchoose'), attendance_path( attendance, :attendance => { :student_id => "" }, :redirect => "klass" ), :method => :put, :class => :grid %>
+								<% end %>
+							</li>
 						</	div>
 					<% end %>
 				<% end %>

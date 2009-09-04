@@ -88,7 +88,7 @@ class AttendancesController < ApplicationController
     end    
     respond_to do |format|
       if @attendance.update_attributes(params[:attendance])
-      	format.html { redirect_to( klasses_path( :date => params[:date] )) }        	
+      	format.html { redirect_to :back } #( klasses_path( :date => params[:date] )) }        	
         format.xml  { head :ok }
       else
         session[:error] = "You cannot change student yet."

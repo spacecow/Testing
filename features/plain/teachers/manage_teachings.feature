@@ -47,7 +47,7 @@ Examples:
 
 Scenario Outline: Deleting Courses on the Teacher Course Page
 Given I have courses titled "Java I, Java VI, Fortran, Cpp"
-	And that teacher "prince_philip" has courses "Java I, Fortran"
+	And teacher "prince_philip" has courses "Java I, Fortran"
 	And I am logged in as "<user>" with password "secret"
 	And I go to the course page of teacher "prince_philip"
 	And the "Java I" checkbox should be checked
@@ -74,7 +74,7 @@ Examples:
 
 Scenario Outline: Edit Teachings on the Teacher Course Page
 Given I have courses titled "Ruby, Pascal"
-	And that teacher "johan_sveholm" has courses "Ruby, Pascal"
+	And teacher "johan_sveholm" has courses "Ruby, Pascal"
 	And I am logged in as "<user>" with password "secret"
 	And I go to the course page of teacher "johan_sveholm"
 	And I should see "1500" within "Ruby"

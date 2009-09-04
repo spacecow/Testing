@@ -17,10 +17,10 @@
 
 <div class="links">
 	<% if clearance <=2 %>
-		<%= link_to t('courses.title'), edit_courses_student_path( @student ) %> |
+		<%= link_to t('courses.title'), edit_courses_student_path( @student ), :class=>"link" %> |
 	<% end %>
 	<% unless clearance == 3 %>
-		<%= link_to t('reserve'), edit_klasses_student_path( @student ) %>
+		<%= link_to t('reserve'), edit_klasses_student_path( @student ), :class=>"link" %>
 	<% end %>
 </div>
 

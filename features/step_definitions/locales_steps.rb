@@ -66,11 +66,24 @@ Then /^I should see '([^\"]*)' within "([^\"]*)"$/ do |text,scope_string|
 	end
 end
 
+Then /^I should see "([^\"]*)"'([^\"]*)' within "([^\"]*)"$/ do |text1,text2,scope_string|
+  within ".#{scope_string}" do |scope|
+		scope.should contain( text1+I18n.translate( text2 ))
+	end
+end
+
 Then /^I should not see '([^\"]*)' within "([^\"]*)"$/ do |text,scope_string|
   within ".#{scope_string}" do |scope|
 		scope.should_not contain( I18n.translate( text ))
 	end
 end
+
+Then /^I should not see "([^\"]*)"'([^\"]*)' within "([^\"]*)"$/ do |text1,text2,scope_string|
+  within ".#{scope_string}" do |scope|
+		scope.should_not contain( text1+I18n.translate( text2 ))
+	end
+end
+
 
 When /^I check '([^\"]*)'$/ do |field|
   check(I18n.translate( field )) 
