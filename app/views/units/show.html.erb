@@ -1,0 +1,32 @@
+<h1><%= t('units.title') %></h1>
+
+<p>
+  <strong>Unit:</strong>
+  <%=h @unit.unit %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%=h @unit.title %>
+</p>
+<p>
+  <strong>Page:</strong>
+  <%=h @unit.page %>
+</p>
+<p>
+  <strong>Grammar Unit:</strong>
+  <%=h @unit.grammar_unit %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @unit.description %>
+</p>
+<p>
+  <strong>Note:</strong>
+  <%=h @unit.note %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_unit_path(@unit) %> |
+  <%= link_to "Destroy", @unit, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", units_path %>
+</p>

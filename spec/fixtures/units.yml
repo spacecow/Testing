@@ -1,0 +1,15 @@
+one:
+  unit: MyString
+  title: MyString
+  page: MyString
+  grammar_unit: MyString
+  description: MyText
+  note: MyText
+
+two:
+  unit: MyString
+  title: MyString
+  page: MyString
+  grammar_unit: MyString
+  description: MyText
+  note: MyText

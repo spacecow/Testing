@@ -1,4 +1,26 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
   map.resources :attendances
   map.resources :classrooms
   map.resources :courses

@@ -1,0 +1,25 @@
+<div id="list">
+<h1><%= t('units.title') %></h1>
+
+<table cellpadding="2" cellspacing="1">
+	<% for unit in @units %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      	<td><%=h unit.unit %></td>
+      	<td><%=h unit.title %></td>
+      	<td><%=h unit.page %></td>
+      	<td><%=h unit.grammar_unit %></td>
+      	<td><%=h unit.description %></td>
+      	<td><%=h unit.note %></td>
+  		<td>
+    			<%= link_to t('show'), unit, :class=>"link" %>
+    			<%= link_to t('edit'), edit_unit_path(unit), :class=>"link" %>
+    			<%= link_to t('destroy'), unit, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>
+
+<div class="link">
+<p><%= link_to t('units.new'), new_unit_path %></p>
+</div>
+</div>
