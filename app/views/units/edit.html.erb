@@ -1,8 +1,18 @@
-<% title "Edit Unit" %>
+<div class="form">
+<%= error_messages_for :unit %>
 
-<%= render :partial => 'form' %>
+<fieldset>
+<legend><%= t('units.editing') %></legend>
 
-<p>
-  <%= link_to "Show", @unit %> |
-  <%= link_to "View All", units_path %>
-</p>
+<% form_for @unit do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<% end %>
+
+<div class="links">
+		  <%= link_to t('show'), @unit, :class=>"link" %> |
+		  <%= link_to t('view_all'), units_path, :class=>"link" %>
+		</p>
+</div>
+
+</fieldset>
+</div>

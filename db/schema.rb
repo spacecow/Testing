@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090905051150) do
+ActiveRecord::Schema.define(:version => 20090906121110) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -147,6 +147,14 @@ ActiveRecord::Schema.define(:version => 20090905051150) do
     t.datetime "updated_at"
   end
 
+  create_table "schedules", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -204,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20090905051150) do
 
   create_table "units", :force => true do |t|
     t.string   "unit"
+    t.integer  "schedule_id"
     t.string   "title"
     t.string   "page"
     t.string   "grammar_unit"

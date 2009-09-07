@@ -1,0 +1,27 @@
+<div id="list">
+<h1><%= t('schedules.title') %></h1>
+
+<table cellpadding="2" cellspacing="1">
+	<tr>
+			<th class="list-topics">Title</th>		
+			<th class="list-topics">Description</th>		
+			<th class="list-topics">Note</th>		
+	</tr>
+	<% for schedule in @schedules %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      	<td><%=h schedule.title %></td>
+      	<td><%=h schedule.description %></td>
+      	<td><%=h schedule.note %></td>
+  		<td>
+    			<%= link_to t('show'), schedule, :class=>"link" %>
+    			<%= link_to t('edit'), edit_schedule_path(schedule), :class=>"link" %>
+    			<%= link_to t('destroy'), schedule, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>
+
+<div class="links">
+<p><%= link_to t('schedules.new'), new_schedule_path, :class=>"link" %></p>
+</div>
+</div>

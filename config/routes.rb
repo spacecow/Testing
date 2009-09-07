@@ -1,4 +1,128 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :schedules
+
+  map.resources :schedules
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
+  map.resources :units
+
   map.resources :units
 
   map.resources :units

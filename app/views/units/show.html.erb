@@ -1,32 +1,36 @@
-<h1><%= t('units.title') %></h1>
+<h1><%= t('info') %> - <%= t('schedule') %></h1>
 
 <p>
-  <strong>Unit:</strong>
+  <strong><%= t('unit') %>:</strong>
   <%=h @unit.unit %>
 </p>
 <p>
-  <strong>Title:</strong>
+  <strong><%= t('schedule') %>:</strong>
+  <%= link_to h( @unit.schedule.title ), @unit.schedule %>
+</p>
+<p>
+  <strong><%= t('title') %>:</strong>
   <%=h @unit.title %>
 </p>
 <p>
-  <strong>Page:</strong>
+  <strong><%= t('page') %>:</strong>
   <%=h @unit.page %>
 </p>
 <p>
-  <strong>Grammar Unit:</strong>
+  <strong><%= t('grammar_unit') %>:</strong>
   <%=h @unit.grammar_unit %>
 </p>
 <p>
-  <strong>Description:</strong>
+  <strong><%= t('description') %>:</strong>
   <%=h @unit.description %>
 </p>
 <p>
-  <strong>Note:</strong>
+  <strong><%= t('note') %>:</strong>
   <%=h @unit.note %>
 </p>
 
-<p>
-  <%= link_to "Edit", edit_unit_path(@unit) %> |
-  <%= link_to "Destroy", @unit, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", units_path %>
-</p>
+<div class="links">
+  <%= link_to t('edit'), edit_unit_path(@unit), :class=>"link" %> |
+  <%= link_to t('destroy'), @unit, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), units_path, :class=>"link" %>
+</div>

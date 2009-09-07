@@ -4,7 +4,7 @@
 en:
   address: "Address"
   address2: "Second address"
-  back: "Back"
+  back: "Back to Index"
   blank: " "
   cancel: "Cancel"
   canceled: "canceled"
@@ -139,4 +139,16 @@ en:
     new: "New Template Class"
     error:
       edit_courses_with_teacher: "Cancel teacher before changing course"
-    
+
+  grammar_unit: "Grammar unit"
+  page: "Page"
+  schedule: "Schedule"
+  view_all: "View all"
+  schedules:
+    editing: "Editing Schedule"
+    new: "New Schedule"
+    title: "Schedules"
+  units:
+    editing: "Editing Unit"
+    new: "New Unit"
+    title: "Units"

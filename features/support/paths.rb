@@ -16,6 +16,8 @@ module NavigationHelpers
     	course_times_path
     when /the list of courses/
     	courses_path
+    when /the list of units/
+    	units_path
     when /the list of classrooms/
     	classrooms_path
     when /the list of [ck]lasses/

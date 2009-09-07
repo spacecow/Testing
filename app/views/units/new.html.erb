@@ -1,5 +1,16 @@
-<h1><%= t('units.new') %></h1>
+<div class="form">
+<%= error_messages_for :unit %>
 
-<%= render :partial => 'form' %>
+<fieldset>
+<legend><%= t('units.new') %></legend>
 
-<p><%= link_to "Back to List", units_path %></p>
+<% form_for @unit do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), units_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

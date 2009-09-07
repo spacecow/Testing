@@ -1,0 +1,18 @@
+<div class="form">
+<%= error_messages_for :schedule %>
+
+<fieldset>
+<legend><%= t('schedules.editing') %></legend>
+
+<% form_for @schedule do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<% end %>
+
+<div class="links">
+		  <%= link_to t('show'), @schedule, :class=>"link" %> |
+		  <%= link_to t('view_all'), schedules_path, :class=>"link" %>
+		</p>
+</div>
+
+</fieldset>
+</div>

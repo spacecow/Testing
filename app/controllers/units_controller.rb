@@ -1,6 +1,6 @@
 class UnitsController < ApplicationController
   def index
-    @units = Unit.all
+    @units = Unit.all( :include => :schedule )
   end
   
   def show
@@ -9,13 +9,15 @@ class UnitsController < ApplicationController
   
   def new
     @unit = Unit.new
+    @schedules = Schedule.all
   end
   
   def create
     @unit = Unit.new(params[:unit])
+    @schedules = Schedule.all
     if @unit.save
       flash[:notice] = "Successfully created unit."
-      redirect_to @unit
+      redirect_to units_path
     else
       render :action => 'new'
     end
@@ -23,10 +25,12 @@ class UnitsController < ApplicationController
   
   def edit
     @unit = Unit.find(params[:id])
+    @schedules = Schedule.all
   end
   
   def update
     @unit = Unit.find(params[:id])
+    @schedules = Schedule.all
     if @unit.update_attributes(params[:unit])
       flash[:notice] = "Successfully updated unit."
       redirect_to @unit

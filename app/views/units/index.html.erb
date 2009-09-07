@@ -2,14 +2,22 @@
 <h1><%= t('units.title') %></h1>
 
 <table cellpadding="2" cellspacing="1">
+	<tr>
+			<th class="list-topics">Unit</th>		
+			<th class="list-topics">Schedule</th>		
+			<th class="list-topics">Title</th>		
+			<th class="list-topics">Page</th>		
+			<th class="list-topics">Grammar Unit</th>		
+			<th class="list-topics">Description</th>		
+	</tr>
 	<% for unit in @units %>
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
       	<td><%=h unit.unit %></td>
+      	<td><%= link_to h( unit.schedule.title ), unit.schedule %></td>
       	<td><%=h unit.title %></td>
       	<td><%=h unit.page %></td>
       	<td><%=h unit.grammar_unit %></td>
       	<td><%=h unit.description %></td>
-      	<td><%=h unit.note %></td>
   		<td>
     			<%= link_to t('show'), unit, :class=>"link" %>
     			<%= link_to t('edit'), edit_unit_path(unit), :class=>"link" %>
@@ -19,7 +27,7 @@
 	<% end %>
 </table>
 
-<div class="link">
-<p><%= link_to t('units.new'), new_unit_path %></p>
+<div class="links">
+<p><%= link_to t('units.new'), new_unit_path, :class=>"link" %></p>
 </div>
 </div>

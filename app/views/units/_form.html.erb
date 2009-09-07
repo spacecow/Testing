@@ -1,28 +1,32 @@
-<% form_for @unit do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :unit %><br />
-    <%= f.text_field :unit %>
-  </p>
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :page %><br />
-    <%= f.text_field :page %>
-  </p>
-  <p>
-    <%= f.label :grammar_unit %><br />
-    <%= f.text_field :grammar_unit %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :note %><br />
-    <%= f.text_area :note %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
-<% end %>
+<p>
+  <%= f.label :unit, t('unit') %>
+	<%= f.text_field :unit, :size=>20 %>
+</p>
+<p>
+  <%= f.label :schedule_id, t('schedule') %>		      
+	<%= f.collection_select :schedule_id,
+				@schedules, :id, :title,
+		    :include_blank => true %>
+</p>
+<p>
+  <%= f.label :title, t('title') %>
+	<%= f.text_field :title, :size=>20 %>
+</p>
+<p>
+  <%= f.label :page, t('page') %>
+	<%= f.text_field :page, :size=>20 %>
+</p>
+<p>
+  <%= f.label :grammar_unit, t('grammar_unit') %>
+	<%= f.text_field :grammar_unit, :size=>20 %>
+</p>
+<p>
+  <%= f.label :description, t('description') %>
+ 	<%= f.text_area :description, :rows=>8, :cols=>27 %>
+</p>
+<p>
+  <%= f.label :note, t('note') %>
+ 	<%= f.text_area :note, :rows=>8, :cols=>27 %>
+</p>
+  <p><%= f.submit label_text, :class=>"submit" %></p>
+

@@ -1,0 +1,60 @@
+<h1><%= t('info') %> - Schedule</h1>
+
+<p>
+  <strong><%= t('title') %>:</strong>
+  <%=h @schedule.title %>
+</p>
+<p>
+  <strong><%= t('description') %>:</strong>
+  <%=h @schedule.description %>
+</p>
+<p>
+  <strong><%= t('note') %>:</strong>
+  <%=h @schedule.note %>
+</p>
+
+<table><tr><td>
+	<table cellpadding="2" cellspacing="1">
+		<% (0..19).to_a.map{|e| e.day.from_now }.each do |day| %>
+			<% elements = @day_hash[day.strftime("%A")] %>
+			<% unless elements.nil? %>
+				<% elements.size.times do |no| %>
+					<tr>
+						<% if no==0 %>
+							<td style="font-size: small;"><%= day.strftime("%m").to_i %>/<%= day.strftime("%d").to_i %></td>
+						<% else %>
+							<td></td>
+						<% end %>
+						<td style="font-size: small;"><%= t('date.abbr_day_names')[day.strftime("%w").to_i] %></td>
+						<td style="font-size: small;"><%= elements[no] %></td>
+		      </tr>
+		    <% end %>
+		  <% end %>
+	  <% end %>
+	</table>
+	</td><td>
+	<table cellpadding="2" cellspacing="1">
+		<% (20..39).to_a.map{|e| e.day.from_now }.each do |day| %>
+			<% elements = @day_hash[day.strftime("%A")] %>
+			<% unless elements.nil? %>
+				<% elements.size.times do |no| %>
+					<tr>
+						<% if no==0 %>
+							<td style="font-size: small;"><%= day.strftime("%m").to_i %>/<%= day.strftime("%d").to_i %></td>
+						<% else %>
+							<td></td>
+						<% end %>
+						<td style="font-size: small;"><%= t('date.abbr_day_names')[day.strftime("%w").to_i] %></td>
+						<td style="font-size: small;"><%= elements[no] %></td>
+		      </tr>
+		    <% end %>
+		  <% end %>
+	  <% end %>
+	</table>
+</td></tr></table>
+
+<div class="links">
+  <%= link_to t('edit'), edit_schedule_path(@schedule), :class=>"link" %> |
+  <%= link_to t('destroy'), @schedule, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), schedules_path, :class=>"link" %>
+</div>
