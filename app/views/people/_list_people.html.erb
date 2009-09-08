@@ -5,7 +5,7 @@
     <td class="list-topics"><%= t('mobile_phone') %></td>
     <td class="list-topics"><%= t('mail_address_mobile') %></td>
   </tr>
-  <% ppl.each do |person| %>
+  <% @people.each do |person| %>
     <% if person.gender == 1 %>
       <tr valign="top" class="list-line-man">
     <% else %>

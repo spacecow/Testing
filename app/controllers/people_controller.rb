@@ -7,13 +7,24 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    @people = Person.find(:all)
-    @category = params[:category] || t('people.title')
+		@test = params[:name]
+		@search = Person.search( params[:search] )
+		if @test.blank?
+			@people = @search.all
+			@testing = @test.blank?
+		else
+			@people = @search.family_name_or_first_name_like( "fwelkfhwföwjg" )
+			#@testing = @search.family_name_or_first_name_like( @test.to_s ).count
+			@testing = "-"+@test+"-"
+		end
+#    @people = Person.find(:all)
+#    @category = params[:category] || t('people.title')
     session[:redirect] = request.request_uri
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @people }
+      format.js
     end
   end
 
@@ -46,19 +57,22 @@ class PeopleController < ApplicationController
 
   # POST /people
   # POST /people.xml
-  def create
+  def create  	
     @person = Person.new(params[:person])
 		@person.tostring = @person.to_s
 
     respond_to do |format|
-      if @person.save
-        flash[:notice] = ( @person.teacher!=nil ? t('teacher') : t('student') )+t('created')
-	      format.html { redirect_to( session[:redirect] || people_path ) }
-        format.xml  { render :xml => @person, :status => :created, :location => @person }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
-      end
+      format.html{
+      	if @person.save
+		      flash[:notice] = ( @person.teacher!=nil ? t('teacher') : t('student') )+t('created')
+		      format.html { redirect_to( session[:redirect] || people_path ) }
+		      format.xml  { render :xml => @person, :status => :created, :location => @person }
+		    else
+		      format.html { render :action => "new" }
+		      format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+		    end
+		  }
+		  format.js
     end
   end
 

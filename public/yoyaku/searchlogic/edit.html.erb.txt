@@ -1,0 +1,34 @@
+&lt;div class="form">
+&lt;%= error_messages_for :attendance %>
+&lt;fieldset>
+&lt;legend>&lt;%= t('attendances.editing') %>&lt;/legend>
+
+&lt;% form_for( @attendance ) do |f| %>
+  &lt;p>
+    &lt;label for="student">&lt;%= t('student') %>&lt;/label>
+    &lt;%= link_to h( @attendance.student ), @attendance.student ? @attendance.student : "" %>
+  &lt;/p>
+  
+  &lt;p>
+    &lt;label for="klass">&lt;%= t('klass') %>&lt;/label>
+    &lt;%= link_to h( @attendance.klass.full_description ), @attendance.klass ? @attendance.klass : "" %>
+  &lt;/p>
+  
+  &lt;p>
+    &lt;%= f.label :cancel, t('cancel') %>
+    &lt;table>&lt;tr>
+      &lt;td bgcolor="#AAAAFF">&lt;%= f.radio_button :cancel, false %>&lt;%= t('offu') %>&lt;/td>
+      &lt;td bgcolor="#FFAAAA">&lt;%= f.radio_button :cancel, true %>&lt;%= t('onu') %>&lt;/td>
+    &lt;/tr>&lt;/table>
+  &lt;/p>
+  
+  &lt;p>
+    &lt;%= f.label :note, t('note') %>
+    &lt;%= f.text_area :note, :rows=>8, :cols=>27 %>
+  &lt;/p>
+&lt;% end %>
+
+&lt;%= link_to t('info'), @attendance, :class=>:link %>
+
+&lt;/fieldset>
+&lt;/div>

@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>
+Searchlogic
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Searchlogic</h1>
+<doc tags=["rails","hirb","searchlogic"] title="Searchlogic">
+Install the gem with:
+<pre class="code">
+yoyaku><span class="typing">gem install searchlogic</span>
+Successfully installed searchlogic-2.3.3
+Successfully installed activesupport-2.3.4
+2 gems installed
+Installing ri documentation for searchlogic-2.3.3...
+Installing ri documentation for activesupport-2.3.4...
+Installing RDoc documentation for searchlogic-2.3.3...
+Installing RDoc documentation for activesupport-2.3.4...
+</pre>
+And add to your environment file:
+<pre class="code">
+<div class="path"><a href="searchlogic/environment.rb.txt">yoyaku/config/environment.rb</a></div>
+...
+Rails::Initializer.run do |config|
+	...
+  # config.gem "aws-s3", :lib => "aws/s3"
+  <span class="highlight">config.gem "searchlogic"</span>
+	...
+end
+</pre>
+<h2>Hirb</h2>
+Install it:
+<pre class="code">
+yoyaku><span class="typing">gem install cldwalker-hirb --source http://gems.github.com</span>
+Successfully installed cldwalker-hirb-0.2.5
+1 gem installed
+</pre>
+Withiout hirb installed:
+<pre class="code">
+yoyaku><span class="typing">ruby script/console</span>
+Loading development environment (Rails 2.2.2)
+
+>> <span class="typing">Classroom.all</span>
+=> [#&lt;Classroom id: 1, name: "1", address: "", description: "", inactive: false,
+ note: "", created_at: "2009-05-13 14:03:01", updated_at: "2009-05-13 14:03:01">
+, #&lt;Classroom id: 2, name: "2", address: "", description: "", inactive: false, n
+ote: "", created_at: "2009-05-13 14:03:34", updated_at: "2009-05-13 14:03:34">,
+#&lt;Classroom id: 3, name: "3", address: "", description: "", inactive: false, not
+e: "", created_at: "2009-05-13 14:03:38", updated_at: "2009-05-13 14:03:38">, #&lt;
+Classroom id: 4, name: "4", address: "", description: "", inactive: false, note:
+ "", created_at: "2009-05-15 12:17:08", updated_at: "2009-05-15 12:17:08">, #&lt;Cl
+assroom id: 5, name: "5", address: "", description: "", inactive: false, note: "
+", created_at: "2009-05-29 04:53:36", updated_at: "2009-05-29 04:53:36">]
+</pre>
+Input these commands from the start:
+<pre class="code">
+yoyaku><span class="typing">ruby script/console</span>
+Loading development environment (Rails 2.2.2)
+
+>> <span class="typing">ActiveRecord::Base.logger = Logger.new(STDOUT)</span>
+=> #&lt;Logger:0x5ce0ab8 @formatter=nil, @default_formatter=#&lt;Logger::Formatter:0x5
+ce0a90 @datetime_format=nil>, @level=0, @progname=nil, @logdev=#&lt;Logger::LogDevi
+ce:0x5ce0a40 @mutex=#&lt;Logger::LogDevice::LogDeviceMutex:0x5ce0a04 @mon_entering_
+queue=[], @mon_count=0, @mon_owner=nil, @mon_waiting_queue=[]>, @dev=#&lt;IO:0x2946
+af4>, @shift_size=nil, @shift_age=nil, @filename=nil>>
+
+>> <span class="typing">require 'hirb'</span>
+=> []
+
+>> <span class="typing">Hirb::View.enable</span>
+=> true
+
+<i>(And with the default timestamp removed...)</i>
+>> <span class="typing">Classroom.all</span>
+[4;36;1mSQL (0.0ms)[0m[0;1mSET NAMES 'utf8'[0m
+[4;35;1mSQL (0.0ms)[0m[0mSET SQL_AUTO_IS_NULL=0[0m
+[4;36;1mClassroom Load (0.0ms)[0m[0;1mSELECT * FROM `classrooms`[0m
+[4;35;1mClassroom Columns (0.0ms)[0m[0mSHOW FIELDS FROM `classrooms`[0m
++----+------+---------+-------------+----------+------+
+| id | name | address | description | inactive | note | 
++----+------+---------+-------------+----------+------+
+| 1  | 1    |         |             | false    |      |
+| 2  | 2    |         |             | false    |      |
+| 3  | 3    |         |             | false    |      |
+| 4  | 4    |         |             | false    |      |
+| 5  | 5    |         |             | false    |      |
++----+------+---------+-------------+----------+------+
+</pre>
+
+<pre class="code">
+<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+&lt;div id="list">
+&lt;%= error_messages_for :person %>
+&lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
+
+&lt;table>&lt;tr>
+&lt;td>
+  &lt;label for="searchtext">&lt;%= t('search') %>:&lt;/label>
+  &lt;%= text_field_tag :searchtext, @searchtext, :size=>30 %>
+  &lt;%= observe_field(
+        :searchtext,
+        :frequency => 0.25,
+        :update => :search_hits,
+        :url => { :action => :live_search, :category => @category },
+        :with => 'search_text' ) %>
+&lt;/td>
+&lt;td>
+  &lt;% form_for :template_class,
+              :url => { :action=>'index' },
+              :html => { :method=>'get' } do |f| %>
+    &lt;label for="category">&lt;%= t('category') %>:&lt;/label>
+    &lt;%= select_tag :category,
+      options_for_select( [t('people.title'), t('teachers.title'), t('students.t
+itle')], @category ),
+      :onchange => "this.form.submit();" %>
+  &lt;% end %>
+&lt;/td>
+&lt;/tr>&lt;/table>&lt;br />
+&lt;div id="search_hits">&lt;/div>
+
+
+&lt;/div>
+&lt;br />
+
+&lt;div class="links">
+&lt;% if clearance &lt; 3 %>
+  &lt;%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :clas
+s=>'link' %> |
+  &lt;%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :cl
+ass=>'link' %>&lt;br />
+&lt;% end %>
+&lt;/div>
+</pre>
+</doc>
+
+
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+
