@@ -1,38 +1,47 @@
-﻿<div id="list">
-<%= error_messages_for :person %>
-<h1><%= t('listing') %><%= @category %></h1>
+﻿&lt;div id="list">
+&lt;%= error_messages_for :person %>
+&lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
 
-<table><tr>
-<td>
-  <label for="searchtext"><%= t('search') %>:</label>
-  <%= text_field_tag :searchtext, @searchtext, :size=>30 %>
-  <%= observe_field(
-        :searchtext,
-        :frequency => 0.25,
-        :update => :search_hits,
-        :url => { :action => :live_search, :category => @category },
-        :with => 'search_text' ) %>
-</td>
-<td>
-  <% form_for :template_class,
-              :url => { :action=>'index' },
-              :html => { :method=>'get' } do |f| %>
-    <label for="category"><%= t('category') %>:</label>
-    <%= select_tag :category,
-      options_for_select( [t('people.title'), t('teachers.title'), t('students.title')], @category ),
-      :onchange => "this.form.submit();" %>
-  <% end %>
-</td>
-</tr></table><br />
-<div id="search_hits"></div>
+&lt;% form_for @search do |f| %>
+&lt;p>
+  &lt;label for="name">&lt;%= t('name') %>&lt;/label>
+  &lt;%= text_field_tag :name, params[:name] %>
+  &lt;%= f.submit "Search" %>
+&lt;p>
+&lt;div class="blind" id="cell_blind" style="display:none">
+  &lt;p>
+    &lt;%= f.label :mobile_phone_like, t('mobile_phone') %>
+    &lt;%= f.text_field :mobile_phone_like, :size=>30 %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+    &lt;%= f.text_field :mail_address_mobile_like, :size=>30 %>
+  &lt;/p>
+&lt;/div>
+&lt;p>
+  &lt;div id="links">
+    &lt;span style="font-size: medium;">Sort by:&lt;/span>
+    &lt;%= order @search, :by => :first_name %> |
+    &lt;%= order @search, :by => :family_name %>
+    &lt;%= order @search, :by => :first_name_kana %> |
+    &lt;%= order @search, :by => :family_name_kana %>        
+  &lt;/div>
+&lt;/p>
+&lt;% end %>
 
+&lt;p>
+  &lt;a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search&lt;/a>&lt;p>
+&lt;/p>
+&lt;div id="search_hits">&lt;/div>
 
-</div>
-<br />
+&lt;%= render :partial => "list_people" %>
 
-<div class="links">
-<% if clearance < 3 %>
-  <%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :class=>'link' %> | 
-  <%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :class=>'link' %><br />
-<% end %>
-</div>
+&lt;/div>
+&lt;br />
+
+&lt;div class="links">
+&lt;% if clearance &lt; 3 %>
+  &lt;%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :class=>'link' %> | 
+  &lt;%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :class=>'link' %>&lt;br />
+&lt;% end %>
+&lt;/div>

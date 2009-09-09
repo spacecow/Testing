@@ -92,9 +92,10 @@ af4>, @shift_size=nil, @shift_age=nil, @filename=nil>>
 | 5  | 5    |         |             | false    |      |
 +----+------+---------+-------------+----------+------+
 </pre>
-
+<h2>Search Form</h2>
+This is how the search form looks like right now:
 <pre class="code">
-<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+<div class="path"><a href="searchlogic/index_old.html.erb.txt">yoyaku/app/views/people/index_old.html.erb</a></div>
 &lt;div id="list">
 &lt;%= error_messages_for :person %>
 &lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
@@ -130,16 +131,159 @@ itle')], @category ),
 
 &lt;div class="links">
 &lt;% if clearance &lt; 3 %>
-  &lt;%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :clas
+  &lt;%= link_to t('teachers.new'), new_person_path( :status=> t('teacher') ), :clas
 s=>'link' %> |
-  &lt;%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :cl
+  &lt;%= link_to t('students.new'), new_person_path( :status=> t('studen') ), :cl
 ass=>'link' %>&lt;br />
 &lt;% end %>
 &lt;/div>
 </pre>
+The <span class="method">form_for</span> is usually used for manipulating resources, but in this case
+<span class="method">search</span> can be thought of as a resource. Then the form can be written:
+<pre class="code">
+<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+&lt;div id="list">
+&lt;%= error_messages_for :person %>
+&lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
+
+&lt;% form_for @search do |f| %>
+<span class="highlight">&lt;p>
+  &lt;%= f.label :first_name_or_family_name_or_first_name_kana_or_family_name_kana_like, t('name') %>
+  &lt;%= f.text_field :first_name_or_family_name_or_first_name_kana_or_family_name_kana_like, :size=>30 %>
+  &lt;%= f.submit "Search" %>
+&lt;p>
+&lt;p>
+  &lt;%= f.label :mobile_phone_like, t('mobile_phone') %>
+  &lt;%= f.text_field :mobile_phone_like, :size=>30 %>
+&lt;/p>
+&lt;p>
+  &lt;%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+  &lt;%= f.text_field :mail_address_mobile_like, :size=>30 %>
+&lt;/p></span>
+&lt;% end %>
+
+&lt;%= render :partial => "list_people" %>
+
+&lt;/div>&lt;br />
+
+&lt;div class="links">
+&lt;% if clearance &lt; 3 %>
+  &lt;%= link_to t('teachers.new'), new_person_path( :status=> t('teachers')), :class=>'link' %> |
+  &lt;%= link_to t('students.new'), new_person_path( :status=> t('students')), :class=>'link' %>&lt;br />
+&lt;% end %>
+&lt;/div></pre>
+<h3>Scope with or</h3>
+Now, these two results should generate the same result:
+1: User.login_or_email_like("foobar")
+2: User.search(:login_or_email_like => "foobar")
+but at the time of writing, it does not, why we need to use a
+<i>virtual attribute</i>
+<pre class="code">
+<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+...
+&lt;% form_for @search do |f| %>
+&lt;p>
+  <span class="highlight">&lt;label for="name"><%= t('name') %>&lt;/label>
+  &lt;%= text_field_tag :name, params[:name] %></span>
+  &lt;%= f.submit "Search" %>
+&lt;p>
+...
+&lt;% end %>
+...
+</pre>
+This is handled by the controller instead of
+<pre class="code">
+<div class="path"><a href="searchlogic/people_controller.rb.txt">yoyaku/app/controllers/people_controller.rb</a></div>
+class PeopleController &lt; ApplicationController
+  ...
+  def index
+    <span class="highlight">@search = Person.search( params[:search] )
+    @people = @search.all</span>
+
+    session[:redirect] = request.request_uri
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @people }
+      format.js
+    end
+  end
+  ...
+end
+</pre>
+...like this
+<pre class="code">
+<div class="path"><a href="searchlogic/people_controller.rb.txt">yoyaku/app/controllers/people_controller.rb</a></div>
+class PeopleController &lt; ApplicationController
+  ...
+  def index
+    @search = Person.search( params[:search] )
+    <span class="highlight">names = params[:name].empty? ? "" : params[:name].to_s.split
+    @people = Person.first_name_or_family_name_or_first_name_kana_or_family_name_kana_like_any( names ).search( params[:search] )</span>
+    
+    session[:redirect] = request.request_uri
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @people }
+      format.js
+    end
+  end
+  ...
+end
+</pre>
+<h3>Sorting</h3>
+Searchlogic provides a helper method called <span class="method">order</span> that can be added to the
+view and which provides links that order the search results:
+<pre class="code">
+<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+...
+&lt;% form_for @search do |f| %>
+...
+&lt;p>
+  &lt;%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+  &lt;%= f.text_field :mail_address_mobile_like, :size=>30 %>
+&lt;/p>
+<span class="highlight">&lt;p>
+  &lt;div id="links">
+    &lt;span style="font-size: medium;">Sort by:&lt;/span>
+    &lt;%= order @search, :by => :first_name %> |
+    &lt;%= order @search, :by => :family_name %>
+    &lt;%= order @search, :by => :first_name_kana %> |
+    &lt;%= order @search, :by => :family_name_kana %>
+  &lt;/div>
+&lt;/p></span>
+&lt;% end %>
+...
+</pre>
+<h3>Advanced search</h3>
+A flashy effect can be added to hide away some fields that might be
+called advanced search fields:
+<pre class="code">
+<div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+...
+&lt;% form_for @search do |f| %>
+...
+<span class="highlight">&lt;div class="blind" id="cell_blind" style="display:none"></span>
+  &lt;p>
+    &lt;%= f.label :mobile_phone_like, t('mobile_phone') %>
+    &lt;%= f.text_field :mobile_phone_like, :size=>30 %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+    &lt;%= f.text_field :mail_address_mobile_like, :size=>30 %>
+  &lt;/p>
+<span class="highlight">&lt;/div></span>
+...
+&lt;% end %>
+
+<span class="highlight">&lt;p>
+  &lt;a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); \
+     return false;">Advanced search&lt;/a>
+&lt;/p></span>
+...
+</pre>
 </doc>
-
-
 
 <hr>
 
@@ -148,7 +292,7 @@ ass=>'link' %>&lt;br />
 <--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
 </td>
 <td width="350" align="right">
-<a href="yoyaku_12.html">Part 12 - </a> --->  
+<a href="paginate.html">Paginate</a> --->  
 </td>
 </tr></table>
 

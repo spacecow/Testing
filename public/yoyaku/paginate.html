@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>
+Paginate
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Paginate</h1>
+<doc tags=["rails","paginate"] title="Paginate">
+Add this piece of code to the environment file:
+<pre class="code">
+<div class="path"><a href="paginate/environment.rb.txt">yoyaku/config/environment.rb</a></div>
+...
+Rails::Initializer.run do |config|
+  ...
+  config.gem "searchlogic"
+  <span class="highlight">config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"</span>
+  ...
+end
+</pre>
+So when the server is started again:
+<pre class="code">
+<span class="typing">yoyaku>ruby script/server</span>
+=> Booting Mongrel
+=> Rails 2.3.4 application starting on http://0.0.0.0:3000
+Missing these required gems:
+  mislav-will_paginate
+
+You're running:
+  ruby 1.8.6.111 at c:/ruby/bin/ruby.exe
+  rubygems 1.3.1 at C:/Documents and Settings/Johan/.gem/ruby/1.8, c:/ruby/lib/r
+uby/gems/1.8
+
+Run `rake gems:install` to install the missing gems.
+
+<span class="typing">yoyaku>rake gems:install</span>
+(in C:/Johan/Ruby/Rails/yoyaku)
+gem.bat install mislav-will_paginate --source http://gems.github.com
+Successfully installed mislav-will_paginate-2.3.11
+1 gem installed
+Installing ri documentation for mislav-will_paginate-2.3.11...
+Installing RDoc documentation for mislav-will_paginate-2.3.11..
+</pre>
+Start up the server again...
+</doc>
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="paginate.html">Paginate</a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
+

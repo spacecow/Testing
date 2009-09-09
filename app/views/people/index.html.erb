@@ -2,40 +2,42 @@
 <%= error_messages_for :person %>
 <h1><%= t('listing') %><%= @category %></h1>
 
-<%= @testing %>
-<table>
-	<% form_for @search do |f| %>
-		<tr>
-	  	<td>
-				<label for="name"><%= t('name') %></label>
-				<%= text_field_tag :name %>
-			</td>
-			<td><%= f.submit "Search" %></td>
-	  </tr>
-		<tr>
-	  	<td>
-				<%= f.label :mobile_phone_like, t('mobile_phone') %>
-				<%= f.text_field :mobile_phone_like, :size=>30 %>
-			</td>
-	  </tr>
-		<tr>
-	  	<td>
-				<%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
-				<%= f.text_field :mail_address_mobile_like, :size=>30 %>
-			</td>
-	  </tr>
-
-	  <tr>
-	  	
-	  </tr>
-	<% end %>
-</table><br />
-<div id="search_hits"></div>
-
-<%= render :partial => "list_people" %>
-
+<% form_remote_tag :url => people_path, :method => :get do %>
+<p>
+	<label for="name"><%= t('name') %></label>
+	<%= text_field_tag :name, params[:name] %>
+	<%= submit_tag "Search" %>
+<p>
+<div class="blind" id="cell_blind" style="display:none">
+	<p>
+		<label for="mobile_no"><%= t('mobile_phone') %></label>
+		<%= text_field_tag :mobile_no, params[:mobile_no] %>
+	</p>
+	<p>
+		<label for="mobile_address"><%= t('mail_address_mobile') %></label>
+		<%= text_field_tag :mobile_address, params[:mobile_address] %>
+	</p>
 </div>
-<br />
+<p>
+	<div id="links">
+		<span style="font-size: medium;">Sort by:</span>
+		<%= order @search, :by => :first_name %> |
+		<%= order @search, :by => :family_name %>
+		<%= order @search, :by => :first_name_kana %> |
+		<%= order @search, :by => :family_name_kana %>  			
+	</div>
+</p>
+<% end %>
+
+<p>
+	<a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search</a>
+</p>
+
+<div id="search_hits">
+	<%= render :partial => "list_people" %>
+</div>
+
+</div><br />
 
 <div class="links">
 <% if clearance < 3 %>
