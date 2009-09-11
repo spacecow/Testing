@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  people_per_page: 1
+  language: MyString
+
+two:
+  people_per_page: 1
+  language: MyString

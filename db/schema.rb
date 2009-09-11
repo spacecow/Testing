@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090906121110) do
+ActiveRecord::Schema.define(:version => 20090911055158) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -147,6 +147,14 @@ ActiveRecord::Schema.define(:version => 20090906121110) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "settings", :force => true do |t|
+    t.string   "name"
+    t.integer  "people_per_page"
+    t.string   "language"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "students", :force => true do |t|
     t.integer  "person_id"

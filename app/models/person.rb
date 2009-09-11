@@ -2,8 +2,6 @@ class Person < ActiveRecord::Base
   has_one :teacher
   has_one :student
   
-  attr_accessor :password
-
   validates_uniqueness_of :user_name
   validates_presence_of :family_name, :first_name, :family_name_kana, :first_name_kana, :gender, :mail_address_mobile
 

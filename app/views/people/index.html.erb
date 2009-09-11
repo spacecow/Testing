@@ -2,35 +2,36 @@
 <%= error_messages_for :person %>
 <h1><%= t('listing') %><%= @category %></h1>
 
-<% form_remote_tag :url => people_path, :method => :get do %>
+
+<% form_for @search, :url => people_path do |f| %>
 <p>
-	<label for="name"><%= t('name') %></label>
-	<%= text_field_tag :name, params[:name] %>
-	<%= submit_tag "Search" %>
+  <%= f.label :tostring_like, t('name') %>
+  <%= f.text_field :tostring_like, :size=>30 %>
+  <%= f.submit "Search" %>
 <p>
 <div class="blind" id="cell_blind" style="display:none">
 	<p>
-		<label for="mobile_no"><%= t('mobile_phone') %></label>
-		<%= text_field_tag :mobile_no, params[:mobile_no] %>
+	  <%= f.label :mobile_phone_like, t('mobile_phone') %>
+	  <%= f.text_field :mobile_phone_like, :size=>30 %>
 	</p>
 	<p>
-		<label for="mobile_address"><%= t('mail_address_mobile') %></label>
-		<%= text_field_tag :mobile_address, params[:mobile_address] %>
+	  <%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+	  <%= f.text_field :mail_address_mobile_like, :size=>30 %>
 	</p>
 </div>
 <p>
-	<div id="links">
-		<span style="font-size: medium;">Sort by:</span>
-		<%= order @search, :by => :first_name %> |
-		<%= order @search, :by => :family_name %>
-		<%= order @search, :by => :first_name_kana %> |
-		<%= order @search, :by => :family_name_kana %>  			
-	</div>
+  <div id="links">
+    <span style="font-size: medium;">Sort by:</span>
+    <%= order @search, :by => :first_name %> |
+    <%= order @search, :by => :family_name %>
+    <%= order @search, :by => :first_name_kana %> |
+    <%= order @search, :by => :family_name_kana %>
+  </div>
 </p>
 <% end %>
 
 <p>
-	<a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search</a>
+  <a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search</a>
 </p>
 
 <div id="search_hits">

@@ -1,0 +1,20 @@
+<% title "Setting" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @setting.name %>
+</p>
+<p>
+  <strong>People Per Page:</strong>
+  <%=h @setting.people_per_page %>
+</p>
+<p>
+  <strong>Language:</strong>
+  <%=h @setting.language %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_setting_path(@setting) %> |
+  <%= link_to "Destroy", @setting, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", settings_path %>
+</p>

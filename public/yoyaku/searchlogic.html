@@ -176,14 +176,13 @@ The <span class="method">form_for</span> is usually used for manipulating resour
 Now, these two results should generate the same result:
 1: User.login_or_email_like("foobar")
 2: User.search(:login_or_email_like => "foobar")
-but at the time of writing, it does not, why we need to use a
-<i>virtual attribute</i>
+but at the time of writing, it does not, why the code is changed:
 <pre class="code">
 <div class="path"><a href="searchlogic/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
 ...
 &lt;% form_for @search do |f| %>
 &lt;p>
-  <span class="highlight">&lt;label for="name"><%= t('name') %>&lt;/label>
+  <span class="highlight">&lt;label for="name">&lt;%= t('name') %>&lt;/label>
   &lt;%= text_field_tag :name, params[:name] %></span>
   &lt;%= f.submit "Search" %>
 &lt;p>
@@ -283,6 +282,30 @@ called advanced search fields:
 &lt;/p></span>
 ...
 </pre>
+
+attr_accessible is used to identify attributes that are accessible by
+your controller methods. This is to protect your models from being
+written to by malicious users posting values that they shouldn't be
+into your create and update methods. All of your fields are blank
+except the one that you specified to be accessible because rails is
+doing it's job :)
+
+attr_accessible will only allow access to the attributes that you
+specify, denying the rest. attr_protected will deny access to the
+attributes that you specify, allowing the rest, and specifying neither
+in your model will allow access to all attributes.
+
+attr_accessor is an easy way to create read and write accessors in your
+class. attr_accessor :myvar replaces the following.
+
+def myvar
+  @myvar
+end
+
+def myvar=(myvar)
+  @myvar=myvar
+end
+
 </doc>
 
 <hr>

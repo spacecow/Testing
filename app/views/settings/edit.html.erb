@@ -1,0 +1,15 @@
+<div class="form">
+<%= error_messages_for :setting %>
+
+<fieldset>
+<legend><%= t('settings.editing') %></legend>
+
+<%= render :partial => 'form' %>
+
+<p>
+  <%= link_to t('show'), @setting %> |
+  <%= link_to "View All", settings_path %>
+</p>
+
+</fieldset>
+</div>

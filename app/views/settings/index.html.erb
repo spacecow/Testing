@@ -1,0 +1,21 @@
+<h1>Settings</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>People Per Page</th>
+    <th>Language</th>
+  </tr>
+  <% for setting in @settings %>
+    <tr>
+      <td><%=h setting.name %></td>
+      <td><%=h setting.people_per_page %></td>
+      <td><%=h setting.language %></td>
+      <td><%= link_to "Show", setting %></td>
+      <td><%= link_to "Edit", edit_setting_path(setting) %></td>
+      <td><%= link_to "Destroy", setting, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Setting", new_setting_path %></p>

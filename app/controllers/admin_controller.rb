@@ -18,7 +18,7 @@ class AdminController < ApplicationController
       else
         flash.now[:error] = t 'login.flash.invalid_user_or_password'
       end
-    end
+  	end
   end
 
   def logout

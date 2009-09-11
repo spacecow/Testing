@@ -1,0 +1,49 @@
+﻿&lt;div id="list">
+&lt;%= error_messages_for :person %>
+&lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
+&lt;%= javascript_include_tag 'pagination' %>
+
+&lt;% form_for @search, :url => people_path do |f| %>
+&lt;p>
+  &lt;%= f.label :tostring_like, t('name') %>
+  &lt;%= f.text_field :tostring_like, :size=>30 %>
+  &lt;%= f.submit "Search" %>
+&lt;p>
+&lt;div class="blind" id="cell_blind" style="display:none">
+  &lt;p>
+    &lt;%= f.label :mobile_phone_like, t('mobile_phone') %>
+    &lt;%= f.text_field :mobile_phone_like, :size=>30 %>
+  &lt;/p>
+  &lt;p>
+    &lt;%= f.label :mail_address_mobile_like, t('mail_address_mobile') %>
+    &lt;%= f.text_field :mail_address_mobile_like, :size=>30 %>
+  &lt;/p>
+&lt;/div>
+&lt;p>
+  &lt;div id="links">
+    &lt;span style="font-size: medium;">Sort by:&lt;/span>
+    &lt;%= order @search, :by => :first_name %> |
+    &lt;%= order @search, :by => :family_name %>
+    &lt;%= order @search, :by => :first_name_kana %> |
+    &lt;%= order @search, :by => :family_name_kana %>
+  &lt;/div>
+&lt;/p>
+&lt;% end %>
+
+&lt;p>
+  &lt;a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search&lt;/a>
+&lt;/p>
+
+&lt;%= will_paginate @people %>
+&lt;div id="search_hits">
+  &lt;%= render :partial => "list_people" %>
+&lt;/div>
+
+&lt;/div>&lt;br />
+
+&lt;div class="links">
+&lt;% if clearance &lt; 3 %>
+  &lt;%= link_to t('teachers.new'), new_person_path( :status=> '講師' ), :class=>'link' %> | 
+  &lt;%= link_to t('students.new'), new_person_path( :status=>'受講生' ), :class=>'link' %>&lt;br />
+&lt;% end %>
+&lt;/div>

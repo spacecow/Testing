@@ -10,11 +10,11 @@ Paginate
 <body>
 <table><tr><td width="300">
 <pre class="main">
-<h1>Paginate</h1>
-<doc tags=["rails","paginate"] title="Paginate">
+<h1>Pagination</h1>
+<doc tags=["rails","pagination","AJAX","jQuery"] title="Pagination">
 Add this piece of code to the environment file:
 <pre class="code">
-<div class="path"><a href="paginate/environment.rb.txt">yoyaku/config/environment.rb</a></div>
+<div class="path"><a href="pagination/environment.rb.txt">yoyaku/config/environment.rb</a></div>
 ...
 Rails::Initializer.run do |config|
   ...
@@ -46,7 +46,80 @@ Successfully installed mislav-will_paginate-2.3.11
 Installing ri documentation for mislav-will_paginate-2.3.11...
 Installing RDoc documentation for mislav-will_paginate-2.3.11..
 </pre>
-Start up the server again...
+Start up the server again and call paginate with options specified:
+<pre class="code">
+<div class="path"><a href="pagination/people_controller.rb.txt">yoyaku/app/control
+lers/people_controller.rb</a></div>
+class PeopleController &lt; ApplicationController
+  ...
+  def index
+    @search = Person.search( params[:search] )
+    @people = @search.<span class="highlight">paginate( :per_page => 5, :page=>params[:page] )</span>
+
+    session[:redirect] = request.request_uri
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @people }
+      format.js
+    end
+  end
+	...
+</pre>
+And in the view just call the will_paginate tag to get its links:
+<pre class="code">
+<div class="path"><a href="pagination/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+...
+<span class="highlight">&lt;%= will_paginate @people %></span>
+&lt;div id="search_hits">
+  &lt;%= render :partial => "list_people" %>
+&lt;/div>
+...
+</pre>
+<h2>Adding AJAX functionality</h2>
+Download <a href="http://jquery.com/">jQuery</a> (I got jquery-1.3.2.min.js - 55.9 KB) and put it in
+the <span class="path">public/javascript/</span> directory as <i>jquery.js</i>. Then add to the
+application's layout file:
+<pre class="code">
+<div class="path"><a href="pagination/courses.html.erb.txt">yoyaku/app/views/layouts/courses.html.erb</a></div>
+...
+&lt;head>
+  ...
+  &lt;%= stylesheet_link_tag 'yoyaku' %>
+  &lt;%= stylesheet_link_tag 'rails' %>
+  &lt;%= javascript_include_tag :defaults %>
+  <span class="highlight">&lt;%= javascript_include_tag 'jquery' %></span>
+&lt;/head>
+&lt;body>
+  ...
+&lt;/body>
+...
+</pre>
+Create a file <span class="path">pagination.js</span> in the same directory. The first thing
+to add to the file is some onclick events for the pagination links
+on the page. However, events should not be added until the page's
+Document Object Model (DOM) has been loaded. The browser can be made
+execute a function when the DOM has loaded by making it call the $
+function, passing it the function as an argument. To test that the
+code is set up correctly, start by showing an alert when the DOM loads:
+<pre class="code">
+<div class="path"><a href="pagination/pagination.js.txt">yoyaku/public/javascripts/pagination.js</a></div>
+$( function(){
+  alert("seems to be working");
+});</pre>
+However, before the code will work the new JavaScript file has to be
+included on the products page:
+<pre class="code">
+<div class="path"><a href="pagination/index.html.erb.txt">yoyaku/app/views/people/index.html.erb</a></div>
+...
+&lt;h1>&lt;%= t('listing') %>&lt;%= @category %>&lt;/h1>
+<span class="highlight">&lt;%= javascript_include_tag 'pagination' %></span>
+
+&lt;% form_for @search, :url => people_path do |f| %>
+  ...
+&lt;% end %>
+...
+</pre>
 </doc>
 
 <hr>
