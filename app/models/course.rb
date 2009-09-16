@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   has_many :klasses
   has_many :teachings
   has_many :teachers, :through=>:teachings
+  has_many :schedules
     
   validates_presence_of :name
   validates_uniqueness_of :name

@@ -142,12 +142,18 @@ en:
 
   grammar_unit: "Grammar unit"
   page: "Page"
+  people_per_page: "People/page"
   schedule: "Schedule"
+  units_per_schedule: "Units/schedule"
   view_all: "View all"
   schedules:
     editing: "Editing Schedule"
     new: "New Schedule"
     title: "Schedules"
+  settings:
+    editing: "Editing Settings"
+    new: "New Settings"
+    title: "Settings"
   units:
     editing: "Editing Unit"
     new: "New Unit"

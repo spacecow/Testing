@@ -264,3 +264,22 @@ ja:
         less_than_or_equal_to: "は{{count}}以下の値にしてください。"
         odd: "は奇数にしてください。"
         even: "は偶数にしてください。"
+        
+  grammar_unit: "Grammar unit"
+  page: "Page"
+  people_per_page: "People/page"
+  schedule: "Schedule"
+  units_per_schedule: "Units/schedule"
+  view_all: "View all"
+  schedules:
+    editing: "スケジュール編集"
+    new: "新しいスケジュール"
+    title: "スケジュール"
+  settings:
+    editing: "設定編集"
+    new: "新しい設定"
+    title: "設定"
+  units:
+    editing: "ユニット編集"
+    new: "新しいユニット"
+    title: "ユニット"

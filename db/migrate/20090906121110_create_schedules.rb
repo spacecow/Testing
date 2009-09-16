@@ -1,7 +1,7 @@
 class CreateSchedules < ActiveRecord::Migration
   def self.up
     create_table :schedules do |t|
-      t.string :title
+      t.references :course
       t.text :description
       t.text :note
       t.timestamps

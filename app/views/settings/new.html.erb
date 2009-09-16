@@ -1,5 +1,16 @@
-<% title "New Setting" %>
+<div class="form">
+<%= error_messages_for :setting %>
 
-<%= render :partial => 'form' %>
+<fieldset>
+<legend><%= t('settings.new') %></legend>
 
-<p><%= link_to "Back to List", settings_path %></p>
+<% form_for @setting do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), settings_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

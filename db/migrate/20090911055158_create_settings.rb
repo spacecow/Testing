@@ -3,6 +3,7 @@ class CreateSettings < ActiveRecord::Migration
     create_table :settings do |t|
       t.string :name	
       t.integer :people_per_page
+      t.integer :units_per_schedule
       t.string :language
 
       t.timestamps

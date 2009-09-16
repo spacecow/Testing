@@ -30,6 +30,15 @@
 							<li><a href="/classrooms"><%= t('classrooms.title') %></a></li>
 						</ul>
 					</li>
+					
+					<li><a href="/schedules"><%= t('schedules.title') %></a>
+						<ul>
+							<li>------------------</li>
+							<li><a href="/units"><%= t('units.title') %></a></li>
+						</ul>
+					</li>					
+					<li><a href="/settings"><%= t('settings.title') %></a>
+					</li>		
 				<% end %>
 				
 				<li><%= link_to t('mymafumafu.title'), current_user.student.nil? ? teacher_path( current_user.teacher.id ) : edit_klasses_student_path( current_user.student.id ) %></a>

@@ -7,8 +7,9 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    @search = Person.search( params[:search] )
-		@people = @search.paginate( :per_page => 3, :page=>params[:page] )
+    search_hash = ( params[:search] ? params[:search] : { :first_name_like=>"xxx" })
+    @search = Person.search( search_hash )
+		@people = @search.paginate( :per_page => people_per_page, :page=>params[:page] )
 		
 		
     session[:redirect] = request.request_uri

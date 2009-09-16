@@ -1,7 +1,16 @@
 <p>
-  <%= f.label :title, t('title') %>
-	<%= f.text_field :title, :size=>20 %>
+  <%= f.label :course_id, t('course') %>
+	<%= f.collection_select :course_id,
+				@courses, :id, :name,
+		    :include_blank => true %> 	
 </p>
+<table><tr><td>
+	<table cellpadding="2" cellspacing="1">
+		<% @units.each do |unit| %>
+			<%= render :partial=>"show_scheduled_unit", :locals=>{ :unit=>unit } %>
+		<% end %>
+	</table>
+</td></tr></table>
 <p>
   <%= f.label :description, t('description') %>
  	<%= f.text_area :description, :rows=>8, :cols=>27 %>

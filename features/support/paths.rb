@@ -12,16 +12,22 @@ module NavigationHelpers
       '/'
     when /the login page/
     	login_path
+
+    when /the list of schedules/
+    	schedules_path
+    when /the new page of schedule/
+    	new_schedule_path
+
+    when /the list of classrooms/
+    	classrooms_path
+    when /the list of [ck]lasses/
+    	klasses_path
     when /the list of course times/
     	course_times_path
     when /the list of courses/
     	courses_path
     when /the list of units/
     	units_path
-    when /the list of classrooms/
-    	classrooms_path
-    when /the list of [ck]lasses/
-    	klasses_path
     when /the "(.+)" list of classes/
     	klasses_path( :date => DateTime.parse( $1 ))
     when /the list of people/

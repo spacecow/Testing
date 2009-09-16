@@ -128,6 +128,10 @@ private
     redirect_to :controller=>:admin, :action=>:login
 	end
 
+	def people_per_page
+		session[:settings].people_per_page
+	end
+		
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'en'
   end  

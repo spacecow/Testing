@@ -1,16 +1,18 @@
-<% form_for @setting do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :name, t('name') %>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :people_per_page, t('people_per_page') %>
-    <%= f.text_field :people_per_page %>
-  </p>
-  <p>
-    <%= f.label :language, t('language') %>
-    <%= f.text_field :language %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
-<% end %>
+<p>
+  <%= f.label :name, t('name') %>
+	<%= f.text_field :name, :size=>20 %>
+</p>
+<p>
+  <%= f.label :people_per_page, t('people_per_page') %>
+	<%= f.text_field :people_per_page, :size=>20 %>
+</p>
+<p>
+  <%= f.label :units_per_schedule, t('units_per_schedule') %>
+	<%= f.text_field :units_per_schedule, :size=>20 %>
+</p>
+<p>
+  <%= f.label :language, t('language') %>
+	<%= f.text_field :language, :size=>20 %>
+</p>
+  <p><%= f.submit label_text, :class=>"submit" %></p>
+

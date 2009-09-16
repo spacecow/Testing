@@ -21,6 +21,23 @@ ActiveRecord::Schema.define(:version => 20090911055158) do
     t.boolean  "chosen",     :default => false
   end
 
+  create_table "classes", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_id"
+    t.integer  "classroom_id"
+    t.integer  "capacity"
+    t.datetime "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "cancel"
+    t.integer  "mail_sending"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "classrooms", :force => true do |t|
     t.string   "name"
     t.string   "address"
@@ -131,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20090911055158) do
   end
 
   create_table "schedules", :force => true do |t|
-    t.string   "title"
+    t.integer  "course_id"
     t.text     "description"
     t.text     "note"
     t.datetime "created_at"
@@ -151,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20090911055158) do
   create_table "settings", :force => true do |t|
     t.string   "name"
     t.integer  "people_per_page"
+    t.integer  "units_per_schedule"
     t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"

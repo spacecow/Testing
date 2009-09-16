@@ -1,4 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :schedules
+
+  map.resources :settings
+
+  map.resources :settings
+
+  map.resources :settings
+
   map.resources :settings
 
   map.resources :schedules

@@ -56,6 +56,10 @@ Given /^teacher "([^\"]*)" had classe?s? "([^\"]*)" yesterday$/ do |username,cla
   end
 end
 
+Given /^teacher "([^\"]*)" has mobile phone "([^\"]*)"$/ do |username, phone|
+  Person.find_by_user_name( username ).update_attribute( :mobile_phone, phone )
+end
+
 Then /^teachers? "([^\"]*)" should have ([0-9]+) courses?$/ do |users,no|
 	users.split(', ').map{|e| find_teacher( e )}.each do |teacher|
 		teacher.courses.count.should == no.to_i

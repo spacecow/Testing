@@ -15,7 +15,7 @@ class SettingsController < ApplicationController
     @setting = Setting.new(params[:setting])
     if @setting.save
       flash[:notice] = "Successfully created setting."
-      redirect_to @setting
+      redirect_to settings_url
     else
       render :action => 'new'
     end

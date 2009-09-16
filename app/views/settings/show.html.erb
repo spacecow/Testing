@@ -1,20 +1,24 @@
-<% title "Setting" %>
+<h1><%= t('info') %> - Setting</h1>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('name') %>:</strong>
   <%=h @setting.name %>
 </p>
 <p>
-  <strong>People Per Page:</strong>
+  <strong><%= t('people_per_page') %>:</strong>
   <%=h @setting.people_per_page %>
 </p>
 <p>
-  <strong>Language:</strong>
+  <strong><%= t('units_per_schedule') %>:</strong>
+  <%=h @setting.units_per_schedule %>
+</p>
+<p>
+  <strong><%= t('language') %>:</strong>
   <%=h @setting.language %>
 </p>
 
-<p>
-  <%= link_to "Edit", edit_setting_path(@setting) %> |
-  <%= link_to "Destroy", @setting, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", settings_path %>
-</p>
+<div class="links">
+  <%= link_to t('edit'), edit_setting_path(@setting), :class=>"link" %> |
+  <%= link_to t('destroy'), @setting, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), settings_path, :class=>"link" %>
+</div>
