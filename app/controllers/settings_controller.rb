@@ -29,7 +29,8 @@ class SettingsController < ApplicationController
     @setting = Setting.find(params[:id])
     if @setting.update_attributes(params[:setting])
       flash[:notice] = "Successfully updated setting."
-      redirect_to @setting
+			set_settings
+      redirect_to settings_path
     else
       render :action => 'edit'
     end

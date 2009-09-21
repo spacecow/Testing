@@ -1,5 +1,5 @@
 Given /^I am logged in as "([^\"]*)"(?: with password "([^\"]*)")?$/ do |username, password|
-	Given "I have basic settings"
+	Given "I have main settings"
 	Given "I go to the login page"
   	And "I fill in \'login\.user_name\' with \"#{username}\""
   	And "I fill in \'login\.password\' with \"" + ( password || "secret" ) + "\""

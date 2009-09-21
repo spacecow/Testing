@@ -12,6 +12,9 @@ module NavigationHelpers
       '/'
     when /the login page/
     	login_path
+    	
+    when /the list of settings/
+    	settings_path
 
     when /the list of schedules/
     	schedules_path

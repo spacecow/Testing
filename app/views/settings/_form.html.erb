@@ -12,7 +12,7 @@
 </p>
 <p>
   <%= f.label :language, t('language') %>
-	<%= f.text_field :language, :size=>20 %>
+	<%= f.select :language, [["English","en"],["Japanese","ja"]] %>
 </p>
   <p><%= f.submit label_text, :class=>"submit" %></p>
 

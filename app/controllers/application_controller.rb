@@ -131,11 +131,19 @@ private
 	def people_per_page
 		session[:settings].people_per_page
 	end
+
+	def set_username( username )
+		session[:user_name] = username
+	end        
 		
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'en'
   end  
   
+	def set_settings( name='main' )
+		session[:settings] = Setting.find_by_name( name )
+	end
+	
   def get_sorting
 		session[:sorting] ||= Sorting.new
 	end

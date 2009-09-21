@@ -39,3 +39,17 @@ Then I should see "Sveholm Johan"
 	And I should not see "Osburg Thomas"
 	And I should not see "Komatsu Aya"
 	And I should not see "Prince Philip"
+
+Scenario: Testing pagination
+Given the list of people displays 3 persons per page
+	And I go to the list of people' 
+When I press 'search'
+Then I should see "Sveholm Johan"
+	And I should see "Osburg Thomas"
+	And I should see "Komatsu Aya"
+	And I should not see "Prince Philip"
+When I follow "Next"
+Then I should not see "Sveholm Johan"
+	And I should not see "Osburg Thomas"
+	And I should not see "Komatsu Aya"
+	And I should see "Prince Philip"

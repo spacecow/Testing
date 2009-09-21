@@ -1,160 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :schedules
-
   map.resources :settings
-
-  map.resources :settings
-
-  map.resources :settings
-
-  map.resources :settings
-
   map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :schedules
-
   map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :schedules
-
-  map.resources :schedules
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
-  map.resources :units
-
   map.resources :attendances
   map.resources :classrooms
   map.resources :courses
@@ -168,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :teachings
   map.resources :template_classes, :collection => { :add_course => :get }
   map.login 'login', :controller => 'admin', :action => 'login'
+  map.root :login
 
   # The priority is based upon order of creation: first created -> highest priority.
 
