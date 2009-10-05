@@ -149,6 +149,7 @@ en:
   schedules:
     editing: "Editing Schedule"
     new: "New Schedule"
+    successfully_created: "Successfully created schedule"
     title: "Schedules"
   settings:
     editing: "Editing Settings"

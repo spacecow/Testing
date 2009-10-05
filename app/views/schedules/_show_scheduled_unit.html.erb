@@ -1,3 +1,12 @@
 <tr>
-		<td style="font-size: small;"><%= unit.day.strftime("%m").to_i %>/<%= day.strftime("%d").to_i %></td> <td style="font-size: small;"><%= t('date.abbr_day_names')[day.strftime("%w").to_i] %></td> <td style="font-size: small;"><%= elements[no] %></td>
+	<td style="font-size: small;">
+		<%= unit.date.strftime("%m").to_i %>/
+		<%= unit.date.strftime("%d").to_i %>
+	</td>
+	<td style="font-size: small;">
+		<%= t('date.abbr_day_names')[unit.date.strftime("%w").to_i] %>
+	</td>
+	<td style="font-size: small;">
+		
+	</td>
 </tr>

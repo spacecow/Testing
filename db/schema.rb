@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090911055158) do
+ActiveRecord::Schema.define(:version => 20090925155307) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -19,23 +19,6 @@ ActiveRecord::Schema.define(:version => 20090911055158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
-  end
-
-  create_table "classes", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "teacher_id"
-    t.integer  "classroom_id"
-    t.integer  "capacity"
-    t.datetime "date"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.string   "title"
-    t.text     "description"
-    t.boolean  "cancel"
-    t.integer  "mail_sending"
-    t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -143,6 +126,16 @@ ActiveRecord::Schema.define(:version => 20090911055158) do
     t.integer  "course_id"
     t.boolean  "cancel"
     t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scheduled_units", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "unit_id"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

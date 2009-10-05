@@ -14,6 +14,7 @@ Teacher.delete_all
 Person.delete_all
 Attendance.delete_all
 Teaching.delete_all
+ScheduledUnit.delete_all
 
 #count = 0
 #After do |scenario|

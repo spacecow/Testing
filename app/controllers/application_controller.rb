@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :association_delete_error_messages
   helper_method :association_delete_error_message
+	helper_method :units_per_schedule
 
   session :session_key => '_yoyaku_session_id'
   layout "courses"
@@ -118,6 +119,44 @@ private
 	  end
 	end
 
+	def generate_scheduled_units( schedule )
+		scheduled_units = []
+		template_hash = TemplateClass.all(
+			:conditions=>["courses.name = ?", schedule.course.name],
+			:include => :course
+		).uniq_by( &:day_and_time_interval ).
+			group_by( &:day )
+			
+		index = 0
+		(0..90).to_a.map{|e| e.day.from_now }.each do |date|
+			elements = template_hash[ date.strftime("%A") ]
+			unless elements.nil?
+				elements.sort_by( &:time_interval ).each do |e|
+					break if( index += 1 ) > units_per_schedule
+					
+					scheduled_unit = schedule.equaled_scheduled_unit( date, e.start_time, e.end_time	)
+					old_scheduled_unit = schedule.equaled_scheduled_unit( date - 7.days, e.start_time, e.end_time )
+					unit_id = old_scheduled_unit ? ( old_scheduled_unit.unit_id ? old_scheduled_unit.unit_id+1 : nil ) : nil # = @classes[ equal_array.index( true ) ]
+					if scheduled_unit.nil?
+						scheduled_unit = ScheduledUnit.create!(
+							:date => date,
+							:start_time => e.start_time,
+							:end_time => e.end_time,
+							:unit_id => unit_id
+						)
+						schedule.scheduled_units << scheduled_unit
+					else
+						unless old_scheduled_unit.nil? || scheduled_unit.unit_id == unit_id
+							scheduled_unit.update_attribute( :unit_id, unit_id ) 
+						end
+					end
+					scheduled_units.push scheduled_unit 
+				end
+			end
+		end
+		scheduled_units
+	end
+
   def logged_in?
     session[:user_name] != nil
   end
@@ -128,8 +167,20 @@ private
     redirect_to :controller=>:admin, :action=>:login
 	end
 
+  def get_sorting
+		session[:sorting] ||= Sorting.new
+	end
+	
+	def get_settings
+		session[:settings] ||= Setting.find_by_name( "main" )
+	end
+
 	def people_per_page
-		session[:settings].people_per_page
+		get_settings.people_per_page
+	end
+
+	def set_settings( settings = 'main' )
+		session[:settings] = Setting.find_by_name( "main" )
 	end
 
 	def set_username( username )
@@ -139,12 +190,9 @@ private
   def set_user_language
     I18n.locale = logged_in? ? current_user.language : 'en'
   end  
-  
-	def set_settings( name='main' )
-		session[:settings] = Setting.find_by_name( name )
-	end
 	
-  def get_sorting
-		session[:sorting] ||= Sorting.new
+	
+	def units_per_schedule
+		get_settings.units_per_schedule
 	end
 end

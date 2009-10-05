@@ -11,6 +11,22 @@ class TemplateClass < ActiveRecord::Base
     :with => %r{\wday},
     :message => "must be chosen"
 
+  def course_category
+    course.category
+  end
+  
+  def course_level
+    course.level
+  end       
+  
+  def course_name
+  	course.name
+  end
+
+	def day_and_time_interval
+		day+": "+time_interval
+	end
+
 	def end_time_string
 		end_time.to_s(:time) if end_time
 	end
@@ -40,19 +56,7 @@ class TemplateClass < ActiveRecord::Base
   def time_interval
     start_time.to_s(:time)+"~"+end_time.to_s(:time)
   end    
-  
-  def course_category
-    course.category
-  end
-  
-  def course_level
-    course.level
-  end       
-  
-  def course_name
-  	course.name
-  end
-  
+    
 protected
 	def validate_on_update
 		if course_id != TemplateClass.find( id ).course_id

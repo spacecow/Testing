@@ -99,6 +99,7 @@ Then /^I should not see "([^\"]*)"$/ do |text|
 end
 
 Then /^the "([^\"]*)" field should contain "([^\"]*)"$/ do |field, value|
+  p field_labeled(field).value
   field_labeled(field).value.should =~ /#{value}/
 end
 

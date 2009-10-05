@@ -14,7 +14,7 @@
       	<td><%=h setting.people_per_page %></td>
       	<td><%=h setting.units_per_schedule %></td>
       	<td><%=h setting.language %></td>
-  		<td class="<%= setting.name %>">
+  		<td class="settings_<%= setting.name %>">
     			<%= link_to t('show'), setting, :class=>"link" %>
     			<%= link_to t('edit'), edit_setting_path(setting), :class=>"link" %>
     			<%= link_to t('destroy'), setting, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>

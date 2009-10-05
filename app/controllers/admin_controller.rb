@@ -8,7 +8,6 @@ class AdminController < ApplicationController
       user = Person.authenticate( params[:user_name], params[:password] )
       if user
       	set_username( user.user_name )
-      	set_settings()
         uri = session[:original_uri]
         session[:original_uri] = nil
         if clearance >= 4

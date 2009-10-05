@@ -1,3 +1,7 @@
+Given /^not implemented$/ do
+	false.should be_true
+end
+
 Then /^I should see (todays|yesterdays) (day|date)$/ do |day,cat|
   hash = {}
   hash["todays"] = DateTime.current
@@ -48,4 +52,9 @@ end
 
 Then /^I should see an error '([^\"]*)'$/ do |mess|
   flash[:error].should contain( I18n.translate( mess ))
+end
+
+Then /^the "([^\"]*)" drop menu should contain "([^\"]*)"$/ do |field, title|
+  value = Unit.find_by_title( title ).id
+  field_labeled(field).value[0].should =~ /#{value}/
 end

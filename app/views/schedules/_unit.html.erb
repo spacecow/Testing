@@ -1,0 +1,17 @@
+<tr>
+	<label>
+		<td style="font-size: small;">
+			<%= unit.date.strftime("%m").to_i %>/<%= unit.date.strftime("%d").to_i %></td> <td style="font-size: small;"><%= t('date.abbr_day_names')[unit.date.strftime("%w").to_i] %></td> <td style="font-size: small;"><%= unit.time_interval %>
+		</td> 
+		<td style="font-size: small;">
+			<% form_for @schedule do |f| %>
+				<% fields_for "schedule[scheduled_unit_attributes][]", unit do |ff| %>
+					<%= ff.collection_select :unit_id,
+						@units, :id, :title,
+						{ :include_blank => true },
+					  :onchange => 'this.form.submit();' %>
+				<% end %>
+			<% end %>
+		</td>
+	</label>
+</tr>
