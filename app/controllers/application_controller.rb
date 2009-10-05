@@ -25,11 +25,12 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
 protected
+	def login
+	end
+
   def authorize
     if !logged_in?
-      session[:original_uri] = request.request_uri
-      flash[:notice] = t('login.title')
-      redirect_to :controller=>:admin, :action=>:login
+      login_redirection
     elsif clearance >= 3
       redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
     end
@@ -37,9 +38,7 @@ protected
   
   def authorize_view
     if !logged_in?
-      session[:original_uri] = request.request_uri
-      flash[:notice] = t('login.title')
-      redirect_to :controller=>:admin, :action=>:login
+			login_redirection
     elsif clearance >= 4
       redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
     end

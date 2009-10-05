@@ -72,6 +72,12 @@ Then /^I should see "([^\"]*)"'([^\"]*)' within "([^\"]*)"$/ do |text1,text2,sco
 	end
 end
 
+Then /^I should see '([^\"]*)'"([^\"]*)" within "([^\"]*)"$/ do |text1,text2,scope_string|
+  within ".#{scope_string}" do |scope|
+		scope.should contain( I18n.translate( text1 ) + text2 )
+	end
+end
+
 Then /^I should not see '([^\"]*)' within "([^\"]*)"$/ do |text,scope_string|
   within ".#{scope_string}" do |scope|
 		scope.should_not contain( I18n.translate( text ))
@@ -95,4 +101,8 @@ end
 
 When /^the "([^\"]*)"'([^\"]*)' checkbox should be checked$/ do |label1,label2|
   field_labeled( label1+I18n.translate( label2 )).should be_checked
+end
+
+Then /^the '([^\"]*)' field should contain "([^\"]*)"$/ do |field, value|
+  field_labeled( I18n.translate( field )).value.should =~ /#{value}/
 end

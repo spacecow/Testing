@@ -12,6 +12,8 @@ module NavigationHelpers
       '/'
     when /the login page/
     	login_path
+    when /the logout page/
+    	logout_path
     	
     when /the list of settings/
     	settings_path
@@ -59,12 +61,15 @@ module NavigationHelpers
 			edit_multiple_teachers_path
 		when /the multi course page of student "(.+)"/
 			edit_multiple_students_path
+
 		when /the edit page of class "(.+)"/
 			edit_klass_path( $1 )
-		when /the edit page of course "(.+)"/
-			edit_course_path( Course.find_by_name( $1 ))			
 		when /the info page of class "(.+)"/
 			klass_path( Klass.find( $1 ))
+
+		when /the edit page of course "(.+)"/
+			edit_course_path( Course.find_by_name( $1 ))			
+
 		when /the info page of student "(.+)"/
     	student_path( Student.user( $1 ).first )
 		when /the course page of student "(.+)"/
@@ -81,6 +86,7 @@ module NavigationHelpers
 	    		:include=>:person
 	    	)
     	)
+
 		when /the course page of teacher "(.+)"/
     	edit_courses_teacher_path( 
     		Teacher.find(

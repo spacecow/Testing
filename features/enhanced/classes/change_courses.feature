@@ -41,3 +41,41 @@ Then I should see text 'klasses.listing'
 	And I should have 2 classes "Ruby I"
 	And I should have 1 class "Fortran II"
 	
+Scenario: Try to change course with existing teacher	
+Given I am logged in as "johan_sveholm"
+	And I go to the list of classes
+	And I follow 'edit' within "klass_2"
+	And I should not see 'students.title' within "students"
+When I select "Ruby I" from 'course'
+	And I press 'update'
+Then I have 2 classes "Java I"
+	And I have 2 class "Ruby I"
+	And I should see 'klasses.error.edit_courses_with_teacher'
+When I select no teacher
+	And I press 'update'
+Then I have 1 class "Java I"
+	And I have 3 classes "Ruby I"
+	And I should not see 'klasses.error.edit_courses_with_teacher'
+	
+Scenario: Try to change course with existing students
+Given I am logged in as "johan_sveholm"
+	And I go to the list of classes
+	And I follow 'edit' within "klass_3"
+	And I should see 'students.title' within "students"
+When I select "Java I" from 'course'
+	And I press 'update'
+Then I have 2 classes "Java I"
+	And I have 2 class "Ruby I"
+	And I should see 'klasses.error.edit_courses_with_students'
+	
+Scenario: Try to change course with existing teacher and students
+Given I am logged in as "johan_sveholm"
+	And I go to the list of classes
+	And I follow 'edit' within "klass_4"
+	And I should see 'students.title' within "students"
+When I select "Java I" from 'course'
+	And I press 'update'
+Then I have 2 classes "Java I"
+	And I have 2 class "Ruby I"
+	And I should see 'klasses.error.edit_courses_with_teacher'
+	And I should see 'klasses.error.edit_courses_with_students'		

@@ -1,6 +1,4 @@
-﻿<div class="form">
-<fieldset>
-<legend><%= t('klass') %></legend>
+﻿<h1><%= t('info') %> - <%= t('klass') %></h1>
 <table cellpadding="10">
 	<tr>
 		<td>
@@ -43,9 +41,16 @@
 			<p>
 			  <b><%= t('description') %>: </b><%=h @klass.description %>
 			</p>
-			
+
 			<p>
+<% if clearance >= 4 && !current_user.teacher.nil? %>
+				<% form_for @klass do |f| %>
+					<b><%= f.label :note, t('note')+":" %></b><br /><%= f.text_area :note, :rows=>8 %><br /><br />
+					<%= f.submit t('update') %>
+				<% end %>
+<% else	%>
 			  <b><%= t('note') %>: </b><%=h @klass.note %>
+<% end %>
 			</p>
 		</td>
 		<td valign="top">
@@ -71,9 +76,17 @@
 	</tr>
 </table>
 
-<% if clearance<3 %>
-	<%= link_to t('edit'), edit_klass_path( @klass ), :class=>:link %> |
-<% end %>
-<%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
-</fieldset>
+<div class="links">
+	<% if clearance<3 %>
+		<%= link_to t('edit'), edit_klass_path( @klass ), :class=>:link %> |
+	<% end %>
+	<%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
+	| <%= t('version') %> <%= @klass.version %>
+	<% if @klass.version > 1 %>
+		| <%= link_to t('previous_version'), :version => @klass.version-1 %>
+	<% end %>
+	<% if params[:version] %>
+		| <%= link_to t('latest_version'), :version => nil %>
+	<% end %>
 </div>
+</fieldset>

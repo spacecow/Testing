@@ -32,6 +32,7 @@ ja:
   klass_date: "日付"
   klass_time: "時間"
   language: "言語"
+  latest_version: "最新バージョン"
   lesson: "授業"
   listing: "編集"
   male: "男性"
@@ -48,6 +49,7 @@ ja:
   offu: "OFF"
   onu: "ON" 
   password: "パスワード"
+  previous_version: "前バージョン"
   reserve: "予約"
   room: "部屋"
   search: "検索"
@@ -64,6 +66,7 @@ ja:
   unchoose: "排除"
   unit: "ユニット"
   user_name: "ユーザー名"
+  version: "バージョン"
   attendances:
     editing: "出席編集"  
     title: "出席"

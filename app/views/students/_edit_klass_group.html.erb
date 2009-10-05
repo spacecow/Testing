@@ -11,7 +11,12 @@
 	  <% klass_group.sort_by{|e| [ e.start_time,e.course.name,(!@student.klasses.include?(e)).to_s ]}.each do |klass| %>
 	    <% if !hash[klass.to_s] %>
 	      <% hash[klass.to_s] = klass %>
-	      <tr>
+	      <% attendance = @student.find_attendance_by_klass_id( klass.id ) %>
+	      <% if attendance && attendance.version < klass.version %>
+	      	<tr style="background: #dddddd;" >
+	      <% else %>
+	      	<tr>
+	      <% end %>
 					<label>
 		    	<td>
 		    	  <%= check_box_tag "student[klass_ids][]", klass.id, @student.klasses.include?(klass), :disabled=>!clearance?(3)&&@student.klasses.include?(klass) ? true : false %>

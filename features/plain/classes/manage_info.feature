@@ -19,11 +19,11 @@ Then I should be redirected to the login page
 Scenario Outline: Admin&observer should see all fields
 Given I am logged in as "<user>"
 When I go to the info page of class "1"
-Then I should see 'teacher' within "form"
-	And I should see 'classroom' within "form"
-	And I should see 'capacity' within "form"
-	And I should see 'mail_sending' within "form"
-	And I should see 'cancel' within "form"
+Then I should see 'teacher'
+	And I should see 'classroom'
+	And I should see 'capacity'
+	And I should see 'mail_sending'
+	And I should see 'cancel'
 Examples:
 |	user						|
 |	johan_sveholm		|
@@ -38,17 +38,17 @@ Given teacher "prince_philip" has course "Java I"
 	And I should be redirected to the <default> page of <status> "<user>"
 When I follow "<course>: 12:00~15:00" within "classes"
 Then I should be redirected to the info page of class "<no>"
-	And I should not see 'teacher' within "form"
-	And I should not see 'classroom' within "form"
-	And I should not see 'capacity' within "form"
-	And I should not see 'mail_sending' within "form"
-	And I should not see 'cancel' within "form"
+	And I should not see 'teacher'
+	And I should not see 'classroom'
+	And I should not see 'capacity'
+	And I should not see 'mail_sending'
+	And I should not see 'cancel'
 Examples:
 |	user						|	default	|	status	|	course	|	no	|
 |	prince_philip		|	info		|	teacher	|	Java I	|	1		|
 |	kurosawa_akira	|	reserve	|	student	|	Ruby I	|	2		|
 
-Scenario: Regular users should not be able to see the show page of classes they cannot choose
+Scenario: Regular students should not be able to see the show page of classes they cannot choose
 Given student "kurosawa_akira" has course "Ruby I"
 	And student "kurosawa_akira" has class "3"
 	And I am logged in as "kurosawa_akira"
@@ -59,7 +59,13 @@ Then I should be redirected to the info page of class "2"
 When I go to the info page of class "1"
 Then I should be redirected to the reserve page of student "kurosawa_akira"
 	And I should see 'people.error.unauthorized_access'
+
+Scenario: Regular teachers should not be able to see the show page of classes they cannot choose (NOT IMPLEMENTED)
+	Given not implemented
 	
+Scenario: Regular users should not be able to see the show page of classes they did not sign/was not signed up for (NOT IMPLEMENTED)
+	Given not implemented
+
 Scenario Outline: If there are no students, student title should not be visible		
 Given teacher "prince_philip" has course "Java I"
 	And student "kurosawa_akira" has course "Java I"

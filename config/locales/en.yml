@@ -35,6 +35,7 @@ en:
   klass_date: "Date"
   klass_time: "Time"
   language: "Language"
+  latest_version: "Latest version"
   lesson: "Lesson"
   listing: "Listing "  
   male: "Male"
@@ -51,6 +52,7 @@ en:
   offu: "OFF"
   onu: "ON"
   password: "Password"
+  previous_version: "Previous version"
   reserve: "Reserve"
   room: "Room"
   search: "Search"
@@ -67,6 +69,7 @@ en:
   unit: "Unit"
   update: "Update"
   user_name: "User name"
+  version: "Version"
   attendances:
     editing: "Editing Attendance"
     title: "Attendances"

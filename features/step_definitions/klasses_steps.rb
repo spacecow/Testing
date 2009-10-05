@@ -60,7 +60,7 @@ Given /^classe?s? "([^\"]*)" (?:has|have) canceled students? "([^\"]*)"$/ do |na
   	users.split(', ').each do |user_name|
 	  	student = Student.user( user_name ).first
 	  	klass.students << student
-	  	klass.attendances.find_by_student_id( student.id ).update_attribute( :cancel, 1 )
+	  	klass.attendances.find_by_student_id( student.id ).update_attributes({ :cancel=>1, :chosen=>1 })
 	  end
   end
 end

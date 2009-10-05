@@ -48,7 +48,7 @@ Given class "2" has student "kurosawa_akira"
 	And I am logged in as "<user>"
 When I go to the edit page of class "2"
 Then I should see 'students.title' within "students"
-	And I should see "(Kurosawa Akira)" within "students"
+	And I should see "(Kurosawa Akira "'choose' within "students"
 Examples:
 |	user						|
 |	johan_sveholm		|
@@ -68,7 +68,7 @@ Examples:
 |	johan_sveholm		|
 |	komatsu_aya			|
 
-Scenario Outline: Canceled students should be (visible) for admin&observer
+Scenario Outline: Canceled students should be (visible) for admin
 Given class "2" has canceled students "kurosawa_akira, asada_mao"
 	And I am logged in as "<user>"
 When I go to the edit page of class "2"

@@ -9,6 +9,8 @@ class Klass < ActiveRecord::Base
   
   validates_presence_of :course_id, :date, :start_time, :end_time
 
+	versioned
+
 	# To be able to edit time with a textfield
 	def end_time_string
 		end_time.to_s(:time) if end_time

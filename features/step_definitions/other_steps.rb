@@ -1,3 +1,7 @@
+Given /^not implemented$/ do
+	false.should be_true
+end
+
 Then /^I should see (todays|yesterdays) (day|date)$/ do |day,cat|
   hash = {}
   hash["todays"] = DateTime.current
@@ -48,4 +52,12 @@ end
 
 Then /^I should see an error '([^\"]*)'$/ do |mess|
   flash[:error].should contain( I18n.translate( mess ))
+end
+
+Then /^I should have a tag "([^\"]*)"$/ do |label|
+  assert_have_selector( label )
+end
+
+Then /^I should not have a tag "([^\"]*)"$/ do |label|
+  assert_have_no_selector( label )
 end

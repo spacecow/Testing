@@ -1,5 +1,6 @@
 class KlassesController < ApplicationController  
-  before_filter :authorize_view, :only=>[:index,:live_search]
+  before_filter :authorize, :except=>[:index,:show,:update]
+  before_filter :authorize_view, :only=>[:index]
   
   def add_student
     StudentClass.new( :klass_id=>params[:klass_id], :cancel=>false ).save
@@ -92,6 +93,7 @@ class KlassesController < ApplicationController
   # GET /klasses/1.xml
   def show
   	@klass = Klass.find( params[:id], :include=>:course )
+  	@klass.revert_to( params[:version].to_i ) if params[:version]
   	
   	if !logged_in?
   		login_redirection
@@ -166,14 +168,28 @@ class KlassesController < ApplicationController
   # PUT /klasses/1
   # PUT /klasses/1.xml
   def update
-  	@klass = Klass.find( params[:id],
+   	@klass = Klass.find( params[:id],
   		:include=>[
   			{ :students=>:person },
   			:teacher,
   			:course,
   			:classroom ])
 		course_id = @klass.course_id
-			  
+		  
+    if !logged_in?
+			login_redirection
+			return
+		elsif clearance >= 3 && !current_user.teacher.nil? && params[:klass][:note]
+			@klass.update_attribute( :note, params[:klass][:note] )
+			redirect_to @klass
+			flash[:notice] = "Note successfully updated."
+			return
+		elsif clearance >= 3
+			redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
+			flash[:error] = "Illegal operation."
+			return
+		end
+  	  
     respond_to do |format|
       if @klass.update_attributes( params[:klass] )
 	      format.html{

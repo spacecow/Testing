@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>
+Vestal Versions
+</title>
+<link rel=StyleSheet href="rails.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/tooltips.js"></script>
+</head>
+
+<body>
+<table><tr><td width="300">
+<pre class="main">
+<h1>Vestal Versions</h1>
+<doc tags=["rails","vestal_versions"] title="Vestal Versions">
+In order to make vestal version operate on single attributes,
+(in this case <span class="param">note</span>) add this piece of code to the original file.
+It is not pretty, but until the author himself has fixed the problem,
+it works:
+
+<pre class="code">
+<div class="path"><a href="vestal_versions/vestal_versions.rb.txt">c:/ruby/lib/ruby/gems/1.8/gems/laserlemon-vestal_versions-0.6.0/lib/vestal_versions.rb</a></div>
+require 'version'
+
+module LaserLemon
+  module VestalVersions
+		...
+
+    module ClassMethods
+      ...
+    end
+
+    module InstanceMethods
+      private
+        ...
+
+        def create_version
+          versions.create(:changes => changes, :number => (last_version + 1)) \
+            <span class="highlight">if changes["note"]</span>
+          reset_version
+        end
+
+      public
+        ...
+    end
+  end
+end
+
+ActiveRecord::Base.send(:include, LaserLemon::VestalVersions)
+</pre>
+</doc>
+
+
+<hr>
+
+<table><tr>
+<td width="300">
+<--- <a href="yoyaku_10.html">Part 10 - Student Courses</a>
+</td>
+<td width="350" align="right">
+<a href="yoyaku_12.html">Part 12 - </a> --->  
+</td>
+</tr></table>
+
+</td></tr></table>
+</pre>
+</body>
+</html>
