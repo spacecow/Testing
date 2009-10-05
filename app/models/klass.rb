@@ -5,6 +5,8 @@ class Klass < ActiveRecord::Base
   has_many :attendances
   has_many :students, :through => :attendances
 
+	versioned
+
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}  
   
   validates_presence_of :course_id, :date, :start_time, :end_time
