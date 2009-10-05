@@ -10,6 +10,16 @@ class Sorting
     array
   end
 
+  def sort_class_by_day( array )
+		%w[Sunday Saturday Friday Thursday Wednesday Tuesday Monday].each do |cat|
+	  	array.map{|e| e.day == cat ? e : nil }.compact.size.times do
+	    	index = array.map(&:day).index( cat )
+	    	array.push( array.delete_at( index ))
+	  	end
+	  end
+    array.reverse
+  end
+
   def sort_in_mogi_order array
     (0...array.size).each do |i|
       %w[個別 韓国語 中国語 中級 初級 入門].each do |cat|

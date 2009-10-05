@@ -9,7 +9,9 @@ class Klass < ActiveRecord::Base
   
   validates_presence_of :course_id, :date, :start_time, :end_time
 
-	versioned
+	def date_and_time_interval
+		date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval
+	end
 
 	# To be able to edit time with a textfield
 	def end_time_string
@@ -19,6 +21,13 @@ class Klass < ActiveRecord::Base
 	def end_time_string=(end_time_str)
 		self.end_time = Time.parse( end_time_str ) if end_time_str != ""
 	rescue ArgumentError
+	end
+
+	def equals( _date, _start_time, _end_time )
+		date.strftime("%m") == _date.strftime("%m") &&
+		date.strftime("%d") == _date.strftime("%d") &&
+		start_time.to_s( :time ) == _start_time.to_s( :time ) &&
+		end_time.to_s( :time ) == _end_time.to_s( :time )
 	end
 
 	def start_time_string

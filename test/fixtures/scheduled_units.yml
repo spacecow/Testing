@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  schedule: 
+  unit: 
+  start_time: 2009-09-26 00:53:07
+  end_time: 2009-09-26 00:53:07
+  date: 2009-09-26 00:53:07
+
+two:
+  schedule: 
+  unit: 
+  start_time: 2009-09-26 00:53:07
+  end_time: 2009-09-26 00:53:07
+  date: 2009-09-26 00:53:07

@@ -9,7 +9,7 @@
   <%= f.text_field :tostring_like, :size=>30 %>
   <%= f.submit "Search" %>
 <p>
-<div class="blind" id="cell_blind" style="display:none">
+<div id="advanced_search" style="display:none">
 	<p>
 	  <%= f.label :mobile_phone_like, t('mobile_phone') %>
 	  <%= f.text_field :mobile_phone_like, :size=>30 %>
@@ -28,11 +28,14 @@
     <%= order @search, :by => :family_name_kana %>
   </div>
 </p>
-<% end %>
+<% end %><br/ >
 
-<p>
-  <a class="link" href="" onclick="new Effect.BlindDown('cell_blind'); return false;">Advanced search</a>
-</p>
+<div id="advanced_search_link">
+	<%= link_to_function 'Advanced Search', toggle_div(:advanced_search, :advanced_search_link, :normal_search_link), :class=>:link%>
+</div>
+<div id="normal_search_link" style="display:none">
+	<%= link_to_function 'Normal Search', toggle_div(:advanced_search, :advanced_search_link, :normal_search_link), :class=>:link%>
+</div><br />
 
 <div id="search_hits">
 	<%= render :partial => "list_people" %>

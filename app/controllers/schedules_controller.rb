@@ -1,3 +1,9 @@
+module Enumerable
+  def uniq_by #:yield:
+    h = {}; inject([]) {|a,x| h[yield(x)] ||= a << x}
+  end
+end
+
 class SchedulesController < ApplicationController
   def index
     @schedules = Schedule.all
@@ -10,58 +16,39 @@ class SchedulesController < ApplicationController
   def new
     @schedule = Schedule.new
     @courses = Course.all
+    @units = []
   end
   
   def create
     @schedule = Schedule.new(params[:schedule])
     @courses = Course.all
+    @units = []
     if @schedule.save
-      flash[:notice] = "Successfully created schedule."
+      flash[:notice] = t('schedule')+t('created')
       redirect_to schedules_url
     else
       render :action => 'new'
     end
   end
-  
+    
   def edit
-    @schedule = Schedule.find(params[:id])
+    @schedule = Schedule.find( params[:id], :include=>:scheduled_units )
     @courses = Course.all
-		@units = []
+		@units = Unit.all
+			
+#		@classes = Klass.course_name( @schedule.course_name ).
+#			all( :conditions=>[ "date > ?", 1.day.ago ]).
+#			uniq_by( &:date_and_time_interval )
 
-		@day_hash = {}
-		@day_groups = TemplateClass.all(
-			:conditions=>["courses.name=?", @schedule.course.name ],
-			:include=>'course' ).group_by(&:day)
-		@day_groups.each do |day,group|
-			hash = Hash.new
-			array = Array.new
-			group.sort_by(&:time_interval).reverse.each do |klass|
-				unless hash[klass.time_interval]
-					hash[klass.time_interval] = klass
-					array.insert( 0, klass )
-				end
-			end
-			@day_hash[day] = array
-		end
-		
-		(0..9).to_a.map{|e| e.day.from_now }.each do |day|
-			elements = @day_hash[day.strftime("%A")]
-			unless elements.nil?
-				elements.size.times do |no|
-					@units.push elements[no]
-				end
-			end
-		end
-		
-		p @day_hash.values.map(&:size).inject(0){|sum,e| sum + e}
+		@scheduled_units = generate_scheduled_units( @schedule )
 	end
   
   def update
     @schedule = Schedule.find(params[:id])
-    @courses = Course.all    
+    @courses = Course.all
     if @schedule.update_attributes(params[:schedule])
       flash[:notice] = "Successfully updated schedule."
-      redirect_to @schedule
+      redirect_to :back
     else
       render :action => 'edit'
     end

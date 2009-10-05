@@ -54,10 +54,16 @@ Then /^I should see an error '([^\"]*)'$/ do |mess|
   flash[:error].should contain( I18n.translate( mess ))
 end
 
+<<<<<<< HEAD:features/step_definitions/other_steps.rb
 Then /^I should have a tag "([^\"]*)"$/ do |label|
   assert_have_selector( label )
 end
 
 Then /^I should not have a tag "([^\"]*)"$/ do |label|
   assert_have_no_selector( label )
+end
+
+Then /^the "([^\"]*)" drop menu should contain "([^\"]*)"$/ do |field, title|
+  value = Unit.find_by_title( title ).id
+  field_labeled(field).value[0].should =~ /#{value}/
 end

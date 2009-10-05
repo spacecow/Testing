@@ -45,3 +45,9 @@ end
 
 Factory.define :teaching do |f|
 end
+
+Factory.define :scheduled_unit do |f|
+end
+
+Factory.define :unit do |f|
+end

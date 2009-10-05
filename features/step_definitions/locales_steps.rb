@@ -32,6 +32,9 @@ end
 Then /^I should see '([^\"]*)'"([^\"]*)"$/ do |text1,text2|
 	response.should contain(I18n.translate( text1 )+text2 )
 end
+Then /^I should see '([^\"]*)''([^\"]*)'$/ do |text1,text2|
+	response.should contain(I18n.translate( text1 )+I18n.translate( text2 ))
+end
 
 Then /^I should not see '([^\"]*)'"([^\"]*)"$/ do |text1,text2|
 	response.should_not contain(I18n.translate( text1 )+text2 )

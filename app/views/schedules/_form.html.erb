@@ -2,16 +2,23 @@
   <%= f.label :course_id, t('course') %>
 	<%= f.collection_select :course_id,
 				@courses, :id, :name,
-		    :include_blank => true %> 	
+		    :include_blank => true %>
 </p>
-<table><tr><td>
+<% unless @schedule.scheduled_units.empty? %>
+<table><tr>
+<td>
 	<table cellpadding="2" cellspacing="1">
-		<% @units.each do |unit| %>
-			<%= render :partial=>"show_scheduled_unit", :locals=>{ :unit=>unit } %>
-		<% end %>
+		<%= render :partial=>"unit", :collection => @scheduled_units[0..units_per_schedule/2-1] %>
 	</table>
-</td></tr></table>
+</td>
+<td>
+	<table cellpadding="2" cellspacing="1">
+		<%= render :partial=>"unit", :collection => @scheduled_units[units_per_schedule/2..units_per_schedule-1] %>
+	</table>
+</td>
+</tr></table>
 <p>
+<% end %>
   <%= f.label :description, t('description') %>
  	<%= f.text_area :description, :rows=>8, :cols=>27 %>
 </p>

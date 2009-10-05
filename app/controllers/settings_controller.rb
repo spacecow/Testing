@@ -28,8 +28,8 @@ class SettingsController < ApplicationController
   def update
     @setting = Setting.find(params[:id])
     if @setting.update_attributes(params[:setting])
+    	set_settings
       flash[:notice] = "Successfully updated setting."
-			set_settings
       redirect_to settings_path
     else
       render :action => 'edit'

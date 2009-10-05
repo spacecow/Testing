@@ -13,7 +13,7 @@
 	<% for unit in @units %>
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
       	<td><%=h unit.unit %></td>
-      	<td><%= link_to h( unit.schedule.title ), unit.schedule %></td>
+      	<td><%= link_to h( unit.course_name ), unit.schedule %></td>
       	<td><%=h unit.title %></td>
       	<td><%=h unit.page %></td>
       	<td><%=h unit.grammar_unit %></td>
