@@ -5,7 +5,7 @@ class Klass < ActiveRecord::Base
   has_many :attendances
   has_many :students, :through => :attendances
 
-	versioned
+	versioned :only => :note
 
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}  
   

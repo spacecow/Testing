@@ -43,8 +43,7 @@ Scenario: Scheduled units are generated and filled in
 	And I go to the list of schedules
 	And schedule "Ruby I" should have 1 scheduled unit
 When I follow 'edit' for schedule "Ruby I"
-Then schedule "Ruby I" should have 40 scheduled units
-	And the "10/5 Mon 13:00~15:00" drop menu should contain "Family and Feelings"
+Then schedule "Ruby I" should have 41 scheduled units
 	And the "10/12 Mon 13:00~15:00" drop menu should contain "In the neiborhood"
 	And the "10/19 Mon 13:00~15:00" drop menu should contain "My style, your style"
 	And the "10/26 Mon 13:00~15:00" drop menu should contain "What's your schedule"

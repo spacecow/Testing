@@ -22,6 +22,10 @@ Given /^I click link '([^\"]*)' for "([^\"]*)" (?:template )?class ([0-9]+)$/ do
 	clickAndWait get_edit_locator( category, class_no )
 end
 
+Given /^I click link '([^\"]*)' for (.+) "([^\"]*)"$/ do |link, category, name|
+	clickAndWait get_action_locator( name.gsub( / /, '_' ), link=="edit" ? 2 : 0 )
+end
+
 When /^I click button "([^\"]*)"$/ do |button|
   clickAndWait button
 end
@@ -36,14 +40,19 @@ end
 
 When /^I move "([^\"]*)" from class ([0-9]+) to class ([0-9]+)$/ do |username, class_1, class_2|
   selectAndWait( get_student_locator( class_1, get_student_no( username, class_1 )), "Move to #{class_2}" )
-end	
+end
 
 When /^I select "([^\"]*)" for "([^\"]*)" class ([0-9]+) as teacher$/ do |name, category, class_no|
  	selectAndWait( get_teacher_locator( category, class_no ), name )
 end
 
-Then /^I select option "([^\"]*)" from "([^\"]*)"$/ do |option, locator|
-  selectAndWait( locator, option )
+#When /^I select "([^\"]*)" for scheduled unit "([^\"]*)"$/ do |option, unit|
+#	 selectAndWait( "//td[@id='#{unit}']/select", option )
+#end
+
+Then /^I select option "([^\"]*)" from "([^\"]*)"$/ do |option, unit|
+	selectAndWait( "//td[@id='#{unit}']/select", option )
+#  selectAndWait( locator, option )
 end
 
 Then /^I select option blank from "([^\"]*)"$/ do |locator|
@@ -52,6 +61,10 @@ end
 
 When /^I unselect teacher for "([^\"]*)" class ([0-9]+)$/ do |category, class_no|
  	When "I select \"\" for \"#{category}\" class #{class_no} as teacher"
+end
+
+Then /^I should see option "([^\"]*)" for "([^\"]*)"$/ do |option, unit|
+	@browser.get_selected_label( "//td[@id='#{unit}']/select" ).should == option
 end
 
 Then /^I should see "([^\"]*)" for class ([0-9]+) as student ([0-9]+)$/ do |name, class_no, student_no|
@@ -124,6 +137,10 @@ def get_edit_locator( category, class_no )
 	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='links']/a[2]"
 end
 
+def get_action_locator( name, id )
+	"//td[@id='#{name}']/a[#{id}]"
+end
+
 def get_student_locator( class_no, student_no )
 	tr_i = ( 4+class_no.to_i ).to_s
 	"//table[@id='JavaCourse']/tbody/tr[#{tr_i}]/td[@id='student_#{student_no}']/select"
@@ -134,7 +151,7 @@ def get_teacher_locator( category, class_no )
 	"//table[@id='#{category}Course']/tbody/tr[#{tr_i}]/td[@id='teacher']/select"
 end
 
-def page_load( time='60000' )
+def page_load( time='600000' )
 	@browser.wait_for_page_to_load( time )
 end
 

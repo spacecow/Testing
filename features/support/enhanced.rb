@@ -11,7 +11,7 @@ require 'selenium'
 app_server_host = "localhost"
 app_port = "3001"
 selenium_server_host = "localhost"
-browser_name = "*chrome C:/Program/Mozilla Firefox/firefox.exe"
+browser_name = "*chrome C:/Program Files/Mozilla Firefox/firefox.exe"
 #"C:\Program Files\Google\Chrome\Application\chrome.exe"
 #"*chrome C:/Program Files/Mozilla Firefox/firefox.exe"
 #"*iexplore C:/Program Files/Internet Explorer/iexplore.exe"
@@ -53,6 +53,9 @@ Before do
 	Person.delete_all
 	Attendance.delete_all
 	Teaching.delete_all
+	ScheduledUnit.delete_all
+	Schedule.delete_all
+	Unit.delete_all
 end
 
 After do

@@ -1,7 +1,7 @@
 <div id="list" class="list">
 <h1><%= t('schedules.title') %></h1>
 
-<table cellpadding="2" cellspacing="1">
+<table cellpadding="2" cellspacing="1" id="<%= t('schedules.title') %>">
 	<tr>
 			<th class="list-topics"><%= t('course') %></th>		
 			<th class="list-topics"><%= t('description') %></th>		
@@ -12,7 +12,7 @@
       	<td><%=h schedule.course.name %></td>
       	<td><%=h schedule.description %></td>
       	<td><%=h schedule.note %></td>
-  		<td class="<%= schedule.course.name.gsub( / /,'_' ) %>">
+  		<td id="<%= schedule.course.name.gsub( / /,'_' ) %>">
     			<%= link_to t('show'), schedule, :class=>"link" %>
     			<%= link_to t('edit'), edit_schedule_path(schedule), :class=>"link" %>
     			<%= link_to t('destroy'), schedule, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>

@@ -29,7 +29,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "searchlogic"
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
-  config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
+  #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 
 
   $KCODE = 'u'

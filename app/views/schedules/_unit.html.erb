@@ -1,9 +1,9 @@
 <tr>
 	<label>
-		<td style="font-size: small;">
-			<%= unit.date.strftime("%m").to_i %>/<%= unit.date.strftime("%d").to_i %></td> <td style="font-size: small;"><%= t('date.abbr_day_names')[unit.date.strftime("%w").to_i] %></td> <td style="font-size: small;"><%= unit.time_interval %>
-		</td> 
-		<td style="font-size: small;">
+		<% unit.to_s.split.each do |e| %>
+			<td style="font-size: small;" align="left"><%= e %></td>
+		<% end %>
+		<td style="font-size: small;" id="<%= unit.to_s.gsub( / /, '_' ) %>">
 			<% form_for @schedule do |f| %>
 				<% fields_for "schedule[scheduled_unit_attributes][]", unit do |ff| %>
 					<%= ff.collection_select :unit_id,

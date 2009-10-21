@@ -117,7 +117,7 @@ private
 	  		edit_klasses_student_path( current_user.student.id )
 	  end
 	end
-
+	
 	def generate_scheduled_units( schedule )
 		scheduled_units = []
 		template_hash = TemplateClass.all(

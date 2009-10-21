@@ -4,6 +4,10 @@ class ScheduledUnit < ActiveRecord::Base
 
 	validates_presence_of :date, :start_time, :end_time
 
+	def abbr_day
+		I18n.t('date.abbr_day_names')[ date.strftime("%w").to_i ]
+	end
+
 	def equals( _date, _start_time, _end_time )
 		date.strftime("%m") == _date.strftime("%m") &&
 		date.strftime("%d") == _date.strftime("%d") &&
@@ -17,4 +21,12 @@ class ScheduledUnit < ActiveRecord::Base
   def time_interval
     start_time.to_s(:time)+"~"+end_time.to_s(:time)
   end
+  
+  def short_date
+  	date.strftime("%m") + "/" + date.strftime("%d")
+  end
+  
+  def to_s
+		short_date+" "+abbr_day+" "+time_interval
+	end
 end

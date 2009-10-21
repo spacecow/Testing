@@ -54,7 +54,6 @@ Then /^I should see an error '([^\"]*)'$/ do |mess|
   flash[:error].should contain( I18n.translate( mess ))
 end
 
-<<<<<<< HEAD:features/step_definitions/other_steps.rb
 Then /^I should have a tag "([^\"]*)"$/ do |label|
   assert_have_selector( label )
 end
