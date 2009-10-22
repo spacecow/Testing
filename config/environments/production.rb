@@ -22,3 +22,19 @@ config.action_controller.perform_caching             = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
+
+# Don't care if the mailer can't send
+config.action_mailer.raise_delivery_errors = true
+
+# set delivery method to :smtp, :sendmail or :test
+config.action_mailer.delivery_method = :smtp
+
+# these options are only needed if you choose smtp delivery
+config.action_mailer.smtp_settings = {
+  :address        => 'smtp.reserve-gakuwarinet.com',
+  :port           => 25,
+  :domain         => 'www.reserve-gakuwarinet.com',
+#  :authentication => :login,
+# :user_name      => 'www',
+#  :password       => 'secret'
+}
