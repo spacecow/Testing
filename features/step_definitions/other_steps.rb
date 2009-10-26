@@ -66,3 +66,8 @@ Then /^the "([^\"]*)" drop menu should contain "([^\"]*)"$/ do |field, title|
   value = Unit.find_by_title( title ).id
   field_labeled(field).value[0].should =~ /#{value}/
 end
+
+Then /^I should not see a button '([^\"]*)'$/ do |label|
+  label = I18n.t( label ).gsub(/ /, '_')
+  assert_have_no_xpath( "//input[@id='#{label}']" )
+end

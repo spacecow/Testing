@@ -4,7 +4,12 @@
 				@courses, :id, :name,
 		    :include_blank => true %>
 </p>
-<% unless @schedule.scheduled_units.empty? %>
+<% unless label_text == t('create') %>
+  <p>
+    <%= submit_tag t('scheduled_units.update'), :id => t('scheduled_units.update').gsub(/ /, '_'), :class => :submit %>
+  </p>
+<% end %>
+<% unless @scheduled_units.empty? %>
 <table><tr>
 <td>
 	<table cellpadding="2" cellspacing="1">
@@ -26,5 +31,5 @@
   <%= f.label :note, t('note') %>
  	<%= f.text_area :note, :rows=>8, :cols=>27 %>
 </p>
-  <p><%= f.submit label_text, :class=>"submit" %></p>
+<p><%= f.submit label_text, :class=>"submit" %></p>
 

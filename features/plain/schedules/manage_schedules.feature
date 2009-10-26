@@ -1,3 +1,4 @@
+@schedule
 Background:
 Given the following teacher records
 |	user_name			|	language	|	password	|
@@ -5,6 +6,12 @@ Given the following teacher records
 |	komatsu_aya		|	ja				|	secret		|
 Given I go to the list of schedules
 	
+@monday
+Scenario: Schedule's new-form should not contain a Update Scheduled Unit button
+Given I am logged in as "johan_sveholm"
+When I follow 'schedules.new' within "links"
+Then I should not see a button 'scheduled_units.update'
+
 Scenario Outline: Course id has to be filled in to create a schedule
 Given I am logged in as "<user>"
 	And I follow 'schedules.new' within "links"
@@ -38,6 +45,16 @@ When I select "Ruby I" from 'course'
 Then I should be redirected to the list of schedules
 And I should see 'schedule''created'
 And I should see "Ruby I" within "list"
+Examples:
+| user 					|
+|	johan_sveholm	|
+|	komatsu_aya		|
+
+Scenario Outline: Listing schedules
+Given I have course "Ruby I"
+  And I have schedule "Ruby I"
+When I am logged in as "<user>"
+Then I should see "Ruby I" within "list"
 Examples:
 | user 					|
 |	johan_sveholm	|

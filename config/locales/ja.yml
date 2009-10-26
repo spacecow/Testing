@@ -112,6 +112,8 @@ ja:
     title: "全部の人"
     error:
       unauthorized_access: "不正アクセス"
+  scheduled_units:
+    update: "予定されたユニットを更新する"
   students:
     editing: "テンプレート・クラス編集"
     new: "新しい受講生"

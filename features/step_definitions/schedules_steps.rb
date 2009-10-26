@@ -5,7 +5,7 @@ Given /^I have schedule "([^\"]*)"$/ do |titles|
 end
 
 When /^I follow '([^\"]*)' for schedule "([^\"]*)"$/ do |link,schedule|
-	within '.'+schedule.gsub( / /,'_' ) do
+	within '#'+schedule.gsub( / /,'_' ) do
 		click_link I18n.translate( link )
 	end
 end

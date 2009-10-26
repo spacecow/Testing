@@ -116,6 +116,8 @@ en:
     title: "People"
     error:
       unauthorized_access: "Unauthorized access."
+  scheduled_units:
+    update: "Update Scheduled Units"
   students:
     editing: "Editing Student"
     new: "New Student"

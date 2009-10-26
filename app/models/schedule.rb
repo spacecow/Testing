@@ -29,7 +29,7 @@ class Schedule < ActiveRecord::Base
 		false
 	end
 
-	def equaled_scheduled_unit( _date, _start_time, _end_time )
+	def get_scheduled_unit( _date, _start_time, _end_time )
 		scheduled_units.each do |unit|
 			return unit if unit.equals( _date, _start_time, _end_time	)
 		end

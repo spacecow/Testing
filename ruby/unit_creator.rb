@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'activerecord'
+require '../app/models/course.rb'
 require '../app/models/unit.rb'
 require '../app/models/schedule.rb'
 filename = "Shokyuu Units.txt"
@@ -16,12 +17,23 @@ Schedule.delete_all
 
 titles = [ :unit, :title, :page, :description ]
 
-Schedule.new( :title => "初級 I" ).save
-schedule_id = Schedule.find_by_title( "初級 I" ).id
+course = Course.find_by_name( "初級 I" )
+schedule = Schedule.create!( :course_id => course.id )
+#schedule_id = Schedule.find_by_title( "初級 I" ).id
 
 File.open filename, 'r' do |f|
 	f.readlines.each do |line|
-		array = titles.zip( line.split(',')) + [ :schedule_id, schedule_id ]
-		Unit.new( Hash[ *array.flatten ]).save
+	  while line.match(/"(.+),(.+)"/)
+      line = line.gsub(/"(.+),(.+)"/, "\""+$1+"#"+$2+"\"")
+    end
+		array = titles.zip( line.split(',')) + [ :schedule_id, schedule.id ]
+    hash = Hash[ *array.flatten ]
+    title = hash[:title]
+	  while title.match(/"(.+)#(.+)"/)
+      title = title.gsub(/"(.+)#(.+)"/, "\""+$1+","+$2+"\"")
+    end
+    title = title.gsub(/"(.+)"/, $1) if title.match(/"(.+)"/)
+    hash[:title] = title
+		Unit.new( hash ).save
 	end
 end

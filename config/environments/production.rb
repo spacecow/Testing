@@ -20,9 +20,6 @@ config.action_controller.perform_caching             = true
 # Enable serving of images, stylesheets, and javascripts from an asset server
 # config.action_controller.asset_host                  = "http://assets.example.com"
 
-# Disable delivery errors, bad email addresses will be ignored
-# config.action_mailer.raise_delivery_errors = false
-
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 
@@ -30,11 +27,11 @@ config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :smtp
 
 # these options are only needed if you choose smtp delivery
-config.action_mailer.smtp_settings = {
-  :address        => 'smtp.reserve-gakuwarinet.com',
-  :port           => 25,
-  :domain         => 'www.reserve-gakuwarinet.com',
+#config.action_mailer.smtp_settings = {
+#  :address        => 'smtp.reserve-gakuwarinet.com',
+#  :port           => 25,
+#  :domain         => 'www.reserve-gakuwarinet.com',
 #  :authentication => :login,
 # :user_name      => 'www',
 #  :password       => 'secret'
-}
+#}

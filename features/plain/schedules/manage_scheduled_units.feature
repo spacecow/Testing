@@ -24,17 +24,14 @@ Given I have course "Ruby I"
 	And I have teacher "johan_sveholm"
 	And I am logged in as "johan_sveholm"
 
-Scenario: Listing schedules
-Given I go to the list of schedules
-Then I should see "Ruby I" within "list"
-
 Scenario: Listing units in two rows
 Given I set the units per schedule to 2
 	And I go to the list of schedules
 When I follow 'edit' for schedule "Ruby I"
-Then I should see "Mon 11:15~12:15"
-	And I should see "Mon 13:00~15:00"
-	And I should not see "Mon 15:50~17:50"
+  And I press 'scheduled_units.update'
+#Then I should see "Mon 11:15~12:15"
+#	And I should see "Mon 13:00~15:00"
+#	And I should not see "Mon 15:50~17:50"
 	
 Scenario: Scheduled units are generated and filled in
 	And the following scheduled unit record

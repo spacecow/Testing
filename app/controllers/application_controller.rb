@@ -116,45 +116,7 @@ private
 	  		current_user.teacher :
 	  		edit_klasses_student_path( current_user.student.id )
 	  end
-	end
-	
-	def generate_scheduled_units( schedule )
-		scheduled_units = []
-		template_hash = TemplateClass.all(
-			:conditions=>["courses.name = ?", schedule.course.name],
-			:include => :course
-		).uniq_by( &:day_and_time_interval ).
-			group_by( &:day )
-			
-		index = 0
-		(0..90).to_a.map{|e| e.day.from_now }.each do |date|
-			elements = template_hash[ date.strftime("%A") ]
-			unless elements.nil?
-				elements.sort_by( &:time_interval ).each do |e|
-					break if( index += 1 ) > units_per_schedule
-					
-					scheduled_unit = schedule.equaled_scheduled_unit( date, e.start_time, e.end_time	)
-					old_scheduled_unit = schedule.equaled_scheduled_unit( date - 7.days, e.start_time, e.end_time )
-					unit_id = old_scheduled_unit ? ( old_scheduled_unit.unit_id ? old_scheduled_unit.unit_id+1 : nil ) : nil # = @classes[ equal_array.index( true ) ]
-					if scheduled_unit.nil?
-						scheduled_unit = ScheduledUnit.create!(
-							:date => date,
-							:start_time => e.start_time,
-							:end_time => e.end_time,
-							:unit_id => unit_id
-						)
-						schedule.scheduled_units << scheduled_unit
-					else
-						unless old_scheduled_unit.nil? || scheduled_unit.unit_id == unit_id
-							scheduled_unit.update_attribute( :unit_id, unit_id ) 
-						end
-					end
-					scheduled_units.push scheduled_unit 
-				end
-			end
-		end
-		scheduled_units
-	end
+	end	
 
   def logged_in?
     session[:user_name] != nil
