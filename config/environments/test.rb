@@ -23,8 +23,9 @@ config.action_mailer.delivery_method = :test
 
 config.gem 'thoughtbot-shoulda', :lib => 'Shoulda', :version => '2.10.1', :source => "http://gems.github.com"
 config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
-config.gem "rspec", :lib => false, :version => ">=1.2.6"
-config.gem "rspec-rails", :lib => false, :version => ">=1.2.6"
-config.gem "webrat", :lib => false, :version => ">=0.4.4"
-config.gem "cucumber", :lib => false, :version => ">=0.3.11"
 #config.gem 'selenium-client', :lib => 'selenium/client', :version => ">=1.2.14"
+config.gem "rspec", :lib => false, :version => ">=1.2.9"
+config.gem "rspec-rails", :lib => false, :version => ">=1.2.9"
+config.gem "webrat", :lib => false, :version => ">=0.5.3"
+config.gem "cucumber", :lib => false, :version => ">=0.4.3"
+config.gem "pickle", :lib => false, :version => ">=0.1.21"

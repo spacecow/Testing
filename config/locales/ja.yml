@@ -88,6 +88,8 @@ ja:
     title: "DOCUMENTATION"
   docs:
     title: "DOCS"
+  kanjis:
+    title: "漢字"
   klasses:
     title: "クラス"
     listing: "上場クラス"

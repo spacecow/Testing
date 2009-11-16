@@ -6,11 +6,11 @@ Given the following teacher records
 |	komatsu_aya		|	ja				|	secret		|
 Given I go to the list of schedules
 	
-@monday
-Scenario: Schedule's new-form should not contain a Update Scheduled Unit button
-Given I am logged in as "johan_sveholm"
-When I follow 'schedules.new' within "links"
-Then I should not see a button 'scheduled_units.update'
+#@monday
+#Scenario: Schedule's new-form should not contain a Update Scheduled Unit button
+#Given I am logged in as "johan_sveholm"
+#When I follow 'schedules.new' within "links"
+#Then I should not see a button 'scheduled_units.update'
 
 Scenario Outline: Course id has to be filled in to create a schedule
 Given I am logged in as "<user>"
