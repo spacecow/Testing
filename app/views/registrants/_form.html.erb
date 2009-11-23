@@ -1,0 +1,14 @@
+<% f.inputs do %>
+	<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => Registrant::OCCUPATIONS %>
+	<%= f.input :name, :label => t( 'name' ) %>
+	<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>
+	<%= f.input :male, :label => t( 'gender' ), :as => :radio, :collection => [[t('male'), true],[t('female'), false]] %>
+	<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => Registrant::AGE %>
+	<%= f.input :tel, :label => t( 'tel' ) %>
+	<%= f.input :email, :label => t( 'email' ) %>
+	<%= f.input :note, :label => t( 'note' ), :input_html => { :rows => 8 }, :required => false %>
+	<% f.input :event_id, :as => :hidden, :value => @event.id %>
+<% end %>
+<% f.buttons do %>
+	<%= f.commit_button label_text %>
+<% end %>

@@ -1,0 +1,32 @@
+<div class="form">
+<%= error_messages_for :event %>
+
+<fieldset>
+<legend><%=h @event.title %> - <%=h @event.date %></legend>
+
+<p>
+  <%=h @event.description %>
+</p>
+<p><%= button_to t( 'register' ), new_registrant_path( :event_id => @event.id ) %></p>
+
+<p><%= render :partial => 'comment', :collection => @event.comments %></p>
+
+<% if current_user %>
+	<% form_for :comment, :url=>comments_path do |f| %>
+		<%= f.hidden_field :event_id, :value=>@event.id %>
+		<%= f.hidden_field :name, :value => current_user ? current_user.name : "" %>
+		<p>	
+			<%= f.text_area :comment, :rows=>4, :cols=>25 %>
+		</p>
+		<p><%= f.submit t 'comments.add' %></p>
+	<% end %>
+<% end %>
+
+<div class="links">
+  <%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
+  <%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), events_path, :class=>"link" %>
+</div>
+
+</fieldset>
+</div>

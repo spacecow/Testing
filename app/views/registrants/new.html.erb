@@ -1,0 +1,16 @@
+<div class="form">
+<%= error_messages_for :registrant %>
+
+<fieldset>
+<legend><%= t('registrants.new', :event => @event.title ) %></legend>
+
+<% semantic_form_for @registrant do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), registrants_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

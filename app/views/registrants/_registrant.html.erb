@@ -1,0 +1,15 @@
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+	<td><%=h registrant.occupation %></td>
+	<td><%=h registrant.name %></td>
+	<td><%=h registrant.name_hurigana %></td>
+	<td><%= registrant.male ? t(:male) : t(:female) %></td>
+	<td><%=h registrant.age %></td>
+	<td><%=h registrant.tel %></td>
+	<td><%=h registrant.email %></td>
+	<td><%=h registrant.note %></td>
+	<td>
+		<%= link_to t('show'), registrant, :class=>"link" %>
+		<%= link_to t('edit'), edit_registrant_path(registrant), :class=>"link" %>
+		<%= link_to t('delete'), registrant, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+	</td>    	
+</tr>

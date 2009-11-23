@@ -1,0 +1,20 @@
+<h1><%= t('info') %> - Registrant</h1>
+
+<p>
+  <strong><%= t('name') %>:</strong>
+  <%=h @registrant.name %>
+</p>
+<p>
+  <strong><%= t('event_id') %>:</strong>
+  <%=h @registrant.event_id %>
+</p>
+<p>
+  <strong><%= t('male') %>:</strong>
+  <%=h @registrant.male %>
+</p>
+
+<div class="links">
+  <%= link_to t('edit'), edit_registrant_path(@registrant), :class=>"link" %> |
+  <%= link_to t('delete'), @registrant, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), registrants_path, :class=>"link" %>
+</div>

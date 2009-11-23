@@ -1,0 +1,27 @@
+<div id="list">
+<h1><%= t('events.title') %></h1>
+
+<table cellpadding="2" cellspacing="1">
+	<tr>
+			<th class="list-topics"><%= t('title') %></th>		
+			<th class="list-topics"><%= t('event_date') %></th>		
+			<th class="list-topics"><%= t('description') %></th>		
+	</tr>
+	<% for event in @events %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      	<td><%=h event.title %></td>
+      	<td><%=h event.date %></td>
+      	<td><%=h event.description %></td>
+  		<td>
+    			<%= link_to t('show'), event, :class=>"link" %>
+    			<%= link_to t('edit'), edit_event_path(event), :class=>"link" %>
+    			<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>
+
+<div class="links">
+<p><%= link_to t('events.new'), new_event_path, :class=>"link" %></p>
+</div>
+</div>

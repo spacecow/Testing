@@ -1,0 +1,18 @@
+<div class="form">
+<%= error_messages_for :event %>
+
+<fieldset>
+<legend><%= t('events.editing') %></legend>
+
+<% semantic_form_for @event do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<% end %>
+
+<div class="links">
+		  <%= link_to t('show'), @event, :class=>"link" %> |
+		  <%= link_to t('view_all'), events_path, :class=>"link" %>
+		</p>
+</div>
+
+</fieldset>
+</div>

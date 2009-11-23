@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+	map.resources :comments
+  map.resources :registrants
+  map.resources :events
   map.resources :kanjis, :member => {:check => :get}
-
 	map.resources :scheduled_units
   map.resources :schedules
   map.resources :settings

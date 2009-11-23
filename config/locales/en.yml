@@ -4,6 +4,7 @@
 en:
   address: "Address"
   address2: "Second address"
+  age: "Age"
   back: "Back to Index"
   blank: " "
   cancel: "Cancel"
@@ -22,8 +23,10 @@ en:
   deleted: " was successfylly deleted"
   description: "Description"
   edit: "Edit "
+  email: "Email Address"
   end_time: "End Time"
   english: "English"
+  event_date: "Date"
   female: "Female"
   gender: "Gender"
   hiragana: "Hiragana"
@@ -50,14 +53,17 @@ en:
   mobile_phone: "Mobile phone"
   multi: "Multi "
   name: "Name"
+  name_hurigana: "Name/Hurigana"
   name_kana: "Name (katakana)"
   new: "New"
   note: "Note"
   notice: "Note"
+  occupation: "Occupation"
   offu: "OFF"
   onu: "ON"
   password: "Password"
   previous_version: "Previous version"
+  register: "Register"
   reserve: "Reserve"
   room: "Room"
   search: "Search"
@@ -67,6 +73,7 @@ en:
   suspended: "Suspended"
   sure?: "Are you sure?"
   teacher: "Teacher"
+  tel: "Telephone Number"
   template_class: "Template Class"
   title: "Title"
   uncancel: "Uncancel"
@@ -83,6 +90,8 @@ en:
     listing: "Listing Classrooms"
     new: "New Classroom"
     title: "Classrooms"
+  comments:
+    add: "Add Comment"
   courses:
     editing: "Editing Course"
     new: "New course"
@@ -96,6 +105,10 @@ en:
     title: "Documentation"
   docs:
     title: "Docs"
+  events:
+    editing: "Editing Event"
+    new: "New Event"
+    title: "Events"
   kanjis:
     editing: "Editing Kanji"
     new_sentence: "New Kanji Sentence"
@@ -125,6 +138,10 @@ en:
     title: "People"
     error:
       unauthorized_access: "Unauthorized access."
+  registrants:
+    editing: "Editing Registrant for {{event}}"
+    new: "New Registrant for {{event}}"
+    title: "Registrants"
   scheduled_units:
     update: "Update Scheduled Units"
   students:

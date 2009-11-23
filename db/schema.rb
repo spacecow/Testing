@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091116031107) do
+ActiveRecord::Schema.define(:version => 20091123162533) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -22,12 +22,37 @@ ActiveRecord::Schema.define(:version => 20091116031107) do
     t.integer  "version",    :default => 1
   end
 
+  create_table "classes", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_id"
+    t.integer  "classroom_id"
+    t.integer  "capacity"
+    t.datetime "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "cancel"
+    t.integer  "mail_sending"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "classrooms", :force => true do |t|
     t.string   "name"
     t.string   "address"
     t.text     "description"
     t.boolean  "inactive",    :default => false
     t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.string   "name"
+    t.text     "comment"
+    t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +92,14 @@ ActiveRecord::Schema.define(:version => 20091116031107) do
   create_table "docs_tags", :id => false, :force => true do |t|
     t.integer  "doc_id"
     t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.date     "date"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,6 +162,20 @@ ActiveRecord::Schema.define(:version => 20091116031107) do
     t.string   "salt"
     t.string   "check"
     t.string   "language",                          :default => "ja"
+  end
+
+  create_table "registrants", :force => true do |t|
+    t.string   "occupation"
+    t.string   "name"
+    t.string   "name_hurigana"
+    t.integer  "event_id"
+    t.boolean  "male"
+    t.string   "age"
+    t.string   "tel"
+    t.string   "email"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registrations", :force => true do |t|

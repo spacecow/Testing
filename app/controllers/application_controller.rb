@@ -149,7 +149,7 @@ private
 	end        
 		
   def set_user_language
-    I18n.locale = logged_in? ? current_user.language : 'en'
+    I18n.locale = logged_in? ? current_user.language : Setting.find_by_name( 'main' ).language
   end  
 	
 	

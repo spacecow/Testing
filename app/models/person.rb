@@ -55,6 +55,10 @@ class Person < ActiveRecord::Base
       "#{family_name} #{first_name}"
     end
   end 
+  
+  def name_hurigana
+		"#{family_name_kana} #{first_name_kana}"
+  end
 
   def to_s
     "#{family_name} #{first_name}"

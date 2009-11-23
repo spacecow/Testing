@@ -1,0 +1,9 @@
+one:
+  name: MyString
+  event_id: 1
+  male: false
+
+two:
+  name: MyString
+  event_id: 1
+  male: false

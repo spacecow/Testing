@@ -4,6 +4,7 @@
 ja:
   address: "住所"
   address2: "二番目の住所"
+  age: "年代"
   back: "BACK"
   blank: ""
   cancel: "ｷｬﾝｾﾙ"
@@ -19,7 +20,9 @@ ja:
   delete: "削除"
   description: "記述"
   edit: "編集"
+  email: "メールアドレス"
   end_time: "終わりの時間"
+  event_date: "日付"
   female: "女性"
   gender: "性別"
   history: "過去"
@@ -42,14 +45,17 @@ ja:
   mobile_phone: "携帯番号"
   multi: "倍数"
   name: "名前"
+  name_hurigana: "名前/ふりがな"
   name_kana: "名前 (カタカナ)"
   new: "新しい"
   note: "備考"
   notice: "注意"
+  occupation: "参加形態"
   offu: "OFF"
   onu: "ON" 
   password: "パスワード"
   previous_version: "前バージョン"
+  register: "登録"
   reserve: "予約"
   room: "部屋"
   search: "検索"
@@ -60,6 +66,7 @@ ja:
   suspended: "利用停止"
   teacher: "講師"
   template_class: "テンプレート・クラス"
+  tel: "電話番号"
   title: "タイトル"
   update: "更新"
   uncancel: "ｳﾝｷｬﾝｾﾙ"  
@@ -75,6 +82,8 @@ ja:
     listing: "上場教室"
     new: "新しい教室"
     title: "教室"
+  comments:
+    add: "コメント"
   courses:
     editing: "講座編集"
     listing: "上場講座"
@@ -88,6 +97,10 @@ ja:
     title: "DOCUMENTATION"
   docs:
     title: "DOCS"
+  events:
+    editing: "イベント編集"
+    new: "新しいイベント"
+    title: "参加イベント"
   kanjis:
     title: "漢字"
   klasses:
@@ -114,6 +127,10 @@ ja:
     title: "全部の人"
     error:
       unauthorized_access: "不正アクセス"
+  registrants:
+    editing: "{{event}}へ登録者情報編集"
+    new: "{{event}}へ新しい登録者"
+    title: "登録者"
   scheduled_units:
     update: "予定されたユニットを更新する"
   students:
