@@ -156,4 +156,18 @@ private
 	def units_per_schedule
 		get_settings.units_per_schedule
 	end
+	
+	
+	
+	helper_method :current_user2
+	
+	def current_user_session2
+		return @current_user_session2 if defined?( @current_user_session2 )
+		@current_user_session2 = UserSession.find
+	end
+	
+	def current_user2
+		return @current_user2 if defined?( @current_user2 )
+		@current_user2 = current_user_session2 && current_user_session2.record
+	end
 end

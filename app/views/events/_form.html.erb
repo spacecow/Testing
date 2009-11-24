@@ -1,6 +1,6 @@
 <% f.inputs do %>
 	<%= f.input :title, :label => t( 'title' ) %>
-	<%= f.input :date, :label => t( 'event_date' ) %>
+	<%= f.input :date, :label => t( 'event_date' ), :include_blank => false %>
 	<%= f.input :description, :label => t( 'description' ), :input_html => { :rows => 8 } %>
 <% end %>
 <% f.buttons do %>

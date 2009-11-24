@@ -54,6 +54,7 @@ ja:
   offu: "OFF"
   onu: "ON" 
   password: "パスワード"
+  password_confirmation: "パスワード確認"
   previous_version: "前バージョン"
   register: "登録"
   reserve: "予約"
@@ -159,6 +160,9 @@ ja:
     title: "テンプレート・クラス"
     error:
       edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
+  users:
+    editing: "ユーザー編集"
+    new: "新しいユーザー"
   date:
     formats:
       default: "%Y/%m/%d"

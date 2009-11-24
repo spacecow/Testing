@@ -39,7 +39,7 @@ html[xmlns] form.formtastic fieldset { display: block; }
 
 /* INPUT LIs
 --------------------------------------------------------------------------------------------------*/
-form.formtastic fieldset ol li { margin-bottom:1.5em; }
+form.formtastic fieldset ol li { margin-bottom:1.5em; margin:0; padding:0; }
 
 /* clearfixing the li's */
 form.formtastic fieldset ol li { display: inline-block; }

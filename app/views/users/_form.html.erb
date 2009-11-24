@@ -1,15 +1,18 @@
-﻿<p>
-  <%= f.label :name %>
-  <%= f.text_field :name, :size=>30 %>
-</p>
+<% f.inputs do %>
+	<%= f.input :username, :label => t( :user_name ) %>
+	<%= f.input :email, :label => t( :email ) %>
+	<%= f.input :password, :label => t( :password ) %>
+	<%= f.input :password_confirmation, :label => t( :password_confirmation ) %>
+<% end %>
 <p>
-  <label for="password">パスワード</label>
-  <%= f.password_field :password, :size=>30 %>
+  <%= f.label :roles %><br />
+  <% for role in User::ROLES %>
+    <%= check_box_tag "user[roles][]", role, @user.roles.include?(role) %>
+    <%= h role.humanize %><br />
+  <% end %>
+  <%= hidden_field_tag "user[roles][]", "" %>
 </p>
-<p>
-  <label for="password_confirmation">Confirm:</label>
-  <%= f.password_field :password_confirmation, :size=>30 %>
-</p>
-<p>
-  <%= f.submit label_text, :class=>'submit' %>
-</p>
+<% f.buttons do %>
+	<%= f.commit_button label_text %>
+<% end %>
+

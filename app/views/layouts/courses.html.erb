@@ -62,6 +62,15 @@
 		</td></tr></table>
   </div>		
     <div id="main">
+    	<div id="user_nav">
+    		<% if current_user2 %>
+    			<%= link_to "Edit Profile", edit_user_path(:current) %> |
+    			<%= link_to "Logout", logout_user_path %>
+    		<% else %>
+	    		<%= link_to "Register", new_user_path %> |
+	    		<%= link_to "Login", login_user_path %>
+	    	<% end %>
+    	</div>
       <%- flash.each do |key, msg| -%>  
         <div id="<%= key %>">  
           <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  

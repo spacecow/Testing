@@ -7,7 +7,7 @@
 	<%= f.input :tel, :label => t( 'tel' ) %>
 	<%= f.input :email, :label => t( 'email' ) %>
 	<%= f.input :note, :label => t( 'note' ), :input_html => { :rows => 8 }, :required => false %>
-	<% f.input :event_id, :as => :hidden, :value => @event.id %>
+	<%= f.input :event_id, :as => :hidden, :value => @event.id %>
 <% end %>
 <% f.buttons do %>
 	<%= f.commit_button label_text %>

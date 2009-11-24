@@ -36,7 +36,7 @@ td.schedule-only-right-and-down{
 
 #notice { background-color: #A4E7A0; border: 1px solid #26722D; }  
 #error { background-color: #F0A8A8; border: 1px solid #900; }  
-#notice, #error { width: 90%; margin: 0 auto 10px auto; padding: 5px; }  
+#notice, #error { width: 80%; margin: 0 18% 10px auto; padding: 5px; }  
 #notice p, #error p { margin-left: 20px; padding: 0; font-size: .75em; color: #000; }  
 #notice a, #error a { text-decoration: none; padding: 0 3px; }  
 #notice a { border: 1px solid #26722D; color: #26722D; }  
@@ -327,4 +327,13 @@ a.link{
 	left: auto;
 	background: #0099cc;
 	border-bottom: 2px solid;
+}
+
+#user_nav{
+	float: right;
+	font-size: 12px;
+	margin-right: 30px;
+}
+#user_nav a{
+	text-decoration: none;
 }

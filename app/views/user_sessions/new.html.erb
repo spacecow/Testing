@@ -1,0 +1,15 @@
+<div class="form">
+<%= error_messages_for :user_session %>
+
+<fieldset>
+<legend><%= t('login.title') %></legend>
+
+<% semantic_form_for @user_session do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('login.button') } %>
+<% end %>
+
+<div class="links">
+</div>
+
+</fieldset>
+</div>

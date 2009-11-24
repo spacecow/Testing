@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091123162533) do
+ActiveRecord::Schema.define(:version => 20091124125913) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -20,23 +20,6 @@ ActiveRecord::Schema.define(:version => 20091123162533) do
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
-  end
-
-  create_table "classes", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "teacher_id"
-    t.integer  "classroom_id"
-    t.integer  "capacity"
-    t.datetime "date"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.string   "title"
-    t.text     "description"
-    t.boolean  "cancel"
-    t.integer  "mail_sending"
-    t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -279,6 +262,18 @@ ActiveRecord::Schema.define(:version => 20091123162533) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username"
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "roles_mask"
+    t.string   "roles"
   end
 
   create_table "versions", :force => true do |t|
