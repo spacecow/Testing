@@ -1,6 +1,5 @@
 class RegistrantsController < ApplicationController
-  before_filter :authorize, :except=>[:new,:create,:index,:show]
-  before_filter :authorize_view, :only=>[:show,:live_search]
+	filter_resource_access
   
 	def index
     #@registrants = Registrant.all
@@ -8,23 +7,22 @@ class RegistrantsController < ApplicationController
   end
   
   def show
-    @registrant = Registrant.find(params[:id])
   end
   
   def new
-  	user = current_user
-    @registrant = Registrant.new(
-    	:name => user.name,
-    	:name_hurigana => user.name_hurigana,
-    	:male => user.gender,
-    	:tel => user.mobile_phone,
-    	:email => user.mail_address_mobile
-    )
+  	if( user = current_user2 )
+	    @registrant = Registrant.new(
+	    	#:name => user.name,
+	    	#:name_hurigana => user.name_hurigana,
+	    	#:male => user.gender,
+	    	#:tel => user.mobile_phone,
+	    	:email => user.email
+	    )
+  	end
     @event = Event.find( params[:event_id] )
   end
   
   def create
-    @registrant = Registrant.new(params[:registrant])
     if @registrant.save
       flash[:notice] = "Successfully created registrant."
       redirect_to registrants_url
@@ -35,12 +33,10 @@ class RegistrantsController < ApplicationController
   end
   
   def edit
-    @registrant = Registrant.find(params[:id])
     @event = Event.find( @registrant.event_id )
   end
   
   def update
-    @registrant = Registrant.find(params[:id])
     if @registrant.update_attributes(params[:registrant])
       flash[:notice] = "Successfully updated registrant."
       redirect_to registrants_path
@@ -50,9 +46,13 @@ class RegistrantsController < ApplicationController
   end
   
   def destroy
-    @registrant = Registrant.find(params[:id])
     @registrant.destroy
     flash[:notice] = "Successfully destroyed registrant."
     redirect_to registrants_url
   end
+  
+  def authorize
+  end  
+  def authorize_view
+	end    
 end

@@ -17,8 +17,8 @@ form.formtastic fieldset ol li.date{
 }
 form.formtastic fieldset ol li.radio fieldset ol li label { margin-left: 10px; float:none; width:100%; text-align: left; }
 form.formtastic fieldset ol li.radio fieldset legend label{ width: 100%; }
-form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 250px; text-align: right; }
-form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 10px; float:none; width:100%; text-align: left; }
+form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 26%; }
+form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 12px; float:none; width:100%; text-align: left; }
 form.formtastic fieldset ol li.date fieldset legend label{ width: 97%; }
 
 form.formtastic fieldset ol li fieldset legend {
@@ -32,7 +32,8 @@ form.comment fieldset ol li.text label{ display: none; }
 form.comment fieldset ol li.text textarea { width:30%; }
 form.comment fieldset.buttons { padding-left: 0; }
 
-form.registrant fieldset ol li { margin-bottom:0.5em; }
+form.registrant fieldset ol li,
+form.user fieldset ol li{ margin-bottom:0.5em; }
 
 form.user fieldset ol li { margin-bottom:0; }
 form.user fieldset ol li.string input,

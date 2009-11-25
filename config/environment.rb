@@ -31,7 +31,8 @@ Rails::Initializer.run do |config|
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
   config.gem "formtastic", :lib => "formtastic"
 	config.gem "authlogic"
-  
+  config.gem "declarative_authorization", :source => "http://gemcutter.org"
+	
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 
 

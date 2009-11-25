@@ -1,20 +1,17 @@
 class EventsController < ApplicationController
-  before_filter :authorize_view, :only=>[:live_search]
+	filter_resource_access
 	
 	def index
     @events = Event.all
   end
   
   def show
-    @event = Event.find(params[:id])
   end
   
   def new
-    @event = Event.new
   end
   
   def create
-    @event = Event.new(params[:event])
     if @event.save
       flash[:notice] = "Successfully created event."
       redirect_to events_url
@@ -24,11 +21,9 @@ class EventsController < ApplicationController
   end
   
   def edit
-    @event = Event.find(params[:id])
   end
   
   def update
-    @event = Event.find(params[:id])
     if @event.update_attributes(params[:event])
       flash[:notice] = "Successfully updated event."
       redirect_to @event
@@ -38,9 +33,13 @@ class EventsController < ApplicationController
   end
   
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     flash[:notice] = "Successfully destroyed event."
     redirect_to events_url
-  end 
+  end
+  
+  def authorize
+  end  
+  def authorize_view
+	end    
 end

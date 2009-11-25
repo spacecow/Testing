@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+	before_filter { |c| Authorization.current_user = c.current_user2 }
+
   before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_user_language
@@ -24,6 +26,18 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password
+
+	helper_method :current_user2
+	
+	def current_user_session2
+		return @current_user_session2 if defined?( @current_user_session2 )
+		@current_user_session2 = UserSession.find
+	end
+	
+	def current_user2
+		return @current_user2 if defined?( @current_user2 )
+		@current_user2 = current_user_session2 && current_user_session2.record
+	end
 
 protected
 	def login
@@ -155,19 +169,5 @@ private
 	
 	def units_per_schedule
 		get_settings.units_per_schedule
-	end
-	
-	
-	
-	helper_method :current_user2
-	
-	def current_user_session2
-		return @current_user_session2 if defined?( @current_user_session2 )
-		@current_user_session2 = UserSession.find
-	end
-	
-	def current_user2
-		return @current_user2 if defined?( @current_user2 )
-		@current_user2 = current_user_session2 && current_user_session2.record
 	end
 end

@@ -58,6 +58,7 @@ ja:
   previous_version: "前バージョン"
   register: "登録"
   reserve: "予約"
+  roles: "Roles"
   room: "部屋"
   search: "検索"
   show: "表示"
