@@ -4,9 +4,8 @@
 <fieldset>
 <legend><%=h @event.title %> - <%=h @event.date %></legend>
 
-<p>
-  <%=h @event.description %>
-</p>
+<p><%=h @event.description %></p>
+<p><%= t 'registrants.title' %>: <%= @event.registrants.count %></p>
 <p><%= button_to t( 'register' ), new_registrant_path( :event_id => @event.id ) %></p>
 
 <p><%= render :partial => 'comment', :collection => @event.comments %></p>
@@ -18,7 +17,7 @@
 		<p>	
 			<%= f.text_area :comment, :rows=>4, :cols=>25 %>
 		</p>
-		<p><%= f.submit t 'comments.add' %></p>
+		<p><%= f.submit t( 'comments.add' ) %></p>
 	<% end %>
 <% end %>
 

@@ -15,6 +15,9 @@ module NavigationHelpers
     when /the logout page/
     	logout_path
     	
+    when /the list of events/
+    	events_path	
+    	
     when /the list of settings/
     	settings_path
 

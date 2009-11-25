@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   before_filter :authorize_view, :only=>[:index,:show,:live_search]
-  before_filter :set_user_language
+  #before_filter :set_user_language
   helper_method :clearance
   helper_method :clearance?
   helper_method :current_user
@@ -39,7 +39,18 @@ class ApplicationController < ActionController::Base
 		@current_user2 = current_user_session2 && current_user_session2.record
 	end
 
+  def logged_in2?
+    current_user2 != nil
+  end
+
+
 protected
+
+	def permission_denied
+	  flash[:error] = t( 'access_denied' )
+	  redirect_to events_path
+	end
+
 	def login
 	end
 
@@ -162,9 +173,10 @@ private
 		session[:user_name] = username
 	end        
 		
-  def set_user_language
-    I18n.locale = logged_in? ? current_user.language : Setting.find_by_name( 'main' ).language
-  end  
+  #def set_user_language
+		#@current_settings = Setting.find_by_name( 'main' )
+    #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
+  #end  
 	
 	
 	def units_per_schedule

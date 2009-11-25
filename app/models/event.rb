@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  has_many :regitrants
+  has_many :registrants
   has_many :comments
 
 	attr_accessible :title, :date, :description

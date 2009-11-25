@@ -24,7 +24,7 @@ class RegistrantsController < ApplicationController
   
   def create
     if @registrant.save
-      flash[:notice] = "Successfully created registrant."
+      flash[:notice] = "Successfully registered."
       redirect_to registrants_url
     else
     	@event = Event.find( params[:registrant][:event_id] )

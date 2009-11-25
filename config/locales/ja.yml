@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ja:
+  access_denied: "Sorry, you are not allowed to access that page."
   address: "住所"
   address2: "二番目の住所"
   age: "年代"
@@ -20,6 +21,7 @@ ja:
   delete: "削除"
   description: "記述"
   edit: "編集"
+  edit_profile: "ﾌﾟﾛﾌｧｲﾙ編集"
   email: "メールアドレス"
   end_time: "終わりの時間"
   event_date: "日付"
@@ -58,6 +60,7 @@ ja:
   previous_version: "前バージョン"
   register: "登録"
   reserve: "予約"
+  role: "Role"
   roles: "Roles"
   room: "部屋"
   search: "検索"

@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  access_denied: "Sorry, you are not allowed to access that page."
   address: "Address"
   address2: "Second address"
   age: "Age"
@@ -23,6 +24,7 @@ en:
   deleted: " was successfylly deleted"
   description: "Description"
   edit: "Edit "
+  edit_profile: "Edit Profile"
   email: "Email Address"
   end_time: "End Time"
   english: "English"
@@ -66,6 +68,7 @@ en:
   previous_version: "Previous version"
   register: "Register"
   reserve: "Reserve"
+  role: "Role"
   roles: "Roles"
   room: "Room"
   search: "Search"
@@ -125,10 +128,11 @@ en:
       edit_courses_with_students: "Cancel students before changing course"
       try_to_delete_klass_with_students: "Move away all students from the class before deleting"
   login:
+    button: "Login"
+    password: "Password"
+    text: "Login"
     title: "Please log in"
     user_name: "User name"
-    password: "Password"
-    button: "Login"
     flash:
       invalid_user_or_password: "User name or password invalid"
   logout:

@@ -1,5 +1,7 @@
 class UserSessionsController < ApplicationController
-  def new
+	filter_resource_access
+  
+	def new
     @user_session = UserSession.new
   end
   
