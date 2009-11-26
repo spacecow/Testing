@@ -14,4 +14,10 @@ Then /^I should be redirected to the "login" page$/ do
   response.should contain( I18n.translate( 'login.title' ))
 end
 
-#www.mysoju.com
+Given /^a user is logged in as "([^\"]*)"$/ do |arg1|
+  Given "I go to the list of events"
+	And "I follow \'login.text\'"""
+	And "I fill in \'user_name\' with \"kurosawa_akira\""
+	And "I fill in \'password\' with \"secret\""
+	And "I press \'login.button\'"
+end

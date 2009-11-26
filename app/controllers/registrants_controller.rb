@@ -23,11 +23,11 @@ class RegistrantsController < ApplicationController
   end
   
   def create
-    if @registrant.save
-      flash[:notice] = "Successfully registered."
-      redirect_to registrants_url
+    @event = Event.find( params[:registrant][:event_id] )
+  	if @registrant.save
+      flash[:notice] = t( 'registrants.notice.success', :event => @event.title )
+      redirect_to @event
     else
-    	@event = Event.find( params[:registrant][:event_id] )
       render :action => 'new'
     end
   end

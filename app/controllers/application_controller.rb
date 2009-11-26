@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   before_filter :authorize_view, :only=>[:index,:show,:live_search]
-  #before_filter :set_user_language
+  before_filter :set_user_language
   helper_method :clearance
   helper_method :clearance?
   helper_method :current_user
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password
 
-	helper_method :current_user2
+	helper_method :current_user2, :english?
 	
 	def current_user_session2
 		return @current_user_session2 if defined?( @current_user_session2 )
@@ -43,6 +43,9 @@ class ApplicationController < ActionController::Base
     current_user2 != nil
   end
 
+	def english?
+		session[:language] == 'en'
+	end
 
 protected
 
@@ -173,10 +176,11 @@ private
 		session[:user_name] = username
 	end        
 		
-  #def set_user_language
+  def set_user_language
 		#@current_settings = Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
-  #end  
+    I18n.locale = session[:language]
+  end  
 	
 	
 	def units_per_schedule

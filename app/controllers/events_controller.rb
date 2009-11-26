@@ -37,7 +37,8 @@ class EventsController < ApplicationController
     flash[:notice] = "Successfully destroyed event."
     redirect_to events_url
   end
-  
+
+	  
   def authorize
   end  
   def authorize_view

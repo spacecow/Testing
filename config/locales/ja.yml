@@ -67,6 +67,7 @@ ja:
   show: "表示"
   start_time: "開始の時間"
   student: "受講生"
+  successfully: "首尾よく"
   sure?: "確かですか"
   suspended: "利用停止"
   teacher: "講師"
@@ -105,6 +106,7 @@ ja:
   events:
     editing: "イベント編集"
     new: "新しいイベント"
+    register: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
     title: "参加イベント"
   kanjis:
     title: "漢字"
@@ -116,16 +118,19 @@ ja:
       edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
+    button: "ログイン"
+    text: "ﾛｸﾞｲﾝ"
     title: "ログインして下さい"
     user_name: "ユーザー名"
     password: "パスワード"
-    button: "ログイン"
-    notice: "が首尾よくログインされました"
+    notice:
+      success: "首尾よくログインされました"
     flash:
       invalid_user_or_password: "無効ユーザーかパスワード"
   logout:
     title: "ログアウト"
-    notice: "が首尾よくログアウトされました"
+    notice:
+      success: "首尾よくログアウトされました"
   mymafumafu:
     title: "マイまふまふページ"
   people:
@@ -167,6 +172,8 @@ ja:
   users:
     editing: "ユーザー編集"
     new: "新しいユーザー"
+    notice:
+      registration: "登録が首尾よく作成されました"    
   date:
     formats:
       default: "%Y/%m/%d"

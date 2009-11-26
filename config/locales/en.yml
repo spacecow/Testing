@@ -75,6 +75,7 @@ en:
   show: "Info"
   start_time: "Start Time"
   student: "Student"
+  successfully: "Successfully"
   suspended: "Suspended"
   sure?: "Are you sure?"
   teacher: "Teacher"
@@ -113,6 +114,7 @@ en:
   events:
     editing: "Editing Event"
     new: "New Event"
+    register: "Login in order to register to the event."
     title: "Events"
   kanjis:
     editing: "Editing Kanji"
@@ -135,9 +137,12 @@ en:
     user_name: "User name"
     flash:
       invalid_user_or_password: "User name or password invalid"
+    notice:
+      success: "Successfully logged in"
   logout:
     title: "Logout"
-    notice: "Successfully logged out"
+    notice:
+      success: "Successfully logged out"
   mymafumafu:
     title: "My Mafumafu Page"
   people:
@@ -147,6 +152,8 @@ en:
   registrants:
     editing: "Editing Registrant for {{event}}"
     new: "New Registrant for {{event}}"
+    notice:
+      success: "Successfully registered for {{event}}."
     title: "Registrants"
   scheduled_units:
     update: "Update Scheduled Units"
@@ -179,6 +186,8 @@ en:
   users:
     editing: "Edit User"
     new: "New User"
+    notice:
+      registration: "Registration successful."
   grammar_unit: "Grammar unit"
   page: "Page"
   people_per_page: "People/page"

@@ -42,7 +42,14 @@ class SettingsController < ApplicationController
     flash[:notice] = "Successfully destroyed setting."
     redirect_to settings_url
   end
-  
-  def set_user_language
+
+  def toggle_user_language
+  	session[:language] = session[:language] == "ja" ? "en" : "ja"
+  	redirect_to :back
 	end
+	  
+  def authorize
+  end  
+  def authorize_view
+	end    
 end

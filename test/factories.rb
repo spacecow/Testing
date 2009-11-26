@@ -22,6 +22,16 @@ Factory.define :template_class do |f|
 	f.day Date.current.strftime("%A")
 end
 
+Factory.define :user do |f|
+	f.email "fake@fake.com"
+	f.password "secret"
+	f.password_confirmation "secret"
+end
+
+Factory.define :event do |f|
+	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
+end
+
 Factory.define :klass do |f|
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 	f.start_time Time.parse( "12:00" )
