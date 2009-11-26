@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :user_sessions
 
-  map.resources :users
+  map.resources :users, :member => { :new_event_register => :post, :create_event_register => :put }
 
 	map.resources :comments
   map.resources :registrants

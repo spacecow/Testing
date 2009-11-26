@@ -3,6 +3,7 @@ authorization do
     has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :registrants, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register  ]
   end
   
   role :guest do

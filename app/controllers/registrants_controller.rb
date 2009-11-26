@@ -16,8 +16,9 @@ class RegistrantsController < ApplicationController
 	    	#:name_hurigana => user.name_hurigana,
 	    	#:male => user.gender,
 	    	#:tel => user.mobile_phone,
-	    	:email => user.email
+	    	#:email => user.email
 	    )
+	    @registrant.user = current_user2
   	end
     @event = Event.find( params[:event_id] )
   end

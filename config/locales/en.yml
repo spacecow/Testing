@@ -188,6 +188,7 @@ en:
     new: "New User"
     notice:
       registration: "Registration successful."
+    title: "User"
   grammar_unit: "Grammar unit"
   page: "Page"
   people_per_page: "People/page"

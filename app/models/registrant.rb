@@ -1,10 +1,11 @@
 class Registrant < ActiveRecord::Base
 	belongs_to :event
+	belongs_to :user
 
-  attr_accessible :occupation, :name, :name_hurigana, :event_id, :male, :age, :tel, :email, :note
+#  attr_accessible :occupation, :name, :name_hurigana, :event_id, :male, :age, :tel, :email, :note
   
-  validates_presence_of :occupation, :name, :name_hurigana, :event_id, :age, :tel, :email
-  validates_inclusion_of :male, :in => [false, true]
+#  validates_presence_of :occupation, :name, :name_hurigana, :event_id, :age, :tel, :email
+#  validates_inclusion_of :male, :in => [false, true]
   
   OCCUPATIONS_JA = [
   	"一般(有償)",

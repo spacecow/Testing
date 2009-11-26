@@ -8,7 +8,7 @@
 <p><%= t 'registrants.title' %>: <%= @event.registrants.count %></p>
 <p>
 	<% if current_user2 %>
-		<%= button_to t( 'register' ), new_registrant_path( :event_id => @event.id ) %>
+		<%= button_to t( 'register' ), new_event_register_user_path %>
 	<% else %>
 		<i style="font-size: 12px"><%= t('events.register') %></i>
 	<% end %>

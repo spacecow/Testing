@@ -27,6 +27,22 @@ class UsersController < ApplicationController
     end
   end
   
+  def new_event_register
+  	@user = current_user2
+  	@user.registrants.create!
+	end
+	
+	def create_event_register
+    p "what!!!!!!!!!!!!!!!!!!!!!"
+    p params[ :user ]
+		if @user.save
+      flash[:notice] = "Successful registered to..."
+      redirect_to events_path
+    else
+      render :action => 'new_event_register'
+    end
+	end
+  
   def authorize
   end  
   def authorize_view

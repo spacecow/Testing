@@ -64,7 +64,7 @@
     <div id="main">
     	<div id="user_nav">
     		<% if current_user2 %>
-    			<%= link_to t( 'edit_profile' ), edit_user_path(:current) %> |
+    			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
     			<%= link_to t( 'logout.title' ), logout_user_path %>
     		<% else %>
     			<% if I18n.locale == 'ja' %>

@@ -33,6 +33,10 @@
             <string>app\controllers\application_controller.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
+            <key>yo</key>
+            <string>public\stylesheets\yoyaku.css</string>
+            <key>yoyaku.c</key>
+            <string>public\stylesheets\yoyaku.css</string>
         </dict>
     </dict>
 </plist>

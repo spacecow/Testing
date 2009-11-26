@@ -1,0 +1,27 @@
+<div class="form">
+<%= error_messages_for :user %>
+
+<fieldset>
+<legend>something...</legend>
+
+<% semantic_form_for @user, :url => :create_event_register_user do |f| %>
+	<% f.inputs do %>
+		<%= f.input :name, :label => t( :name ) %>
+		<%= f.input :role, :label => t( :role ) %>
+		<% f.semantic_fields_for :registrants do |reg| %>
+      <% reg.inputs :name => "Registrant" do %>
+      	<%= reg.input :event_id, :label => t( 'events.title' ), :as => :hidden, :value => 1 %>
+      	<%= reg.input :user_id, :label => t( 'users.title' ), :as => :hidden, :value => 1 %>
+      <% end %>
+    <% end %>		
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t( 'register' ) %>
+	<% end %>
+<% end %>
+
+<div class="links">
+</div>
+
+</fieldset>
+</div>

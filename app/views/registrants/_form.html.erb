@@ -1,5 +1,4 @@
 <% f.inputs do %>
-	<%= f.input :event_id, :as => :hidden, :value => @event.id %>	
 	<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => english? ? Registrant::OCCUPATIONS_EN : Registrant::OCCUPATIONS_JA %>
 	<%= f.input :name, :label => t( 'name' ) %>
 	<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>
@@ -7,7 +6,11 @@
 	<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => english? ? Registrant::AGE_EN : Registrant::AGE_JA %>
 	<%= f.input :tel, :label => t( 'tel' ) %>
 	<%= f.input :email, :label => t( 'email' ) %>
-	<%= f.input :note, :label => t( 'note' ), :input_html => { :rows => 8 }, :required => false %>
+	
+	<%= f.input :event_id, :as => :hidden, :value => @event.id %>	
+	<%= f.input :user_id, :as => :hidden, :value => current_user2.id %>
+	<%= f.inputs :name, :for => @user, :name => "User" %>
+	<%= f.input :note, :label => t( 'note' ), :input_html => { :rows => 8 }, :required => false %>	
 <% end %>
 <% f.buttons do %>
 	<%= f.commit_button label_text %>
