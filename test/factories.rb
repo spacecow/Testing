@@ -23,6 +23,10 @@ Factory.define :template_class do |f|
 end
 
 Factory.define :user do |f|
+	f.name "Fake Fakeson"
+	f.name_hurigana "フェイク フェイクソン"	
+	f.nationality "Fakeland"
+	f.male true
 	f.email "fake@fake.com"
 	f.password "secret"
 	f.password_confirmation "secret"

@@ -1,23 +1,30 @@
 <div class="form">
-<%= error_messages_for :user %>
-
 <fieldset>
-<legend>something...</legend>
+<legend><%= t( 'users.registration_for', :event => @event.title ) %></legend>
 
 <% semantic_form_for @user, :url => :create_event_register_user do |f| %>
 	<% f.inputs do %>
-		<%= f.input :name, :label => t( :name ) %>
-		<%= f.input :role, :label => t( :role ) %>
+		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN %>
+		<%= f.input :name, :label => t( 'name' ) %>
+	<% if japanese? %>
+		<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>
+	<% else %>
+		<%= f.input :nationality, :label => t( 'nationality' ) %>
+	<% end %>	
+		<%= f.input :male, :label => t( 'gender' ), :as => :radio, :collection => [[t('male'), true],[t('female'), false]] %>
+		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN %>
+		<%= f.input :tel, :label => t( 'tel' ) %>
+		<%= f.input :email, :label => t( 'email' ) %>
 		<% f.semantic_fields_for :registrants do |reg| %>
-      <% reg.inputs :name => "Registrant" do %>
-      	<%= reg.input :event_id, :label => t( 'events.title' ), :as => :hidden, :value => 1 %>
-      	<%= reg.input :user_id, :label => t( 'users.title' ), :as => :hidden, :value => 1 %>
+      <% reg.inputs do %>
+      	<%= reg.input :event_id, :label => t( 'events.title' ), :as => :hidden %>
+      	<%= reg.input :user_id, :label => t( 'users.title' ), :as => :hidden %>
+      	<%= reg.input :note, :label => t( 'note' ), :input_html => { :rows => 8 } %>
       <% end %>
     <% end %>		
 	<% end %>
-	<% f.buttons do %>
-		<%= f.commit_button t( 'register' ) %>
-	<% end %>
+	<%= hidden_field_tag :event_id, @event.id %>
+	<%= submit_tag t( 'register' ), :name => 'user[christmas]', :class => :submit %>
 <% end %>
 
 <div class="links">

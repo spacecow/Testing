@@ -27,6 +27,9 @@ form.formtastic fieldset ol li fieldset legend {
 	border: 0;	
 }
 form.formtastic fieldset ol li p.inline-errors { color:#cc0000; margin:0 0 5px 26%; font-size:12px; }
+form.formtastic fieldset ol li ul.errors { color:#cc0000; margin:5px 0 0 25%; list-style:square; font-size:12px; }
+
+form.formtastic fieldset ol li.hidden { display:none; margin:0; }
 
 form.comment fieldset ol li.text label{ display: none; }
 form.comment fieldset ol li.text textarea { width:30%; }
@@ -35,7 +38,6 @@ form.comment fieldset.buttons { padding-left: 0; }
 form.registrant fieldset ol li,
 form.user fieldset ol li{ margin-bottom:0.5em; }
 
-form.user fieldset ol li { margin-bottom:0; }
 form.user fieldset ol li.string input,
 form.user_session fieldset ol li.string input{ width:25%; }
 form.user fieldset ol li.password input,

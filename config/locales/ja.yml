@@ -49,6 +49,7 @@ ja:
   name: "名前"
   name_hurigana: "名前/ふりがな"
   name_kana: "名前 (カタカナ)"
+  nationality: "国籍"
   new: "新しい"
   note: "備考"
   notice: "注意"
@@ -59,6 +60,7 @@ ja:
   password_confirmation: "パスワード確認"
   previous_version: "前バージョン"
   register: "登録"
+  registrant: "登録者"
   reserve: "予約"
   role: "Role"
   roles: "Roles"
@@ -105,8 +107,10 @@ ja:
     title: "DOCS"
   events:
     editing: "イベント編集"
+    message:
+      allready_registered: "このイベントにはもう登録されました"
+      login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
     new: "新しいイベント"
-    register: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
     title: "参加イベント"
   kanjis:
     title: "漢字"
@@ -119,14 +123,16 @@ ja:
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
     button: "ログイン"
+    flash:
+      invalid_user_or_password: "無効ユーザーかパスワード"
+    message:
+      logged_in_as: "ﾛｸﾞｲﾝ名は{{username}}"
+    password: "パスワード"
     text: "ﾛｸﾞｲﾝ"
     title: "ログインして下さい"
     user_name: "ユーザー名"
-    password: "パスワード"
     notice:
       success: "首尾よくログインされました"
-    flash:
-      invalid_user_or_password: "無効ユーザーかパスワード"
   logout:
     title: "ログアウト"
     notice:
@@ -173,7 +179,9 @@ ja:
     editing: "ユーザー編集"
     new: "新しいユーザー"
     notice:
-      registration: "登録が首尾よく作成されました"    
+      registration: "登録が首尾よく作成されました"
+      successful_registration_for: "{{event}}の登録が首尾よく作成されました"      
+    registration_for: "{{event}}に登録"
   date:
     formats:
       default: "%Y/%m/%d"

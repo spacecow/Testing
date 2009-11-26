@@ -106,6 +106,14 @@ When /^the "([^\"]*)"'([^\"]*)' checkbox should be checked$/ do |label1,label2|
   field_labeled( label1+I18n.translate( label2 )).should be_checked
 end
 
+When /^I choose '([^\"]*)'$/ do |field|
+  choose( I18n.t( field ))
+end
+
 Then /^the '([^\"]*)' field should contain "([^\"]*)"$/ do |field, value|
-  field_labeled( I18n.translate( field )).value.should =~ /#{value}/
+  field_labeled( I18n.t( field )).value.should =~ /#{value}/
+end
+
+Then /^the '([^\"]*)' field should not contain "([^\"]*)"$/ do |field, value|
+  field_labeled( I18n.t( field )).value.should_not =~ /#{value}/
 end

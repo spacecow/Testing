@@ -3,7 +3,8 @@ authorization do
     has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :registrants, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
-    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register  ]
+    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register ]
+    has_permission_on :comments, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :guest do
@@ -15,6 +16,7 @@ authorization do
   
   role :registrant do
   	includes :guest
+  	has_permission_on :users, :to => [:edit, :update, :new_event_register, :create_event_register ]
   end
   
   role :student do

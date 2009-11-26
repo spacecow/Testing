@@ -6,7 +6,16 @@ class User < ActiveRecord::Base
 	accepts_nested_attributes_for :registrants, :allow_destroy => true
 	has_many :events, :through => :registrants
   
-	validates_presence_of :role
+	
+	validates_uniqueness_of :username
+	validates_presence_of :name, :role
+	validates_inclusion_of :male, :in => [false, true]
+	
+	validates_presence_of :occupation, :age, :tel, :if => :christmas
+	validates_presence_of :name_hurigana, :if => :japanese
+	validates_presence_of :nationality, :if => :english
+	
+	attr_accessor :christmas, :english, :japanese
 	
 	ROLES = %w[god admin observer teatcher student registrant]
 

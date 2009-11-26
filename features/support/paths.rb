@@ -17,7 +17,10 @@ module NavigationHelpers
     	
     when /the list of events/
     	events_path	
-    	
+    
+    when /the new user error page/
+    	users_path
+    		
     when /the list of settings/
     	settings_path
 

@@ -5,12 +5,16 @@
 <legend><%=h @event.title %> - <%=h @event.date %></legend>
 
 <p><%=h @event.description %></p>
-<p><%= t 'registrants.title' %>: <%= @event.registrants.count %></p>
+<p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>
 <p>
 	<% if current_user2 %>
-		<%= button_to t( 'register' ), new_event_register_user_path %>
+		<% if current_user2.events.include?( @event ) %>
+			<i style="font-size: 12px"><%= t('events.message.allready_registered') %></i>
+		<% else %>
+			<%= button_to t( 'register' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
+		<% end %>
 	<% else %>
-		<i style="font-size: 12px"><%= t('events.register') %></i>
+		<i style="font-size: 12px"><%= t('events.message.login') %></i>
 	<% end %>
 </p>
 		
@@ -18,10 +22,10 @@
 <hr>
 <p><%= render :partial => 'comment', :collection => @event.comments %></p>
 
-<% if current_user %>
+<% if permitted_to? :create, Comment.new %>
 	<% form_for :comment, :url=>comments_path do |f| %>
 		<%= f.hidden_field :event_id, :value=>@event.id %>
-		<%= f.hidden_field :name, :value => current_user ? current_user.name : "" %>
+		<%= f.hidden_field :name, :value => current_user2.name %>
 		<p>	
 			<%= f.text_area :comment, :rows=>4, :cols=>25 %>
 		</p>

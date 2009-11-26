@@ -12,6 +12,4 @@
 	<%= f.inputs :name, :for => @user, :name => "User" %>
 	<%= f.input :note, :label => t( 'note' ), :input_html => { :rows => 8 }, :required => false %>	
 <% end %>
-<% f.buttons do %>
-	<%= f.commit_button label_text %>
-<% end %>
+<%= submit_tag 'Resubmit', :name => 'foo_bar[force_submit]' %>

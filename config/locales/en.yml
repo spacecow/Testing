@@ -57,6 +57,7 @@ en:
   name: "Name"
   name_hurigana: "Name/Hurigana"
   name_kana: "Name (katakana)"
+  nationality: "Nationality"
   new: "New"
   note: "Note"
   notice: "Note"
@@ -67,6 +68,7 @@ en:
   password_confirmation: "Password Confirmation"
   previous_version: "Previous version"
   register: "Register"
+  registrant: "Registrant"
   reserve: "Reserve"
   role: "Role"
   roles: "Roles"
@@ -113,8 +115,10 @@ en:
     title: "Docs"
   events:
     editing: "Editing Event"
+    message:
+      allready_registered: "You have allready registered for this event."
+      login: "Login in order to register to the event."
     new: "New Event"
-    register: "Login in order to register to the event."
     title: "Events"
   kanjis:
     editing: "Editing Kanji"
@@ -131,14 +135,16 @@ en:
       try_to_delete_klass_with_students: "Move away all students from the class before deleting"
   login:
     button: "Login"
+    flash:
+      invalid_user_or_password: "User name or password invalid"
+    message:
+      logged_in_as: "Logged in as {{username}}"
+    notice:
+      success: "Successfully logged in"
     password: "Password"
     text: "Login"
     title: "Please log in"
     user_name: "User name"
-    flash:
-      invalid_user_or_password: "User name or password invalid"
-    notice:
-      success: "Successfully logged in"
   logout:
     title: "Logout"
     notice:
@@ -188,6 +194,8 @@ en:
     new: "New User"
     notice:
       registration: "Registration successful."
+      successful_registration_for: "Successfully registered for {{event}}"
+    registration_for: "Registration for {{event}}"
     title: "User"
   grammar_unit: "Grammar unit"
   page: "Page"

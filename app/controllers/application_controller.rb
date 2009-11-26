@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password
 
-	helper_method :current_user2, :english?
+	helper_method :current_user2, :japanese?
 	
 	def current_user_session2
 		return @current_user_session2 if defined?( @current_user_session2 )
@@ -43,8 +43,8 @@ class ApplicationController < ActionController::Base
     current_user2 != nil
   end
 
-	def english?
-		session[:language] == 'en'
+	def japanese?
+		session[:language] == 'ja'
 	end
 
 protected
