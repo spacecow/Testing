@@ -1,10 +1,14 @@
 authorization do
-  role :god do
+  role :admin do
     has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :registrants, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register ]
     has_permission_on :comments, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  end
+  
+  role :god do
+  	includes :admin
   end
   
   role :guest do

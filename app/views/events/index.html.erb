@@ -1,7 +1,7 @@
 <div id="list">
 <h1><%= t('events.title') %></h1>
 
-<table cellpadding="2" cellspacing="1">
+<table cellpadding="2" cellspacing="1" id="events">
 	<tr>
 			<th class="list-topics"><%= t('title') %></th>		
 			<th class="list-topics"><%= t('event_date') %></th>		
@@ -13,15 +13,23 @@
       	<td><%=h event.date %></td>
       	<td><%=h event.description %></td>
   		<td>
-    			<%= link_to t('show'), event, :class=>"link" %>
-    			<%= link_to t('edit'), edit_event_path(event), :class=>"link" %>
-    			<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+    			<% if permitted_to? :show, event %>
+    				<%= link_to t('show'), event, :class=>"link" %>
+    			<% end %>
+    			<% if permitted_to? :edit, event %>
+    				<%= link_to t('edit'), edit_event_path(event), :class=>"link" %>
+    			<% end %>
+    			<% if permitted_to? :destroy, event %>
+    				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+    			<% end %>
 			</td>    	
 		</tr>
 	<% end %>
 </table>
 
 <div class="links">
-<p><%= link_to t('events.new'), new_event_path, :class=>"link" %></p>
+<% if permitted_to? :new, Event.new %>	
+	<p><%= link_to t('events.new'), new_event_path, :class=>"link" %></p>
+<% end %>
 </div>
 </div>

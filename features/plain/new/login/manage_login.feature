@@ -1,0 +1,10 @@
+@login
+Scenario: Log in
+Given a user exists with username: "kurosawa_akira", role: "registrant"
+	And I go to the events page
+When I follow 'login.text'
+	And I fill in 'user_name' with "kurosawa_akira"
+	And I fill in 'password' with "secret"
+	And I press 'login.button'
+Then I should be redirected to the events page
+	And I should see 'login.notice.success'

@@ -1,5 +1,4 @@
 <div class="form">
-<%= error_messages_for :user %>	
 <fieldset>
 <legend><%= t('users.new') %></legend>
 
@@ -15,6 +14,7 @@
 		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN, :required => false %>
 		<%= f.input :tel, :label => t( 'tel' ), :required => false %>
 		<%= f.input :email, :label => t( :email ) %>
+		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN %>
 		<% if current_user2 %>
 			<%= f.input :role, :label => t( :role ), :as => :select, :collection => User::ROLES %>
 		<% else %>
@@ -24,6 +24,8 @@
 		<%= f.input :username, :label => t( :user_name ) %>
 		<%= f.input :password, :label => t( :password ) %>
 		<%= f.input :password_confirmation, :label => t( :password_confirmation ) %>
+		<hr>
+		<%= f.input :language, :label => t( :language ), :as => :select, :collection => User::LANGUAGES, :selected => ( japanese? ? "japanese" : "english" ), :include_blank => false %>
 	<% end %>
 	<% if japanese? %>
 		<%= submit_tag t( 'create' ), :name => 'user[japanese]', :class => 'submit' %>

@@ -26,11 +26,11 @@ Then /^I should see (todays|yesterdays) (day|date) within "([^\"]*)"$/ do |day,c
 	end
 end
 
-Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
-  within ".#{scope_string}" do |scope|
-		scope.should contain( text )
-	end
-end
+#Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
+#  within ".#{scope_string}" do |scope|
+#		scope.should contain( text )
+#	end
+#end
 
 Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
   within ".#{scope_string}" do |scope|
@@ -75,3 +75,16 @@ Then /^I should not see a button '([^\"]*)'$/ do |label|
   label = I18n.t( label ).gsub(/ /, '_')
   assert_have_no_xpath( "//input[@id='#{label}']" )
 end
+
+Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id| 
+  field = field_with_id(select_id) 
+  selected_value = field.value[0] 
+  state = :nothing_selected 
+  field.options.each do |option| 
+    if option.element.to_html =~ /value="#{selected_value}"/ 
+      state = :something_selected 
+      option.element.inner_html.should == option_text 
+    end 
+  end 
+  state.should == :something_selected 
+end 

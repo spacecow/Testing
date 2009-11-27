@@ -14,7 +14,7 @@
 			<%= button_to t( 'register' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
 		<% end %>
 	<% else %>
-		<i style="font-size: 12px"><%= t('events.message.login') %></i>
+		<i style="font-size: 12px"><%= t('events.message.please_login') %></i>
 	<% end %>
 </p>
 		
@@ -34,9 +34,15 @@
 <% end %>
 
 <div class="links">
-  <%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
-  <%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
-  <%= link_to t('view_all'), events_path, :class=>"link" %>
+  <% if permitted_to? :edit, @event %>
+  	<%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
+  <% end %>
+  <% if permitted_to? :destroy, @event %>
+  	<%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <% end %>
+  <% if permitted_to? :index, @event %>
+  	<%= link_to t('view_all'), events_path, :class=>"link" %>
+  <% end %>
 </div>
 
 </fieldset>

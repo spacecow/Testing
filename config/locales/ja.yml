@@ -109,7 +109,7 @@ ja:
     editing: "イベント編集"
     message:
       allready_registered: "このイベントにはもう登録されました"
-      login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
+      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
     new: "新しいイベント"
     title: "参加イベント"
   kanjis:
@@ -134,6 +134,7 @@ ja:
     notice:
       success: "首尾よくログインされました"
   logout:
+    text: "ﾛｸﾞｱｳﾄ"
     title: "ログアウト"
     notice:
       success: "首尾よくログアウトされました"

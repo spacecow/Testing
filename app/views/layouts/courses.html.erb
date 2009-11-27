@@ -63,14 +63,16 @@
   </div>		
     <div id="main">
     	<div id="user_nav">
-				<% if I18n.locale == 'ja' %>
-					<%= link_to 'English', toggle_user_language_url %> |
-				<% else %>
-					<%= link_to '日本語', toggle_user_language_url %> |
+				<% if !current_user2 %>
+					<% if I18n.locale == 'ja' %>
+						<%= link_to 'English', toggle_user_language_url %> |
+					<% else %>
+						<%= link_to '日本語', toggle_user_language_url %> |
+					<% end %>
 				<% end %>
     		<% if current_user2 %>
     			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
-    			<%= link_to t( 'logout.title' ), logout_user_path %><br />
+    			<%= link_to t( 'logout.text' ), logout_user_path %><br />
     			<%= t('login.message.logged_in_as', :username => current_user2.username ) %>
     		<% else %>
 	    		<%= link_to t( 'register' ), new_user_path %> |

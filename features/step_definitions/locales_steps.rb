@@ -17,6 +17,10 @@ When /^I press '([^\']*)'$/ do |button|
   click_button(I18n.translate( button ))
 end
 
+When /^I select "([^\"]*)" as the '([^\"]*)' date$/ do |date, date_label|
+  select_date(date, :from => I18n.t('date_label'))
+end
+
 Then /^I should see '([^\']*)'$/ do |text|
   response.should contain(I18n.translate( text ))
 end

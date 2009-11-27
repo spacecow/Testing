@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	attr_accessor :christmas, :english, :japanese
 	
 	ROLES = %w[god admin observer teatcher student registrant]
+	LANGUAGES = [['Japanese','ja'],['English','en']]
 
 	def role_symbols
     [role.to_sym]

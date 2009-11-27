@@ -117,7 +117,7 @@ en:
     editing: "Editing Event"
     message:
       allready_registered: "You have allready registered for this event."
-      login: "Login in order to register to the event."
+      please_login: "Login in order to register to the event."
     new: "New Event"
     title: "Events"
   kanjis:
@@ -146,6 +146,7 @@ en:
     title: "Please log in"
     user_name: "User name"
   logout:
+    text: "Logout"
     title: "Logout"
     notice:
       success: "Successfully logged out"
