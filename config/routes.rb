@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 	map.login_user "login_user", :controller => "user_sessions", :action => "new"
 	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
-	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language"
+	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
 
   map.resources :user_sessions
 
@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :template_classes, :collection => { :add_course => :get }
   map.login 'login', :controller => 'admin', :action => 'login'
   map.logout 'logout', :controller => 'admin', :action => 'logout'
-  map.root :login_user
+  map.root :events
 
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -3,8 +3,8 @@
  
 class ApplicationController < ActionController::Base
 	before_filter { |c| Authorization.current_user = c.current_user2 }
-  #before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
-  #before_filter :authorize_view, :only=>[:index,:show,:live_search]
+  before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
+  before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_default_user_language
   helper_method :clearance
   helper_method :clearance?
@@ -51,9 +51,10 @@ class ApplicationController < ActionController::Base
 	end
 
   def set_default_user_language
-		#@current_settings = Setting.find_by_name( 'main' )
+		#@current_settings ||= Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
-    I18n.locale = ( current_user2 ? current_user2.language : ( session[:language] ? session[:language] : "ja" ))
+    
+    I18n.locale = ( current_user2 ? current_user2.language : ( session[:language] ? session[:language] : "ja" )) #( @setting ? @setting.language : "ja" )))
   end  
 
 protected
@@ -66,21 +67,21 @@ protected
 #	def login
 #	end
 #
-#  def authorize
-#    if !logged_in?
-#      login_redirection
-#    elsif clearance >= 3
-#      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
-#    end
-#  end
-#  
-#  def authorize_view
-#    if !logged_in?
-#			login_redirection
-#    elsif clearance >= 4
-#      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
-#    end
-#	end
+  def authorize
+    if !logged_in?
+      login_redirection
+    elsif clearance >= 3
+      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
+    end
+  end
+  
+  def authorize_view
+    if !logged_in?
+			login_redirection
+    elsif clearance >= 4
+      redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
+    end
+	end
 #    
 #  def clearance?(level)
 #    if level>=1 && session[:user_name] == "johan_sveholm"
@@ -155,15 +156,15 @@ protected
 #	  end
 #	end	
 #
-#  def logged_in?
-#    session[:user_name] != nil
-#  end
-#
-#	def login_redirection
-#    session[:original_uri] = request.request_uri
-#    flash[:notice] = t('login.title')
-#    redirect_to :controller=>:admin, :action=>:login
-#	end
+  def logged_in?
+    session[:user_name] != nil
+  end
+
+	def login_redirection
+    session[:original_uri] = request.request_uri
+    flash[:notice] = t('login.title')
+    redirect_to login_user_path #:controller=>:admin, :action=>:login
+	end
 #
 #  def get_sorting
 #		session[:sorting] ||= Sorting.new

@@ -3,6 +3,7 @@ class EventsController < ApplicationController
 	
 	def index
     @events = Event.all
+    @setting = Setting.find_by_name( "main" )
   end
   
   def show

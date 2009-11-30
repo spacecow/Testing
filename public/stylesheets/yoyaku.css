@@ -141,6 +141,15 @@ h4{
 #list .list-line-man{
   background: #ccccff;
 }
+#list .intro{
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #7F9DB9;
+	padding: 5px;
+	width: 700px;
+}
+
+
 
 
 #table .template-table-title{

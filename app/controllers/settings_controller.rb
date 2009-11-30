@@ -1,4 +1,6 @@
 class SettingsController < ApplicationController
+	filter_access_to :all
+	
   def index
     @settings = Setting.all
   end
@@ -28,7 +30,6 @@ class SettingsController < ApplicationController
   def update
     @setting = Setting.find(params[:id])
     if @setting.update_attributes(params[:setting])
-    	set_settings
       flash[:notice] = "Successfully updated setting."
       redirect_to settings_path
     else
@@ -44,6 +45,7 @@ class SettingsController < ApplicationController
   end
 
   def toggle_user_language
+  	@settings = Setting.all
   	session[:language] = ( session[:language] == "en" ? "ja" : "en" )
   	redirect_to :back
 	end

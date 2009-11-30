@@ -1,5 +1,16 @@
 <div id="list">
 <h1><%= t('events.title') %></h1>
+<table class="intro">
+	<tr>
+		<td>
+			<%= @setting.events_description( japanese? ) %>
+			<% if permitted_to? :edit, @setting %>
+				<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
+			<% end %>
+		</td>
+	</tr>
+</table><br/ >
+
 
 <table cellpadding="2" cellspacing="1" id="events">
 	<tr>
@@ -9,9 +20,9 @@
 	</tr>
 	<% for event in @events %>
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-      	<td><%=h event.title %></td>
+      	<td><%= event.title( japanese? )%></td>
       	<td><%=h event.date %></td>
-      	<td><%=h event.description %></td>
+      	<td><%=h event.description( japanese? ) %></td>
   		<td>
     			<% if permitted_to? :show, event %>
     				<%= link_to t('show'), event, :class=>"link" %>

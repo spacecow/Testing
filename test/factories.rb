@@ -14,6 +14,8 @@ Factory.define :courses_student do |f|
 end
 
 Factory.define :event do |f|
+	f.title_en "Event 1"
+	f.title_ja "イベント１"
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 end
 
@@ -61,7 +63,7 @@ end
 
 Factory.define :user do |f|
 	f.email "fake@fake.com"
-	f.language "en"
+	f.language "ja"
 	f.role "registrant"
 	f.male true
 	f.name "Fake Fakeson"

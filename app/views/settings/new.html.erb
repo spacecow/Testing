@@ -4,7 +4,7 @@
 <fieldset>
 <legend><%= t('settings.new') %></legend>
 
-<% form_for @setting do |f| %>
+<% semantic_form_for @setting do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
 <% end %>
 

@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 	def create_event_register
 		@event = Event.find( params[:event_id] )
 		if @user.update_attributes(params[:user])
-      flash[:notice] = t('users.notice.successful_registration_for', :event => @event.title )
+      flash[:notice] = t('users.notice.successful_registration_for', :event => @event.title( japanese? ))
       redirect_to @event
     else
       render :action => 'new_event_register'

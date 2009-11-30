@@ -2,9 +2,9 @@
 <%= error_messages_for :event %>
 
 <fieldset>
-<legend><%=h @event.title %> - <%=h @event.date %></legend>
+<legend><%=h @event.title( japanese? ) %> - <%=h @event.date %></legend>
 
-<p><%=h @event.description %></p>
+<p><%=h @event.description( japanese? ) %></p>
 <p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>
 <p>
 	<% if current_user2 %>
@@ -14,7 +14,7 @@
 			<%= button_to t( 'register' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
 		<% end %>
 	<% else %>
-		<i style="font-size: 12px"><%= t('events.message.please_login') %><%= link_to t('login.text'), login_user_path %></i>
+		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
 	<% end %>
 </p>
 		

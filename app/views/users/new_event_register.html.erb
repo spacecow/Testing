@@ -1,6 +1,6 @@
 <div class="form">
 <fieldset>
-<legend><%= t( 'users.registration_for', :event => @event.title ) %></legend>
+<legend><%= t( 'users.registration_for', :event => @event.title( japanese? ) ) %></legend>
 
 <% semantic_form_for @user, :url => :create_event_register_user do |f| %>
 	<% f.inputs do %>
