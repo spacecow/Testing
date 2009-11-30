@@ -1,7 +1,9 @@
 <% f.inputs do %>
-	<%= f.input :title, :label => t( 'title' ) %>
+	<%= f.input :title_ja, :label => t( 'title_ja' ) %>
+	<%= f.input :title_en, :label => t( 'title_en' ) %>
 	<%= f.input :date, :label => t( 'event_date' ), :as => :string, :hint => "Ex. 2009-12-19" %>
-	<%= f.input :description, :label => t( 'description' ), :input_html => { :rows => 8 } %>
+	<%= f.input :description_ja, :label => t( 'description' ) %>
+	<%= f.input :description_en, :label => t( 'description' ) %>
 <% end %>
 <% f.buttons do %>
 	<%= f.commit_button label_text %>

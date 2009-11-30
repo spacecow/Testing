@@ -80,11 +80,11 @@ ActiveRecord::Schema.define(:version => 20091127072840) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "title"
     t.date     "date"
-    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.text     "description"
   end
 
   create_table "kanjis", :force => true do |t|
