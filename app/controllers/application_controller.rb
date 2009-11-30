@@ -3,7 +3,6 @@
  
 class ApplicationController < ActionController::Base
 	before_filter { |c| Authorization.current_user = c.current_user2 }
- 
   #before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   #before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_default_user_language
@@ -50,20 +49,20 @@ class ApplicationController < ActionController::Base
 	def japanese?
 		I18n.locale == 'ja'
 	end
- 
+
   def set_default_user_language
 		#@current_settings = Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
     I18n.locale = ( current_user2 ? current_user2.language : ( session[:language] ? session[:language] : "ja" ))
   end  
- 
+
 protected
  
 	def permission_denied
 	  flash[:error] = t( 'access_denied' )
 	  redirect_to events_path
 	end
- 
+
 #	def login
 #	end
 #

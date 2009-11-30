@@ -3,7 +3,7 @@ class RegistrantsController < ApplicationController
   
 	def index
     #@registrants = Registrant.all
-    @events = Event.all
+    @events = Event.find( :all, :include => { :registrants => :user })
   end
   
   def show

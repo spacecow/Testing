@@ -12,6 +12,19 @@
   <div id="banner" class="banner">
 		<table border="0" align="center"><tr><td>
 			<ul id="nav">
+					<li><%= link_to t('events.title'), events_path %>
+						<% if permitted_to? :index, Registrant.new %>	
+							<ul>
+								<li>------------------</li>
+								<li><%= link_to t('registrants.title'), registrants_path %></li>							
+							</ul>
+						<% end %>
+					</li>				
+					
+					<% if permitted_to? :index, User.new %>	
+						<li><%= link_to t('users.title'), users_path %></li>									
+					<% end %>
+<% if false %>
 				<% if clearance <= 3 %>
 					<li><%= link_to t('people.title'), people_path %></a>
 						<ul>
@@ -58,6 +71,7 @@
 						</ul>
 					</li>
 				<% end %>
+<% end %>
 			</ul>
 		</td></tr></table>
   </div>		

@@ -1,7 +1,8 @@
 <% f.inputs do %>
-	<%= f.input :username, :label => t( :user_name ) %>
-	<%= f.input :password, :label => t( :password ) %>
+	<%= f.input :username, :label => t( :user_name ), :required => false %>
+	<%= f.input :password, :label => t( :password ), :required => false %>
 <% end %>
+<i style="font-size:12px; margin-left:160px;"><%= t('login.message.no_account') %> <%= link_to t('login.message.create_one'), new_user_path %></i>
 <% f.buttons do %>
 	<%= f.commit_button label_text %>
 <% end %>

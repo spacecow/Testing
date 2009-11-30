@@ -60,11 +60,13 @@ Factory.define :unit do |f|
 end
 
 Factory.define :user do |f|
+	f.email "fake@fake.com"
+	f.language "en"
+	f.role "registrant"
+	f.male true
 	f.name "Fake Fakeson"
 	f.name_hurigana "フェイク フェイクソン"	
 	f.nationality "Fakeland"
-	f.male true
-	f.email "fake@fake.com"
 	f.password "secret"
 	f.password_confirmation "secret"
 end

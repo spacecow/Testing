@@ -15,12 +15,16 @@
 		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN %>
 		<%= f.input :tel, :label => t( 'tel' ) %>
 		<%= f.input :email, :label => t( 'email' ) %>
-		<% f.semantic_fields_for :registrants do |reg| %>
-      <% reg.inputs do %>
-      	<%= reg.input :event_id, :label => t( 'events.title' ), :as => :hidden %>
-      	<%= reg.input :user_id, :label => t( 'users.title' ), :as => :hidden %>
-      	<%= reg.input :note, :label => t( 'note' ), :input_html => { :rows => 8 } %>
-      <% end %>
+		<hr>
+		<% fields_for "user[new_registrant_attributes][]", Registrant.new(:event_id=>@event.id, :user_id=>current_user2.id) do |reg| %>
+			<p>
+				<%= reg.label :note %>
+			  <%= reg.text_area :note, :cols => 21 %>
+			</p>
+			<p>
+			  <%= reg.hidden_field :user_id %>
+			  <%= reg.hidden_field :event_id %>
+			</p>
     <% end %>		
 	<% end %>
 	<%= hidden_field_tag :event_id, @event.id %>
