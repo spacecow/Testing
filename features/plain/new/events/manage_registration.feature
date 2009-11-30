@@ -1,6 +1,6 @@
 @event_registration
 Scenario: Register a user to an event
-Given a user: "kurosawa" exists with username: "kurosawa_akira", role: "registrant"
+Given a user: "kurosawa" exists with username: "kurosawa_akira", role: "registrant", language: "en"
 	And a user is logged in as "kurosawa_akira"
 	And an event: "christmas" exists with title: "Christmas Party"
 When I go to the events page
@@ -13,6 +13,7 @@ When I select "Exchange Student" from 'occupation'
 	And I press 'register'
 Then I should see 'successfully'
 	Then a registrant should exist with event: event "christmas", user: user "kurosawa"
+	And a user should exist with occupation: "Exchange Student", age: "10's", tel: "080-1234-5678"
 
 Scenario: One cannot register to events without a user
 Given an event exists with title: "Christmas Party"

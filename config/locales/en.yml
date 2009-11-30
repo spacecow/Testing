@@ -138,7 +138,9 @@ en:
     flash:
       invalid_user_or_password: "User name or password invalid"
     message:
+      create_one: "Create one"    
       logged_in_as: "Logged in as {{username}}"
+      no_account: "Don't have an account?"
     notice:
       success: "Successfully logged in"
     password: "Password"
@@ -197,7 +199,7 @@ en:
       registration: "Registration successful."
       successful_registration_for: "Successfully registered for {{event}}"
     registration_for: "Registration for {{event}}"
-    title: "User"
+    title: "Users"
   grammar_unit: "Grammar unit"
   page: "Page"
   people_per_page: "People/page"

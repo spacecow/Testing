@@ -1,0 +1,12 @@
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+	<td><%=h user.username %></td>
+	<td><%=h user.name %></td>
+	<td><%=h user.name_hurigana %></td>
+	<td><%=h user.email %></td>	
+	<td><%=h user.tel %></td>
+	<td>
+		<%= link_to t('show'), user, :class=>"link" %>
+		<%= link_to t('edit'), edit_user_path(user), :class=>"link" %>
+		<%= link_to t('delete'), user, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+	</td>  
+</tr>

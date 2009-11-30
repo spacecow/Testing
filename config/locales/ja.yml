@@ -109,7 +109,7 @@ ja:
     editing: "イベント編集"
     message:
       allready_registered: "このイベントにはもう登録されました"
-      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
+      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい。"
     new: "新しいイベント"
     title: "参加イベント"
   kanjis:
@@ -126,7 +126,9 @@ ja:
     flash:
       invalid_user_or_password: "無効ユーザーかパスワード"
     message:
+      create_one: "創造して"
       logged_in_as: "ﾛｸﾞｲﾝ名は{{username}}"
+      no_account: "アカウントがありません？"      
     password: "パスワード"
     text: "ﾛｸﾞｲﾝ"
     title: "ログインして下さい"

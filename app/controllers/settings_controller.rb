@@ -44,7 +44,7 @@ class SettingsController < ApplicationController
   end
 
   def toggle_user_language
-  	session[:language] = session[:language] == "ja" ? "en" : "ja"
+  	session[:language] = ( session[:language] == "en" ? "ja" : "en" )
   	redirect_to :back
 	end
 	  

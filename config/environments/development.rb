@@ -19,4 +19,4 @@ config.action_mailer.raise_delivery_errors = true
 # set delivery method to :smtp, :sendmail or :test
 config.action_mailer.delivery_method = :smtp
 
-require 'ruby-debug'
+#require 'ruby-debug'

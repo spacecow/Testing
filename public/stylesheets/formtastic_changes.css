@@ -9,15 +9,25 @@ form.formtastic fieldset ol li p.inline-hints { color:#333; }
 
 --------------------------------------------------------------------------------------------------*/
 
-form.formtastic fieldset ol li.text textarea { width:50%; }
-form.formtastic fieldset ol li.string input { width:50%; }
+form.formtastic fieldset ol li fieldset legend span.label,
+form.formtastic fieldset ol p label,
+form.formtastic fieldset ol li label { display:block; width:150px; float:left; padding-top:.2em; }
+
+form.formtastic fieldset ol li fieldset ol { float:left; width:74%; margin:0; padding:0 0 0 170px; }
+form.formtastic fieldset ol li{ margin-bottom:0.5em; }
+
+
+form.formtastic fieldset ol p textarea,
+form.formtastic fieldset ol li.text textarea { width:300px; height:150px; }
+form.formtastic fieldset ol li.password input,
+form.formtastic fieldset ol li.string input{ width:300px; }
 
 form.formtastic fieldset ol li.date{
 	margin-left: 10px;
 }
-form.formtastic fieldset ol li.radio fieldset ol li label { margin-left: 10px; float:none; width:100%; text-align: left; }
-form.formtastic fieldset ol li.radio fieldset legend label{ width: 100%; }
-form.formtastic fieldset ol li.radio fieldset legend span.label{ width: 25.6%; }
+
+form.formtastic fieldset ol li.radio fieldset ol li label { float:none; width:100px; text-align: left; }
+
 form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 26%; }
 form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 12px; float:none; width:100%; text-align: left; }
 form.formtastic fieldset ol li.date fieldset legend label{ width: 97%; }
@@ -36,13 +46,22 @@ form.comment fieldset ol li.text label{ display: none; }
 form.comment fieldset ol li.text textarea { width:30%; }
 form.comment fieldset.buttons { padding-left: 0; }
 
-form.event fieldset ol li,
-form.registrant fieldset ol li,
-form.user fieldset ol li{ margin-bottom:0.5em; }
+form.formtastic fieldset.buttons { padding-left:0; }
+form.formtastic fieldset.buttons li { float:left; padding-right:0.5em; }
 
-form.user fieldset ol li.string input,
-form.user_session fieldset ol li.string input{ width:25%; }
-form.user fieldset ol li.password input,
-form.user_session fieldset ol li.password input{ width:25%; }
-form.user fieldset.buttons,
-form.user_session fieldset.buttons{ padding-left:26%; padding-top:10px; }
+form.formtastic fieldset.buttons,
+div.form fieldset form input.submit{ margin-left: 160px; }
+
+
+
+#form.user_session fieldset ol li,
+#form.event fieldset ol li,
+#form.registrant fieldset ol li,
+#form.user fieldset ol li{ margin-bottom:0.5em; }
+
+#form.user fieldset ol li.string input,
+#form.user_session fieldset ol li.string input{ width:25%; }
+#form.user fieldset ol li.password input,
+#form.user_session fieldset ol li.password input{ width:25%; }
+#form.user fieldset.buttons,
+#form.user_session fieldset.buttons{ padding-left:26%; padding-top:10px; }

@@ -1,14 +1,15 @@
-<h1><%= Event.find( event_id ).title %></h1>
+<h1><%= event.title %></h1>
 <table cellpadding="2" cellspacing="1">
 	<tr>
 		<th class="list-topics"><%= t('occupation') %></th>			
 		<th class="list-topics"><%= t('name') %></th>	
 		<th class="list-topics"><%= t('name_hurigana') %></th>		
 		<th class="list-topics"><%= t('gender') %></th>		
-		<th class="list-topics"><%= t('age') %></th>		
+		<th class="list-topics"><%= t('age') %></th>
+		<th class="list-topics"><%= t('nationality') %></th>
 		<th class="list-topics"><%= t('tel') %></th>	
 		<th class="list-topics"><%= t('email') %></th>
 		<th class="list-topics"><%= t('note') %></th>				
 	</tr>
-	<%= render :partial => 'registrant', :collection => Registrant.find_all_by_event_id( event_id ) %>
+	<%= render :partial => 'registrant', :collection => event.registrants %>
 </table>
