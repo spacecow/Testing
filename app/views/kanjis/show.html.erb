@@ -10,7 +10,8 @@
 </p>
 <p>
 	<%= f.label :answer, "Answer" %>
-	<%= text_field_tag :answer %>
+	<%= text_field_tag :answer %><br />
+	<%= f.label :english %><%= @kanji.english %><br />
 </p>
 	<%= hidden_field_tag :correct_answer, @correct_answer %>
 <!--

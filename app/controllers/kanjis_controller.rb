@@ -1,4 +1,6 @@
 class KanjisController < ApplicationController
+  filter_resource_access
+  
   def index
     @kanjis = Kanji.all
   end
@@ -17,7 +19,7 @@ class KanjisController < ApplicationController
   	answer = params[:answer]
   	correct_answer = params[:correct_answer]
   	if( answer == correct_answer )
-  		flash[:notice] = "Correct!<br>#{@kanji.english}"
+  		flash[:notice] = "Correct!"
   	else
   		flash[:error] = "Wrong! The correct answer was: #{correct_answer}."
 		end
@@ -58,4 +60,9 @@ class KanjisController < ApplicationController
     flash[:notice] = "Successfully destroyed kanji."
     redirect_to kanjis_url
   end
+
+  def authorize
+  end  
+  def authorize_view
+	end      
 end

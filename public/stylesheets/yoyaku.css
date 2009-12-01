@@ -34,8 +34,8 @@ td.schedule-only-right-and-down{
 	border-bottom: solid black 1px;
 }
 
-#notice { background-color: #A4E7A0; border: 1px solid #26722D; }  
-#error { background-color: #F0A8A8; border: 1px solid #900; }  
+#notice { background-color: #A4E7A0; border: 1px solid #26722D; -moz-border-radius: 5px; -webkit-border-radius: 5px; }  
+#error { background-color: #F0A8A8; border: 1px solid #900; -moz-border-radius: 5px; -webkit-border-radius: 5px; }  
 #notice, #error { width: 80%; margin: 0 18% 10px auto; padding: 5px; }  
 #notice p, #error p { margin-left: 20px; padding: 0; font-size: .75em; color: #000; }  
 #notice a, #error a { text-decoration: none; padding: 0 3px; }  
@@ -78,6 +78,8 @@ td.schedule-only-right-and-down{
   padding-top: 4ex;
   padding-left: 2em;
   background: white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 h1{
   font: 150% sans-serif;
@@ -147,6 +149,8 @@ h4{
 	border-color: #7F9DB9;
 	padding: 5px;
 	width: 700px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;	
 }
 
 
@@ -234,6 +238,8 @@ h4{
 	background: #efe;
 	border: 1px solid #000080;
 	margin-right: 35px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;	
 }
 .form legend{
   color: #fff;
@@ -241,6 +247,8 @@ h4{
   font-family: sans-serif;
   padding: 0.2em 1em;
   border: 1px solid #000080;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 .form label{
   width: 10em;
