@@ -186,7 +186,8 @@ ja:
     editing: "ユーザー編集"
     new: "新しいユーザー"
     notice:
-      registration: "登録が首尾よく作成されました"
+      edit_registration: "正常に登録が更新されました"
+      new_registration: "正常に登録が作成されました"
       successful_registration_for: "{{event}}の登録が首尾よく作成されました"      
     registration_for: "{{event}}に登録"
   date:

@@ -11,8 +11,12 @@ class UsersController < ApplicationController
   
   def create
     if @user.save
-      flash[:notice] = t('users.notice.registration')
-      redirect_to events_path
+      if( params[:user][:avatar].blank? )
+      	flash[:notice] = t('users.notice.new_registration')
+      	redirect_to events_path
+    	else
+    		render :action => "crop"
+  		end
     else
       render :action => 'new'
     end
@@ -25,8 +29,12 @@ class UsersController < ApplicationController
   def update
     @user = current_user2
     if @user.update_attributes(params[:user])
-      flash[:notice] = "Successfully updated profile."
-      redirect_to events_path
+      if( params[:user][:avatar].blank? )
+      	flash[:notice] = t('users.notice.edit_registration')
+      	redirect_to events_path
+    	else
+    		render :action => "crop"
+  		end
     else
       render :action => 'edit'
     end

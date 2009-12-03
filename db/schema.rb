@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091130082055) do
+ActiveRecord::Schema.define(:version => 20091203051735) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -33,11 +33,11 @@ ActiveRecord::Schema.define(:version => 20091130082055) do
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "name"
     t.text     "comment"
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "course_times", :force => true do |t|
@@ -280,6 +280,10 @@ ActiveRecord::Schema.define(:version => 20091130082055) do
     t.string   "tel"
     t.string   "nationality"
     t.string   "language"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "versions", :force => true do |t|

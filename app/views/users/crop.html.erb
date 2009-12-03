@@ -1,0 +1,17 @@
+<h1>Crop avatar</h1>
+<% content_for(:head) do %>
+<%= stylesheet_link_tag "jquery.Jcrop" %>
+<%= javascript_include_tag "jquery.Jcrop.min" %>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#cropbox').Jcrop();
+});
+</script>
+<% end %>
+<%= image_tag @user.avatar(:large), :id => "cropbox" %>
+
+<% semantic_form_for @user do |f| -%>
+  <% f.buttons do %>
+  	<%= f.commit_button t('crop') %>
+  <% end %>
+<% end -%>

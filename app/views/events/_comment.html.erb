@@ -1,2 +1,3 @@
-<strong><%= h comment.name %>:</strong>
+<%= image_tag comment.user.avatar.url( :mini ) %>
+<strong><%= h comment.user.name %>:</strong>
 <%= h comment.comment %><br />

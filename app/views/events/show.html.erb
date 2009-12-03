@@ -25,7 +25,7 @@
 <% if permitted_to? :create, Comment.new %>
 	<% form_for :comment, :url=>comments_path do |f| %>
 		<%= f.hidden_field :event_id, :value=>@event.id %>
-		<%= f.hidden_field :name, :value => current_user2.name %>
+		<%= f.hidden_field :user_id, :value => current_user2.id %>
 		<p>	
 			<%= f.text_area :comment, :rows=>4, :cols=>25 %>
 		</p>
