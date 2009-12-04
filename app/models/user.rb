@@ -5,12 +5,11 @@ class User < ActiveRecord::Base
 
 	acts_as_authentic
 
-	has_attached_file :avatar, :styles => { :mini => "40x40#", :small => "100x100#", :large => "500x500>" },
-                  	:url  => "/assets/users/:id/:style/:basename.:extension",
-                  	:path => ":rails_root/public/assets/users/:id/:style/:basename.:extension"
-	attr_protected :avatar_file_name, :avatar_content_type, :avatar_size
-	attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-
+  has_attached_file :avatar, :styles => { :mini => "40x40#", :small => "100x100#", :large => "500x500>" }, :processors => [:cropper]
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_update :reprocess_avatar, :if => :cropping?
+	#attr_protected :avatar_file_name, :avatar_content_type, :avatar_size
+  
 	validates_attachment_size :avatar, :less_than => 5.megabytes
 	validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']	
 	validates_uniqueness_of :username
@@ -35,6 +34,21 @@ class User < ActiveRecord::Base
 		end
 	end  
   
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+  
+  def avatar_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
+  end
+  
+  private
+  
+  def reprocess_avatar
+    avatar.reprocess!
+  end
+
   #def roles=(roles)
   #  self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   #end
