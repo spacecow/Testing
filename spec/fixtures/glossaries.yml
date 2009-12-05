@@ -1,0 +1,11 @@
+one:
+  japanese: MyString
+  hiragana: MyString
+  kanji: MyString
+  english: MyString
+
+two:
+  japanese: MyString
+  hiragana: MyString
+  kanji: MyString
+  english: MyString

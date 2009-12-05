@@ -1,0 +1,24 @@
+<h1><%= t('info') %> - Glossary</h1>
+
+<p>
+  <strong><%= t('japanese') %>:</strong>
+  <%=h @glossary.japanese %>
+</p>
+<p>
+  <strong><%= t('hiragana') %>:</strong>
+  <%=h @glossary.hiragana %>
+</p>
+<p>
+  <strong><%= t('kanji') %>:</strong>
+  <%=h @glossary.kanji %>
+</p>
+<p>
+  <strong><%= t('english') %>:</strong>
+  <%=h @glossary.english %>
+</p>
+
+<div class="links">
+  <%= link_to t('edit'), edit_glossary_path(@glossary), :class=>"link" %> |
+  <%= link_to t('destroy'), @glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), glossaries_path, :class=>"link" %>
+</div>

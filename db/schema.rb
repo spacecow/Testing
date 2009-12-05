@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091203051735) do
+ActiveRecord::Schema.define(:version => 20091205023115) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -104,6 +104,15 @@ ActiveRecord::Schema.define(:version => 20091203051735) do
     t.text     "description_ja"
     t.string   "title_en"
     t.text     "description_en"
+  end
+
+  create_table "glossaries", :force => true do |t|
+    t.string   "japanese"
+    t.string   "hiragana"
+    t.string   "kanji"
+    t.string   "english"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "kanjis", :force => true do |t|

@@ -11,6 +11,7 @@ authorization do
   role :god do
   	includes :admin
   	has_permission_on :kanjis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :glossaries, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :guest do
