@@ -1,0 +1,18 @@
+<div class="form">
+<%= error_messages_for :glossary %>
+
+<fieldset>
+<legend><%= t('glossaries.editing') %></legend>
+
+<% form_for @glossary do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<% end %>
+
+<div class="links">
+		  <%= link_to t('show'), @glossary, :class=>"link" %> |
+		  <%= link_to t('view_all'), glossaries_path, :class=>"link" %>
+		</p>
+</div>
+
+</fieldset>
+</div>

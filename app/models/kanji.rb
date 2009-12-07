@@ -1,4 +1,6 @@
 class Kanji < ActiveRecord::Base
-  attr_accessible :japanese, :katakana, :kanji, :english
-  validates_presence_of :japanese, :katakana, :kanji
+	has_and_belongs_to_many :meanings
+	has_and_belongs_to_many :onyomis
+	has_and_belongs_to_many :kunyomis
+	validates_presence_of :title
 end

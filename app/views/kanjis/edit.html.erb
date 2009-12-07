@@ -1,0 +1,12 @@
+<h1>Editing kanji</h1>
+
+<% form_for(@kanji) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @kanji %> |
+<%= link_to 'Back', kanjis_path %>

@@ -1,0 +1,8 @@
+<div class="form">
+<fieldset>
+<legend><%=h @kanji.title %></legend>
+<%= t('onyomi') %>: <%= @kanji.onyomis.map{|e| link_to e.reading, e }.join(', ') %><br />
+<%= t('kunyomi') %>: <%= @kanji.kunyomis.map{|e| link_to e.reading, e }.join(', ') %><br />
+<%= t('meaning') %>: <%= @kanji.meanings.map{|e| link_to e.title, e }.join(', ') %>
+</fieldset>
+</div>

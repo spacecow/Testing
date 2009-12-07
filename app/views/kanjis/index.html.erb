@@ -1,0 +1,12 @@
+<div id="list">
+	<h1><%= t('kanjis.title') %></h1>
+	<table cellpadding="2" cellspacing="1">
+		<tr>
+			<th class="list-topics"><%= t('title') %></th>			
+			<th class="list-topics"><%= t('onyomi') %></th>	
+			<th class="list-topics"><%= t('kunyomi') %></th>		
+			<th class="list-topics"><%= t('meaning') %></th>		
+		</tr>
+		<%= render @kanjis %>
+	</table>
+</div>

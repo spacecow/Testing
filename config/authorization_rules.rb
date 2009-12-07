@@ -11,6 +11,10 @@ authorization do
   role :god do
   	includes :admin
   	has_permission_on :kanjis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :glossaries, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :onyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :kunyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :meanings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :guest do
@@ -21,6 +25,14 @@ authorization do
 		has_permission_on :settings, :to => :toggle_user_language
   end
   
+  role :kanji_maniac do
+		includes :guest
+  	has_permission_on :kanjis, :to => [:index, :show]
+  	has_permission_on :onyomis, :to => :show
+  	has_permission_on :kunyomis, :to => :show
+  	has_permission_on :meanings, :to => :show
+  end  
+
   role :registrant do
   	includes :guest
   	has_permission_on :users, :to => [:edit, :update, :new_event_register, :create_event_register ]

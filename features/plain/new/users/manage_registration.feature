@@ -1,27 +1,7 @@
 @user_registration
-Scenario: A guest can make a simple registration in english
-Given I go to the events page
-	And I follow "English"
-When I follow 'register'
-Then I should not see 'role'
-	And "English" should be selected in "user_language"
-	And the 'nationality' field should contain ""
-When I fill in 'user_name' with "prince_philip"
-	And I fill in 'name' with "Prince Philip"
-	And I fill in 'nationality' with "Swedish"
-	And I choose "female"
-	And I fill in 'password' with "secret"
-	And I fill in 'password_confirmation' with "secret"
-	And I press 'create'
-Then I should be redirected to the error users page
-When I fill in 'email' with "prince@docomo.ne.jp"
-	And I fill in 'name_hurigana' with "プリンス　ヒリプ"
-	And I press 'create'
-Then I should be redirected to the events page
-	And a user should exist with role: "registrant", language: "en"
-	And I should see 'users.notice.registration'
-	And I should see "Events"
-	
+Background:
+Given a setting exists with name: "main"
+
 Scenario: A guest can make a simple registration in japanese
 Given I go to the events page
 When I follow 'register'
@@ -42,6 +22,49 @@ When I fill in 'email' with "akira@docomo.ne.jp"
 Then I should be redirected to the events page
 	And a user should exist with role: "registrant", language: "en"
 	And I should see "Events"
+
+@user_registration_english
+Scenario: A guest can make a simple registration in english
+Given I go to the events page
+	And I follow "English"
+When I follow 'register'
+Then I should not see 'role'
+	And I should see "Occupation"
+	And I should not see "Occupation*"
+	And "English" should be selected in "user_language"
+	And the 'nationality' field should contain ""
+When I fill in 'user_name' with "prince_philip"
+Then the 'user_name' field should contain "prince_philip"
+When I fill in 'name' with "Prince Philip"
+	And I fill in 'nationality' with "Swedish"
+	And I choose "female"
+	And I fill in 'password' with "secret"
+	And I fill in 'password_confirmation' with "secret"
+	And I press 'create'
+Then I should be redirected to the error users page
+When I fill in "Email Address*" with "prince@docomo.ne.jp"
+Then the "Email Address*" field should contain "prince@docomo.ne.jp"
+When I fill in 'name_hurigana' with "プリンス　ヒリプ"
+	And I press 'create'
+Then I should be redirected to the events page
+	And a user should exist with role: "registrant", language: "en"
+	And I should see 'users.notice.new_registration'
+	And I should see "Events"
+
+#@avatar
+#Scenario: Avatar error messages
+#Given I go to the events page
+#	And I follow "English"
+#When I follow 'register'
+#	And I press "Create"
+#Then I should not see "Avatar content type is not a picture"
+#When I attach the file at "C:/aaw7boot.log" to "Avatar"
+#	And I press "Create"
+#Then I should see "Avatar content type is not a picture"
+#When I attach the file at "C:/Pictures/sadako_face.jpg" to "Avatar"
+#And I press "Create"
+#Then I should not see "Avatar content type is not a picture"
+
 
 Scenario: Edit function
 Given a user: "kurosawa" exists with username: "kurosawa_akira", language: "ja", male: false, age: "10"
