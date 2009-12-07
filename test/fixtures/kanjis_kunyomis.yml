@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  kanji_id: 1
+  kunyomi_id: 1
+
+two:
+  kanji_id: 1
+  kunyomi_id: 1

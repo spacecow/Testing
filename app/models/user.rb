@@ -10,8 +10,9 @@ class User < ActiveRecord::Base
   after_update :reprocess_avatar, :if => :cropping?
 	#attr_protected :avatar_file_name, :avatar_content_type, :avatar_size
   
-	validates_attachment_size :avatar, :less_than => 5.megabytes
-	validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']	
+	#validates_attachment_size :avatar, :less_than => 5.megabytes, :if => :avatar_file_name
+	#validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png', 'image/jpg']	
+	#validates_inclusion_of :avatar_content_type, :in => %w( image/jpeg image/png ), :message => "is not a picture", :if => :false
 	validates_uniqueness_of :username
 	validates_presence_of :name, :role, :name_hurigana, :language, :nationality
 	validates_inclusion_of :male, :in => [false, true]

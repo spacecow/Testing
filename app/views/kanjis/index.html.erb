@@ -1,29 +1,12 @@
 <div id="list">
-<h1><%= t('kanjis.title') %></h1>
-
-<table cellpadding="2" cellspacing="1">
-	<tr>
-			<th class="list-topics"><%= t('japanese') %></th>		
-			<th class="list-topics"><%= t('katakana') %></th>		
-			<th class="list-topics"><%= t('kanji') %></th>		
-			<th class="list-topics"><%= t('english') %></th>		
-	</tr>
-	<% for kanji in @kanjis %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-      	<td><%=h kanji.japanese %></td>
-      	<td><%=h kanji.katakana %></td>
-      	<td><%=h kanji.kanji %></td>
-      	<td><%=h kanji.english %></td>
-  		<td>
-    			<%= link_to t('show'), kanji, :class=>"link" %>
-    			<%= link_to t('edit'), edit_kanji_path(kanji), :class=>"link" %>
-    			<%= link_to t('destroy'), kanji, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
-			</td>    	
+	<h1><%= t('kanjis.title') %></h1>
+	<table cellpadding="2" cellspacing="1">
+		<tr>
+			<th class="list-topics"><%= t('title') %></th>			
+			<th class="list-topics"><%= t('onyomi') %></th>	
+			<th class="list-topics"><%= t('kunyomi') %></th>		
+			<th class="list-topics"><%= t('meaning') %></th>		
 		</tr>
-	<% end %>
-</table>
-
-<div class="links">
-<p><%= link_to t('kanjis.new_sentence'), new_kanji_path, :class=>"link" %></p>
-</div>
+		<%= render @kanjis %>
+	</table>
 </div>

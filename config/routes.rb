@@ -1,4 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :kanjis
+	map.resources :onyomis
+	map.resources :kunyomis
+	map.resources :meanings
+
   map.resources :glossaries
 
 	map.login_user "login_user", :controller => "user_sessions", :action => "new"

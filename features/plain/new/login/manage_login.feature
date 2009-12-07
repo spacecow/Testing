@@ -1,6 +1,5 @@
-@login
 Scenario: Log in
-Given a user exists with username: "kurosawa_akira", role: "registrant", language: "ja"
+Given a user exists with username: "kurosawa_akira", language: "ja"
 	And I go to the events page
 When I follow 'login.text'
 	And I fill in 'user_name' with "kurosawa_akira"

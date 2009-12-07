@@ -1,16 +1,11 @@
-<div class="form">
-<%= error_messages_for :kanji %>
+<h1>New kanji</h1>
 
-<fieldset>
-<legend><%= t('kanjis.new_sentence') %></legend>
+<% form_for(@kanji) do |f| %>
+  <%= f.error_messages %>
 
-<% form_for @kanji do |f| %>
-	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
 <% end %>
 
-<div class="links">
-		<p><%= link_to t('back'), kanjis_path, :class=>"link" %></p>
-</div>
-
-</fieldset>
-</div>
+<%= link_to 'Back', kanjis_path %>

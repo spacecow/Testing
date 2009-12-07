@@ -25,6 +25,10 @@
 					<% if permitted_to? :index, User.new %>	
 						<li><%= link_to t('users.title'), users_path %></li>									
 					<% end %>
+					
+					<% if permitted_to? :index, User.new %>	
+						<li><%= link_to t('kanjis.title'), kanjis_path %></li>									
+					<% end %>					
 <% if false %>
 				<% if clearance <= 3 %>
 					<li><%= link_to t('people.title'), people_path %></a>

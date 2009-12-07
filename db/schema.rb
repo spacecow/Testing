@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091205023115) do
+ActiveRecord::Schema.define(:version => 20091205032903) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -116,12 +116,24 @@ ActiveRecord::Schema.define(:version => 20091205023115) do
   end
 
   create_table "kanjis", :force => true do |t|
-    t.string   "japanese"
-    t.string   "katakana"
-    t.string   "kanji"
-    t.string   "english"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+  end
+
+  create_table "kanjis_kunyomis", :id => false, :force => true do |t|
+    t.integer "kanji_id"
+    t.integer "kunyomi_id"
+  end
+
+  create_table "kanjis_meanings", :id => false, :force => true do |t|
+    t.integer "kanji_id"
+    t.integer "meaning_id"
+  end
+
+  create_table "kanjis_onyomis", :id => false, :force => true do |t|
+    t.integer "kanji_id"
+    t.integer "onyomi_id"
   end
 
   create_table "klasses", :force => true do |t|
@@ -144,6 +156,24 @@ ActiveRecord::Schema.define(:version => 20091205023115) do
   create_table "klasses_students", :id => false, :force => true do |t|
     t.integer  "student_id"
     t.integer  "klass_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "kunyomis", :force => true do |t|
+    t.string   "reading"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meanings", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "onyomis", :force => true do |t|
+    t.string   "reading"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
