@@ -17,13 +17,17 @@
   		<td>
     			<%= link_to t('show'), glossary, :class=>"link" %>
     			<%= link_to t('edit'), edit_glossary_path(glossary), :class=>"link" %>
-    			<%= link_to t('destroy'), glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+    			<%= link_to t('delete'), glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
 			</td>    	
 		</tr>
 	<% end %>
 </table>
 
 <div class="links">
-<p><%= link_to t('glossaries.new'), new_glossary_path, :class=>"link" %></p>
+<p>
+  <%= link_to t('glossaries.new'), new_glossary_path, :class=>"link" %> |
+  <%= link_to t('quiz'), quiz_init_glossaries_path, :class=>"link" %>
+</p>
+
 </div>
 </div>

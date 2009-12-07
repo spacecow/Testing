@@ -1,0 +1,14 @@
+<div class="form">
+<fieldset>
+<legend><%= t('quiz') %></legend>
+<%= @glossary.japanese %><br />
+<h2><%= @kanji.title %></h2>
+<% form_for @kanji do |f| %>
+<p>
+  <%= t('onyomi') %>
+  <%= text_field_tag :question, nil, :id => 'question' %>
+</p>
+  <%= text_field_tag :answer, nil, :onkeypress => "alert('bajs')" %>
+<% end %>
+</fieldset>
+</div>

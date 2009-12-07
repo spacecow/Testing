@@ -1,18 +1,10 @@
-<p>
-  <%= f.label :japanese, t('japanese') %>
-	<%= f.text_field :japanese, :size=>20 %>
-</p>
-<p>
-  <%= f.label :hiragana, t('hiragana') %>
-	<%= f.text_field :hiragana, :size=>20 %>
-</p>
-<p>
-  <%= f.label :kanji, t('kanji') %>
-	<%= f.text_field :kanji, :size=>20 %>
-</p>
-<p>
-  <%= f.label :english, t('english') %>
-	<%= f.text_field :english, :size=>20 %>
-</p>
-  <p><%= f.submit label_text, :class=>"submit" %></p>
+<% f.inputs do %>
+  <%= f.input :japanese, :label => t('japanese') %>
+  <%= f.input :kanji, :label => t('kanji') %>
+  <%= f.input :hiragana, :label => t('hiragana') %>
+  <%= f.input :english, :required => false, :label => t('english') %>
+<% end %>
+<% f.buttons do %>
+  <%= f.commit_button label_text %>
+<% end %>
 

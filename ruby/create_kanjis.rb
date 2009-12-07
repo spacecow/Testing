@@ -7,7 +7,7 @@ require '../app/models/kunyomi.rb'
 require '../app/models/meaning.rb'
 
 $KCODE = "UTF-8"
-filename = '..\data\kanjidic.txt'
+filename = '../data/kanjidic2.txt'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'mysql',
@@ -75,7 +75,10 @@ File.open filename, 'r' do |f|
 	end	
 end
 
+print "Onyomi: "
 p Onyomi.count
+print "Kunyomi: "
 p Kunyomi.count
+print "Meaning: "
 p Meaning.count
 

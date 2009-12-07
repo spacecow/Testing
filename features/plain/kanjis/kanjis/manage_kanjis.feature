@@ -12,7 +12,7 @@ Given a setting exists with name: "main"
 	And a user exists with username: "johan", role: "kanji_maniac", language: "en"
 	And a user is logged in as "johan"
 
-Scenario: Go to onyomi show page from kanji index
+Scenario: Links from kanji index
 When I go to the kanjis page
 	And I follow "ア"
 Then I should be redirected to the show page for that onyomi
@@ -21,6 +21,11 @@ When I go to the kanjis page
 Then I should be redirected to the show page for that kunyomi
 When I go to the kanjis page
 Then I should see "Asia, -ous"
+When I follow "-ous"
+Then I should be redirected to the show page for meaning: "-ous"
+When I go to the kanjis page
+	And I follow "亜"
+Then I should be redirected to the show page for that kanji
 
 Scenario: Show page
 When I go to the show page for that kanji

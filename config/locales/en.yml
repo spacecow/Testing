@@ -74,6 +74,7 @@ en:
   password: "Password"
   password_confirmation: "Password Confirmation"
   previous_version: "Previous version"
+  quiz: "Quiz"
   register: "Register"
   registrant: "Registrant"
   reserve: "Reserve"
@@ -129,6 +130,9 @@ en:
       please_login: "Login in order to register to the event."
     new: "New Event"
     title: "Events"
+  glossaries:
+    new: "New Glossary"
+    title: "Glossaries"
   kanjis:
     editing: "Editing Kanji"
     new_sentence: "New Kanji"

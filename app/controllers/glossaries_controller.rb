@@ -1,5 +1,26 @@
 class GlossariesController < ApplicationController
-  filter_resource_access
+  filter_access_to :all
+
+  def quiz
+    @glossary = Glossary.find( params[:glossary_id] )
+    @index = params[:index].to_i
+    kanjis = @glossary.japanese.split(//)
+    begin
+      @kanji = Kanji.find_by_title( kanjis[@index] )
+      @index+=1
+    end while ( @index < kanjis.size && !@kanji ) # && !@kanji )
+  end
+
+  def quiz_init
+    @glossary_hash = {}
+    @glossary = Glossary.find( rand( Glossary.count )+1 )
+    @glossary.japanese.split(//).each do |kanji_title|
+      if kanji = Kanji.find_by_title( kanji_title )
+        @glossary_hash[kanji_title] = kanji
+      end 
+    end
+    redirect_to quiz_glossaries_path( :glossary_id => @glossary.id, :index => 0 )
+  end
 
   def index
     @glossaries = Glossary.all
@@ -9,12 +30,13 @@ class GlossariesController < ApplicationController
   end
   
   def new
+    @glossary = Glossary.new
   end
   
   def create
+    @glossary = Glossary.create( params[:glossary] )
     if @glossary.save
-      flash[:notice] = "Successfully created glossary."
-      redirect_to glossaries_url
+      redirect_to new_glossary_path
     else
       render :action => 'new'
     end

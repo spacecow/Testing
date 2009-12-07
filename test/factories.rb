@@ -19,6 +19,11 @@ Factory.define :event do |f|
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 end
 
+Factory.define :glossary do |f|
+  f.kanji "言葉"
+  f.hiragana "ことば"
+end
+
 Factory.define :kanji do |f|
 end
 

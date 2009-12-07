@@ -1,9 +1,8 @@
 <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-	<td><%=h kanji.title %></td>
+	<td><%= link_to kanji.title, kanji %></td>
 	<td><%= kanji.onyomis.map{|e| link_to e.reading, e }.join(', ') %></td>
 	<td><%= kanji.kunyomis.map{|e| link_to e.reading, e }.join(', ') %></td>
 	<td><%= kanji.meanings.map{|e| link_to e.title, e }.join(', ') %></td>
-	<td></td>
 	<td>
 		<%= link_to t('show'), kanji, :class=>"link" %>
 		<%= link_to t('edit'), edit_kanji_path( kanji ), :class=>"link" %>
