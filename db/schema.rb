@@ -22,23 +22,6 @@ ActiveRecord::Schema.define(:version => 20091203051735) do
     t.integer  "version",    :default => 1
   end
 
-  create_table "classes", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "teacher_id"
-    t.integer  "classroom_id"
-    t.integer  "capacity"
-    t.datetime "date"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.string   "title"
-    t.text     "description"
-    t.boolean  "cancel"
-    t.integer  "mail_sending"
-    t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "classrooms", :force => true do |t|
     t.string   "name"
     t.string   "address"
@@ -104,15 +87,6 @@ ActiveRecord::Schema.define(:version => 20091203051735) do
     t.text     "description_ja"
     t.string   "title_en"
     t.text     "description_en"
-  end
-
-  create_table "kanjis", :force => true do |t|
-    t.string   "japanese"
-    t.string   "katakana"
-    t.string   "kanji"
-    t.string   "english"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "klasses", :force => true do |t|
