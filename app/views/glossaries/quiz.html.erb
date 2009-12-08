@@ -3,12 +3,15 @@
 <legend><%= t('quiz') %></legend>
 <%= @glossary.japanese %><br />
 <h2><%= @kanji.title %></h2>
-<% form_for @kanji do |f| %>
+<% form_remote_for :kanji, :url => check_glossary_path( @kanji ), :html => { :method => :put } do |f| %>
 <p>
   <%= t('onyomi') %>
   <%= text_field_tag :question, nil, :id => 'question' %>
 </p>
   <%= text_field_tag :answer, nil, :onkeypress => "alert('bajs')" %>
+  <%= f.submit %>
 <% end %>
+<div id="bajs">
+</div>
 </fieldset>
 </div>

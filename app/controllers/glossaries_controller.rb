@@ -22,6 +22,13 @@ class GlossariesController < ApplicationController
     redirect_to quiz_glossaries_path( :glossary_id => @glossary.id, :index => 0 )
   end
 
+	def check
+    respond_to do |format|
+      format.html{ redirect_to quiz_init_glossaries_path }
+      format.js
+    end	
+	end
+
   def index
     @glossaries = Glossary.all
   end

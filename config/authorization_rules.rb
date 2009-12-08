@@ -11,7 +11,7 @@ authorization do
   role :god do
   	includes :admin
   	has_permission_on :kanjis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
-  	has_permission_on :glossaries, :to => [:quiz, :quiz_init, :index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :glossaries, :to => [:quiz, :quiz_init, :check, :index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :onyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :kunyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :meanings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
@@ -31,7 +31,7 @@ authorization do
   	has_permission_on :onyomis, :to => :show
   	has_permission_on :kunyomis, :to => :show
   	has_permission_on :meanings, :to => :show
-  	has_permission_on :glossaries, :to => [:index, :quiz, :quiz_init, :new, :create]
+  	has_permission_on :glossaries, :to => [:index, :quiz, :quiz_init, :new, :create, :check ]
   end  
 
   role :registrant do

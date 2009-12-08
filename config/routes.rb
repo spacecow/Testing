@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :kunyomis
 	map.resources :meanings
 
-  map.resources :glossaries, :collection => { :quiz => :get, :quiz_init => :get }
+  map.resources :glossaries, :collection => { :quiz => :get, :quiz_init => :get }, :member => { :check => :put }
 
 	map.login_user "login_user", :controller => "user_sessions", :action => "new"
 	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
