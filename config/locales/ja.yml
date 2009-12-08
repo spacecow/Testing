@@ -3,6 +3,7 @@
 
 ja:
   access_denied: "Sorry, you are not allowed to access that page."
+  add: "追加"
   address: "住所"
   address2: "二番目の住所"
   age: "年代"
@@ -12,6 +13,7 @@ ja:
   cancel: "ｷｬﾝｾﾙ"
   canceled: "ｷｬﾝｾﾙ"
   capacity: "CAPACITY"
+  caption: "解説"
   category: "カテゴリー"
   choose: "選択"
   classroom: "部屋"
@@ -30,6 +32,7 @@ ja:
   english: "英語"
   event_date: "日付"
   female: "女性"
+  gallery: "画廊"
   gender: "性別"
   hiragana: "ひらがな"
   history: "過去"
@@ -68,6 +71,7 @@ ja:
   onyomi: "音読み"
   password: "パスワード"
   password_confirmation: "パスワード確認"
+  photo: "写真"
   previous_version: "前バージョン"
   quiz: "クイズ"
   register: "登録"
@@ -125,6 +129,9 @@ ja:
       please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい。"
     new: "新しいイベント"
     title: "参加イベント"
+  gallery:
+    editing: "画廊情報編集"
+    title: "画廊"
   glossaries:
     new: "新しい用語集"
     title: "用語集"
@@ -162,6 +169,9 @@ ja:
     title: "全部の人"
     error:
       unauthorized_access: "不正アクセス"
+  photos:
+    add: "写真を加える"
+    new: "新しい写真"
   registrants:
     editing: "{{event}}へ登録者情報編集"
     new: "{{event}}へ新しい登録者"

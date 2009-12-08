@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :galleries
+  map.resources :photos
+
   map.resources :kanjis
 	map.resources :onyomis
 	map.resources :kunyomis

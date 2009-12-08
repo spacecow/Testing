@@ -1,0 +1,15 @@
+<div class="form">
+<%= error_messages_for :photo %>
+<fieldset>
+<legend><%= t('photos.new') %></legend>
+
+<% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('add') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), photos_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

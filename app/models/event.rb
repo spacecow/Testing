@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
 	has_many :registrants, :dependent => :destroy
 	has_many :users, :through => :registrants
-  has_many :comments
+  has_many :comments, :dependent => :destroy
+  has_one :gallery, :dependent => :destroy
 
 	attr_accessible :title_en, :title_ja, :date, :description_en, :description_ja
   

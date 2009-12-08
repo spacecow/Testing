@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091205032903) do
+ActiveRecord::Schema.define(:version => 20091208045431) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -87,6 +87,13 @@ ActiveRecord::Schema.define(:version => 20091205032903) do
     t.text     "description_ja"
     t.string   "title_en"
     t.text     "description_en"
+  end
+
+  create_table "galleries", :force => true do |t|
+    t.integer  "event_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "glossaries", :force => true do |t|
@@ -186,6 +193,17 @@ ActiveRecord::Schema.define(:version => 20091205032903) do
     t.string   "salt"
     t.string   "check"
     t.string   "language",                          :default => "ja"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.integer  "gallery_id"
+    t.string   "caption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "registrants", :force => true do |t|
