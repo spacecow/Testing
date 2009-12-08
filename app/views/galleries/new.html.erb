@@ -1,0 +1,16 @@
+<div class="form">
+<%= error_messages_for :gallery %>
+
+<fieldset>
+<legend><%= t('galleries.new') %></legend>
+
+<% form_for @gallery do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), galleries_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

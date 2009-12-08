@@ -1,0 +1,21 @@
+<div id="list">
+<h1><%= t('galleries.title') %></h1>
+
+<table cellpadding="2" cellspacing="1">
+	<tr>
+			<th class="list-topics"><%= t('gallery') %></th>		
+	</tr>
+	<% for gallery in @galleries %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      	<td><%=h gallery.event.title_en %></td>
+  		<td>
+    			<%= link_to t('show'), gallery, :class=>"link" %>
+    			<%= link_to t('edit'), edit_gallery_path(gallery), :class=>"link" %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>
+
+<div class="links">
+</div>
+</div>

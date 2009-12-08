@@ -143,6 +143,7 @@ h4{
 #list .list-line-man{
   background: #ccccff;
 }
+.form .intro,
 #list .intro{
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;

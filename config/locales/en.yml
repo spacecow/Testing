@@ -3,6 +3,7 @@
 
 en:
   access_denied: "Sorry, you are not allowed to access that page."
+  add: "Add"
   address: "Address"
   address2: "Second address"
   age: "Age"
@@ -12,6 +13,7 @@ en:
   cancel: "Cancel"
   canceled: "canceled"
   capacity: "Capacity"
+  caption: "Caption"
   category: "Category"
   choose: "Select"
   classroom: "Classroom"
@@ -34,6 +36,7 @@ en:
   english: "English"
   event_date: "Date"
   female: "Female"
+  gallery: "Gallery"
   gender: "Gender"
   hiragana: "Hiragana"
   history: "History"
@@ -73,6 +76,7 @@ en:
   onyomi: "Onyomi"
   password: "Password"
   password_confirmation: "Password Confirmation"
+  photo: "Photo"
   previous_version: "Previous version"
   quiz: "Quiz"
   register: "Register"
@@ -130,6 +134,9 @@ en:
       please_login: "Login in order to register to the event."
     new: "New Event"
     title: "Events"
+  galleries:
+    editing: "Editing Gallery"
+    title: "Galleries"
   glossaries:
     new: "New Glossary"
     title: "Glossaries"
@@ -171,6 +178,9 @@ en:
     title: "People"
     error:
       unauthorized_access: "Unauthorized access."
+  photos:
+    add: "Add Photo"
+    new: "New Photo"
   registrants:
     editing: "Editing Registrant for {{event}}"
     new: "New Registrant for {{event}}"

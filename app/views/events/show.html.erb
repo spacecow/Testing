@@ -4,7 +4,15 @@
 <fieldset>
 <legend><%=h @event.title( japanese? ) %> - <%=h @event.date %></legend>
 
-<p><%=h @event.description( japanese? ) %></p>
+<br />
+<table class="intro">
+	<tr>
+		<td>
+			<%=h @event.description( japanese? ) %>
+		</td>
+	</tr>
+</table>
+
 <p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>
 <p>
 	<% if current_user2 %>

@@ -6,6 +6,8 @@ authorization do
     has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register ]
     has_permission_on :comments, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :settings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :galleries, :to => [:index, :show, :edit]
+    has_permission_on :photos, :to => [:new, :create]
   end
   
   role :god do

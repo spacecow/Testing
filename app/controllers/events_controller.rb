@@ -14,6 +14,7 @@ class EventsController < ApplicationController
   
   def create
     if @event.save
+      @event.gallery = Gallery.create!
       flash[:notice] = "Successfully created event."
       redirect_to events_url
     else

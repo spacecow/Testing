@@ -1,0 +1,14 @@
+<h1><%= t('info') %> - Gallery</h1>
+
+<p>
+  <strong><%= t('description') %>:</strong>
+  <%=h @gallery.description %>
+</p>
+
+<%= image_tag @gallery.photos[0].url %>
+
+<div class="links">
+  <%= link_to t('photos.add'), new_photo_path, :class => :link %> |
+  <%= link_to t('edit'), edit_gallery_path(@gallery), :class=>"link" %> |
+  <%= link_to t('view_all'), galleries_path, :class=>"link" %>
+</div>
