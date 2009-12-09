@@ -47,7 +47,7 @@ form.formtastic fieldset ol li p.inline-hints { color:#666; margin:5px 0 0 25%; 
 form.formtastic fieldset ol li.hidden { display:none; margin:0; }
 
 form.comment fieldset ol li.text label{ display: none; }
-form.comment fieldset ol li.text textarea { width:30%; }
+form.comment fieldset ol li.text textarea { width:45%; height:70px; }
 form.comment fieldset.buttons { padding-left: 0; }
 
 form.formtastic fieldset.buttons { padding-left:0; }

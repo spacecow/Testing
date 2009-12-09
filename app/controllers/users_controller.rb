@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
 	filter_resource_access
 
+	def show
+	end
+
 	def index
 		@users = User.all
 	end
@@ -60,10 +63,5 @@ class UsersController < ApplicationController
     else
       render :action => 'new_event_register'
     end
-	end
-  
-  def authorize
-  end  
-  def authorize_view
-	end  
+	end 
 end

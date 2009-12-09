@@ -1,5 +1,5 @@
 <div class="show">
-<%= error_messages_for :event %>
+<%= error_messages_for :comment %>
 
 <fieldset>
 <legend><%=h @event.title( japanese? ) %> - <%=h @event.date %></legend>
@@ -35,19 +35,18 @@
 	<% else %>
 		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
 	<% end %>
-</p>
+</p><br />
 		
 
-<hr>
-<p><%= render :partial => 'comment', :collection => @event.comments %></p>
+<ul id="event_comments"><%= render :partial => 'comment', :collection => @event.comments %></ul>
 
-<% if permitted_to? :create, Comment.new %>
-	<% form_for :comment, :url=>comments_path do |f| %>
+<% if permitted_to? :create, @comment %>
+	<% semantic_form_for @comment, :url=>comments_path do |f| %>
 		<%= f.hidden_field :event_id, :value=>@event.id %>
 		<%= f.hidden_field :user_id, :value => current_user2.id %>
-		<p>	
-			<%= f.text_area :comment, :rows=>4, :cols=>25 %>
-		</p>
+    <% f.inputs do %>
+    	<%= f.input :comment %>
+    <% end %>
 		<p><%= f.submit t( 'comments.add' ) %></p>
 	<% end %>
 <% end %>

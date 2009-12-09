@@ -1,12 +1,13 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+ 
 en:
   access_denied: "Sorry, you are not allowed to access that page."
   add: "Add"
   address: "Address"
   address2: "Second address"
   age: "Age"
+  ago: " ago"
   avatar: "Avatar"
   back: "Back to Index"
   blank: " "
@@ -17,6 +18,7 @@ en:
   category: "Category"
   choose: "Select"
   classroom: "Classroom"
+  comment: "Comment"
   cost: "Cost"
   course: "Course"
   create: "Create"
@@ -56,7 +58,7 @@ en:
   language: "Language"
   latest_version: "Latest version"
   lesson: "Lesson"
-  listing: "Listing "  
+  listing: "Listing "
   male: "Male"
   mail_address_mobile: "Mobile address"
   mail_address_pc: "PC address"
@@ -116,6 +118,8 @@ en:
     title: "Classrooms"
   comments:
     add: "Add Comment"
+    error:
+      blank: "Comment cannot be left blank."
   courses:
     editing: "Editing Course"
     new: "New course"
@@ -160,7 +164,7 @@ en:
     flash:
       invalid_user_or_password: "User name or password invalid"
     message:
-      create_one: "Create one"    
+      create_one: "Create one"
       logged_in_as: "Logged in as {{username}}"
       no_account: "Don't have an account?"
     notice:

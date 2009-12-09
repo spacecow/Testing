@@ -6,6 +6,5 @@ Given a setting exists with name: "main"
 
 Scenario: Create an image
 When I go to the galleries page
-Then show me the page
   And I follow 'show'
 Then I should see 'photos.add'

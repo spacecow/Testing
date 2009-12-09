@@ -1,5 +1,6 @@
 Scenario: Log in
-Given a user exists with username: "kurosawa_akira", language: "ja"
+Given a setting exists with name: "main"
+	And a user exists with username: "kurosawa_akira", language: "ja"
 	And I go to the events page
 When I follow 'login.text'
 	And I fill in 'user_name' with "kurosawa_akira"

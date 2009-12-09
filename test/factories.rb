@@ -17,6 +17,7 @@ Factory.define :event do |f|
 	f.title_en "Event 1"
 	f.title_ja "イベント１"
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
+	f.gallery {|gallery| gallery.association(:gallery)}
 end
 
 Factory.define :gallery do |f|

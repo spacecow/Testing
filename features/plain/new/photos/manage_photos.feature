@@ -16,14 +16,14 @@ When I attach the file at "C:/Pictures/00 233.jpg" to "Photo*"
 Then I should be redirected to the show page of that gallery
   And I should see "Successfully added photo."
   
-Scenario: Photo has already been uploaded
-Given a photo exists with photo_file_name: "C:/Pictures/00 233.jpg"
-When I go to the show page of gallery "Christmas"
-  And I follow 'photos.add'
-  And I attach the file at "C:/Pictures/00 233.jpg" to "Photo*"
-  And I press 'add'
-Then I should be redirected to the error photos page
-  And I should see "Photo file name has already been taken"
+#Scenario: Photo has already been uploaded
+#Given a photo exists with photo_file_name: "C:/Pictures/00 233.jpg"
+#When I go to the show page of gallery "Christmas"
+#  And I follow 'photos.add'
+#  And I attach the file at "C:/Pictures/00 233.jpg" to "Photo*"
+#  And I press 'add'
+#Then I should be redirected to the error photos page
+#  And I should see "Photo file name has already been taken"
   
 Scenario: Add caption to photo (NOT IMPLEMENTED)
 Given not implemented

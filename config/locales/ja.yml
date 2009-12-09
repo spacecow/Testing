@@ -1,12 +1,13 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+ 
 ja:
   access_denied: "Sorry, you are not allowed to access that page."
   add: "追加"
   address: "住所"
   address2: "二番目の住所"
   age: "年代"
+  ago: "前"
   avatar: "アバター"
   back: "BACK"
   blank: ""
@@ -17,6 +18,7 @@ ja:
   category: "カテゴリー"
   choose: "選択"
   classroom: "部屋"
+  comment: "コメント"
   course: "講座"
   create: "創造"
   created: "が首尾よく作成されました"
@@ -25,7 +27,7 @@ ja:
   delete: "削除"
   description: "記述"
   description_en: "記述 (英語)"
-  description_ja: "記述 (日本語)"    
+  description_ja: "記述 (日本語)"
   edit: "編集"
   edit_profile: "ﾌﾟﾛﾌｧｲﾙ編集"
   email: "メールアドレス"
@@ -69,7 +71,7 @@ ja:
   notice: "注意"
   occupation: "参加形態"
   offu: "OFF"
-  onu: "ON" 
+  onu: "ON"
   onyomi: "音読み"
   password: "パスワード"
   password_confirmation: "パスワード確認"
@@ -95,15 +97,15 @@ ja:
   tel: "電話番号"
   title: "タイトル"
   title_en: "タイトル (英語)"
-  title_ja: "タイトル (日本語)"      
+  title_ja: "タイトル (日本語)"
   update: "更新"
-  uncancel: "ｳﾝｷｬﾝｾﾙ"  
+  uncancel: "ｳﾝｷｬﾝｾﾙ"
   unchoose: "排除"
   unit: "ユニット"
   user_name: "ユーザー名"
   version: "バージョン"
   attendances:
-    editing: "出席編集"  
+    editing: "出席編集"
     title: "出席"
   classrooms:
     editing: "教室編集"
@@ -112,6 +114,8 @@ ja:
     title: "教室"
   comments:
     add: "コメント"
+    error:
+      blank: "コメントは空白のままにしておく事は出来ません"    
   courses:
     editing: "講座編集"
     listing: "上場講座"
@@ -145,7 +149,7 @@ ja:
     listing: "上場クラス"
     new: "新しいクラス"
     error:
-      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
+      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"
       try_to_delete_klass_with_students: "クラスを消す前に全部の関係がある受講生を除いて下さい"
   login:
     button: "ログイン"
@@ -154,7 +158,7 @@ ja:
     message:
       create_one: "創造して"
       logged_in_as: "ﾛｸﾞｲﾝ名は{{username}}"
-      no_account: "アカウントがありません？"      
+      no_account: "アカウントがありません？"
     password: "パスワード"
     text: "ﾛｸﾞｲﾝ"
     title: "ログインして下さい"
@@ -179,7 +183,7 @@ ja:
     new: "新しい写真"
     notice:
       add_success: "正常に写真が追加されました"
-      delete_success: "正常に写真が削除されました"    
+      delete_success: "正常に写真が削除されました"
   registrants:
     editing: "{{event}}へ登録者情報編集"
     new: "{{event}}へ新しい登録者"
@@ -193,7 +197,7 @@ ja:
     updated: "受講生が更新されました"
     error:
       delete_student_with_courses: "受講生を削除する前に全部の関係がある講座を除いて下さい"
-      delete_student_with_classes: "受講生を削除する前に全部の関係があるクラスを除いて下さい"    
+      delete_student_with_classes: "受講生を削除する前に全部の関係があるクラスを除いて下さい"
       select: "受講生を選択して下さい"
   tags:
     title: "TAGS"
@@ -208,17 +212,17 @@ ja:
   template_klasses:
     editing: "テンプレート・クラス編集"
     listing: "上場テンプレート・クラス"
-    new: "新しいテンプレート・クラス"  
+    new: "新しいテンプレート・クラス"
     title: "テンプレート・クラス"
     error:
-      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"    
+      edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"
   users:
     editing: "ユーザー編集"
     new: "新しいユーザー"
     notice:
       edit_registration: "正常に登録が更新されました"
       new_registration: "正常に登録が作成されました"
-      successful_registration_for: "{{event}}の登録が首尾よく作成されました"      
+      successful_registration_for: "{{event}}の登録が首尾よく作成されました"
     registration_for: "{{event}}に登録"
   date:
     formats:
