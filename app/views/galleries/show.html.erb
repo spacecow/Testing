@@ -1,14 +1,33 @@
-<h1><%= t('info') %> - Gallery</h1>
+<div class="form">
+<fieldset>
+<legend><%= t('info') %> - Gallery</legend>
 
+<br />
+<table class="intro">
+	<tr>
+		<td>
+			<%= @gallery.description %>
+			<% if permitted_to? :edit, @gallery %>
+				<%= link_to t('edit'), edit_gallery_path(@gallery), :class=>"link" %>
+			<% end %>
+		</td>
+	</tr>
+</table>
 <p>
-  <strong><%= t('description') %>:</strong>
-  <%=h @gallery.description %>
-</p>
 
-<%= image_tag @gallery.photos[0].url %>
+<%= @gallery.photos.map{|e| link_to( image_tag( e.photo.url(:small)), e) }%>
 
 <div class="links">
-  <%= link_to t('photos.add'), new_photo_path, :class => :link %> |
-  <%= link_to t('edit'), edit_gallery_path(@gallery), :class=>"link" %> |
-  <%= link_to t('view_all'), galleries_path, :class=>"link" %>
+  <% if permitted_to? :show, @gallery.event %>
+  	<%= link_to t('events.title'), @gallery.event, :class => :link %>
+  <% end %>
+  <% if permitted_to? :new, Photo.new %>
+  	| <%= link_to t('photos.add'), new_photo_path( :gallery_id => @gallery.id ), :class => :link %>
+  <% end %>
+  <% if permitted_to? :index, Gallery.new %>
+  	| <%= link_to t('galleries.title'), galleries_path, :class=>"link" %>
+  <% end %>
+</div>
+
+</fieldset>
 </div>

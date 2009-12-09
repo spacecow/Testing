@@ -24,6 +24,7 @@
 	<% else %>
 		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
 	<% end %>
+	<br /><%= link_to t('gallery'), @event.gallery %>
 </p>
 		
 

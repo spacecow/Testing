@@ -1,0 +1,25 @@
+<div class="form">
+<fieldset>
+<legend><%= t('photos.editing') %></legend>
+
+<%= link_to( image_tag( @photo.photo.url(:large)), @next ) %>
+
+<% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
+	<% f.inputs do %>
+	  <%= f.input :caption, :label => t('caption') %>
+	  <% f.input :gallery_id, :as => :hidden %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t('edit') %>
+	<% end %>
+<% end %>
+
+<div class="links">
+	<p>
+		<%= link_to t('gallery'), @photo.gallery, :class=>"link" %> |		
+		<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+	</p>
+</div>
+
+</fieldset>
+</div>

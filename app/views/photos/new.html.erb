@@ -4,11 +4,18 @@
 <legend><%= t('photos.new') %></legend>
 
 <% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
-	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('add') } %>
+	<% f.inputs do %>
+	  <%= f.input :photo, :label => t('photo') %>
+	  <%= f.input :caption, :label => t('caption') %>
+	  <% f.input :gallery_id, :as => :hidden %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t('add') %>
+	<% end %>
 <% end %>
 
 <div class="links">
-		<p><%= link_to t('back'), photos_path, :class=>"link" %></p>
+		<p><%= link_to t('gallery'), @photo.gallery, :class=>"link" %></p>
 </div>
 
 </fieldset>

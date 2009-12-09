@@ -180,6 +180,7 @@ en:
       unauthorized_access: "Unauthorized access."
   photos:
     add: "Add Photo"
+    editing: "Editing Caption"
     new: "New Photo"
   registrants:
     editing: "Editing Registrant for {{event}}"

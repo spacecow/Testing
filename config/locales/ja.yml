@@ -129,7 +129,7 @@ ja:
       please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい。"
     new: "新しいイベント"
     title: "参加イベント"
-  gallery:
+  galleries:
     editing: "画廊情報編集"
     title: "画廊"
   glossaries:
@@ -171,6 +171,7 @@ ja:
       unauthorized_access: "不正アクセス"
   photos:
     add: "写真を加える"
+    editing: "解説編集"
     new: "新しい写真"
   registrants:
     editing: "{{event}}へ登録者情報編集"

@@ -7,7 +7,7 @@ authorization do
     has_permission_on :comments, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :settings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :galleries, :to => [:index, :show, :edit]
-    has_permission_on :photos, :to => [:new, :create]
+    has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
   end
   
   role :god do
@@ -25,6 +25,8 @@ authorization do
 		has_permission_on :user_sessions, :to => [:new, :create, :destroy]
 		has_permission_on :users, :to => [:new, :create]
 		has_permission_on :settings, :to => :toggle_user_language
+		has_permission_on :galleries, :to => :show
+		has_permission_on :photos, :to => :show
   end
   
   role :kanji_maniac do
