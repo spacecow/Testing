@@ -12,9 +12,11 @@ form.formtastic fieldset ol li p.inline-hints { color:#333; }
 form.formtastic fieldset ol li fieldset legend span.label,
 form.formtastic fieldset ol p label,
 form.formtastic fieldset ol li label { display:block; width:150px; float:left; padding-top:.2em; }
+form.photo fieldset ol li label { display:block; width:50px; float:left; padding-top:.2em; }
 
 form.formtastic fieldset ol li fieldset ol { float:left; width:74%; margin:0; padding:0 0 0 170px; }
 form.formtastic fieldset ol li{ margin-bottom:0.5em; }
+form.formtastic fieldset ol li.hidden { display:none; margin-bottom:0; }
 
 
 form.formtastic fieldset ol p textarea,
@@ -53,6 +55,7 @@ form.formtastic fieldset.buttons li { float:left; padding-right:0.5em; }
 
 form.formtastic fieldset.buttons,
 div.form fieldset form input.submit{ margin-left: 160px; }
+form.photo fieldset.buttons{ margin-left: 60px; }
 
 
 

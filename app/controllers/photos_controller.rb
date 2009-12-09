@@ -19,7 +19,7 @@ class PhotosController < ApplicationController
   def update
     if @photo.update_attributes( params[:photo] )
       if( params[:photo][:photo].blank? )
-      	flash[:notice] = t('users.notice.edit_registration')
+      	flash[:notice] = t('photos.notice.add_success')
       	redirect_to @photo.gallery
     	else
     		render :action => "crop"
@@ -41,7 +41,7 @@ class PhotosController < ApplicationController
   def destroy
     gallery = @photo.gallery
     @photo.destroy
-    flash[:notice] = "Successfully deleted photo."
+    flash[:notice] = t('photos.notice.delete_success')
     redirect_to gallery
   end	
 end

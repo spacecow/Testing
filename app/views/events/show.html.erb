@@ -1,4 +1,4 @@
-<div class="form">
+<div class="show">
 <%= error_messages_for :event %>
 
 <fieldset>
@@ -13,6 +13,17 @@
 	</tr>
 </table>
 
+<fieldset class="gallery">
+<legend><%= link_to t('gallery'), @event.gallery %></legend>
+<table class="gallery">
+	<tr>
+		<td>
+			<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini)), e) }%><br />
+		</td>
+	</tr>
+</table>
+</fieldset>
+
 <p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>
 <p>
 	<% if current_user2 %>
@@ -24,7 +35,6 @@
 	<% else %>
 		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
 	<% end %>
-	<br /><%= link_to t('gallery'), @event.gallery %>
 </p>
 		
 
@@ -50,7 +60,7 @@
   	<%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
   <% end %>
   <% if permitted_to? :index, @event %>
-  	<%= link_to t('view_all'), events_path, :class=>"link" %>
+  	<%= link_to t('events.title'), events_path, :class=>"link" %>
   <% end %>
 </div>
 

@@ -34,6 +34,7 @@ en:
   email: "Email Address"
   end_time: "End Time"
   english: "English"
+  event: "Event"
   event_date: "Date"
   female: "Female"
   gallery: "Gallery"
@@ -77,6 +78,7 @@ en:
   password: "Password"
   password_confirmation: "Password Confirmation"
   photo: "Photo"
+  preview: "Preview"
   previous_version: "Previous version"
   quiz: "Quiz"
   register: "Register"
@@ -180,8 +182,12 @@ en:
       unauthorized_access: "Unauthorized access."
   photos:
     add: "Add Photo"
-    editing: "Editing Caption"
+    crop: "Crop Photo"
+    editing: "Editing Photo"
     new: "New Photo"
+    notice:
+      add_success: "Successfully added photo."
+      delete_success: "Successfully deleted photo."
   registrants:
     editing: "Editing Registrant for {{event}}"
     new: "New Registrant for {{event}}"

@@ -1,4 +1,4 @@
-<div class="form">
+<div class="show">
 <fieldset>
 <legend><%= t('info') %> - Gallery</legend>
 
@@ -13,13 +13,13 @@
 		</td>
 	</tr>
 </table>
-<p>
+<br />
 
-<%= @gallery.photos.map{|e| link_to( image_tag( e.photo.url(:small)), e) }%>
+<%= @gallery.photos.map{|e| link_to( image_tag( e.photo.url(:small)), e) }%><br /><br />
 
 <div class="links">
   <% if permitted_to? :show, @gallery.event %>
-  	<%= link_to t('events.title'), @gallery.event, :class => :link %>
+  	<%= link_to t('event'), @gallery.event, :class => :link %>
   <% end %>
   <% if permitted_to? :new, Photo.new %>
   	| <%= link_to t('photos.add'), new_photo_path( :gallery_id => @gallery.id ), :class => :link %>

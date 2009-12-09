@@ -1,4 +1,4 @@
-<h1>Crop photo</h1>
+<h1><%= t('photos.crop') %></h1>
 <% content_for(:head) do %>
 <%= stylesheet_link_tag "jquery.Jcrop" %>
 <%= javascript_include_tag "jquery.Jcrop.min" %>
@@ -32,7 +32,8 @@ function update_crop(coords) {
 <% end %>
 <%= image_tag @photo.photo(:large), :id => "cropbox" %>
 
-<h4>Preview:</h4>
+<br />
+<strong><%= t('preview') %>:</strong>
 <div style="width:100px; height:100px; overflow:hidden">
   <%= image_tag @photo.photo.url(:large), :id => "preview" %>
 </div>
@@ -41,5 +42,5 @@ function update_crop(coords) {
   <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
     <%= f.hidden_field attribute, :id => attribute %>
   <% end %>
-  <p><%= f.submit "Crop" %></p>
+  <p><%= f.submit t('crop') %></p>
 <% end %>

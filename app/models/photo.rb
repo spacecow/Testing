@@ -7,6 +7,7 @@ class Photo < ActiveRecord::Base
 	attr_protected :photo_file_name, :photo_content_type, :photo_size
 
   validates_presence_of :photo_file_name
+  validates_uniqueness_of :photo_file_name
 
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?

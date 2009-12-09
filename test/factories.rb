@@ -17,7 +17,6 @@ Factory.define :event do |f|
 	f.title_en "Event 1"
 	f.title_ja "イベント１"
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
-	f.gallery{|gallery| gallery.association( :gallery, :description => 'cool' )}
 end
 
 Factory.define :gallery do |f|
@@ -63,6 +62,11 @@ Factory.define :person do |f|
   f.first_name_kana "フェイク"
   f.family_name_kana "フェイクソン"
   f.language "en"
+end
+
+Factory.define :photo do |f|
+  f.photo_content_type "image/jpeg"
+  f.photo_file_size 37423
 end
 
 Factory.define :registrant do |f|

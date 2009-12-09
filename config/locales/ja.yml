@@ -20,6 +20,7 @@ ja:
   course: "講座"
   create: "創造"
   created: "が首尾よく作成されました"
+  crop: "切断"
   day: "曜日"
   delete: "削除"
   description: "記述"
@@ -30,6 +31,7 @@ ja:
   email: "メールアドレス"
   end_time: "終わりの時間"
   english: "英語"
+  event: "イベント"
   event_date: "日付"
   female: "女性"
   gallery: "画廊"
@@ -72,6 +74,7 @@ ja:
   password: "パスワード"
   password_confirmation: "パスワード確認"
   photo: "写真"
+  preview: "プレビュー"
   previous_version: "前バージョン"
   quiz: "クイズ"
   register: "登録"
@@ -171,8 +174,12 @@ ja:
       unauthorized_access: "不正アクセス"
   photos:
     add: "写真を加える"
-    editing: "解説編集"
+    crop: "写真切断"
+    editing: "写真情報編集"
     new: "新しい写真"
+    notice:
+      add_success: "正常に写真が追加されました"
+      delete_success: "正常に写真が削除されました"    
   registrants:
     editing: "{{event}}へ登録者情報編集"
     new: "{{event}}へ新しい登録者"
