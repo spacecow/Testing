@@ -2,23 +2,26 @@
 <fieldset>
 <legend><%= t('photos.editing') %></legend>
 
-<%= link_to( image_tag( @photo.photo.url(:large)), @next ) %>
+<div id="photo_container">
+  <%= link_to( image_tag( @photo.photo.url(:large)), @next ) %>
+  
+  <%- semantic_form_for @photo, :html => { :multipart => true } do |f| -%>
+    <% f.inputs do %>
+  	  <%= f.input :photo, :as => :hidden %>
+  	  <%= f.input :caption, :label => t('caption'), :required => false, :hint => t('photos.edit_caption') %>
+  	<% end %>
+    <div id="update_button_container">
+      <%= f.submit t( 'update' ) %>
+    </div>
+  <%- end -%>
 
-<% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
-	<% f.inputs do %>
-	  <%= f.input :photo, :as => :hidden %>
-	  <%= f.input :caption, :label => t('caption'), :required => false %>
-	<% end %>
-	<% f.buttons do %>
-		<%= f.commit_button t('edit') %>
-	<% end %>
-<% end %>
-
-<div class="links">
-	<p>
-		<%= link_to t('gallery'), @photo.gallery, :class=>"link" %> |		
-		<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
-	</p>
+  <div class="links">
+  	<p>
+  		<%= link_to t('show'), @photo, :class => :link %> |
+  		<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  		<%= link_to t('gallery'), @photo.gallery, :class=>"link" %>
+  	</p>
+  </div>
 </div>
 
 </fieldset>

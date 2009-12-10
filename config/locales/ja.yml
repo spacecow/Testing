@@ -137,6 +137,7 @@ ja:
     new: "新しいイベント"
     title: "参加イベント"
   galleries:
+    edit: "画廊編集"
     editing: "画廊情報編集"
     title: "画廊"
   glossaries:
@@ -179,6 +180,7 @@ ja:
   photos:
     add: "写真を加える"
     crop: "写真切断"
+    edit_caption: "写真の解説を編集する"
     editing: "写真情報編集"
     new: "新しい写真"
     notice:

@@ -1,5 +1,5 @@
 <li <% if Comment.first == comment %>class="first"<% end %>>
-	<%= image_tag comment.user.avatar.url( :mini ) %>
+	<%= image_tag avatar_mini_url( comment.user ) %>
 	<div class="event_comment_container">
 		<%= link_to h( comment.user.name ), comment.user %>
 		<%= h comment.comment %><br />

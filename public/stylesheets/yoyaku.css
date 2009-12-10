@@ -77,12 +77,14 @@ td.schedule-only-right-and-down{
   font-size: small;
 }
 #main{
+  font-family: sans-serif;
+  font-size: 12px;
   margin-left: 5em;
   margin-right: 5em;
   padding-top: 4ex;
   padding-left: 2em;
   background: white;
-  width:750px;
+  width:740px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
@@ -114,7 +116,7 @@ h4{
 #event_comments{
 	margin:0px;
 	padding:0px;
-	width:512px;
+	width:100%;
 }
 #event_comments li{
 	list-style:none;
@@ -134,7 +136,6 @@ h4{
 #event_comments li div.event_comment_container{
 	float:left;
 	margin-left:10px;
-	font-size:14px;
 	width:450px;
 }
 #event_comments li div.event_comment_container a{
@@ -147,6 +148,30 @@ h4{
 	font-size:90%;
 	padding-top:3px;
 }
+/* EVENT COMMENT FORM */
+#new_comment_form{
+  width:350px;
+}
+#new_comment_form textarea{
+  width:300px;
+  height:46px;
+  resize: none;
+}
+#new_comment_form #add_button_container{
+  float:right;
+  text-align:right;
+  width:100px; 
+}
+
+/* PHOTOS*/
+#photo_container{
+  margin: 10px 0 0 10px;
+}
+#photo_container #caption{
+  margin-top:5px;
+  font-style:italic;
+}
+
 
 
 
@@ -195,8 +220,9 @@ h4{
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;
 	border-color: #7F9DB9;
-	padding: 5px;
-	width: 512px;
+	padding:5px;
+	margin:0;
+	width: 100%;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
@@ -284,43 +310,15 @@ h4{
 .show fieldset a img{
   margin: 1px 1px 1px 1px;
 }
-
-div.show fieldset fieldset.gallery{
-	border: 1px solid #7F9DB9;
-	margin: 10px 25px 0 0;	
-	padding: 5px;
-	width:200px;
-	float: right;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;	
+#list{
+	background: #efe;
+  width:570px;	
 }
-div.show fieldset fieldset.gallery table.gallery{
-  width: 174px;
-	margin: 0;
-  padding: 0;		
-}
-
-div.show fieldset fieldset.gallery legend{
-  color: #fff;
-  background: #9999ff;
-  font-family: sans-serif;
-  font-size: 10px;
-  padding: 0.2em 1em;
-  border: 1px solid #000080;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  
-}
-div.show fieldset fieldset.gallery legend a{
-  text-decoration: none;
-  color: #fff;
-}
-
 .show fieldset,
 .form fieldset{
 	background: #efe;
 	border: 1px solid #000080;
-  width:500px;
+  width:550px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
@@ -328,7 +326,7 @@ div.show fieldset fieldset.gallery legend a{
 .form legend{
   color: #fff;
   background: #9999ff;
-  font-family: sans-serif;
+  font-size:16px;
   padding: 0.2em 1em;
   border: 1px solid #000080;
   -moz-border-radius: 5px;
@@ -343,6 +341,46 @@ div.show fieldset fieldset.gallery legend a{
 }
 
 .form .submit{ margin-left: 165px; }
+
+/* FIELDSET GALLERY */
+div.show fieldset fieldset.gallery{
+	border: 1px solid #7F9DB9;
+	margin: 10px 0 0 0;	
+	padding: 5px;
+	width:215px;
+	float: right;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;	
+}
+div.show fieldset fieldset.gallery:hover{
+	background: #f5ffee;
+}
+
+div.show fieldset fieldset.gallery legend{
+  color: #fff;
+  background: #9999ff;
+  font-size: 10px;
+  padding: 0.2em 1em;
+  border: 1px solid #000080;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  
+}
+div.show fieldset fieldset.gallery legend a{
+  text-decoration: none;
+  color: #fff;
+}
+div.show fieldset fieldset.gallery table.gallery{
+  width: 220px;
+	margin: 0;
+  padding: 0;		
+}
+img a:hover span{
+  position: absolute;
+  display: block;
+  background: #fdd;
+  border: 1px solid red;
+}
 
 
 
@@ -433,15 +471,20 @@ a.link{
 }
 
 #user_nav{
+  width:120px;
 	float: right;
 	text-align: right;
-	font-size: 12px;
+	font-size: 10px;
 	margin: 13px 30px 0 0;
 	padding:5px;
 	border: 1px solid #000080;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
+#user_nav:hover{
+  background: #efe;	
+}
+
 #user_nav a{
 	text-decoration: none;
 }

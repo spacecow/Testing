@@ -27,3 +27,6 @@ Then I should be redirected to the show page of that gallery
   
 Scenario: Add caption to photo (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Make it optional to crop an already uploaded picture (NOT IMPLEMENTED)
+Given not implemented
