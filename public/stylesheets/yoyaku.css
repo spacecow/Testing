@@ -286,16 +286,16 @@ h4{
 }
 
 div.show fieldset fieldset.gallery{
-	border: 1px solid #7F9DB9;
-	margin: 10px 25px 0 0;	
+	border:1px solid #7F9DB9;
+	margin:10px 0 0 0;	
 	padding: 5px;
-	width:200px;
+	width:190px;
 	float: right;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
 div.show fieldset fieldset.gallery table.gallery{
-  width: 174px;
+  width: 190px;
 	margin: 0;
   padding: 0;		
 }
