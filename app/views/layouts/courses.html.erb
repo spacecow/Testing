@@ -81,6 +81,13 @@
 		</td></tr></table>
   </div>		
     <div id="main">
+      <%- flash.each do |key, msg| -%>  
+        <div id="<%= key %>">  
+          <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
+          <p><%= msg %></p>    
+        </div>
+        <div class="clear"></div>
+      <%- end -%>
     	<div id="user_nav">
 				<% if !current_user2 %>
 					<% if I18n.locale == 'ja' %>
@@ -93,19 +100,12 @@
     			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
     			<%= link_to t( 'logout.text' ), logout_user_path %><br />
     			<%= t('login.message.logged_in_as', :username => current_user2.username ) %><br />
-    			<%= image_tag current_user2.avatar.url( :mini ) %>
+    			<%= image_tag avatar_mini_url( current_user2 ) %>
     		<% else %>
 	    		<%= link_to t( 'register' ), new_user_path %> |
 	    		<%= link_to t( 'login.text' ), login_user_path %>
 	    	<% end %>
-    	</div>
-      <%- flash.each do |key, msg| -%>  
-        <div id="<%= key %>">  
-          <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
-          <p><%= msg %></p>  
-          <div class="clear"></div>  
-        </div>
-      <%- end -%> 
+    	</div>              
       <%= yield :layout %>
       <br />
     </div>

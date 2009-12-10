@@ -136,11 +136,12 @@ en:
   events:
     editing: "Editing Event"
     message:
-      allready_registered: "You have allready registered for this event."
+      allready_registered: "You have already registered for this event."
       please_login: "Login in order to register to the event."
     new: "New Event"
     title: "Events"
   galleries:
+    edit: "Edit Gallery"
     editing: "Editing Gallery"
     title: "Galleries"
   glossaries:
@@ -187,6 +188,7 @@ en:
   photos:
     add: "Add Photo"
     crop: "Crop Photo"
+    edit_caption: "Edit caption of photo"
     editing: "Editing Photo"
     new: "New Photo"
     notice:

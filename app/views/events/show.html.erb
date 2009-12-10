@@ -1,6 +1,14 @@
+<% content_for(:head) do %>
+<style>
+textarea#comment_comment{
+  background: url(<%= avatar_mini_url( current_user2 ) %>) no-repeat;
+  background-color: white;
+  background-position: 0 50%;
+  padding-left: 45px;
+}
+</style>
+<% end %>
 <div class="show">
-<%= error_messages_for :comment %>
-
 <fieldset>
 <legend><%=h @event.title( japanese? ) %> - <%=h @event.date %></legend>
 
@@ -18,7 +26,7 @@
 <table class="gallery">
 	<tr>
 		<td>
-			<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini)), e) }%><br />
+			<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini), :title => e.caption, :alt => e.caption ),e )} %>
 		</td>
 	</tr>
 </table>
@@ -35,20 +43,27 @@
 	<% else %>
 		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
 	<% end %>
-</p><br />
-		
+</p>
+<div class="clear"></div><br />
 
 <ul id="event_comments"><%= render :partial => 'comment', :collection => @event.comments %></ul>
 
 <% if permitted_to? :create, @comment %>
-	<% semantic_form_for @comment, :url=>comments_path do |f| %>
-		<%= f.hidden_field :event_id, :value=>@event.id %>
-		<%= f.hidden_field :user_id, :value => current_user2.id %>
-    <% f.inputs do %>
-    	<%= f.input :comment %>
-    <% end %>
-		<p><%= f.submit t( 'comments.add' ) %></p>
-	<% end %>
+	<%- semantic_form_for @comment, :url=>comments_path do |f| -%>
+		<div id="new_comment_form">
+      <%= f.hidden_field :event_id, :value=>@event.id %>
+  		<%= f.hidden_field :user_id, :value => current_user2.id %>
+      <% f.inputs do %>
+      	<%= f.input :comment %>
+      <% end %>
+      <div id="add_button_container">
+        <%= f.submit t( 'comments.add' ) %>
+      </div>
+      <div class="clear"></div>
+		</div>
+	<%- end -%>
+<% else %>
+  <br />
 <% end %>
 
 <div class="links">

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   #before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   #before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_default_user_language
-  helper_method :clearance
+  helper_method :clearance, :avatar_mini_url
   helper_method :clearance?
   helper_method :current_user
   helper_method :association_delete_error_messages
@@ -41,6 +41,18 @@ class ApplicationController < ActionController::Base
 	def current_user
 		return current_user2
 	end	
+	
+	def avatar_mini_url( user )
+	  if user
+      if user.avatar?    	    
+        user.avatar.url(:mini)
+      else
+        "http://gakuwarinet.com/pictures/mafumafu.jpg"
+      end
+    else
+      "http://gakuwarinet.com/pictures/mafumafu.jpg"
+    end
+  end
  
   def logged_in2?
     current_user2 != nil

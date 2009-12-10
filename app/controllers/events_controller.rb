@@ -8,6 +8,11 @@ class EventsController < ApplicationController
   
   def show
     @comment = Comment.new
+#    @user = current_user2
+#    respond_to do |format|
+#      format.html
+#      format.css
+#    end
   end
   
   def new

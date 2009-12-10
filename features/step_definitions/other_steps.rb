@@ -87,4 +87,14 @@ Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
     end 
   end 
   state.should == :something_selected 
+end
+
+Then /^I should see links "([^\"]*)"$/ do |links|
+  links.split(', ').each_with_index do |link,i|
+    if i==0
+      And "I should see \"#{link}\""
+    else
+      And "I should see \"| #{link}\""
+    end
+  end
 end 
