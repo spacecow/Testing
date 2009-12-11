@@ -29,6 +29,8 @@ Factory.define :glossary do |f|
 end
 
 Factory.define :invitation do |f|
+	f.sequence(:recipient_email) { |n| "foo#{n}@example.com" }
+	#f.recipient_email "foo"+rand(10000).to_s+"@example.com"
 end
 
 Factory.define :kanji do |f|
@@ -104,7 +106,7 @@ end
 
 Factory.define :user do |f|
 	f.username "username"
-	f.email "fake@fake.com"
+	f.sequence(:email) { |n| "bar#{n}@example.com" }
 	f.language "ja"
 	f.role "registrant"
 	f.male true
@@ -114,4 +116,5 @@ Factory.define :user do |f|
 	f.password "secret"
 	f.password_confirmation "secret"
 	f.invitation_limit 5
+	f.invitation {|invitation| invitation.association(:invitation)}
 end

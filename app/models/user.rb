@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants
 	has_many :comments, :dependent => :destroy
-  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
-  belongs_to :invitation
+	has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+	belongs_to :invitation
   
   #before_create :set_invitation_limit
 

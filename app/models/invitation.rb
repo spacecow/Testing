@@ -11,7 +11,7 @@ class Invitation < ActiveRecord::Base
 	validate :sender_has_invitations, :if => :sender
 	
 	before_create :generate_token
-	before_create :decrement_sender_count
+	before_create :decrement_sender_count, :if => :sender
 	
 private
 	def recipient_is_not_already_registered

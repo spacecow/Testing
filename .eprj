@@ -59,6 +59,8 @@
             <string>config\locales\ja.yml</string>
             <key>manage_eve</key>
             <string>features\plain\new\events\manage_events.feature</string>
+            <key>manage_events</key>
+            <string>features\plain\new\events\manage_events.feature</string>
             <key>manage_invi</key>
             <string>features\plain\new\invitations\manage_invitations.feature</string>
             <key>routes</key>
