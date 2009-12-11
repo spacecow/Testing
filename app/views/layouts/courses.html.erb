@@ -98,8 +98,13 @@
 				<% end %>
     		<% if current_user2 %>
     			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
-    			<%= link_to t( 'logout.text' ), logout_user_path %><br />
-    			<%= t('login.message.logged_in_as', :username => current_user2.username ) %><br />
+    			<%= link_to t( 'logout.text' ), logout_user_path %>
+    			<% if permitted_to? :new, Invitation.new %>
+            | <%= link_to t('invitations.send'), new_invitation_path %>
+          <% end %>
+          <br />
+    			<i><%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
+          <br />
     			<%= image_tag avatar_mini_url( current_user2 ) %>
     		<% else %>
 	    		<%= link_to t( 'register' ), new_user_path %> |
@@ -107,7 +112,9 @@
 	    	<% end %>
     	</div>              
       <%= yield :layout %>
-      <br />
+			<div id="footer">
+				Questions/suggestions are sent to: johan@reserve-gakuwarinet.com	
+			</div>    
     </div>
   </div>
 </body>

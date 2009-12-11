@@ -496,3 +496,11 @@ a.link{
 #user_nav img{
 	margin-top:2px;
 }
+
+#main #footer{
+	font-size:10px;
+	margin-top:2px;
+	padding-bottom:2px;
+	width:570px;
+	text-align:center;
+}

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091208045431) do
+ActiveRecord::Schema.define(:version => 20091211041433) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -101,6 +101,15 @@ ActiveRecord::Schema.define(:version => 20091208045431) do
     t.string   "hiragana"
     t.string   "kanji"
     t.string   "english"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "sender_id"
+    t.string   "recipient_email"
+    t.string   "token"
+    t.datetime "sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -341,6 +350,8 @@ ActiveRecord::Schema.define(:version => 20091208045431) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "invitation_id"
+    t.integer  "invitation_limit"
   end
 
   create_table "versions", :force => true do |t|

@@ -28,6 +28,9 @@ Factory.define :glossary do |f|
   f.hiragana "ことば"
 end
 
+Factory.define :invitation do |f|
+end
+
 Factory.define :kanji do |f|
 end
 
@@ -100,6 +103,7 @@ Factory.define :unit do |f|
 end
 
 Factory.define :user do |f|
+	f.username "username"
 	f.email "fake@fake.com"
 	f.language "ja"
 	f.role "registrant"
@@ -109,4 +113,5 @@ Factory.define :user do |f|
 	f.nationality "Fakeland"
 	f.password "secret"
 	f.password_confirmation "secret"
+	f.invitation_limit 5
 end

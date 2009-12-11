@@ -90,6 +90,7 @@ en:
   roles: "Roles"
   room: "Room"
   search: "Search"
+  send: "Send"
   show: "Info"
   start_time: "Start Time"
   student: "Student"
@@ -147,6 +148,10 @@ en:
   glossaries:
     new: "New Glossary"
     title: "Glossaries"
+  invitations:
+    new: "New Invitation"
+    send: "Send Invitation"
+    sent: "Invitation sent"
   kanjis:
     editing: "Editing Kanji"
     new_sentence: "New Kanji"

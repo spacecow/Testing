@@ -4,6 +4,7 @@
 <legend><%= t('users.new') %></legend>
 
 <% semantic_form_for @user do |f| %>
+	<%= f.hidden_field :invitation_token %>
 	<% f.inputs do %>
 		<%= f.input :name, :label => t( :name ) %>
 		<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>

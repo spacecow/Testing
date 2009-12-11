@@ -86,6 +86,7 @@ ja:
   roles: "Roles"
   room: "部屋"
   search: "検索"
+  send: "送信"
   show: "表示"
   start_time: "開始の時間"
   student: "受講生"
@@ -143,6 +144,10 @@ ja:
   glossaries:
     new: "新しい用語集"
     title: "用語集"
+  invitations:
+    new: "新しい招待"
+    send: "招待を送る"
+    sent: "招待を送りました"
   kanjis:
     title: "漢字"
   klasses:

@@ -8,6 +8,9 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     
+		when /the root page/
+			'/'
+    
 		when /^the (?:error )?(.+?) page$/
       send "#{$1.downcase.gsub(' ','_')}_path"
         

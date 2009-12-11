@@ -41,7 +41,7 @@ form.formtastic fieldset ol li fieldset legend {
 	border: 0;	
 }
 form.formtastic fieldset ol li p.inline-errors { color:#cc0000; margin:0 0 5px 26%; font-size:12px; }
-form.formtastic fieldset ol li ul.errors { color:#cc0000; margin:5px 0 0 25%; list-style:square; font-size:12px; }
+form.formtastic fieldset ol li ul.errors { color:#cc0000; margin:5px 0 0 25%; list-style:square; font-size:10px; font-style:italic; }
 form.formtastic fieldset ol li p.inline-hints { color:#666; margin:5px 0 0 25%; font-size:10px; font-style:italic; }
 
 form.formtastic fieldset ol li.hidden { display:none; margin:0; }

@@ -16,3 +16,6 @@ When I go to the show page of event "christmas"
 	And I fill in "Comment*" with "bajs"
 	And I press 'comments.add'
 Then I should see "bajs"
+
+Scenario: Edit & delete comments
+Given not implemented

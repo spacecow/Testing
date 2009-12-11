@@ -17,16 +17,17 @@ authorization do
   	has_permission_on :onyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :kunyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :meanings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+  	has_permission_on :invitations, :to => [:new, :create]
   end
   
   role :guest do
-		has_permission_on :events, :to => [:index, :show]
-		has_permission_on :registrants, :to => [:new, :create]
+#		has_permission_on :events, :to => [:index, :show]
+#		has_permission_on :registrants, :to => [:new, :create]
 		has_permission_on :user_sessions, :to => [:new, :create, :destroy]
 		has_permission_on :users, :to => [:new, :create]
 		has_permission_on :settings, :to => :toggle_user_language
-		has_permission_on :galleries, :to => :show
-		has_permission_on :photos, :to => :show
+#		has_permission_on :galleries, :to => :show
+#		has_permission_on :photos, :to => :show
   end
   
   role :kanji_maniac do

@@ -9,10 +9,15 @@ class UsersController < ApplicationController
 	end
 
   def new
-  	@user = User.new( :nationality => ( japanese? ? "日本" : "" ))
+  	@user = User.new(
+  		:nationality => ( japanese? ? "日本" : "" ),
+  		:invitation_token => params[:invitation_token]
+  	)
+  	@user.email = @user.invitation.recipient_email if @user.invitation
   end
   
   def create
+  	@user.invitation_limit = 0
     if @user.save
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.new_registration')

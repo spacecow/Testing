@@ -31,6 +31,52 @@
             <string>app\controllers\application_controller.rb</string>
             <key>application</key>
             <string>app\controllers\application_controller.rb</string>
+            <key>autt</key>
+            <string>config\authorization_rules.rb</string>
+            <key>en.y</key>
+            <string>config\locales\en.yml</string>
+            <key>fac</key>
+            <string>test\factories.rb</string>
+            <key>factor</key>
+            <string>test\factories.rb</string>
+            <key>fomtasti</key>
+            <string>public\stylesheets\formtastic_changes.css</string>
+            <key>inv</key>
+            <string>app\models\invitation.rb</string>
+            <key>invi</key>
+            <string>app\controllers\invitations_controller.rb</string>
+            <key>invit</key>
+            <string>app\controllers\invitations_controller.rb</string>
+            <key>invita</key>
+            <string>app\models\invitation.rb</string>
+            <key>invitat</key>
+            <string>app\controllers\invitations_controller.rb</string>
+            <key>invitations</key>
+            <string>app\controllers\invitations_controller.rb</string>
+            <key>invitations_controller.</key>
+            <string>app\controllers\invitations_controller.rb</string>
+            <key>ja.y</key>
+            <string>config\locales\ja.yml</string>
+            <key>manage_eve</key>
+            <string>features\plain\new\events\manage_events.feature</string>
+            <key>manage_invi</key>
+            <string>features\plain\new\invitations\manage_invitations.feature</string>
+            <key>routes</key>
+            <string>config\routes.rb</string>
+            <key>user.rb</key>
+            <string>app\models\user.rb</string>
+            <key>user_co</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>user_con</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>user_cont</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>user_contro</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>user_mail</key>
+            <string>app\models\user_mailer.rb</string>
+            <key>user_mailer</key>
+            <string>app\models\user_mailer.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
             <key>yo</key>

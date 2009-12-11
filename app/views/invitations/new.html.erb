@@ -1,0 +1,20 @@
+<div class="form">
+<%= error_messages_for :invitation %>
+
+<fieldset>
+<legend><%= t('invitations.new') %></legend>
+
+<% semantic_form_for @invitation do |f| %>
+  <% f.inputs do %>
+  	<%= f.input :recipient_email, :label => t( 'email' ) %>
+  <% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t('send') %>
+	<% end %>
+<% end %>
+
+<div class="links">
+</div>
+
+</fieldset>
+</div>

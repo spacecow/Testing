@@ -73,7 +73,7 @@ protected
  
 	def permission_denied
 	  flash[:error] = t( 'access_denied' )
-	  redirect_to events_path
+	  redirect_to login_user_path
 	end
 
 #	def login
