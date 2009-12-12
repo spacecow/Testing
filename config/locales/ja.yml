@@ -2,7 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
  
 ja:
-  access_denied: "Sorry, you are not allowed to access that page."
+  access_denied: "ページを許可されません"
   add: "追加"
   address: "住所"
   address2: "二番目の住所"
@@ -170,12 +170,12 @@ ja:
     title: "ログインして下さい"
     user_name: "ユーザー名"
     notice:
-      success: "首尾よくログインされました"
+      success: "正常にログインされました"
   logout:
     text: "ﾛｸﾞｱｳﾄ"
     title: "ログアウト"
     notice:
-      success: "首尾よくログアウトされました"
+      success: "正常にログアウトされました"
   mymafumafu:
     title: "マイまふまふページ"
   people:

@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :template_classes, :collection => { :add_course => :get }
   map.login 'login', :controller => 'admin', :action => 'login'
   map.logout 'logout', :controller => 'admin', :action => 'logout'
-  map.root :events
+  map.root :login_user
 
   # The priority is based upon order of creation: first created -> highest priority.
 

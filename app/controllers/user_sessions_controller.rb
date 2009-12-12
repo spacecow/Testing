@@ -19,7 +19,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.find
     @user_session.destroy
     flash[:notice] = t( 'logout.notice.success' )
-    redirect_to events_path
+    redirect_to login_user_path
   end
   
   def authorize

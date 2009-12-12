@@ -25,6 +25,4 @@ config.action_mailer.smtp_settings = {
   :port           => 25,
   :domain         => 'www.reserve-gakuwarinet.com',
   :authentication => :login
-#	:user_name      => 'johan',
-#  :password       => 'googla96'
 }

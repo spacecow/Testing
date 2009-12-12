@@ -44,6 +44,9 @@ authorization do
   	has_permission_on :events, :to => [:index, :show]
   	has_permission_on :users, :to => [:edit, :update, :new_event_register, :create_event_register ]
   	has_permission_on :comments, :to => [:new, :create]
+		has_permission_on :photos, :to => :show
+		has_permission_on :galleries, :to => :show
+		has_permission_on :registrants, :to => [:new, :create]
   end
   
   role :student do

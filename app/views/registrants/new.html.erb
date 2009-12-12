@@ -1,15 +1,37 @@
 <div class="form">
-<%= error_messages_for :registrant %>
-
 <fieldset>
-<legend><%= t('registrants.new', :event => @event.title ) %></legend>
+<legend><%= t( 'users.registration_for', :event => @event.title( japanese? ) ) %></legend>
 
-<% semantic_form_for @registrant do |f| %>
-	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% semantic_form_for @user do |f| %>
+	<% f.inputs do %>
+		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN %>
+		<%= f.input :name, :label => t( 'name' ) %>
+	<% if japanese? %>
+		<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>
+	<% else %>
+		<%= f.input :nationality, :label => t( 'nationality' ) %>
+	<% end %>	
+		<%= f.input :male, :label => t( 'gender' ), :as => :radio, :collection => [[t('male'), true],[t('female'), false]] %>
+		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN %>
+		<%= f.input :tel, :label => t( 'tel' ) %>
+		<%= f.input :email, :label => t( 'email' ) %>
+		<hr>
+		<% fields_for "user[new_registrant_attributes][]", Registrant.new(:event_id=>@event.id, :user_id=>current_user2.id) do |reg| %>
+			<p>
+				<%= reg.label :note %>
+			  <%= reg.text_area :note, :cols => 21 %>
+			</p>
+			<p>
+			  <%= reg.hidden_field :user_id %>
+			  <%= reg.hidden_field :event_id %>
+			</p>
+    <% end %>		
+	<% end %>
+	<%= hidden_field_tag :event_id, @event.id %>
+	<%= submit_tag t( 'register' ), :name => 'user[christmas]', :class => :submit %>
 <% end %>
 
 <div class="links">
-		<p><%= link_to t('back'), registrants_path, :class=>"link" %></p>
 </div>
 
 </fieldset>

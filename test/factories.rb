@@ -71,8 +71,10 @@ Factory.define :person do |f|
 end
 
 Factory.define :photo do |f|
+  f.photo_file_name "sadako.jpg"
   f.photo_content_type "image/jpeg"
-  f.photo_file_size 37423
+  f.photo_file_size 34284
+  f.photo_updated_at Time.now
 end
 
 Factory.define :registrant do |f|

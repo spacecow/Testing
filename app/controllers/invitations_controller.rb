@@ -9,7 +9,7 @@ class InvitationsController < ApplicationController
     if @invitation.save
     	UserMailer.deliver_invitation( @invitation, signup_url( @invitation.token ))
       flash[:notice] = t('invitations.sent')
-      redirect_to root_url
+      redirect_to events_path
     else
       render :action => 'new'
     end

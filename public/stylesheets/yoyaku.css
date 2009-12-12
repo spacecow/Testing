@@ -347,15 +347,10 @@ div.show fieldset fieldset.gallery{
 	border: 1px solid #7F9DB9;
 	margin: 10px 0 0 0;	
 	padding: 5px;
-	width:215px;
+	width:240px;
 	float: right;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
-}
-div.show fieldset fieldset.gallery table.gallery{
-  width: 190px;
-	margin: 0;
-  padding: 0;		
 }
 div.show fieldset fieldset.gallery:hover{
 	background: #f5ffee;
@@ -376,7 +371,7 @@ div.show fieldset fieldset.gallery legend a{
   color: #fff;
 }
 div.show fieldset fieldset.gallery table.gallery{
-  width: 220px;
+  width: 240px;
 	margin: 0;
   padding: 0;		
 }

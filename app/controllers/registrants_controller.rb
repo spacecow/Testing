@@ -10,16 +10,7 @@ class RegistrantsController < ApplicationController
   end
   
   def new
-  	if( user = current_user2 )
-	    @registrant = Registrant.new(
-	    	#:name => user.name,
-	    	#:name_hurigana => user.name_hurigana,
-	    	#:male => user.gender,
-	    	#:tel => user.mobile_phone,
-	    	#:email => user.email
-	    )
-	    @registrant.user = current_user2
-  	end
+  	@user = current_user
     @event = Event.find( params[:event_id] )
   end
   

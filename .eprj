@@ -31,6 +31,8 @@
             <string>app\controllers\application_controller.rb</string>
             <key>application</key>
             <string>app\controllers\application_controller.rb</string>
+            <key>aut</key>
+            <string>config\authorization_rules.rb</string>
             <key>autt</key>
             <string>config\authorization_rules.rb</string>
             <key>en.y</key>
@@ -41,6 +43,8 @@
             <string>test\factories.rb</string>
             <key>fomtasti</key>
             <string>public\stylesheets\formtastic_changes.css</string>
+            <key>formta</key>
+            <string>public\stylesheets\formtastic.css</string>
             <key>inv</key>
             <string>app\models\invitation.rb</string>
             <key>invi</key>
@@ -63,6 +67,8 @@
             <string>features\plain\new\events\manage_events.feature</string>
             <key>manage_invi</key>
             <string>features\plain\new\invitations\manage_invitations.feature</string>
+            <key>registrant</key>
+            <string>app\controllers\registrants_controller.rb</string>
             <key>routes</key>
             <string>config\routes.rb</string>
             <key>user.rb</key>
@@ -79,6 +85,8 @@
             <string>app\models\user_mailer.rb</string>
             <key>user_mailer</key>
             <string>app\models\user_mailer.rb</string>
+            <key>user_sess</key>
+            <string>app\controllers\user_sessions_controller.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
             <key>yo</key>

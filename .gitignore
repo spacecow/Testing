@@ -4,3 +4,5 @@ backup/*
 Yoyaku_Log.csv
 *.bak
 config/database.yml
+ruby/*.*
+config/smtp_gmail.yml

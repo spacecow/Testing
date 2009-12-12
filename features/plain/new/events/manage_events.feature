@@ -32,20 +32,6 @@ Then a event should exist with title_en: "Christmas Party", title_ja: "クリス
   And a gallery should exist with event: that event
 	And I should be redirected to the events page
 
-Scenario: Display a single event
-Given a event exist with title_en: "Christmas Party!", title_ja: "クリスマスパーティ", date: "2009-12-19", description_en: "It's Christmas!", description_ja: "クリスマスタイム！"
-	And a user is logged in as "kurosawa"
-When I go to the show page for that event
-Then I should see "クリスマスパーティ - 2009-12-19" within "legend"
-	And I should see "クリスマスタイム！"
-	And I should see 'registrants.title'": 0"	
-When I follow 'edit_profile'
-	And I select "英語" from 'language'
-	And I press 'update'
-	And I follow 'show'
-Then I should see "Christmas Party! - 2009-12-19" within "legend"
-	And I should see "It's Christmas!"
-
 Scenario: When an event is deleted, its gallery should be deleted
 Given a user is logged in as "aya"
   And a event exist with title_en: "Christmas Party!"

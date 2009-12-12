@@ -31,6 +31,8 @@ namespace :deploy do
 	task :symlink_shared do
 	  run "ln -nfs #{deploy_to}/shared/system/database.yml #{release_path}/config/database.yml"
 	  run "ln -nfs #{deploy_to}/shared/assets #{release_path}/public/assets"
+	  run "ln -nfs #{deploy_to}/shared/ruby #{release_path}/ruby"	  
+	  run "ln -nfs #{deploy_to}/shared/system/smtp_gmail.yml #{release_path}/config/smtp_gmail.yml"
 	end
 end
 

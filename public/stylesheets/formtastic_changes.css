@@ -11,7 +11,7 @@ form.formtastic fieldset ol li p.inline-hints { color:#333; }
 
 form.formtastic fieldset ol li fieldset legend span.label,
 form.formtastic fieldset ol p label,
-form.formtastic fieldset ol li label { display:block; width:150px; float:left; padding-top:.2em; }
+form.formtastic fieldset ol li label { display:block; width:150px; float:left; padding-top:.2em; font-size:12px; }
 form.photo fieldset ol li label { display:block; width:50px; float:left; padding-top:.2em; }
 
 form.formtastic fieldset ol li fieldset ol { float:left; width:74%; margin:0; padding:0 0 0 170px; }
@@ -31,15 +31,11 @@ form.formtastic fieldset ol li.date{
 }
 
 form.formtastic fieldset ol li.radio fieldset ol li label { float:none; width:100px; text-align: left; }
+#form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 26%; }
+#form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 12px; float:none; width:100%; text-align: left; }
+#form.formtastic fieldset ol li.date fieldset legend label{ width: 97%; }
+form.formtastic fieldset ol li fieldset legend{ background: #efe; border: 0;	}
 
-form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 26%; }
-form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 12px; float:none; width:100%; text-align: left; }
-form.formtastic fieldset ol li.date fieldset legend label{ width: 97%; }
-
-form.formtastic fieldset ol li fieldset legend {
-	background: #efe;
-	border: 0;	
-}
 form.formtastic fieldset ol li p.inline-errors { color:#cc0000; margin:0 0 5px 26%; font-size:12px; }
 form.formtastic fieldset ol li ul.errors { color:#cc0000; margin:5px 0 0 25%; list-style:square; font-size:10px; font-style:italic; }
 form.formtastic fieldset ol li p.inline-hints { color:#666; margin:5px 0 0 25%; font-size:10px; font-style:italic; }

@@ -14,14 +14,13 @@ Given a user exists with username: "aya", role: "admin", language: "en"
 When I go to the events page
 Then I should not see "Send Invitation"
 
-
 Scenario: Send an invitation
 Given a user: "johan" exists with username: "johan", role: "god", language: "en", invitation_limit: 5
 	And a user is logged in as "johan"
 When I go to the new invitation page
 	And I fill in "Email Address*" with "jsveholm@gmail.com"
 	And I press "Send"
-Then I should be redirected to the root page
+Then I should be redirected to the events page
 	And I should see "Invitation sent"
 	And an invitation should exist with sender: user "johan"
 	And a user should exist with invitation_limit: 4
