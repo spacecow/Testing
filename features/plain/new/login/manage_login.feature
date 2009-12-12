@@ -16,3 +16,9 @@ Given a user is logged in as "kurosawa_akira"
 When I follow 'logout.text'
 Then I should not see "ページを許可されません"
 	And I should see "正常にログアウトされました"
+	
+Scenario: Display error login message (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Display a better path than "user_sessions" (NOT IMPLEMENTED)
+Given not implemented

@@ -31,6 +31,8 @@
             <string>app\controllers\application_controller.rb</string>
             <key>application</key>
             <string>app\controllers\application_controller.rb</string>
+            <key>au</key>
+            <string>config\authorization_rules.rb</string>
             <key>aut</key>
             <string>config\authorization_rules.rb</string>
             <key>autt</key>
@@ -59,6 +61,8 @@
             <string>app\controllers\invitations_controller.rb</string>
             <key>invitations_controller.</key>
             <string>app\controllers\invitations_controller.rb</string>
+            <key>inviti</key>
+            <string>app\models\invitation.rb</string>
             <key>ja.y</key>
             <string>config\locales\ja.yml</string>
             <key>manage_eve</key>

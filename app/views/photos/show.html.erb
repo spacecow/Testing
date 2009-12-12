@@ -11,7 +11,7 @@
   			<% if permitted_to? :edit, @photo %>
   				<%= link_to t('edit'), edit_photo_path(@photo), :class=>"link" %> |
   			<% end %>
-  			<% if permitted_to? :delete, @photo %>
+  			<% if permitted_to? :destroy, @photo %>
   				<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
   			<% end %>
   			<% if permitted_to? :show, @photo.gallery %>

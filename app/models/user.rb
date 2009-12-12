@@ -9,7 +9,11 @@ class User < ActiveRecord::Base
 
 	acts_as_authentic
 
-  has_attached_file :avatar, :styles => { :mini => "40x40#", :small => "100x100#", :large => "500x500>" }, :processors => [:cropper]
+  has_attached_file :avatar, :styles => {
+  	:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
+  	:small => { :geometry => "100x100#", :processors => [:cropper]},
+  	:large => { :geometry => "500x500>" }
+  } 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_avatar, :if => :cropping?
 	attr_protected :avatar_file_name, :avatar_content_type, :avatar_size

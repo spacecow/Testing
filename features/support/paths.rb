@@ -11,6 +11,9 @@ module NavigationHelpers
 		when /the root page/
 			'/'
     
+		when /path "(.+)"/
+			$1
+	
 		when /^the (?:error )?(.+?) page$/
       send "#{$1.downcase.gsub(' ','_')}_path"
         

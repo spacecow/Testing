@@ -1,7 +1,11 @@
 class Photo < ActiveRecord::Base
   belongs_to :gallery
 
-  has_attached_file :photo, :styles => { :mini => "40x40#", :small => "100x100#", :large => "500x500>" }, :processors => [:cropper]
+  has_attached_file :photo, :styles => {
+  	:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
+  	:small => { :geometry => "100x100#", :processors => [:cropper]},
+  	:large => { :geometry => "500x500>" }
+  }  
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_photo, :if => :cropping?
 	attr_protected :photo_file_name, :photo_content_type, :photo_size
