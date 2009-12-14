@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   end
   
   def create
+  	@user = User.new( params[:user] )
   	@user.invitation_limit = 0
     if @user.save
       if( params[:user][:avatar].blank? )

@@ -155,10 +155,17 @@ Then /^I should see "([^\"]*)" within #{capture_model}$/ do |text, model|
 end
 
 Then /^I should not see "([^\"]*)" within #{capture_model}$/ do |text, model|
-  scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+  scope = get_scope( model )
 	within "##{scope}" do |element|
 		element.should_not contain( text )
 	end  
+end
+
+When /^I follow "([^\"]*)" within #{capture_model}$/ do |text, model|
+  scope = get_scope( model )
+  within "##{scope}" do |element|
+		element.click_link text
+	end
 end
 
 # -----------------------------------------------------
@@ -166,6 +173,10 @@ end
 def get_options_array( select_id )
 	field = field_with_id( select_id ) 
 	field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }
+end
+
+def get_scope( model )
+	model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
 end
 
 

@@ -1,17 +1,27 @@
 class InvitationsController < ApplicationController
-  filter_resource_access
+  filter_access_to :all
   
   def new
+  	@invitation = Invitation.new
+  	@version = Setting.find_by_name( "main" ).version.gsub(/\./, '_')
   end
   
   def create
+		@invitation = Invitation.new(params[:invitation])
     @invitation.sender = current_user
     if @invitation.save
     	UserMailer.deliver_invitation( @invitation, signup_url( @invitation.token ))
       flash[:notice] = t('invitations.sent')
-      redirect_to events_path
+      redirect_to new_invitation_path
     else
+      @version = Setting.find_by_name( "main" ).version.gsub(/\./, '_')
       render :action => 'new'
     end
+  end
+
+  def deliver
+  	UserMailer.deliver_update_0_11( User.first )
+    flash[:notice] = t('invitations.sent')
+		redirect_to new_invitation_path  	
   end
 end

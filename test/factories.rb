@@ -87,6 +87,7 @@ Factory.define :scheduled_unit do |f|
 end
 
 Factory.define :setting do |f|
+	f.version "0.11"
 end
 
 Factory.define :student do |f|

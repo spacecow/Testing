@@ -7,6 +7,7 @@
 			<th class="list-topics"><%= t('people_per_page') %></th>		
 			<th class="list-topics"><%= t('units_per_schedule') %></th>		
 			<th class="list-topics"><%= t('language') %></th>		
+			<th class="list-topics"><%= t('version') %></th>		
 	</tr>
 	<% for setting in @settings %>
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
@@ -14,6 +15,7 @@
       	<td><%=h setting.people_per_page %></td>
       	<td><%=h setting.units_per_schedule %></td>
       	<td><%=h setting.language %></td>
+      	<td><%=h setting.version %></td>
   		<td class="settings_<%= setting.name %>">
     			<%= link_to t('show'), setting, :class=>"link" %>
     			<%= link_to t('edit'), edit_setting_path(setting), :class=>"link" %>

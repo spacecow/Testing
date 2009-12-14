@@ -17,8 +17,22 @@ When I follow 'logout.text'
 Then I should not see "ページを許可されません"
 	And I should see "正常にログアウトされました"
 	
-Scenario: Display error login message (NOT IMPLEMENTED)
-Given not implemented
+Scenario: Display error login message
+When I go to path "/login_user"
+	And I follow "English"
+	And I fill in "User name" with "fe"
+	And I press "Login"
+Then I should see "cannot be blank"
+When I fill in "Password" with "fe"
+	And I press "Login"
+Then I should see "is not valid"
+When I fill in "User name" with "kurosawa_akira"
+	And I press "Login"
+Then I should see "cannot be blank"
+When I fill in "Password" with "fe"
+	And I press "Login"
+Then I should see "is not valid"
+	
 
 Scenario: Display a better path than "user_sessions" (NOT IMPLEMENTED)
 Given not implemented

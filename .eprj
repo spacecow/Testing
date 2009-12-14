@@ -37,6 +37,8 @@
             <string>config\authorization_rules.rb</string>
             <key>autt</key>
             <string>config\authorization_rules.rb</string>
+            <key>comments</key>
+            <string>app\controllers\comments_controller.rb</string>
             <key>en.y</key>
             <string>config\locales\en.yml</string>
             <key>fac</key>

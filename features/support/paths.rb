@@ -17,9 +17,11 @@ module NavigationHelpers
 		when /^the (?:error )?(.+?) page$/
       send "#{$1.downcase.gsub(' ','_')}_path"
         
-		when /^the show page (?:for|of) (.+)$/
+		when /^the (?:error )?show page (?:for|of) (.+)$/
 			polymorphic_path( model($1) )
 			      
+		when /^the edit page (?:for|of) (.+)$/			      
+			edit_polymorphic_path( model($1) )
 #    when /the homepage/
 #      '/'
 #    when /the login page/

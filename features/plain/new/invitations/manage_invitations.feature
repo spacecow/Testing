@@ -20,7 +20,7 @@ Given a user: "johan" exists with username: "johan", role: "god", language: "en"
 When I go to the new invitation page
 	And I fill in "Email Address*" with "jsveholm@gmail.com"
 	And I press "Send"
-Then I should be redirected to the events page
+Then I should be redirected to the new invitation page
 	And I should see "Invitation sent"
 	And an invitation should exist with sender: user "johan"
 	And a user should exist with invitation_limit: 4

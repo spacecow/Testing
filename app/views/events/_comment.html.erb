@@ -3,7 +3,7 @@
 	<div class="event_comment_container">
 		<div class="links" id="comment_<%= comment.id %>">
       <% if permitted_to? :edit, comment %>
-        <%= link_to t('edit'), edit_comment_path( comment, :event_id => comment.event_id ) %>
+        <%= link_to t('edit'), edit_comment_path( comment ) %>
       <% end %>
       <% if permitted_to? :destroy, comment %>
         | <%= link_to t('delete'), comment, :confirm => 'Are you sure?', :method => :delete %>

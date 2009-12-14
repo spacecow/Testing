@@ -2,7 +2,7 @@
 Background:
 Given a setting exists with name: "main"
 
-Scenario: A guest can make a simple registration in japanese
+Scenario: An invited guest can make a simple registration in japanese
 Given an invitation exists with recipient_email: "akira@docomo.ne.jp"
 When I signup with that invitation
 Then I should not see 'role'
@@ -14,16 +14,17 @@ When I fill in 'user_name' with "kurosawa_akira"
 	And I fill in 'name_hurigana' with "くろさわ あきら"
 	And I fill in 'password' with "secret"
 	And I fill in 'password_confirmation' with "secret"
-	And I press 'create'
+	And I press 'register'
 Then I should be redirected to the error users page
 When I choose 'female'
 	And I select "英語" from 'language'
-	And I press 'create'
+	And I press 'register'
 Then I should be redirected to the events page
 	And a user should exist with role: "registrant", language: "en"
 	And I should see "Events"
 
-Scenario: A guest can make a simple registration in english
+@avatar
+Scenario: An invited guest can make a simple registration in english
 Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
 When I signup with that invitation
 	And I follow "English"
@@ -42,18 +43,17 @@ When I fill in 'name' with "Prince Philip"
 	And I choose "female"
 	And I fill in 'password' with "secret"
 	And I fill in 'password_confirmation' with "secret"
-	And I press 'create'
+	And I press 'register'
 Then I should be redirected to the error users page
 When I fill in 'name_hurigana' with "プリンス　ヒリプ"
 	And "" should be selected in "user_occupation"
 	And "" should be selected in "user_age"
-	And I press 'create'
+	And I press 'register'
 Then I should be redirected to the events page
 	And a user should exist with role: "registrant", language: "en"
 	And I should see 'users.notice.new_registration'
 	And I should see "Events"
 
-@bajskorv
 Scenario: A user can not unset certain attributes that were set in an event registration
 Given a user exists with username: "kurosawa", role: "registrant", language: "en"
 	And a user is logged in as "kurosawa"
@@ -79,17 +79,6 @@ Then "10's" should be selected in "user_age"
 #And I press "Create"
 #Then I should not see "Avatar content type is not a picture"
 
-
-Scenario: Edit function
-Given a user: "kurosawa" exists with username: "kurosawa_akira", language: "ja", male: false, age: "10"
-	And a user is logged in as "kurosawa_akira"
-When I go to the events page
-	And I follow 'edit_profile'
-Then "日本語" should be selected in "user_language"
-	And the 'female' checkbox should be checked
-	And the 'male' checkbox should not be checked
-	And "10代" should be selected in "user_age"
-	
 Scenario: Klargoer vad som aer foer och efternamn (NOT IMPLEMENTED)
 Given not implemented
 	
@@ -97,6 +86,9 @@ Scenario: Nationality drop-down (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Avatar strular vid registreringoegonblicket (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
 Given not implemented
 
 # 正常にﾛｸﾞｱｳﾄされました

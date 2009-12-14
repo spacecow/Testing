@@ -3,7 +3,6 @@
 
 <fieldset>
 <legend><%= t('invitations.new') %></legend>
-
 <% semantic_form_for @invitation do |f| %>
   <% f.inputs do %>
   	<%= f.input :recipient_email, :label => t( 'email' ) %>
@@ -12,6 +11,20 @@
 		<%= f.commit_button t('send') %>
 	<% end %>
 <% end %>
+</fieldset><br />
+
+<fieldset>
+<legend><%= t('update') %></legend>
+<div id="update_container">
+	<div id="text_message">	
+		<% File.open "app/views/user_mailer/update_#{@version}.erb", 'r' do |f| %>
+			<% f.readlines.each do |line| %>
+				<%= line %><br />
+			<% end %>
+		<% end %>
+	</div>
+	<%= button_to "Send to all", deliver_invitations_path %>
+</div>
 
 <div class="links">
 </div>

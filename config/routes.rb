@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :invitations
+  map.resources :invitations, :collection => { :deliver => :get }
 	map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
 
   map.resources :galleries

@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
       flash[:notice] = t( 'login.notice.success' )
       redirect_to events_path
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
   

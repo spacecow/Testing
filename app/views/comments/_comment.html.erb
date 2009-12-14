@@ -1,6 +1,7 @@
 <li <% if Comment.last == comment %>class="last"<% end %>>
 	<% if @comment == comment %>
 		<%= f.text_area :comment %>
+		<%= f.submit t('update') %>
 	<% else %>
 		<%= image_tag avatar_mini_url( comment.user ) %>
 		<div class="event_comment_container">

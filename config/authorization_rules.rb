@@ -17,9 +17,9 @@ authorization do
   	has_permission_on :onyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :kunyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :meanings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
-  	has_permission_on :invitations, :to => [:new, :create]
+  	has_permission_on :invitations, :to => [:new, :create, :deliver]
   end
-  
+    
   role :guest do
 #		has_permission_on :events, :to => [:index, :show]
 #		has_permission_on :registrants, :to => [:new, :create]
@@ -47,11 +47,14 @@ authorization do
   	has_permission_on :comments, :to => [:edit, :update, :destroy] do
       if_attribute :user => is { user }
     end
-
 		has_permission_on :photos, :to => :show
 		has_permission_on :galleries, :to => :show
 		has_permission_on :registrants, :to => [:new, :create]
   end
+
+  role :observer do
+		includes :registrant
+	end
   
   role :student do
   	includes :guest

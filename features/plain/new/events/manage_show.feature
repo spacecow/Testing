@@ -12,7 +12,7 @@ Given a user is logged in as "kurosawa"
 When I go to the show page for that event
 Then I should see "クリスマスパーティ - 2009-12-19" within "legend"
 	And I should see "クリスマスタイム！"
-	And I should see "参加者 0"	
+	And I should see "参加者: 0"	
 
 Scenario: Display the show page in english
 Given a user is logged in as "johan"

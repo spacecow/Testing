@@ -3,6 +3,7 @@
 	<%= f.input :people_per_page, :label => t( :people_per_page ) %>
 	<%= f.input :units_per_schedule, :label => t( :units_per_schedule ) %>
 	<%= f.input :language, :label => t( :language ), :as => :select, :collection => ( japanese? ? User::LANGUAGES_JA : User::LANGUAGES_EN ), :include_blank => false %>
+	<%= f.input :version, :label => t( 'version' ) %>
 <h3>Events</h3>
 <%= f.input :events_description_ja, :label => t( :description_ja ), :required => false %>
 <%= f.input :events_description_en, :label => t( :description_en ), :required => false %>

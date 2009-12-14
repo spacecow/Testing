@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   } 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_avatar, :if => :cropping?
-	attr_protected :avatar_file_name, :avatar_content_type, :avatar_size
+	#attr_protected :avatar_file_name, :avatar_content_type, :avatar_size
   
 	# Attachment validations that doesnt work
   #validates_attachment_size :avatar, :less_than => 5.megabytes, :if => :avatar_file_name
