@@ -71,6 +71,14 @@
             <string>features\plain\new\events\manage_events.feature</string>
             <key>manage_invi</key>
             <string>features\plain\new\invitations\manage_invitations.feature</string>
+            <key>other</key>
+            <string>features\step_definitions\other_steps.rb</string>
+            <key>photo</key>
+            <string>app\controllers\photos_controller.rb</string>
+            <key>photo_cont</key>
+            <string>app\controllers\photos_controller.rb</string>
+            <key>photo_controller</key>
+            <string>app\controllers\photos_controller.rb</string>
             <key>registrant</key>
             <string>app\controllers\registrants_controller.rb</string>
             <key>routes</key>

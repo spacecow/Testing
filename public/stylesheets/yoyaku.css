@@ -116,7 +116,6 @@ h4{
 #event_comments{
 	margin:0px;
 	padding:0px;
-	width:100%;
 }
 #event_comments li{
 	list-style:none;
@@ -124,7 +123,7 @@ h4{
 	margin:0;
 	border-bottom:1px dashed #7F9DB9;
 }
-#event_comments li.first{
+#event_comments li.last{
 	border-top:1px dashed #7F9DB9;
 }
 #event_comments li:hover{
@@ -136,18 +135,30 @@ h4{
 #event_comments li div.event_comment_container{
 	float:left;
 	margin-left:10px;
-	width:450px;
+	width:500px;
 }
 #event_comments li div.event_comment_container a{
 	color:#99f;
 	text-decoration:none;
 	font-weight:bold;
 }
+#event_comments li div.event_comment_container div.links{
+	float:right;
+	font-size:10px;
+	width:70px;
+	text-align:right;
+}
+#event_comments li div.event_comment_container div.links a{
+	color:#0000EE;
+	font-weight:normal;	
+}
 #event_comments li div.event_comment_container div.time_ago{
 	color:#9c9c9c;
 	font-size:90%;
 	padding-top:3px;
 }
+
+
 /* EVENT COMMENT FORM */
 #new_comment_form{
   width:350px;
@@ -171,8 +182,14 @@ h4{
   margin-top:5px;
   font-style:italic;
 }
-
-
+#photo_container #edit_checkbox_container{
+	margin-bottom:5px;
+}
+#photo_container #edit_checkbox_container label.text{
+	margin-top:2px;
+	text-align:left;
+	width:60px;
+}
 
 
 #list .list-inactive{
@@ -475,8 +492,9 @@ a.link{
 #right_column{
 	float:right;
 }
-#beta_testers, #user_nav{
-  width:120px;
+#right_column #beta_testers, #right_column #user_nav{
+	background:white;
+	width:120px;
 	text-align: right;
 	font-size: 10px;
 	margin: 13px 30px 0 0;
@@ -485,17 +503,17 @@ a.link{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
-#beta_testers li{
+#right_column #beta_testers ul li{
 	list-style:none;
 }
-#beta_testers, #user_nav:hover{
+#right_column #beta_testers:hover, #right_column #user_nav:hover{
   background: #efe;	
 }
 
-#beta_testers, #user_nav a{
+#user_nav a{
 	text-decoration: none;
 }
-#beta_testers, #user_nav img{
+#user_nav img{
 	margin-top:2px;
 }
 

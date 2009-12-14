@@ -6,5 +6,9 @@ class CommentsController < ApplicationController
       flash[:error] = t('comments.error.blank')
     end
     redirect_to Event.find( @comment.event_id )
-  end   
+  end
+  
+  def edit
+  	@event = Event.find(params[:event_id])
+  end
 end

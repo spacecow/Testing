@@ -29,8 +29,6 @@ When I signup with that invitation
 	And I follow "English"
 Then I should not see 'role'
 	And the "Email Address*" field should contain "prince@docomo.ne.jp"
-	And "user_occupation" should have a blank option
-	And "user_age" should have a blank option
 	And I should see "Occupation"
 	And I should not see "Occupation*"
 	And "English" should be selected in "user_language"
@@ -45,25 +43,11 @@ When I fill in 'name' with "Prince Philip"
 	And I press 'create'
 Then I should be redirected to the error users page
 When I fill in 'name_hurigana' with "プリンス　ヒリプ"
-	And "" should be selected in "user_occupation"
-	And "" should be selected in "user_age"
 	And I press 'create'
 Then I should be redirected to the events page
 	And a user should exist with role: "registrant", language: "en"
 	And I should see 'users.notice.new_registration'
 	And I should see "Events"
-
-@bajskorv
-Scenario: A user can not unset certain attributes that were set in an event registration
-Given a user exists with username: "kurosawa", role: "registrant", language: "en"
-	And a user is logged in as "kurosawa"
-	And an event: "christmas" exists with title_en: "Christmas Party"
-	And I am registered for that event
-When I follow "Edit Profile"
-Then "Exchange Student" should be selected in "user_occupation"
-	And "user_occupation" should have no blank option
-Then "10's" should be selected in "user_age"
-	And "user_age" should have no blank option
 
 #@avatar
 #Scenario: Avatar error messages
@@ -90,13 +74,4 @@ Then "日本語" should be selected in "user_language"
 	And the 'male' checkbox should not be checked
 	And "10代" should be selected in "user_age"
 	
-Scenario: Klargoer vad som aer foer och efternamn (NOT IMPLEMENTED)
-Given not implemented
-	
-Scenario: Nationality drop-down (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Avatar strular vid registreringoegonblicket (NOT IMPLEMENTED)
-Given not implemented
-
 # 正常にﾛｸﾞｱｳﾄされました

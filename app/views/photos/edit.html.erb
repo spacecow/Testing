@@ -10,6 +10,10 @@
   	  <%= f.input :photo, :as => :hidden %>
   	  <%= f.input :caption, :label => t('caption'), :required => false, :hint => t('photos.edit_caption') %>
   	<% end %>
+  	<%= hidden_field_tag :edit, true %>
+		<div id="edit_checkbox_container">
+			<label class="text">Edit photo</label><%= check_box_tag "edit_photo" %>
+		</div>
     <div id="update_button_container">
       <%= f.submit t( 'update' ) %>
     </div>

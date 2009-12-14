@@ -18,8 +18,12 @@ class PhotosController < ApplicationController
   
   def update
     if @photo.update_attributes( params[:photo] )
-      if( params[:photo][:photo].blank? )
-      	flash[:notice] = t('photos.notice.add_success')
+      if( params[:edit_photo].blank? || params[:photo][:photo].blank? )
+    		if params[:edit].blank?
+    			flash[:notice] = t('notice.add_success',    :object => t(:photo).downcase )
+				else
+    			flash[:notice] = t('notice.update_success', :object => t(:photo).downcase )
+    		end
       	redirect_to @photo.gallery
     	else
     		render :action => "crop"

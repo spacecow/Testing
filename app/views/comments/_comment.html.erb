@@ -1,0 +1,23 @@
+<li <% if Comment.last == comment %>class="last"<% end %>>
+	<% if @comment == comment %>
+		<%= f.text_area :comment %>
+	<% else %>
+		<%= image_tag avatar_mini_url( comment.user ) %>
+		<div class="event_comment_container">
+			<div class="links">
+				<% if permitted_to? :edit, comment %>
+	  			<%= link_to t('edit'), edit_comment_path( comment, :event_id => comment.event_id ) %> |
+	  		<% end %>
+	  		<% if permitted_to? :destroy, comment %>
+	  			<%= link_to t('delete'), comment, :confirm => 'Are you sure?', :method => :delete %>
+	  		<% end %>
+			</div>
+			<%= link_to h( comment.user.name ), comment.user %>
+			<%= h comment.comment %><br />
+			<div class="time_ago">
+				<%= distance_of_time_in_words_to_now( comment.created_at ) %><%= t('ago') %>
+			</div>
+		</div>
+	<% end %>
+	<div class="clear"></div>
+</li>

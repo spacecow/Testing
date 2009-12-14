@@ -88,6 +88,31 @@ Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   end 
   state.should == :something_selected 
 end
+Then /^"(.*)" should not be selected in "(.*)"$/ do |option_text,select_id| 
+  field = field_with_id(select_id) 
+  selected_value = field.value[0] 
+  state = :nothing_selected 
+  field.options.each do |option| 
+    if option.element.to_html =~ /value="#{selected_value}"/ 
+      state = :something_selected 
+      option.element.inner_html.should == option_text 
+    end 
+  end 
+  state.should != :something_selected 
+end
+
+Then /^"(.*)" should have options "(.*)"$/ do |select_id, options| 
+  field = field_with_id(select_id) 
+  field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
+end
+
+Then /^"(.*)" should have a blank option$/ do |select_id| 
+  !get_options_array( select_id ).grep(/BLANK/).empty?
+end
+
+Then /^"(.*)" should have no blank option$/ do |select_id| 
+  get_options_array( select_id ).grep(/BLANK/).empty?
+end
 
 Then /^I should see links "([^\"]*)"$/ do |links|
   links.split(', ').each_with_index do |link,i|
@@ -97,4 +122,30 @@ Then /^I should see links "([^\"]*)"$/ do |links|
       And "I should see \"| #{link}\""
     end
   end
-end 
+end
+
+# -----------------------------------------------------
+
+def get_options_array( select_id )
+	field = field_with_id( select_id ) 
+	field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

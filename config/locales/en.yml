@@ -109,6 +109,10 @@ en:
   update: "Update"
   user_name: "User name"
   version: "Version"
+  notice:
+    add_success: "Successfully added {{object}}."
+    delete_success: "Successfully deleted {{object}}."
+    update_success: "Successfully updated {{object}}."
   attendances:
     editing: "Editing Attendance"
     title: "Attendances"
@@ -196,9 +200,6 @@ en:
     edit_caption: "Edit caption of photo"
     editing: "Editing Photo"
     new: "New Photo"
-    notice:
-      add_success: "Successfully added photo."
-      delete_success: "Successfully deleted photo."
   registrants:
     editing: "Editing Registrant for {{event}}"
     new: "New Registrant for {{event}}"
@@ -239,7 +240,7 @@ en:
     notice:
       edit_registration: "Registration successfully updated."
       new_registration: "Registration successful."
-      successful_registration_for: "Successfully registered for {{event}}"
+      successful_registration_for: "Successfully registered for {{event}}."
     registration_for: "Registration for {{event}}"
     title: "Users"
   grammar_unit: "Grammar unit"
@@ -251,7 +252,7 @@ en:
   schedules:
     editing: "Editing Schedule"
     new: "New Schedule"
-    successfully_created: "Successfully created schedule"
+    successfully_created: "Successfully created schedule."
     title: "Schedules"
   settings:
     editing: "Editing Settings"

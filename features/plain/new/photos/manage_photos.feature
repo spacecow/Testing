@@ -4,10 +4,10 @@ Given a setting exists with name: "main"
 	And a user is logged in as "johan"
 	And a gallery: "Christmas" exists
 	And a event exist with title_en: "Christmas Party", date: "2009-12-19", gallery: gallery "Christmas"
-
+	
 Scenario: Add a photo
 When I go to the show page of gallery "Christmas"
-  And I follow 'photos.add'
+	And I follow 'photos.add'
   And I press 'add'
 Then I should see "Photo file name can't be blank"
 When I attach the file at "C:/Pictures/00 233.jpg" to "Photo*"
@@ -28,5 +28,20 @@ Then I should be redirected to the show page of that gallery
 Scenario: Add caption to photo (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Make it optional to crop an already uploaded picture (NOT IMPLEMENTED)
-Given not implemented
+@checkbox
+Scenario: Make it optional to crop an already uploaded picture
+Given I go to the show page of gallery "Christmas"
+	And I follow "Add Photo"
+	And I attach the file at "C:/Pictures/sadako.jpg" to "Photo"
+  And I press "Add"
+  And I press "Crop"
+When I follow "sadako"
+	And I follow "Edit"
+	And I check "edit_photo"
+	And I press "Update"
+  And I press "Crop"	
+Then I should see "Successfully updated photo."
+When I follow "sadako"
+	And I follow "Edit"
+	And I press "Update"
+Then I should see "Successfully updated photo."

@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   end
   
   def show
+  	@event = Event.find( params[:id], :include => [{:comments => :user}, {:gallery => :photos}, :registrants ] )
     @comment = Comment.new
 #    @user = current_user2
 #    respond_to do |format|

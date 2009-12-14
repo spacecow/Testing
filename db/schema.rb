@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091211041433) do
+ActiveRecord::Schema.define(:version => 20091213060145) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20091211041433) do
     t.text     "description_ja"
     t.string   "title_en"
     t.text     "description_en"
+    t.integer  "registrants_count", :default => 0
   end
 
   create_table "galleries", :force => true do |t|

@@ -1,10 +1,14 @@
 <% content_for(:head) do %>
 <style>
 textarea#comment_comment{
-  background: url(<%= avatar_mini_url( current_user2 ) %>) no-repeat;
+  background: url(<%= avatar_mini_url( @comment.user ) %>) no-repeat;
   background-color: white;
   background-position: 0 50%;
   padding-left: 45px;
+	width:430px;
+  height:46px;
+	font-size:12px;
+	font-family: sans-serif;
 }
 </style>
 <% end %>
@@ -46,27 +50,19 @@ textarea#comment_comment{
 </p>
 <div class="clear"></div><br />
 
-<ul id="event_comments"><%= render :partial => 'comment', :collection => @event.comments.reverse %></ul>
-
-<% if permitted_to? :create, @comment %>
-	<%- semantic_form_for @comment, :url=>comments_path do |f| -%>
-		<div id="new_comment_form">
-      <%= f.hidden_field :event_id, :value=>@event.id %>
-  		<%= f.hidden_field :user_id, :value => current_user2.id %>
-      <% f.inputs do %>
-      	<%= f.input :comment %>
-      <% end %>
-      <div id="add_button_container">
-        <%= f.submit t( 'comments.add' ) %>
-      </div>
-      <div class="clear"></div>
+<ul id="event_comments">
+	<%- form_for @comment do |f| -%>
+		<div id="edit_comment_form">
+			<%= render :partial => 'comment', :collection => @event.comments.reverse, :locals => { :f=>f } %>
 		</div>
 	<%- end -%>
-<% else %>
-  <br />
-<% end %>
+</ul>
 
+<br />
 <div class="links">
+  <% if permitted_to? :edit, @event %>
+  	<%= link_to @event.title( japanese? ), @event, :class=>"link" %> |
+  <% end %>
   <% if permitted_to? :edit, @event %>
   	<%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
   <% end %>

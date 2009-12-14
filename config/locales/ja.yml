@@ -36,7 +36,7 @@ ja:
   event: "イベント"
   event_date: "日付"
   female: "女性"
-  gallery: "画廊"
+  gallery: "ギャラリー"
   gender: "性別"
   hiragana: "ひらがな"
   history: "過去"
@@ -79,8 +79,8 @@ ja:
   preview: "プレビュー"
   previous_version: "前バージョン"
   quiz: "クイズ"
-  register: "登録"
-  registrant: "登録者"
+  register: "参加"
+  registrant: "参加者"
   reserve: "予約"
   role: "Role"
   roles: "Roles"
@@ -105,6 +105,10 @@ ja:
   unit: "ユニット"
   user_name: "ユーザー名"
   version: "バージョン"
+  notice:
+    add_success: "正常に{{object}}が追加されました"
+    delete_success: "正常に{{object}}が削除されました"
+    update_success: "正常に{{object}}が更新されました"
   attendances:
     editing: "出席編集"
     title: "出席"
@@ -138,9 +142,9 @@ ja:
     new: "新しいイベント"
     title: "参加イベント"
   galleries:
-    edit: "画廊編集"
-    editing: "画廊情報編集"
-    title: "画廊"
+    edit: "ギャラリー編集"
+    editing: "ギャラリー情報編集"
+    title: "ギャラリー"
   glossaries:
     new: "新しい用語集"
     title: "用語集"
@@ -188,13 +192,10 @@ ja:
     edit_caption: "写真の解説を編集する"
     editing: "写真情報編集"
     new: "新しい写真"
-    notice:
-      add_success: "正常に写真が追加されました"
-      delete_success: "正常に写真が削除されました"
   registrants:
     editing: "{{event}}へ登録者情報編集"
     new: "{{event}}へ新しい登録者"
-    title: "登録者"
+    title: "参加者"
   scheduled_units:
     update: "予定されたユニットを更新する"
   students:

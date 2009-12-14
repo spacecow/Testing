@@ -1,5 +1,5 @@
 class Registrant < ActiveRecord::Base
-	belongs_to :event
+	belongs_to :event, :counter_cache => true
 	belongs_to :user
 
 #  attr_accessible :occupation, :name, :name_hurigana, :event_id, :male, :age, :tel, :email, :note
