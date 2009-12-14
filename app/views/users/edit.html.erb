@@ -11,7 +11,7 @@
 		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN, :required => false, :include_blank => ( @user.age ? false : true ) %>
 		<%= f.input :tel, :label => t( 'tel' ), :required => false %>
 		<%= f.input :email, :label => t( :email ) %>
-		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN, :include_blank => ( @user.occupation ? false : true ), :required => false %> %>
+		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN, :include_blank => ( @user.occupation ? false : true ), :required => false %>
 		<% if current_user2 %>
 			<%= f.input :role, :label => t( :role ), :input_html => { :disabled => true } %>
 		<% else %>

@@ -124,6 +124,43 @@ Then /^I should see links "([^\"]*)"$/ do |links|
   end
 end
 
+Then /^I should see links "([^\"]*)" within #{capture_model}$/ do |links, model|
+  links.split(', ').each_with_index do |link,i|
+    if i==0
+      And "I should see \"#{link}\" within #{model}"
+    else
+      And "I should see \"| #{link}\" within #{model}"
+    end
+  end
+end
+
+Then /^I should not see links "([^\"]*)" within #{capture_model}$/ do |links, model|
+  links.split(', ').each_with_index do |link,i|
+    if i==0
+      And "I should not see \"#{link}\" within #{model}"
+    else
+      And "I should not see \"| #{link}\" within #{model}"
+    end
+  end
+end
+
+Then /^I should see "([^\"]*)" within #{capture_model}$/ do |text, model|
+  scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+  #response_body.should have_selector( "div[id='#{scope}']" ) do |element|
+  #  element.should contain( text )
+  #end
+	within "##{scope}" do |element|
+		element.should contain( text )
+	end  
+end
+
+Then /^I should not see "([^\"]*)" within #{capture_model}$/ do |text, model|
+  scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+	within "##{scope}" do |element|
+		element.should_not contain( text )
+	end  
+end
+
 # -----------------------------------------------------
 
 def get_options_array( select_id )

@@ -4,6 +4,9 @@ end
 Factory.define :classroom do |f|
 end
 
+Factory.define :comment do |f|
+end
+
 Factory.define :course do |f|
 end
 
