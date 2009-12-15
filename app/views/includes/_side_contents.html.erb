@@ -11,7 +11,7 @@
 			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
 			<%= link_to t( 'logout.text' ), logout_user_path %>
 			<% if permitted_to? :new, Invitation.new %>
-	      | <%= link_to t('invitations.send'), new_invitation_path %>
+	      | <%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %>
 	    <% end %>
 		<% else %>
 			<%= link_to t( 'login.text' ), login_user_path %>
@@ -23,9 +23,9 @@
 			<%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
 		</div>
 	<% end %>
+	<div class="clear"></div>
 </div>
-<div class="clear"></div>
 <div id="beta_testers">
-	<strong>Beta Testers</strong>
+	<div class="title">Beta Testers</div>
 	<ul><%= User.all.map{|e| "<li>"+e.name+"</li>"} %></ul>
 </div>    	              

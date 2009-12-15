@@ -1,5 +1,6 @@
 body{
-  background: black url(/images/background.jpg) top left repeat-x; #4B7399;
+  /*background: black url(/images/background.jpg) top left repeat-x; #4B7399;*/
+  background-color:#4B7399;
 }
 #container{
 	width:740px;
@@ -19,7 +20,6 @@ body{
 #right_column{
 	width:150px;
 	float:right;
-	border:1px solid;
 	font-size: 10px;
 }
 
@@ -378,7 +378,7 @@ div.show fieldset fieldset.gallery{
 	border: 1px solid #7F9DB9;
 	margin: 10px 0 0 0;	
 	padding: 5px;
-	width:240px;
+	width:220px;
 	float: right;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -402,9 +402,9 @@ div.show fieldset fieldset.gallery legend a{
   color: #fff;
 }
 div.show fieldset fieldset.gallery table.gallery{
-  width: 240px;
+  width: 237px;
 	margin: 0;
-  padding: 0;		
+  padding: 0;
 }
 img a:hover span{
   position: absolute;
@@ -527,21 +527,29 @@ a.link{
 }
 #user_nav div.links a{
 	text-decoration: none;	
+	color:#0000EE;
 }
+#user_nav img{
+	float:right;
+}
+#user_nav div.info{
+	float:right;
+	width:70px;
+	text-align:right;
+	margin-right:5px;
+}
+
 #beta_testers{
 	background:white;
 	padding:5px;
 	border: 1px solid #000080;
+	margin-top:12px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
-
-	/*	width:120px;
 	text-align: right;
-	
-	margin: 13px 30px 0 0;
-	
-	
-	*/
+}
+#beta_testers .title{
+	font-weight:bold;
 }
 #beta_testers ul li{
 	list-style:none;
@@ -550,14 +558,6 @@ a.link{
   background: #efe;	
 }
 
-#user_nav img{
-	margin-top:2px;
-	float:right;
-}
-#user_nav .info{
-	float:right;
-	padding-right:10px;
-}
 
 #main #footer{
 	font-size:10px;
@@ -565,4 +565,5 @@ a.link{
 	padding-bottom:2px;
 	width:570px;
 	text-align:center;
+	color:white;
 }
