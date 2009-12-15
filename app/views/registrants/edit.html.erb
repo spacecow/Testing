@@ -2,7 +2,7 @@
 <%= error_messages_for :registrant %>
 
 <fieldset>
-<legend><%= t('registrants.editing', :event => @event.title ) %></legend>
+<legend><%= t('registrants.editing', :event => @event.title( japanese? ) ) %></legend>
 
 <% semantic_form_for @registrant do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>

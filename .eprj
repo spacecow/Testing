@@ -25,6 +25,8 @@
         </dict>
         <key>fileTriggers</key>
         <dict>
+            <key>_side</key>
+            <string>app\views\includes\_side_contents.html.erb</string>
             <key>appli</key>
             <string>app\controllers\application_controller.rb</string>
             <key>applicat</key>

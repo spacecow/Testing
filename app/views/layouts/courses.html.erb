@@ -79,48 +79,25 @@
 <% end %>
 			</ul>
 		</td></tr></table>
-  </div>		
-    <div id="main">
-      <%- flash.each do |key, msg| -%>  
-        <div id="<%= key %>">  
-          <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
-          <p><%= msg %></p>    
-        </div>
-        <div class="clear"></div>
-      <%- end -%>
-			<div id="right_column">
-	    	<div id="user_nav">
-					<% if !current_user2 %>
-						<% if I18n.locale == 'ja' %>
-							<%= link_to 'English', toggle_user_language_url %> |
-						<% else %>
-							<%= link_to '日本語', toggle_user_language_url %> |
-						<% end %>
-					<% end %>
-	    		<% if current_user2 %>
-	    			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
-	    			<%= link_to t( 'logout.text' ), logout_user_path %>
-	    			<% if permitted_to? :new, Invitation.new %>
-	            | <%= link_to t('invitations.send'), new_invitation_path %>
-	          <% end %>
-	          <br />
-	    			<i><%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
-	          <br />
-	    			<%= image_tag avatar_mini_url( current_user2 ) %>
-	    		<% else %>
-		    		<%= link_to t( 'login.text' ), login_user_path %>
-		    	<% end %>
-	    	</div>
-				<div id="beta_testers">
-					<strong>Beta Testers</strong>
-					<ul><%= User.all.map{|e| "<li>"+e.name+"</li>"} %></ul>
-				</div>    	              
-			</div>
-      <%= yield :layout %>
-			<div id="footer">
-				Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	
-			</div>    
-    </div>
-  </div>
+  </div><!-- banner -->
+	<div id="container">	
+		<div id="main">
+	    <%- flash.each do |key, msg| -%>  
+	      <div id="<%= key %>">  
+	        <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
+	        <p><%= msg %></p>    
+	      </div>
+	      <div class="clear"></div>
+	    <%- end -%>
+	    <%= yield :layout %>
+	  </div>
+		<div id="right_column">
+			<%= render :partial => "/includes/side_contents" %>
+		</div>
+		<div class="clear"></div>
+		<div id="footer">
+			Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	
+		</div>
+	</div>    
 </body>
 </html>

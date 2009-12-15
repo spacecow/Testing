@@ -25,7 +25,7 @@ class RegistrantsController < ApplicationController
   end
   
   def edit
-    @event = Event.find( @registrant.event_id )
+    @event = Event.first #find( @registrant.event_id )
   end
   
   def update

@@ -1,6 +1,28 @@
 body{
-  background-color: #4B7399;
+  background: black url(/images/background.jpg) top left repeat-x; #4B7399;
 }
+#container{
+	width:740px;
+  font-family: sans-serif;
+  font-size: 12px;
+	margin: 0 auto 25px auto;
+  padding: 20px 20px;
+  margin-top: 20px;
+  width:740px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#main{
+	width:580px;
+	float:left;
+}
+#right_column{
+	width:150px;
+	float:right;
+	border:1px solid;
+	font-size: 10px;
+}
+
 #login{
   margin-left: 5em;
   margin-right: 5em;
@@ -75,18 +97,6 @@ td.schedule-only-right-and-down{
 #side a{
   color: #00ffff;
   font-size: small;
-}
-#main{
-  font-family: sans-serif;
-  font-size: 12px;
-  margin-left: 5em;
-  margin-right: 5em;
-  padding-top: 4ex;
-  padding-left: 2em;
-  background: white;
-  width:740px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
 }
 h1{
   font: 150% sans-serif;
@@ -339,7 +349,6 @@ h4{
 .form fieldset{
 	background: #efe;
 	border: 1px solid #000080;
-  width:550px;
   float:top;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -504,32 +513,50 @@ a.link{
 }
 
 
-#right_column{
-	float:right;
-}
-#right_column #beta_testers, #right_column #user_nav{
+
+#user_nav{
 	background:white;
-	width:120px;
-	text-align: right;
-	font-size: 10px;
-	margin: 13px 30px 0 0;
+	padding:5px;
+	border: 1px solid #000080;
+	margin-top:12px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;		
+}
+#user_nav div.links{
+	text-align:right;
+}
+#user_nav div.links a{
+	text-decoration: none;	
+}
+#beta_testers{
+	background:white;
 	padding:5px;
 	border: 1px solid #000080;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
+
+	/*	width:120px;
+	text-align: right;
+	
+	margin: 13px 30px 0 0;
+	
+	
+	*/
 }
-#right_column #beta_testers ul li{
+#beta_testers ul li{
 	list-style:none;
 }
-#right_column #beta_testers:hover, #right_column #user_nav:hover{
+#beta_testers:hover, #right_column #user_nav:hover{
   background: #efe;	
 }
 
-#user_nav a{
-	text-decoration: none;
-}
 #user_nav img{
 	margin-top:2px;
+	float:right;
+}
+#user_nav .info{
+	float:right;
+	padding-right:10px;
 }
 
 #main #footer{

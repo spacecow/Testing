@@ -1,0 +1,31 @@
+<div id="user_nav">
+	<div class="links">
+		<% if !current_user2 %>
+			<% if I18n.locale == 'ja' %>
+				<%= link_to 'English', toggle_user_language_url %> |
+			<% else %>
+				<%= link_to '“ú–{Œê', toggle_user_language_url %> |
+			<% end %>
+		<% end %>
+		<% if current_user2 %>
+			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
+			<%= link_to t( 'logout.text' ), logout_user_path %>
+			<% if permitted_to? :new, Invitation.new %>
+	      | <%= link_to t('invitations.send'), new_invitation_path %>
+	    <% end %>
+		<% else %>
+			<%= link_to t( 'login.text' ), login_user_path %>
+		<% end %>
+	</div>
+	<% if current_user2 %>	
+		<%= image_tag avatar_mini_url( current_user2 ) %>
+		<div class="info">    
+			<%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
+		</div>
+	<% end %>
+</div>
+<div class="clear"></div>
+<div id="beta_testers">
+	<strong>Beta Testers</strong>
+	<ul><%= User.all.map{|e| "<li>"+e.name+"</li>"} %></ul>
+</div>    	              
