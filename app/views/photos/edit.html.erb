@@ -1,24 +1,26 @@
-﻿<div class="form">
+<div class="show">
 <fieldset>
 <legend><%= t('photos.editing') %></legend>
 
-<div id="photo_container">
-  <%= link_to( image_tag( @photo.photo.url(:large)), @next ) %>
-  
-  <%- semantic_form_for @photo, :html => { :multipart => true } do |f| -%>
-    <% f.inputs do %>
-  	  <%= f.input :photo, :as => :hidden %>
-  	  <%= f.input :caption_ja, :label => t('caption'), :required => false, :hint => "写真の解説を編集する" %>
-  	  <%= f.input :caption_en, :label => t('caption'), :required => false, :hint => "Edit caption of photo" %>
-  	<% end %>
-  	<%= hidden_field_tag :edit, true %>
-		<div id="edit_checkbox_container">
-			<label class="text">Edit photo</label><%= check_box_tag "edit_photo" %>
-		</div>
-    <div id="update_button_container">
-      <%= f.submit t( 'update' ) %>
-    </div>
-  <%- end -%>
+<div id="show_container">
+	<div id="photo_container">
+	  <%= image_tag( @photo.photo.url(:large)) %>
+	  
+	  <%- semantic_form_for @photo, :html => { :multipart => true } do |f| -%>
+	    <% f.inputs do %>
+	  	  <%= f.input :photo, :as => :hidden %>
+	  	  <%= f.input :caption_ja, :label => t('caption'), :required => false, :hint => "写真の解説を編集する" %>
+	  	  <%= f.input :caption_en, :label => t('caption'), :required => false, :hint => "Edit caption of photo" %>
+	  	<% end %>
+	  	<%= hidden_field_tag :edit, true %>
+			<div id="edit_checkbox_container">
+				<label class="text">Edit photo</label><%= check_box_tag "edit_photo" %>
+			</div>
+	    <div id="update_button_container">
+	      <%= f.submit t( 'update' ) %>
+	    </div>
+	  <%- end -%>
+	</div>
 
   <div class="links">
   	<p>

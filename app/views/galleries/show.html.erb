@@ -2,35 +2,32 @@
 <fieldset>
 <legend><%=h @gallery.event.title( japanese? ) %> - <%=h @gallery.event.date %> - <%= t('gallery') %></legend>
 
-<br />
 <% if @gallery.description %>
-  <table class="intro">
-  	<tr>
-  		<td>
-  			<%= @gallery.description %><% if permitted_to? :edit, @gallery %> <%= link_to t('edit'), edit_gallery_path(@gallery), :class=>"link" %><% end %>
-  		</td>
-  	</tr>
-  </table>
-  <br />
+	<br />
+	<%= @gallery.description %><% if permitted_to? :edit, @gallery %> <%= link_to t('edit'), edit_gallery_path(@gallery), :class=>"link" %><% end %>
 <% end %>
 
-<%= @gallery.photos.map{|e| link_to( image_tag( e.photo.url(:small), :title => e.caption( japanese? ), :alt => e.caption( japanese? )), e) }%><br /><br />
+<div id="show_container">
+	<div id="photo_container">
+		<%= @gallery.photos.map{|e| link_to( image_tag( e.photo.url(:small), :title => e.caption( japanese? ), :alt => e.caption( japanese? )), e) }%>
+	</div><br />
 
-<div class="links">
-  <% if permitted_to? :show, @gallery.event %>
-  	<%= link_to @gallery.event.title( japanese? ), @gallery.event, :class => :link %>
-  <% end %>
-  <% if @gallery.description.blank? %>
-    <% if permitted_to? :edit, @gallery %>
-       | <%= link_to t('galleries.edit'), edit_gallery_path(@gallery), :class=>"link" %>
-    <% end %>
-  <% end %>
-  <% if permitted_to? :new, Photo.new %>
-  	| <%= link_to t('photos.add'), new_photo_path( :gallery_id => @gallery.id ), :class => :link %>
-  <% end %>
-  <% if permitted_to? :index, Gallery.new %>
-  	| <%= link_to t('galleries.title'), galleries_path, :class=>"link" %>
-  <% end %>
+	<div class="links">
+	  <% if permitted_to? :show, @gallery.event %>
+	  	<%= link_to @gallery.event.title( japanese? ), @gallery.event, :class => :link %>
+	  <% end %>
+	  <% if @gallery.description.blank? %>
+	    <% if permitted_to? :edit, @gallery %>
+	       | <%= link_to t('galleries.edit'), edit_gallery_path(@gallery), :class=>"link" %>
+	    <% end %>
+	  <% end %>
+	  <% if permitted_to? :new, Photo.new %>
+	  	| <%= link_to t('photos.add'), new_photo_path( :gallery_id => @gallery.id ), :class => :link %>
+	  <% end %>
+	  <% if permitted_to? :index, Gallery.new %>
+	  	| <%= link_to t('galleries.title'), galleries_path, :class=>"link" %>
+	  <% end %>
+	</div>
 </div>
 
 </fieldset>

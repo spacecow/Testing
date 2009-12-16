@@ -204,8 +204,18 @@ h4{
 
 
 /* PHOTOS*/
-#photo_container{
+#show_container{
   margin: 10px 0 0 10px;
+}
+#show_container div.links a{
+	text-decoration: none;	
+	color:#66a;
+	padding:0 1px 0 1px;
+}
+#show_container div.links a:hover{
+	background: #66a;
+	color: #efe;
+	padding:0 1px 0 1px;
 }
 #photo_container #caption{
   margin-top:5px;
@@ -421,6 +431,9 @@ div.show fieldset fieldset.gallery legend{
 div.show fieldset fieldset.gallery legend a{
   text-decoration: none;
   color: #fff;
+}
+div.show fieldset fieldset.gallery legend a:hover{
+	background: #9999ff;
 }
 div.show fieldset fieldset.gallery a, div.show fieldset a{
   text-decoration: none;

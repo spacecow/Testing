@@ -238,7 +238,7 @@ en:
     editing: "Edit User"
     new: "New User"
     notice:
-      edit_registration: "Registration successfully updated."
+      edit_registration: "User successfully updated."
       new_registration: "Registration successful."
       successful_registration_for: "Successfully registered for {{event}}."
     registration_for: "Registration for {{event}}"
