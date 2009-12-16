@@ -10,6 +10,7 @@ a{
 a:hover{
 	background: #66a;
 	color: #efe;
+	padding:0 1px 0 1px;
 }
 #container{
 	width:740px;
@@ -172,7 +173,9 @@ h4{
 	font-weight:normal;	
 }
 #event_comments li div.event_comment_container div.links a:hover{
-	color: #99ddff;
+	background: #66a;
+	color: #efe;
+	padding:0 1px 0 1px;
 }
 #event_comments li div.event_comment_container div.time_ago{
 	color:#9c9c9c;
@@ -424,8 +427,9 @@ div.show fieldset fieldset.gallery a, div.show fieldset a{
   color:black;
   padding:0;
 }
-div.show fieldset fieldset.gallery a:hover, div.show fieldset a:hover{
+div.show fieldset fieldset.gallery a:hover, div.show fieldset a:hover, #photo_container a:hover{
 	color: #f5ffee;
+	background: #f5ffee;
 }
 /*img a:hover span{
   position: absolute;

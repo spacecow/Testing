@@ -2,10 +2,12 @@ class Photo < ActiveRecord::Base
   belongs_to :gallery
 
   has_attached_file :photo, :styles => {
-  	:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
-  	:small => { :geometry => "100x100#", :processors => [:cropper]},
-  	:large => { :geometry => "500x500>" }
-  }  
+  		:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
+  		:small => { :geometry => "100x100#", :processors => [:cropper]},
+  		:large => { :geometry => "500x500>" }},
+  	:url  => "/assets/photos/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/photos/:id/:style/:basename.:extension"
+  
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_photo, :if => :cropping?
 	attr_protected :photo_file_name, :photo_content_type, :photo_size

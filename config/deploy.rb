@@ -25,13 +25,24 @@ namespace :deploy do
   end
 end
 
-# For deploying a database.yml file.
 namespace :deploy do
-	#task :after_update_code, :roles => :app do
-	task :symlink_shared do
-	  run "ln -nfs #{deploy_to}/shared/system/database.yml #{release_path}/config/database.yml"
-	  run "ln -nfs #{deploy_to}/shared/system/smtp_gmail.yml #{release_path}/config/smtp_gmail.yml"
-	end
+  desc "Tell Passenger to restart the app."
+  task :restart do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+  
+  desc "Symlink shared configs and folders on each release."
+  task :symlink_shared do
+    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/shared/config/smtp_gmail.yml #{release_path}/config/smtp_gmail.yml"
+    run "ln -nfs #{deploy_to}/shared/assets #{release_path}/public/assets"
+  end
+  
+  desc "Sync the public/assets directory."
+  task :assets do
+    system "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{application}:#{shared_path}/"
+  end
+  # cap deploy:assets
 end
 
 after 'deploy:update_code', 'deploy:symlink_shared'
