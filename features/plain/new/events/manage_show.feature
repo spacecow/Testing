@@ -19,7 +19,7 @@ Given a user is logged in as "johan"
 When I go to the show page for that event
 Then I should see "Christmas Party! - 2009-12-19" within "legend"
 	And I should see "It's Christmas!"
-	And I should see "Registrants: 0"
+	And I should see "Applicants: 0"
 
 Scenario: Link to a photo
 Given a user is logged in as "johan"
@@ -38,7 +38,7 @@ Then I should be redirected to the show page of that gallery
 Scenario: Link to registrant
 Given a user is logged in as "johan"
 When I go to the show page for that event
-When I press "Register"
+When I press "Apply"
 Then I should not see "Sorry, you are not allowed to access that page."
 
 Scenario: You are not registered for this party yet!! (NOT IMPLEMENTED)

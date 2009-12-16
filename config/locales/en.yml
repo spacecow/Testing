@@ -8,6 +8,7 @@ en:
   address2: "Second address"
   age: "Age"
   ago: " ago"
+  apply: "Apply"
   avatar: "Avatar"
   back: "Back to Index"
   blank: " "
@@ -201,11 +202,11 @@ en:
     editing: "Editing Photo"
     new: "New Photo"
   registrants:
-    editing: "Editing Registrant for {{event}}"
-    new: "New Registrant for {{event}}"
+    editing: "Editing applicant for {{event}}"
+    new: "New applicant for {{event}}"
     notice:
       success: "Successfully registered for {{event}}."
-    title: "Registrants"
+    title: "Applicants"
   scheduled_units:
     update: "Update Scheduled Units"
   students:
@@ -241,7 +242,7 @@ en:
       edit_registration: "User successfully updated."
       new_registration: "Registration successful."
       successful_registration_for: "Successfully registered for {{event}}."
-    registration_for: "Registration for {{event}}"
+    registration_for: "Application for {{event}}"
     title: "Users"
   grammar_unit: "Grammar unit"
   page: "Page"

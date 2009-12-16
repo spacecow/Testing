@@ -93,3 +93,6 @@ Given not implemented
 
 Scenario: Absolute value for occupation so that english&japanese doesnt mix (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Will comments dissapear if user is deleted? (NOT IMPLEMENTED)
+Given not implemented

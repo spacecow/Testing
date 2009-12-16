@@ -18,7 +18,7 @@
 		<hr>
 		<% fields_for "user[new_registrant_attributes][]", Registrant.new(:event_id=>@event.id, :user_id=>current_user2.id) do |reg| %>
 			<p>
-				<%= reg.label :note %>
+				<%= reg.label :note, t('note') %>
 			  <%= reg.text_area :note, :cols => 21 %>
 			</p>
 			<p>
@@ -28,7 +28,7 @@
     <% end %>		
 	<% end %>
 	<%= hidden_field_tag :event_id, @event.id %>
-	<%= submit_tag t( 'register' ), :name => 'user[christmas]', :class => :submit %>
+	<%= submit_tag t( 'apply' ), :name => 'user[christmas]', :class => :submit %>
 <% end %>
 
 <div class="links">
