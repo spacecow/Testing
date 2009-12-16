@@ -1,0 +1,20 @@
+<p>
+  <%= f.label :title, t('title') %>
+	<%= f.text_field :title, :size=>20 %>
+</p>
+<p>
+  <%= f.label :description, t('description') %>
+ 	<%= f.text_area :description, :rows=>8, :cols=>27 %>
+</p>
+<p>
+  <%= f.label :votes, t('votes') %>
+	<%= f.text_field :votes, :size=>20 %>
+</p>
+<p>
+  <%= f.label :user_id, t('user_id') %>
+	<%= f.collection_select :user_id,
+				@users, :id, :name,
+		    :include_blank => true %> 	
+</p>
+  <p><%= f.submit label_text, :class=>"submit" %></p>
+

@@ -1,0 +1,24 @@
+<h1><%= t('info') %> - Todo</h1>
+
+<p>
+  <strong><%= t('title') %>:</strong>
+  <%=h @todo.title %>
+</p>
+<p>
+  <strong><%= t('description') %>:</strong>
+  <%=h @todo.description %>
+</p>
+<p>
+  <strong><%= t('votes') %>:</strong>
+  <%=h @todo.votes %>
+</p>
+<p>
+  <strong><%= t('user_id') %>:</strong>
+  <%=h @todo.user_id %>
+</p>
+
+<div class="links">
+  <%= link_to t('edit'), edit_todo_path(@todo), :class=>"link" %> |
+  <%= link_to t('destroy'), @todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+  <%= link_to t('view_all'), todos_path, :class=>"link" %>
+</div>

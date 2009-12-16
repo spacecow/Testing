@@ -25,10 +25,6 @@ Then I should be redirected to the show page of that gallery
 #Then I should be redirected to the error photos page
 #  And I should see "Photo file name has already been taken"
   
-Scenario: Add caption to photo (NOT IMPLEMENTED)
-Given not implemented
-
-@checkbox
 Scenario: Make it optional to crop an already uploaded picture
 Given I go to the show page of gallery "Christmas"
 	And I follow "Add Photo"

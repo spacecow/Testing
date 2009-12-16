@@ -6,7 +6,8 @@
 <% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
 	<% f.inputs do %>
 	  <%= f.input :photo, :label => t('photo') %>
-	  <%= f.input :caption, :label => t('caption'), :required => false %>
+  	  <%= f.input :caption_ja, :label => t('caption'), :required => false, :hint => "写真の解説を編集する" %>
+  	  <%= f.input :caption_en, :label => t('caption'), :required => false, :hint => "Edit caption of photo" %>
 	  <%= f.input :gallery_id, :as => :hidden %>
 	<% end %>
 	<% f.buttons do %>

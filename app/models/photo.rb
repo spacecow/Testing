@@ -21,9 +21,16 @@ class Photo < ActiveRecord::Base
     @geometry ||= {}
     @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))
   end
+
+  def caption( japanese )
+  	if japanese
+  		caption_ja.blank? ? caption_en : caption_ja
+  	else
+  		caption_en.blank? ? caption_ja : caption_en
+  	end
+  end
   
-  private
-  
+private
   def reprocess_photo
     photo.reprocess!
   end

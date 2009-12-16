@@ -25,8 +25,6 @@
         </dict>
         <key>fileTriggers</key>
         <dict>
-            <key>_side</key>
-            <string>app\views\includes\_side_contents.html.erb</string>
             <key>appli</key>
             <string>app\controllers\application_controller.rb</string>
             <key>applicat</key>
@@ -87,6 +85,8 @@
             <string>app\controllers\registrants_controller.rb</string>
             <key>routes</key>
             <string>config\routes.rb</string>
+            <key>schedule</key>
+            <string>app\models\schedule.rb</string>
             <key>user.rb</key>
             <string>app\models\user.rb</string>
             <key>user_co</key>

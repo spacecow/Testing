@@ -40,3 +40,6 @@ Given a user is logged in as "johan"
 When I go to the show page for that event
 When I press "Register"
 Then I should not see "Sorry, you are not allowed to access that page."
+
+Scenario: You are not registered for this party yet!! (NOT IMPLEMENTED)
+Given not implemented

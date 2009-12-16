@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091214180254) do
+ActiveRecord::Schema.define(:version => 20091215150315) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(:version => 20091214180254) do
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
+  end
+
+  create_table "classes", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_id"
+    t.integer  "classroom_id"
+    t.integer  "capacity"
+    t.datetime "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "cancel"
+    t.integer  "mail_sending"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -207,13 +224,14 @@ ActiveRecord::Schema.define(:version => 20091214180254) do
 
   create_table "photos", :force => true do |t|
     t.integer  "gallery_id"
-    t.string   "caption"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "caption_ja"
+    t.string   "caption_en"
   end
 
   create_table "registrants", :force => true do |t|

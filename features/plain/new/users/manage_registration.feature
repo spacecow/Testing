@@ -91,4 +91,5 @@ Given not implemented
 Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
 Given not implemented
 
-# 正常にﾛｸﾞｱｳﾄされました
+Scenario: Absolute value for occupation so that english&japanese doesnt mix (NOT IMPLEMENTED)
+Given not implemented

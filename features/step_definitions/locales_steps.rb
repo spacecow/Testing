@@ -129,3 +129,7 @@ end
 Then /^the '([^\"]*)' field should not contain "([^\"]*)"$/ do |field, value|
   field_labeled( I18n.t( field )).value.should_not =~ /#{value}/
 end
+
+When /^I attach the file at "([^\"]*)" to '([^\"]*)'$/ do |path, field|
+  attach_file( I18n.t( field ), path)
+end

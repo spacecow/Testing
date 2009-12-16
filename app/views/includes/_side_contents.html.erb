@@ -25,7 +25,9 @@
 	<% end %>
 	<div class="clear"></div>
 </div>
-<div id="beta_testers">
-	<div class="title">Beta Testers</div>
-	<ul><%= User.all.map{|e| "<li>"+e.name+"</li>"} %></ul>
-</div>    	              
+<% if current_user %>
+	<div id="beta_testers">
+		<div class="title">Beta Testers</div>
+		<ul><%= User.all.map{|e| "<li>"+( link_to e.name, e )+"</li>"} %></ul>
+	</div>    	              
+<% end %>

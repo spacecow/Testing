@@ -23,13 +23,7 @@ textarea#comment_comment{
 
 <fieldset class="gallery">
 <legend><%= link_to t('gallery'), @event.gallery %></legend>
-<table class="gallery">
-	<tr>
-		<td>
-			<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini), :title => e.caption, :alt => e.caption ),e )} %>
-		</td>
-	</tr>
-</table>
+	<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini), :title => e.caption( japanese? ), :alt => e.caption( japanese? )),e )} %>
 </fieldset>
 
 <p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>

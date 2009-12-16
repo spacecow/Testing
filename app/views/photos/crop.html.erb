@@ -1,3 +1,4 @@
+<div id="list">
 <h1><%= t('photos.crop') %></h1>
 <% content_for(:head) do %>
 <%= stylesheet_link_tag "jquery.Jcrop" %>
@@ -45,3 +46,4 @@ function update_crop(coords) {
   <% end %>
   <p><%= f.submit t('crop') %></p>
 <% end %>
+</div>

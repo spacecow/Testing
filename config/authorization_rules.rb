@@ -42,7 +42,7 @@ authorization do
   role :registrant do
   	includes :guest
   	has_permission_on :events, :to => [:index, :show]
-  	has_permission_on :users, :to => [:edit, :update, :new_event_register, :create_event_register ]
+  	has_permission_on :users, :to => [:show, :edit, :update, :new_event_register, :create_event_register ]
   	has_permission_on :comments, :to => [:new, :create]
   	has_permission_on :comments, :to => [:edit, :update, :destroy] do
       if_attribute :user => is { user }

@@ -2,6 +2,13 @@ body{
   /*background: black url(/images/background.jpg) top left repeat-x; #4B7399;*/
   background-color:#4B7399;
 }
+a{
+	text-decoration: none;	
+	color:#66a;
+}
+a:hover{
+	color: #99ddff;
+}
 #container{
 	width:740px;
   font-family: sans-serif;
@@ -159,8 +166,11 @@ h4{
 	text-align:right;
 }
 #event_comments li div.event_comment_container div.links a{
-	color:#0000EE;
+	color:#66a;
 	font-weight:normal;	
+}
+#event_comments li div.event_comment_container div.links a:hover{
+	color: #99ddff;
 }
 #event_comments li div.event_comment_container div.time_ago{
 	color:#9c9c9c;
@@ -246,8 +256,7 @@ h4{
 #list .list-line-man{
   background: #ccccff;
 }
-.show .intro,
-#list .intro{
+.intro{
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;
 	border-color: #7F9DB9;
@@ -256,6 +265,9 @@ h4{
 	width: 100%;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
+}
+.intro:hover{
+	background: #f5ffee;
 }
 
 
@@ -343,7 +355,11 @@ h4{
 }
 #list{
 	background: #efe;
-  width:570px;	
+  width:570px;
+  padding:5px;
+  margin-top:12px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;	  
 }
 .show fieldset,
 .form fieldset{
@@ -378,7 +394,7 @@ div.show fieldset fieldset.gallery{
 	border: 1px solid #7F9DB9;
 	margin: 10px 0 0 0;	
 	padding: 5px;
-	width:220px;
+	width:230px;
 	float: right;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -401,17 +417,19 @@ div.show fieldset fieldset.gallery legend a{
   text-decoration: none;
   color: #fff;
 }
-div.show fieldset fieldset.gallery table.gallery{
-  width: 237px;
-	margin: 0;
-  padding: 0;
+div.show fieldset fieldset.gallery a, div.show fieldset a{
+  text-decoration: none;
+  color:black;
 }
-img a:hover span{
+div.show fieldset fieldset.gallery a:hover, div.show fieldset a:hover{
+	color: #f5ffee;
+}
+/*img a:hover span{
   position: absolute;
   display: block;
   background: #fdd;
   border: 1px solid red;
-}
+}*/
 
 
 /* UPDATE */
@@ -525,10 +543,6 @@ a.link{
 #user_nav div.links{
 	text-align:right;
 }
-#user_nav div.links a{
-	text-decoration: none;	
-	color:#0000EE;
-}
 #user_nav img{
 	float:right;
 }
@@ -550,6 +564,7 @@ a.link{
 }
 #beta_testers .title{
 	font-weight:bold;
+	color:#333;
 }
 #beta_testers ul li{
 	list-style:none;

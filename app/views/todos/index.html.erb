@@ -1,0 +1,29 @@
+<div id="list">
+<h1><%= t('todos.title') %></h1>
+
+<table cellpadding="2" cellspacing="1">
+	<tr>
+			<th class="list-topics"><%= t('title') %></th>		
+			<th class="list-topics"><%= t('description') %></th>		
+			<th class="list-topics"><%= t('votes') %></th>		
+			<th class="list-topics"><%= t('user_id') %></th>		
+	</tr>
+	<% for todo in @todos %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      	<td><%=h todo.title %></td>
+      	<td><%=h todo.description %></td>
+      	<td><%=h todo.votes %></td>
+      	<td><%=h todo.user_id %></td>
+  		<td>
+    			<%= link_to t('show'), todo, :class=>"link" %>
+    			<%= link_to t('edit'), edit_todo_path(todo), :class=>"link" %>
+    			<%= link_to t('destroy'), todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>
+
+<div class="links">
+<p><%= link_to t('todos.new'), new_todo_path, :class=>"link" %></p>
+</div>
+</div>

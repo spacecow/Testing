@@ -1,4 +1,4 @@
-<div class="form">
+﻿<div class="form">
 <fieldset>
 <legend><%= t('photos.editing') %></legend>
 
@@ -8,7 +8,8 @@
   <%- semantic_form_for @photo, :html => { :multipart => true } do |f| -%>
     <% f.inputs do %>
   	  <%= f.input :photo, :as => :hidden %>
-  	  <%= f.input :caption, :label => t('caption'), :required => false, :hint => t('photos.edit_caption') %>
+  	  <%= f.input :caption_ja, :label => t('caption'), :required => false, :hint => "写真の解説を編集する" %>
+  	  <%= f.input :caption_en, :label => t('caption'), :required => false, :hint => "Edit caption of photo" %>
   	<% end %>
   	<%= hidden_field_tag :edit, true %>
 		<div id="edit_checkbox_container">

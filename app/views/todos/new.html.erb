@@ -1,0 +1,16 @@
+<div class="form">
+<%= error_messages_for :todo %>
+
+<fieldset>
+<legend><%= t('todos.new') %></legend>
+
+<% form_for @todo do |f| %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<% end %>
+
+<div class="links">
+		<p><%= link_to t('back'), todos_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>
