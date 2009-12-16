@@ -5,9 +5,11 @@ body{
 a{
 	text-decoration: none;	
 	color:#66a;
+	padding:0 1px 0 1px;
 }
 a:hover{
-	color: #99ddff;
+	background: #66a;
+	color: #efe;
 }
 #container{
 	width:740px;
@@ -420,6 +422,7 @@ div.show fieldset fieldset.gallery legend a{
 div.show fieldset fieldset.gallery a, div.show fieldset a{
   text-decoration: none;
   color:black;
+  padding:0;
 }
 div.show fieldset fieldset.gallery a:hover, div.show fieldset a:hover{
 	color: #f5ffee;

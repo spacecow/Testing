@@ -20,7 +20,8 @@ class InvitationsController < ApplicationController
   end
 
   def deliver
-  	UserMailer.deliver_update_0_11( User.first )
+  	func = "deliver_update_#{params[:version]}".to_sym
+  	UserMailer.send( func, User.first )
     flash[:notice] = t('invitations.sent')
 		redirect_to new_invitation_path  	
   end

@@ -36,3 +36,6 @@ Then I should see "is not valid"
 
 Scenario: Display a better path than "user_sessions" (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: If you are logged in you should not be able to see the login page (NOT IMPLEMENTED)
+Given not implemented

@@ -1,5 +1,5 @@
-set :application, "staff"
-set :deploy_to, "/home/deploy/app/#{application}"
+set :application, "yoyaku"
+set :deploy_to, "/home/deploy/app/yoyaku"
 
 role :app, "74.207.244.236"
 role :web, "74.207.244.236"
@@ -30,6 +30,8 @@ namespace :deploy do
 	#task :after_update_code, :roles => :app do
 	task :symlink_shared do
 	  run "ln -nfs #{deploy_to}/shared/system/database.yml #{release_path}/config/database.yml"
+	  run "ln -nfs #{deploy_to}/shared/assets #{release_path}/public/assets"
+	  run "ln -nfs #{deploy_to}/shared/ruby #{release_path}/ruby"	  
 	  run "ln -nfs #{deploy_to}/shared/system/smtp_gmail.yml #{release_path}/config/smtp_gmail.yml"
 	end
 end

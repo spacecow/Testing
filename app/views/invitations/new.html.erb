@@ -23,7 +23,7 @@
 			<% end %>
 		<% end %>
 	</div>
-	<%= button_to "Send to all", deliver_invitations_path %>
+	<%= button_to "Send to all", deliver_invitations_path( :version => @version ) %>
 </div>
 
 <div class="links">
