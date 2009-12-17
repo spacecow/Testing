@@ -7,14 +7,13 @@
  	<%= f.text_area :description, :rows=>8, :cols=>27 %>
 </p>
 <p>
-  <%= f.label :votes, t('votes') %>
-	<%= f.text_field :votes, :size=>20 %>
+  <% for subject in Todo::SUBJECTS_EN %>
+    <%= check_box_tag "todo[subjects][]", subject[1], @todo.subjects.include?( subject[1] ) %>
+    <%= subject[0].humanize %><br />
+  <% end %>
+  <%= hidden_field_tag "todo[subjects][]", "" %>
 </p>
 <p>
-  <%= f.label :user_id, t('user_id') %>
-	<%= f.collection_select :user_id,
-				@users, :id, :name,
-		    :include_blank => true %> 	
+	<%= f.submit label_text, :class=>"submit" %>
 </p>
-  <p><%= f.submit label_text, :class=>"submit" %></p>
 

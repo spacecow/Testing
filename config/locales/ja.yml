@@ -67,7 +67,6 @@ ja:
   name_hurigana: "名前/ふりがな"
   name_kana: "名前 (カタカナ)"
   nationality: "国籍"
-  new: "新しい"
   note: "備考"
   notice: "注意"
   occupation: "参加形態"
@@ -100,16 +99,20 @@ ja:
   title: "タイトル"
   title_en: "タイトル (英語)"
   title_ja: "タイトル (日本語)"
+  todo: "やる事"
   update: "更新"
   uncancel: "ｳﾝｷｬﾝｾﾙ"
   unchoose: "排除"
   unit: "ユニット"
   user_name: "ユーザー名"
   version: "バージョン"
+
+  new: "新しい{{object}}"
   notice:
     add_success: "正常に{{object}}が追加されました"
     delete_success: "正常に{{object}}が削除されました"
     update_success: "正常に{{object}}が更新されました"
+
   attendances:
     editing: "出席編集"
     title: "出席"
@@ -225,6 +228,8 @@ ja:
     title: "テンプレート・クラス"
     error:
       edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"
+  todos:
+    title: "やる事"
   users:
     editing: "ユーザー編集"
     new: "新しいユーザー"

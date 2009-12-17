@@ -71,7 +71,6 @@ en:
   name_hurigana: "Name/Hurigana"
   name_kana: "Name (katakana)"
   nationality: "Nationality"
-  new: "New"
   note: "Note"
   notice: "Note"
   occupation: "Occupation"
@@ -104,16 +103,21 @@ en:
   title: "Title"
   title_en: "Title (en)"
   title_ja: "Title (ja)"
+  todo: "Todo"
   uncancel: "Uncancel"
   unchoose: "Deselect"
   unit: "Unit"
   update: "Update"
   user_name: "User name"
   version: "Version"
+  
+  new: "New {{object}}"
+  create_success: "Successfully created {{object}}."
   notice:
     add_success: "Successfully added {{object}}."
     delete_success: "Successfully deleted {{object}}."
     update_success: "Successfully updated {{object}}."
+  
   attendances:
     editing: "Editing Attendance"
     title: "Attendances"
@@ -235,6 +239,8 @@ en:
     new: "New Template Class"
     error:
       edit_courses_with_teacher: "Cancel teacher before changing course"
+  todos:
+    title: "Todos"
   users:
     editing: "Edit User"
     new: "New User"

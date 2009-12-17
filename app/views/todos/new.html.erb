@@ -2,14 +2,14 @@
 <%= error_messages_for :todo %>
 
 <fieldset>
-<legend><%= t('todos.new') %></legend>
+<legend><%= t(:new, :object => t(:todo)) %></legend>
 
 <% form_for @todo do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
 <% end %>
 
 <div class="links">
-		<p><%= link_to t('back'), todos_path, :class=>"link" %></p>
+		<p><%= link_to t('todos.title'), todos_path, :class=>"link" %></p>
 </div>
 
 </fieldset>

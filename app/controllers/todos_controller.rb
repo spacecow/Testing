@@ -1,20 +1,20 @@
 class TodosController < ApplicationController
+	filter_resource_access
+
   def index
     @todos = Todo.all
   end
   
   def show
-    @todo = Todo.find(params[:id])
   end
   
   def new
-    @todo = Todo.new
   end
   
   def create
-    @todo = Todo.new(params[:todo])
+		@todo.user_id = current_user.id
     if @todo.save
-      flash[:notice] = "Successfully created todo."
+      flash[:notice] = t(:create_success, :object => t(:todo))
       redirect_to todos_url
     else
       render :action => 'new'
@@ -22,11 +22,9 @@ class TodosController < ApplicationController
   end
   
   def edit
-    @todo = Todo.find(params[:id])
   end
   
   def update
-    @todo = Todo.find(params[:id])
     if @todo.update_attributes(params[:todo])
       flash[:notice] = "Successfully updated todo."
       redirect_to @todo
@@ -36,7 +34,6 @@ class TodosController < ApplicationController
   end
   
   def destroy
-    @todo = Todo.find(params[:id])
     @todo.destroy
     flash[:notice] = "Successfully destroyed todo."
     redirect_to todos_url
