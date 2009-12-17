@@ -5,6 +5,7 @@
 	<tr>
 			<th class="list-topics"><%= t('title') %></th>		
 			<th class="list-topics"><%= t('description') %></th>		
+			<th class="list-topics"><%= t('subject') %></th>		
 			<th class="list-topics"><%= t('votes') %></th>		
 			<th class="list-topics"><%= t('user_id') %></th>		
 	</tr>
@@ -12,7 +13,8 @@
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
       	<td><%=h todo.title %></td>
       	<td><%=h todo.description %></td>
-      	<td><%=h todo.votes %></td>
+      	<td><%=h todo.subjects_mask %></td>
+      	<td><% if false %><%=h todo.votes %><% end %></td>
       	<td><%=h todo.user_id %></td>
   		<td>
     			<%= link_to t('show'), todo, :class=>"link" %>
@@ -24,6 +26,6 @@
 </table>
 
 <div class="links">
-<p><%= link_to t('todos.new'), new_todo_path, :class=>"link" %></p>
+<p><%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %></p>
 </div>
 </div>

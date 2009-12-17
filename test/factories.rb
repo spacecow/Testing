@@ -101,6 +101,9 @@ end
 Factory.define :teaching do |f|
 end
 
+Factory.define :todo do |f|
+end
+
 Factory.define :template_class do |f|
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )		

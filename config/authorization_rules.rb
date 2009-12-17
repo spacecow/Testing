@@ -8,6 +8,7 @@ authorization do
     has_permission_on :settings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :galleries, :to => [:index, :show, :edit]
     has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
+    has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :god do
@@ -50,6 +51,10 @@ authorization do
 		has_permission_on :photos, :to => :show
 		has_permission_on :galleries, :to => :show
 		has_permission_on :registrants, :to => [:new, :create]
+		has_permission_on :todos, :to => [:index, :show, :new, :create]
+  	has_permission_on :todos, :to => [:edit, :update, :destroy] do
+      if_attribute :user => is { user }
+    end		
   end
 
   role :observer do
@@ -57,6 +62,6 @@ authorization do
 	end
   
   role :student do
-  	includes :guest
+  	includes :registrant
   end
 end
