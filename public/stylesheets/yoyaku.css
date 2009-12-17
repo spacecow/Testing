@@ -379,7 +379,7 @@ h4{
 .show fieldset,
 .form fieldset{
 	background: #efe;
-	border: 1px solid #000080;
+	border: 2px solid #000080;
   float:top;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -555,7 +555,7 @@ a.link{
 #user_nav{
 	background:white;
 	padding:5px;
-	border: 1px solid #000080;
+	border: 2px solid #000080;
 	margin-top:12px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;		
@@ -576,7 +576,7 @@ a.link{
 #beta_testers{
 	background:white;
 	padding:5px;
-	border: 1px solid #000080;
+	border: 2px solid #000080;
 	margin-top:12px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
