@@ -2,16 +2,24 @@
 <%= error_messages_for :todo %>
 
 <fieldset>
-<legend><%= t('todos.editing') %></legend>
+<legend><%= t(:editing, :object=>t(:todo)) %></legend>
 
-<% form_for @todo do |f| %>
-	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
-<% end %>
-
-<div class="links">
-		  <%= link_to t('show'), @todo, :class=>"link" %> |
-		  <%= link_to t('view_all'), todos_path, :class=>"link" %>
-		</p>
+<div id="form_container">
+	<% form_for @todo do |f| %>
+		<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+	<% end %>
+	
+	<div class="links">
+		<% if permitted_to? :index, @todo %>
+			<%= link_to t('todos.title'), todos_path %>
+		<% end %>				
+		<% if permitted_to? :show, @todo %>
+			| <%= link_to t('show'), @todo %>
+		<% end %>
+		<% if permitted_to? :destroy, @todo %>
+			| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete %>
+		<% end %>
+	</div>
 </div>
 
 </fieldset>

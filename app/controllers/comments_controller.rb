@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
 	filter_resource_access
 
   def create
+  	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
   	if !@comment.save
       flash[:error] = t('comments.error.blank')
     end
@@ -13,6 +14,8 @@ class CommentsController < ApplicationController
   end
   
   def update
+  	params[:comment][:comment] = params[:comment][:comment].gsub("\r\n", "<br />");
+  	p params[:comment][:comment]
   	if @comment.update_attributes( params[:comment] )
   		redirect_to Event.find( @comment.event )
 		else

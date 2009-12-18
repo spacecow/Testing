@@ -10,11 +10,11 @@ Then /^I should see (todays|yesterdays) (day|date)$/ do |day,cat|
 	response.should contain( text )
 end
 
-When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, scope|
-  within ".#{scope}" do
-		click_link link
-	end
-end
+#When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, scope|
+#  within ".#{scope}" do
+#		click_link link
+#	end
+#end
 
 Then /^I should see (todays|yesterdays) (day|date) within "([^\"]*)"$/ do |day,cat,scope_string|
   hash = {}
@@ -32,11 +32,11 @@ end
 #	end
 #end
 
-Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
-  within ".#{scope_string}" do |scope|
-		scope.should_not contain( text )
-	end
-end
+#Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
+#  within ".#{scope_string}" do |scope|
+#		scope.should_not contain( text )
+#	end
+#end
 
 Then /^I should be redirected to (.+)$/ do |page|
   URI.parse(current_url).path.should == path_to(page)

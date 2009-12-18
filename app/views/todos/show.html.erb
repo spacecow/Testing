@@ -1,24 +1,21 @@
-<h1><%= t('info') %> - Todo</h1>
+<div class="show">
+<fieldset>
+<legend><%= @todo.title %></legend>
 
-<p>
-  <strong><%= t('title') %>:</strong>
-  <%=h @todo.title %>
-</p>
-<p>
-  <strong><%= t('description') %>:</strong>
-  <%=h @todo.description %>
-</p>
-<p>
-  <strong><%= t('votes') %>:</strong>
-  <%=h @todo.votes %>
-</p>
-<p>
-  <strong><%= t('user_id') %>:</strong>
-  <%=h @todo.user_id %>
-</p>
+<div id="show_container">
+	<%= render :partial => @todo, :locals =>{ :title => false, :links => false } %>
+  <div class="links">
+		<% if permitted_to? :index, @todo %>
+			<%= link_to t('todos.title'), todos_path, :class=>"link" %>
+		<% end %>				
+		<% if permitted_to? :edit, @todo %>
+			| <%= link_to t('edit'), edit_todo_path(@todo), :class=>"link" %>
+		<% end %>
+		<% if permitted_to? :destroy, @todo %>
+			| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+		<% end %>
+  </div>
+</div>
 
-<div class="links">
-  <%= link_to t('edit'), edit_todo_path(@todo), :class=>"link" %> |
-  <%= link_to t('destroy'), @todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
-  <%= link_to t('view_all'), todos_path, :class=>"link" %>
+</fieldset>
 </div>

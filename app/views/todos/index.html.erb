@@ -1,29 +1,7 @@
 <div id="list">
 <h1><%= t('todos.title') %></h1>
 
-<table cellpadding="2" cellspacing="1">
-	<tr>
-			<th class="list-topics"><%= t('title') %></th>		
-			<th class="list-topics"><%= t('description') %></th>		
-			<th class="list-topics"><%= t('subject') %></th>		
-			<th class="list-topics"><%= t('votes') %></th>		
-			<th class="list-topics"><%= t('user_id') %></th>		
-	</tr>
-	<% for todo in @todos %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-      	<td><%=h todo.title %></td>
-      	<td><%=h todo.description %></td>
-      	<td><%=h todo.subjects_mask %></td>
-      	<td><% if false %><%=h todo.votes %><% end %></td>
-      	<td><%=h todo.user_id %></td>
-  		<td>
-    			<%= link_to t('show'), todo, :class=>"link" %>
-    			<%= link_to t('edit'), edit_todo_path(todo), :class=>"link" %>
-    			<%= link_to t('destroy'), todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
-			</td>    	
-		</tr>
-	<% end %>
-</table>
+<%= render :partial => 'todo', :collection => @todos, :locals => { :title => true, :links => true } %>
 
 <div class="links">
 <p><%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %></p>

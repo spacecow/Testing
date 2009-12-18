@@ -58,7 +58,7 @@ authorization do
   end
 
   role :observer do
-		includes :registrant
+		includes :registrant		
 	end
   
   role :student do

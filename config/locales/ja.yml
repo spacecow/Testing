@@ -12,6 +12,7 @@ ja:
   avatar: "アバター"
   back: "BACK"
   blank: ""
+  bug: "バグ"
   cancel: "ｷｬﾝｾﾙ"
   canceled: "ｷｬﾝｾﾙ"
   capacity: "CAPACITY"
@@ -29,8 +30,9 @@ ja:
   description: "記述"
   description_en: "記述 (英語)"
   description_ja: "記述 (日本語)"
+  destroy: "削除"
   edit: "編集"
-  edit_profile: "ﾌﾟﾛﾌｧｲﾙ編集"
+  edit_profile: "ﾌﾟﾛﾌｨｰﾙ編集"
   email: "メールアドレス"
   end_time: "終わりの時間"
   english: "英語"
@@ -76,6 +78,7 @@ ja:
   password: "パスワード"
   password_confirmation: "パスワード確認"
   photo: "写真"
+  points: "ポイント"
   preview: "プレビュー"
   previous_version: "前バージョン"
   quiz: "クイズ"
@@ -88,6 +91,7 @@ ja:
   search: "検索"
   send: "送信"
   show: "表示"
+  spelling: "スペルミス"
   start_time: "開始の時間"
   student: "受講生"
   successfully: "首尾よく"
@@ -106,13 +110,14 @@ ja:
   unit: "ユニット"
   user_name: "ユーザー名"
   version: "バージョン"
-
+  
+  editing: "{{object}}編集"
   new: "新しい{{object}}"
   notice:
     add_success: "正常に{{object}}が追加されました"
     delete_success: "正常に{{object}}が削除されました"
     update_success: "正常に{{object}}が更新されました"
-
+    
   attendances:
     editing: "出席編集"
     title: "出席"

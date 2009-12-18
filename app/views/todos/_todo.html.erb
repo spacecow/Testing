@@ -1,0 +1,30 @@
+<div class="todo_container">
+	<div class="points">
+		<%= t(:points) %>: 56<br/>
+		Vote
+	</div>
+	<div class="contents_container">
+		<div class="contents">
+			<% if title %><h3><%= link_to( h( todo.title ), todo ) %></h3><% end %>
+			<%= h todo.description %>
+			<% if links %>
+				<div class="links">
+					<% if permitted_to? :destroy, todo %>
+						<%= link_to t('destroy'), todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+					<% end %>
+					<% if permitted_to? :edit, todo %>
+						<%= link_to t('edit'), edit_todo_path(todo), :class=>"link" %>
+					<% end %>
+				</div>
+			<% end %>
+		</div>
+		<div class="clear"></div>
+		<% todo.subjects.each do |subject| %>
+			<div class="<%= subject %>"><%= t( subject ).downcase %></div>
+		<% end %>
+		<div class="author">
+			<%= link_to todo.user.name, todo.user %>	
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

@@ -12,6 +12,7 @@ en:
   avatar: "Avatar"
   back: "Back to Index"
   blank: " "
+  bug: "Bug"
   cancel: "Cancel"
   canceled: "canceled"
   capacity: "Capacity"
@@ -80,6 +81,7 @@ en:
   password: "Password"
   password_confirmation: "Password Confirmation"
   photo: "Photo"
+  points: "Points"
   preview: "Preview"
   previous_version: "Previous version"
   quiz: "Quiz"
@@ -92,6 +94,7 @@ en:
   search: "Search"
   send: "Send"
   show: "Info"
+  spelling: "Spelling"
   start_time: "Start Time"
   student: "Student"
   successfully: "Successfully"
@@ -111,6 +114,7 @@ en:
   user_name: "User name"
   version: "Version"
   
+  editing: "Editing {{object}}"
   new: "New {{object}}"
   create_success: "Successfully created {{object}}."
   notice:

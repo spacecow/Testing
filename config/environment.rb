@@ -32,6 +32,7 @@ Rails::Initializer.run do |config|
   config.gem "formtastic", :lib => "formtastic"
 	config.gem "authlogic"
   config.gem "declarative_authorization", :source => "http://gemcutter.org"
+  config.gem "sanitize"
 	
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 

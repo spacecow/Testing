@@ -7,9 +7,9 @@
  	<%= f.text_area :description, :rows=>8, :cols=>27 %>
 </p>
 <p>
-  <% for subject in Todo::SUBJECTS_EN %>
-    <%= check_box_tag "todo[subjects][]", subject[1], @todo.subjects.include?( subject[1] ) %>
-    <%= subject[0].humanize %><br />
+  <% for subject in Todo::SUBJECTS %>
+    <label><%= check_box_tag "todo[subjects][]", subject, @todo.subjects.include?( subject ) %>
+    <%= t( subject ).humanize %><br /></label>
   <% end %>
   <%= hidden_field_tag "todo[subjects][]", "" %>
 </p>

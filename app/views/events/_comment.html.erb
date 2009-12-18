@@ -10,7 +10,7 @@
       <% end %>
 		</div>
 		<%= link_to h( comment.user.name ), comment.user %>
-		<%= h comment.comment %><br />
+		<%= Sanitize.clean( comment.comment, :elements => 'br' ) %><br />
 		<div class="time_ago">
 			<%= distance_of_time_in_words_to_now( comment.created_at ) %><%= t('ago') %>
 		</div>

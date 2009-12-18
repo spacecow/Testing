@@ -1,9 +1,9 @@
 class Todo < ActiveRecord::Base
+  belongs_to :user
+  
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
   
-  SUBJECTS_EN = [['Bug','bug'],['Spelling','spelling']]
-	SUBJECTS_JA = [['バグ', 'bug'],['スペリング', 'spelling']]
 	SUBJECTS = %w[bug spelling]
 	
   def subjects
