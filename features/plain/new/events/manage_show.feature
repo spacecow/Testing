@@ -43,3 +43,6 @@ Then I should not see "Sorry, you are not allowed to access that page."
 
 Scenario: You are not registered for this party yet!! (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Register for this event! (NOT IMPLEMENTED)
+Given not implemented

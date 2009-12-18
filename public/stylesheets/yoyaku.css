@@ -157,25 +157,27 @@ h4{
 	margin-left:10px;
 	width:500px;
 }
-#event_comments li div.event_comment_container a{
+#event_comments li div.event_comment_container div.action_container{
+	float:right;
+}
+#event_comments li div.event_comment_container div.action_container a{
 	color:#99f;
 	text-decoration:none;
 	font-weight:bold;
 }
-#event_comments li div.event_comment_container div.links{
-	float:right;
+#event_comments li div.event_comment_container div.action_container div.links{
 	font-size:10px;
 	width:70px;
 	text-align:right;
+	padding:0 1px 0 1px;
 }
-#event_comments li div.event_comment_container div.links a{
+#event_comments li div.event_comment_container div.action_container div.links a{
 	color:#66a;
 	font-weight:normal;	
 }
-#event_comments li div.event_comment_container div.links a:hover{
+#event_comments li div.event_comment_container div.action_container div.links a:hover{
 	background: #66a;
 	color: #efe;
-	padding:0 1px 0 1px;
 }
 #event_comments li div.event_comment_container div.time_ago{
 	color:#9c9c9c;

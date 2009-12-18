@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	has_many :comments, :dependent => :destroy
 	has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
 	has_many :todos
+	has_many :votes, :dependent => :destroy
 	belongs_to :invitation
   
   #before_create :set_invitation_limit

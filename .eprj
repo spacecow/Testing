@@ -89,6 +89,8 @@
             <string>app\models\schedule.rb</string>
             <key>todo.rb</key>
             <string>app\models\todo.rb</string>
+            <key>todos_con</key>
+            <string>app\controllers\todos_controller.rb</string>
             <key>user.rb</key>
             <string>app\models\user.rb</string>
             <key>user_co</key>
@@ -105,11 +107,15 @@
             <string>app\models\user_mailer.rb</string>
             <key>user_sess</key>
             <string>app\controllers\user_sessions_controller.rb</string>
+            <key>votes</key>
+            <string>app\controllers\votes_controller.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
             <key>yo</key>
             <string>public\stylesheets\yoyaku.css</string>
             <key>yoy</key>
+            <string>public\stylesheets\yoyaku.css</string>
+            <key>yoya</key>
             <string>public\stylesheets\yoyaku.css</string>
             <key>yoyaku</key>
             <string>public\stylesheets\yoyaku.css</string>

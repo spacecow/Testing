@@ -14,6 +14,8 @@
   <%= hidden_field_tag "todo[subjects][]", "" %>
 </p>
 <p>
+	<%= f.hidden_field :user_id %>
+	<%= hidden_field_tag :comment_id, @comment_id %>
 	<%= f.submit label_text, :class=>"submit" %>
 </p>
 

@@ -1,0 +1,16 @@
+Vote!
+<% if !vote.nil? %><span class="cancel"><%= link_to t(:cancel).downcase, vote, :method => :delete %></span><% end %>
+<br />
+<% if vote.nil? %>
+	<span class="vote1"><%= link_to "1", new_vote_path( :todo_id => todo_id, :points => 1 ) %></span>
+	<span class="vote2"><%= link_to "2", new_vote_path( :todo_id => todo_id, :points => 2 ) %></span>
+	<span class="vote3"><%= link_to "3", new_vote_path( :todo_id => todo_id, :points => 3 ) %></span>
+	<span class="vote4"><%= link_to "4", new_vote_path( :todo_id => todo_id, :points => 4 ) %></span>
+	<span class="vote5"><%= link_to "5", new_vote_path( :todo_id => todo_id, :points => 5 ) %></span>
+<% else %>
+	<span class="<%= vote.points == 1 ? "selected1" : "unselected1" %>"><%= link_to "1", edit_vote_path( vote, :points => 1 ) %></span> 
+	<span class="<%= vote.points == 2 ? "selected2" : "unselected2" %>"><%= link_to "2", edit_vote_path( vote, :points => 2 ) %></span> 
+	<span class="<%= vote.points == 3 ? "selected3" : "unselected3" %>"><%= link_to "3", edit_vote_path( vote, :points => 3 ) %></span> 
+	<span class="<%= vote.points == 4 ? "selected4" : "unselected4" %>"><%= link_to "4", edit_vote_path( vote, :points => 4 ) %></span> 
+	<span class="<%= vote.points == 5 ? "selected5" : "unselected5" %>"><%= link_to "5", edit_vote_path( vote, :points => 5 ) %></span> 
+<% end %>

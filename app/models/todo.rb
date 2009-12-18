@@ -1,5 +1,6 @@
 class Todo < ActiveRecord::Base
   belongs_to :user
+	has_many :votes, :dependent => :destroy
   
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
@@ -12,5 +13,9 @@ class Todo < ActiveRecord::Base
   
 	def subjects=( subjects )
     self.subjects_mask = (subjects & SUBJECTS).map { |r| 2**SUBJECTS.index(r) }.sum
-  end  
+  end
+  
+  def points
+  	votes.sum(:points)
+  end
 end

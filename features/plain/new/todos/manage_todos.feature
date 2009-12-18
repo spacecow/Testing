@@ -15,3 +15,6 @@ When I go to the new todo page
 Then I should be redirected to the todos page
   And I should see "Successfully created Todo."
   And a todo should exist with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"  
+  
+Scenario: Deleting a Todo must delete votes and comments also (NOT IMPLEMENTED)
+Given not implemented

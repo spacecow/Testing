@@ -26,7 +26,6 @@ When I go to the todos page
 Then I should be redirected to the todos page
 	And 0 todos should exist
 
-
 Scenario Outline: Contents of the index page
 Given a user is logged in as "<user>"
 	And a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"  

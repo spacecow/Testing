@@ -127,3 +127,7 @@ Factory.define :user do |f|
 	f.invitation_limit 5
 	f.invitation {|invitation| invitation.association(:invitation)}
 end
+
+Factory.define :vote do |f|
+	f.points 3
+end

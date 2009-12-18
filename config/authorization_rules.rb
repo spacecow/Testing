@@ -9,6 +9,7 @@ authorization do
     has_permission_on :galleries, :to => [:index, :show, :edit]
     has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
     has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :votes, :to => [:new, :edit, :destroy]
   end
   
   role :god do
@@ -55,6 +56,7 @@ authorization do
   	has_permission_on :todos, :to => [:edit, :update, :destroy] do
       if_attribute :user => is { user }
     end		
+    has_permission_on :votes, :to => [:new, :edit, :destroy]
   end
 
   role :observer do

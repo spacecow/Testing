@@ -9,13 +9,23 @@ class TodosController < ApplicationController
   end
   
   def new
+  	@todo.description = params[:description]
+  	@todo.user_id = ( params[:user_id].blank? ? current_user.id : params[:user_id] )
+  	@comment_id = params[:comment_id]
   end
   
   def create
-		@todo.user_id = current_user.id
+		#@todo.user_id = current_user.id
     if @todo.save
       flash[:notice] = t(:create_success, :object => t(:todo))
-      redirect_to todos_url
+      if( params[:comment_id].blank? )
+      	redirect_to todos_path
+      else
+      	comment = Comment.find( params[:comment_id] )
+      	event = Event.find( comment.event_id )
+      	comment.destroy
+      	redirect_to event
+    	end
     else
       render :action => 'new'
     end

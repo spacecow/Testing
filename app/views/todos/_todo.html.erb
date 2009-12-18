@@ -1,7 +1,9 @@
 <div class="todo_container">
-	<div class="points">
-		<%= t(:points) %>: 56<br/>
-		Vote
+	<div class="points" id="todo_<%= todo.id %>">
+		<%= t(:points) %>: <%= todo.points %><br/>
+		<div class="vote">
+			<%= render :partial => "vote", :locals => { :todo_id => todo.id, :vote => current_user.votes.find_by_todo_id( todo.id )} %>
+		</div>
 	</div>
 	<div class="contents_container">
 		<div class="contents">
