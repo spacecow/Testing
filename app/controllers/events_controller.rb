@@ -55,7 +55,7 @@ class EventsController < ApplicationController
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
   	if !@comment.save
-      flash[:error] = t('error.blank',:object=>t(:comment))
+      flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
 		respond_to do |wants|
 			wants.html { redirect_to Event.find( @comment.event_id ) }

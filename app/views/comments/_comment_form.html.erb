@@ -1,4 +1,5 @@
 <% path = ( event_id.nil? ? "todo" : "event" ) %>
+<div id="flash_message"></div>
 <% if permitted_to? :create, @comment %>
 	<%- semantic_form_for @comment, :url => "add_comment_#{path}".to_sym, :html => {:method => :put} do |f| -%>
 		<div id="new_comment_form">

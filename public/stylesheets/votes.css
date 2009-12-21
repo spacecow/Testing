@@ -1,0 +1,93 @@
+.todo_container .points .vote{
+	font-family:fantasy;
+	color:black;
+	font-size:14px;
+}
+
+.todo_container .points .cancel{
+	font-family:sans_serif;
+	color:#6666AA;
+	font-size:10px;
+	font-style:italic;
+	float:right;
+	margin-top:3px;
+	padding:0;
+}
+.todo_container .points .cancel a{ color:#6666AA; }
+.todo_container .points .cancel a:hover{ background:#6666AA; color:white; }
+
+.todo_container .points .vote span.vote1,
+.todo_container .points .vote span.vote2,
+.todo_container .points .vote span.vote3,
+.todo_container .points .vote span.vote4,
+.todo_container .points .vote span.vote5{
+	padding:0px 3px 0px 3px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border:1px solid white;
+}
+.todo_container .points .vote span.vote1:hover{ background:#A77D54;	color:#D47FAA; }
+.todo_container .points .vote span.vote2:hover{ background:#D47FAA; color:#D47FAA; }
+.todo_container .points .vote span.vote3:hover{ background:#CECE29;	color:#D47FAA; }
+.todo_container .points .vote span.vote4:hover{ background:#7CA6CF;	color:#D47FAA; }
+.todo_container .points .vote span.vote5:hover{	background:#6EB36E;	color:#D47FAA; }
+.todo_container .points .vote span.vote1 a{	color:#A77D54; }
+.todo_container .points .vote span.vote2 a{	color:#D47FAA; }
+.todo_container .points .vote span.vote3 a{	color:#CECE29; }
+.todo_container .points .vote span.vote4 a{	color:#7CA6CF; }
+.todo_container .points .vote span.vote5 a{	color:#6EB36E; }
+.todo_container .points .vote span.vote1 a:hover{	background:#A77D54;	color:white; }
+.todo_container .points .vote span.vote2 a:hover{	background:#D47FAA;	color:white; }
+.todo_container .points .vote span.vote3 a:hover{	background:#CECE29;	color:white; }
+.todo_container .points .vote span.vote4 a:hover{	background:#7CA6CF;	color:white; }
+.todo_container .points .vote span.vote5 a:hover{	background:#6EB36E;	color:white; }
+
+.todo_container .points .vote span.unselected1,
+.todo_container .points .vote span.unselected2,
+.todo_container .points .vote span.unselected3,
+.todo_container .points .vote span.unselected4,
+.todo_container .points .vote span.unselected5{
+	padding:0px 3px 0px 3px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border:1px solid white;
+}
+.todo_container .points .vote span.unselected1:hover{ border:1px solid #A77D54; }
+.todo_container .points .vote span.unselected2:hover{ border:1px solid #D47FAA; }
+.todo_container .points .vote span.unselected3:hover{ border:1px solid #CECE29; }
+.todo_container .points .vote span.unselected4:hover{ border:1px solid #7CA6CF; }
+.todo_container .points .vote span.unselected5:hover{ border:1px solid #6EB36E; }
+.todo_container .points .vote span.unselected1 a,
+.todo_container .points .vote span.unselected2 a,
+.todo_container .points .vote span.unselected3 a,
+.todo_container .points .vote span.unselected4 a,
+.todo_container .points .vote span.unselected5 a{
+	color:#ddd;
+}
+.todo_container .points .vote span.unselected1 a:hover,
+.todo_container .points .vote span.unselected2 a:hover,
+.todo_container .points .vote span.unselected3 a:hover,
+.todo_container .points .vote span.unselected4 a:hover,
+.todo_container .points .vote span.unselected5 a:hover{
+	background:white;
+}
+.todo_container .points .vote span.selected1,
+.todo_container .points .vote span.selected2,
+.todo_container .points .vote span.selected3,
+.todo_container .points .vote span.selected4,
+.todo_container .points .vote span.selected5{
+	padding:0px 3px 0px 3px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+	color:white;
+}
+.todo_container .points .vote span.selected1{ background:#A77D54; }	
+.todo_container .points .vote span.selected2{	background:#D47FAA; }
+.todo_container .points .vote span.selected3{	background:#CECE29; }
+.todo_container .points .vote span.selected4{	background:#7CA6CF; }
+.todo_container .points .vote span.selected5{	background:#6EB36E; }
+.todo_container .points .vote span.selected1 a, .todo_container .points .vote span.selected1 a:hover{ color:white; background:#A77D54; }
+.todo_container .points .vote span.selected2 a, .todo_container .points .vote span.selected2 a:hover{ color:white; background:#D47FAA; }
+.todo_container .points .vote span.selected3 a, .todo_container .points .vote span.selected3 a:hover{ color:white; background:#CECE29; }
+.todo_container .points .vote span.selected4 a, .todo_container .points .vote span.selected4 a:hover{ color:white; background:#7CA6CF; }
+.todo_container .points .vote span.selected5 a, .todo_container .points .vote span.selected5 a:hover{ color:white; background:#6EB36E; }

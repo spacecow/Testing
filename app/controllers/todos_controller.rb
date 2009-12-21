@@ -61,13 +61,14 @@ class TodosController < ApplicationController
   end
   
   def add_comment
+		@todo = Todo.find( params[:id] )
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
   	if !@comment.save
-      flash[:error] = t('error.blank',:object=>t(:comment))
+      flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
 		respond_to do |wants|
-			#wants.html { redirect_to Todo.find( @comment.todo_id ) }
+			wants.html { redirect_to @todo }
 			wants.js
 		end
   end

@@ -33,7 +33,7 @@ Given a setting exists with name: "main"
 #Then I should see "Fuck Christmas!" within comment "fuck"
 #	And 0 todos should exist	
 
-Scenario: A comment cannot be blank
+Scenario: A comment cannot be blank (AJAX)
 Given a user is logged in as "kurosawa"
 	When I go to the show page of event "christmas"
 	And I press "コメントを書き足す"

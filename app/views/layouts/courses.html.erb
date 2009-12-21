@@ -83,7 +83,7 @@
 	<div id="container">	
 		<div id="main">
 	    <%- flash.each do |key, msg| -%>  
-	      <div id="<%= key %>">  
+	      <div id="<%= key %>">
 	        <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
 	        <p><%= msg %></p>    
 	      </div>

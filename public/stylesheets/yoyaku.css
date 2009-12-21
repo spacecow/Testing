@@ -427,6 +427,13 @@ h4{
 div.form fieldset div.links a{
 	font-size:smaller;
 }
+div#flash_message{
+	color:red;
+	font-style:italic;
+	font-size:smaller;
+	margin:5px 0 0 0;
+	padding:0;
+}
 
 /* FIELDSET GALLERY */
 div.show fieldset fieldset.gallery{

@@ -27,6 +27,8 @@
         <dict>
             <key>ap</key>
             <string>public\yoyaku\yoyaku_11\application.rb.txt</string>
+            <key>appl</key>
+            <string>public\javascripts\application.js</string>
             <key>appli</key>
             <string>public\javascripts\application.js</string>
             <key>applic</key>

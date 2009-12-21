@@ -1,2 +1,7 @@
-$("#comments").prepend("<%= escape_javascript( render( :partial => 'comments/comment', :locals => { :f => nil }))%>");
+<% if @comment.comment.blank? %>
+	$("#flash_message").html("<%= t('error.blank',:object=>t(:comment)) %>");
+<% else %>
+	$("#comments").prepend("<%= escape_javascript( render( :partial => 'comments/comment', :locals => { :f => nil }))%>");
+	$("#flash_message").html("");
+<% end %>
 $("#new_comment")[0].reset();

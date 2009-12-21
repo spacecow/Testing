@@ -1,4 +1,3 @@
-@todos
 Background:
 Given a setting exists with name: "main"
 	And a user exists with username: "johan", role: "admin", language: "en"
@@ -46,4 +45,7 @@ Then I should be redirected to the todos page
 	And 0 votes should exist
 	
 Scenario: Link to todos (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Author (NOT IMPLEMENTED)
 Given not implemented

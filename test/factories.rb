@@ -5,6 +5,7 @@ Factory.define :classroom do |f|
 end
 
 Factory.define :comment do |f|
+	f.comment "default comment"
 end
 
 Factory.define :course do |f|
@@ -102,6 +103,10 @@ Factory.define :teaching do |f|
 end
 
 Factory.define :todo do |f|
+	f.title "default todo title"
+	f.description "default todo description"
+	f.subjects ["bug", ""]
+	f.user {|user| user.association(:user)}
 end
 
 Factory.define :template_class do |f|

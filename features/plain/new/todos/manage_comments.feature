@@ -5,7 +5,7 @@ Given a setting exists with name: "main"
 	And a user: "thomas" exists with username: "thomas", role: "observer", language: "en"
 	And a todo: "chat" exists with subjects_mask: 1, user: user "kurosawa", title: "Chat room", description: "Wouldn't that be fun!"  
 	
-Scenario: A comment cannot be blank
+Scenario: A comment cannot be blank (AJAX)
 Given a user is logged in as "kurosawa"
 	When I go to the show page of todo "chat"
 	And I press "コメントを書き足す"
