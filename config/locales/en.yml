@@ -40,6 +40,7 @@ en:
   english: "English"
   event: "Event"
   event_date: "Date"
+  feature: "Feature"
   female: "Female"
   gallery: "Gallery"
   gender: "Gender"
@@ -114,11 +115,14 @@ en:
   user_name: "User name"
   version: "Version"
   
+  add: "Add {{object}}"
   editing: "Editing {{object}}"
+  error:
+    blank: "{{object}} cannot be left blank."      
   new: "New {{object}}"
-  create_success: "Successfully created {{object}}."
   notice:
     add_success: "Successfully added {{object}}."
+    create_success: "Successfully created {{object}}."
     delete_success: "Successfully deleted {{object}}."
     update_success: "Successfully updated {{object}}."
   

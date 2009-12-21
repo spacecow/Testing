@@ -2,13 +2,14 @@
 	<div class="points" id="todo_<%= todo.id %>">
 		<%= t(:points) %>: <%= todo.points %><br/>
 		<div class="vote">
-			<%= render :partial => "vote", :locals => { :todo_id => todo.id, :vote => current_user.votes.find_by_todo_id( todo.id )} %>
+			<%= render :partial => "todos/vote", :locals => { :todo_id => todo.id, :vote => current_user.votes.find_by_todo_id( todo.id )} %>
 		</div>
 	</div>
 	<div class="contents_container">
 		<div class="contents">
 			<% if title %><h3><%= link_to( h( todo.title ), todo ) %></h3><% end %>
-			<%= h todo.description %>
+			<%= Sanitize.clean( todo.description, :elements => 'br' ) %>
+			
 			<% if links %>
 				<div class="links">
 					<% if permitted_to? :destroy, todo %>
@@ -22,7 +23,7 @@
 		</div>
 		<div class="clear"></div>
 		<% todo.subjects.each do |subject| %>
-			<div class="<%= subject %>"><%= t( subject ).downcase %></div>
+			<div id="subject" class="<%= subject %>"><%= t( subject ).downcase %></div>
 		<% end %>
 		<div class="author">
 			<%= link_to todo.user.name, todo.user %>	

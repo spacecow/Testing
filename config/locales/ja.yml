@@ -38,6 +38,7 @@ ja:
   english: "英語"
   event: "イベント"
   event_date: "日付"
+  feature: "機能"
   female: "女性"
   gallery: "ギャラリー"
   gender: "性別"
@@ -111,10 +112,14 @@ ja:
   user_name: "ユーザー名"
   version: "バージョン"
   
+  add: "{{object}}を書き足す"
   editing: "{{object}}編集"
   new: "新しい{{object}}"
+  error:
+    blank: "{{object}}は空白のままにしておく事は出来ません"    
   notice:
     add_success: "正常に{{object}}が追加されました"
+    create_success: "正常に{{object}}が作成されました"
     delete_success: "正常に{{object}}が削除されました"
     update_success: "正常に{{object}}が更新されました"
     
@@ -126,10 +131,6 @@ ja:
     listing: "上場教室"
     new: "新しい教室"
     title: "教室"
-  comments:
-    add: "コメント"
-    error:
-      blank: "コメントは空白のままにしておく事は出来ません"    
   courses:
     editing: "講座編集"
     listing: "上場講座"

@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 	map.resources :votes
-  map.resources :todos
+  map.resources :todos, :member => {:add_comment => :put, :edit_comment => :get}
+	map.resources :events, :member => {:add_comment => :put, :edit_comment => :get, :move_comment => :get}
 
   map.resources :invitations, :collection => { :deliver => :get }
 	map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
@@ -25,7 +26,6 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :comments
   map.resources :registrants
-  map.resources :events
   map.resources :kanjis, :member => {:check => :get}
 	map.resources :scheduled_units
   map.resources :schedules

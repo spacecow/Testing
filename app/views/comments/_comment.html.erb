@@ -1,24 +1,37 @@
-<li <% if Comment.last == comment %>class="last"<% end %>>
-	<% if @comment == comment %>
-		<%= f.text_area :comment %>
+<li>
+	<% if !f.nil? && @comment == comment %>
+		<label for="comment_comment" style="display:none">Comment</label>
+		<%= f.text_area :comment, :value => @comment.comment.gsub("<br />", "\r\n") %>
 		<%= f.submit t('update') %>
 	<% else %>
 		<%= image_tag avatar_mini_url( comment.user ) %>
-		<div class="event_comment_container">
-			<div class="links">
-				<% if permitted_to? :edit, comment %>
-	  			<%= link_to t('edit'), edit_comment_path( comment, :event_id => comment.event_id ) %> |
-	  		<% end %>
-	  		<% if permitted_to? :destroy, comment %>
-	  			<%= link_to t('delete'), comment, :confirm => 'Are you sure?', :method => :delete %>
-	  		<% end %>
+		<div class="comment_container" id="comment_<%= comment.id %>">
+			<div class="action_container">
+				<div class="links">
+		      <% if permitted_to? :edit, comment %>
+		        <%= link_to t('edit'), :action => "edit_comment", :id => comment.id %>
+		      <% end %>
+		      <% if permitted_to? :destroy, comment %>
+		        | <%= link_to t('delete'), comment, :confirm => 'Are you sure?', :method => :delete %>
+		      <% end %>
+				</div>
 			</div>
 			<%= link_to h( comment.user.name ), comment.user %>
-			<%= h comment.comment %><br />
+			<%= Sanitize.clean( comment.comment, :elements => 'br' ) %><br />
 			<div class="time_ago">
 				<%= distance_of_time_in_words_to_now( comment.created_at ) %><%= t('ago') %>
 			</div>
+			<div class="move_comment">
+				<% if permitted_to?( :move_comment, comment.event ) && !@move_options.nil? %>
+					<% form_for :todo, :url => move_comment_event_path, :html => { :method => :get } do |f| %>
+						<%= hidden_field_tag :description, comment.comment %>
+						<%= hidden_field_tag :user_id, comment.user_id %>
+						<%= hidden_field_tag :comment_id, comment.id %>
+						<%= select_tag :move, options_for_select( @move_options ), :onchange => "this.form.submit();" %>
+					<% end %>
+				<% end %>
+			</div>
 		</div>
+		<div class="clear"></div>
 	<% end %>
-	<div class="clear"></div>
 </li>

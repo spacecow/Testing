@@ -25,10 +25,14 @@
         </dict>
         <key>fileTriggers</key>
         <dict>
+            <key>ap</key>
+            <string>public\yoyaku\yoyaku_11\application.rb.txt</string>
             <key>appli</key>
-            <string>app\controllers\application_controller.rb</string>
+            <string>public\javascripts\application.js</string>
+            <key>applic</key>
+            <string>public\javascripts\application.js</string>
             <key>applicat</key>
-            <string>app\controllers\application_controller.rb</string>
+            <string>public\javascripts\application.js</string>
             <key>application</key>
             <string>app\controllers\application_controller.rb</string>
             <key>au</key>
@@ -37,6 +41,8 @@
             <string>config\authorization_rules.rb</string>
             <key>autt</key>
             <string>config\authorization_rules.rb</string>
+            <key>comment</key>
+            <string>app\controllers\comments_controller.rb</string>
             <key>comments</key>
             <string>app\controllers\comments_controller.rb</string>
             <key>en.y</key>
@@ -83,12 +89,18 @@
             <string>app\controllers\photos_controller.rb</string>
             <key>registrant</key>
             <string>app\controllers\registrants_controller.rb</string>
+            <key>rout</key>
+            <string>config\routes.rb</string>
             <key>routes</key>
             <string>config\routes.rb</string>
             <key>schedule</key>
             <string>app\models\schedule.rb</string>
             <key>todo.rb</key>
             <string>app\models\todo.rb</string>
+            <key>todo_co</key>
+            <string>app\controllers\todos_controller.rb</string>
+            <key>todos</key>
+            <string>app\controllers\todos_controller.rb</string>
             <key>todos_con</key>
             <string>app\controllers\todos_controller.rb</string>
             <key>user.rb</key>
@@ -107,8 +119,6 @@
             <string>app\models\user_mailer.rb</string>
             <key>user_sess</key>
             <string>app\controllers\user_sessions_controller.rb</string>
-            <key>votes</key>
-            <string>app\controllers\votes_controller.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
             <key>yo</key>

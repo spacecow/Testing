@@ -133,53 +133,62 @@ h4{
 
 
 /* EVENT COMMENTS */
-#event_comments{
+#comments{
 	margin:0px;
 	padding:0px;
 }
-#event_comments li{
+.show hr{
+	border-top:1px dashed #7F9DB9;
+	background-color : #efe;
+	color:#efe;
+	height:0;
+	margin:0;
+	padding:0;
+}
+#comments li{
 	list-style:none;
 	padding:10px 0;
 	margin:0;
 	border-bottom:1px dashed #7F9DB9;
 }
-#event_comments li.last{
+#comments li.last{
 	border-top:1px dashed #7F9DB9;
 }
-#event_comments li:hover{
+#comments li:hover{
 	background: #f5ffee;
 }
-#event_comments li img{
+#comments li img{
 	float:left;
 }
-#event_comments li div.event_comment_container{
+#comments li div.comment_container{
 	float:left;
 	margin-left:10px;
 	width:500px;
 }
-#event_comments li div.event_comment_container div.action_container{
+#comments li div.comment_container div.action_container{
 	float:right;
 }
-#event_comments li div.event_comment_container div.action_container a{
+#comments li div.comment_container a{
 	color:#99f;
 	text-decoration:none;
 	font-weight:bold;
 }
-#event_comments li div.event_comment_container div.action_container div.links{
+#comments li div.comment_container div.action_container div.links{
 	font-size:10px;
 	width:70px;
 	text-align:right;
 	padding:0 1px 0 1px;
 }
-#event_comments li div.event_comment_container div.action_container div.links a{
+#comments li div.comment_container div.action_container div.links a{
 	color:#66a;
-	font-weight:normal;	
+	font-weight:normal;
+	padding:0 1px 0 1px;
 }
-#event_comments li div.event_comment_container div.action_container div.links a:hover{
+#comments li div.comment_container div.action_container div.links a:hover{
 	background: #66a;
 	color: #efe;
 }
-#event_comments li div.event_comment_container div.time_ago{
+#comments li div.comment_container div.time_ago{
 	color:#9c9c9c;
 	font-size:90%;
 	padding-top:3px;
@@ -210,7 +219,7 @@ h4{
   margin: 10px 0 0 10px;
 }
 #show_container div.links a{
-	text-decoration: none;	
+	text-decoration:none;	
 	color:#66a;
 	padding:0 1px 0 1px;
 }
@@ -396,6 +405,15 @@ h4{
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+.show fieldset .links a{
+	color:#66a;
+	font-weight:normal;
+	padding:0 1px 0 1px;
+}
+.show fieldset .links a:hover{
+	background: #66a;
+	color: #efe;
+}
 .form label{
   width: 10em;
   float: left;
@@ -404,7 +422,11 @@ h4{
   display: block;
 }
 
+.form
 .form .submit{ margin-left: 165px; }
+div.form fieldset div.links a{
+	font-size:smaller;
+}
 
 /* FIELDSET GALLERY */
 div.show fieldset fieldset.gallery{
@@ -519,22 +541,18 @@ a.link{
 	margin-top:3px;
 	float:right;
 }
-.todo_container .contents_container .bug{
+.todo_container .contents_container div#subject{
 	float:left;
 	border:1px solid;
-	background:red;
 	padding:0px 3px 0px 3px;
 	-moz-border-radius: 5px;
-  -webkit-border-radius: 5px;	
+  -webkit-border-radius: 5px;
+  font-weight:bold;
 }
-.todo_container .contents_container .spelling{
-	float:left;
-	border:1px solid;
-	background:orange;
-	padding:0px 3px 0px 3px;
-	-moz-border-radius: 5px;
-  -webkit-border-radius: 5px;	
-}
+.todo_container .contents_container .bug{ background:red; }
+.todo_container .contents_container .spelling{ background:orange; }
+.todo_container .contents_container .feature{ background:green; }
+
 .todo_container .contents_container .author{
 	float:right;
 	font-size:10px;
@@ -551,10 +569,38 @@ a.link{
 	color: #efe;
 	padding:0 1px 0 1px;
 }
-
 #form_container .links a{
 	font-size:10px;
 }
+
+form div.subjects{
+	margin:0 0 0 153px;
+	padding:0;
+}
+form div.subjects label{
+	font-weight:bold;
+	text-align:left;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;		
+}
+form div.subjects label.bug{
+	background:red;
+}
+form div.subjects label.spelling{
+	background:orange;
+}
+form div.subjects label.feature{
+	background:green;
+}
+form div.subjects label input{
+	float:left;
+}
+form div.subjects label span.text{
+	margin-top:2px;
+	float:left;
+}
+
+
 
 
 /* The error box */

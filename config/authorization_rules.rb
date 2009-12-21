@@ -1,14 +1,14 @@
 authorization do
   role :admin do
-    has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :add_comment, :edit_comment, :move_comment]
     has_permission_on :registrants, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register ]
-    has_permission_on :comments, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :comments, :to => [:new, :create, :edit, :update, :destroy]
     has_permission_on :settings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :galleries, :to => [:index, :show, :edit]
     has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
-    has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :add_comment, :edit_comment]
     has_permission_on :votes, :to => [:new, :edit, :destroy]
   end
   
@@ -43,7 +43,7 @@ authorization do
 
   role :registrant do
   	includes :guest
-  	has_permission_on :events, :to => [:index, :show]
+  	has_permission_on :events, :to => [:index, :show, :add_comment, :edit_comment]
   	has_permission_on :users, :to => [:show, :edit, :update, :new_event_register, :create_event_register ]
   	has_permission_on :comments, :to => [:new, :create]
   	has_permission_on :comments, :to => [:edit, :update, :destroy] do
@@ -52,7 +52,7 @@ authorization do
 		has_permission_on :photos, :to => :show
 		has_permission_on :galleries, :to => :show
 		has_permission_on :registrants, :to => [:new, :create]
-		has_permission_on :todos, :to => [:index, :show, :new, :create]
+		has_permission_on :todos, :to => [:index, :show, :new, :create, :add_comment, :edit_comment]
   	has_permission_on :todos, :to => [:edit, :update, :destroy] do
       if_attribute :user => is { user }
     end		

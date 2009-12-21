@@ -1,11 +1,12 @@
 class Todo < ActiveRecord::Base
   belongs_to :user
 	has_many :votes, :dependent => :destroy
+	has_many :comments, :dependent => :destroy
   
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
   
-	SUBJECTS = %w[bug spelling]
+	SUBJECTS = %w[bug spelling feature]
 	
   def subjects
     SUBJECTS.reject { |r| ((subjects_mask || 0) & 2**SUBJECTS.index(r)).zero? }

@@ -22,7 +22,7 @@ Then I should see "english"
 
 Scenario: Add a caption in Japanese
 Given a user is logged in as "kurosawa"
-	And I add a photo "sadako"
+	And I add a photo "sadako" in Japanese
 	And I follow "sadako"
 	And I follow "編集"
 	And I fill in "photo_caption_en" with "english"

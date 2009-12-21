@@ -2,10 +2,14 @@
 <%= stylesheet_link_tag 'votes' %>
 <style>
 textarea#comment_comment{
-  background: url(<%= avatar_mini_url( current_user2 ) %>) no-repeat;
+  background: url(<%= avatar_mini_url( @comment.user ) %>) no-repeat;
   background-color: white;
   background-position: 0 50%;
   padding-left: 45px;
+	width:430px;
+  height:46px;
+	font-size:12px;
+	font-family: sans-serif;
 }
 </style>
 <% end %>
@@ -16,10 +20,13 @@ textarea#comment_comment{
 <%= render :partial => @todo, :locals =>{ :title => false, :links => false } %>
 <hr>
 <ul id="comments">
-	<%= render :partial => 'comments/comment', :collection => @todo.comments.reverse, :locals => { :f => nil } %>
+	<%- semantic_form_for @comment do |f| -%>
+		<div id="edit_comment_form">
+			<%= render :partial => 'comments/comment', :collection => @todo.comments.reverse, :locals => { :f=>f } %>
+		</div>
+	<%- end -%>	
 </ul>
-<%= render :partial => 'comments/comment_form',
-           :locals => { :event_id => nil, :todo_id => @todo.id } %>
+<br />
 <div class="links">
 	<% if permitted_to? :index, @todo %>
 		<%= link_to t('todos.title'), todos_path, :class=>"link" %>

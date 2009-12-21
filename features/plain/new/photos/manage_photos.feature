@@ -8,10 +8,10 @@ Given a setting exists with name: "main"
 Scenario: Add a photo
 When I go to the show page of gallery "Christmas"
 	And I follow 'photos.add'
-  And I press 'add'
+  And I press "Add Photo"
 Then I should see "Photo file name can't be blank"
 When I attach the file at "C:/Pictures/00 233.jpg" to "Photo*"
-  And I press 'add'
+  And I press "Add Photo"
   And I press 'crop'
 Then I should be redirected to the show page of that gallery
   And I should see "Successfully added photo."

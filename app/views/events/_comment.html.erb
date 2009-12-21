@@ -1,6 +1,6 @@
 <li <% if Comment.last == comment %>class="last"<% end %>>
 	<%= image_tag avatar_mini_url( comment.user ) %>
-	<div class="event_comment_container" id="comment_<%= comment.id %>">
+	<div class="comment_container" id="comment_<%= comment.id %>">
 		<div class="action_container">
 			<div class="links">
 	      <% if permitted_to? :edit, comment %>
@@ -11,7 +11,12 @@
 	      <% end %>
 			</div>
 			<div class="move_comment">
-				<%= link_to "move", new_todo_path( :description => comment.comment, :user_id => comment.user_id, :comment_id => comment.id ) %>
+				<% form_for :todo, :url => new_todo_path do |f| %>
+					<%= hidden_field_tag :description, comment.comment %>
+					<%= hidden_field_tag :user_id, comment.user_id %>
+					<%= hidden_field_tag :comment_id, comment.id %>
+					<%= f.submit "Move" %>
+				<% end %>
 			</div>
 		</div>
 		<%= link_to h( comment.user.name ), comment.user %>

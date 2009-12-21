@@ -4,12 +4,14 @@
 <fieldset>
 <legend><%= t(:new, :object => t(:todo)) %></legend>
 
-<% form_for @todo do |f| %>
+<%- semantic_form_for @todo do |f| -%>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
-<% end %>
+<%- end -%>
 
 <div class="links">
-		<p><%= link_to t('todos.title'), todos_path, :class=>"link" %></p>
+	<% if permitted_to? :index, @todo %>
+		<%= link_to t('todos.title'), todos_path %>
+	<% end %>
 </div>
 
 </fieldset>

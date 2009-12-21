@@ -1,6 +1,10 @@
 class CommentsController < ApplicationController
 	filter_resource_access
 
+	def new
+		redirect_to Comment.new( params[:comment] ), :method => :post
+	end
+
   def create
   	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
   	if !@comment.save
@@ -15,20 +19,36 @@ class CommentsController < ApplicationController
   
   def update
   	params[:comment][:comment] = params[:comment][:comment].gsub("\r\n", "<br />");
-  	p params[:comment][:comment]
   	if @comment.update_attributes( params[:comment] )
-  		redirect_to Event.find( @comment.event )
+  		if @comment.todo_id.blank?
+  			redirect_to @comment.event
+  		else
+  			redirect_to @comment.todo
+			end
 		else
 			@comment.comment = Comment.find( @comment ).comment
-			@event = Event.find( @comment.event )
-			flash[:error] = t('comments.error.blank')
-			render :action => :edit
+  		flash.now[:error] = t('error.blank',:object=>t(:comment))
+  		if @comment.todo_id.blank?
+  			@event = Event.find( @comment.event )
+  			render :template => 'events/edit_comment'
+  		else
+  			@todo = Todo.find( @comment.todo )
+  			render :template => 'todos/edit_comment'
+			end		
+			
+			#redirect_to edit_comment_todo_path( @comment )
+			
 		end
   end
   
   def destroy
     @comment.destroy
     flash[:notice] = t('notice.delete_success', :object => t('comment').downcase )
-    redirect_to @comment.event
+  		if @comment.todo_id.blank?
+  			redirect_to @comment.event
+  		else
+  			redirect_to @comment.todo
+			end
+		else
   end
 end

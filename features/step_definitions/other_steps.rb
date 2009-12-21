@@ -168,6 +168,13 @@ When /^I follow "([^\"]*)" within #{capture_model}$/ do |text, model|
 	end
 end
 
+When /^I press "([^\"]*)" within #{capture_model}$/ do |text, model|
+  scope = get_scope( model )
+  within "##{scope}" do |element|
+		element.click_button( text )
+	end
+end
+
 # -----------------------------------------------------
 
 def get_options_array( select_id )

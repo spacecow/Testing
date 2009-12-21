@@ -37,6 +37,8 @@ Rails::Initializer.run do |config|
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 
 
+	config.action_view[:debug_rjs] = true 
+
   $KCODE = 'u'
 
   # Only load the plugins named here, in the order given. By default, all plugins 

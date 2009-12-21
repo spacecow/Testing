@@ -1,7 +1,7 @@
 Background:
 Given a setting exists with name: "main"
-	And a user exists with username: "aya", role: "admin", language: "en"
-	And a user exists with username: "kurosawa", role: "registrant", language: "ja"
+	And a user: "aya" exists with username: "aya", role: "admin", language: "en"
+	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant", language: "ja"
 
 Scenario: Display the event list
 Given a user is logged in as "kurosawa"
@@ -32,14 +32,19 @@ Then a event should exist with title_en: "Christmas Party", title_ja: "クリス
   And a gallery should exist with event: that event
 	And I should be redirected to the events page
 
-Scenario: When an event is deleted, its gallery should be deleted
+Scenario: When an event is deleted, its gallery & comments should be deleted
 Given a user is logged in as "aya"
-  And a event exist with title_en: "Christmas Party!"
+	And a event exist with title_en: "Christmas Party!"
+	And a comment exists with event: that event, user: user "aya", comment: "comment 1"
+	And a comment exists with event: that event, user: user "kurosawa", comment: "comment 2"
 Then a gallery should exist with event: that event
+	And 1 galleries should exist
+	And 2 comments should exist
 When I go to the events page
   And I follow 'delete'
 Then 0 events should exist
   And 0 galleries should exist 
+  And 0 comments should exist
 
 #Scenario: When an event is deleted, its registrants and comments should be deleted
 #Given not implemented

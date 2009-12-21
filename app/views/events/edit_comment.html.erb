@@ -1,10 +1,14 @@
 <% content_for(:head) do %>
 <style>
 textarea#comment_comment{
-  background: url(<%= avatar_mini_url( current_user2 ) %>) no-repeat;
+  background: url(<%= avatar_mini_url( @comment.user ) %>) no-repeat;
   background-color: white;
   background-position: 0 50%;
   padding-left: 45px;
+	width:430px;
+  height:46px;
+	font-size:12px;
+	font-family: sans-serif;
 }
 </style>
 <% end %>
@@ -41,12 +45,13 @@ textarea#comment_comment{
 <div class="clear"></div><br />
 <hr>
 <ul id="comments">
-	<%= render :partial => 'comments/comment',
-	           :collection => @event.comments.reverse,
-	           :locals => { :f => nil } %>
+	<%- semantic_form_for @comment do |f| -%>
+		<div id="edit_comment_form">
+			<%= render :partial => 'comments/comment', :collection => @event.comments.reverse, :locals => { :f => f } %>
+		</div>
+	<% end %>
 </ul>
-<%= render :partial => 'comments/comment_form',
-           :locals => { :event_id => @event.id, :todo_id => nil } %>
+
 <div class="links">
   <% if permitted_to? :edit, @event %>
   	<%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |

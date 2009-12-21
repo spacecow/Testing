@@ -1,0 +1,5 @@
+$("#comment_<%= @comment.id %>").html(
+	"<% form_for @comment do |f| %>"+
+		"<%= f.text_area :comment %>"
+	"<% end %>"
+);

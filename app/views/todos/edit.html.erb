@@ -4,22 +4,20 @@
 <fieldset>
 <legend><%= t(:editing, :object=>t(:todo)) %></legend>
 
-<div id="form_container">
-	<% form_for @todo do |f| %>
-		<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<%- semantic_form_for @todo do |f| -%>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<%- end -%>
+
+<div class="links">
+	<% if permitted_to? :index, @todo %>
+		<%= link_to t('todos.title'), todos_path %>
+	<% end %>				
+	<% if permitted_to? :show, @todo %>
+		| <%= link_to t('show'), @todo %>
 	<% end %>
-	
-	<div class="links">
-		<% if permitted_to? :index, @todo %>
-			<%= link_to t('todos.title'), todos_path %>
-		<% end %>				
-		<% if permitted_to? :show, @todo %>
-			| <%= link_to t('show'), @todo %>
-		<% end %>
-		<% if permitted_to? :destroy, @todo %>
-			| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete %>
-		<% end %>
-	</div>
+	<% if permitted_to? :destroy, @todo %>
+		| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete %>
+	<% end %>
 </div>
 
 </fieldset>

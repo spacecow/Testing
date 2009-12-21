@@ -1,0 +1,19 @@
+<% path = ( event_id.nil? ? "todo" : "event" ) %>
+<% if permitted_to? :create, @comment %>
+	<%- semantic_form_for @comment, :url => "add_comment_#{path}".to_sym, :html => {:method => :put} do |f| -%>
+		<div id="new_comment_form">
+      <%= f.hidden_field :event_id, :value => event_id %>
+      <%= f.hidden_field :todo_id, :value => todo_id %>
+  		<%= f.hidden_field :user_id, :value => current_user2.id %>
+      <% f.inputs do %>
+      	<%= f.input :comment %>
+      <% end %>
+      <div id="add_button_container">
+        <%= f.submit t(:add,:object=>t(:comment)) %>
+      </div>
+      <div class="clear"></div>
+		</div>
+	<%- end -%>
+<% else %>
+  <br />
+<% end %>

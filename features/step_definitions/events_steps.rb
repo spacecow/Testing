@@ -11,5 +11,9 @@ Given /^I am registered for that event$/ do
 		And "I press \"Apply\""
 end
 
-
+When /^I select todo with #{capture_model} and #{capture_model}$/ do |user, comment|
+  user_id = find_model(user)[0].id
+  comment_id = find_model(comment)[0].id
+	When "I go to path \"move_comment?move=todo&description=Fuck+Christmas!&user_id=#{user_id}&comment_id=#{comment_id}\""
+end
 
