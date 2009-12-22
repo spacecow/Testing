@@ -20,7 +20,9 @@
 								<li><%= link_to t('registrants.title'), registrants_path %></li>							
 							</ul>
 						<% end %>
-					</li>				
+					</li>	
+					
+					<li><%= link_to t('todos.title'),todos_path %></li>								
 					
 					<% if permitted_to? :index, User.new %>	
 						<li><%= link_to t('users.title'), users_path %></li>									
