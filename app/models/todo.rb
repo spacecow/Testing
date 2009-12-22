@@ -19,4 +19,11 @@ class Todo < ActiveRecord::Base
   def points
   	votes.sum(:points)
   end
+  
+  def closed_message
+  	if self.closed
+  		return " - "+I18n.t(:closed)
+  	end
+  	""
+  end
 end

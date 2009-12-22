@@ -24,3 +24,6 @@ Then I should be redirected to the new invitation page
 	And I should see "Invitation sent"
 	And an invitation should exist with sender: user "johan"
 	And a user should exist with invitation_limit: 4
+	
+Scenario: Include email in update messages (NOT IMPLEMENTED)
+Given not implemented

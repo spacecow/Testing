@@ -2,7 +2,11 @@ class TodosController < ApplicationController
 	filter_access_to :all
 
   def index
-    @todos = Todo.all
+    if params[:option] == "closed"
+    	@todos = Todo.all.reject{|e| !e.closed}
+  	else
+    	@todos = Todo.all.reject(&:closed)
+    end
   end
   
   def show
@@ -80,5 +84,11 @@ class TodosController < ApplicationController
 			wants.html
 			wants.js
   	end	
+  end
+  
+  def close
+  	@todo = Todo.find( params[:id] )
+  	@todo.update_attribute( :closed, !@todo.closed )
+  	redirect_to :back
   end
 end

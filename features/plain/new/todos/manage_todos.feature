@@ -28,7 +28,7 @@ Then I should be redirected to the todos page
   And I should see "Successfully updated Todo."
   And a todo should exist with subjects_mask: 5, user: user "junko", title: "Chatter room", description: "Wouldn't that be even funnier!"
 
-Scenario: Edit a Todo
+Scenario: Delete a Todo and its dependencies
 Given a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
 	And a vote exists with todo: that todo, user: user "junko"
 	And a comment exists with todo: that todo, user: user "junko", comment: "yeah!"
@@ -43,9 +43,27 @@ Then I should be redirected to the todos page
 	And 0 todos should exist
 	And 0 comments should exist
 	And 0 votes should exist
-	
-Scenario: Link to todos (NOT IMPLEMENTED)
-Given not implemented
+
+@close
+Scenario: Close a Todo
+Given a todo exists with title: "Chat room"
+	And a user is logged in as "johan"
+When I go to the todos page
+Then I should see "Chat room"
+When I follow "Close"
+Then I should be redirected to the todos page
+	And I should not see "Chat room"
+
+@close
+Scenario: List a closed Todo
+Given a todo exists with title: "Chat room", closed: true
+	And a user is logged in as "johan"
+When I go to the todos page
+Then I should not see "Chat room"
+When I follow "Closed"
+Then I should be redirected to the todos page
+	And I should see "Chat room - closed"
+
 
 Scenario: Author (NOT IMPLEMENTED)
 Given not implemented
