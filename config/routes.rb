@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 	map.resources :votes
-  map.resources :todos, :member => {:add_comment => :put, :edit_comment => :get}
+  map.resources :todos, :member => {:add_comment => :put, :edit_comment => :get, :close => :get}
 	map.resources :events, :member => {:add_comment => :put, :edit_comment => :get, :move_comment => :get}
 
   map.resources :invitations, :collection => { :deliver => :get }

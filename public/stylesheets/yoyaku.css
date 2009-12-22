@@ -81,16 +81,38 @@ td.schedule-only-right-and-down{
 
 /* Styles for main page */
 #banner{
-  background: #0099cc;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid;
+  background:white;
+  padding:5px;
+  border:2px solid;
   font: small-caps 15px/15px serif;
   color: #000080;
   text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  
 }
-#banner img{
-  float: left;
+#nav, #nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+#nav a {
+	width: 10em;
+	text-decoration: none;
+	color: #000080;
+}
+#nav li {
+	float: left;
+	width: 10em;
+}
+#nav li ul {
+	position: absolute;
+	width: 10em;
+	left: -999em;
+}
+#nav li:hover ul {
+	background:white;
+	left: auto;
+	border-bottom: 2px solid;
 }
 #columns{
   background: #9999ff;
@@ -384,6 +406,7 @@ h4{
   width:570px;
   padding:5px;
   margin-top:12px;
+  border:2px solid #000080;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	  
 }
@@ -544,7 +567,7 @@ a.link{
   border-bottom:0;
   margin:0 0 3px 0;
 }
-.todo_container .contents_container .contents .links a{
+.todo_container .contents_container .contents .links{
 	margin-top:3px;
 	float:right;
 }
@@ -648,35 +671,7 @@ form div.subjects label span.text{
 
 
 
-#nav, #nav ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
 
-#nav a {
-	display: block;
-	width: 10em;
-	text-decoration: none;
-	color: #000080;
-}
-
-#nav li {
-	float: left;
-	width: 10em;
-}
-
-#nav li ul {
-	position: absolute;
-	width: 10em;
-	left: -999em;
-}
-
-#nav li:hover ul {
-	left: auto;
-	background: #0099cc;
-	border-bottom: 2px solid;
-}
 
 
 
