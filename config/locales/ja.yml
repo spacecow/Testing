@@ -20,6 +20,8 @@ ja:
   category: "カテゴリー"
   choose: "選択"
   classroom: "部屋"
+  close: "閉じる"
+  closed: "閉じた"
   comment: "コメント"
   course: "講座"
   create: "創造"
@@ -76,6 +78,7 @@ ja:
   offu: "OFF"
   onu: "ON"
   onyomi: "音読み"
+  open: "開いた"
   password: "パスワード"
   password_confirmation: "パスワード確認"
   photo: "写真"
@@ -85,6 +88,7 @@ ja:
   quiz: "クイズ"
   register: "登録"
   registrant: "参加者"
+  reopen: "再び開く"
   reserve: "予約"
   role: "Role"
   roles: "Roles"
@@ -95,6 +99,7 @@ ja:
   spelling: "スペルミス"
   start_time: "開始の時間"
   student: "受講生"
+  subdomain: "サブドメイン"
   successfully: "首尾よく"
   sure?: "確かですか"
   suspended: "利用停止"
@@ -235,7 +240,7 @@ ja:
     error:
       edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"
   todos:
-    title: "やる事"
+    title: "やる事リスト"
   users:
     editing: "ユーザー編集"
     new: "新しいユーザー"

@@ -12,8 +12,8 @@
 			
 			<% if links %>
 				<div class="links">
-					<% if permitted_to? :close, todo %>
-						<%= link_to t('close'), close_todo_path(todo), :class=>"link" %>
+					<% if permitted_to? :toggle_close, todo %>
+						<%= link_to todo.closed ? t(:reopen) : t(:close), toggle_close_todo_path(todo), :class=>"link" %>
 					<% end %>					
 					<% if permitted_to? :edit, todo %>
 						<%= link_to t('edit'), edit_todo_path(todo), :class=>"link" %>

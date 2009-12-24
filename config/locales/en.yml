@@ -91,6 +91,7 @@ en:
   quiz: "Quiz"
   register: "Register"
   registrant: "Registrant"
+  reopen: "Re-open"
   reserve: "Reserve"
   role: "Role"
   roles: "Roles"
@@ -101,6 +102,7 @@ en:
   spelling: "Spelling"
   start_time: "Start Time"
   student: "Student"
+  subdomain: "Sub-domain"
   successfully: "Successfully"
   suspended: "Suspended"
   sure?: "Are you sure?"
@@ -251,7 +253,7 @@ en:
     error:
       edit_courses_with_teacher: "Cancel teacher before changing course"
   todos:
-    title: "Todos"
+    title: "Todo List"
   users:
     editing: "Edit User"
     new: "New User"

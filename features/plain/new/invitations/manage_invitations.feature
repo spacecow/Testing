@@ -27,3 +27,6 @@ Then I should be redirected to the new invitation page
 	
 Scenario: Include email in update messages (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Have a version page where updates are listed (NOT IMPLEMENTED)
+Given not implemented

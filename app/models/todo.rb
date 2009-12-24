@@ -22,7 +22,7 @@ class Todo < ActiveRecord::Base
   
   def closed_message
   	if self.closed
-  		return " - "+I18n.t(:closed)
+  		return " - "+I18n.t(:closed).downcase
   	end
   	""
   end

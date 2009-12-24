@@ -2,7 +2,9 @@ class TodosController < ApplicationController
 	filter_access_to :all
 
   def index
-    if params[:option] == "closed"
+  	@option = params[:option].blank? ? "open" : "closed"
+  	@setting = Setting.find_by_name( "main" )
+    if @option == "closed"
     	@todos = Todo.all.reject{|e| !e.closed}
   	else
     	@todos = Todo.all.reject(&:closed)
@@ -10,6 +12,7 @@ class TodosController < ApplicationController
   end
   
   def show
+  	@setting = Setting.find_by_name( "main" )
   	@todo = Todo.find( params[:id] )
   	@comment = Comment.new
   end
@@ -78,6 +81,7 @@ class TodosController < ApplicationController
   end
   
   def edit_comment
+  	@setting = Setting.find_by_name( "main" )
   	@comment = Comment.find( params[:id] )
   	@todo = Todo.find( @comment.todo )
   	respond_to do |wants|
@@ -86,7 +90,7 @@ class TodosController < ApplicationController
   	end	
   end
   
-  def close
+  def toggle_close
   	@todo = Todo.find( params[:id] )
   	@todo.update_attribute( :closed, !@todo.closed )
   	redirect_to :back

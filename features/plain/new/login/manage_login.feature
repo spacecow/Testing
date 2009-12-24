@@ -5,7 +5,8 @@ Given a setting exists with name: "main"
 Scenario: Log in
 When I go to the events page
 	And I follow 'login.text'
-	And I fill in 'user_name' with "kurosawa_akira"
+Then I should not see "参加イベント"	
+When I fill in 'user_name' with "kurosawa_akira"
 	And I fill in 'password' with "secret"
 	And I press 'login.button'
 Then I should be redirected to the events page

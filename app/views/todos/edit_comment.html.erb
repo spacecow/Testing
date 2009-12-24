@@ -2,7 +2,7 @@
 <%= stylesheet_link_tag 'votes' %>
 <style>
 textarea#comment_comment{
-  background: url(<%= avatar_mini_url( @comment.user ) %>) no-repeat;
+  background: url(<%= @setting.subdomain%><%= avatar_mini_url( current_user2 ) %>) no-repeat;
   background-color: white;
   background-position: 0 50%;
   padding-left: 45px;

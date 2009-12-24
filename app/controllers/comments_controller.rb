@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
   end
   
   def update
+  	@setting = Setting.find_by_name( "main" )
   	params[:comment][:comment] = params[:comment][:comment].gsub("\r\n", "<br />");
   	if @comment.update_attributes( params[:comment] )
   		if @comment.todo_id.blank?

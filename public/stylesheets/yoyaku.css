@@ -81,8 +81,8 @@ td.schedule-only-right-and-down{
 
 /* Styles for main page */
 #banner{
-  background:white;
-  padding:5px;
+  background:#cdc;
+  padding:1px;
   border:2px solid;
   font: small-caps 15px/15px serif;
   color: #000080;
@@ -95,10 +95,14 @@ td.schedule-only-right-and-down{
 	margin: 0;
 	list-style: none;
 }
-#nav a {
+#nav a{
 	width: 10em;
 	text-decoration: none;
 	color: #000080;
+}
+#nav a:hover{
+	color:white;
+	background:#000080;
 }
 #nav li {
 	float: left;
@@ -110,7 +114,7 @@ td.schedule-only-right-and-down{
 	left: -999em;
 }
 #nav li:hover ul {
-	background:white;
+	background:#cdc;
 	left: auto;
 	border-bottom: 2px solid;
 }
@@ -309,8 +313,8 @@ h4{
 	border-style: solid;
 	border-color: #7F9DB9;
 	padding:5px;
-	margin:0;
-	width: 100%;
+	margin:0 0 5px 0;
+	width: 98%;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	
 }
@@ -409,6 +413,10 @@ h4{
   border:2px solid #000080;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;	  
+}
+#list div.sorting{
+	margin:0 0 10px 120px;
+	padding:0;
 }
 .show fieldset,
 .form fieldset{
@@ -605,6 +613,7 @@ a.link{
 
 form div.subjects{
 	margin:0 0 0 153px;
+	width:150px;
 	padding:0;
 }
 form div.subjects label{
@@ -613,15 +622,9 @@ form div.subjects label{
 	-moz-border-radius: 5px;
   -webkit-border-radius: 5px;		
 }
-form div.subjects label.bug{
-	background:red;
-}
-form div.subjects label.spelling{
-	background:orange;
-}
-form div.subjects label.feature{
-	background:green;
-}
+form div.subjects label.bug{ background:red; }
+form div.subjects label.spelling{	background:orange; }
+form div.subjects label.feature{ background:green; }
 form div.subjects label input{
 	float:left;
 }

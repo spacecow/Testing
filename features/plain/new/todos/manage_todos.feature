@@ -44,26 +44,56 @@ Then I should be redirected to the todos page
 	And 0 comments should exist
 	And 0 votes should exist
 
-@close
 Scenario: Close a Todo
 Given a todo exists with title: "Chat room"
 	And a user is logged in as "johan"
 When I go to the todos page
+Then I should see "Todo List - Open"
 Then I should see "Chat room"
 When I follow "Close"
 Then I should be redirected to the todos page
+	And I should see "Todo List - Open"
 	And I should not see "Chat room"
 
-@close
-Scenario: List a closed Todo
+Scenario: List a closed/reopened Todo
 Given a todo exists with title: "Chat room", closed: true
 	And a user is logged in as "johan"
 When I go to the todos page
 Then I should not see "Chat room"
 When I follow "Closed"
 Then I should be redirected to the todos page
+	And I should see "Todo List - Closed"
 	And I should see "Chat room - closed"
+When I follow "Re-open"
+Then I should be redirected to the todos page
+	And I should see "Todo List - Closed"	
+	And I should not see "Chat room"
+When I follow "Open"
+Then I should be redirected to the todos page
+	And I should see "Todo List - Open"
+	And I should see "Chat room"
+
+Scenario: Show a closed/reopened Todo
+Given a todo exists with title: "Chat room"
+	And a user is logged in as "johan"
+When I go to the show page of that todo
+Then I should not see "Chat room - closed"
+When I follow "Close"
+Then I should be redirected to the show page of that todo
+	And I should see "Chat room - closed"
+	
+Scenario: Re-open a closed Todo
+Given a todo exists with title: "Chat room", closed: true
+	And a user is logged in as "johan"
+When I go to the show page of that todo
+Then I should see "Chat room - closed"
+When I follow "Re-open"
+Then I should be redirected to the show page of that todo
+	And I should see "Chat room"
 
 
 Scenario: Author (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Cache setting (NOT IMPLEMENTED)
 Given not implemented

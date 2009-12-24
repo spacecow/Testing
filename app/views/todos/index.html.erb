@@ -1,10 +1,17 @@
 <% content_for(:head) do %><%= stylesheet_link_tag 'votes' %><% end %>
 <div id="list">
-<h1><%= t('todos.title') %></h1>
-<%= link_to t(:open), todos_path %> |
-<%= link_to t(:closed), todos_path(:option => "closed") %>
+<h1><%= t('todos.title') %> - <%= t( @option ).capitalize %></h1>
+<div class="intro">
+	<%= @setting.todos_description( japanese? ) %>
+	<% if permitted_to? :edit, @setting %>
+		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
+	<% end %>
+</div>
+<div class="sorting">
+	<%= link_to t(:open), todos_path %> |
+	<%= link_to t(:closed), todos_path(:option => "closed") %>
+</div>
 <%= render :partial => 'todo', :collection => @todos, :locals => { :title => true, :links => true } %>
-
 <div class="links">
 <p><%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %></p>
 </div>

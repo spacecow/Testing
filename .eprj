@@ -103,6 +103,8 @@
             <string>app\controllers\todos_controller.rb</string>
             <key>todos</key>
             <string>app\controllers\todos_controller.rb</string>
+            <key>todos_</key>
+            <string>app\controllers\todos_controller.rb</string>
             <key>todos_con</key>
             <string>app\controllers\todos_controller.rb</string>
             <key>user.rb</key>

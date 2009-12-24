@@ -2,7 +2,7 @@
 <%= stylesheet_link_tag 'votes' %>
 <style>
 textarea#comment_comment{
-  background: url(<%= avatar_mini_url( current_user2 ) %>) no-repeat;
+  background: url(<%= @setting.subdomain%><%= avatar_mini_url( current_user2 ) %>) no-repeat;
   background-color: white;
   background-position: 0 50%;
   padding-left: 45px;
@@ -11,7 +11,7 @@ textarea#comment_comment{
 <% end %>
 <div class="show">
 <fieldset>
-<legend><%= @todo.title %></legend>
+<legend><%= @todo.title %><%= @todo.closed_message %></legend>
 
 <%= render :partial => @todo, :locals =>{ :title => false, :links => false } %>
 <hr>
@@ -24,6 +24,9 @@ textarea#comment_comment{
 	<% if permitted_to? :index, @todo %>
 		<%= link_to t('todos.title'), todos_path, :class=>"link" %>
 	<% end %>				
+	<% if permitted_to? :toggle_close, @todo %>
+		| <%= link_to @todo.closed ? t(:reopen) : t(:close), toggle_close_todo_path(@todo), :class=>"link" %>
+	<% end %>					
 	<% if permitted_to? :edit, @todo %>
 		| <%= link_to t('edit'), edit_todo_path(@todo), :class=>"link" %>
 	<% end %>
