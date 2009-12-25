@@ -1,4 +1,3 @@
-@event_comments
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exists with username: "johan", role: "admin", language: "en"
@@ -93,15 +92,7 @@ Then I should be redirected to the show page of its event
 Scenario: Delete with ajax (NOT IMPLEMENTED)
 Given not implemented
 
-
-
-
-
-
-
-
-
-
-
+Scenario: When you move a comment, the line breaks should stay there (NOT IMPLEMENTED)
+Given not implemented
 
 

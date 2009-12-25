@@ -23,7 +23,6 @@ Then I should be redirected to the events page
 	And a user should exist with role: "registrant", language: "en"
 	And I should see "Events"
 
-@avatar
 Scenario: An invited guest can make a simple registration in english
 Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
 When I signup with that invitation
@@ -55,15 +54,28 @@ Then I should be redirected to the events page
 	And I should see "Events"
 
 Scenario: A user can not unset certain attributes that were set in an event registration
-Given a user exists with username: "kurosawa", role: "registrant", language: "en"
+Given a user exists with username: "kurosawa", role: "registrant", language: "en", occupation: "e1", age: "age_10", occupation: "reg_e1"
 	And a user is logged in as "kurosawa"
 	And an event: "christmas" exists with title_en: "Christmas Party"
-	And I am registered for that event
+	And a registrant exists with user: that user, event: that event
 When I follow "Edit Profile"
 Then "Exchange Student" should be selected in "user_occupation"
-	And "user_occupation" should have no blank option
-Then "10's" should be selected in "user_age"
+	And "user_occupation" should have a blank option
+	And "10's" should be selected in "user_age"
 	And "user_age" should have no blank option
+When I select "Japanese" from "Language"
+	And I press "Update"
+	And I follow "ﾌﾟﾛﾌｨｰﾙ編集"
+Then "" should be selected in "user_occupation"	
+	And "10代" should be selected in "user_age"
+	And "user_age" should have no blank option
+When I select "英語" from "言語"
+	And I press "更新"
+	And I follow "Edit Profile"
+Then "Exchange Student" should be selected in "user_occupation"
+	And "user_occupation" should have a blank option
+	And "10's" should be selected in "user_age"
+	And "user_age" should have no blank option	
 
 #@avatar
 #Scenario: Avatar error messages
@@ -91,8 +103,21 @@ Given not implemented
 Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Absolute value for occupation so that english&japanese doesnt mix (NOT IMPLEMENTED)
-Given not implemented
 
-Scenario: Will comments dissapear if user is deleted? (NOT IMPLEMENTED)
-Given not implemented
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

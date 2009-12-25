@@ -8,13 +8,13 @@ Given a user is logged in as "kurosawa"
 	And a event exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", date: "2009-12-19", description_en: "It's Christmas!", description_ja: "クリスマスタイム！"
 When I go to the events page
 Then I should see events table
-  |	タイトル				|	日付					|	記述					|
+  |	イベント名					|	開催日			|	記述					|
   |	クリスマスパーティ	|	2009-12-19	|	クリスマスタイム！	|	
 When I follow 'edit_profile'
 	And I select "英語" from 'language'
 	And I press 'update'
 Then I should see events table
-  |	Title						|	Date				|	Description			|
+  |	Event						|	Date				|	Description			|
   |	Christmas Party	|	2009-12-19	|	It's Christmas!	|
 
 Scenario: Create an event
@@ -32,19 +32,22 @@ Then a event should exist with title_en: "Christmas Party", title_ja: "クリス
   And a gallery should exist with event: that event
 	And I should be redirected to the events page
 
-Scenario: When an event is deleted, its gallery & comments should be deleted
+Scenario: When an event is deleted, its gallery, registrants & comments should be deleted
 Given a user is logged in as "aya"
 	And a event exist with title_en: "Christmas Party!"
 	And a comment exists with event: that event, user: user "aya", comment: "comment 1"
 	And a comment exists with event: that event, user: user "kurosawa", comment: "comment 2"
+	And a registrant exists with event: that event, user: user "kurosawa"
 Then a gallery should exist with event: that event
 	And 1 galleries should exist
 	And 2 comments should exist
+	And 1 registrants should exist
 When I go to the events page
   And I follow 'delete'
 Then 0 events should exist
   And 0 galleries should exist 
   And 0 comments should exist
+  And 0 registrants should exist
 
 #Scenario: When an event is deleted, its registrants and comments should be deleted
 #Given not implemented

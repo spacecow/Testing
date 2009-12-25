@@ -1,4 +1,3 @@
-@event_registration
 Background:
 Given a setting exists with name: "main"
 
@@ -15,4 +14,4 @@ When I go to the events page
 	And I press 'apply'
 Then I should see 'successfully'
 	Then a registrant should exist with event: event "christmas", user: user "kurosawa"
-	And a user should exist with occupation: "Exchange Student", age: "10", tel: "080-1234-5678"
+	And a user should exist with occupation: "reg_e1", age: "age_10", tel: "080-1234-5678"

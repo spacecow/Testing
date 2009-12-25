@@ -105,7 +105,7 @@ end
 Factory.define :todo do |f|
 	f.title "default todo title"
 	f.description "default todo description"
-	f.subjects ["bug", ""]
+	#f.subjects ["bug", ""]
 	f.user {|user| user.association(:user)}
 end
 

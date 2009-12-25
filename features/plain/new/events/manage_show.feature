@@ -1,4 +1,3 @@
-@show_event
 Background:
 Given a setting exists with name: "main"
 	And a user exists with username: "johan", role: "registrant", language: "en"

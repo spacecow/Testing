@@ -1,17 +1,24 @@
 <% content_for(:head) do %><%= stylesheet_link_tag 'votes' %><% end %>
 <div id="list">
-<h1><%= t('todos.title') %> - <%= t( @option ).capitalize %></h1>
+<h1><%= t('todos.title') %> - <%= t( @status ).capitalize %></h1>
 <div class="intro">
 	<%= @setting.todos_description( japanese? ) %>
 	<% if permitted_to? :edit, @setting %>
 		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
 	<% end %>
 </div>
-<div class="sorting">
-	<%= link_to t(:open), todos_path %> |
-	<%= link_to t(:closed), todos_path(:option => "closed") %>
-</div>
-<%= render :partial => 'todo', :collection => @todos, :locals => { :title => true, :links => true } %>
+
+	<%- form_for :sorting, todos_path, :html => { :method=>'get' } do |f| -%>
+		<div class="sorting">
+			<label for="status"><%= t(:sort) %></label>
+	  	<%= select_tag :status, options_for_select( Todo::STATUS_DROP.map{|e| [t(e[0]),e[1]]}, @status), :include_blank => false %>
+	  	<%= select_tag :subject, options_for_select( Todo::SUBJECTS_DROP.map{|e| [t(e[0]),e[1]]}, @subject), :include_blank => false %>
+	  	<%= select_tag :sort, options_for_select( Todo::SORT_DROP.map{|e| [t(e[0]),e[1]]}, @sort), :include_blank => false %>
+	  	<%= select_tag :order, options_for_select( Todo::ORDER_DROP.map{|e| [t(e[0]),e[1]]}, @order), :include_blank => false %>
+	  	<%= f.submit "Go!" %>
+		</div>
+	<%- end -%>
+<%= render :partial => 'todo', :collection => @todos, :locals => { :show => false } %>
 <div class="links">
 <p><%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %></p>
 </div>

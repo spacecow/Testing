@@ -53,7 +53,7 @@ authorization do
 		has_permission_on :galleries, :to => :show
 		has_permission_on :registrants, :to => [:new, :create]
 		has_permission_on :todos, :to => [:index, :show, :new, :create, :add_comment, :edit_comment]
-  	has_permission_on :todos, :to => [:edit, :update, :destroy] do
+  	has_permission_on :todos, :to => [:edit, :update, :destroy, :toggle_close] do
       if_attribute :user => is { user }
     end		
     has_permission_on :votes, :to => [:new, :edit, :destroy]

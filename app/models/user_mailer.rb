@@ -35,10 +35,10 @@ class UserMailer < ActionMailer::Base
     body
   end
   
-  def update_0_15b( user )
+  def update_0_16( user )
     recipients  user.email
     from        "johan@reserve-gakuwarinet.com"
-    subject     "Update, Version 0.15b"
+    subject     "Update, Version 0.16"
     body
   end    
 end

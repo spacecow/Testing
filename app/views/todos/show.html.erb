@@ -11,9 +11,8 @@ textarea#comment_comment{
 <% end %>
 <div class="show">
 <fieldset>
-<legend><%= @todo.title %><%= @todo.closed_message %></legend>
 
-<%= render :partial => @todo, :locals =>{ :title => false, :links => false } %>
+<%= render :partial => @todo, :locals =>{ :show => true } %>
 <hr>
 <ul id="comments">
 	<%= render :partial => 'comments/comment', :collection => @todo.comments.reverse, :locals => { :f => nil } %>

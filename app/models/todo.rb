@@ -5,7 +5,28 @@ class Todo < ActiveRecord::Base
   
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
-  
+
+	named_scope :with_subject, lambda { |subject| {:conditions => "subjects_mask & #{2**SUBJECTS.index(subject.to_s)} > 0"} }
+
+  STATUS_DROP = [
+    ["open","open"],
+    ["closed","closed"],
+	]
+	SUBJECTS_DROP = [
+	  ["all","all"],
+	  ["bug","bug"],
+	  ["spelling","spelling"],
+	  ["feature","feature"]
+	]
+  SORT_DROP = [
+  	["points","points"],
+  	["latest","created_at"],
+  	["latest_comment", "latest_comment"]
+	]
+	ORDER_DROP = [
+	  ["descending", "descending"],
+	  ["ascending", "ascending"]
+	]
 	SUBJECTS = %w[bug spelling feature]
 	
   def subjects
@@ -19,6 +40,10 @@ class Todo < ActiveRecord::Base
   def points
   	votes.sum(:points)
   end
+  
+  def latest_comment
+		comments.sort_by(&:created_at).first.created_at
+	end
   
   def closed_message
   	if self.closed

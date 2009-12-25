@@ -1,9 +1,9 @@
-<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-	<td><%=h registrant.user.occupation %></td>
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="registrant_<%= registrant.id %>">
+	<td><%=t registrant.user.occupation %></td>
 	<td><%=h registrant.user.name %></td>
 	<td><%=h registrant.user.name_hurigana %></td>
 	<td><%= registrant.user.male ? t(:male) : t(:female) %></td>
-	<td><%=h registrant.user.age %></td>
+	<td><%=t registrant.user.age %></td>
 	<td><%=h registrant.user.nationality %></td>
 	<td><%=h registrant.user.tel %></td>
 	<td><%=h registrant.user.email %></td>

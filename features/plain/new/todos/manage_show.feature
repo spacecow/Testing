@@ -6,17 +6,19 @@ Given a setting exists with name: "main"
 	
 Scenario Outline: Contents of the show page
 Given a user is logged in as "<user>"
-	And a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"  
+	And a todo exists with subjects_mask: 7, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
 When I go to the show page of that todo
-Then I should see "Chat room" within "legend"
+Then I should see "Chat room" within "div.title"
+	And I should see "By: Junko" within "div.title"
 	And I should see "Wouldn't that be fun!" within "div.contents"
-	And I should see "<subject>" within "div.bug"
-	And I should see "Junko" within "div.author"
+	And I should see "bug" within "div.bug"
+	And I should see "spelling" within "div.spelling"
+	And I should see "feature" within "div.feature"
 	And I should <index> "Todo List" within "div.links"
 	And I should <edit> "Edit" within "div.links"
 	And I should <delete> "Del" within "div.links"
 Examples:
-| user 			|	subject	|	edit		| delete 	| index |
-| junko 		|	bug			|	see			|	see			|	see		|
-| johan 		|	bug			|	see			|	see			|	see		|
-| thomas 		|	bug			| not see	| not see |	see		|
+| user 			|	edit		| delete 	| index |
+| junko 		|	see			|	see			|	see		|
+| johan 		|	see			|	see			|	see		|
+| thomas 		| not see	| not see |	see		|

@@ -2,12 +2,27 @@ class TodosController < ApplicationController
 	filter_access_to :all
 
   def index
-  	@option = params[:option].blank? ? "open" : "closed"
+  	@status = params[:status] || "open"
+  	@subject = params[:subject] || "all"
+  	@sort = params[:sort] || "points"
+  	@order = params[:order] || "descending"
   	@setting = Setting.find_by_name( "main" )
-    if @option == "closed"
-    	@todos = Todo.all.reject{|e| !e.closed}
+    if @status == "closed"
+    	if @subject == "all"
+    		@todos = Todo.all( :conditions => ["closed = ?", true] )
+    	else
+  			@todos = Todo.with_subject( @subject ).reject{|e| !e.closed}
+			end
   	else
-    	@todos = Todo.all.reject(&:closed)
+  		if @subject == "all"
+    		@todos = Todo.all( :conditions => ["closed = ?", false])
+    	else
+    		@todos = Todo.with_subject( @subject ).reject(&:closed)
+    	end
+    end
+    @todos = @todos.sort_by{|e| e.send( @sort )}
+    if @order == "descending"
+    	@todos = @todos.reverse
     end
   end
   

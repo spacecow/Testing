@@ -17,7 +17,7 @@ textarea#comment_comment{
 <fieldset>
 <legend><%= @todo.title %></legend>
 
-<%= render :partial => @todo, :locals =>{ :title => false, :links => false } %>
+<%= render :partial => @todo, :locals =>{ :show => true } %>
 <hr>
 <ul id="comments">
 	<%- semantic_form_for @comment do |f| -%>

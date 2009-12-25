@@ -45,7 +45,7 @@ Then I should be redirected to the todos page
 	And 0 votes should exist
 
 Scenario: Close a Todo
-Given a todo exists with title: "Chat room"
+Given a todo exists with title: "Chat room", subjects_mask: 1
 	And a user is logged in as "johan"
 When I go to the todos page
 Then I should see "Todo List - Open"
@@ -55,26 +55,8 @@ Then I should be redirected to the todos page
 	And I should see "Todo List - Open"
 	And I should not see "Chat room"
 
-Scenario: List a closed/reopened Todo
-Given a todo exists with title: "Chat room", closed: true
-	And a user is logged in as "johan"
-When I go to the todos page
-Then I should not see "Chat room"
-When I follow "Closed"
-Then I should be redirected to the todos page
-	And I should see "Todo List - Closed"
-	And I should see "Chat room - closed"
-When I follow "Re-open"
-Then I should be redirected to the todos page
-	And I should see "Todo List - Closed"	
-	And I should not see "Chat room"
-When I follow "Open"
-Then I should be redirected to the todos page
-	And I should see "Todo List - Open"
-	And I should see "Chat room"
-
 Scenario: Show a closed/reopened Todo
-Given a todo exists with title: "Chat room"
+Given a todo exists with title: "Chat room", subjects_mask: 1
 	And a user is logged in as "johan"
 When I go to the show page of that todo
 Then I should not see "Chat room - closed"
@@ -83,7 +65,7 @@ Then I should be redirected to the show page of that todo
 	And I should see "Chat room - closed"
 	
 Scenario: Re-open a closed Todo
-Given a todo exists with title: "Chat room", closed: true
+Given a todo exists with title: "Chat room", closed: true, subjects_mask: 1
 	And a user is logged in as "johan"
 When I go to the show page of that todo
 Then I should see "Chat room - closed"
@@ -96,4 +78,7 @@ Scenario: Author (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Cache setting (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: If a user is deleted who has created a todo, it has to be dealt with (NOT IMPLEMENTED)
 Given not implemented

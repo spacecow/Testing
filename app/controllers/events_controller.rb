@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   end
   
   def show
+  	@setting = Setting.find_by_name( "main" )
   	@event = Event.find( params[:id], :include => [{:comments => :user}, {:gallery => :photos}, :registrants ] )
     @comment = Comment.new
     @move_options = [["move","move"], ["todo","todo"]] + Todo.all.map{|e| [e.title, e.id]}
@@ -64,6 +65,7 @@ class EventsController < ApplicationController
   end
   
   def edit_comment
+  	@setting = Setting.find_by_name( "main" )
   	@comment = Comment.find( params[:id] )
   	@event = Event.find( @comment.event )
   	respond_to do |wants|

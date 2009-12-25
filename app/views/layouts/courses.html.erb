@@ -84,6 +84,13 @@
   <% end %>
 	<div id="container">	
 		<% if permitted_to? :index, Event.new %>	
+		  <%- flash.each do |key, msg| -%>  
+	      <div id="<%= key %>">
+	        <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
+	        <p><%= msg %></p>    
+	      </div>
+	      <div class="clear"></div>
+	    <%- end -%>
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">
@@ -112,13 +119,6 @@
 			</div>
 		<% end %>
 		<div id="main">
-	    <%- flash.each do |key, msg| -%>  
-	      <div id="<%= key %>">
-	        <p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p>  
-	        <p><%= msg %></p>    
-	      </div>
-	      <div class="clear"></div>
-	    <%- end -%>
 	    <%= yield :layout %>
 			<div id="footer">
 				Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	

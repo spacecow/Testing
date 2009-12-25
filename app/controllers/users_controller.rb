@@ -35,6 +35,7 @@ class UsersController < ApplicationController
   end
   
   def update
+  	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.edit_registration')
