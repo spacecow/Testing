@@ -469,6 +469,11 @@ div#flash_message{
 	padding:0;
 }
 
+
+div.show div.info span.category{
+	font-weight:bold;
+}
+
 /* FIELDSET GALLERY */
 div.show fieldset fieldset.gallery{
 	border: 1px solid #7F9DB9;

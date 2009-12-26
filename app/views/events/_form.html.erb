@@ -1,7 +1,12 @@
 <% f.inputs do %>
 	<%= f.input :title_ja, :label => t( 'title_ja' ) %>
 	<%= f.input :title_en, :label => t( 'title_en' ) %>
-	<%= f.input :date, :label => t( 'event_date' ), :as => :string, :hint => "Ex. 2009-12-19" %>
+	<%= f.input :place, :label => t( 'place' ), :required => false %>
+	<%= f.input :cost, :label => t( 'event_cost' ), :required => false %>
+	<%= f.input :pay_method, :label => t( 'pay_method' ), :required => false %>
+	<%= f.input :start_date, :label => t( 'start_date' ), :start_year => 2009, :required => false, :hint => "Ex: 2009-12月-19 19:00" %>
+	<%= f.input :end_date, :label => t( 'end_date' ), :start_year => 2009, :required => false %>
+	<%= f.input :due_date, :label => t( 'due_date' ), :start_year => 2009, :required => false %>
 	<%= f.input :description_ja, :label => t( 'description_ja' ), :required => false %>
 	<%= f.input :description_en, :label => t( 'description_en' ), :required => false %>
 <% end %>

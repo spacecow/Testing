@@ -15,14 +15,16 @@
 <table cellpadding="2" cellspacing="1" id="events">
 	<tr>
 			<th class="list-topics"><%= t('event') %></th>		
-			<th class="list-topics"><%= t('event_date') %></th>		
-			<th class="list-topics"><%= t('description') %></th>		
+			<th class="list-topics"><%= t('event_date') %></th>
+			<th class="list-topics"><%= t('place') %></th>
+			<th class="list-topics"><%= t('event_cost') %></th>		
 	</tr>
 	<% for event in @events %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="event_<%= event.id %>">
       	<td><%= event.title( japanese? )%></td>
       	<td><%=h event.date %></td>
-      	<td><%=h event.description( japanese? ) %></td>
+      	<td><%=h event.place_to_s %></td>
+      	<td><%=h event.cost_to_s %></td>
   		<td>
     			<% if permitted_to? :show, event %>
     				<%= link_to t('show'), event, :class=>"link" %>

@@ -49,6 +49,8 @@
             <string>app\controllers\comments_controller.rb</string>
             <key>en.y</key>
             <string>config\locales\en.yml</string>
+            <key>environment</key>
+            <string>config\environment.rb</string>
             <key>fac</key>
             <string>test\factories.rb</string>
             <key>factor</key>

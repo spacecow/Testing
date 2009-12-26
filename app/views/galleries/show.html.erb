@@ -1,6 +1,6 @@
 <div class="show">
 <fieldset>
-<legend><%=h @gallery.event.title( japanese? ) %> - <%=h @gallery.event.date %> - <%= t('gallery') %></legend>
+<legend><%=h @gallery.event.title( japanese? ) %> - <%=h @gallery.event.start_date_to_s %> - <%= t('gallery') %></legend>
 
 <% if @gallery.description %>
 	<br />

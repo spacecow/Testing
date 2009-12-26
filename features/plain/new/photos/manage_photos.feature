@@ -3,7 +3,7 @@ Given a setting exists with name: "main"
 	And a user exists with username: "johan", role: "admin", language: "en"
 	And a user is logged in as "johan"
 	And a gallery: "Christmas" exists
-	And a event exist with title_en: "Christmas Party", date: "2009-12-19", gallery: gallery "Christmas"
+	And a event exist with title_en: "Christmas Party", start_date: "2009-12-19", gallery: gallery "Christmas"
 	
 Scenario: Add a photo
 When I go to the show page of gallery "Christmas"

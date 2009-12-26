@@ -101,6 +101,12 @@ Then /^"(.*)" should not be selected in "(.*)"$/ do |option_text,select_id|
   state.should != :something_selected 
 end
 
+When /^I select "([^\"]*)" from dropmenus "([^\"]*)"$/ do |selections, menu|
+  selections.split(', ').each_with_index do |selection,i|
+	  When "I select \"#{selection}\" from \"#{menu}_#{i+1}i\""
+	end
+end
+
 Then /^"(.*)" should have options "(.*)"$/ do |select_id, options| 
   field = field_with_id(select_id) 
   field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options

@@ -85,7 +85,7 @@ class TodosController < ApplicationController
   def add_comment
 		@todo = Todo.find( params[:id] )
   	@comment = Comment.new( params[:comment] )
-  	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
+  	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if !@comment.save
       flash.now[:error] = t('error.blank',:object=>t(:comment))
     end

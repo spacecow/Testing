@@ -18,9 +18,9 @@ Factory.define :courses_student do |f|
 end
 
 Factory.define :event do |f|
-	f.title_en "Event 1"
-	f.title_ja "イベント１"
-	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
+	f.sequence(:title_en){|n| "Event #{n}" }
+	f.sequence(:title_ja){|n| "イベント#{n}" }
+	#f.start_date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 	f.gallery {|gallery| gallery.association(:gallery)}
 end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091222135618) do
+ActiveRecord::Schema.define(:version => 20091226081805) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(:version => 20091222135618) do
   end
 
   create_table "events", :force => true do |t|
-    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title_ja"
@@ -106,6 +105,12 @@ ActiveRecord::Schema.define(:version => 20091222135618) do
     t.string   "title_en"
     t.text     "description_en"
     t.integer  "registrants_count", :default => 0
+    t.string   "place"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "pay_method"
+    t.datetime "due_date"
+    t.string   "cost"
   end
 
   create_table "galleries", :force => true do |t|

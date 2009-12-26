@@ -42,6 +42,7 @@ class Todo < ActiveRecord::Base
   end
   
   def latest_comment
+		return DateTime.new if comments.empty?
 		comments.sort_by(&:created_at).first.created_at
 	end
   
