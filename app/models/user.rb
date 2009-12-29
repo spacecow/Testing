@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	has_many :todos
 	has_many :votes, :dependent => :destroy
 	belongs_to :invitation
+  has_many :photos
   
   attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana	, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes
   

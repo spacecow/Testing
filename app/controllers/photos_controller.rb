@@ -2,7 +2,7 @@ class PhotosController < ApplicationController
 	filter_resource_access
 	
   def new
-  	@photo = Photo.new( :gallery_id => params[:gallery_id])
+  	@photo = Photo.new( :gallery_id => params[:gallery_id] )
   end
   
   def create

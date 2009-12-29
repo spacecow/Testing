@@ -9,6 +9,7 @@
   	  <%= f.input :caption_ja, :label => t('caption'), :required => false, :hint => "写真の解説を編集する" %>
   	  <%= f.input :caption_en, :label => t('caption'), :required => false, :hint => "Edit caption of photo" %>
 	  <%= f.input :gallery_id, :as => :hidden %>
+	  <%= f.hidden_field :user_id, :value => current_user.id %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:add,:object=>t(:photo)) %>

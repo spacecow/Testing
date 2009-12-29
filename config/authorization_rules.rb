@@ -42,10 +42,10 @@ authorization do
   end  
 	
 	role :photographer do
-		has_permission_on :photos, :to => [:new, :create]	
-		has_permission_on :photos, :to => [:edit, :update]
-		#	if_attribute :user => is { user }
-    #end
+		has_permission_on :photos, :to => [:new, :create, :update]	
+		has_permission_on :photos, :to => :edit do
+			if_attribute :user => is { user }
+    end
 	end
 
   role :registrant do

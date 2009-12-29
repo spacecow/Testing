@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
   belongs_to :gallery
+  belongs_to :user
 
   has_attached_file :photo, :styles => {
   		:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
