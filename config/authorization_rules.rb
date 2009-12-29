@@ -3,7 +3,7 @@ authorization do
     has_permission_on :events, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :add_comment, :edit_comment, :move_comment]
     has_permission_on :registrants, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
-    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register ]
+    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :new_event_register, :create_event_register, :edit_role, :update_role ]
     has_permission_on :comments, :to => [:new, :create, :edit, :update, :destroy]
     has_permission_on :settings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :galleries, :to => [:index, :show, :edit]
@@ -40,6 +40,13 @@ authorization do
   	has_permission_on :meanings, :to => :show
   	has_permission_on :glossaries, :to => [:index, :quiz, :quiz_init, :new, :create, :check ]
   end  
+	
+	role :photographer do
+		has_permission_on :photos, :to => [:new, :create]	
+		has_permission_on :photos, :to => [:edit, :update]
+		#	if_attribute :user => is { user }
+    #end
+	end
 
   role :registrant do
   	includes :guest

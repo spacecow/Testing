@@ -7,8 +7,11 @@ class User < ActiveRecord::Base
 	has_many :votes, :dependent => :destroy
 	belongs_to :invitation
   
+  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana	, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes
+  
   #before_create :set_invitation_limit
-
+  before_create :set_role
+  
 	acts_as_authentic
 
   has_attached_file :avatar, :styles => {
@@ -27,7 +30,7 @@ class User < ActiveRecord::Base
 	#validates_inclusion_of :avatar_content_type, :in => %w( image/jpeg image/png ), :message => "is not a picture", :if => :false
 	
   validates_uniqueness_of :username
-	validates_presence_of :name, :role, :name_hurigana, :language, :nationality
+	validates_presence_of :name, :name_hurigana, :language, :nationality
 	validates_inclusion_of :male, :in => [false, true]
 	validates_presence_of :occupation, :age, :tel, :if => :christmas	
 	attr_accessor :christmas	
@@ -37,12 +40,12 @@ class User < ActiveRecord::Base
 	
 	#attr_accessible :username, :email, :password, :password_confirmation, :roles_mask, :role, :name, :invitation_token
 	
-	ROLES = %w[god admin observer teatcher student registrant]
+	ROLES = %w[god admin observer teacher student registrant photographer]
 	LANGUAGES_EN = [['Japanese','ja'],['English','en']]
 	LANGUAGES_JA = [['日本語','ja'],['英語','en']]
 
 	def role_symbols
-    [role.to_sym]
+    roles.map(&:to_sym)
   end
 	
 	def new_registrant_attributes=( registrant_attributes )
@@ -68,6 +71,13 @@ class User < ActiveRecord::Base
 		self.invitation = Invitation.find_by_token( token )
 	end
   
+  def roles=(roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
+  end
+  def roles
+    ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
+  end
+  
 private
   
   def reprocess_avatar
@@ -77,12 +87,8 @@ private
   def set_invitation_limit
     self.invitation_limit = 0;
   end
-
-  #def roles=(roles)
-  #  self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
-  #end
-  #def roles
-  #  ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
-  #end
-
+  
+  def set_role
+		self.roles = ["registrant"]
+	end
 end

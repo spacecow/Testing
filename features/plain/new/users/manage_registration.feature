@@ -20,9 +20,10 @@ When I choose 'female'
 	And I select "英語" from 'language'
 	And I press 'register'
 Then I should be redirected to the events page
-	And a user should exist with role: "registrant", language: "en"
+	And a user should exist with roles_mask: 32, language: "en"
 	And I should see "Events"
 
+@user_signup
 Scenario: An invited guest can make a simple registration in english
 Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
 When I signup with that invitation
@@ -49,7 +50,7 @@ When I fill in 'name_hurigana' with "プリンス　ヒリプ"
 	And "" should be selected in "user_age"
 	And I press 'register'
 Then I should be redirected to the events page
-	And a user should exist with role: "registrant", language: "en"
+	And a user should exist with username: "prince_philip", email: "prince@docomo.ne.jp", nationality: "Swedish", name: "Prince Philip", name_hurigana: "プリンス　ヒリプ", roles_mask: 32, male: false, language: "en", occupation: "", tel: "", age: "", invitation_limit: 0
 	And I should see 'users.notice.new_registration'
 	And I should see "Events"
 

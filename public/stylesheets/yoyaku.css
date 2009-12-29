@@ -456,7 +456,6 @@ div.sorting select{
   display: block;
 }
 
-.form
 .form .submit{ margin-left: 165px; }
 div.form fieldset div.links a{
 	font-size:smaller;
@@ -655,6 +654,13 @@ form div.subjects label span.text{
 }
 
 
+/* ROLES */
+form input#user_submit{
+	margin:10px 0 0 70px;	
+}
+
+
+
 
 
 /* The error box */
@@ -735,6 +741,8 @@ form div.subjects label span.text{
 }
 #beta_testers ul li{
 	list-style:none;
+	width:120%;
+	float:right;
 }
 #beta_testers:hover, #right_column #user_nav:hover{
   background: #efe;	

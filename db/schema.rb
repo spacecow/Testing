@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091226081805) do
+ActiveRecord::Schema.define(:version => 20091226152144) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -391,6 +391,13 @@ ActiveRecord::Schema.define(:version => 20091226081805) do
     t.datetime "avatar_updated_at"
     t.integer  "invitation_id"
     t.integer  "invitation_limit"
+    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
   create_table "versions", :force => true do |t|

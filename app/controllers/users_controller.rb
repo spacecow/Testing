@@ -68,5 +68,13 @@ class UsersController < ApplicationController
     else
       render :action => 'new_event_register'
     end
-	end 
+	end
+	
+	def edit_role
+	end
+	
+	def update_role
+		@user.update_attributes(params[:user])
+		redirect_to users_path	
+	end
 end

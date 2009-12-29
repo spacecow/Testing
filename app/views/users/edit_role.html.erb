@@ -1,0 +1,21 @@
+<div class="form">
+
+<fieldset>
+<legend><%= t(:editing, :object=>t(:role)) %></legend>
+
+<%- form_for @user, :url => update_role_user_path( @user ), :method => :put do |f| -%>
+	<div class="roles">
+		<% for role in User::ROLES[1,User::ROLES.length-1] %>
+		  <label>
+		  	<%= check_box_tag "user[roles][]", role, @user.roles.include?( role ) %>
+		  	<span class="text"><%= t( role ).humanize %></span>
+		  	<div class="clear"></div>
+		  </label>
+		<% end %>
+		<%= hidden_field_tag "user[roles][]", "" %>
+	</div>
+	<%= f.submit t(:update) %>
+<%- end -%>
+
+</fieldset>
+</div>

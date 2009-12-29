@@ -2,7 +2,29 @@
 
 # create a model
 Given(/^#{capture_model} exists?(?: with #{capture_fields})?$/) do |name, fields|
-  create_model(name, fields)
+  mdl = create_model(name, fields)
+  if name[0,6] == "a user"
+  	#/role:\s"(.+?)"/ =~ ( fields )
+		roles = mdl[-1].role
+		roles_code = {}
+		roles_code["god"] = 1
+		roles_code["admin"] = 2
+		roles_code["observer"] = 4
+		roles_code["teatcher"] = 8
+		roles_code["student"] = 16
+		roles_code["registrant"] = 32
+		roles_code["photographer"] = 64
+		
+		roles_mask = 0
+		roles.split(', ').each do |role|
+			roles_mask += roles_code[role]
+		end
+	  mdl[-1].update_attribute( :roles_mask, roles_mask )
+#	  p mdl
+#  	p mdl[-1].roles_mask
+#  	#model.update_attribute( :role, $1 )
+#  end
+	end
 end
 
 # create n models
