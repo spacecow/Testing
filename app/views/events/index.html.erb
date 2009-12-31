@@ -1,23 +1,19 @@
 <div id="list">
 <h1><%= t('events.title') %></h1>
-<table class="intro">
-	<tr>
-		<td>
-			<%= @setting.events_description( japanese? ) %>
-			<% if permitted_to? :edit, @setting %>
-				<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
-			<% end %>
-		</td>
-	</tr>
-</table><br/ >
+<div class="intro">
+	<%= @setting.events_description( japanese? ) %>
+	<% if permitted_to? :edit, @setting %>
+		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
+	<% end %>
+</div>
 
 
-<table cellpadding="2" cellspacing="1" id="events">
+<table cellpadding="20" cellspacing="20" id="events">
 	<tr>
-			<th class="list-topics"><%= t('event') %></th>		
-			<th class="list-topics"><%= t('event_date') %></th>
-			<th class="list-topics"><%= t('place') %></th>
-			<th class="list-topics"><%= t('event_cost') %></th>		
+			<th><%= t('event') %></th>		
+			<th><%= t('event_date') %></th>
+			<th><%= t('place') %></th>
+			<th><%= t('event_cost') %></th>		
 	</tr>
 	<% for event in @events %>
 		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="event_<%= event.id %>">
@@ -27,13 +23,13 @@
       	<td><%=h event.cost_to_s %></td>
   		<td>
     			<% if permitted_to? :show, event %>
-    				<%= link_to t('show'), event, :class=>"link" %>
+    				<%= link_to t('show'), event %>
     			<% end %>
     			<% if permitted_to? :edit, event %>
-    				<%= link_to t('edit'), edit_event_path(event), :class=>"link" %>
+    				<%= link_to t('edit'), edit_event_path(event) %>
     			<% end %>
     			<% if permitted_to? :destroy, event %>
-    				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+    				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete %>
     			<% end %>
 			</td>    	
 		</tr>

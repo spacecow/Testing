@@ -1,6 +1,7 @@
 Background:
 Given a setting exists with name: "main"
 
+@applicants
 Scenario: Register a user to an event
 Given a user: "kurosawa" exists with username: "kurosawa_akira", role: "registrant", language: "en"
 	And a user is logged in as "kurosawa_akira"
@@ -8,10 +9,16 @@ Given a user: "kurosawa" exists with username: "kurosawa_akira", role: "registra
 When I go to the events page
 	And I follow 'show'
 	And I press 'apply'
-	And I select "Exchange Student" from 'occupation'
-	And I select "10's" from 'age'
+Then "" should not be selected in "user_occupation"
+	And "" should not be selected in "user_age"
+When I press 'apply'
+Then I should see "Occupation*Exchange StudentALTetccan't be blank"                
+	And I should see "Age*Under Junior High School10's20's30's40's50'sOver 60can't be blank"
+	And I should see "Telephone number*can't be blank"
+When I select "Exchange Student" from 'occupation'
+	And I select "20's" from 'age'
 	And I fill in 'tel' with "080-1234-5678"
-	And I press 'apply'
+	And I press "Apply"
 Then I should see 'successfully'
 	Then a registrant should exist with event: event "christmas", user: user "kurosawa"
-	And a user should exist with occupation: "reg_e1", age: "age_10", tel: "080-1234-5678"
+	And a user should exist with occupation: "reg_e1", age: "age_20", tel: "080-1234-5678"

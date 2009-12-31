@@ -74,9 +74,6 @@ Then I should be redirected to the show page of that todo
 	And I should see "Chat room"
 
 
-Scenario: Author (NOT IMPLEMENTED)
-Given not implemented
-
 Scenario: Cache setting (NOT IMPLEMENTED)
 Given not implemented
 

@@ -1,21 +1,23 @@
 <div id="user_nav">
-	<div class="links">
-		<% if !current_user2 %>
-			<% if I18n.locale == 'ja' %>
-				<%= link_to 'English', toggle_user_language_url %> |
-			<% else %>
-				<%= link_to '日本語', toggle_user_language_url %> |
+	<div class="commands">
+		<ul>
+			<% if !current_user2 %>
+				<% if I18n.locale == 'ja' %>
+					<li><%= link_to 'English', toggle_user_language_url %></li>
+				<% else %>
+					<li><%= link_to '日本語', toggle_user_language_url %></li>
+				<% end %>
 			<% end %>
-		<% end %>
-		<% if current_user2 %>
-			<%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %> |
-			<%= link_to t( 'logout.text' ), logout_user_path %>
-			<% if permitted_to? :new, Invitation.new %>
-	      | <%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %>
-	    <% end %>
-		<% else %>
-			<%= link_to t( 'login.text' ), login_user_path %>
-		<% end %>
+			<% if current_user2 %>
+				<li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
+				<li><%= link_to t( 'logout.text' ), logout_user_path %></li>
+				<% if permitted_to? :new, Invitation.new %>
+		      <li><%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %></li>
+		    <% end %>
+			<% else %>
+				<li><%= link_to t( 'login.text' ), login_user_path %></li>
+			<% end %>
+		</ul>
 	</div>
 	<% if current_user2 %>	
 		<%= image_tag avatar_mini_url( current_user2 ) %>

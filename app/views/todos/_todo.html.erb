@@ -7,15 +7,15 @@
 	</div>
 	<div class="contents_container">
 		<div class="contents">
-			<div class="title">
+			<div class="header">
 				<%= image_tag avatar_mini_url( todo.user ) %>
-				<h3>
+				<div class="title">
 					<% if show %>
 						<%= h( todo.title ) %><%= todo.closed_message %>
 					<% else %>
 						<%= link_to( h( todo.title ), todo ) %><%= todo.closed_message %>
 					<% end %>
-				</h3>
+				</div>
 				<span class="creator">
 					By: <%= link_to todo.user.name, todo.user %>,
 				  <%= distance_of_time_in_words_to_now( todo.created_at ) %><%= t('ago') %>

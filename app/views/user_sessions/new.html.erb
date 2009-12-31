@@ -1,7 +1,7 @@
 <div class="form">
 
-<fieldset>
-<legend><%= t('login.text') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('login.text') %></legend>
 
 <% semantic_form_for @user_session do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('login.button') } %>

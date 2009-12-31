@@ -15,10 +15,10 @@ Then I should be redirected to the todos page
 When I follow "New Todo"
 Then I should be redirected to the new todo page
 When I go to the todos page
-	And I follow "Chat room" within "div.title"
+	And I follow "Chat room" within "div.header div.title"
 Then I should be redirected to the show page of that todo
 When I go to the todos page
-	And I follow "Junko" within "div.title"
+	And I follow "Junko" within "div.header"
 Then I should be redirected to the show page of that user
 When I go to the todos page
 	And I follow "Edit" within "div.links"
@@ -47,8 +47,8 @@ Then I should see "Todo List - Open" within "h1"
 	And "sort" should have options "Points, Latest, Latest comment"
 	And "order" should have options "Descending, Ascending"
 	And I should see "A long todo description" within "div.intro"
-	And I should see "Chat room" within "h3"
-	And I should see "By: Junko" within "div.title"
+	And I should see "Chat room" within "div.header div.title"
+	And I should see "By: Junko" within "span.creator"
 	And I should see "Wouldn't that be fun!" within "div.contents"
 	And I should see "bug" within "div.bug"
 	And I should <close> "Close" within "div.links"

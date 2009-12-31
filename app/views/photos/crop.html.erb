@@ -1,5 +1,6 @@
 <div id="list">
 <h1><%= t('photos.crop') %></h1>
+<br />
 <% content_for(:head) do %>
 <%= stylesheet_link_tag "jquery.Jcrop" %>
 <%= javascript_include_tag "jquery.Jcrop.min" %>
@@ -43,7 +44,8 @@ function update_crop(coords) {
   <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
     <%= f.hidden_field attribute, :id => attribute %>
     <%= hidden_field_tag :edit, params[:edit] %>
-  <% end %>
+  <% end %>	
+  <br />
   <p><%= f.submit t('crop') %></p>
 <% end %>
 </div>

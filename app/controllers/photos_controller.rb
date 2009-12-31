@@ -45,7 +45,7 @@ class PhotosController < ApplicationController
   def destroy
     gallery = @photo.gallery
     @photo.destroy
-    flash[:notice] = t('photos.notice.delete_success')
+    flash[:notice] = t('notice.delete_success', :object=>t(:photo).downcase )
     redirect_to gallery
   end	
 end

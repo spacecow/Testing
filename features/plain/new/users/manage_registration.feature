@@ -24,6 +24,21 @@ Then I should be redirected to the events page
 	And I should see "Events"
 
 @user_signup
+Scenario Outline: Some usernames/names are not allowed
+Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
+When I signup with that invitation
+	And I follow "English"
+	And I fill in "Name" with "<word1>"
+	And I fill in "User name" with "<word1>"
+	And I press "Register"
+Then I should see "Name*is not available"
+Then I should see "User name*is not available"
+Examples:
+| word1			|
+| Admin			|
+| Superuser	|
+| webMaster	|
+
 Scenario: An invited guest can make a simple registration in english
 Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
 When I signup with that invitation

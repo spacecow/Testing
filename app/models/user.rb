@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+	include NameValidations
+	
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants
 	has_many :comments, :dependent => :destroy
@@ -8,7 +10,7 @@ class User < ActiveRecord::Base
 	belongs_to :invitation
   has_many :photos
   
-  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana	, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes
+  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana	, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas
   
   #before_create :set_invitation_limit
   before_create :set_role
@@ -80,7 +82,6 @@ class User < ActiveRecord::Base
   end
   
 private
-  
   def reprocess_avatar
     avatar.reprocess!
   end

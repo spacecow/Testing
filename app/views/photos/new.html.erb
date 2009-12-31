@@ -1,7 +1,7 @@
 <div class="form">
 <%= error_messages_for :photo %>
-<fieldset>
-<legend><%= t('photos.new') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('photos.new') %></legend>
 
 <% semantic_form_for @photo, :html => { :multipart => true } do |f| %>
 	<% f.inputs do %>

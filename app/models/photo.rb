@@ -32,7 +32,7 @@ class Photo < ActiveRecord::Base
   		caption_en.blank? ? caption_ja : caption_en
   	end
   end
-  
+
 private
   def reprocess_photo
     photo.reprocess!

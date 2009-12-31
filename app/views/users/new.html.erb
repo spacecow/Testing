@@ -1,7 +1,7 @@
 <div class="form">
 <%= error_messages_for :user %>
-<fieldset>
-<legend><%= t('users.new') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('users.new') %></legend>
 
 <% semantic_form_for @user do |f| %>
 	<%= f.hidden_field :invitation_token %>

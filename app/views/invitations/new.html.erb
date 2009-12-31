@@ -1,8 +1,8 @@
 <div class="form">
 <%= error_messages_for :invitation %>
 
-<fieldset>
-<legend><%= t('invitations.new') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('invitations.new') %></legend>
 <% semantic_form_for @invitation do |f| %>
   <% f.inputs do %>
   	<%= f.input :recipient_email, :label => t( 'email' ) %>
@@ -13,8 +13,8 @@
 <% end %>
 </fieldset><br />
 
-<fieldset>
-<legend><%= t('update') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('update') %></legend>
 <div id="update_container">
 	<div id="text_message">	
 		<% File.open "app/views/user_mailer/update_#{@version}.erb", 'r' do |f| %>

@@ -43,7 +43,7 @@ authorization do
 	
 	role :photographer do
 		has_permission_on :photos, :to => [:new, :create, :update]	
-		has_permission_on :photos, :to => :edit do
+		has_permission_on :photos, :to => [:edit, :destroy] do
 			if_attribute :user => is { user }
     end
 	end

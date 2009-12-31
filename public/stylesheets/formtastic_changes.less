@@ -1,0 +1,105 @@
+@fine_gray:					#9c9c9c;
+@label_width:				120px;
+
+@border_radius: 5px;
+.border_xtras{
+	-moz-border-radius: @border_radius;
+	-webkit-border-radius: @border_radius;		
+}
+
+.global_width{ width:300px; }
+.label_mixin{
+	width: @label_width;
+	text-align: right;
+	margin-right: 0.5em;	
+}
+
+form.comment{
+	fieldset.inputs{
+		ol{
+			li{
+				label{
+					display:none;
+				}
+			}
+		}
+	}
+}
+form.todo{
+	fieldset.buttons{
+		margin-top:5px;
+	}
+}
+form.formtastic{
+	fieldset.buttons{
+		padding-left:@label_width + 5px;
+	}
+	fieldset.inputs{
+		ol{
+			.subjects{
+				padding-left:@label_width + 5px;
+				label{
+					padding:2px 0 0 2px;
+					float:left;
+					width:100px;
+					.border_xtras;
+				}
+				label.bug{ background:red; }
+				label.spelling{	background:orange; }
+				label.feature{ background:green; }				
+				input{ 
+					float:left; }
+				span.text{
+					margin-left: 2px;
+					float:left;
+					font-weight:bold;
+				}
+			}
+			li{
+				margin-bottom:5px;
+				label{ .label_mixin; }
+				p.inline-hints{
+					color:@fine_gray;
+					font-size:10px;
+					font-style:italic;
+					margin-left:@label_width + 5px;
+				}				
+			}
+			li.radio{
+				fieldset{
+					legend{
+						span.label{ .label_mixin; }
+					}
+					ol{
+						li{
+							label{
+								text-align:left;
+							}
+						}
+					}
+				}
+			}
+			li.text{
+				textarea{
+					.global_width;
+					height:70px;
+				}
+			}
+			li.string{ input{ .global_width; }}
+			li.password{ input{ .global_width; }}
+			li.datetime{
+				fieldset{
+					legend{
+						span.label{
+							width:@label_width;
+						}
+					}
+					ol{
+						text-align:right;
+						padding-left:@label_width + 6px;
+					}
+				}
+			}
+		}
+	}
+}

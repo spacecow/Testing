@@ -1,25 +1,28 @@
 <div class="show">
-<fieldset>
+<fieldset class="show">
 <legend><%= t('photo') %></legend>
 
-<div id="show_container">
-	<div id="photo_container">
-	  <%= link_to( image_tag( @photo.photo.url(:large)), @next ) %><br />
-	  <div id="caption"><%= h @photo.caption( japanese? ) %></div>
-	</div>
-  <div class="links">
-		<p>
-			<% if permitted_to? :edit, @photo %>
-				<%= link_to t('edit'), edit_photo_path(@photo), :class=>"link" %> |
-			<% end %>
-			<% if permitted_to? :destroy, @photo %>
-				<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
-			<% end %>
-			<% if permitted_to? :show, @photo.gallery %>
-				<%= link_to t('gallery'), @photo.gallery, :class=>"link" %>
-			<% end %>
-		</p>
+<div id="photo_container">
+  <div id="photo"><%= link_to( image_tag( @photo.photo.url(:large)), @next ) %></div>
+  <div class="clear"></div>
+  <div id="caption"><%= h @photo.caption( japanese? ) %></div>
+  <div id="uploader">
+  	By: <% if @photo.user.nil? %><%= t :anonymous %><% else %><%= link_to( h( @photo.user.name ), @photo.user ) %><% end %>
   </div>
+</div>
+<div class="clear"></div>
+<div class="links">
+	<p>
+		<% if permitted_to? :edit, @photo %>
+			<%= link_to t('edit'), edit_photo_path(@photo), :class=>"link" %> |
+		<% end %>
+		<% if permitted_to? :destroy, @photo %>
+			<%= link_to t('delete'), @photo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
+		<% end %>
+		<% if permitted_to? :show, @photo.gallery %>
+			<%= link_to t('gallery'), @photo.gallery, :class=>"link" %>
+		<% end %>
+	</p>
 </div>
 
 </fieldset>

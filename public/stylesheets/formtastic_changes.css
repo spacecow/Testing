@@ -1,62 +1,59 @@
-/* -------------------------------------------------------------------------------------------------
-
-Load this stylesheet after formtastic.css in your layouts to override the CSS to suit your needs.
-This will allow you to update formtastic.css with new releases without clobbering your own changes.
-
-For example, to make the inline hint paragraphs a little darker in color than the standard #666:
-
-form.formtastic fieldset ol li p.inline-hints { color:#333; }
-
---------------------------------------------------------------------------------------------------*/
-
-form.formtastic fieldset ol li fieldset legend span.label,
-form.formtastic fieldset ol p label,
-form.formtastic fieldset ol li label { display:block; width:150px; float:left; padding-top:.2em; font-size:12px; }
-form.photo fieldset ol li label { display:block; width:50px; float:left; padding-top:.2em; }
-
-form.formtastic fieldset ol li fieldset ol { float:left; width:74%; margin:0; padding:0 0 0 170px; }
-form.formtastic fieldset ol li{ margin-bottom:0.5em; }
-form.formtastic fieldset ol li.hidden { display:none; margin-bottom:0; }
-
-
-form.formtastic fieldset ol p textarea,
-form.formtastic fieldset ol li.text textarea { width:300px; height:150px; }
-form.setting fieldset ol li.text textarea { width:300px; height:50px; }
-form.formtastic fieldset ol li.password input,
-form.formtastic fieldset ol li.numeric input,
-form.formtastic fieldset ol li.string input{ width:300px; }
-
-form.formtastic fieldset ol li.date{
-	margin-left: 10px;
+.border_xtras {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
-
-form.formtastic fieldset ol li.radio fieldset ol li label { float:none; width:100px; text-align: left; }
-#form.formtastic fieldset ol li.check_boxes fieldset legend span.label{ width: 26%; }
-#form.formtastic fieldset ol li.check_boxes fieldset ol li label { margin-left: 12px; float:none; width:100%; text-align: left; }
-#form.formtastic fieldset ol li.date fieldset legend label{ width: 97%; }
-form.formtastic fieldset ol li fieldset legend{ background: #efe; border: 0;	}
-
-form.formtastic fieldset ol li p.inline-errors { color:#cc0000; margin:0 0 5px 26%; font-size:12px; }
-form.formtastic fieldset ol li ul.errors { color:#cc0000; margin:5px 0 0 25%; list-style:square; font-size:10px; font-style:italic; }
-form.formtastic fieldset ol li p.inline-hints { color:#666; margin:5px 0 0 25%; font-size:10px; font-style:italic; }
-
-form.formtastic fieldset ol li.hidden { display:none; margin:0; }
-
-form.comment fieldset ol li.text label{ display: none; }
-form.comment fieldset ol li.text textarea { width:45%; height:70px; }
-form.comment fieldset.buttons { padding-left: 0; }
-
-form.photo fieldset ol li.string label{ display: none; }
-form.photo fieldset ol li p.inline-hints { color:#666; margin:5px 0 0 0%; font-size:10px; font-style:italic; }
-
-/* BUTTONS */
-form.formtastic fieldset.buttons { width:100px; padding:0; }
-form.formtastic fieldset.buttons li { float:left; padding-right:0.5em; }
-form.formtastic fieldset.buttons ol{ margin:0;}
-form.formtastic fieldset.buttons ol li { float:left; padding-right:0.5em; }
-
-form.formtastic fieldset.buttons,
-div.form fieldset form input.submit{ margin-left: 155px; }
-form.photo fieldset.buttons{ margin-left: 60px; }
-
-
+.global_width { width: 300px; }
+.label_mixin {
+  width: 120px;
+  text-align: right;
+  margin-right: 0.5em;
+}
+form.comment fieldset.inputs ol li label { display: none; }
+form.todo fieldset.buttons { margin-top: 5px; }
+form.formtastic fieldset.buttons { padding-left: 125px; }
+form.formtastic fieldset.inputs ol .subjects { padding-left: 125px; }
+form.formtastic fieldset.inputs ol .subjects label {
+  padding: 2px 0 0 2px;
+  float: left;
+  width: 100px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+form.formtastic fieldset.inputs ol .subjects label.bug { background: red; }
+form.formtastic fieldset.inputs ol .subjects label.spelling { background: orange; }
+form.formtastic fieldset.inputs ol .subjects label.feature { background: green; }
+form.formtastic fieldset.inputs ol .subjects input { float: left; }
+form.formtastic fieldset.inputs ol .subjects span.text {
+  margin-left: 2px;
+  float: left;
+  font-weight: bold;
+}
+form.formtastic fieldset.inputs ol li { margin-bottom: 5px; }
+form.formtastic fieldset.inputs ol li label {
+  width: 120px;
+  text-align: right;
+  margin-right: 0.5em;
+}
+form.formtastic fieldset.inputs ol li p.inline-hints {
+  color: #9c9c9c;
+  font-size: 10px;
+  font-style: italic;
+  margin-left: 125px;
+}
+form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
+  width: 120px;
+  text-align: right;
+  margin-right: 0.5em;
+}
+form.formtastic fieldset.inputs ol li.radio fieldset ol li label { text-align: left; }
+form.formtastic fieldset.inputs ol li.text textarea {
+  width: 300px;
+  height: 70px;
+}
+form.formtastic fieldset.inputs ol li.string input { width: 300px; }
+form.formtastic fieldset.inputs ol li.password input { width: 300px; }
+form.formtastic fieldset.inputs ol li.datetime fieldset legend span.label { width: 120px; }
+form.formtastic fieldset.inputs ol li.datetime fieldset ol {
+  text-align: right;
+  padding-left: 126px;
+}
