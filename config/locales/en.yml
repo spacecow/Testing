@@ -158,7 +158,7 @@ en:
   error:
     blank: "{{object}} cannot be left blank."      
   message:
-    info_update: "I would like to get information when the site has been updated"
+    info_update: "I would like to get information sent to me when the site has been updated"
   new: "New {{object}}"
   notice:
     add_success: "Successfully added {{object}}."
