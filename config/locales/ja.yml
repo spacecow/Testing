@@ -155,6 +155,8 @@ ja:
   new: "新しい{{object}}"
   error:
     blank: "{{object}}は空白のままにしておく事は出来ません"    
+  message:
+    info_update: "サイトが更新された時に情報を送ってもらいたい"
   notice:
     add_success: "正常に{{object}}が追加されました"
     create_success: "正常に{{object}}が作成されました"
@@ -185,8 +187,9 @@ ja:
   events:
     editing: "イベント編集"
     message:
-      already_registered: "このイベントにはもう登録されました"
-      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい。"
+      already_applied: "このイベントにはもう登録されました"
+      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
+      not_applied_yet: "まだ登録されませんでした"
     new: "新しいイベント"
     title: "参加イベント"
   galleries:

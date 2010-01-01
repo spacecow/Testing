@@ -21,16 +21,17 @@
 			<div class="time_ago">
 				<%= distance_of_time_in_words_to_now( comment.created_at ) %><%= t('ago') %>
 			</div>
-			<div class="move_comment">
-				<% if permitted_to?( :move_comment, comment.event ) && !@move_options.nil? %>
-					<% form_for :todo, :url => move_comment_event_path, :html => { :method => :get } do |f| %>
+			<% if permitted_to?( :move_comment, comment.event ) && !@move_options.nil? %>
+				<%- form_for :todo, :url => move_comment_event_path, :html => { :method => :get } do |f| -%>
+					<div class="move_comment">
 						<%= hidden_field_tag :description, comment.comment %>
 						<%= hidden_field_tag :user_id, comment.user_id %>
 						<%= hidden_field_tag :comment_id, comment.id %>
-						<%= select_tag :move, options_for_select( @move_options ), :onchange => "this.form.submit();" %>
-					<% end %>
-				<% end %>
-			</div>
+						<%= select_tag :move, options_for_select( @move_options ), :name => "move" %>
+						<%= f.submit "Go!"%>
+					</div>
+				<%- end -%>
+			<% end %>
 		</div>
 		<div class="clear"></div>
 	<% end %>

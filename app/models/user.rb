@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 	belongs_to :invitation
   has_many :photos
   
-  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana	, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas
+  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas, :info_update
   
   #before_create :set_invitation_limit
   before_create :set_role

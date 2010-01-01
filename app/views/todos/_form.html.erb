@@ -1,4 +1,5 @@
 <% f.inputs do %>
+	<%= hidden_field_tag :comment_id, @comment_id %>
 	<%= f.input :title, :label => t( 'title' ) %>
 	<%= f.input :description, :label => t( 'description' ) %>
 <div class="subjects">

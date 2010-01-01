@@ -33,9 +33,10 @@ textarea#comment_comment{
 	<div class="apply">
 		<% if current_user2 %>
 			<% if current_user2.events.include?( @event ) %>
-				<i style="font-size: 12px"><%= t('events.message.already_registered') %></i>
+				<i style="font-size: 12px"><%= t('events.message.already_applied') %></i>
 			<% else %>
 				<%= button_to t( 'apply' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
+				<i><%= t('events.message.not_applied_yet') %></i>
 			<% end %>
 		<% else %>
 			<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>

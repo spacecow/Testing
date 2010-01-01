@@ -17,7 +17,7 @@
 					<% end %>
 				</div>
 				<span class="creator">
-					By: <%= link_to todo.user.name, todo.user %>,
+					By: <% if todo.user.nil? %><%= t :anonymous %><% else %><%= link_to( h( todo.user.name ), todo.user ) %><% end %>,
 				  <%= distance_of_time_in_words_to_now( todo.created_at ) %><%= t('ago') %>
 				</span>
 			</div>

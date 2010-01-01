@@ -19,6 +19,7 @@
 		<hr>
 		<%= f.input :language, :label => t( :language ), :as => :select, :collection => ( japanese? ? User::LANGUAGES_JA : User::LANGUAGES_EN ), :include_blank => false %>
 		<%= f.input :avatar, :label => t( :avatar ) %>
+		<%= f.input :info_update, :label => t( 'message.info_update' ), :required => false %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t('update') %>

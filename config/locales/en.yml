@@ -157,6 +157,8 @@ en:
   editing: "Editing {{object}}"
   error:
     blank: "{{object}} cannot be left blank."      
+  message:
+    info_update: "I would like to get information when the site has been updated"
   new: "New {{object}}"
   notice:
     add_success: "Successfully added {{object}}."
@@ -192,8 +194,9 @@ en:
   events:
     editing: "Editing Event"
     message:
-      already_registered: "You have already registered for this event."
-      please_login: "Login in order to register to the event."
+      already_applied: "You have already applied for this event."
+      not_applied_yet: "You have not applied for this event yet!"
+      please_login: "Login in order to apply to the event."
     new: "New Event"
     title: "Events"
   galleries:

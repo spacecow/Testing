@@ -7,30 +7,43 @@ Given a setting exists with name: "main"
 	And a gallery: "christmas" exists
 	And a event: "christmas" exist with title_en: "Christmas Party", gallery: gallery "christmas"
 
-#@comment
-#Scenario: Move comment and create a new Todo
-#Given a comment: "fuck" exists with comment: "Fuck Christmas!", event: event "christmas", user: user "kurosawa"
-#	And a user is logged in as "johan"
-#When I go to the show page of that event
-#	And I select todo with user "kurosawa" and comment "fuck"
-#Then I should be redirected to the new todo page
-#	And the "Description" field should contain "Fuck Christmas!"
-#When I fill in "Title" with "Christmas Spirit"
-#	And I check "Bug"
-#	And I press "Create"
-#Then I should be redirected to the show page of event "christmas"
-#	And a todo should exist with title: "Christmas Spirit", description: "Fuck Christmas!", subjects_mask: 1, user: user #"kurosawa"
-#	And 0 comments should exist
-#	
-#Scenario: Move comment and create a new Todo
-#Given a comment: "fuck" exists with comment: "Fuck Christmas!", event: event "christmas", user: user "kurosawa"
-#	And a user is logged in as "johan"
-#When I go to the show page of that event
-#	And I press "Move" within comment "fuck"
-#Then I should be redirected to the new todo page
-#When I go to the show page of event "christmas"	
-#Then I should see "Fuck Christmas!" within comment "fuck"
-#	And 0 todos should exist	
+Scenario: Move comment with LF and create a new Todo
+Given a comment: "fuck" exists with comment: "Fuck Christmas!<br />and his goat!", event: event "christmas", user: user "kurosawa"
+	And a user is logged in as "johan"
+When I go to the show page of that event
+	And I press "Go!"
+Then I should be redirected to the new todo page
+	And the "Description" field should not contain "Fuck Christmas! and his goat!"
+	And the "Description" field should contain "Fuck Christmas!\n"
+	And the "Description" field should contain "and his goat!"
+When I press "Create"
+Then the "Description" field should not contain "Fuck Christmas!&lt;br /&gt;"
+	And the "Description" field should contain "Fuck Christmas!\n"
+When I fill in "Title" with "Christmas Spirit"
+	And I check "Bug"
+	And I press "Create"
+Then I should be redirected to the show page of event "christmas"
+	And a todo should exist with title: "Christmas Spirit", description: "Fuck Christmas!<br />", subjects_mask: 1, user: user "kurosawa"
+	And 0 comments should exist
+	
+@comment
+Scenario: Move an event comment with LF to an existing todo
+Given a comment: "fuck" exists with comment: "Fuck Christmas!<br />and his goat!", event: event "christmas", user: user "kurosawa"
+	And a todo exists with title: "Chatter room", subjects_mask: 1
+	And a user is logged in as "johan"
+When I go to the show page of that event
+Then "move" should have options "todo, Chatter room"
+	And 1 comments should exist
+When I select "Chatter room" from "move"
+	And I press "Go!"
+Then I should be redirected to the show page of that event
+	And I should not see "Fuck Christmas!"
+	And 1 comments should exist
+When I go to the todos page
+	And I follow "Chatter room"
+	And I should see "Fuck Christmas!"
+	And a comment should exist with comment: "Fuck Christmas!<br />and his goat!"
+
 
 Scenario: A comment cannot be blank (AJAX)
 Given a user is logged in as "kurosawa"
@@ -90,9 +103,6 @@ Then I should be redirected to the show page of its event
 	And 0 comments should exist
 
 Scenario: Delete with ajax (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: When you move a comment, the line breaks should stay there (NOT IMPLEMENTED)
 Given not implemented
 
 

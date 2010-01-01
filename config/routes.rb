@@ -16,7 +16,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :glossaries, :collection => { :quiz => :get, :quiz_init => :get }, :member => { :check => :put }
 
-	map.login_user "login_user", :controller => "user_sessions", :action => "new"
+	map.login_user '/login_user/:username', :controller => "user_sessions", :action => "new"
+	map.login_user 'login_user', :controller => "user_sessions", :action => "new"
 	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
 	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
 

@@ -85,8 +85,8 @@ pre, code, kbd, samp, tt {
   margin: 20px auto 25px auto;
   padding: 20px 20px;
 }
-.main_width { width: 580px; }
-.side_width { width: 160px; }
+.main_width { width: 575px; }
+.side_width { width: 165px; }
 .global_a {
   text-decoration: none;
   color: #4b7399;
@@ -337,7 +337,7 @@ a:hover {
   padding-bottom: 3px;
 }
 #container #right_column {
-  width: 160px;
+  width: 165px;
   float: right;
   font-size: 10px;
 }
@@ -354,7 +354,7 @@ a:hover {
 #container #right_column #user_nav:hover { background: #eeffee; }
 #container #right_column #user_nav .commands ul {
   float: left;
-  width: 100px;
+  width: 110px;
   background: #4b7399;
   overflow: auto;
   -moz-border-radius: 5px;
@@ -397,7 +397,7 @@ a:hover {
   color: #222266;
 }
 #container #main {
-  width: 580px;
+  width: 575px;
   float: left;
 }
 #container #main .form fieldset.form {
@@ -628,7 +628,7 @@ a:hover {
   -webkit-box-shadow: 0px 2px 5px #000000;
   background: #eeffee;
   padding: 10px;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 #container #main #list h1 {
   font: 150% sans-serif;
@@ -647,6 +647,7 @@ a:hover {
   border-collapse: separate;
   border-spacing: 1px;
   margin-top: 10px;
+  font-size: 11px;
 }
 #container #main #list table tr th {
   font-weight: bold;

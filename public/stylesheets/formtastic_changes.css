@@ -40,6 +40,11 @@ form.formtastic fieldset.inputs ol li p.inline-hints {
   font-style: italic;
   margin-left: 125px;
 }
+form.formtastic fieldset.inputs ol li.boolean label {
+  padding-left: 124px;
+  width: 300px;
+  text-align: left;
+}
 form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
   width: 120px;
   text-align: right;

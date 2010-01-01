@@ -14,7 +14,7 @@
 </fieldset><br />
 
 <fieldset class="form">
-<legend class="form"><%= t('update') %></legend>
+<legend class="form"><%= t('update') %> - <%= t :version %> <%= @version.gsub(/_/,'.') %></legend>
 <div id="update_container">
 	<div id="text_message">	
 		<% File.open "app/views/user_mailer/update_#{@version}.erb", 'r' do |f| %>

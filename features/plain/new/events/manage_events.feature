@@ -63,9 +63,3 @@ Then 0 events should exist
   And 0 galleries should exist 
   And 0 comments should exist
   And 0 registrants should exist
-
-#Scenario: When an event is deleted, its registrants and comments should be deleted
-#Given not implemented
-
-#Make title_ja, description_ja in database
-#Registrants keep building up...

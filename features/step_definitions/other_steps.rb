@@ -181,6 +181,10 @@ When /^I press "([^\"]*)" within #{capture_model}$/ do |text, model|
 	end
 end
 
+Then /^the "([^\"]*)" field should be blank$/ do |field|
+  field_labeled(field).value.should be_nil
+end
+
 # -----------------------------------------------------
 
 def get_options_array( select_id )

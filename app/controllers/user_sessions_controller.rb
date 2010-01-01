@@ -2,7 +2,8 @@ class UserSessionsController < ApplicationController
 	filter_resource_access
   
 	def new
-    @user_session = UserSession.new
+  	redirect_to events_path if current_user
+    @user_session = UserSession.new( :username => params[:username] )
   end
   
   def create

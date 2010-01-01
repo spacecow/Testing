@@ -41,10 +41,12 @@ class TodosController < ApplicationController
   end
   
   def create
+  	@comment_id = params[:comment_id]
 		#@todo.user_id = current_user.id
-		params[:todo][:description] = params[:todo][:description].gsub("\r\n", "<br />");
+		#params[:todo][:description] = params[:todo][:description].gsub("\n", "<br />");
 		@todo = Todo.new( params[:todo] )
     if @todo.save
+    	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.create_success', :object=>t(:todo))
       if( params[:comment_id].blank? )
       	redirect_to todos_path
@@ -61,13 +63,14 @@ class TodosController < ApplicationController
   
   def edit
   	@todo = Todo.find( params[:id] )
-  	@todo.description = @todo.description.gsub("<br />", "\r\n");
+  	@todo.description = @todo.description.gsub("<br />", "\n");
   end
   
   def update
-  	params[:todo][:description] = params[:todo][:description].gsub("\r\n", "<br />");
+  	#params[:todo][:description] = params[:todo][:description].gsub("\n", "<br />");
   	@todo = Todo.find( params[:id] )
     if @todo.update_attributes(params[:todo])
+    	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.update_success', :object=>t(:todo))
       redirect_to todos_path
     else

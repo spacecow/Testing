@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   	@setting = Setting.find_by_name( "main" )
   	@event = Event.find( params[:id], :include => [{:comments => :user}, {:gallery => :photos}, :registrants ] )
     @comment = Comment.new
-    @move_options = [["move","move"], ["todo","todo"]] + Todo.all.map{|e| [e.title, e.id]}
+    @move_options = [["todo","todo"]] + Todo.all.map{|e| [e.title, e.id]}
 #    @user = current_user2
 #    respond_to do |format|
 #      format.html
@@ -56,7 +56,7 @@ class EventsController < ApplicationController
 
   def add_comment
   	@comment = Comment.new( params[:comment] )
-  	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
+  	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if !@comment.save
       flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
@@ -79,14 +79,14 @@ class EventsController < ApplicationController
   def move_comment
 		if params[:move] == "todo"
 			redirect_to new_todo_path(
-				:description => params[:description].gsub("<br />", "\r\n"),
+				:description => params[:description].gsub("<br />", "\n"),
 				:user_id => params[:user_id],
 				:comment_id => params[:comment_id]
 			)
 			return
 		elsif Todo.exists?( params[:move] )
 			Comment.create!(
-				:comment => params[:description].gsub("<br />", "\r\n"),
+				:comment => params[:description], #.gsub("<br />", "\n"),
 				:user_id => params[:user_id],
 				:todo_id => params[:move]
 			)

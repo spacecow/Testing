@@ -40,6 +40,13 @@ class UserMailer < ActionMailer::Base
     from        "johan@reserve-gakuwarinet.com"
     subject     "Update, Version 0.16"
     body
-  end    
+  end
+  
+  def update_0_17( user )
+    recipients  user.email
+    from        "johan@reserve-gakuwarinet.com"
+    subject     "Update, Version 0.17"
+    body				:username => user.username
+  end     
 end
 
