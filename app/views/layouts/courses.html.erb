@@ -22,9 +22,14 @@
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">
-						<% if permitted_to? :index, Todo.new %>	
-							<li><%= link_to t('todos.title'), todos_path %></li>									
-						<% end %>
+						<li><%= link_to t('todos.title'), todos_path %>
+						<% if permitted_to? :index, Vote.new %>	
+							<ul>
+								<li>------------------</li>
+								<li><%= link_to t('votes'), votes_path %></li>							
+							</ul>
+						<% end %>							
+					</li>
 						
 						<li><%= link_to t('events.title'), events_path %>
 							<% if permitted_to? :index, Registrant.new %>	

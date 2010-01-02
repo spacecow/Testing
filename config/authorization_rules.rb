@@ -9,7 +9,7 @@ authorization do
     has_permission_on :galleries, :to => [:index, :show, :edit]
     has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
     has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :add_comment, :edit_comment, :toggle_close]
-    has_permission_on :votes, :to => [:new, :edit, :destroy]
+    has_permission_on :votes, :to => [:new, :edit, :destroy, :index]
   end
   
   role :god do

@@ -147,8 +147,11 @@ ja:
   uncancel: "ｳﾝｷｬﾝｾﾙ"
   unchoose: "排除"
   unit: "ユニット"
+  user: "ユーザー"
   user_name: "ユーザー名"
   version: "バージョン"
+  votes: "投票"
+  when: "いつ"
   
   add: "{{object}}を書き足す"
   editing: "{{object}}編集"

@@ -1,0 +1,11 @@
+<% unless todo.votes.empty? %>
+	<h1><%= todo.title %></h1>
+	<table cellpadding="2" cellspacing="1" id="todo_<%= todo.id %>">
+		<tr>
+				<th><%= t('user') %></th>		
+				<th><%= t('points') %></th>
+				<th><%= t('when') %></th>
+		</tr>
+		<%= render :partial => todo.votes %>
+	</table>
+<% end %>

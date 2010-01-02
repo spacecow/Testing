@@ -1,0 +1,5 @@
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
+		<td><%= vote.user.name %></td>		
+		<td><%= vote.points %></td>
+		<td><%= distance_of_time_in_words_to_now( vote.created_at ) %><%= t :ago %></td>
+</tr>

@@ -1,4 +1,3 @@
-@voting
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exists with username: "johan", role: "registrant", language: "en"

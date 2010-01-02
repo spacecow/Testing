@@ -119,7 +119,7 @@ Factory.define :unit do |f|
 end
 
 Factory.define :user do |f|
-	f.username "username"
+	f.sequence(:username) { |n| "username#{n}" }
 	f.sequence(:email) { |n| "bar#{n}@example.com" }
 	f.language "ja"
 	f.role "registrant"

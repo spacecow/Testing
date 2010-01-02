@@ -61,7 +61,7 @@ When I fill in 'name' with "Prince Philip"
 	And I choose "female"
 	And I fill in 'password' with "secret"
 	And I fill in 'password_confirmation' with "secret"
-	And I uncheck "I would like to get information when the site has been updated"
+	And I uncheck "I would like to get information sent to me when the site has been updated"
 	And I press 'register'
 Then I should be redirected to the error users page
 	And the "I would like to get information sent to me when the site has been updated" checkbox should not be checked

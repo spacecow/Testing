@@ -150,8 +150,11 @@ en:
   unchoose: "Deselect"
   unit: "Unit"
   update: "Update"
+  user: "User"
   user_name: "User name"
   version: "Version"
+  votes: "Votes"
+  when: "When"
   
   add: "Add {{object}}"
   editing: "Editing {{object}}"

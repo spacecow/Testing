@@ -1,6 +1,10 @@
 class VotesController < ApplicationController
   filter_resource_access
   
+  def index
+  	@todos = Todo.all( :include => { :votes => :user })
+  end
+  
   def new
   	@vote.user_id = current_user.id
   	@vote.todo_id = params[:todo_id]
