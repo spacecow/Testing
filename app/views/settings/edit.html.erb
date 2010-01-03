@@ -1,8 +1,8 @@
 <div class="form">
 <%= error_messages_for :setting %>
 
-<fieldset>
-<legend><%= t('settings.editing') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('settings.editing') %></legend>
 
 <% semantic_form_for @setting do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
