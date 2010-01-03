@@ -4,6 +4,8 @@ class InvitationsController < ApplicationController
   def new
   	@invitation = Invitation.new
   	@version = Setting.find_by_name( "main" ).version.gsub(/\./, '_')
+  	#@users = User.all
+  	@users = [ User.first ]
   end
   
   def create
@@ -21,10 +23,11 @@ class InvitationsController < ApplicationController
 
   def deliver
   	func = "deliver_update_#{params[:version]}".to_sym
-  	UserMailer.send( func, User.first, login_user_url, User.first.username )
-#  	User.all.each do |user|
-#  		UserMailer.send( func, user ) if user.info_update
-#		end
+		@users = User.find( params[:users] )
+#  	UserMailer.send( func, User.first, login_user_url, User.first.username )
+  	@users.each do |user|
+  		UserMailer.send( func, user, login_user_url, user.username ) if user.info_update
+		end
     flash[:notice] = t('invitations.sent')
 		redirect_to new_invitation_path  	
   end

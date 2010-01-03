@@ -23,7 +23,18 @@
 			<% end %>
 		<% end %>
 	</div>
-	<%= button_to "Send to all", deliver_invitations_path( :version => @version ) %>
+	<div class="right_column">
+		<%= button_to "Send to all", deliver_invitations_path( :version => @version, :users => @users ) %>
+		<ul>
+			<% @users.each do |user| %>
+				<% if user.info_update %>
+					<li><%= user.name %></li>
+				<% else %>
+					<li>(<%= user.name %>)</li>
+				<% end %>
+			<% end %>
+		</ul>
+	</div>
 </div>
 
 <div class="links">

@@ -428,6 +428,19 @@ a:hover {
   margin: 0.4em 0 1em 0;
 }
 #container #main .form fieldset.form .intro:hover { background: #f5ffee; }
+#container #main .form #update_container #text_message {
+  width: 400px;
+  background: white;
+  border: 2px dashed;
+  padding: 5px;
+  float: left;
+}
+#container #main .form #update_container .right_column {
+  float: left;
+  width: 120px;
+  text-align: right;
+}
+#container #main .form #update_container .right_column input { margin-bottom: 10px; }
 #container #main .show fieldset.show {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
