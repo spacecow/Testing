@@ -21,10 +21,10 @@ class InvitationsController < ApplicationController
 
   def deliver
   	func = "deliver_update_#{params[:version]}".to_sym
-#  	UserMailer.send( func, User.first )
-  	User.all.each do |user|
-  		UserMailer.send( func, user ) if user.info_update
-		end
+  	UserMailer.send( func, User.first, login_user( User.first.username ))
+#  	User.all.each do |user|
+#  		UserMailer.send( func, user ) if user.info_update
+#		end
     flash[:notice] = t('invitations.sent')
 		redirect_to new_invitation_path  	
   end
