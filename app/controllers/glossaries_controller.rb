@@ -34,6 +34,7 @@ class GlossariesController < ApplicationController
   end
   
   def show
+  	@glossary = Glossary.find( params[:id] )
   end
   
   def new
@@ -50,6 +51,7 @@ class GlossariesController < ApplicationController
   end
   
   def edit
+  	@glossary = Glossary.find( params[:id] )
   end
   
   def update

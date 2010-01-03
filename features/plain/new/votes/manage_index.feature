@@ -20,4 +20,57 @@ Then I should see todo "chat" table
 And I should see todo "password" table
 |	User	|	Points	| When										|
 |	Kurosawa	|	3				|	less than a minute ago	|
-And I should not see "Yeah"
+	And I should not see "Yeah"
+	And I should see "Johan" within "span.highlight"
+
+Scenario: Index links
+Given a user is logged in as "johan"
+When I go to the votes page
+	And I follow "Chat room"
+Then I should be redirected to the show page of todo "chat"
+When I go to the votes page
+	And I follow "Reset password"
+Then I should be redirected to the show page of todo "password"
+When I go to the votes page
+	And I follow "Johan"
+Then I should be redirected to the show page of user "johan"
+When I go to the votes page
+	And I follow "Kurosawa"
+Then I should be redirected to the show page of user "kurosawa"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

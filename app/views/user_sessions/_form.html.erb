@@ -2,9 +2,6 @@
 	<%= f.input :username, :label => t( :user_name ), :required => false %>
 	<%= f.input :password, :label => t( :password ), :required => false %>
 <% end %>
-<% if false %>
-	<i style="font-size:12px; margin-left:160px;"><%= t('login.message.no_account') %> <%= link_to t('login.message.create_one'), new_user_path %></i>
-<% end %>
 <% f.buttons do %>
-	<%= f.commit_button label_text %>
+	<%= f.commit_button label_text %><i><%= link_to t('message.forgotten_password'), new_reset_password_path %></i>
 <% end %>

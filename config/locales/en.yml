@@ -29,6 +29,8 @@ en:
   capacity: "Capacity"
   caption: "Caption"
   category: "Category"
+  change: "Change"
+  change_password: "Change password"
   choose: "Select"
   classroom: "Classroom"
   close: "Close"
@@ -50,7 +52,7 @@ en:
   edit: "Edit "
   edit_profile: "Edit Profile"
   edit_role: "Role"
-  email: "Email Address"
+  email: "Email address"
   end_date: "End date"
   end_time: "End Time"
   english: "English"
@@ -151,6 +153,7 @@ en:
   unit: "Unit"
   update: "Update"
   user: "User"
+  user_confirmation: "User confirmation"
   user_name: "User name"
   version: "Version"
   votes: "Votes"
@@ -159,14 +162,24 @@ en:
   add: "Add {{object}}"
   editing: "Editing {{object}}"
   error:
-    blank: "{{object}} cannot be left blank."      
+    blank: "{{object}} cannot be left blank."
+    no_pass_key: "Obtain a correct pass key in order to reset password."
+    used_pass_key: "This pass key has already been used."
+    message:
+      both_blank: "can't both be blank"
+      does_not_exist: "does not exist"
   message:
+    forgotten_password: "I have forgotten my password!"
     info_update: "I would like to get information sent to me when the site has been updated"
+    provide_username_or_email: "Please provide your username or email and an email will be sent to you with instructions of how to reset your password."
+    change_password: "Change password for user: {{object}}"
   new: "New {{object}}"
   notice:
     add_success: "Successfully added {{object}}."
     create_success: "Successfully created {{object}}."
+    change_success: "Successfully changed {{object}}."
     delete_success: "Successfully deleted {{object}}."
+    mail_sent: "A mail has been sent to you."
     update_success: "Successfully updated {{object}}."
   
   attendances:

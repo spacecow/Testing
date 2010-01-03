@@ -10,13 +10,13 @@ When I fill in 'user_name' with "kurosawa_akira"
 	And I fill in 'password' with "secret"
 	And I press 'login.button'
 Then I should be redirected to the events page
-	And I should see 'login.notice.success'
+	And I should not see 'login.notice.success'
 	
 Scenario: Log out
 Given a user is logged in as "kurosawa_akira"
 When I follow 'logout.text'
 Then I should not see "ページを許可されません"
-#And I should see "正常にログアウトされました"
+And I should see "正常にログアウトされました"
 	
 Scenario: Display error login message
 When I go to path "/login_user"
@@ -39,7 +39,6 @@ Given a user is logged in as "kurosawa_akira"
 When I go to path "/login_user"
 Then I should be redirected to the events page
 
-@login
 Scenario: The username is filled in if it is given in the url
 When I go to path "/login_user"
 	And I follow "English"
@@ -48,3 +47,9 @@ Then the "Password" field should be blank
 When I go to path "/login_user/jinjin"
 Then the "User name" field should contain "jinjin"
 Then the "Password" field should be blank
+
+Scenario: If a user inputs a wrong url, he should be taken to the root page (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: No error messages! (NOT IMPLEMENTED)
+Given not implemented

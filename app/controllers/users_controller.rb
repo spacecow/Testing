@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-	filter_resource_access
+	filter_access_to :all
 
 	def show
+		@user = User.find( params[:id] )
 	end
 
 	def index
@@ -32,9 +33,11 @@ class UsersController < ApplicationController
   end
   
   def edit
+  	@user = User.find( params[:id] )
   end
   
   def update
+  	@user = User.find( params[:id] )
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
@@ -49,6 +52,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+  	@user = User.find( params[:id] )
     @user.destroy
     flash[:notice] = "Successfully deleted user."
     redirect_to users_url
@@ -61,6 +65,7 @@ class UsersController < ApplicationController
 	end
 	
 	def create_event_register
+		@user = current_user2
 		@event = Event.find( params[:event_id] )
 		if @user.update_attributes(params[:user])
       flash[:notice] = t('users.notice.successful_registration_for', :event => @event.title( japanese? ))
@@ -71,10 +76,71 @@ class UsersController < ApplicationController
 	end
 	
 	def edit_role
+		@user = User.find( params[:id] )
 	end
 	
 	def update_role
+		@user = User.find( params[:id] )
 		@user.update_attributes(params[:user])
 		redirect_to users_path	
 	end
+	
+	def change_password
+		@token = params[:token]
+		@reset_password = ResetPassword.find_by_token( @token )
+		@user = @reset_password.user unless @reset_password.nil?
+		if @user.nil?
+			flash[:error] = t('error.no_pass_key')
+			redirect_to root_path
+		elsif @reset_password.used
+			flash[:error] = t('error.used_pass_key')
+			redirect_to root_path			
+		end
+	end
+	
+	def update_password
+		@token = params[:token]
+		@reset_password = ResetPassword.find_by_token( params[:token] )
+		@user = @reset_password.user unless @reset_password.nil?
+		if @user.nil?
+			flash[:error] = t('error.pass_key')
+			redirect_to root_path
+		end
+		if @user.update_attributes(params[:user])
+    	flash[:notice] = t('notice.change_success', :object => t(:password).downcase )
+    	@reset_password.update_attribute( :used, true )
+    	#@reset_password.destroy
+    	redirect_to root_path
+    else
+      render :action => 'change_password'
+    end
+	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -84,6 +84,9 @@ end
 Factory.define :registrant do |f|
 end
 
+Factory.define :reset_password do |f|
+end
+
 Factory.define :scheduled_unit do |f|
 end
 

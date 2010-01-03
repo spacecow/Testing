@@ -297,6 +297,7 @@ a:hover {
   margin: 0 0 10px 0;
   padding: 5px;
   background-color: #660000;
+  color: #ffffff;
 }
 #container #banner {
   -moz-border-radius: 5px;
@@ -418,6 +419,15 @@ a:hover {
   background: #aabbaa;
   padding: 0.2em 1em;
 }
+#container #main .form fieldset.form .intro {
+  margin-top: 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #7f9db9;
+  margin: 0.4em 0 1em 0;
+}
+#container #main .form fieldset.form .intro:hover { background: #f5ffee; }
 #container #main .show fieldset.show {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -631,10 +641,12 @@ a:hover {
   margin-top: 16px;
 }
 #container #main #list h1 {
-  font: 150% sans-serif;
+  font: 18px sans-serif;
   color: #222266;
   border-bottom: 3px dotted #aabbaa;
 }
+#container #main #list h1 a { font: 18px sans-serif; }
+#container #main #list h1 a:hover { color: #eeffee; }
 #container #main #list .intro {
   margin-top: 10px;
   -moz-border-radius: 5px;
@@ -654,6 +666,7 @@ a:hover {
   background: #aabbaa;
   text-align: center;
 }
+#container #main #list table tr td span.highlight { font-weight: bold; }
 #container #main #list table tr.list-line-odd { background: #ccddcc; }
 #container #main #list table tr.list-line-odd:hover { background: #eeffee; }
 #container #main #list table tr.list-line-odd td { padding: 0 3px 0 3px; }

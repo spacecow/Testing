@@ -29,6 +29,8 @@ ja:
   capacity: "CAPACITY"
   caption: "解説"
   category: "カテゴリー"
+  change: "変更"
+  change_password: "パスワード変更"
   choose: "選択"
   classroom: "部屋"
   close: "閉じる"
@@ -148,6 +150,7 @@ ja:
   unchoose: "排除"
   unit: "ユニット"
   user: "ユーザー"
+  user_confirmation: "ユーザー確認"
   user_name: "ユーザー名"
   version: "バージョン"
   votes: "投票"
@@ -157,13 +160,23 @@ ja:
   editing: "{{object}}編集"
   new: "新しい{{object}}"
   error:
-    blank: "{{object}}は空白のままにしておく事は出来ません"    
+    blank: "{{object}}は空白のままにしておく事は出来ません"
+    no_pass_key: "パスワードをリセットするために正しいパスキーを手に入れて"
+    used_pass_key: "このパスキーがもう使われてしまいました"
+    message:
+      both_blank: "テキスト領域は両方が空白のままにしておけない"
+      does_not_exist: "がありません"
   message:
+    forgotten_password: "パスワードを忘れました！"
     info_update: "サイトが更新された時に情報を送ってもらいたい"
+    provide_username_or_email: "ユーザーなかEメールを挙げてパスワード・リセットの方法がメールアドレスに送られます。"
+    change_password: "{{object}}のユーザーパスワードを変更して"
   notice:
     add_success: "正常に{{object}}が追加されました"
     create_success: "正常に{{object}}が作成されました"
+    change_success: "正常に{{object}}が変更されました"
     delete_success: "正常に{{object}}が削除されました"
+    mail_sent: "メールが送信されました"
     update_success: "正常に{{object}}が更新されました"
     
   attendances:

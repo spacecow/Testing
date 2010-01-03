@@ -1,7 +1,7 @@
 <div class="form">
 
-<fieldset>
-<legend><%= t(:editing, :object=>t(:role)) %></legend>
+<fieldset class="form">
+<legend class="form"><%= t(:editing, :object=>t(:role)) %></legend>
 
 <%- form_for @user, :url => update_role_user_path( @user ), :method => :put do |f| -%>
 	<div class="roles">

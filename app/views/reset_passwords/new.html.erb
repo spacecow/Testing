@@ -1,0 +1,23 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t('user_confirmation') %></legend>
+
+<div class="intro">
+	<%= t('message.provide_username_or_email') %>
+</div>
+
+<%- semantic_form_for @reset_password do |f| -%>
+	<% f.inputs do %>
+		<%= f.input :username, :label => t( 'user_name' ), :required => false %>
+		<%= f.input :email, :label => t( 'email' ), :required => false %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t( :send ) %>
+	<% end %>
+<%- end -%>
+
+<div class="links">
+</div>
+
+</fieldset>
+</div>

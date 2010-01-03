@@ -9,8 +9,9 @@ class User < ActiveRecord::Base
 	has_many :votes, :dependent => :destroy
 	belongs_to :invitation
   has_many :photos
+  has_many :reset_passwords
   
-  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas, :info_update
+  attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas, :info_update, :change_password
   
   #before_create :set_invitation_limit
   before_create :set_role
@@ -36,10 +37,12 @@ class User < ActiveRecord::Base
 	validates_presence_of :name, :name_hurigana, :language, :nationality
 	validates_inclusion_of :male, :in => [false, true]
 	validates_presence_of :occupation, :age, :tel, :if => :christmas	
-	attr_accessor :christmas	
+	attr_accessor :christmas, :change_password
 
 	validates_presence_of :invitation_id, :message => 'is required'
 	validates_uniqueness_of :invitation_id
+	
+	validates_presence_of :password,	 :if => :change_password
 	
 	#attr_accessible :username, :email, :password, :password_confirmation, :roles_mask, :role, :name, :invitation_token
 	

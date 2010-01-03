@@ -250,6 +250,7 @@ a{ .global_a; }
 	#error{
 		.flash_mixin;
 		background-color: #600;
+		color:#fff;
 	}
 	#banner{
 		.menu_xtras;
@@ -346,6 +347,12 @@ a{ .global_a; }
 			fieldset.form{
 				.fieldset_basic_mixin;
 				legend.form{ .legend_basic_mixin; }
+				.intro{
+					
+					.global_intro;
+					margin:0.4em 0 1em 0;
+					
+				}
 			}
 		}
 		.show{
@@ -462,9 +469,15 @@ a{ .global_a; }
 			padding:10px;
   		margin-top:16px;
   		h1{
-			  font: 150% sans-serif;
+			  font: 18px sans-serif;
 			  color: @h_fg;
 			  border-bottom: 3px dotted @banner_bg;
+			  a{
+				  font: 18px sans-serif;
+				  :hover{
+				  	color:@main_bg;
+				  }
+			  }
 			}
 			.intro{	.global_intro; }
 			table{
@@ -477,6 +490,11 @@ a{ .global_a; }
 						font-weight:bold;
 						background:@banner_bg;
 						text-align:center;	
+					}
+					td{
+						span.highlight{
+							font-weight:bold;
+						}
 					}
 				}
 				tr.list-line-odd{

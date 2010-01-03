@@ -25,8 +25,9 @@ authorization do
   role :guest do
 #		has_permission_on :events, :to => [:index, :show]
 #		has_permission_on :registrants, :to => [:new, :create]
+		has_permission_on :reset_passwords, :to => [:new, :create]
 		has_permission_on :user_sessions, :to => [:new, :create, :destroy]
-		has_permission_on :users, :to => [:new, :create]
+		has_permission_on :users, :to => [:new, :create, :change_password, :update_password]
 		has_permission_on :settings, :to => :toggle_user_language
 #		has_permission_on :galleries, :to => :show
 #		has_permission_on :photos, :to => :show

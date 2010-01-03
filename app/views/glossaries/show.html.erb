@@ -1,5 +1,6 @@
-<h1><%= t('info') %> - Glossary</h1>
-
+<div class="show">
+<fieldset class="show">
+<legend><%= t('info') %> - Glossary</legend>
 <p>
   <strong><%= t('japanese') %>:</strong>
   <%=h @glossary.japanese %>
@@ -21,4 +22,7 @@
   <%= link_to t('edit'), edit_glossary_path(@glossary), :class=>"link" %> |
   <%= link_to t('destroy'), @glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
   <%= link_to t('view_all'), glossaries_path, :class=>"link" %>
+</div>
+
+</fieldset>
 </div>

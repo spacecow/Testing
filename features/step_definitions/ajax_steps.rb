@@ -2,7 +2,11 @@ Given 'I am logged in as "(.+)" AJAX' do |user|
   Given "I browse to \"login\""
   @browser.type 'user_name', user
   @browser.type 'password', "secret"
-  Given "I click button \"commit\""
+  Given "I press button \"commit\""
+end
+
+When /^I type in "([^\"]*)" with "([^\"]*)"$/ do |field,string|
+	@browser.type field, string
 end
 
 When /^I browse to "([^\"]*)"$/ do |page|
@@ -26,7 +30,7 @@ Given /^I click link '([^\"]*)' for (.+) "([^\"]*)"$/ do |link, category, name|
 	clickAndWait get_action_locator( name.gsub( / /, '_' ), link=="edit" ? 2 : 0 )
 end
 
-When /^I click button "([^\"]*)"$/ do |button|
+When /^I press button "([^\"]*)"$/ do |button|
   clickAndWait button
 end
 

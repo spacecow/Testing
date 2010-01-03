@@ -1,6 +1,6 @@
 <div class="form">
-<fieldset>
-<legend><%= t('quiz') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('quiz') %></legend>
 <%= @glossary.japanese %><br />
 <h2><%= @kanji.title %></h2>
 <% form_remote_for :kanji, :url => check_glossary_path( @kanji ), :html => { :method => :put } do |f| %>

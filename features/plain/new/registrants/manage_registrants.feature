@@ -8,7 +8,7 @@ Given a setting exists with name: "main"
 Scenario: List registrants
 When I go to the registrants page
 Then I should see "registrants" table
-|	Occupation				|	Name					|	Name/Hurigana	|	Gender	|	Age		|	Nationality	|	Telephone number	|	Email Address	|	Note		|
+|	Occupation				|	Name					|	Name/Hurigana	|	Gender	|	Age		|	Nationality	|	Telephone number	|	Email address	|	Note		|
 | Exchange Student	|	Fake Fakeson	|	johan					|	Male		|	10's	|	Fakeland		|	080-1234-5678			|	joh@n.se			|					|
 When I follow "Edit" within that registrant
 Then I should be redirected to the edit page of that registrant

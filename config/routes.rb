@@ -1,10 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :reset_passwords
+
 	map.resources :votes
   map.resources :todos, :member => {:add_comment => :put, :edit_comment => :get, :toggle_close => :get}
 	map.resources :events, :member => {:add_comment => :put, :edit_comment => :get, :move_comment => :get}
 
   map.resources :invitations, :collection => { :deliver => :get }
 	map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
+	map.reset_password '/change_password/:token', :controller => 'users', :action => 'change_password'
 
   map.resources :galleries
   map.resources :photos
@@ -19,11 +22,12 @@ ActionController::Routing::Routes.draw do |map|
 	map.login_user '/login_user/:username', :controller => "user_sessions", :action => "new"
 	map.login_user 'login_user', :controller => "user_sessions", :action => "new"
 	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
+	
 	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
 
   map.resources :user_sessions
 
-  map.resources :users, :member => { :new_event_register => :post, :create_event_register => :put, :edit_role => :get, :update_role => :put }
+  map.resources :users, :member => { :new_event_register => :post, :create_event_register => :put, :edit_role => :get, :update_role => :put }, :collection => { :change_password => :get, :update_password => :put }
 
 	map.resources :comments
   map.resources :registrants
