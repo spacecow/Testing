@@ -1,3 +1,4 @@
+@roles
 Background:
 Given a setting exists with name: "main"
 	And a user exists with username: "johan", role: "admin", language: "en"
@@ -13,3 +14,5 @@ When I check "Photographer"
 	And I press "Update"
 Then I should be redirected to the users page
 	And a user should exist with username: "thomas", roles_mask: 68
+And I follow "Role" within user: "thomas"
+Then show me the page	

@@ -1,0 +1,8 @@
+Background:
+Given a setting exist with name: "main"
+	And a user exist with username: "johan", role: "admin", language: "en"
+	And a template class exists with course: course "ruby", teacher: user "kurosawa", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
+	
+Scenario: List Template Classes
+Given I go to the template classes page
+Then show me the page

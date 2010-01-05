@@ -13,6 +13,8 @@
 	text-align: right;
 	margin-right: 0.5em;	
 }
+.numeric_mixin{ width: 10em; }
+
 
 form.comment{
 	fieldset.inputs{
@@ -79,8 +81,19 @@ form.formtastic{
 					}
 					ol{
 						li{
-							label{
-								text-align:left;
+						label{
+							text-align:left;
+							}
+						}
+					}
+				}
+			}
+			div.horizontal{
+				li.radio{
+					fieldset{
+						ol{
+							li{
+								float:left;
 							}
 						}
 					}
@@ -90,12 +103,16 @@ form.formtastic{
 				textarea{
 					.global_width;
 					height:70px;
+					resize:none;
 				}
 			}
 			li.numeric{
-				input{ width: 10em; }
+				input{ .numeric_mixin; }
 			}
-			li.string{ input{ .global_width; }}
+			li.string{
+				input{ .global_width; }
+				input.numeric{ .numeric_mixin; }
+			}
 			li.password{ input{ .global_width; }}
 			li.datetime{
 				fieldset{

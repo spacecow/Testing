@@ -36,7 +36,7 @@
 			  <li>
 			  	<%= link_to e.name, e %>
 			  	<% if !e.current_login_at.nil? %>
-			  		<%= distance_of_time_in_words_to_now( e.current_login_at ) %><% t(:ago) %>
+			  		<%= distance_of_time_in_words_to_now( e.current_login_at ) %><%= t(:ago) %>
 			  	<% end %>
 			  </li>
 			<% end %>

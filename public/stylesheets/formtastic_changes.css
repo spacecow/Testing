@@ -8,6 +8,7 @@
   text-align: right;
   margin-right: 0.5em;
 }
+.numeric_mixin { width: 10em; }
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
 form.formtastic fieldset.buttons { padding-left: 135px; }
@@ -51,12 +52,15 @@ form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
   margin-right: 0.5em;
 }
 form.formtastic fieldset.inputs ol li.radio fieldset ol li label { text-align: left; }
+form.formtastic fieldset.inputs ol div.horizontal li.radio fieldset ol li { float: left; }
 form.formtastic fieldset.inputs ol li.text textarea {
   width: 300px;
   height: 70px;
+  resize: none;
 }
 form.formtastic fieldset.inputs ol li.numeric input { width: 10em; }
 form.formtastic fieldset.inputs ol li.string input { width: 300px; }
+form.formtastic fieldset.inputs ol li.string input.numeric { width: 10em; }
 form.formtastic fieldset.inputs ol li.password input { width: 300px; }
 form.formtastic fieldset.inputs ol li.datetime fieldset legend span.label { width: 130px; }
 form.formtastic fieldset.inputs ol li.datetime fieldset ol {

@@ -146,6 +146,12 @@ pre, code, kbd, samp, tt {
   background: #aabbaa;
   color: #ffffff;
 }
+.header_mixin {
+  color: #222266;
+  border-bottom: 3px dotted #aabbaa;
+}
+.header_mixin a { font: 18px sans-serif; }
+.header_mixin a:hover { color: #eeffee; }
 .table_cell:hover { background: #eeffee; }
 .table_cell td { padding: 0 3px 0 3px; }
 .side_container {
@@ -354,6 +360,7 @@ a:hover {
 }
 #container #right_column #user_nav:hover { background: #eeffee; }
 #container #right_column #user_nav .commands ul {
+  padding: 4px 0 4px 0;
   float: left;
   width: 110px;
   background: #4b7399;
@@ -654,12 +661,19 @@ a:hover {
   margin-top: 16px;
 }
 #container #main #list h1 {
-  font: 18px sans-serif;
   color: #222266;
   border-bottom: 3px dotted #aabbaa;
+  font: 18px sans-serif;
 }
 #container #main #list h1 a { font: 18px sans-serif; }
 #container #main #list h1 a:hover { color: #eeffee; }
+#container #main #list h2 {
+  color: #222266;
+  border-bottom: 3px dotted #aabbaa;
+  font: 14px sans-serif;
+}
+#container #main #list h2 a { font: 18px sans-serif; }
+#container #main #list h2 a:hover { color: #eeffee; }
 #container #main #list .intro {
   margin-top: 10px;
   -moz-border-radius: 5px;

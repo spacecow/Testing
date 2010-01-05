@@ -1,5 +1,6 @@
 class TemplateClassesController < ApplicationController
-  before_filter :load_classes_and_times
+  filter_access_to :all
+  #before_filter :load_classes_and_times
   
   def add_course
   	TemplateClass.create!(
@@ -12,13 +13,15 @@ class TemplateClassesController < ApplicationController
 	end
   
   def index
-    @template_day = params[ :template_day ] || Date.current.strftime( "%A" )
-    @template_klasses = TemplateClass.find_all_by_day( @template_day, :include => [ :course, :course_time, :classroom, { :teacher=>:person }])
-    @template_groups = @template_klasses.group_by{|e| e.course.category }
-
-		@classrooms = Classroom.all
-		@teachers = Teacher.find( :all, :include => :person )
-		@collision = {}
+#    @template_day = params[ :template_day ] || Date.current.strftime( "%A" )
+#    @template_klasses = TemplateClass.find_all_by_day( @template_day, :include => [ :course, :course_time, :classroom, { :teacher=>:person }])
+		@template_classes = TemplateClass.all( :include => :course )
+    @template_groups = @template_classes.group_by{|e| e.course.category }
+    @days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+#
+#		@classrooms = Classroom.all
+#		@teachers = Teacher.find( :all, :include => :person )
+#		@collision = {}
   end
 
   # GET /template_classes/1
@@ -32,11 +35,11 @@ class TemplateClassesController < ApplicationController
     end
   end
 
-  # GET /template_classes/new
-  # GET /template_classes/new.xml
   def new
-    @template_class = TemplateClass.new()
+    @template_class = TemplateClass.new( :capacity => 8 )
+#		@teachers = [] you should not be able to choose teacher before course has been chosen
 		@teachers = User.with_role( :teacher )
+		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,38 +47,33 @@ class TemplateClassesController < ApplicationController
     end
   end
 
-  # GET /template_classes/1/edit
+  def create
+    @template_class = TemplateClass.new( params[ :template_class ] )
+		@teachers = User.with_role( :teacher )
+		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+#		@teachers = [] you should not be able to choose teacher before course has been chosen
+#		if !params[:template_class][:course_id].blank?
+#			@teachers = Teacher.all(
+#				:conditions=>["courses.name = ?", Course.find( params[:template_class][:course_id] ).name],
+#			  :include=>[:person, :courses])    
+#		end
+    if @template_class.save
+      flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
+      #format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
+      redirect_to template_classes_path
+    else
+      render :action => "new"
+    end
+  end
+
+
   def edit
     @template_class = TemplateClass.find(params[:id])
 		@teachers = Teacher.all(
 			:conditions=>["courses.name = ?", Course.find( @template_class.course_id ).name],
 		  :include=>[:person, :courses])      		    
   end
-
-  # POST /template_classes
-  # POST /template_classes.xml
-  def create
-    @template_class = TemplateClass.new( params[ :template_class ])
-		@teachers = []
-		if !params[:template_class][:course_id].blank?
-			@teachers = Teacher.all(
-				:conditions=>["courses.name = ?", Course.find( params[:template_class][:course_id] ).name],
-			  :include=>[:person, :courses])    
-		end
-    respond_to do |format|
-      if @template_class.save
-        flash[:notice] = 'TemplateClass was successfully created.'
-        format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
-        format.xml  { render :xml => @template_class, :status => :created, :location => @template_class }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @template_class.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /template_classes/1
-  # PUT /template_classes/1.xml
+  
   def update
     @template_class = TemplateClass.find(params[:id])
     course_id = @template_class.course_id

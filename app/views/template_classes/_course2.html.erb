@@ -1,0 +1,59 @@
+
+<table cellpadding="0" cellspacing="1", border="0" id="<%= course_klasses[0].course_category+'Course' %>">
+  <tr>
+    <td class="template-table-title" colspan="2">
+    	<%= course_klasses[0].course_category+"コース" %>
+  	</td>
+  </tr>
+  <tr>
+	  <th class="template-table-topics" rowspan="2">授業</th>
+		<th class="template-table-topics" rowspan="2">時間</th>
+		<th class="template-table-topics" rowspan="2">ユニット</th>
+		<th class="template-table-topics" rowspan="2">部屋</th>
+		<th class="template-table-topics" rowspan="2">講師</th>
+    <td class="template-table-topics" colspan="8">受講生</td>
+  </tr>
+  <tr>
+    <% 8.times do |no| %>
+      <td class="template-table-topics-sub"><%= no+1 %></td>
+    <% end %>
+  </tr>
+  <tr><td colspan="13" class="table-course"></td></tr>
+  <% @time_groups = course_klasses.group_by{|e| e.time_interval } %>
+  <% @time_groups.sort.each do |time, time_klasses_and_levels| %>
+  	<% time_klasses_and_levels.group_by{|e| e.course_level }.sort.each do |level,time_klasses| %>
+			<div class="<%= time_klasses[0].course_category %>_<%= time_klasses[0].course_level %>_<%= time_klasses[0].stripped_time_interval %>">
+	    	<tr>
+			    <th rowspan="<%= time_klasses.size %>">
+			    	<%= time_klasses[0].course_level %>&nbsp;<%= link_to '+',
+			          	add_course_template_classes_path(
+			          		:template_day => @template_day,
+										:course_id => time_klasses[0].course.id,
+										:start_time => time_klasses[0].start_time,
+										:end_time => time_klasses[0].end_time
+			          	),
+			            :class=>"grid" %>     
+			    </th>
+			    
+		      <% if !collision[time_klasses[0].time_interval] %>
+			    <% collision[time_klasses[0].time_interval] = @template_klasses.reject{|e| !(( e.start_time <= time_klasses[0].start_time and e.end_time >= time_klasses[0].start_time ) or ( e.start_time <= time_klasses[0].end_time and e.end_time >= time_klasses[0].end_time ))} %>
+			    <% end %>
+			    <% collisions = collision[time_klasses[0].time_interval] %>
+			    	    
+		      <% time_klasses.each do |template_klass| %>
+						<div class="template_klass_<%= template_klass.id %>">
+							<%= render :partial=>"template_klass",
+										:locals => {
+											:template_klass => template_klass,
+											:teachers => @teachers.reject{|e| !e.courses.include?( template_klass.course )},
+											:collisions => collisions }%>
+						</div>
+		    		</tr>
+		    		<tr>
+		      <% end %>
+		  	</tr>
+	    </div>
+		  <tr><td colspan="13" class="table-course"></td></tr>
+		<% end %>
+  <% end %>
+</table>

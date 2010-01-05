@@ -1,4 +1,8 @@
-﻿<h1><%= t( 'template_klasses.listing' ) %></h1>
+﻿<div id="list">
+
+<h1><%= t( 'template_klasses.title' ) %></h1>
+<div class="intro">
+</div>
 
 <% form_for :template_class,
             :url => { :action=>'index' },
@@ -11,15 +15,11 @@
 
 <% @keys = sort_in_mogi_order @template_groups.keys %>
 <% @keys.each do |key| %>
-  <div id="table">
-    <%= render :partial=>"course",
-    			:locals=>{
-    				:course_klasses => @template_groups[key],
-    				:collision => @collision	
-    			} %><br />
-  </div>
+	<%= render :partial => 'course', :locals => { :template_classes => @template_groups[key] } %>
 <% end %>
 
 <div id="links">
 	<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
+</div>
+
 </div>

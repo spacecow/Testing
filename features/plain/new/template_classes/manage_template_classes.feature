@@ -34,23 +34,35 @@
 #	And I should see 'note'": Something important"
 #	And I should have 2 template classes
 
+@visual
 Background:
 Given a setting exist with name: "main"
 	And a user exist with username: "johan", role: "admin", language: "en"
 	
-@template_classes
 Scenario: Create a new template class
-Given a course exists with name: "Ruby I"
+Given a course: "ruby" exists with name: "Ruby I"
 	And a course exists with name: "Rails II"
-	And a user exists with username: "kurosawa", name: "Akira Kurosawa", role: "teacher"
-	And a classroom exists with name: "1"
+	And a user: "kurosawa" exists with username: "kurosawa", name: "Akira Kurosawa", role: "teacher"
+	And a classroom: "1" exists with name: "1"
 	And a user is logged in as "johan"
 When I go to the new template class page
-Then "template_class_course_id" should have options "BLANK, Ruby I, Rails II"
-	And "template_class_teacher_id" should have options "BLANK, Akira Kurosawa"
-	And "template_class_classroom_id" should have options "BLANK, 1"
-Then show me the page
-When I press "Create"
-Then I should see "Course*Ruby IRails IIcan't be blank"
-Then I should see "Start time*fe"
-Then show me the page
+	And I fill in "Title" with "A funny title"
+	And I select "Ruby I" from "Course"
+	And I select "Akira Kurosawa" from "Teacher"
+	And I select "Monday" from "Day"
+	And I select "1" from "Classroom"
+	And I fill in "Description" with "A funny description"
+	And I fill in "Note" with "A funny note"
+	And I press "Create"
+Then I should be redirected to the error template classes page
+	And "Ruby I" should be selected in the "Course" box
+	And "Akira Kurosawa" should be selected in the "Teacher" box
+	And "Monday" should be selected in the "Day" box
+	And "1" should be selected in the "Classroom" box
+When I fill in "Start time" with "18:50"
+	And I fill in "End time" with "20:50"
+	And I press "Create"
+Then I should be redirected to the template classes page
+	And I should see "Successfully created template class" within "#notice"
+	And a template class should exist with course: course "ruby", teacher: user "kurosawa", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
+	

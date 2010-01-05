@@ -6,13 +6,12 @@ class TemplateClass < ActiveRecord::Base
   
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}    
   
-  validates_presence_of :course_id, :start_time, :end_time
-  validates_format_of :day,
-    :with => %r{\wday},
-    :message => "must be chosen"
-	validates_format_of :start_time,
-		:with => /[1]{2}/,
-		:message => "can't be blank"
+  validates_presence_of :course, :capacity, :day
+  validates_inclusion_of :inactive, :in => [false, true]
+	validate :start_time_cant_be_blank
+	validate :end_time_cant_be_blank
+	
+	DAYS = %w( sun mon tue wed thu fri sat )
 
   def course_category
     course.category
@@ -67,5 +66,12 @@ protected
       errors.add_to_base( I18n.translate( 'template_klasses.error.edit_courses_with_teacher' )) unless teacher_id.nil?
       #errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_students') ) if !students.empty?
 		end
+	end
+	
+	def start_time_cant_be_blank
+		errors.add :start_time_string, I18n.t('activerecord.errors.messages.blank') if start_time.nil?
+	end
+	def end_time_cant_be_blank
+		errors.add :end_time_string, I18n.t('activerecord.errors.messages.blank') if end_time.nil?
 	end
 end

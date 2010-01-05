@@ -133,6 +133,16 @@
 }
 
 
+.header_mixin{
+	  color: @h_fg;
+	  border-bottom: 3px dotted @banner_bg;
+	  a{
+		  font: 18px sans-serif;
+		  :hover{
+		  	color:@main_bg;
+		  }
+	  }	
+}
 .table_cell{
 	:hover{
 		background:@main_bg;
@@ -296,6 +306,7 @@ a{ .global_a; }
 			.side_container;
 			.commands{
 				ul{
+					padding:4px 0 4px 0;
 					float:left;											
 					width:110px;
 					background:@global_bg;
@@ -484,16 +495,13 @@ a{ .global_a; }
 			padding:10px;
   		margin-top:16px;
   		h1{
+  			.header_mixin;
 			  font: 18px sans-serif;
-			  color: @h_fg;
-			  border-bottom: 3px dotted @banner_bg;
-			  a{
-				  font: 18px sans-serif;
-				  :hover{
-				  	color:@main_bg;
-				  }
-			  }
 			}
+  		h2{
+  			.header_mixin;
+			  font: 14px sans-serif;
+			}			
 			.intro{	.global_intro; }
 			table{
 				border-collapse: separate;

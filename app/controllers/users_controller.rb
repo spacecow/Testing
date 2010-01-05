@@ -79,6 +79,7 @@ class UsersController < ApplicationController
 		@user = User.find( params[:id] )
 	end
 	
+	#:roles are not updated if :invitation_id is nil, why?
 	def update_role
 		@user = User.find( params[:id] )
 		@user.update_attributes(params[:user])

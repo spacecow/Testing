@@ -57,6 +57,7 @@ ja:
   event: "イベント名"  
   event_cost: "会費"
   event_date: "日付"
+  ex: "例え"
   feature: "機能"
   female: "女性"
   gallery: "ギャラリー"
@@ -286,7 +287,6 @@ ja:
       select: "講師を選択して下さい"
   template_klasses:
     editing: "テンプレート・クラス編集"
-    listing: "上場テンプレート・クラス"
     new: "新しいテンプレート・クラス"
     title: "テンプレート・クラス"
     error:

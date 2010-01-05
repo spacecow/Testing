@@ -1,5 +1,4 @@
 <div class="form">
-<%= error_messages_for :template_class %>
 
 <fieldset class="form">
 <legend class="form"><%= t( 'template_klasses.new' ) %></legend>
@@ -8,6 +7,10 @@
   <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t( 'create' )} %>
 <%- end -%>
 
-<%= link_to t( 'back' ), template_classes_path( :template_day=>@template_class.day ) %>
+<div class="links">
+	<% if permitted_to? :index, TemplateClass.new %>
+		<%= link_to t( 'template_klasses.title' ), template_classes_path( :template_day=>@template_class.day ) %>
+	<% end %>
+</div>
 </fieldset>
 </div>
