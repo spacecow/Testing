@@ -21,28 +21,5 @@
 <% end %>
 
 <div id="links">
-	<% if clearance < 3 %>
-		<br />
-		<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
-	<% end %>
+	<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ), :class=>"link" %><br />
 </div>
-
-<% if clearance?(1) && @template_classes %>
-	<table>
-	<% @template_classes.each do |template_class| %>
-	  <tr>
-	    <td><%=h template_class.course %></td>
-	    <td><%=h template_class.course_time %></td>
-	    <td><%=h template_class.day %></td>
-	    <td><%=h template_class.title %></td>
-	    <td><%=h template_class.description %></td>
-	    <td><%=h template_class.inactive %></td>
-	    <td><%=h template_class.note %></td>
-	    <td><%= link_to 'Show', template_class %></td>
-	    <td><%= link_to 'Edit', edit_template_class_path(template_class) %></td>
-	    <td><%= link_to 'Destroy', template_class, :confirm => 'Are you sure?', :method => :delete %>
-	    </td>
-	  </tr>
-	<% end %>
-	</table>
-<% end %>

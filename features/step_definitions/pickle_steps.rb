@@ -10,7 +10,7 @@ Given(/^#{capture_model} exists?(?: with #{capture_fields})?$/) do |name, fields
 		roles_code["god"] = 1
 		roles_code["admin"] = 2
 		roles_code["observer"] = 4
-		roles_code["teatcher"] = 8
+		roles_code["teacher"] = 8
 		roles_code["student"] = 16
 		roles_code["registrant"] = 32
 		roles_code["photographer"] = 64

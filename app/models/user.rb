@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :photos
   has_many :reset_passwords
   
+  named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+  
   attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas, :info_update, :change_password
   
   #before_create :set_invitation_limit

@@ -1,22 +1,13 @@
-﻿<p>
-  <%= f.label :course_id, t( 'course' ) %>
-  <%= f.collection_select :course_id,
-    Course.all, :id, :name,
-    { :include_blank => true },
-    :onchange => 'this.form.submit();' %>
-</p>
-<p>
-  <%= f.label :teacher_id, t( 'teacher' ) %>
-  <%= f.collection_select :teacher_id,
-    @teachers, :id, :name,
-    :include_blank => true %>
-</p>
-<p>
-  <%= f.label :classroom_id, t( 'classroom' ) %>
-  <%= f.collection_select :classroom_id,
-    Classroom.all, :id, :name,
-    :include_blank => true %>
-</p>
+﻿<% f.inputs do %>
+	<%= f.input :course_id, :label => t( 'course' ), :collection => Course.all %>
+	<%= f.input :teacher, :label => t( 'teacher' ), :collection => @teachers, :required => false %>
+	<%= f.input :classroom, :label => t( 'classroom' ) %>
+	<%= f.input :capacity, :label => t( 'capacity' ) %>
+	<%= f.input :day, :label => t( 'day' ), :as => :select, :collection => t( 'date.day_names' ) %>
+	<%= f.input :start_time, :label => t( 'start_time' ) %>
+	<%= f.input :end_time, :label => t( 'end_time' ) %>
+	<%= f.input :title, :label => t( 'title' ) %>
+<% end %>
 <p>
 	<%= f.label :capacity, t( 'capacity' ) %>
   <%= f.text_field :capacity, :size=>5 %>

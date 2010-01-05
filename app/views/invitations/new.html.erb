@@ -28,9 +28,9 @@
 		<ul>
 			<% @users.each do |user| %>
 				<% if user.info_update %>
-					<li><%= user.name %></li>
+					<li><%= link_to user.name, user %></li>
 				<% else %>
-					<li>(<%= user.name %>)</li>
+					<li>(<%= link_to user.name, user %>)</li>
 				<% end %>
 			<% end %>
 		</ul>

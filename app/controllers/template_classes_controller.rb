@@ -36,7 +36,7 @@ class TemplateClassesController < ApplicationController
   # GET /template_classes/new.xml
   def new
     @template_class = TemplateClass.new()
-		@teachers = []
+		@teachers = User.with_role( :teacher )
 
     respond_to do |format|
       format.html # new.html.erb

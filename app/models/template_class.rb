@@ -1,7 +1,7 @@
 class TemplateClass < ActiveRecord::Base
   belongs_to :course
   belongs_to :course_time
-  belongs_to :teacher
+  belongs_to :teacher, :class_name => 'User'
   belongs_to :classroom
   
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}    
@@ -10,6 +10,9 @@ class TemplateClass < ActiveRecord::Base
   validates_format_of :day,
     :with => %r{\wday},
     :message => "must be chosen"
+	validates_format_of :start_time,
+		:with => /[1]{2}/,
+		:message => "can't be blank"
 
   def course_category
     course.category
