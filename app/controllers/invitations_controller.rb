@@ -11,6 +11,8 @@ class InvitationsController < ApplicationController
   def create
 		@invitation = Invitation.new(params[:invitation])
     @invitation.sender = current_user
+  	#@users = User.all
+  	@users = [ User.first ]    
     if @invitation.save
     	UserMailer.deliver_invitation( @invitation, signup_url( @invitation.token ))
       flash[:notice] = t('invitations.sent')

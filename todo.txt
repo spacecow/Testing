@@ -1,0 +1,6 @@
+start with monday
+submenu in header (not pretty)
+margin-top for index page
+make template classes change with day
+prepare for many classes within a class
+move comment to only open todos

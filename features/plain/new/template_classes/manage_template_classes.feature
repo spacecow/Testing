@@ -48,7 +48,6 @@ Given a course: "ruby" exists with name: "Ruby I"
 When I go to the new template class page
 	And I fill in "Title" with "A funny title"
 	And I select "Ruby I" from "Course"
-	And I select "Akira Kurosawa" from "Teacher"
 	And I select "Monday" from "Day"
 	And I select "1" from "Classroom"
 	And I fill in "Description" with "A funny description"
@@ -56,7 +55,6 @@ When I go to the new template class page
 	And I press "Create"
 Then I should be redirected to the error template classes page
 	And "Ruby I" should be selected in the "Course" box
-	And "Akira Kurosawa" should be selected in the "Teacher" box
 	And "Monday" should be selected in the "Day" box
 	And "1" should be selected in the "Classroom" box
 When I fill in "Start time" with "18:50"
@@ -64,5 +62,5 @@ When I fill in "Start time" with "18:50"
 	And I press "Create"
 Then I should be redirected to the template classes page
 	And I should see "Successfully created template class" within "#notice"
-	And a template class should exist with course: course "ruby", teacher: user "kurosawa", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
+	And a template class should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "Mon"
 	

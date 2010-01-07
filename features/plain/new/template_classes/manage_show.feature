@@ -11,10 +11,9 @@ Given a course exists with name: "Ruby I"
 When I go to the new template class page
 Then I should see "New Template Class" within "legend"
 	And the "Course" field should have options "BLANK, Ruby I, Rails II"
-	And the "Teacher" field should have options "BLANK, Akira Kurosawa"
 	And the "Classroom" field should have options "BLANK, 1"
 	And the "Capacity" field should contain "8"
-	And the "Day" field should have options "BLANK, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+	And the "Day" field should have options "BLANK, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
 	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"
 	And I should see "Ex. 18:40" within "li#template_class_end_time_string_input"
 	And the "Inactive" checkbox should not be checked
@@ -29,7 +28,7 @@ When I go to the new template class page
 Then I should be redirected to the error template classes page
 	And I should see "Course*can't be blank"
 	And I should see "Capacity*can't be blank"
-	And I should see "Day*SundayMondayTuesdayWednesdayThursdayFridaySaturdaycan't be blank"
+	And I should see "Day*MondayTuesdayWednesdayThursdayFridaySaturdaySundaycan't be blank"
 
 Scenario: Change capacity automatically when changing between conversation/grammar (NOT IMPLEMENTED)
 Given not implemented

@@ -11,7 +11,7 @@ class TemplateClass < ActiveRecord::Base
 	validate :start_time_cant_be_blank
 	validate :end_time_cant_be_blank
 	
-	DAYS = %w( sun mon tue wed thu fri sat )
+	DAYS = %w(Mon Tue Wed Thu Fri Sat Sun)
 
   def course_category
     course.category

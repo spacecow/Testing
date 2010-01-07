@@ -10,7 +10,7 @@ authorization do
     has_permission_on :photos, :to => [:new, :create, :show, :index, :update, :edit, :destroy ]
     has_permission_on :todos, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :add_comment, :edit_comment, :toggle_close]
     has_permission_on :votes, :to => [:new, :edit, :destroy, :index]
-    has_permission_on :template_classes, :to => [:new, :create, :index]
+    has_permission_on :template_classes, :to => [:new, :create, :index, :show, :edit, :destroy]
   end
   
   role :god do

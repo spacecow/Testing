@@ -40,6 +40,7 @@ ja:
   create: "創造"
   created: "が首尾よく作成されました"
   crop: "切断"
+  date_and_time: "日時"
   day: "曜日"
   delete: "削除"
   descending: "降順"
@@ -47,7 +48,7 @@ ja:
   description_en: "記述 (英語)"
   description_ja: "記述 (日本語)"
   destroy: "削除"
-  due_date: "満期日"
+  due_date: "申込締切日"
   edit: "編集"
   edit_profile: "ﾌﾟﾛﾌｨｰﾙ編集"
   email: "メールアドレス"
@@ -94,18 +95,21 @@ ja:
   nationality: "国籍"
   note: "備考"
   notice: "注意"
+  object_course: "{{object}}コース"
   observer: "観察者"
   occupation: "参加形態"
   offu: "OFF"
   onu: "ON"
   onyomi: "音読み"
   open: "開いた"
-  pay_method: "支払い方法"
+  pay_method: "支払方法"
   password: "パスワード"
-  password_confirmation: "パスワード確認"
+  password_new: "新しいパスワード"
+  password_confirmation: "パスワードの再確認"
+  password_confirmation_new: "新しいパスワードの再確認"
   photo: "写真"
   photographer: "写真家"
-  place: "開催場所"
+  place: "場所"
   points: "ポイント"
   preview: "プレビュー"
   previous_version: "前バージョン"
@@ -170,8 +174,8 @@ ja:
   message:
     forgotten_password: "パスワードを忘れました！"
     info_update: "サイトが更新された時に情報を送ってもらいたい"
-    provide_username_or_email: "ユーザーなかEメールを挙げてパスワード・リセットの方法がメールアドレスに送られます。"
-    change_password: "{{object}}のユーザーパスワードを変更して"
+    provide_username_or_email: "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
+    change_password: "{{object}}様のパスワードの変更を受付けます"
   notice:
     add_success: "正常に{{object}}が追加されました"
     create_success: "正常に{{object}}が作成されました"
@@ -204,9 +208,9 @@ ja:
   events:
     editing: "イベント編集"
     message:
-      already_applied: "このイベントにはもう登録されました"
-      please_login: "イベントに登録する為にﾛｸﾞｲﾝして下さい"
-      not_applied_yet: "まだ登録されませんでした"
+      already_applied: "このイベントにはもう申し込みされていました"
+      please_login: "イベントに申し込む為にﾛｸﾞｲﾝして下さい"
+      not_applied_yet: "まだ申し込みされていません"
     new: "新しいイベント"
     title: "参加イベント"
   galleries:
@@ -308,8 +312,8 @@ ja:
       short: "%m/%d"
       long: "%Y年%m月%d日(%a)"
  
-    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
-    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+    day_names: [月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日, 日曜日]
+    abbr_day_names: [月, 火, 水, 木, 金, 土, 日]
  
     month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
     abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]

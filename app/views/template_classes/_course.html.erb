@@ -1,20 +1,19 @@
-<table cellpadding="0" cellspacing="1", border="0">
+<table cellpadding="0" cellspacing="1", border="0" class="course" id="<%= template_classes[0].course.name.gsub(/\s/,'_') %>">
   <tr>
-    <td class="template-table-title" colspan="2">
-    	<%= template_classes[0].course_category+"コース" %>
-  	</td>
+    <th class="title" colspan="2"><%= t(:object_course, :object => template_classes[0].course_category) %></th>
   </tr>
   <tr>
-	  <th class="template-table-topics" rowspan="2">授業</th>
-		<th class="template-table-topics" rowspan="2">時間</th>
-		<th class="template-table-topics" rowspan="2">ユニット</th>
-		<th class="template-table-topics" rowspan="2">部屋</th>
-		<th class="template-table-topics" rowspan="2">講師</th>
-    <td class="template-table-topics" colspan="8">受講生</td>
+	  <th class="subtitle" rowspan="2"><%= t :lesson %></th>
+		<th class="subtitle" rowspan="2"><%= t :klass_time %></th>
+		<th class="subtitle" rowspan="2"><%= t :unit %></th>
+		<th class="subtitle" rowspan="2"><%= t :classroom %></th>
+		<th class="subtitle" rowspan="2"><%= t :teacher %></th>
+    <th class="subtitle" colspan="8"><%= t :student %></th>		
   </tr>
   <tr>
     <% 8.times do |no| %>
-      <td class="template-table-topics-sub"><%= no+1 %></td>
+      <th class="template-table-topics-sub"><%= no+1 %></th>
     <% end %>
-  </tr>  
+  </tr>
+  <%= render template_classes %>
 </table>

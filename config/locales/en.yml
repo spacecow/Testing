@@ -40,6 +40,7 @@ en:
   create: "Create"
   created: " was successfully created"
   crop: "Crop"
+  date_and_time: "Date&Time"
   day: "Day"
   delete: "Del"
   descending: "Descending"
@@ -97,6 +98,7 @@ en:
   nationality: "Nationality"
   note: "Note"
   notice: "Note"
+  object_course: "{{object}} Course"
   observer: "Observer"
   occupation: "Occupation"
   offu: "OFF"
@@ -104,7 +106,9 @@ en:
   onyomi: "Onyomi"
   open: "Open"
   password: "Password"
-  password_confirmation: "Password Confirmation"
+  password_new: "New password"
+  password_confirmation: "Password confirmation"
+  password_confirmation_new: "New password confirmation"
   pay_method: "Pay method"
   photo: "Photo"
   photographer: "Photographer"
@@ -334,3 +338,7 @@ en:
     editing: "Editing Unit"
     new: "New Unit"
     title: "Units"
+
+  date:
+    day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+    abbr_day_names: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
