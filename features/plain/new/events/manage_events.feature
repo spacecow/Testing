@@ -9,13 +9,13 @@ Given a user is logged in as "kurosawa"
 	And a event exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", start_date: "2009-12-19 19:00", end_date: "2009-12-19 21:00", description_en: "It's Christmas!", description_ja: "クリスマスタイム！", place: "141", cost: "2500円, non Japanese free"
 When I go to the events page
 Then I should see events table
-  |	イベント名					|	日付											|	開催場所	|	会費											|
+  |	イベント名					|	日時										|	場所	|	会費											|
   |	クリスマスパーティ	|	2009-12-19 19:00 - 21:00	|	141				|	2500円, non Japanese free	|	
 When I follow 'edit_profile'
 	And I select "英語" from 'language'
 	And I press 'update'
 Then I should see events table
-  |	Event						|	Date											|	Place	|	Cost											|
+  |	Event						|	Date&amp;Time											|	Place	|	Cost											|
   |	Christmas Party	|	2009-12-19 19:00 - 21:00	|	141		|	2500円, non Japanese free	|
 
 Scenario: Create an event

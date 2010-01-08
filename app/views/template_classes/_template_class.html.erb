@@ -1,1 +1,26 @@
-<h1><%= template_class.course.name %></h1>
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
+	<td><%= h template_class.course.name %></td>
+	<td><%= h template_class.time_interval %></td>
+	<td></td>
+	<td><%= h template_class.classroom %></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td>
+		<% if permitted_to? :show, template_class %>
+			<%= link_to t('show'), template_class %>
+		<% end %>
+		<% if permitted_to? :edit, template_class %>
+			<%= link_to t('edit'), edit_template_class_path(template_class) %>
+		<% end %>
+		<% if permitted_to? :destroy, template_class %>
+			<%= link_to t('delete'), template_class, :confirm => 'Are you sure?', :method => :delete %>
+		<% end %>
+	</td>	
+</tr>

@@ -15,7 +15,7 @@ class TemplateClassesController < ApplicationController
   def index
 #    @template_day = params[ :template_day ] || Date.current.strftime( "%A" )
 #    @template_klasses = TemplateClass.find_all_by_day( @template_day, :include => [ :course, :course_time, :classroom, { :teacher=>:person }])
-		@template_classes = TemplateClass.all( :include => :course )
+		@template_classes = TemplateClass.find_all_by_day( 'Mon', :include => :course )
     @template_groups = @template_classes.group_by{|e| e.course.category }
     @days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 #

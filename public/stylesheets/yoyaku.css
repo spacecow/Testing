@@ -720,6 +720,9 @@ a:hover {
 #container #main #list table tr.list-line-even { background: #dfeedf; }
 #container #main #list table tr.list-line-even:hover { background: #eeffee; }
 #container #main #list table tr.list-line-even td { padding: 0 3px 0 3px; }
+#container #main #list table.course tr th { padding: 0 2px 0 2px; }
+#container #main #list table.course tr th.title { font-size: 14px; }
+#container #main #list table.course tr th.subtitle { color: #666666; }
 #container #main #list .links { margin-top: 5px; }
 #container #main #list form .sorting {
   margin: 10px 0 10px 110px;

@@ -1,4 +1,6 @@
-<h1>Crop avatar</h1>
+<div class="show">
+<fieldset class="show">
+<legend>Crop avatar</legend>
 <% content_for(:head) do %>
 <%= stylesheet_link_tag "jquery.Jcrop" %>
 <%= javascript_include_tag "jquery.Jcrop.min" %>
@@ -32,10 +34,12 @@ function update_crop(coords) {
 <% end %>
 <%= image_tag @user.avatar(:large), :id => "cropbox" %>
 
-<h4>Preview:</h4>
+<br />
+<h1>Preview:</h1>
 <div style="width:100px; height:100px; overflow:hidden">
   <%= image_tag @user.avatar.url(:large), :id => "preview" %>
 </div>
+<br />
 	
 <% form_for @user do |f| %>
   <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
@@ -43,3 +47,6 @@ function update_crop(coords) {
   <% end %>
   <p><%= f.submit "Crop" %></p>
 <% end %>
+
+</fieldset>
+</div>
