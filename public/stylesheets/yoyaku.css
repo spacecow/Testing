@@ -502,6 +502,26 @@ a:hover {
 #container #main .show fieldset.show .info span.category { font-weight: bold; }
 #container #main .show fieldset.show .info .applicants { margin-top: 5px; }
 #container #main .show fieldset.show .info .apply { margin-top: 5px; }
+#container #main .show fieldset.show .pairs { font-size: 1.1em; }
+#container #main .show fieldset.show .pairs .left_column {
+  width: 12em;
+  float: left;
+  text-align: right;
+  padding-right: 0.4em;
+  border-right: 0.1em solid;
+  margin: 0.3em 0 0.3em 0;
+}
+#container #main .show fieldset.show .pairs .left_column .left {
+  padding: 0.3em 0 0.3em 0.2em;
+  background: #ccddcc;
+}
+#container #main .show fieldset.show .pairs .right_column {
+  width: 28em;
+  float: left;
+  padding-left: 0.4em;
+}
+#container #main .show fieldset.show .pairs .right_column .right { background: #dfeedf; }
+#container #main .show fieldset.show .pairs .right_column .right a { font-size: 1em; }
 #container #main .show fieldset.show hr {
   border-top: 1px dashed #7f9db9;
   background-color: #eeffee;

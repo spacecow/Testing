@@ -1,38 +1,51 @@
+@list
 Background:
 Given a setting exist with name: "main"
 	And a user exist with username: "johan", role: "admin", language: "en"
-	
-Scenario: Visual & Links
-Given a course exists with name: "Ruby I"
-	And a course exists with name: "Rails II"
-	And a user exists with username: "kurosawa", name: "Akira Kurosawa", role: "teacher"
-	And a classroom exists with name: "1"
-	And a user is logged in as "johan"
-When I go to the new template class page
-Then I should see "New Template Class" within "legend"
-	And the "Course" field should have options "BLANK, Ruby I, Rails II"
-	And the "Teacher" field should have options "BLANK, Akira Kurosawa"
-	And the "Classroom" field should have options "BLANK, 1"
-	And the "Capacity" field should contain "8"
-	And the "Day" field should have options "BLANK, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
-	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"
-	And I should see "Ex. 18:40" within "li#template_class_end_time_string_input"
-	And the "Inactive" checkbox should not be checked
-When I follow "Template Classes" within "div.links"
-	Then I should be redirected to the template classes page
-	
-Scenario: Errors
-Given a user is logged in as "johan"
-When I go to the new template class page
-	And I fill in "Capacity" with ""
-	And I press "Create"
-Then I should be redirected to the error template classes page
-	And I should see "Course*can't be blank"
-	And I should see "Capacity*can't be blank"
-	And I should see "Day*SundayMondayTuesdayWednesdayThursdayFridaySaturdaycan't be blank"
+	And a user exist with username: "thomas", role: "observer", language: "en"
 
-Scenario: Change capacity automatically when changing between conversation/grammar (NOT IMPLEMENTED)
-Given not implemented
+Scenario Outline: List a template class
+Given a user is logged in as "<user>"
+	And a course: "ruby" exists with name: "Ruby I"
+	And a classroom: "room1" exists with name: "1"
+	And a user: "prince" exists with name: "Prince Philip"
+	And a template class exists with teacher: user "prince", course: course "ruby", classroom: classroom "room1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
+When I go to the show page of that template class
+Then I should see "Template Class" within "legend"
+	And I should see "TitleA funny title"
+	And I should see "CourseRuby I"
+	And I should see "TeacherPrince Philip"
+	And I should see "Classroom1"
+	And I should see "Capacity8"
+	And I should see "DayMonday"
+	And I should see "Start time18:50"
+	And I should see "End time20:50"
+	And I should see "Mail Sending0"
+	And I should see "Inactivefalse"
+	And I should see "DescriptionA funny description"
+Examples:
+|	user		|
+|	johan		|
+|	thomas	|
 
-Scenario: You should not be able to choose teacher before course has been chosen (NOT IMPLEMENTED)
-Given not implemented
+Scenario Outline: Links
+Given a user is logged in as "<user>"
+	And a course: "ruby" exists with name: "Ruby I"
+	And a classroom: "room1" exists with name: "1"
+	And a user: "prince" exists with name: "Prince Philip"
+	And a template class exists with teacher: user "prince", course: course "ruby", classroom: classroom "room1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
+When I go to the show page of that template class
+	And I follow "Ruby I"
+Then I should be redirected to the show page of that course
+When I go to the show page of that template class
+	And I follow "Prince Philip"
+Then I should be redirected to the show page of that user
+When I go to the show page of that template class
+	And I follow "1"
+Then I should be redirected to the show page of that classroom
+When I go to the show page of that template class
+	And I follow "Edit" within "div.links"
+Then I should be redirected to the edit page of that template class
+When I go to the show page of that template class
+	And I follow "List"
+Then I should be redirected to the template classes page

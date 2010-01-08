@@ -1,13 +1,12 @@
 ﻿<div class="form">
-<%= error_messages_for :template_class %>
 
-<fieldset>
-<legend><%= t('template_klasses.editing') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t(:editing, :object => t(:template_class)) %></legend>
 
-<% form_for(@template_class) do |f| %>
+<%- semantic_form_for(@template_class) do |f| -%>
   <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t('update') } %>
   <%= hidden_field_tag :redirect, params[:redirect] %>
-<% end %>
+<%- end -%>
 
 <%= link_to t('show'), @template_class %> |
 <%= link_to t('template_klasses.title'), template_classes_path( :template_day=>@template_class.day ) %>

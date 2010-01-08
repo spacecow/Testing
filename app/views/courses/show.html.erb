@@ -21,9 +21,7 @@
   <%=h @course.note %>
 </p>
 
-<% if clearance<3 %>
-	<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
-<% end %>
+<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
 <%= link_to t('back'), courses_path, :class=>"link" %><br />	
 
 <table border="0" cellspacing="0" cellpadding="5">
@@ -69,9 +67,7 @@
 </table></p>
 
 <% if !( @course.template_classes.empty? && @course.klasses.empty? ) %>
-	<% if clearance<3 %>
-		<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
-	<% end %>
+	<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
 	<%= link_to t('back'), courses_path, :class=>"link" %><br />	
 <% end %>
 

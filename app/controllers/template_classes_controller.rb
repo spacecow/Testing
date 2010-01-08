@@ -27,18 +27,12 @@ class TemplateClassesController < ApplicationController
   # GET /template_classes/1
   # GET /template_classes/1.xml
   def show
-    @template_klass = TemplateClass.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @template_klass }
-    end
+    @template_class = TemplateClass.find(params[:id])
   end
 
   def new
     @template_class = TemplateClass.new( :capacity => 8 )
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
-		@teachers = User.with_role( :teacher )
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 
     respond_to do |format|
@@ -49,7 +43,6 @@ class TemplateClassesController < ApplicationController
 
   def create
     @template_class = TemplateClass.new( params[ :template_class ] )
-		@teachers = User.with_role( :teacher )
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 #		if !params[:template_class][:course_id].blank?
@@ -69,35 +62,30 @@ class TemplateClassesController < ApplicationController
 
   def edit
     @template_class = TemplateClass.find(params[:id])
-		@teachers = Teacher.all(
-			:conditions=>["courses.name = ?", Course.find( @template_class.course_id ).name],
-		  :include=>[:person, :courses])      		    
+		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+		#@teachers = Teacher.all(
+		#	:conditions=>["courses.name = ?", Course.find( @template_class.course_id ).name],
+		#  :include=>[:person, :courses])      		    
   end
   
   def update
     @template_class = TemplateClass.find(params[:id])
+  	@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
     course_id = @template_class.course_id
 
-    respond_to do |format|
-      if @template_class.update_attributes(params[:template_class])          
-      	format.html{
-	      	if params[:redirect] == "courses"
-	      		redirect_to edit_course_path( @template_class.course_id )
-					else
-						redirect_to( template_classes_path( :template_day=>@template_class.day ))
-					end
-				}
-        format.xml  { head :ok }
-      else
-        format.html{
-		      @template_class.update_attribute( :course_id, course_id )          
-					@teachers = Teacher.all(
-						:conditions=>["courses.name = ?", Course.find( course_id ).name],
-						:include=>[:person, :courses]) 
-        	render :action => "edit"
-        }
-        format.xml  { render :xml => @template_class.errors, :status => :unprocessable_entity }
-      end
+    if @template_class.update_attributes(params[:template_class])          
+      flash[:notice] = t( 'notice.update_success', :object => t( :template_class ).downcase )
+    	if params[:redirect] == "courses"
+    		redirect_to edit_course_path( @template_class.course_id )
+			else
+				redirect_to( template_classes_path( :template_day=>@template_class.day ))
+			end
+    else
+      @template_class.update_attribute( :course_id, course_id )          
+			#@teachers = Teacher.all(
+			#	:conditions=>["courses.name = ?", Course.find( course_id ).name],
+			#	:include=>[:person, :courses]) 
+    	render :action => "edit"
     end
   end
 

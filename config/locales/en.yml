@@ -83,7 +83,7 @@ en:
   latest_comment: "Latest comment"
   latest_version: "Latest version"
   lesson: "Lesson"
-  listing: "Listing "
+  list: "List"
   male: "Male"
   mail_address_mobile: "Mobile address"
   mail_address_pc: "PC address"
@@ -162,6 +162,7 @@ en:
   
   add: "Add {{object}}"
   editing: "Editing {{object}}"
+  listing: "Listing {{object}}"
   error:
     blank: "{{object}} cannot be left blank."
     no_pass_key: "Obtain a correct pass key in order to reset password."
@@ -334,3 +335,7 @@ en:
     editing: "Editing Unit"
     new: "New Unit"
     title: "Units"
+    
+  date:
+    day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+    abbr_day_names: [mon, tue, wed, thu, fri, sat, sun]    

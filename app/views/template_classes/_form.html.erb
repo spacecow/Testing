@@ -1,7 +1,6 @@
 ﻿<% f.inputs do %>
 	<%= f.input :title, :label => t( 'title' ), :required => false %>
 	<%= f.input :course, :label => t( 'course' ) %>
-	<%= f.input :teacher, :label => t( 'teacher' ), :collection => @teachers, :required => false %>
 	<%= f.input :classroom, :label => t( 'classroom' ), :required => false %>
 	<%= f.input :capacity, :label => t( 'capacity' ) %>
 	<%= f.input :day, :label => t( 'day' ), :as => :select, :collection => @days %>

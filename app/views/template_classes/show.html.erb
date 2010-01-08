@@ -1,55 +1,26 @@
-﻿<div class="form">
-<fieldset>
+﻿<div class="show">
+<fieldset class="show">
 <legend><%= t('template_class') %></legend>
 
-<p>
-  <b><%= t('course') %>: </b><%= link_to h(@template_klass.course), @template_klass.course ? @template_klass.course : "" %>
-</p>
+<div class="pairs">
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :title ), :right => h( @template_class.title ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :course ), :right => link_to( h( @template_class.course ), @template_class.course ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :teacher ), :right => link_to( h( @template_class.teacher ), @template_class.teacher ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :classroom ), :right => link_to( h( @template_class.classroom ), @template_class.classroom ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :capacity ), :right => h( @template_class.capacity ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :day ), :right => h( @template_class.day_to_s ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :start_time ), :right => h( @template_class.start_time.to_s( :time )) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :end_time ), :right => h( @template_class.end_time.to_s( :time )) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :mail_sending ), :right => h( @template_class.mail_sending ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :inactive ), :right => h( @template_class.inactive ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :description ), :right => h( @template_class.description ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :note ), :right => h( @template_class.note ) } %>
+</div>
 
-<p>
-  <b><%= t('teacher') %>: </b><%= link_to h(@template_klass.teacher), @template_klass.teacher ? @template_klass.teacher : "" %>
-</p>
-
-<p>
-  <b><%= t('classroom') %>: </b><%= link_to h(@template_klass.classroom), @template_klass.classroom ? @template_klass.classroom : "" %>
-</p>
-
-<p>
-  <b><%= t('capacity') %>: </b><%=h @template_klass.capacity %>
-</p>
-
-<p>
-  <b><%= t('day') %>: </b><%=h @template_klass.day %>
-</p>
-
-<p>
-  <b><%= t('klass_time') %>: </b><%=h @template_klass.time_interval %>
-</p>
-
-<p>
-  <b><%= t('title') %>: </b><%=h @template_klass.title %>
-</p>
-
-<p>
-  <b><%= t('description') %>: </b><%=h @template_klass.description %>
-</p>
-
-<p>
-  <b><%= t('inactive') %>: </b><%=h @template_klass.inactive %>
-</p>
-
-<p>
-  <b><%= t('mail_sending') %>: </b><%=h @template_klass.mail_sending %>
-</p>
-
-<p>
-  <b><%= t('note') %>: </b><%=h @template_klass.note %>
-</p>
-
-<% if clearance<3 %>
-	<%= link_to t('edit'), edit_template_class_path(@template_klass), :class=>:link %> |
-<% end %>
-<%= link_to t('back'), template_classes_path( :template_day=>@template_klass.day ), :class=>:link %>
+<div class="links">
+	<%= link_to t(:edit), edit_template_class_path(@template_class), :class=>:link %> |
+	<%= link_to t(:list), template_classes_path( :template_day=>@template_class.day ), :class=>:link %>
+</div>
 
 </fieldset>
 </div>

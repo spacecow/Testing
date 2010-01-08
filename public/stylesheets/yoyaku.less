@@ -412,6 +412,32 @@ a{ .global_a; }
 						margin-top:5px;
 					}
 				}
+				.pairs{
+					font-size:1.1em;					
+					.left_column{
+						width:12em;
+						float:left;
+						text-align:right;
+						padding-right:0.4em;
+						border-right:0.1em solid;
+						margin:0.3em 0 0.3em 0;
+						.left{
+							padding:0.3em 0 0.3em 0.2em;
+							
+							background:@list-line-odd_bg;
+						}
+					}
+					.right_column{
+						width:28em;
+						float:left;						
+						padding-left:0.4em;
+						.right{
+							
+							background:@list-line-even_bg;
+							a{ font-size:1.0em;	}
+						}
+					}
+				}
 				hr{
 					border-top:1px dashed @line_color;
 					background-color:@main_bg;

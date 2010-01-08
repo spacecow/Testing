@@ -85,7 +85,10 @@ class User < ActiveRecord::Base
   def roles
     ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
   end
-  
+
+	def to_s
+		name  	
+	end  
 private
   def reprocess_avatar
     avatar.reprocess!

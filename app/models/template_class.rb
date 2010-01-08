@@ -11,7 +11,7 @@ class TemplateClass < ActiveRecord::Base
 	validate :start_time_cant_be_blank
 	validate :end_time_cant_be_blank
 	
-	DAYS = %w( sun mon tue wed thu fri sat )
+	DAYS = %w( mon tue wed thu fri sat sun )
 
   def course_category
     course.category
@@ -25,6 +25,9 @@ class TemplateClass < ActiveRecord::Base
   	course.name
   end
 
+	def day_to_s
+		I18n.t('date.day_names')[ DAYS.index( day ) ]
+	end
 	def day_and_time_interval
 		day+": "+time_interval
 	end
