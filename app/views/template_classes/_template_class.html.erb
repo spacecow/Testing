@@ -1,18 +1,18 @@
 <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>">
-	<td><%= h template_class.course.name %></td>
-	<td><%= h template_class.time_interval %></td>
-	<td></td>
-	<td><%= h template_class.classroom %></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td>
+	<td id="course_name"><%= h template_class.course.name %></td>
+	<td id="time_interval"><%= h template_class.time_interval %></td>
+	<td id="unit"></td>
+	<td id="classroom"><%= h template_class.classroom %></td>
+	<td id="teacher"></td>
+	<td id="student1"></td>
+	<td id="student2"></td>
+	<td id="student3"></td>
+	<td id="student4"></td>
+	<td id="student5"></td>
+	<td id="student6"></td>
+	<td id="student7"></td>
+	<td id="student8"></td>
+	<td id="links">
 		<% if permitted_to? :show, template_class %>
 			<%= link_to t('show'), template_class %>
 		<% end %>

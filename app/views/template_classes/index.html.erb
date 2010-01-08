@@ -1,15 +1,13 @@
 ﻿<div id="list">
-
+	
 <h1><%= t( 'template_klasses.title' ) %></h1>
 <div class="intro">
 </div>
 
-<% form_for :template_class,
-            :url => { :action=>'index' },
-            :html => { :method=>'get' } do |f| %>
-  <%= select_tag :template_day,
-    options_for_select( @days, @template_day ),
-    :onchange => "this.form.submit();" %>
+<% form_for :template_class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| %>
+  <label for="template_day">Choose a day: </label>
+  <%= select_tag :template_day, options_for_select( @days, @template_day ) %>
+  <%= f.submit "Go!"%>
 <% end %>
 <br />
 

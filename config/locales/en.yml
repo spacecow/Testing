@@ -175,6 +175,7 @@ en:
       both_blank: "can't both be blank"
       does_not_exist: "does not exist"
   message:
+    choose_a_day: "Choose a day"
     forgotten_password: "I have forgotten my password!"
     info_update: "I would like to get information sent to me when the site has been updated"
     provide_username_or_email: "Please provide your username or email and an email will be sent to you with instructions of how to reset your password."

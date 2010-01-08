@@ -52,7 +52,7 @@ form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
   margin-right: 0.5em;
 }
 form.formtastic fieldset.inputs ol li.radio fieldset ol li label { text-align: left; }
-form.formtastic fieldset.inputs ol div.horizontal li.radio fieldset ol li {
+form.formtastic fieldset.inputs ol span.horizontal li.radio fieldset ol li {
   float: left;
   margin-left: 5px;
 }

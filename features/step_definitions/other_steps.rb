@@ -26,6 +26,10 @@ Then /^I should see (todays|yesterdays) (day|date) within "([^\"]*)"$/ do |day,c
 	end
 end
 
+When /^I reload the page$/ do
+	reload
+end
+
 #Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text,scope_string|
 #  within ".#{scope_string}" do |scope|
 #		scope.should contain( text )

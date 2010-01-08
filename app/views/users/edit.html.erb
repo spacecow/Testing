@@ -7,7 +7,7 @@
 		<%= f.input :name, :label => t( :name ) %>
 		<%= f.input :name_hurigana, :label => t( 'name_hurigana' ) %>
 		<%= f.input :nationality, :label => t( 'nationality' ) %>
-		<div class="horizontal"><%= f.input :male, :label => t( 'gender' ), :as => :radio, :collection => [[t('male'), true],[t('female'), false]] %></div>
+		<span class="horizontal"><%= f.input :male, :label => t( 'gender' ), :as => :radio, :collection => [[t('male'), true],[t('female'), false]] %></span>
 		<%= f.input :age, :label => t( 'age' ), :as => :select, :collection => japanese? ? Registrant::AGE_JA : Registrant::AGE_EN, :required => false, :include_blank => ( @user.age.blank? ? true : false ) %>
 		<%= f.input :tel, :label => t( 'tel' ), :required => false %>
 		<%= f.input :email, :label => t( :email ) %>
