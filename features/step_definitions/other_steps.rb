@@ -47,7 +47,7 @@ Then /^I should be redirected to (.+)$/ do |page|
 end
 
 Then /^I should not be redirected to (.+)$/ do |page|
-  URI.parse(current_url).path.should != path_to(page)
+  URI.parse(current_url).path.should_not == path_to(page)
 end
 
 Then /^I should see a notice "([^\"]*)"$/ do |mess|

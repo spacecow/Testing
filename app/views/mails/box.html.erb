@@ -1,0 +1,16 @@
+<div id="list">
+<h1><%= t( :mailbox ) %></h1>
+
+<table cellpadding="2" cellspacing="1" id="mails">
+	<tr>
+			<th><%= t('sender') %></th>		
+			<th><%= t('subject') %></th>		
+			<th><%= t('sent_at') %></th>		
+	</tr>
+	<%= render :partial => 'private_mail', :collection => @mails %>
+</table>
+
+<div id="links">
+	<%= link_to t(:new, :object=>t(:mail)), new_mail_path, :class=>"link" %>
+</div>
+</div>

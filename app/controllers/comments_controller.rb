@@ -7,7 +7,8 @@ class CommentsController < ApplicationController
 
   def create
   	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
-  	if !@comment.save
+  	if @comment.save    	
+  	else
       flash[:error] = t('comments.error.blank')
     end
     redirect_to Event.find( @comment.event_id )

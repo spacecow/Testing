@@ -21,6 +21,7 @@ authorization do
   	has_permission_on :kunyomis, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :meanings, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   	has_permission_on :invitations, :to => [:new, :create, :deliver]
+  	has_permission_on :mails, :to => [:show, :edit, :update, :index, :destroy]
   end
     
   role :guest do
@@ -75,5 +76,17 @@ authorization do
   
   role :student do
   	includes :registrant
-  end
+  	has_permission_on :mails, :to => [:box]
+  	has_permission_on :mails, :to => [:show] do
+  		if_attribute :recipient => is { user }
+  	end  	
+  end  
+  
+  role :teacher do
+  	includes :registrant
+  	has_permission_on :mails, :to => [:box]
+  	has_permission_on :mails, :to => [:show] do
+  		if_attribute :recipient => is { user }
+  	end
+  end  
 end

@@ -5,6 +5,7 @@ class Todo < ActiveRecord::Base
   
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
+  validates_uniqueness_of :title
 
 	named_scope :with_subject, lambda { |subject| {:conditions => "subjects_mask & #{2**SUBJECTS.index(subject.to_s)} > 0"} }
 

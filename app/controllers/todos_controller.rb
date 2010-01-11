@@ -48,6 +48,12 @@ class TodosController < ApplicationController
     if @todo.save
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.create_success', :object=>t(:todo))
+      Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
+      	:subject => "created#todo",
+      	:message => "todos.created##{@todo.title}"
+      )
       if( params[:comment_id].blank? )
       	redirect_to todos_path
       else
@@ -72,6 +78,12 @@ class TodosController < ApplicationController
     if @todo.update_attributes(params[:todo])
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.update_success', :object=>t(:todo))
+      Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => User.first.id,
+      	:subject => "updated#todo",
+      	:message => "todos.updated##{@todo.title}"
+      )
       redirect_to todos_path
     else
       render :action => 'edit'
@@ -89,7 +101,20 @@ class TodosController < ApplicationController
 		@todo = Todo.find( params[:id] )
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\n", "<br />");
-  	if !@comment.save
+  	if @comment.save		
+    	Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
+      	:subject => "added#comment",
+      	:message => "comments.added##{@todo.title}#todo"
+      ) unless current_user == User.find_by_name( "Johan Sveholm" )
+      Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => @todo.user.id,
+      	:subject => "added#comment",
+      	:message => "comments.added##{@todo.title}#todo"
+      ) unless @todo.user == User.find_by_name( "Johan Sveholm" )
+    else    		
       flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
 		respond_to do |wants|
@@ -102,6 +127,18 @@ class TodosController < ApplicationController
   	@setting = Setting.find_by_name( "main" )
   	@comment = Comment.find( params[:id] )
   	@todo = Todo.find( @comment.todo )
+  	Mail.create!(
+    	:sender_id => current_user.id,
+    	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
+    	:subject => "updated#comment",
+    	:message => "comments.updated##{@todo.title}#todo"
+    ) unless current_user == User.find_by_name( "Johan Sveholm" )
+    Mail.create!(
+    	:sender_id => current_user.id,
+    	:recipient_id => @todo.user.id,
+    	:subject => "updated#comment",
+    	:message => "comments.updated##{@todo.title}#todo"
+    ) unless @todo.user == User.find_by_name( "Johan Sveholm" )
   	respond_to do |wants|
 			wants.html
 			wants.js

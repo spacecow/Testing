@@ -1,8 +1,10 @@
+@manage_comments
 Background:
 Given a setting exists with name: "main"
-	And a user: "aya" exists with username: "aya", role: "admin", language: "en"
+	And a user: "johan" exists with username: "johan", role: "admin", language: "en", name: "Johan Sveholm"
+	And a user: "aya" exists with username: "aya", role: "admin", language: "en", name: "Aya Komatsu"
 	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant", language: "ja"
-	And a user: "thomas" exists with username: "thomas", role: "observer", language: "en"
+	And a user: "thomas" exists with username: "thomas", role: "observer", language: "en", name: "Thomas Osburg"
 	And a todo: "chat" exists with subjects_mask: 1, user: user "kurosawa", title: "Chat room", description: "Wouldn't that be fun!"  
 	
 Scenario: A comment cannot be blank (AJAX)
@@ -12,13 +14,24 @@ Given a user is logged in as "kurosawa"
 Then I should be redirected to the show page of that todo
 	And I should see "コメントは空白のままにしておく事は出来ません"
 
-Scenario: Add a comment
-Given a user is logged in as "kurosawa"
-When I go to the show page of todo "chat"
-	And I fill in "Comment*" with "I wanna chat!"
-	And I press "コメントを書き足す"
-Then I should see "I wanna chat!"
-	And a comment exists with comment: "I wanna chat!", user: user "kurosawa", todo: todo "chat", event_id: "nil"
+@add_comment
+Scenario Outline: Add a comment
+Given a todo: "reserve" exists with subjects_mask: 4, user: user "<author>", title: "Reservation system"
+	And a user is logged in as "<user>"
+When I go to the show page of todo "reserve"
+	And I fill in "Comment*" with "I want it already!"
+	And I press "Add Comment"
+Then I should see "I want it already!"
+	And a comment exists with comment: "I wanna chat!", user: user "<user>", todo: todo "reserve", event_id: "nil"
+	And <no> mails should exist
+	And a mail <johan> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo", recipient: user "johan"
+	And a mail <other> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo", recipient: user "<author>"
+Examples:
+|	author	|	user	|	johan				|	other				|	no	|
+|	thomas	|	aya		|	should			|	should			|	2		|
+|	thomas	|	johan	|	should not	|	should			|	1		|
+|	johan		|	aya		|	should 			|	should			|	1		|
+|	johan		|	johan	|	should not	|	should not	|	0		|
 
 Scenario: Add a comment with line feed
 Given a user is logged in as "kurosawa"
@@ -46,11 +59,13 @@ Examples:
 | aya       | see links "Edit, Del"   		| see links "Edit, Del"       | see links "Edit, Del"       |
 | thomas    | not see links "Edit, Del"   | not see links "Edit, Del"   |	see links "Edit, Del"       |
 
-Scenario: Edit a comment
-Given a comment exists with comment: "Fuck Christmas!", user: user "thomas", todo: todo "chat"
-	And a user is logged in as "thomas"
+@edit_comment
+Scenario Outline: Edit a comment
+Given a todo: "reserve" exists with subjects_mask: 4, user: user "<author>", title: "Reservation system"
+	And a comment exists with comment: "Fuck Christmas!", user: user "<user>", todo: todo "reserve"
+	And a user is logged in as "<user>"
 Then 1 comments should exist
-When I go to the show page of todo "chat"
+When I go to the show page of todo "reserve"
 	And I follow "Edit" within that comment
 	And I fill in "comment_comment" with ""
 	And I press "Update"
@@ -63,6 +78,15 @@ Then I should be redirected to the show page of its todo
 	And I should see "Fuck Santa's goat!"
 	And I should not see "Comment cannot be left blank."	
 	And 1 comments should exist
+	And <no> mails should exist
+	And a mail <johan> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo", recipient: user "johan"	
+	And a mail <other> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo", recipient: user "<author>"
+Examples:
+|	author	|	user	|	johan				|	other				|	no	|
+|	thomas	|	aya		|	should			|	should			|	2		|
+|	thomas	|	johan	|	should not	|	should			|	1		|
+|	johan		|	aya		|	should 			|	should			|	1		|
+|	johan		|	johan	|	should not	|	should not	|	0		|
 
 Scenario: Delete a comment
 Given a comment exists with comment: "I wanna chat!", user: user "thomas", todo: todo "chat"

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	belongs_to :invitation
   has_many :photos
   has_many :reset_passwords
+  has_many :mails
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   

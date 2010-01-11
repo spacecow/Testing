@@ -1,0 +1,25 @@
+<div class="show">
+<fieldset class="show">
+<legend><%= t( h( @subject[0] ), :object=>t( h( @subject[1] ))) %></legend>
+
+<div class="pairs">
+	<%= render :partial => 'pairs', :locals => { :object => @mail } %>
+</div>
+
+<div class="links">
+  <% if permitted_to? :box, @mail %>
+  	<%= link_to t(:mailbox), box_mails_path %>
+  <% end %>
+  <% if permitted_to? :index, @mail %>
+  	| <%= link_to t(:listing, :object=>t(:mails)), mails_path %>
+  <% end %>
+  <% if permitted_to? :edit, @mail %>
+  	| <%= link_to t(:edit), edit_mail_path(@mail) %>
+  <% end %>
+  <% if permitted_to? :destroy, @mail %>
+  	| <%= link_to t(:destroy), @mail, :confirm => 'Are you sure?', :method => :delete %>
+  <% end %>
+</div>
+
+</fieldset>
+</div>

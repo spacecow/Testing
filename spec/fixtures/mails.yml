@@ -1,0 +1,13 @@
+one:
+  recipient_id: 1
+  sender_id: 1
+  subject: MyString
+  message: MyText
+  read: false
+
+two:
+  recipient_id: 1
+  sender_id: 1
+  subject: MyString
+  message: MyText
+  read: false

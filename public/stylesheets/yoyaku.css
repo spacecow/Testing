@@ -519,9 +519,18 @@ a:hover {
   width: 28em;
   float: left;
   padding-left: 0.4em;
+  margin: 0.3em 0 0.3em 0;
 }
-#container #main .show fieldset.show .pairs .right_column .right { background: #dfeedf; }
+#container #main .show fieldset.show .pairs .right_column .right {
+  padding: 0.3em 0 0.3em 0.2em;
+  background: #dfeedf;
+}
 #container #main .show fieldset.show .pairs .right_column .right a { font-size: 1em; }
+#container #main .show fieldset.show .pairs .right_column .right_message {
+  padding-left: 0.2em;
+  background: #dfeedf;
+}
+#container #main .show fieldset.show .pairs .right_column .right_message a { font-size: 1em; }
 #container #main .show fieldset.show hr {
   border-top: 1px dashed #7f9db9;
   background-color: #eeffee;
@@ -712,8 +721,10 @@ a:hover {
   font-weight: bold;
   background: #aabbaa;
   text-align: center;
+  padding: 0 3px 0 3px;
 }
 #container #main #list table tr td span.highlight { font-weight: bold; }
+#container #main #list table tr td.non-read { font-weight: bold; }
 #container #main #list table tr.list-line-odd { background: #ccddcc; }
 #container #main #list table tr.list-line-odd:hover { background: #eeffee; }
 #container #main #list table tr.list-line-odd td { padding: 0 3px 0 3px; }

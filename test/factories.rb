@@ -58,6 +58,9 @@ end
 Factory.define :kunyomi do |f|
 end
 
+Factory.define :mail do |f|
+end
+
 Factory.define :meaning do |f|
 end
 

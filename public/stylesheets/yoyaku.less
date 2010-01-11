@@ -422,8 +422,7 @@ a{ .global_a; }
 						border-right:0.1em solid;
 						margin:0.3em 0 0.3em 0;
 						.left{
-							padding:0.3em 0 0.3em 0.2em;
-							
+							padding:0.3em 0 0.3em 0.2em;		
 							background:@list-line-odd_bg;
 						}
 					}
@@ -431,11 +430,17 @@ a{ .global_a; }
 						width:28em;
 						float:left;						
 						padding-left:0.4em;
+						margin:0.3em 0 0.3em 0;
 						.right{
-							
+							padding:0.3em 0 0.3em 0.2em;
 							background:@list-line-even_bg;
 							a{ font-size:1.0em;	}
 						}
+						.right_message{
+							padding-left:0.2em;
+							background:@list-line-even_bg;
+							a{ font-size:1.0em;	}
+						}						
 					}
 				}
 				hr{
@@ -538,12 +543,16 @@ a{ .global_a; }
 					th{
 						font-weight:bold;
 						background:@banner_bg;
-						text-align:center;	
+						text-align:center;
+						padding:0 3px 0 3px;
 					}
 					td{
 						span.highlight{
 							font-weight:bold;
 						}
+					}
+					td.non-read{
+						font-weight:bold;
 					}
 				}
 				tr.list-line-odd{

@@ -1,0 +1,11 @@
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+  	<td><%= link_to( h( mail.recipient ), mail.recipient ) %></td>
+  	<td><%= link_to( h( mail.sender ), mail.sender ) %></td>
+  	<td><%= t( h( mail.subject.split('#')[0] ), :object=>t( h( mail.subject.split('#')[1] ))) %></td>
+  	<td><%= distance_of_time_in_words_to_now( mail.created_at ) %><%= t('ago') %></td>
+	<td id="links">
+			<%= link_to t('show'), mail, :class=>"link" %>
+			<%= link_to t('edit'), edit_mail_path(mail), :class=>"link" %>
+			<%= link_to t('destroy'), mail, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+	</td>    	
+</tr>

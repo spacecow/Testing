@@ -89,3 +89,6 @@ Then I should be redirected to the todos page
 #Then I should be redirected to the todos page
 	And I should see "Todo List - Open"
 	And I should see "Chat room"
+	
+Scenario: Implement a search function (NOT IMPLEMENTED)
+Given not implemented

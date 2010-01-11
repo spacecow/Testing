@@ -1,0 +1,16 @@
+<div class="form">
+<%= error_messages_for :mail %>
+
+<fieldset class="form">
+<legend class="form"><%= t(:new, :object=>t(:mail)) %></legend>
+
+<%- semantic_form_for @mail do |f| -%>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
+<%- end -%>
+
+<div class="links">
+		<p><%= link_to t(:listing, :object=>t(:mails)), mails_path, :class=>"link" %></p>
+</div>
+
+</fieldset>
+</div>

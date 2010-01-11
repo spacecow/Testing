@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :mails, :collection => { :box => :get }
+
   map.resources :reset_passwords
 
 	map.resources :votes

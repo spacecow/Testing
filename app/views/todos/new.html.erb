@@ -5,7 +5,7 @@
 <legend class="form"><%= t(:new, :object => t(:todo)) %></legend>
 
 <%- semantic_form_for @todo do |f| -%>
-	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('send') } %>
+	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('create') } %>
 <%- end -%>
 
 <div class="links">
