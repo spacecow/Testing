@@ -1,8 +1,8 @@
 <div class="form">
 <%= error_messages_for :gallery %>
 
-<fieldset>
-<legend><%= t('galleries.editing') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t('galleries.editing') %></legend>
 
 <% form_for @gallery do |f| %>
 	<%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>

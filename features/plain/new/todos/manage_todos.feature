@@ -1,10 +1,10 @@
 @manage_todos
 Background:
 Given a setting exists with name: "main"
-	And a user: "johan" exists with username: "johan", role: "admin", language: "en", name: "Johan Sveholm"
-	And a user exists with username: "thomas", role: "observer", language: "en"
-	And a user exists with username: "kurosawa", role: "registrant", language: "ja"
-	And a user: "junko" exists with username: "junko", role: "registrant", language: "en"
+	And a user: "johan" exists with username: "johan", role: "admin, teacher", language: "en", name: "Johan Sveholm"
+	And a user exists with username: "thomas", role: "observer, teacher", language: "en"
+	And a user exists with username: "kurosawa", role: "registrant, student", language: "ja"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en"
 
 @new_todo
 Scenario: Create new Todo
@@ -93,3 +93,12 @@ Then I should see "Chat room - closed"
 When I follow "Re-open"
 Then I should be redirected to the show page of that todo
 	And I should see "Chat room"
+	
+Scenario: Get rid of the error box, add errors to subjects (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Closed/Open - better names in Japanese, make it easier to understand (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Button for update comment doesnt look pretty (NOT IMPLEMENTED)
+Given not implemented

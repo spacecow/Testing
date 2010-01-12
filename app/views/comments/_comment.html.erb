@@ -8,8 +8,8 @@
 		<div class="comment_container" id="comment_<%= comment.id %>">
 			<div class="action_container">
 				<div class="links">
-		      <% if can? :edit, comment %>
-		        <%= link_to t('edit'), :action => "edit_comment", :id => comment.id %>
+		      <% if can? :update, comment %>
+		        <%= link_to t('edit'), edit_comment_todo_path( comment ) %>
 		      <% end %>
 		      <% if can? :destroy, comment %>
 		        | <%= link_to t('delete'), comment, :confirm => 'Are you sure?', :method => :delete %>

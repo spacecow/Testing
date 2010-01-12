@@ -1,5 +1,11 @@
 class TodosController < ApplicationController
-	load_and_authorize_resource
+	before_filter :find_by_permalink, :only => :edit_comment
+	load_resource
+
+	def find_by_permalink
+  	@comment = Comment.find( params[:id] )
+  	@todo = Todo.find( @comment.todo )
+	end
 
   def index
   	@status = params[:status] || "open"
@@ -125,8 +131,6 @@ class TodosController < ApplicationController
   
   def edit_comment
   	@setting = Setting.find_by_name( "main" )
-  	@comment = Comment.find( params[:id] )
-  	@todo = Todo.find( @comment.todo )
   	Mail.create!(
     	:sender_id => current_user.id,
     	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,

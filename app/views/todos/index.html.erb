@@ -3,7 +3,7 @@
 <h1><%= t('todos.title') %> - <%= t( @status ).capitalize %></h1>
 <div class="intro">
 	<%= @setting.todos_description( japanese? ) %>
-	<% if permitted_to? :edit, @setting %>
+	<% if can? :edit, @setting %>
 		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
 	<% end %>
 </div>

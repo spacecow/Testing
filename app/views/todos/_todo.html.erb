@@ -26,13 +26,13 @@
 			
 			<% if !show %>
 				<div class="links">
-					<% if permitted_to? :toggle_close, todo %>
+					<% if can? :toggle_close, todo %>
 						<%= link_to todo.closed ? t(:reopen) : t(:close), toggle_close_todo_path(todo), :class=>"link" %>
 					<% end %>					
-					<% if permitted_to? :edit, todo %>
+					<% if can? :edit, todo %>
 						<%= link_to t('edit'), edit_todo_path(todo), :class=>"link" %>
 					<% end %>
-					<% if permitted_to? :destroy, todo %>
+					<% if can? :destroy, todo %>
 						<%= link_to t('destroy'), todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
 					<% end %>
 				</div>
