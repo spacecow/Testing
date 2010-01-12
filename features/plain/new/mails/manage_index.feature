@@ -1,7 +1,7 @@
 @manage_index
 Background:
 Given a setting exists with name: "main"
-	And a user: "johan" exists with username: "johan", role: "admin, teacher", language: "en", name: "Johan Sveholm"
+	And a user: "johan" exists with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a user is logged in as "johan"

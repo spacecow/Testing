@@ -55,6 +55,11 @@ class User < ActiveRecord::Base
 
 	def role_symbols
     roles.map(&:to_sym)
+    #roles.include? role.to_s
+  end
+  
+  def role?( role )
+  	roles.include? role.to_s
   end
 	
 	def new_registrant_attributes=( registrant_attributes )

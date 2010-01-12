@@ -1,5 +1,5 @@
 class KunyomisController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
 
   def show
   end

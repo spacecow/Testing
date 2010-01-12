@@ -15,7 +15,7 @@ Then /^I should be redirected to the "login" page$/ do
 end
 
 Given /^a user is logged in as "([^\"]*)"$/ do |username|
-  Given "I go to the events page"
+  Given 'I go to path "login_user"'
 	And "I follow \'login.text\'"""
 	And "I fill in \'user_name\' with \"#{username}\""
 	And "I fill in \'password\' with \"secret\""

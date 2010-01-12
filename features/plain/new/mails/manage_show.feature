@@ -31,7 +31,7 @@ Then I should see "Comment added" within "legend"
 	
 Scenario: List mail, Todo updated
 Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo", message: "todos.updated#Chat room"
-	And a user is logged in as "johan"
+	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Todo updated" within "legend"
 	And I should see "SenderJohan Sveholm"
@@ -41,7 +41,7 @@ Then I should see "Todo updated" within "legend"
 	
 Scenario: List mail, Comment updated
 Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo"
-	And a user is logged in as "johan"
+	And a user is logged in as "god"
 When I go to the show page of that mail
 Then I should see "Comment updated" within "legend"
 	And I should see "SenderJohan Sveholm"
@@ -49,9 +49,9 @@ Then I should see "Comment updated" within "legend"
 	And I should see "Sent atless than a minute ago"
 	And I should see "Johan Sveholm has updated a comment for the Todo:'Chat room'"	
 
-Scenario: Links for admin
+Scenario: Links for god
 Given a mail exists with sender: user "junko", recipient: user "reiko", subject: "added#comment", message: "comments.added#Chat room#todo"
-	And a user is logged in as "johan"
+	And a user is logged in as "god"
 When I go to the show page of that mail
 	And I follow "Junko Sumii" within "div#main"
 Then I should be redirected to the show page of user: "junko"
@@ -59,7 +59,6 @@ When I go to the show page of the mail
 	And I follow "Reiko Arikawa"
 Then I should be redirected to the show page of user: "reiko"
 When I go to the show page of the mail
-Then show me the page
 	And I follow "Junko Sumii has added a comment to the Todo:'Chat room'"
 Then I should be redirected to the show page of that todo
 When I go to the show page of the mail

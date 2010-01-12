@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
 	
   def new
   	@photo = Photo.new( :gallery_id => params[:gallery_id] )

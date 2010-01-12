@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-	filter_access_to :all
+	load_and_authorize_resource
 
   def index
   	@status = params[:status] || "open"

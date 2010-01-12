@@ -20,16 +20,16 @@ textarea#comment_comment{
 <%= render :partial => 'comments/comment_form',
            :locals => { :event_id => nil, :todo_id => @todo.id } %>
 <div class="links">
-	<% if permitted_to? :index, @todo %>
+	<% if can? :index, @todo %>
 		<%= link_to t('todos.title'), todos_path, :class=>"link" %>
 	<% end %>				
-	<% if permitted_to? :toggle_close, @todo %>
+	<% if can? :toggle_close, @todo %>
 		| <%= link_to @todo.closed ? t(:reopen) : t(:close), toggle_close_todo_path(@todo), :class=>"link" %>
 	<% end %>					
-	<% if permitted_to? :edit, @todo %>
+	<% if can? :edit, @todo %>
 		| <%= link_to t('edit'), edit_todo_path(@todo), :class=>"link" %>
 	<% end %>
-	<% if permitted_to? :destroy, @todo %>
+	<% if can? :destroy, @todo %>
 		| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
 	<% end %>
 </div>

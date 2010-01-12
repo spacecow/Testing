@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
 
 	def new
 		redirect_to Comment.new( params[:comment] ), :method => :post

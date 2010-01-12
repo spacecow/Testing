@@ -1,5 +1,5 @@
 class MailsController < ApplicationController
-  filter_resource_access
+  load_and_authorize_resource
   
   def index
     @mails = Mail.all.reverse

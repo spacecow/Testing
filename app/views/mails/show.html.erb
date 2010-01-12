@@ -7,16 +7,16 @@
 </div>
 
 <div class="links">
-  <% if permitted_to? :box, @mail %>
+  <% if can? :box, @mail %>
   	<%= link_to t(:mailbox), box_mails_path %>
   <% end %>
-  <% if permitted_to? :index, @mail %>
+  <% if can? :index, @mail %>
   	| <%= link_to t(:listing, :object=>t(:mails)), mails_path %>
   <% end %>
-  <% if permitted_to? :edit, @mail %>
+  <% if can? :edit, @mail %>
   	| <%= link_to t(:edit), edit_mail_path(@mail) %>
   <% end %>
-  <% if permitted_to? :destroy, @mail %>
+  <% if can? :destroy, @mail %>
   	| <%= link_to t(:destroy), @mail, :confirm => 'Are you sure?', :method => :delete %>
   <% end %>
 </div>
