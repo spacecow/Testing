@@ -1,8 +1,8 @@
 class TodosController < ApplicationController
-	before_filter :find_by_permalink, :only => :edit_comment
-	load_resource
+	before_filter :find_comment_through_todo, :only => :edit_comment
+	load_and_authorize_resource
 
-	def find_by_permalink
+	def find_comment_through_todo
   	@comment = Comment.find( params[:id] )
   	@todo = Todo.find( @comment.todo )
 	end
