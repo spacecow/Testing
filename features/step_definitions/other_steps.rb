@@ -142,6 +142,14 @@ Then /^"(.*)" should have a blank option$/ do |select_id|
   get_options_array( select_id ).grep(/BLANK/).empty?
 end
 
+Then /^I should see options "([^\"]*)" within "([^\"]*)"$/ do |options, selector|
+	response.body.should have_selector( selector ) do |content|
+  	content.should have_selector( 'a' ) do |links|
+  		links.map(&:inner_html).join(', ').should == options
+		end
+	end
+end
+
 Then /^I should see links "([^\"]*)"$/ do |links|
   links.split(', ').each_with_index do |link,i|
     if i==0

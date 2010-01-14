@@ -1,7 +1,7 @@
+@manage_applications
 Background:
 Given a setting exists with name: "main"
 
-@applicants
 Scenario: Register a user to an event
 Given a user: "kurosawa" exists with username: "kurosawa_akira", role: "registrant", language: "en"
 	And a user is logged in as "kurosawa_akira"
