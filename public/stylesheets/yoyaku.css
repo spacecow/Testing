@@ -376,11 +376,15 @@ a:hover {
   float: left;
   margin-left: 5px;
 }
-#container #right_column #user_nav .commands ul li a { color: #ccddcc; }
+#container #right_column #user_nav .commands ul li a {
+  text-decoration: blink;
+  color: #ccddcc;
+}
 #container #right_column #user_nav .commands ul li a:hover {
   color: #ffffff;
   background: #4b7399;
 }
+#container #right_column #user_nav .commands ul li.mail a { color: red; }
 #container #right_column #user_nav img { float: right; }
 #container #right_column #user_nav .info {
   margin-top: 8px;

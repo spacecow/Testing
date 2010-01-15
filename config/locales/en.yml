@@ -25,7 +25,6 @@ en:
   blank: " "
   bug: "Bug"
   cancel: "Cancel"
-  canceled: "canceled"
   capacity: "Capacity"
   caption: "Caption"
   category: "Category"
@@ -169,11 +168,14 @@ en:
   user_confirmation: "User confirmation"
   user_name: "User name"
   version: "Version"
+  vote: "Vote"
   votes: "Votes"
   when: "When"
   
   add: "Add {{object}}"
   added: "{{object}} added"
+  canceled: "{{object}} canceled"
+  changed: "{{object}} changed"
   created: "{{object}} created"
   editing: "Editing {{object}}"
   listing: "Listing {{object}}"
@@ -355,6 +357,10 @@ en:
     editing: "Editing Unit"
     new: "New Unit"
     title: "Units"
+  votes:
+    canceled: "{{name}} has canceled the vote for:'{{subject}}'"
+    changed: "{{name}} has changed the vote for:'{{subject}}'"    
+    created: "{{name}} has voted for:'{{subject}}'"
     
   date:
     day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]

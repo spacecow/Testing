@@ -5,6 +5,14 @@ Given a setting exists with name: "main"
 	And a user exists with username: "thomas", role: "observer, teacher", language: "en"
 	And a user exists with username: "kurosawa", role: "registrant, student", language: "ja"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en"
+	And a user: "mika" exists with username: "mika", role: "registrant", language: "en"
+
+Scenario: Regular registrants should not be able to see the Todo page
+Given a user is logged in as "mika"
+When I go to the new todo page
+Then I should be redirected to the events page
+When I go to the todos page
+Then I should be redirected to the events page
 
 @new_todo
 Scenario: Create new Todo

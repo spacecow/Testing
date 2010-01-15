@@ -8,7 +8,7 @@
 <%- end -%>
 
 <div class="links">
-	<% if permitted_to? :index, TemplateClass.new %>
+	<% if can? :index, TemplateClass.new %>
 		<%= link_to t( 'template_klasses.title' ), template_classes_path( :template_day=>@template_class.day ) %>
 	<% end %>
 </div>

@@ -108,18 +108,21 @@ class TodosController < ApplicationController
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if @comment.save		
-    	Mail.create!(
-      	:sender_id => current_user.id,
-      	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
-      	:subject => "added#comment",
-      	:message => "comments.added##{@todo.title}#todo"
-      ) unless current_user == User.find_by_name( "Johan Sveholm" )
-      Mail.create!(
-      	:sender_id => current_user.id,
-      	:recipient_id => @todo.user.id,
-      	:subject => "added#comment",
-      	:message => "comments.added##{@todo.title}#todo"
-      ) unless @todo.user == User.find_by_name( "Johan Sveholm" )
+	  	mails = []
+    	johan = User.find_by_name( "Johan Sveholm" )
+	  	@todo.comments.each do |comment|
+				mails.push comment.user unless( mails.include?( comment.user ) || current_user == comment.user )
+			end
+    	mails.push @todo.user unless( mails.include?( @todo.user ) || current_user == @todo.user )
+    	mails.push johan unless( mails.include?( johan ) || current_user == johan )
+    	mails.each do |user|
+	    	Mail.create!(
+	      	:sender_id => current_user.id,
+	      	:recipient_id => user.id,
+	      	:subject => "added#comment",
+	      	:message => "comments.added##{@todo.title}#todo"
+	      ) 
+      end
     else    		
       flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
@@ -131,18 +134,23 @@ class TodosController < ApplicationController
   
   def edit_comment
   	@setting = Setting.find_by_name( "main" )
-  	Mail.create!(
-    	:sender_id => current_user.id,
-    	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
-    	:subject => "updated#comment",
-    	:message => "comments.updated##{@todo.title}#todo"
-    ) unless current_user == User.find_by_name( "Johan Sveholm" )
-    Mail.create!(
-    	:sender_id => current_user.id,
-    	:recipient_id => @todo.user.id,
-    	:subject => "updated#comment",
-    	:message => "comments.updated##{@todo.title}#todo"
-    ) unless @todo.user == User.find_by_name( "Johan Sveholm" )
+
+  	mails = []
+  	johan = User.find_by_name( "Johan Sveholm" )
+  	@todo.comments.each do |comment|
+			mails.push comment.user unless( mails.include?( comment.user ) || current_user == comment.user )
+		end
+  	mails.push @todo.user unless( mails.include?( @todo.user ) || current_user == @todo.user )
+  	mails.push johan unless( mails.include?( johan ) || current_user == johan )
+  	mails.each do |user|
+	  	Mail.create!(
+	    	:sender_id => current_user.id,
+	    	:recipient_id => user.id,
+	    	:subject => "updated#comment",
+	    	:message => "comments.updated##{@todo.title}#todo"
+	    )
+    end
+
   	respond_to do |wants|
 			wants.html
 			wants.js

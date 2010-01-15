@@ -9,6 +9,16 @@ Given a setting exists with name: "main"
 	And a user: "god" exists with username: "god", role: "god, teacher", language: "en", name: "God Almighty"
 	And a todo exists with subjects_mask: 1, title: "Chat room"
 
+Scenario: List mail, Vote created
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#vote", message: "votes.created#Chat room"
+	And a user is logged in as "johan"
+When I go to the show page of that mail
+Then I should see "Vote created" within "legend"
+	And I should see "SenderJunko Sumii"
+	And I should see "RecipientJohan Sveholm"
+	And I should see "Sent atless than a minute ago"
+	And I should see "Junko Sumii has voted for:'Chat room'"
+
 Scenario: List mail, Todo created
 Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room"
 	And a user is logged in as "johan"
@@ -39,6 +49,16 @@ Then I should see "Todo updated" within "legend"
 	And I should see "Sent atless than a minute ago"
 	And I should see "Johan Sveholm has updated the Todo:'Chat room'"
 	
+Scenario: List mail, Vote changed
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote", message: "votes.changed#Chat room"
+	And a user is logged in as "junko"
+When I go to the show page of that mail
+Then I should see "Vote changed" within "legend"
+	And I should see "SenderJohan Sveholm"
+	And I should see "RecipientJunko Sumii"
+	And I should see "Sent atless than a minute ago"
+	And I should see "Johan Sveholm has changed the vote for:'Chat room'"	
+	
 Scenario: List mail, Comment updated
 Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo"
 	And a user is logged in as "god"
@@ -48,6 +68,16 @@ Then I should see "Comment updated" within "legend"
 	And I should see "RecipientJunko Sumii"
 	And I should see "Sent atless than a minute ago"
 	And I should see "Johan Sveholm has updated a comment for the Todo:'Chat room'"	
+
+Scenario: List mail, Vote canceled
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "canceled#vote", message: "votes.canceled#Chat room"
+	And a user is logged in as "junko"
+When I go to the show page of that mail
+Then I should see "Vote canceled" within "legend"
+	And I should see "SenderJohan Sveholm"
+	And I should see "RecipientJunko Sumii"
+	And I should see "Sent atless than a minute ago"
+	And I should see "Johan Sveholm has canceled the vote for:'Chat room'"
 
 Scenario: Links for god
 Given a mail exists with sender: user "junko", recipient: user "reiko", subject: "added#comment", message: "comments.added#Chat room#todo"

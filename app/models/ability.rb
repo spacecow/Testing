@@ -4,7 +4,7 @@ class Ability
   def initialize( user )
 		can :toggle_user_language, Setting
 		can :create, UserSession
-		can :create, User
+		can [:create, :change_password, :update_password], User
 		can :read, Event
 		can :show, [Photo, Gallery]
 		can :create, ResetPassword
@@ -26,10 +26,11 @@ class Ability
   				comment.try(:user) == user
   			end
 	  		can :show, User
-	  		can [:read, :add_comment, :edit_comment], Todo
+	  		can [:create, :read, :add_comment, :edit_comment], Todo
   			can [:update, :destroy, :toggle_close], Todo do |todo|
   				todo.try(:user) == user
   			end
+  			can [:new, :edit, :destroy], Vote
   			can [:add_comment, :edit_comment], Event
 	  		can :box, Mail
 	  		can :show, Mail do |mail|
@@ -37,9 +38,9 @@ class Ability
 	  		end	  	
   		end
   		if user.role? :observer
-	  		can :read, [Event, Todo, Photo, Todo, User]
+	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass]
 	  	elsif user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo]
+	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass]
 	  	end
 			if user.role? :photographer
 				can [:create, :update], Photo

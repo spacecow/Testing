@@ -10,16 +10,29 @@ class VotesController < ApplicationController
   	@vote.todo_id = params[:todo_id]
   	@vote.points = params[:points]
   	@vote.save
+  	send_mail "created"
 		redirect_to :back
 	end
   
 	def edit
 		@vote.update_attribute( :points, params[:points] )
+		send_mail "changed"
 		redirect_to :back
 	end
 
   def destroy
   	@vote.destroy
+  	send_mail "canceled"
   	redirect_to :back	
+  end
+  
+  def send_mail( message )
+  	johan = User.find_by_name( "Johan Sveholm" )
+  	Mail.create!(
+    	:sender_id => current_user.id,
+    	:recipient_id => johan.id,
+    	:subject => "#{message}#vote",
+    	:message => "votes.#{message}##{@vote.todo.title}"
+    ) unless current_user == johan  	
   end
 end

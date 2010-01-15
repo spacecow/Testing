@@ -13,13 +13,13 @@
 	<td id="student7"></td>
 	<td id="student8"></td>
 	<td id="links">
-		<% if permitted_to? :show, template_class %>
+		<% if can? :show, template_class %>
 			<%= link_to t('show'), template_class %>
 		<% end %>
-		<% if permitted_to? :edit, template_class %>
+		<% if can? :edit, template_class %>
 			<%= link_to t('edit'), edit_template_class_path(template_class) %>
 		<% end %>
-		<% if permitted_to? :destroy, template_class %>
+		<% if can? :destroy, template_class %>
 			<%= link_to t('delete'), template_class, :confirm => 'Are you sure?', :method => :delete %>
 		<% end %>
 	</td>	
