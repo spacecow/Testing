@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
   
 	def new
   	redirect_to events_path if current_user

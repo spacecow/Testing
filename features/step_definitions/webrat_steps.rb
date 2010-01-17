@@ -13,7 +13,10 @@ Given /^I am on (.+)$/ do |page_name|
 end
 
 When /^I go to (.+)$/ do |page_name|
-  visit path_to(page_name)
+	begin
+  	visit path_to(page_name)
+  rescue CanCan::AccessDenied
+  end
 end
 
 When /^I press "([^\"]*)"$/ do |button|
@@ -21,7 +24,10 @@ When /^I press "([^\"]*)"$/ do |button|
 end
 
 When /^I follow "([^\"]*)"$/ do |link|
-  click_link(link)
+  begin
+  	click_link(link)
+  rescue CanCan::AccessDenied
+  end
 end
 
 When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, parent|

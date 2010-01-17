@@ -12,6 +12,7 @@
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
 form.formtastic fieldset.buttons { padding-left: 145px; }
+form.formtastic fieldset ol li { margin-bottom: 0px; }
 form.formtastic fieldset.inputs ol .subjects { padding-left: 145px; }
 form.formtastic fieldset.inputs ol .subjects label {
   padding: 2px 0 0 2px;

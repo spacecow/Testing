@@ -18,21 +18,23 @@
       </div>
       <div class="clear"></div>
     <%- end -%>
-		<% if permitted_to? :index, Event.new %>		    
+		<% if can? :index, Event.new %>		    
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">
-						<li><%= link_to t('todos.title'), todos_path %>
-						<% if permitted_to? :index, Vote.new %>	
-							<ul>
-								<li>------------------</li>
-								<li><%= link_to t('votes'), votes_path %></li>							
-							</ul>
-						<% end %>							
-					</li>
+						<% if can? :index, Todo.new %>
+							<li><%= link_to t('todos.title'), todos_path %>
+							<% if can? :index, Vote.new %>	
+								<ul>
+									<li>------------------</li>
+									<li><%= link_to t('votes.title'), votes_path %></li>							
+								</ul>
+							<% end %>							
+							</li>
+						<% end %>
 						
 						<li><%= link_to t('events.title'), events_path %>
-							<% if permitted_to? :index, Registrant.new %>	
+							<% if can? :index, Registrant.new %>	
 								<ul>
 									<li>------------------</li>
 									<li><%= link_to t('registrants.title'), registrants_path %></li>							
@@ -40,11 +42,11 @@
 							<% end %>
 						</li>				
 						
-						<% if permitted_to? :index, User.new %>	
+						<% if can? :index, User.new %>	
 							<li><%= link_to t('users.title'), users_path %></li>									
 						<% end %>
 						
-						<% if permitted_to? :index, User.new %>	
+						<% if can? :index, User.new %>	
 							<li><%= link_to t('kanjis.title'), kanjis_path %></li>									
 						<% end %>
 					</ul>

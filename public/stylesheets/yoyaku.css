@@ -381,6 +381,7 @@ a:hover {
   color: #ffffff;
   background: #4b7399;
 }
+#container #right_column #user_nav .commands ul li.mail a { color: red; }
 #container #right_column #user_nav img { float: right; }
 #container #right_column #user_nav .info {
   margin-top: 8px;
@@ -435,6 +436,7 @@ a:hover {
   margin: 0.4em 0 1em 0;
 }
 #container #main .form fieldset.form .intro:hover { background: #f5ffee; }
+#container #main .form fieldset.form .links { margin-top: 1em; }
 #container #main .form #update_container #text_message {
   width: 400px;
   background: white;
@@ -578,7 +580,7 @@ a:hover {
   text-align: right;
   width: 100px;
 }
-#container #main .show fieldset.show .links { margin-top: 5px; }
+#container #main .show fieldset.show #links { margin-top: 1em; }
 #container #main .show fieldset.show #photo_gallery a:hover { background: #eeffee; }
 #container #main .show fieldset.show #photo_gallery a img {
   border: 1px solid #000000;

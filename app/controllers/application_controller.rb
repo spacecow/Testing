@@ -2,7 +2,11 @@
 # Likewise, all the methods added will be available for all controllers.
  
 class ApplicationController < ActionController::Base
-	before_filter { |c| Authorization.current_user = c.current_user2 }
+	rescue_from CanCan::AccessDenied do |exception|
+	  flash[:error] = t( 'access_denied' )
+	  redirect_to login_user_path		
+	end
+	#before_filter { |c| Authorization.current_user = c.current_user2 }
   #before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   #before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_default_user_language

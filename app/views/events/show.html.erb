@@ -53,13 +53,13 @@ textarea#comment_comment{
 <%= render :partial => 'comments/comment_form',
            :locals => { :event_id => @event.id, :todo_id => nil } %>
 <div class="links">
-  <% if permitted_to? :edit, @event %>
+  <% if can? :update, @event %>
   	<%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
   <% end %>
-  <% if permitted_to? :destroy, @event %>
+  <% if can? :destroy, @event %>
   	<%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
   <% end %>
-  <% if permitted_to? :index, @event %>
+  <% if can? :index, @event %>
   	<%= link_to t('events.title'), events_path, :class=>"link" %>
   <% end %>
 </div>

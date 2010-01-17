@@ -9,7 +9,7 @@
 <%- end -%>
 
 <div class="links">
-	<% if permitted_to? :index, @todo %>
+	<% if can? :index, @todo %>
 		<%= link_to t('todos.title'), todos_path %>
 	<% end %>
 </div>

@@ -1,5 +1,5 @@
 class KanjisController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
 	
   def index
     @kanjis = Kanji.all

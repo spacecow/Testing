@@ -127,7 +127,8 @@ Given not implemented
 Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
 Given not implemented
 
-
+Scenario: Not be able to enter a 20+ digit number as telephone number (NOT IMPLEMENTED)
+Given not implemented
 
 
 

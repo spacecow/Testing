@@ -9,13 +9,13 @@
 <%- end -%>
 
 <div class="links">
-	<% if permitted_to? :index, @todo %>
+	<% if can? :index, @todo %>
 		<%= link_to t('todos.title'), todos_path %>
 	<% end %>				
-	<% if permitted_to? :show, @todo %>
+	<% if can? :show, @todo %>
 		| <%= link_to t('show'), @todo %>
 	<% end %>
-	<% if permitted_to? :destroy, @todo %>
+	<% if can? :destroy, @todo %>
 		| <%= link_to t('delete'), @todo, :confirm => 'Are you sure?', :method => :delete %>
 	<% end %>
 </div>

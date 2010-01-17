@@ -3,7 +3,7 @@
 <h1><%= t('todos.title') %> - <%= t( @status ).capitalize %></h1>
 <div class="intro">
 	<%= @setting.todos_description( japanese? ) %>
-	<% if permitted_to? :edit, @setting %>
+	<% if can? :edit, @setting %>
 		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
 	<% end %>
 </div>
@@ -20,6 +20,8 @@
 	<%- end -%>
 <%= render :partial => 'todo', :collection => @todos, :locals => { :show => false } %>
 <div class="links">
-<p><%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %></p>
+	<% if can? :create, Todo %>
+		<%= link_to t(:new,:object=>t(:todo)), new_todo_path, :class=>"link" %>
+	<% end %>
 </div>
 </div>

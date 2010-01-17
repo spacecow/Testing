@@ -2,7 +2,7 @@
 <h1><%= t('events.title') %></h1>
 <div class="intro">
 	<%= @setting.events_description( japanese? ) %>
-	<% if permitted_to? :edit, @setting %>
+	<% if can? :edit, @setting %>
 		<%= link_to t('edit'), edit_setting_path( @setting ), :class => :grid %>
 	<% end %>
 </div>
@@ -22,13 +22,13 @@
       	<td><%=h event.place_to_s %></td>
       	<td><%=h event.cost_to_s %></td>
   		<td>
-    			<% if permitted_to? :show, event %>
+    			<% if can? :show, event %>
     				<%= link_to t('show'), event %>
     			<% end %>
-    			<% if permitted_to? :edit, event %>
+    			<% if can? :edit, event %>
     				<%= link_to t('edit'), edit_event_path(event) %>
     			<% end %>
-    			<% if permitted_to? :destroy, event %>
+    			<% if can? :destroy, event %>
     				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete %>
     			<% end %>
 			</td>    	
@@ -37,7 +37,7 @@
 </table>
 
 <div class="links">
-<% if permitted_to? :new, Event.new %>	
+<% if can? :new, Event.new %>	
 	<p><%= link_to t('events.new'), new_event_path, :class=>"link" %></p>
 <% end %>
 </div>

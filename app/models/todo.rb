@@ -6,12 +6,14 @@ class Todo < ActiveRecord::Base
   attr_accessible :title, :description, :user_id, :subjects
   validates_presence_of :title, :description, :user_id, :subjects
   validates_uniqueness_of :title
+  
+  before_save :clean_up_title
 
 	named_scope :with_subject, lambda { |subject| {:conditions => "subjects_mask & #{2**SUBJECTS.index(subject.to_s)} > 0"} }
 
   STATUS_DROP = [
     ["open","open"],
-    ["closed","closed"],
+    ["is_closed","is_closed"],
 	]
 	SUBJECTS_DROP = [
 	  ["all","all"],
@@ -49,8 +51,13 @@ class Todo < ActiveRecord::Base
   
   def closed_message
   	if self.closed
-  		return " - "+I18n.t(:closed).downcase
+  		return " - "+I18n.t(:is_closed).downcase
   	end
   	""
   end
+
+private
+	def clean_up_title
+		self.title = self.title.gsub(/#/,'*')
+	end
 end

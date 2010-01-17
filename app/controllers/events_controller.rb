@@ -1,5 +1,12 @@
 class EventsController < ApplicationController
-	filter_access_to :all
+	before_filter :find_comment_through_event, :only => :edit_comment
+	load_and_authorize_resource
+
+	def find_comment_through_event
+  	@comment = Comment.find( params[:id] )
+  	@event = Event.find( @comment.event )
+	end
+
 	
 	def index
     @events = Event.all
@@ -68,8 +75,6 @@ class EventsController < ApplicationController
   
   def edit_comment
   	@setting = Setting.find_by_name( "main" )
-  	@comment = Comment.find( params[:id] )
-  	@event = Event.find( @comment.event )
   	respond_to do |wants|
 			wants.html
 			wants.js

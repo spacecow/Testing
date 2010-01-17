@@ -1,5 +1,5 @@
 class RegistrantsController < ApplicationController
-	filter_resource_access
+	load_and_authorize_resource
   
 	def index
     #@registrants = Registrant.all
@@ -42,9 +42,4 @@ class RegistrantsController < ApplicationController
     flash[:notice] = "Successfully destroyed registrant."
     redirect_to registrants_url
   end
-  
-  def authorize
-  end  
-  def authorize_view
-	end    
 end

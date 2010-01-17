@@ -1,10 +1,10 @@
 @todos_index
 Background:
 Given a setting exists with name: "main", todos_description_en: "A long todo description"
-	And a user exists with username: "johan", role: "admin", language: "en"
-	And a user exists with username: "thomas", role: "observer", language: "en"
-	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant", language: "ja", name: "Akira Kurosawa"
-	And a user: "junko" exists with username: "junko", role: "registrant", language: "en", name: "Junko"
+	And a user exists with username: "johan", role: "admin, teacher", language: "en"
+	And a user exists with username: "thomas", role: "observer, teacher", language: "en"
+	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant, student", language: "ja", name: "Akira Kurosawa"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko"
 	
 Scenario: Linking from index page as creator of a Todo
 Given a user is logged in as "junko"
@@ -70,6 +70,7 @@ Given a user is logged in as "kurosawa"
 When I go to the todos page
 Then I should see "A long todo description"
 
+@list
 Scenario: List a closed/reopened Todo
 Given a todo exists with title: "Chat room", closed: true, subjects_mask: 1
 	And a user is logged in as "johan"

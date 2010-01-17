@@ -25,7 +25,6 @@ ja:
   blank: ""
   bug: "バグ"
   cancel: "ｷｬﾝｾﾙ"
-  canceled: "ｷｬﾝｾﾙ"
   capacity: "キャパシティ"
   caption: "解説"
   category: "カテゴリー"
@@ -34,10 +33,9 @@ ja:
   choose: "選択"
   classroom: "部屋"
   close: "閉じる"
-  closed: "閉じた"
   comment: "コメント"
   course: "講座"
-  create: "創造"
+  create: "作成"
   crop: "切断"
   date_and_time: "日時"
   day: "曜日"
@@ -69,6 +67,7 @@ ja:
   inactive_student: "退会"
   inactive_teacher: "退職"
   info: "情報"
+  is_closed: "閉じた"
   japanese: "日本語"
   kanji: "漢字"
   klass: "クラス"
@@ -80,7 +79,6 @@ ja:
   latest_comment: "最新コメント"
   latest_version: "最新バージョン"
   lesson: "授業"
-  list: "上場"
   male: "男性"
   mail: "メール"
   mailbox: "メールボックス"
@@ -96,6 +94,7 @@ ja:
   name_hurigana: "名前/ふりがな"
   name_kana: "名前 (カタカナ)"
   nationality: "国籍"
+  no_subject: "&lt;件名なし&gt;"
   note: "備考"
   notice: "注意"
   object_course: "{{object}}コース"
@@ -146,7 +145,7 @@ ja:
   start_time: "開始の時間"
   student: "受講生"
   subdomain: "サブドメイン"
-  subject: "課題"
+  subject: "件名"
   successfully: "首尾よく"
   sure?: "確かですか"
   suspended: "利用停止"
@@ -167,15 +166,20 @@ ja:
   username: "ユーザー名"
   user_name: "ユーザー名"
   version: "バージョン"
-  votes: "投票"
+  vote: "投票"
   when: "いつ"
   
   add: "{{object}}を書き足す"
   added: "{{object}}が書き足されました"
+  canceled: "{{object}}がキャンセルされました"
+  changed: "{{object}}が変更されました"
+  closed: "{{object}}が閉じられました"
   created: "{{object}}が作成されました"
   editing: "{{object}}編集"
+  list: "上場{{object}}"
   listing: "上場{{object}}"
   new: "新しい{{object}}"
+  reopened: "{{object}}が再び開かれました"
   updated: "{{object}}が更新されました"
   error:
     blank: "{{object}}は空白のままにしておく事は出来ません"
@@ -195,6 +199,7 @@ ja:
     change_success: "正常に{{object}}が変更されました"
     delete_success: "正常に{{object}}が削除されました"
     mail_sent: "メールが送信されました"
+    send_success: "正常に{{object}}が送信されました"
     update_success: "正常に{{object}}が更新されました"
     
   attendances:
@@ -268,6 +273,8 @@ ja:
     title: "ログアウト"
     notice:
       success: "正常にログアウトされました"
+  mails:
+    title: "メール"
   mymafumafu:
     title: "マイまふまふページ"
   people:
@@ -312,8 +319,10 @@ ja:
     error:
       edit_courses_with_teacher: "講座を編集する前に講師をキャンセルして下さい"
   todos:
+    closed: "{{name}}は「{{subject}}」のやる事を閉じました"
     created: "{{name}}は「{{subject}}」のやる事を作成しました"
     title: "やる事リスト"
+    reopened: "{{name}}は「{{subject}}」のやる事を再び開けました"
     updated: "{{name}}は「{{subject}}」のやる事を更新しました"
   users:
     editing: "ユーザー編集"
@@ -324,6 +333,13 @@ ja:
       successful_registration_for: "{{event}}の登録が首尾よく作成されました"
     registration_for: "{{event}}に登録"
     title: "ユーザー"
+  votes:
+    canceled: "{{name}}は「{{subject}}」の投票をキャンセルしました"
+    changed: "{{name}}は「{{subject}}」の投票を変更しました"    
+    created: "{{name}}は「{{subject}}」を投票しました"
+    title: "投票"
+
+
   date:
     formats:
       default: "%Y/%m/%d"

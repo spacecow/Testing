@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-	filter_access_to :all
+	load_and_authorize_resource
 	
   def index
     @settings = Setting.all

@@ -1,8 +1,8 @@
 Background:
 Given a setting exists with name: "main"
-	And a user exists with username: "johan", role: "admin", language: "en"
-	And a user exists with username: "thomas", role: "observer", language: "en"
-	And a user: "junko" exists with username: "junko", role: "registrant", language: "en", name: "Junko"
+	And a user exists with username: "johan", role: "admin, teacher", language: "en"
+	And a user exists with username: "thomas", role: "observer, teacher", language: "en"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko"
 	
 Scenario Outline: Contents of the show page
 Given a user is logged in as "<user>"

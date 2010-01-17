@@ -1,5 +1,5 @@
 class TemplateClassesController < ApplicationController
-  filter_access_to :all
+  load_and_authorize_resource
   #before_filter :load_classes_and_times
   
   def add_course

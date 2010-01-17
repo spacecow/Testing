@@ -17,33 +17,36 @@ textarea#comment_comment{
 <fieldset class="show">
 <legend class="show"><%=h @event.title( japanese? ) %> - <%=h @event.date %></legend>
 
-<br />
-<table class="intro">
-	<tr>
-		<td>
-			<%=h @event.description( japanese? ) %>
-		</td>
-	</tr>
-</table>
+<div class="intro">
+	<%=h @event.description( japanese? ) %>
+</div>
 
 <fieldset class="gallery">
 <legend><%= link_to t('gallery'), @event.gallery %></legend>
 	<%= @event.gallery.photos.map{|e| link_to( image_tag( e.photo.url(:mini), :title => e.caption( japanese? ), :alt => e.caption( japanese? )),e )} %>
 </fieldset>
-
-<p><%= t( 'registrants.title' ) %>: <%= @event.registrants.count %></p>
-<p>
-	<% if current_user2 %>
-		<% if current_user2.events.include?( @event ) %>
-			<i style="font-size: 12px"><%= t('events.message.already_applied') %></i>
-		<% else %>
+<div class="info">
+	<span class="category"><%= t(:date_and_time) %>: </span><%= h @event.date %><br/>
+	<span class="category"><%= t(:due_date) %>: </span><%= h @event.due_date_and_time %><br/>
+	<span class="category"><%= t(:place) %>: </span><%= h @event.place_to_s %><br />
+	<span class="category"><%= t(:event_cost) %>: </span><%= h @event.cost_to_s %><br />
+	<span class="category"><%= t(:pay_method) %>: </span><%= h @event.pay_method_to_s %><br />
+	<div class="applicants">
+		<span class="category"><%= t( 'registrants.title' ) %>: </span><%= @event.registrants.count %>
+	</div>
+	<div class="apply">
+		<% if current_user2 %>
+			<% if current_user2.events.include?( @event ) %>
+				<i style="font-size: 12px"><%= t('events.message.already_applied') %></i>
+			<% else %>
 				<%= button_to t( 'apply' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
 				<i><%= t('events.message.not_applied_yet') %></i>
 			<% end %>
 		<% else %>
-		<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
-	<% end %>
-</p>
+			<i style="font-size: 12px"><%= t('events.message.please_login') %> <%= link_to t('login.text'), login_user_path %></i>
+		<% end %>
+	</div>
+</div>
 <div class="clear"></div><br />
 <hr>
 <ul id="comments">
@@ -55,13 +58,13 @@ textarea#comment_comment{
 </ul>
 
 <div class="links">
-  <% if permitted_to? :edit, @event %>
+  <% if can? :edit, @event %>
   	<%= link_to t('edit'), edit_event_path(@event), :class=>"link" %> |
   <% end %>
-  <% if permitted_to? :destroy, @event %>
+  <% if can? :destroy, @event %>
   	<%= link_to t('delete'), @event, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %> |
   <% end %>
-  <% if permitted_to? :index, @event %>
+  <% if can? :index, @event %>
   	<%= link_to t('events.title'), events_path, :class=>"link" %>
   <% end %>
 </div>

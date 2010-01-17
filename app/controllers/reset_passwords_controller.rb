@@ -1,5 +1,5 @@
 class ResetPasswordsController < ApplicationController
-  filter_resource_access
+  load_and_authorize_resource
   
   def new
     @reset_password = ResetPassword.new

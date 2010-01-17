@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	filter_access_to :all
+	load_and_authorize_resource
 
 	def show
 		@user = User.find( params[:id] )

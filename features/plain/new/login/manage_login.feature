@@ -5,7 +5,7 @@ Given a setting exists with name: "main"
 Scenario: Log in
 When I go to the events page
 	And I follow 'login.text'
-Then I should not see "参加イベント"	
+Then I should not see "ログイン" within "legend"
 When I fill in 'user_name' with "kurosawa_akira"
 	And I fill in 'password' with "secret"
 	And I press 'login.button'

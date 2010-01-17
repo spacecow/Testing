@@ -1,17 +1,48 @@
+@manage_voting
 Background:
 Given a setting exists with name: "main"
-	And a user: "johan" exists with username: "johan", role: "registrant", language: "en"
-	And a user: "junko" exists with username: "junko", role: "registrant", language: "en"
+	And a user: "johan" exists with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en"
+	And a user: "mika" exists with username: "mika", role: "registrant", language: "en"
 	And a todo: "chat" exists with subjects_mask: 3, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
-	And a todo: "friends" exists with subjects_mask: 2, user: user "johan", title: "Have friends", description: "I want friends for Christmas!"
-	
-Scenario: Vote
-Given a user is logged in as "junko"
+	And a todo: "friends" exists with subjects_mask: 2, user: user "prince", title: "Have friends", description: "I want friends for Christmas!"
+
+Scenario: Regular registrants should not be able to vote
+Given a user is logged in as "mika"
+When I go to the votes page
+Then I should be redirected to the events page
+When I go to the new vote page
+Then I should be redirected to the events page
+
+Scenario Outline: Regular users should not be able to see the vote index
+Given a user is logged in as "<user>"
+When I go to the votes page
+Then I should be redirected to the events page
+Examples:
+|	user		|
+|	junko		|
+|	prince	|
+
+@vote
+Scenario Outline: Vote
+Given a todo: "chatting" exists with subjects_mask: 3, user: user "<author>", title: "Chatting room", description: "Wouldn't that be fun!"
+	And a user is logged in as "<user>"
 When I go to the todos page
-	And I follow "1" within todo: "chat"
+	And I follow "1" within todo: "chatting"
 Then I should be redirected to the todos page
-	And I should see "Points: 1" within todo "chat"
-	And a vote should exist with user: user "junko", todo: todo "chat", points: 1
+	And I should see "Points: 1" within todo "chatting"
+	And a vote should exist with user: user "<user>", todo: todo "chatting", points: 1
+	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "created#vote", message: "votes.created#Chatting room"
+	And <no> mails should exist
+Examples:
+|	author	|	user		|	johan				| no	|
+|	junko		|	junko		|	should			|	1		|
+|	junko		|	johan		|	should not	|	0		|
+|	junko		|	prince	| should			|	1		|
+|	johan		|	junko		| should			|	1		|
+|	johan		|	johan		|	should not	|	0		|
+|	johan		|	prince	|	should			|	1		|
 
 Scenario: A person can vote for another todo
 Given a vote exists with user: user "junko", todo: todo "chat", points: 2
@@ -26,30 +57,54 @@ Then 2 votes should exist
 
 Scenario: Another person can vote for a todo that already have been voted for
 Given a vote exists with user: user "junko", todo: todo "chat", points: 5
-	And a user is logged in as "johan"
+	And a user is logged in as "prince"
 When I go to the todos page
 	And I follow "4" within todo: "chat"
 Then 2 votes should exist
 	And I should see "Points: 9" within todo "chat"
 	And a vote should exist with user: user "junko", todo: todo "chat", points: 5
-	And a vote should exist with user: user "johan", todo: todo "chat", points: 4
+	And a vote should exist with user: user "prince", todo: todo "chat", points: 4
 
-Scenario: A person can change his vote
-Given a vote exists with user: user "junko", todo: todo "chat", points: 5
-	And a user is logged in as "junko"
+@change_vote
+Scenario Outline: A person can change his vote
+Given a todo: "chatting" exists with subjects_mask: 3, user: user "<author>", title: "Chatting room", description: "Wouldn't that be fun!"
+	And a vote exists with user: user "<user>", todo: todo "chatting", points: 5
+	And a user is logged in as "<user>"
 When I go to the todos page
-	And I follow "4" within todo: "chat"
+	And I follow "4" within todo: "chatting"
 Then 1 votes should exist
-	And I should see "Points: 4" within todo "chat"
-	And a vote should exist with user: user "junko", todo: todo "chat", points: 4
+	And I should see "Points: 4" within todo "chatting"
+	And a vote should exist with user: user "<user>", todo: todo "chatting", points: 4
+	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "changed#vote", message: "votes.changed#Chatting room"
+	And <no> mails should exist
+Examples:
+|	author	|	user		|	johan				| no	|
+|	junko		|	junko		|	should			|	1		|
+|	junko		|	johan		|	should not	|	0		|
+|	junko		|	prince	| should			|	1		|
+|	johan		|	junko		| should			|	1		|
+|	johan		|	johan		|	should not	|	0		|
+|	johan		|	prince	|	should			|	1		|
 	
-Scenario: Cancel a vote
-Given a vote exists with user: user "junko", todo: todo "chat", points: 5
-	And a user is logged in as "junko"
+@cancel_vote
+Scenario Outline: Cancel a vote
+Given a todo: "chatting" exists with subjects_mask: 3, user: user "<author>", title: "Chatting room", description: "Wouldn't that be fun!"
+	And a vote exists with user: user "<user>", todo: todo "chatting", points: 5
+	And a user is logged in as "<user>"
 When I go to the todos page
-	And I follow "cancel" within todo: "chat"
+	And I follow "cancel" within todo: "chatting"
 Then 0 votes should exist
-	And I should see "Points: 0" within todo "chat"
+	And I should see "Points: 0" within todo "chatting"
+	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "canceled#vote", message: "votes.canceled#Chatting room"
+	And <no> mails should exist
+Examples:
+|	author	|	user		|	johan				| no	|
+|	junko		|	junko		|	should			|	1		|
+|	junko		|	johan		|	should not	|	0		|
+|	junko		|	prince	| should			|	1		|
+|	johan		|	junko		| should			|	1		|
+|	johan		|	johan		|	should not	|	0		|
+|	johan		|	prince	|	should			|	1		|	
 	
 Scenario: Vote on the show page
 Given a user is logged in as "junko"

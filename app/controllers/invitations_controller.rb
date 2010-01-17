@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  filter_access_to :all
+  load_and_authorize_resource
   
   def new
   	@invitation = Invitation.new

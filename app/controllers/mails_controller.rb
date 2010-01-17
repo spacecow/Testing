@@ -1,5 +1,5 @@
 class MailsController < ApplicationController
-  filter_resource_access
+  load_and_authorize_resource
   
   def index
     @mails = Mail.all.reverse
@@ -18,25 +18,28 @@ class MailsController < ApplicationController
   end
   
   def new
-    @mail = Mail.new
+  	@mail = Mail.new( :sender_id => current_user.id )
+  	@recipients = User.all.reject{|e| e==current_user }
   end
   
   def create
-    @mail = Mail.new(params[:mail])
+  	@mail.subject = @mail.subject.gsub(/#/,'*')
+  	@mail.message = @mail.message.gsub(/#/,'*')
+  	@recipients = User.all.reject{|e| e==current_user }
     if @mail.save
-      flash[:notice] = "Successfully created mail."
-      redirect_to mails_url
+      flash[:notice] = t('notice.send_successful',:object=>t(:mail).downcase)
+      redirect_to box_mails_url
     else
       render :action => 'new'
     end
   end
   
   def edit
-    @mail = Mail.find(params[:id])
   end
   
   def update
-    @mail = Mail.find(params[:id])
+  	params[:mail][:subject] = params[:mail][:subject].gsub(/#/,'*')
+  	params[:mail][:message] = params[:mail][:message].gsub(/#/,'*')
     if @mail.update_attributes(params[:mail])
       flash[:notice] = "Successfully updated mail."
       redirect_to @mail
