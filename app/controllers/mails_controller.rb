@@ -14,6 +14,8 @@ class MailsController < ApplicationController
     @mail.update_attribute( :read, params[:read] ) unless params[:read].nil?
     @subject = @mail.subject.split('#')
     @message = @mail.message.split('#')
+    p "!!!!!!!!!!!!!!!!!!!!!"
+    p @mail.message
     @todo = Todo.find_by_title( @message[1] )
   end
   
@@ -27,7 +29,8 @@ class MailsController < ApplicationController
   	@mail.message = @mail.message.gsub(/#/,'*')
   	@recipients = User.all.reject{|e| e==current_user }
     if @mail.save
-      flash[:notice] = t('notice.send_successful',:object=>t(:mail).downcase)
+    	@mail.update_attribute( :message, @mail.message.gsub("\n", "<br />"))
+      flash[:notice] = t('notice.send_success',:object=>t(:mail).downcase)
       redirect_to box_mails_url
     else
       render :action => 'new'
