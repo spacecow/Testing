@@ -179,6 +179,7 @@ ja:
   list: "上場{{object}}"
   listing: "上場{{object}}"
   new: "新しい{{object}}"
+  registered: "{{object}}が登録されました"
   reopened: "{{object}}が再び開かれました"
   updated: "{{object}}が更新されました"
   error:
@@ -332,6 +333,7 @@ ja:
       new_registration: "正常に登録が作成されました"
       successful_registration_for: "{{event}}の登録が首尾よく作成されました"
     registration_for: "{{event}}に登録"
+    registered: "まふまふ予約システムにようこそ！"
     title: "ユーザー"
   votes:
     canceled: "{{name}}は「{{subject}}」の投票をキャンセルしました"

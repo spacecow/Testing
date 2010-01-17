@@ -19,10 +19,12 @@ Given a mail exists with sender: user "junko", recipient: user "johan", subject:
 	And a mail exists with sender: user "johan", recipient: user "junko", subject: "reopened#todo"
 	And a mail exists with recipient: user "junko", sender: user "johan", subject: "A boring subject"
 	And a mail exists with recipient: user "thomas", sender: user "johan", subject: "no_subject"
+	And a mail exists with sender: user "johan", recipient: user "junko", subject: "registered#user"
 When I go to the mails page
 Then I should see "Listing Mail" within "h1"
 And I should see "mails" table
 |	Recipient 		|	Sender				|	Subject							|	Sent at									|
+|	Junko Sumii		|	Johan Sveholm	|	User registered			|	less than a minute ago	|
 |	Thomas Osburg	|	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
 |	Junko Sumii		|	Johan Sveholm	|	A boring subject		|	less than a minute ago	|
 |	Junko Sumii		|	Johan Sveholm	|	Todo re-opened			|	less than a minute ago	|

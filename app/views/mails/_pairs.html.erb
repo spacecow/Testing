@@ -1,4 +1,4 @@
 <%= render :partial => 'includes/pair', :locals => { :right => link_to( h( object.recipient ), object.recipient ), :left => t( :recipient ) } %>
 <%= render :partial => 'includes/pair', :locals => { :right => link_to( h( object.sender ), object.sender ), :left => t( :sender ) } %>
 <%= render :partial => 'includes/pair', :locals => { :right => distance_of_time_in_words_to_now( h( object.created_at ))+t(:ago), :left => t( :sent_at ) } %>
-<%= render :partial => 'includes/pair_message', :locals => { :right => @message.size>1 ? link_to( t( h( @message[0] ), :name => object.sender, :subject => @message[1], :object => t( @message[2] )), @todo ) : Sanitize.clean( @message[0], :elements => 'br' ), :left => t( :mail_message ) } %>
+<%= render :partial => 'includes/pair_message', :locals => { :right => @message.size>1 ? link_to( t( h( @message[0] ), :name => object.sender, :subject => @message[1], :object => t( @message[2] )), @todo ) : @message[0].nil? ? "" : Sanitize.clean( @message[0], :elements => 'br' ), :left => t( :mail_message ) } %>

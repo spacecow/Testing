@@ -1,6 +1,7 @@
 @user_registration
 Background:
 Given a setting exists with name: "main"
+	And a user: "johan" exists with username: "johan", role: "god, teacher", name: "Johan Sveholm"
 
 Scenario: An invited guest can make a simple registration in japanese
 Given an invitation exists with recipient_email: "akira@docomo.ne.jp"
@@ -41,6 +42,7 @@ Examples:
 | Superuser	|
 | webMaster	|
 
+@register
 Scenario: An invited guest can make a simple registration in english
 Given an invitation exists with recipient_email: "prince@docomo.ne.jp"
 When I signup with that invitation
@@ -71,9 +73,10 @@ When I fill in 'name_hurigana' with "プリンス　ヒリプ"
 	And I check "I would like to get information sent to me when the site has been updated"
 	And I press 'register'
 Then I should be redirected to the events page
-	And a user should exist with username: "prince_philip", email: "prince@docomo.ne.jp", nationality: "Swedish", name: "Prince Philip", name_hurigana: "プリンス　ヒリプ", roles_mask: 32, male: false, language: "en", occupation: "", tel: "", age: "", invitation_limit: 0, info_update: true
+	And a user should exist with username: "prince_philip", email: "prince@docomo.ne.jp", nationality: "Swedish", name: "Prince Philip", name_hurigana: "プリンス　ヒリプ", roles_mask: 48, male: false, language: "en", occupation: "", tel: "", age: "", invitation_limit: 0, info_update: true
 	And I should see 'users.notice.new_registration'
 	And I should see "Events"
+	And a mail should exist with sender: user "johan", subject: "registered#user", message: "users.registered#Mafumafu"
 
 @edit_user
 Scenario: A user can not unset certain attributes that were set in an event registration

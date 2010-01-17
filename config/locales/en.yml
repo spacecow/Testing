@@ -180,6 +180,7 @@ en:
   list: "List {{object}}"
   listing: "Listing {{object}}"
   new: "New {{object}}"
+  registered: "{{object}} registered"
   reopened: "{{object}} re-opened"
   updated: "{{object}} updated"
   error:
@@ -342,6 +343,7 @@ en:
       edit_registration: "User successfully updated."
       new_registration: "Registration successful."
       successful_registration_for: "Successfully registered for {{event}}."
+    registered: "Welcome to Mafumafu's Reservation System!"
     registration_for: "Application for {{event}}"
     title: "Users"
   grammar_unit: "Grammar unit"

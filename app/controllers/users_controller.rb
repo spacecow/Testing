@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     if @user.save
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.new_registration')
+	    	Mail.create!(
+	      	:sender_id => User.find_by_name("Johan Sveholm").id,
+	      	:recipient_id => @user.id,
+	      	:subject => "registered#user",
+	      	:message => "users.registered#Mafumafu"
+	      )       	
       	redirect_to events_path
     	else
     		render :action => "crop"

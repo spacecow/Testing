@@ -14,8 +14,6 @@ class MailsController < ApplicationController
     @mail.update_attribute( :read, params[:read] ) unless params[:read].nil?
     @subject = @mail.subject.split('#')
     @message = @mail.message.split('#')
-    p "!!!!!!!!!!!!!!!!!!!!!"
-    p @mail.message
     @todo = Todo.find_by_title( @message[1] )
   end
   

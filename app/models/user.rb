@@ -109,6 +109,6 @@ private
   end
   
   def set_role
-		self.roles = ["registrant"]
+		self.roles = ["registrant", "student"]
 	end
 end
