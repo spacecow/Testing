@@ -9,23 +9,31 @@ Given a setting exists with name: "main"
 @list_mails
 Scenario: List Mails
 Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo"
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo"
-Given a mail exists with sender: user "junko", recipient: user "thomas", subject: "added#comment"
-Given a mail exists with sender: user "thomas", recipient: user "johan", subject: "updated#comment"
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote"
-Given a mail exists with sender: user "junko", recipient: user "thomas", subject: "created#vote"
-Given a mail exists with sender: user "thomas", recipient: user "johan", subject: "canceled#vote"
+	And a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo"
+	And a mail exists with sender: user "junko", recipient: user "thomas", subject: "added#comment"
+	And a mail exists with sender: user "thomas", recipient: user "johan", subject: "updated#comment"
+	And a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote"
+	And a mail exists with sender: user "junko", recipient: user "thomas", subject: "created#vote"
+	And a mail exists with sender: user "thomas", recipient: user "johan", subject: "canceled#vote"
+	And a mail exists with sender: user "junko", recipient: user "johan", subject: "closed#todo"
+	And a mail exists with sender: user "johan", recipient: user "junko", subject: "reopened#todo"
+	And a mail exists with recipient: user "junko", sender: user "johan", subject: "A boring subject"
+	And a mail exists with recipient: user "thomas", sender: user "johan", subject: "no_subject"
 When I go to the mails page
 Then I should see "Listing Mail" within "h1"
 And I should see "mails" table
-|	Recipient 		|	Sender				|	Subject					|	Sent at									|
-|	Johan Sveholm	|	Thomas Osburg	|	Vote canceled		|	less than a minute ago	|
-|	Thomas Osburg	|	Junko Sumii		|	Vote created		|	less than a minute ago	|
-|	Junko Sumii		|	Johan Sveholm	|	Vote changed		|	less than a minute ago	|
-|	Johan Sveholm	|	Thomas Osburg	|	Comment updated	|	less than a minute ago	|
-|	Thomas Osburg	|	Junko Sumii		|	Comment added		|	less than a minute ago	|
-|	Junko Sumii		|	Johan Sveholm	|	Todo updated		|	less than a minute ago	|
-|	Johan Sveholm	|	Junko Sumii		|	Todo created		|	less than a minute ago	|
+|	Recipient 		|	Sender				|	Subject							|	Sent at									|
+|	Thomas Osburg	|	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
+|	Junko Sumii		|	Johan Sveholm	|	A boring subject		|	less than a minute ago	|
+|	Junko Sumii		|	Johan Sveholm	|	Todo re-opened			|	less than a minute ago	|
+|	Johan Sveholm	|	Junko Sumii		|	Todo closed					|	less than a minute ago	|
+|	Johan Sveholm	|	Thomas Osburg	|	Vote canceled				|	less than a minute ago	|
+|	Thomas Osburg	|	Junko Sumii		|	Vote created				|	less than a minute ago	|
+|	Junko Sumii		|	Johan Sveholm	|	Vote changed				|	less than a minute ago	|
+|	Johan Sveholm	|	Thomas Osburg	|	Comment updated			|	less than a minute ago	|
+|	Thomas Osburg	|	Junko Sumii		|	Comment added				|	less than a minute ago	|
+|	Junko Sumii		|	Johan Sveholm	|	Todo updated				|	less than a minute ago	|
+|	Johan Sveholm	|	Junko Sumii		|	Todo created				|	less than a minute ago	|
 
 Scenario: Links
 Given a mail exists with sender: user "johan", recipient: user "johan", subject: "created#todo", message: "created#Chat room"

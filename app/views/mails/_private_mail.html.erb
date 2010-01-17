@@ -1,5 +1,5 @@
 <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
 	<td <%= private_mail.read ? "" : 'class="non-read"' %>><%= link_to( h( private_mail.sender ), private_mail.sender ) %></td>
-	<td <%= private_mail.read ? "" : 'class="non-read"' %>><%= link_to( t( h( private_mail.subject.split('#')[0] ), :object=>t( h( private_mail.subject.split('#')[1] ))), mail_path( private_mail, :read => true )) %></td>
+	<td <%= private_mail.read ? "" : 'class="non-read"' %>><%= private_mail.subject.split('#').size > 1 ? link_to( t( h( private_mail.subject.split('#')[0] ), :object=>t( h( private_mail.subject.split('#')[1] ))), mail_path( private_mail, :read => true )) : private_mail.subject=="no_subject" ? link_to( t( h( private_mail.subject )), private_mail ) : link_to( h( private_mail.subject ), private_mail ) %></td>
 	<td <%= private_mail.read ? "" : 'class="non-read"' %>><%= distance_of_time_in_words_to_now( private_mail.created_at ) %><%= t('ago') %></td>
 </tr>

@@ -32,15 +32,15 @@ class Ability
   			end
   			can [:new, :edit, :destroy], Vote
   			can [:add_comment, :edit_comment], Event
-	  		can :box, Mail
+	  		can [:box, :create], Mail
 	  		can :show, Mail do |mail|
 	  			mail.try(:recipient) == user
 	  		end	  	
   		end
   		if user.role? :observer
-	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass]
+	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant]
 	  	elsif user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass]
+	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant]
 	  	end
 			if user.role? :photographer
 				can [:create, :update], Photo

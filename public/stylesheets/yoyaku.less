@@ -317,7 +317,6 @@ a{ .global_a; }
 						float:left;						
 						margin-left:5px;
 						a{
-							text-decoration: blink;
 							color: @menu_fg;
 							:hover{
 								color: #fff;
@@ -362,12 +361,11 @@ a{ .global_a; }
 			fieldset.form{
 				.fieldset_basic_mixin;
 				legend.form{ .legend_basic_mixin; }
-				.intro{
-					
+				.intro{					
 					.global_intro;
-					margin:0.4em 0 1em 0;
-					
+					margin:0.4em 0 1em 0;					
 				}
+				.links{ margin-top:1em; }
 			}
 			#update_container{
 				#text_message{
@@ -502,8 +500,8 @@ a{ .global_a; }
 					  width:100px; 
 					}
 				}
-				.links{
-					margin-top:5px;
+				#links{
+					margin-top:1em;
 				}
 				#photo_gallery{ .global_gallery; }
 				#photo_container{

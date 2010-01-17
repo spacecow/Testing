@@ -11,7 +11,7 @@
 			<% if current_user2 %>
 				<li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
 				<li><%= link_to t( 'logout.text' ), logout_user_path %></li>
-				<li class="mail"><%= link_to t( :mail ), box_mails_path %></li>
+				<li class=<%= current_user.unread_mail? ? "mail" : "" %>><%= link_to t( :mail ), box_mails_path %></li>
 				<% if can? :new, Invitation.new %>
 		      <li><%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %></li>
 		    <% end %>

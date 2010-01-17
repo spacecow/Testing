@@ -70,6 +70,7 @@ Given a user is logged in as "kurosawa"
 When I go to the todos page
 Then I should see "A long todo description"
 
+@list
 Scenario: List a closed/reopened Todo
 Given a todo exists with title: "Chat room", closed: true, subjects_mask: 1
 	And a user is logged in as "johan"

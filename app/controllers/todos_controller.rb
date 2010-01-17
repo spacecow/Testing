@@ -13,7 +13,7 @@ class TodosController < ApplicationController
   	@sort = params[:sort] || "points"
   	@order = params[:order] || "descending"
   	@setting = Setting.find_by_name( "main" )
-    if @status == "closed"
+    if @status == "is_closed"
     	if @subject == "all"
     		@todos = Todo.all( :conditions => ["closed = ?", true] )
     	else
@@ -54,12 +54,7 @@ class TodosController < ApplicationController
     if @todo.save
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.create_success', :object=>t(:todo))
-      Mail.create!(
-      	:sender_id => current_user.id,
-      	:recipient_id => User.find_by_name( "Johan Sveholm" ).id,
-      	:subject => "created#todo",
-      	:message => "todos.created##{@todo.title}"
-      )
+      send_mail( "created", "todo", { :author => false })
       if( params[:comment_id].blank? )
       	redirect_to todos_path
       else
@@ -84,12 +79,7 @@ class TodosController < ApplicationController
     if @todo.update_attributes(params[:todo])
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
       flash[:notice] = t('notice.update_success', :object=>t(:todo))
-      Mail.create!(
-      	:sender_id => current_user.id,
-      	:recipient_id => User.first.id,
-      	:subject => "updated#todo",
-      	:message => "todos.updated##{@todo.title}"
-      )
+      send_mail( "updated", "todo", { :author => false })
       redirect_to todos_path
     else
       render :action => 'edit'
@@ -108,21 +98,7 @@ class TodosController < ApplicationController
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if @comment.save		
-	  	mails = []
-    	johan = User.find_by_name( "Johan Sveholm" )
-	  	@todo.comments.each do |comment|
-				mails.push comment.user unless( mails.include?( comment.user ) || current_user == comment.user )
-			end
-    	mails.push @todo.user unless( mails.include?( @todo.user ) || current_user == @todo.user )
-    	mails.push johan unless( mails.include?( johan ) || current_user == johan )
-    	mails.each do |user|
-	    	Mail.create!(
-	      	:sender_id => current_user.id,
-	      	:recipient_id => user.id,
-	      	:subject => "added#comment",
-	      	:message => "comments.added##{@todo.title}#todo"
-	      ) 
-      end
+			send_mail( "added", "comment", { :comments => true })
     else    		
       flash.now[:error] = t('error.blank',:object=>t(:comment))
     end
@@ -134,23 +110,7 @@ class TodosController < ApplicationController
   
   def edit_comment
   	@setting = Setting.find_by_name( "main" )
-
-  	mails = []
-  	johan = User.find_by_name( "Johan Sveholm" )
-  	@todo.comments.each do |comment|
-			mails.push comment.user unless( mails.include?( comment.user ) || current_user == comment.user )
-		end
-  	mails.push @todo.user unless( mails.include?( @todo.user ) || current_user == @todo.user )
-  	mails.push johan unless( mails.include?( johan ) || current_user == johan )
-  	mails.each do |user|
-	  	Mail.create!(
-	    	:sender_id => current_user.id,
-	    	:recipient_id => user.id,
-	    	:subject => "updated#comment",
-	    	:message => "comments.updated##{@todo.title}#todo"
-	    )
-    end
-
+		send_mail( "updated", "comment", { :comments => true })
   	respond_to do |wants|
 			wants.html
 			wants.js
@@ -160,6 +120,26 @@ class TodosController < ApplicationController
   def toggle_close
   	@todo = Todo.find( params[:id] )
   	@todo.update_attribute( :closed, !@todo.closed )
+  	send_mail( @todo.closed ? "closed" : "reopened", "todo", { :comments => true, :votes => true })
   	redirect_to :back
+  end
+
+private  
+  def send_mail( message, category, opts={} )
+  	opts = { :author => true }.merge!( opts )
+  	mails = []
+  	johan = User.find_by_name( "Johan Sveholm" )
+  	@todo.comments.each{ |comment| mails.push comment.user } if opts[:comments]
+  	@todo.votes.each{ |vote| mails.push vote.user } if opts[:votes]
+  	mails.push @todo.user if opts[:author]
+  	mails.push johan
+  	mails.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
+    	Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => user.id,
+      	:subject => "#{message}##{category}",
+      	:message => "#{category.pluralize}.#{message}##{@todo.title}#{category=='todo'?'':'#todo'}"
+      ) 
+    end  		
   end
 end
