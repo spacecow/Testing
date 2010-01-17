@@ -30,7 +30,8 @@ And I should see "mails" table
 |	Johan Sveholm	|	Vote changed				|	less than a minute ago	|
 |	Johan Sveholm	|	Todo updated				|	less than a minute ago	|
 
-Scenario: Links
+@unread_mails
+Scenario: Links and mark mails as read
 Given a user is logged in as "johan"
 	And a mail: "todo" exists with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room"
 	And a mail: "comment" exists with sender: user "thomas", recipient: user "johan", subject: "updated#comment", message: "comments.updated#Chat room#todo"
