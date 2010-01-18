@@ -17,9 +17,13 @@
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :note ), :right => h( @template_class.note ) } %>
 </div>
 
-<div class="links">
-	<%= link_to t(:edit), edit_template_class_path(@template_class), :class=>:link %> |
-	<%= link_to t(:list), template_classes_path( :template_day=>@template_class.day ), :class=>:link %>
+<div id="links">
+	<% if can? :edit, @template_class %>
+		<%= link_to t(:edit), edit_template_class_path(@template_class) %>
+	<% end %>
+	<% if can? :index, TemplateClass %>
+		<%= link_to t(:list,:object=>t('template_klasses.title')), template_classes_path( :template_day=>@template_class.day ) %>
+	<% end %>
 </div>
 
 </fieldset>

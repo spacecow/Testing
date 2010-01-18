@@ -17,7 +17,7 @@ Then I should see "New Template Class" within "legend"
 	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"
 	And I should see "Ex. 18:40" within "li#template_class_end_time_string_input"
 	And the "Inactive" checkbox should not be checked
-When I follow "Template Classes" within "div.links"
+When I follow "List Template Classes" within "div#links"
 	Then I should be redirected to the template classes page
 	
 Scenario: Errors

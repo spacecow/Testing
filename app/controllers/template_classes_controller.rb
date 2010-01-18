@@ -31,9 +31,10 @@ class TemplateClassesController < ApplicationController
   end
 
   def new
-    @template_class = TemplateClass.new( :capacity => 8 )
+    @template_class = TemplateClass.new( :capacity => 8, :day => params[:template_day] )
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+		@courses = Course.all( :conditions => ["name like (?)",params[:template_course]+"%"]) unless params[:template_course].nil?
 
     respond_to do |format|
       format.html # new.html.erb
