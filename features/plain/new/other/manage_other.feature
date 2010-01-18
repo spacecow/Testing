@@ -9,3 +9,6 @@ Given not implemented
 
 Scenario: Create a message system (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Explain the * in the forms (NOT IMPLEMENTED)
+Given not implemented

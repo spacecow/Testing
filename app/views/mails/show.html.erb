@@ -1,23 +1,23 @@
 <div class="show">
 <fieldset class="show">
-<legend><%= t( h( @subject[0] ), :object=>t( h( @subject[1] ))) %></legend>
+<legend><%= @subject.size>1 ? t( h( @subject[0] ), :object=>t( h( @subject[1] ))) : @subject[0]=="no_subject" ? t( h( @subject )) : h( @subject ) %></legend>
 
 <div class="pairs">
 	<%= render :partial => 'pairs', :locals => { :object => @mail } %>
 </div>
 
-<div class="links">
+<div id="links">
   <% if can? :box, @mail %>
   	<%= link_to t(:mailbox), box_mails_path %>
   <% end %>
   <% if can? :index, @mail %>
-  	| <%= link_to t(:listing, :object=>t(:mails)), mails_path %>
+  	<%= link_to t(:list, :object=>t('mails.title')), mails_path %>
   <% end %>
   <% if can? :edit, @mail %>
-  	| <%= link_to t(:edit), edit_mail_path(@mail) %>
+  	<%= link_to t(:edit), edit_mail_path(@mail) %>
   <% end %>
   <% if can? :destroy, @mail %>
-  	| <%= link_to t(:destroy), @mail, :confirm => 'Are you sure?', :method => :delete %>
+  	<%= link_to t(:destroy), @mail, :confirm => 'Are you sure?', :method => :delete %>
   <% end %>
 </div>
 

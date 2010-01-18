@@ -11,6 +11,11 @@
 </table>
 
 <div id="links">
-	<%= link_to t(:new, :object=>t(:mail)), new_mail_path, :class=>"link" %>
+	<% if can? :new, Mail %>
+		<%= link_to t(:new, :object=>t(:mail)), new_mail_path %>
+	<% end %>
+	<% if can? :index, Mail %>
+		<%= link_to t(:list, :object=>t('mails.title')), mails_path %>
+	<% end %>	
 </div>
 </div>

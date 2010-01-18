@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 	belongs_to :invitation
   has_many :photos
   has_many :reset_passwords
-  has_many :mails
+  has_many :mails, :foreign_key => "recipient_id"
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   
@@ -80,6 +80,10 @@ class User < ActiveRecord::Base
 	def invitation_token
 		invitation.token if invitation	
 	end
+
+	def unread_mail?
+		mails.map(&:read).grep(false).size > 0
+	end
 	
 	def invitation_token=(token)
 		self.invitation = Invitation.find_by_token( token )
@@ -105,6 +109,6 @@ private
   end
   
   def set_role
-		self.roles = ["registrant"]
+		self.roles = ["registrant", "student"]
 	end
 end

@@ -12,3 +12,6 @@ Then I should see "registrants" table
 | Exchange Student	|	Fake Fakeson	|	johan					|	Male		|	10's	|	Fakeland		|	080-1234-5678			|	joh@n.se			|					|
 When I follow "Edit" within that registrant
 Then I should be redirected to the edit page of that registrant
+
+Scenario: Send a confirmation mail (NOT IMPLEMENTED)
+Given not implemented

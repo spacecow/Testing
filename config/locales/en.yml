@@ -33,7 +33,6 @@ en:
   choose: "Select"
   classroom: "Classroom"
   close: "Close"
-  closed: "Closed"
   comment: "Comment"
   course: "Course"
   create: "Create"
@@ -70,6 +69,7 @@ en:
   inactive_student: "Inactive"
   inactive_teacher: "Inactive"
   info: "Info"
+  is_closed: "Closed"
   japanese: "Japanese"
   kanji: "Kanji"
   katakana: "Katakana"
@@ -89,7 +89,6 @@ en:
   mail_address_pc: "PC address"
   mail_message: "Message"
   mail_sending: "Mail Sending"
-  mails: "Mails"
   meaning: "Meaning"
   mobile_phone: "Mobile phone"
   multi: "Multi "
@@ -97,6 +96,7 @@ en:
   name_hurigana: "Name/Hurigana"
   name_kana: "Name (katakana)"
   nationality: "Nationality"
+  no_subject: "&lt;no subject&gt;"
   note: "Note"
   notice: "Note"
   object_course: "{{object}} Course"
@@ -168,18 +168,20 @@ en:
   user_name: "User name"
   version: "Version"
   vote: "Vote"
-  votes: "Votes"
   when: "When"
   
   add: "Add {{object}}"
   added: "{{object}} added"
   canceled: "{{object}} canceled"
   changed: "{{object}} changed"
+  closed: "{{object}} closed"
   created: "{{object}} created"
   editing: "Editing {{object}}"
   list: "List {{object}}"
   listing: "Listing {{object}}"
   new: "New {{object}}"
+  registered: "{{object}} registered"
+  reopened: "{{object}} re-opened"
   updated: "{{object}} updated"
   error:
     blank: "{{object}} cannot be left blank."
@@ -200,6 +202,7 @@ en:
     change_success: "Successfully changed {{object}}."
     delete_success: "Successfully deleted {{object}}."
     mail_sent: "A mail has been sent to you."
+    send_success: "Successfully sent {{object}}."
     update_success: "Successfully updated {{object}}."
   
   attendances:
@@ -280,6 +283,8 @@ en:
     title: "Logout"
     notice:
       success: "Successfully logged out"
+  mails:
+    title: "Mails"
   mymafumafu:
     title: "My Mafumafu Page"
   people:
@@ -326,7 +331,9 @@ en:
     error:
       edit_courses_with_teacher: "Cancel teacher before changing course"
   todos:
+    closed: "{{name}} has closed the Todo:'{{subject}}'"
     created: "{{name}} has created a new Todo:'{{subject}}'"
+    reopened: "{{name}} has re-opened the Todo:'{{subject}}'"
     title: "Todo List"
     updated: "{{name}} has updated the Todo:'{{subject}}'"
   users:
@@ -336,6 +343,7 @@ en:
       edit_registration: "User successfully updated."
       new_registration: "Registration successful."
       successful_registration_for: "Successfully registered for {{event}}."
+    registered: "Welcome to Mafumafu's Reservation System!"
     registration_for: "Application for {{event}}"
     title: "Users"
   grammar_unit: "Grammar unit"
@@ -361,6 +369,7 @@ en:
     canceled: "{{name}} has canceled the vote for:'{{subject}}'"
     changed: "{{name}} has changed the vote for:'{{subject}}'"    
     created: "{{name}} has voted for:'{{subject}}'"
+    title: "Votes"
     
   date:
     day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
