@@ -190,10 +190,13 @@ ja:
       both_blank: "テキスト領域は両方が空白のままにしておけない"
       does_not_exist: "がありません"
   message:
+    asterisk: "アステリスクがある所は必要な情報。"
+    avatar_upload: "プロフィール写真ををアップロード"
+    change_password: "{{object}}様のパスワードの変更を受付けます"
     forgotten_password: "パスワードを忘れました！"
     info_update: "サイトが更新された時に情報を送ってもらいたい"
     provide_username_or_email: "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
-    change_password: "{{object}}様のパスワードの変更を受付けます"
+    which_language: "このサイトはどんな言語で利用する？"
   notice:
     add_success: "正常に{{object}}が追加されました"
     create_success: "正常に{{object}}が作成されました"
@@ -327,6 +330,7 @@ ja:
     updated: "{{name}}は「{{subject}}」のやる事を更新しました"
   users:
     editing: "ユーザー編集"
+    fill_in: "ユーザー情報を入力して下さい。"
     new: "新しいユーザー"
     notice:
       edit_registration: "正常に登録が更新されました"

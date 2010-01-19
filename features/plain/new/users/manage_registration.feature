@@ -21,10 +21,10 @@ When I fill in 'user_name' with "kurosawa_akira"
 Then I should be redirected to the error users page
 	And the "サイトが更新された時に情報を送ってもらいたい" checkbox should not be checked
 When I choose 'female'
-	And I select "英語" from 'language'
+	And I select "英語" from "このサイトはどんな言語で利用する？*"
 	And I press 'register'
 Then I should be redirected to the events page
-	And a user should exist with roles_mask: 32, language: "en", info_update: false
+	And a user should exist with roles_mask: 48, language: "en", info_update: false
 	And I should see "Events"
 
 Scenario Outline: Some usernames/names are not allowed
@@ -90,13 +90,13 @@ Then "Exchange Student" should be selected in "user_occupation"
 	And "10's" should be selected in "user_age"
 	And "user_age" should have no blank option
 	And the "I would like to get information sent to me when the site has been updated" checkbox should be checked
-When I select "Japanese" from "Language"
+When I select "Japanese" from "In which language do you want this site to be?*"
 	And I press "Update"
 	And I follow "ﾌﾟﾛﾌｨｰﾙ編集"
 Then "" should be selected in "user_occupation"	
 	And "10代" should be selected in "user_age"
 	And "user_age" should have no blank option
-When I select "英語" from "言語"
+When I select "英語" from "このサイトはどんな言語で利用する？*"
 	And I press "更新"
 	And I follow "Edit Profile"
 Then "Exchange Student" should be selected in "user_occupation"

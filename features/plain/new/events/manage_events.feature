@@ -1,12 +1,11 @@
 Background:
 Given a setting exists with name: "main"
-	And a user: "aya" exists with username: "aya", role: "admin", language: "en"
+	And a user: "aya" exists with username: "aya", role: "admin, teacher", language: "en"
 	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant", language: "ja"
 
-@list_events
-Scenario: Display the event list
+Scenario: Display the event list in English and Japanese
 Given a user is logged in as "kurosawa"
-	And a event exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", start_date: "2009-12-19 19:00", end_date: "2009-12-19 21:00", description_en: "It's Christmas!", description_ja: "クリスマスタイム！", place: "141", cost: "2500円, non Japanese free"
+	And an event exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", start_date: "2009-12-19 19:00", end_date: "2009-12-19 21:00", description_en: "It's Christmas!", description_ja: "クリスマスタイム！", place: "141", cost: "2500円, non Japanese free"
 When I go to the events page
 Then I should see events table
   |	イベント名					|	日時										|	場所	|	会費											|
@@ -17,6 +16,15 @@ When I follow 'edit_profile'
 Then I should see events table
   |	Event						|	Date&amp;Time											|	Place	|	Cost											|
   |	Christmas Party	|	2009-12-19 19:00 - 21:00	|	141		|	2500円, non Japanese free	|
+
+@list_events
+Scenario: Display the list in order
+Given an event exists with title_en: "Year-end Party", start_date: "2009-12-23 07:00", end_date: "2009-12-24 13:00", place: "Aizu", cost: "free"
+	And a user is logged in as "aya"
+When I go to the events page
+Then I should see events table
+|	Event						|	Date&amp;Time										|	Place	|	Cost	|
+|	Year-end Party	|	2009-12-23 07:00 - 2009-12-24 13:00	|	Aizu	|	free	|
 
 Scenario: Create an event
 Given a user is logged in as "aya"
