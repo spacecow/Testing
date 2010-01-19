@@ -7,9 +7,9 @@
   <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t( 'create' )} %>
 <%- end -%>
 
-<div class="links">
-	<% if can? :index, TemplateClass.new %>
-		<%= link_to t( 'template_klasses.title' ), template_classes_path( :template_day=>@template_class.day ) %>
+<div id="links">
+	<% if can? :index, TemplateClass %>
+		<%= link_to t(:list,:object=>t('template_klasses.title')), template_classes_path( :template_day=>@template_class.day ) %>
 	<% end %>
 </div>
 </fieldset>

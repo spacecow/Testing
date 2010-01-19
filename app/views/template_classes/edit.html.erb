@@ -8,7 +8,13 @@
   <%= hidden_field_tag :redirect, params[:redirect] %>
 <%- end -%>
 
-<%= link_to t('show'), @template_class %> |
-<%= link_to t('template_klasses.title'), template_classes_path( :template_day=>@template_class.day ) %>
+<div id="links">
+	<% if can? :show, @template_class %>
+		<%= link_to t(:show), @template_class %>
+	<% end %>
+	<% if can? :index, TemplateClass %>
+		<%= link_to t(:list,:object=>t('template_klasses.title')), template_classes_path( :template_day=>@template_class.day ) %>
+	<% end %>
+</div>
 </fieldset>
 </div>

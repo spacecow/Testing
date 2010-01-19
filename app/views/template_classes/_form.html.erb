@@ -1,6 +1,6 @@
 ﻿<% f.inputs do %>
 	<%= f.input :title, :label => t( 'title' ), :required => false %>
-	<%= f.input :course, :label => t( 'course' ) %>
+	<%= f.input :course, :label => t( 'course' ), :collection => @courses %>
 	<%= f.input :classroom, :label => t( 'classroom' ), :required => false %>
 	<%= f.input :capacity, :label => t( 'capacity' ) %>
 	<%= f.input :day, :label => t( 'day' ), :as => :select, :collection => @days %>
@@ -10,6 +10,7 @@
 	<div class="horizontal"><label><%= f.input :inactive, :label => t( :inactive ), :as => :radio %></label></div>
 	<%= f.input :description, :label => t( :description ), :required => false %>
 	<%= f.input :note, :label => t( :note ), :required => false %>
+	<%= hidden_field_tag :template_course, @template_course %>
 <% end %>
 <% f.buttons do %>
 	<%= f.commit_button label_text %>
