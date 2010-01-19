@@ -34,7 +34,15 @@ class TemplateClassesController < ApplicationController
     @template_class = TemplateClass.new( :capacity => 8, :day => params[:template_day] )
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
-		@courses = Course.all( :conditions => ["name like (?)",params[:template_course]+"%"]) unless params[:template_course].nil?
+		@template_course = params[:template_course]
+
+		if @template_course.blank?
+	  	@courses = sort_courses
+		elsif @template_course.split.size > 1
+			@courses = Course.all( :conditions => ["name = ?",@template_course])
+		else
+			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
+		end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,12 +53,23 @@ class TemplateClassesController < ApplicationController
   def create
     @template_class = TemplateClass.new( params[ :template_class ] )
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+		@template_course = params[:template_course]
+		
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 #		if !params[:template_class][:course_id].blank?
 #			@teachers = Teacher.all(
 #				:conditions=>["courses.name = ?", Course.find( params[:template_class][:course_id] ).name],
 #			  :include=>[:person, :courses])    
 #		end
+
+		if @template_course.blank?
+	  	@courses = sort_courses
+		elsif @template_course.split.size > 1
+			@courses = Course.all( :conditions => ["name = ?",@template_course])
+		else
+			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
+		end
+
     if @template_class.save
       flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
       #format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
@@ -108,6 +127,16 @@ class TemplateClassesController < ApplicationController
   end
 
 private
+	def sort_courses
+  	@courses = []
+  	@sorting = Sorting.new
+  	@courses_groups = Course.all( :order=>:name ).group_by(&:category)
+		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
+			@courses_groups[key].map{|course| @courses.push course }
+		end
+		@courses		
+	end
+
   def load_classes_and_times
     @courses = Course.all
     @times = CourseTime.find( :all, :order=>'text' )

@@ -140,3 +140,6 @@ Given not implemented
 #	And I should have 0 template classes	
 #
 #And a template class should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "Mon"
+
+Scenario: Sort courses in order in the drop-box (NOT IMPLEMENTED)
+Given not implemented
