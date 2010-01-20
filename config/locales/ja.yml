@@ -234,6 +234,8 @@ ja:
     editing: "イベント編集"
     message:
       already_applied: "このイベントにはもう申し込みされていました"
+      past_due_date: "このイベントの受付は締切ました"
+      past_end_date: "このイベントの受付は終了しました"
       please_login: "イベントに申し込む為にﾛｸﾞｲﾝして下さい"
       not_applied_yet: "まだ申し込みされていません"
     new: "新しいイベント"

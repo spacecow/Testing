@@ -22,11 +22,11 @@ textarea#comment_comment{
 	<div class="clear"></div>
 </fieldset>
 <div class="info">
-	<span class="category"><%= t(:date_and_time) %>: </span><%= h @event.date %><br/>
-	<span class="category"><%= t(:due_date) %>: </span><%= h @event.due_date_and_time %><br/>
-	<span class="category"><%= t(:place) %>: </span><%= h @event.place_to_s %><br />
-	<span class="category"><%= t(:event_cost) %>: </span><%= h @event.cost_to_s %><br />
-	<span class="category"><%= t(:pay_method) %>: </span><%= h @event.pay_method_to_s %><br />
+	<p><span class="category"><%= t(:date_and_time) %>: </span><%= h @event.date %></p>
+	<p><span class="category"><%= t(:due_date) %>: </span><%= h @event.due_date_and_time %></p>
+	<p><span class="category"><%= t(:place) %>: </span><%= h @event.place_to_s %></p>
+	<p><span class="category"><%= t(:event_cost) %>: </span><%= h @event.cost_to_s %></p>
+	<p><span class="category"><%= t(:pay_method) %>: </span><%= h @event.pay_method_to_s %></p>
 	<div class="applicants">
 		<span class="category"><%= t( 'registrants.title' ) %>: </span><%= @event.registrants.count %>
 	</div>
@@ -34,6 +34,10 @@ textarea#comment_comment{
 		<% if current_user2 %>
 			<% if current_user2.events.include?( @event ) %>
 				<i style="font-size: 12px"><%= t('events.message.already_applied') %></i>
+			<% elsif @event.end_date && DateTime.current > @event.end_date %>
+				<i style="font-size: 12px"><%= t('events.message.past_end_date') %></i>
+			<% elsif @event.due_date && DateTime.current > @event.due_date %>
+				<i style="font-size: 12px"><%= t('events.message.past_due_date') %></i>
 			<% else %>
 				<%= button_to t( 'apply' ), new_event_register_user_path( current_user2, :event_id => @event.id ) %>
 				<i><%= t('events.message.not_applied_yet') %></i>

@@ -9,22 +9,28 @@ Given a user is logged in as "kurosawa"
 When I go to the events page
 Then I should see events table
   |	イベント名					|	日時										|	場所	|	会費											|
-  |	クリスマスパーティ	|	2009-12-19 19:00 - 21:00	|	141				|	2500円, non Japanese free	|	
+  |	クリスマスパーティ	|	2009-12/19 19:00 - 21:00	|	141				|	2500円, non Japanese free	|	
 When I follow 'edit_profile'
-	And I select "英語" from 'language'
+	And I select "英語" from "このサイトはどんな言語で利用する？*"
 	And I press 'update'
 Then I should see events table
   |	Event						|	Date&amp;Time											|	Place	|	Cost											|
-  |	Christmas Party	|	2009-12-19 19:00 - 21:00	|	141		|	2500円, non Japanese free	|
+  |	Christmas Party	|	2009-12/19 19:00 - 21:00	|	141		|	2500円, non Japanese free	|
 
 @list_events
 Scenario: Display the list in order
 Given an event exists with title_en: "Year-end Party", start_date: "2009-12-23 07:00", end_date: "2009-12-24 13:00", place: "Aizu", cost: "free"
+	And an event exists with title_en: "Christmas Party", start_date: "2009-12-19 19:00", end_date: "2009-12-19 21:00", place: "141", cost: "2500円, non Japanese free"
+	And an event exists with title_en: "Talking Party", start_date: "2010-01-09 18:00", end_date: "2010-01-09 20:00", place: "AER 28th floor", cost: "1500円, non Japanese free"
+	And an event exists with title_en: "New Year Party", start_date: "2009-12-31 20:00", end_date: "2010-01-01 05:00", place: "Bar Isn't It", cost: "2500円"
 	And a user is logged in as "aya"
 When I go to the events page
 Then I should see events table
-|	Event						|	Date&amp;Time										|	Place	|	Cost	|
-|	Year-end Party	|	2009-12-23 07:00 - 2009-12-24 13:00	|	Aizu	|	free	|
+|	Event						|	Date&amp;Time												|	Place						|	Cost											|
+|	Talking Party		|	01/09 18:00 - 20:00									|	AER 28th floor	|	1500円, non Japanese free	|
+|	New Year Party	|	2009-12/31 20:00 - 2010-01/01 05:00	|	Bar Isn't It		|	2500円										|
+|	Year-end Party	|	2009-12/23 07:00 - 12/24 13:00			|	Aizu						|	free											|
+|	Christmas Party	|	2009-12/19 19:00 - 21:00						|	141							|	2500円, non Japanese free	|
 
 Scenario: Create an event
 Given a user is logged in as "aya"

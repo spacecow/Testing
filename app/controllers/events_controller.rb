@@ -9,7 +9,7 @@ class EventsController < ApplicationController
 
 	
 	def index
-    @events = Event.all
+    @events = Event.all( :order => :start_date ).reverse
     @setting = Setting.find_by_name( "main" )
   end
   

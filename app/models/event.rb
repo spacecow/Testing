@@ -9,6 +9,8 @@ class Event < ActiveRecord::Base
   validates_presence_of :title_en, :title_ja
 	validates_uniqueness_of :title_en, :title_ja
 	
+	before_save :check_pay_method
+	
 	def cost_to_s
 		return I18n.t( :to_be_announced ) if cost.blank?
 		cost
@@ -20,15 +22,27 @@ class Event < ActiveRecord::Base
 		return ret+" - ?" if end_date.nil?
 		if start_date.strftime("%x") == end_date.strftime("%x")
 			ret += " - "+end_time
+		elsif start_date.year == end_date.year
+			ret += " - "+non_year_end_date_and_time
 		else
-			ret += " - "+end_date_and_time
+			ret += " - "+year_end_date_and_time
 		end
 		ret
 	end
 	
+	def year_date_and_time( category )
+		"#{year_date_to_s( category )} #{time_to_s( category )}"
+	end	
+	
+	def non_year_date_and_time( category )
+		"#{non_year_date_to_s( category )} #{time_to_s( category )}"
+	end		
+	
 	def date_and_time( category )
 		"#{date_to_s( category )} #{time_to_s( category )}"
-	end	
+	end		
+	
+	
 	
 	def description( japanese )
 		japanese ? description_ja : description_en
@@ -41,9 +55,17 @@ class Event < ActiveRecord::Base
 	
 	
 	
+	def year_end_date_and_time
+		"#{year_date_and_time( 'end' )}"
+	end	
+	
+	def non_year_end_date_and_time
+		"#{non_year_date_and_time( 'end' )}"
+	end		
+	
 	def end_date_and_time
 		"#{date_and_time( 'end' )}"
-	end	
+	end		
 	
 	def end_time
 		"#{time_to_s( 'end' )}"
@@ -63,9 +85,13 @@ class Event < ActiveRecord::Base
 	
 	
 	
+	def year_start_date_and_time
+		"#{year_date_and_time( 'start' )}"
+	end
+	
 	def start_date_and_time
 		"#{date_and_time( 'start' )}"
-	end
+	end	
 	
 	def start_date_to_s
 		return I18n.t( :to_be_announced ) if start_date.blank?
@@ -80,9 +106,17 @@ class Event < ActiveRecord::Base
 	
 private
 
-	def date_to_s( category )
-		send( "year_to_s", category ).to_s+"-"+send( "month_to_s", category ).to_s+"-"+send( "day_to_s", category ).to_s
+	def non_year_date_to_s( category )
+		send( "month_to_s", category ).to_s+"/"+send( "day_to_s", category ).to_s
 	end
+	def year_date_to_s( category )
+		send( "year_to_s", category ).to_s+"-"+non_year_date_to_s( category )
+	end
+	def date_to_s( category )
+		Date.current.year == year_to_s( category ) ? non_year_date_to_s( category ) : year_date_to_s( category )
+	end	
+	
+	
 	def year_to_s( category )
 		send( "#{category}_date" ).year
 	end
@@ -109,6 +143,10 @@ private
 		return "0"+min.to_s if min<10
 		min
 	end	
+	
+	def check_pay_method
+		self.pay_method = "none" if cost=="free"
+	end
 end
 
 
