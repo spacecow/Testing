@@ -1,3 +1,7 @@
+Then /^(\d+) teachers should exist$/ do |no|
+	User.with_role( "teacher" ).size.should == no.to_i
+end
+
 Given /^not implemented$/ do
 	false.should be_true
 end

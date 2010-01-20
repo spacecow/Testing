@@ -51,10 +51,10 @@ class ApplicationController < ActionController::Base
       if user.avatar?    	    
         user.avatar.url(:mini)
       else
-        "http://gakuwarinet.com/pictures/mafumafu.jpg"
+        "/images/mafumafu.jpg"
       end
     else
-      "http://gakuwarinet.com/pictures/mafumafu.jpg"
+      "/images/mafumafu.jpg"
     end
   end
  

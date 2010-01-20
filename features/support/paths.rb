@@ -20,8 +20,12 @@ module NavigationHelpers
 		when /^the (?:error )?show page (?:for|of) (.+)$/
 			polymorphic_path( model($1) )
 			      
-		when /^the edit page (?:for|of) (.+)$/			      
+		when /^the edit page (?:for|of) (.+)$/
 			edit_polymorphic_path( model($1) )
+
+#		when /^the delete page (?:for|of) (.+)$/
+#			polymorphic_path( model($1) ), :method => :delete
+			
 #    when /the homepage/
 #      '/'
 #    when /the login page/

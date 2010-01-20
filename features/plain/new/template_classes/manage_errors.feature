@@ -1,3 +1,4 @@
+@errors
 Background:
 Given a setting exist with name: "main"
 	And a user exist with username: "johan", role: "admin", language: "en"
@@ -7,12 +8,10 @@ Given a course exists with name: "Ruby I"
 	And a course exists with name: "Ruby II"
 	And a course exists with name: "Rails II"
 	And a user exists with username: "kurosawa", name: "Akira Kurosawa", role: "teacher"
-	And a classroom exists with name: "1"
 	And a user is logged in as "johan"
 When I go to the new template class page
 Then I should see "New Template Class" within "legend"
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"
-	And the "Classroom" field should have options "BLANK, 1"
 	And the "Capacity" field should contain "8"
 	And the "Day" field should have options "BLANK, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
 	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"

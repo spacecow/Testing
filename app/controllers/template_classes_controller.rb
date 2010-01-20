@@ -83,6 +83,7 @@ class TemplateClassesController < ApplicationController
   def edit
     @template_class = TemplateClass.find(params[:id])
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+		@courses = Course.all
 		#@teachers = Teacher.all(
 		#	:conditions=>["courses.name = ?", Course.find( @template_class.course_id ).name],
 		#  :include=>[:person, :courses])      		    
@@ -91,6 +92,7 @@ class TemplateClassesController < ApplicationController
   def update
     @template_class = TemplateClass.find(params[:id])
   	@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+    @courses = Course.all
     course_id = @template_class.course_id
 
     if @template_class.update_attributes(params[:template_class])          
@@ -109,17 +111,11 @@ class TemplateClassesController < ApplicationController
     end
   end
 
-  # DELETE /template_classes/1
-  # DELETE /template_classes/1.xml
   def destroy
-    @template_class = TemplateClass.find(params[:id])
-    @template_day = @template_class.day
+#    @template_day = @template_class.day
     @template_class.destroy
-
-    respond_to do |format|
-      format.html { redirect_to :back } #(template_classes_path( :template_day=>@template_class.day )) }
-      format.xml  { head :ok }
-    end
+    flash[:notice] = t('notice.delete_success', :object=>t(:template_class).downcase )
+		redirect_to template_classes_path #(template_classes_path( :template_day=>@template_class.day )) }
   end
 
   def no_of_ten_minutes

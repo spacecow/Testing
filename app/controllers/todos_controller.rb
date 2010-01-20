@@ -53,7 +53,7 @@ class TodosController < ApplicationController
 		@todo = Todo.new( params[:todo] )
     if @todo.save
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
-      flash[:notice] = t('notice.create_success', :object=>t(:todo))
+      flash[:notice] = t('notice.create_success', :object=>t(:todo).downcase )
       send_mail( "created", "todo", { :author => false })
       if( params[:comment_id].blank? )
       	redirect_to todos_path
@@ -78,7 +78,7 @@ class TodosController < ApplicationController
   	@todo = Todo.find( params[:id] )
     if @todo.update_attributes(params[:todo])
     	@todo.update_attribute( :description, params[:todo][:description].gsub("\n", "<br />"))
-      flash[:notice] = t('notice.update_success', :object=>t(:todo))
+      flash[:notice] = t('notice.update_success', :object=>t(:todo).downcase )
       send_mail( "updated", "todo", { :author => false })
       redirect_to todos_path
     else
@@ -89,7 +89,7 @@ class TodosController < ApplicationController
   def destroy
   	@todo = Todo.find( params[:id] )
     @todo.destroy
-    flash[:notice] = t('notice.delete_success', :object=>t(:todo))
+    flash[:notice] = t('notice.delete_success', :object=>t(:todo).downcase )
     redirect_to todos_url
   end
   
@@ -100,7 +100,7 @@ class TodosController < ApplicationController
   	if @comment.save		
 			send_mail( "added", "comment", { :comments => true })
     else    		
-      flash.now[:error] = t('error.blank',:object=>t(:comment))
+      flash.now[:error] = t('error.blank',:object=>t(:comment).downcase )
     end
 		respond_to do |wants|
 			wants.html { redirect_to @todo }

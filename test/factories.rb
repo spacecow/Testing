@@ -101,9 +101,9 @@ Factory.define :student do |f|
 	f.association :person
 end
 
-Factory.define :teacher do |f|
-	f.association :person
-end
+#Factory.define :teacher do |f|
+#	f.association :person
+#end
 
 Factory.define :teaching do |f|
 end
@@ -118,7 +118,7 @@ end
 Factory.define :template_class do |f|
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )		
-	f.day Date.current.strftime("%A")
+	f.day Date.current.strftime("%a").downcase
 end
 
 Factory.define :unit do |f|

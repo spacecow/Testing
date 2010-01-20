@@ -20,7 +20,7 @@ When I go to the template classes page
 	And I select "Monday" from "Choose a day:"
 	And I press "Go!"
 Then "Monday" should be selected in the "Choose a day:" box
-	And I should see "II" within "table#Ruby tr td#course_level"
+	And I should see "II" within "table#Ruby tr td.course_level"
 	And I should see "18:50~20:50" within "table#Ruby tr td#time_interval"
 	And I should see "" within "table#Ruby tr td#unit"
 	And I should see "1" within "table#Ruby tr td#classroom"
@@ -29,7 +29,7 @@ Then "Monday" should be selected in the "Choose a day:" box
 	And I should not see "Rails"
 When I select "Tuesday" from "Choose a day:"
 	And I press "Go!"
-	And I should see "II" within "table#Rails tr td#course_level"
+	And I should see "II" within "table#Rails tr td.course_level"
 	And I should see "12:00~13:00" within "table#Rails tr td#time_interval"	
 	And I should see "" within "table#Rails tr td#unit"
 	And I should see "" within "table#Rails tr td#classroom"
@@ -90,6 +90,19 @@ Then I should be redirected to the error template classes page
 When I press "Create"
 Then I should be redirected to the error template classes page
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II"	
+When I go to the template classes page
+	And I select "Monday" from "Choose a day"
+	And I press "Go!"
+	And I follow "+" within template_class "ruby"
+Then I should be redirected to the new template class page
+	And "Monday" should be selected in the "Day" box
+	And the "Course" field should have options "Ruby II"
+When I press "Create"
+Then I should be redirected to the error template classes page
+	And the "Course" field should have options "Ruby II"
+When I press "Create"
+Then I should be redirected to the error template classes page
+	And the "Course" field should have options "Ruby II"
 Examples:
 |	user		|
 |	johan		|
@@ -106,9 +119,6 @@ Examples:
 | mika			|
 
 Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Merge together same classes within list (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Be able to add template course and get course filled in automatically (NOT IMPLEMENTED)

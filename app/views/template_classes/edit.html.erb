@@ -3,8 +3,12 @@
 <fieldset class="form">
 <legend class="form"><%= t(:editing, :object => t(:template_class)) %></legend>
 
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
+
 <%- semantic_form_for(@template_class) do |f| -%>
-  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t('update') } %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'update' } %>
   <%= hidden_field_tag :redirect, params[:redirect] %>
 <%- end -%>
 
@@ -12,6 +16,9 @@
 	<% if can? :show, @template_class %>
 		<%= link_to t(:show), @template_class %>
 	<% end %>
+	<% if can? :destroy, @template_class %>
+		<%= link_to t(:destroy), @template_class, :confirm => t(:sure?), :method => :delete %>
+	<% end %>	
 	<% if can? :index, TemplateClass %>
 		<%= link_to t(:list,:object=>t('template_klasses.title')), template_classes_path( :template_day=>@template_class.day ) %>
 	<% end %>

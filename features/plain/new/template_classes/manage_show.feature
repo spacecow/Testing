@@ -30,8 +30,8 @@ Then I should see "Template Class" within "legend"
 	And I should see options "<options>" within "div#links"
 Examples:
 |	user		|	options											|
-|	johan		|	Edit, List Template Classes	|
-|	aya			|	Edit, List Template Classes	|
+|	johan		|	Edit, Del, List Template Classes	|
+|	aya			|	Edit, Del, List Template Classes	|
 |	thomas	|	List Template Classes				|
 
 Scenario Outline: Links
@@ -51,6 +51,11 @@ Then I should be redirected to the edit page of that template class
 When I go to the show page of that template class
 	And I follow "List Template Classes" within "div#links"
 Then I should be redirected to the template classes page
+	And 1 template_classes should exist
+When I go to the show page of that template class
+	And I follow "Del" within "div#links"
+Then I should be redirected to the template classes page
+	And 0 template_classes should exist
 Examples:
 |	user		|
 |	johan		|

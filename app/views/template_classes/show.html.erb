@@ -21,6 +21,9 @@
 	<% if can? :edit, @template_class %>
 		<%= link_to t(:edit), edit_template_class_path(@template_class) %>
 	<% end %>
+	<% if can? :destroy, @template_class %>
+		<%= link_to t(:destroy), @template_class, :confirm => t(:sure?), :method => :delete %>
+	<% end %>	
 	<% if can? :index, TemplateClass %>
 		<%= link_to t(:list,:object=>t('template_klasses.title')), template_classes_path( :template_day=>@template_class.day ) %>
 	<% end %>

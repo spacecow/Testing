@@ -3,6 +3,10 @@
 <fieldset class="form">
 <legend class="form"><%= t('users.new') %></legend>
 
+<div class="intro">
+	<%= t('users.fill_in') %> <%= t('message.asterisk') %>
+</div>
+
 <% semantic_form_for @user do |f| %>
 	<%= f.hidden_field :invitation_token %>
 	<% f.inputs do %>

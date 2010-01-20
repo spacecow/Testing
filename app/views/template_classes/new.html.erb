@@ -3,8 +3,12 @@
 <fieldset class="form">
 <legend class="form"><%= t( 'template_klasses.new' ) %></legend>
 
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
+
 <%- semantic_form_for @template_class  do |f| -%>
-  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => t( 'create' )} %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'create' } %>
 <%- end -%>
 
 <div id="links">

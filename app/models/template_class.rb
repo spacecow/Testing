@@ -10,6 +10,7 @@ class TemplateClass < ActiveRecord::Base
   validates_inclusion_of :inactive, :in => [false, true]
 	validate :start_time_cant_be_blank
 	validate :end_time_cant_be_blank
+	validate_on_update :course_cannot_be_changed
 	
 	DAYS = %w( mon tue wed thu fri sat sun )
 
@@ -76,5 +77,9 @@ protected
 	end
 	def end_time_cant_be_blank
 		errors.add :end_time_string, I18n.t('activerecord.errors.messages.blank') if end_time.nil?
+	end
+	
+	def course_cannot_be_changed
+		errors.add :course, "cannot be changed" if TemplateClass.find( id ).course != course	
 	end
 end
