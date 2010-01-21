@@ -15,7 +15,7 @@ When I go to the todos page
 Then I should be redirected to the events page
 
 @new_todo
-Scenario: Create new Todo
+Scenario: Create new todo
 Given a user is logged in as "junko"
 When I go to the new todo page
   And I fill in "Title" with "Chat#room"
@@ -23,10 +23,10 @@ When I go to the new todo page
   And I check "Bug"
   And I press "Create"
 Then I should be redirected to the todos page
-  And I should see "Successfully created Todo."
+  And I should see "Successfully created todo."
   And a todo should exist with subjects_mask: 1, user: user "junko", title: "Chat*room", description: "Wouldn't that be fun!"
   And 1 mails should exist
-  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat*room"
+  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat*room##"
   
 @edit_todo
 Scenario: Edit a Todo
@@ -45,9 +45,9 @@ When I fill in "Title" with "Chatter#room"
   And I check "Feature"	
 	And I press "Update"
 Then I should be redirected to the todos page
-  And I should see "Successfully updated Todo."
+  And I should see "Successfully updated todo."
   And a todo should exist with subjects_mask: 5, user: user "junko", title: "Chatter*room", description: "Wouldn't that be fun!<br />"
-  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "updated#todo", message: "todos.updated#Chatter*room"
+  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "updated#todo", message: "todos.updated#Chatter*room##"
 
 Scenario: Delete a Todo and its dependencies
 Given a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
@@ -60,7 +60,7 @@ Given a user is logged in as "junko"
 When I go to the edit page of that todo
 	And I follow "Del"
 Then I should be redirected to the todos page
-  And I should see "Successfully deleted Todo."
+  And I should see "Successfully deleted todo."
 	And 0 todos should exist
 	And 0 comments should exist
 	And 0 votes should exist
@@ -89,10 +89,10 @@ Then I should be redirected to the todos page
 	And I should see "Todo List - Open"
 	And I should not see "Chat room"
 	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room"	
-	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "closed#todo", message: "todos.closed#Chat room"	
-	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "closed#todo", message: "todos.closed#Chat room"	
-	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "closed#todo", message: "todos.closed#Chat room"	
+	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room##"	
+	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "closed#todo", message: "todos.closed#Chat room##"	
+	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "closed#todo", message: "todos.closed#Chat room##"	
+	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "closed#todo", message: "todos.closed#Chat room##"	
 Examples:
 |	user		|	author	|	johan				|	other				|	comment			|	vote		| no	|
 |	junko		|	junko		|	should			|	should not	|	should not	|	should	| 2		|
@@ -122,10 +122,10 @@ When I follow "Re-open"
 Then I should be redirected to the show page of that todo
 	And I should see "Chat room"
 	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room"	
-	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "reopened#todo", message: "todos.reopened#Chat room"	
-	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "reopened#todo", message: "todos.reopened#Chat room"	
-	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "reopened#todo", message: "todos.reopened#Chat room"	
+	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
+	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "reopened#todo", message: "todos.reopened#Chat room##"
+	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
+	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
 Examples:
 |	user		|	author	|	johan				|	other				|	comment			|	vote		| no	|
 |	junko		|	junko		|	should			|	should not	|	should not	|	should	| 2		|

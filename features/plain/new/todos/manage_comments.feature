@@ -1,4 +1,4 @@
-@manage_comments
+@comments
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exists with username: "johan", role: "admin, teacher", language: "en", name: "Johan Sveholm"
@@ -22,12 +22,12 @@ Given a todo: "reserve" exists with subjects_mask: 4, user: user "<author>", tit
 When I go to the show page of todo "reserve"
 	And I fill in "Comment*" with "I want it already!"
 	And I press "Add Comment"
-Then I should see "I want it already!"
-	And a comment exists with comment: "I wanna chat!", user: user "<user>", todo: todo "reserve", event_id: "nil"
+Then a comment should exist with comment: "I want it already!", user: user "<user>", todo: todo "reserve"
+	And 2 comments should exist
 	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo", recipient: user "johan"
-	And a mail <other> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo", recipient: user "<author>"
-	And a mail <comment> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo", recipient: user "thomas"
+	And a mail <johan> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "johan"
+	And a mail <other> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "<author>"
+	And a mail <comment> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "thomas"
 Examples:
 |	author		|	user			|	johan				|	other				|	comment			|	no	|
 |	thomas		|	aya				|	should			|	should			|	should 			|	2		|
@@ -86,9 +86,9 @@ Then I should be redirected to the show page of its todo
 	And I should not see "Comment cannot be left blank."	
 	And 2 comments should exist
 	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo", recipient: user "johan"	
-	And a mail <other> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo", recipient: user "<author>"
-	And a mail <comment> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo", recipient: user "thomas"
+	And a mail <johan> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "johan"	
+	And a mail <other> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "<author>"
+	And a mail <comment> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "thomas"
 Examples:
 Examples:
 |	author		|	user			|	johan				|	other				|	comment			|	no	|
@@ -111,4 +111,10 @@ Then I should be redirected to the show page of its todo
 	And 0 comments should exist
 
 Scenario: Updated at (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Mail should not be created if comment is blank (NOT IMPLEMENTED)
+Given not implemented
+
+
 Given not implemented

@@ -11,7 +11,7 @@ Given a setting exists with name: "main"
 
 @registration_mail
 Scenario: List a registration mail
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "registered#user", message: "users.registered#Mafumafu"
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "registered#user", message: "users.registered#Mafumafu##"
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "User registered" within "legend"
@@ -44,7 +44,7 @@ Then I should see "A boring subject" within "legend"
 	And I should not see "en, A boring message"
 
 Scenario: List mail, Vote created
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#vote", message: "votes.created#Chat room"
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#vote", message: "votes.created#Chat room##"
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Vote created" within "legend"
@@ -54,7 +54,7 @@ Then I should see "Vote created" within "legend"
 	And I should see "MessageJunko Sumii has voted for:'Chat room'"
 
 Scenario: List mail, Todo created
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room"
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room##"
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo created" within "legend"
@@ -64,7 +64,7 @@ Then I should see "Todo created" within "legend"
 	And I should see "MessageJunko Sumii has created a new Todo:'Chat room'"
 	
 Scenario: List mail, Comment added
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "added#comment", message: "comments.added#Chat room#todo"
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "added#comment", message: "comments.added#Chat room#todo#Awesome comment!"
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Comment added" within "legend"
@@ -72,9 +72,10 @@ Then I should see "Comment added" within "legend"
 	And I should see "RecipientJohan Sveholm"
 	And I should see "Sent atless than a minute ago"
 	And I should see "MessageJunko Sumii has added a comment to the Todo:'Chat room'"
+	And I should see "Awesome comment!"
 	
 Scenario: List mail, Todo updated
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo", message: "todos.updated#Chat room"
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo", message: "todos.updated#Chat room##"
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Todo updated" within "legend"
@@ -84,7 +85,7 @@ Then I should see "Todo updated" within "legend"
 	And I should see "MessageJohan Sveholm has updated the Todo:'Chat room'"
 	
 Scenario: List mail, Vote changed
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote", message: "votes.changed#Chat room"
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote", message: "votes.changed#Chat room##"
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Vote changed" within "legend"
@@ -94,7 +95,7 @@ Then I should see "Vote changed" within "legend"
 	And I should see "MessageJohan Sveholm has changed the vote for:'Chat room'"	
 	
 Scenario: List mail, Comment updated
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo"
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo#Awesomer comment!"
 	And a user is logged in as "god"
 When I go to the show page of that mail
 Then I should see "Comment updated" within "legend"
@@ -102,9 +103,10 @@ Then I should see "Comment updated" within "legend"
 	And I should see "RecipientJunko Sumii"
 	And I should see "Sent atless than a minute ago"
 	And I should see "MessageJohan Sveholm has updated a comment for the Todo:'Chat room'"	
+	And I should see "Awesomer comment!"
 
 Scenario: List mail, Vote canceled
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "canceled#vote", message: "votes.canceled#Chat room"
+Given a mail exists with sender: user "johan", recipient: user "junko", subject: "canceled#vote", message: "votes.canceled#Chat room##"
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Vote canceled" within "legend"
@@ -114,7 +116,7 @@ Then I should see "Vote canceled" within "legend"
 	And I should see "MessageJohan Sveholm has canceled the vote for:'Chat room'"
 
 Scenario: List mail, Todo closed
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room"
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room##"
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo closed" within "legend"
@@ -124,7 +126,7 @@ Then I should see "Todo closed" within "legend"
 	And I should see "MessageJunko Sumii has closed the Todo:'Chat room'"
 
 Scenario: List mail, Todo re-opened
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room"
+Given a mail exists with sender: user "junko", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room##"
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo re-opened" within "legend"

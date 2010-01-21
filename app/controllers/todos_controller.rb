@@ -98,7 +98,7 @@ class TodosController < ApplicationController
   	@comment = Comment.new( params[:comment] )
   	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if @comment.save		
-			send_mail( "added", "comment", { :comments => true })
+			send_mail( "added", "comment", { :comments => true, :content => @comment.comment })
     else    		
       flash.now[:error] = t('error.blank',:object=>t(:comment).downcase )
     end
@@ -110,7 +110,6 @@ class TodosController < ApplicationController
   
   def edit_comment
   	@setting = Setting.find_by_name( "main" )
-		send_mail( "updated", "comment", { :comments => true })
   	respond_to do |wants|
 			wants.html
 			wants.js
@@ -123,8 +122,9 @@ class TodosController < ApplicationController
   	send_mail( @todo.closed ? "closed" : "reopened", "todo", { :comments => true, :votes => true })
   	redirect_to :back
   end
-
-private  
+  
+private
+  
   def send_mail( message, category, opts={} )
   	opts = { :author => true }.merge!( opts )
   	mails = []
@@ -138,8 +138,8 @@ private
       	:sender_id => current_user.id,
       	:recipient_id => user.id,
       	:subject => "#{message}##{category}",
-      	:message => "#{category.pluralize}.#{message}##{@todo.title}#{category=='todo'?'':'#todo'}"
+	    	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
       ) 
     end  		
-  end
+  end	  
 end

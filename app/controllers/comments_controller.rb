@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 	end
 
   def create
-  	@comment.comment = @comment.comment.gsub("\r\n", "<br />");
+  	@comment.comment = @comment.comment.gsub("\n", "<br />");
   	if @comment.save    	
   	else
       flash[:error] = t('comments.error.blank')
@@ -20,8 +20,9 @@ class CommentsController < ApplicationController
   
   def update
   	@setting = Setting.find_by_name( "main" )
-  	params[:comment][:comment] = params[:comment][:comment].gsub("\r\n", "<br />");
+  	params[:comment][:comment] = params[:comment][:comment].gsub("\n", "<br />");
   	if @comment.update_attributes( params[:comment] )
+  		send_mail( "updated", "comment", { :comments => true, :content => @comment.comment }) unless @comment.todo_id.blank?
   		if @comment.todo_id.blank?
   			redirect_to @comment.event
   		else
@@ -53,4 +54,24 @@ class CommentsController < ApplicationController
 			end
 		else
   end
+  
+  def send_mail( message, category, opts={} )
+		@todo = Todo.find( @comment.todo_id )
+  	opts = { :author => true }.merge!( opts )
+  	mails = []
+  	johan = User.find_by_name( "Johan Sveholm" )
+  	@todo.comments.each{ |comment| mails.push comment.user } if opts[:comments]
+  	@todo.votes.each{ |vote| mails.push vote.user } if opts[:votes]
+  	mails.push @todo.user if opts[:author]
+  	mails.push johan
+  	mails.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
+    	Mail.create!(
+      	:sender_id => current_user.id,
+      	:recipient_id => user.id,
+      	:subject => "#{message}##{category}",
+	    	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
+      ) 
+    end
+  	Thread.new{ UserMailer.deliver_registration_confirmation( User.first ) }
+  end	    
 end
