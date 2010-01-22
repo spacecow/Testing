@@ -6,12 +6,12 @@ class MailsController < ApplicationController
   end
   
   def box
-    @mails = Mail.find_all_by_recipient_id( current_user.id ).reverse
+    @recipients = current_user.recipients.reverse
   end  
   
   def show
   	@mail = Mail.find(params[:id])
-    @mail.update_attribute( :read, params[:read] ) unless params[:read].nil?
+    @mail.recipients.find_by_user_id( current_user.id ).update_attribute( :read, params[:read] ) unless params[:read].nil?
     @subject = @mail.subject.split('#')
     @message = @mail.message.split('#')
     @todo = Todo.find_by_title( @message[1] )

@@ -8,17 +8,28 @@ Given a setting exists with name: "main"
 
 @mailbox_list
 Scenario: List mails in mailbox
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo"
-	And a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo"
-	And a mail exists with sender: user "junko", recipient: user "thomas", subject: "added#comment"
-	And a mail exists with sender: user "thomas", recipient: user "johan", subject: "updated#comment"
-	And a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote"
-	And a mail exists with sender: user "junko", recipient: user "thomas", subject: "created#vote"
-	And a mail exists with sender: user "thomas", recipient: user "johan", subject: "canceled#vote"
-	And a mail exists with sender: user "junko", recipient: user "johan", subject: "closed#todo"
-	And a mail exists with sender: user "johan", recipient: user "junko", subject: "reopened#todo"
-	And a mail exists with recipient: user "junko", sender: user "johan", subject: "A boring subject"
-	And a mail exists with recipient: user "junko", sender: user "johan", subject: "no_subject"
+Given a mail: "createtodo" exists with sender: user "junko", subject: "created#todo"
+	And a recipient exists with user: user "johan", mail: mail "createtodo"
+	And a mail: "updatetodo" exists with sender: user "johan", subject: "updated#todo"
+	And a recipient exists with user: user "junko", mail: mail "updatetodo"
+	And a mail: "addcomment" exists with sender: user "junko", subject: "added#comment"
+	And a recipient exists with user: user "thomas", mail: mail "addcomment"
+	And a mail: "updatecomment" exists with sender: user "thomas", subject: "updated#comment"
+	And a recipient exists with user: user "johan", mail: mail "updatecomment"
+	And a mail: "changevote" exists with sender: user "johan", subject: "changed#vote"
+	And a recipient exists with user: user "junko", mail: mail "changevote"
+	And a mail: "createvote" exists with sender: user "junko", subject: "created#vote"
+	And a recipient exists with user: user "thomas", mail: mail "createvote"
+	And a mail: "cancelvote" exists with sender: user "thomas", subject: "canceled#vote"
+	And a recipient exists with user: user "johan", mail: mail "cancelvote"
+	And a mail: "closetodo" exists with sender: user "junko", subject: "closed#todo"
+	And a recipient exists with user: user "johan", mail: mail "closetodo"
+	And a mail: "reopentodo" exists with sender: user "johan", subject: "reopened#todo"
+	And a recipient exists with user: user "junko", mail: mail "reopentodo"
+	And a mail: "subject" exists with sender: user "johan", subject: "A boring subject"
+	And a recipient exists with user: user "junko", mail: mail "subject"
+	And a mail: "nosubject" exists with sender: user "johan", subject: "no_subject"
+	And a recipient exists with user: user "junko", mail: mail "nosubject"
 	And a user is logged in as "junko"
 When I go to the box mails page
 Then I should see "Mailbox" within "h1"
@@ -78,4 +89,7 @@ Scenario: Automatic mail when a event comment is written (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Automatic mail when a photo is uploaded (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Check more than one mailbox with multiple recipients (NOT IMPLEMENTED)
 Given not implemented

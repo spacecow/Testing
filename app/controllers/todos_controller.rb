@@ -127,19 +127,22 @@ private
   
   def send_mail( message, category, opts={} )
   	opts = { :author => true }.merge!( opts )
-  	mails = []
+  	recipients = []
   	johan = User.find_by_name( "Johan Sveholm" )
-  	@todo.comments.each{ |comment| mails.push comment.user } if opts[:comments]
-  	@todo.votes.each{ |vote| mails.push vote.user } if opts[:votes]
-  	mails.push @todo.user if opts[:author]
-  	mails.push johan
-  	mails.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
-    	Mail.create!(
-      	:sender_id => current_user.id,
-      	:recipient_id => user.id,
-      	:subject => "#{message}##{category}",
-	    	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
-      ) 
+  	@todo.comments.each{ |comment| recipients.push comment.user } if opts[:comments]
+  	@todo.votes.each{ |vote| recipients.push vote.user } if opts[:votes]
+  	recipients.push @todo.user if opts[:author]
+  	recipients.push johan
+  	
+  	mail = Mail.create!(
+    	:sender_id => current_user.id,
+    	#:recipient_id => user.id,
+    	:subject => "#{message}##{category}",
+    	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
+    )   	
+    
+  	recipients.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
+  		Recipient.create!( :mail_id=>mail.id, :user_id=>user.id )
     end  		
   end	  
 end

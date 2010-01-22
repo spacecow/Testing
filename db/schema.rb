@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100109045529) do
+ActiveRecord::Schema.define(:version => 20100121145650) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(:version => 20100109045529) do
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
+  end
+
+  create_table "classes", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_id"
+    t.integer  "classroom_id"
+    t.integer  "capacity"
+    t.datetime "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "cancel"
+    t.integer  "mail_sending"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -172,12 +189,22 @@ ActiveRecord::Schema.define(:version => 20100109045529) do
     t.datetime "updated_at"
   end
 
+  create_table "mail_queue", :force => true do |t|
+    t.text     "mail"
+    t.text     "error_info"
+    t.datetime "read_at"
+    t.datetime "sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mail_queue", ["read_at"], :name => "index_mail_queue_on_read_at"
+  add_index "mail_queue", ["sent_at"], :name => "index_mail_queue_on_sent_at"
+
   create_table "mails", :force => true do |t|
-    t.integer  "recipient_id"
     t.integer  "sender_id"
     t.string   "subject"
     t.text     "message"
-    t.boolean  "read",         :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -232,6 +259,14 @@ ActiveRecord::Schema.define(:version => 20100109045529) do
     t.string   "caption_ja"
     t.string   "caption_en"
     t.integer  "user_id"
+  end
+
+  create_table "recipients", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "mail_id"
+    t.boolean  "read",       :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registrants", :force => true do |t|

@@ -10,7 +10,9 @@ class User < ActiveRecord::Base
 	belongs_to :invitation
   has_many :photos
   has_many :reset_passwords
-  has_many :mails, :foreign_key => "recipient_id"
+  
+  has_many :recipients, :dependent => :destroy
+  has_many :mails, :through => :recipients #, :foreign_key => "sender_id"
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   

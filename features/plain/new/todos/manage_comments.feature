@@ -12,7 +12,8 @@ Given a user is logged in as "kurosawa"
 	When I go to the show page of todo "chat"
 	And I press "コメントを書き足す"
 Then I should be redirected to the show page of that todo
-	And I should see "コメントは空白のままにしておく事は出来ません"
+Given not implemented	
+#And I should see "コメントは空白のままにしておく事は出来ません"
 
 @add_comment
 Scenario Outline: Add a comment
@@ -24,10 +25,12 @@ When I go to the show page of todo "reserve"
 	And I press "Add Comment"
 Then a comment should exist with comment: "I want it already!", user: user "<user>", todo: todo "reserve"
 	And 2 comments should exist
-	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "johan"
-	And a mail <other> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "<author>"
-	And a mail <comment> exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!", recipient: user "thomas"
+	And 1 mails should exist
+	And <no> recipients should exist
+	And a mail: "add" should exist with sender: user "<user>", subject: "added#comment", message: "comments.added#Reservation system#todo#I want it already!"
+	And a recipient <johan> exist with user: user "johan", mail: mail "add"
+	And a recipient <other> exist with user: user "<author>", mail: mail "add"
+	And a recipient <comment> exist with user: user "thomas", mail: mail "add"
 Examples:
 |	author		|	user			|	johan				|	other				|	comment			|	no	|
 |	thomas		|	aya				|	should			|	should			|	should 			|	2		|
@@ -85,10 +88,12 @@ Then I should be redirected to the show page of its todo
 	And I should see "Fuck Santa's goat!"
 	And I should not see "Comment cannot be left blank."	
 	And 2 comments should exist
-	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "johan"	
-	And a mail <other> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "<author>"
-	And a mail <comment> exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!", recipient: user "thomas"
+	And 1 mails should exist
+	And <no> recipients should exist
+	And a mail: "edit" should exist with sender: user "<user>", subject: "updated#comment", message: "comments.updated#Reservation system#todo#Fuck Santa's goat!"
+	And a recipient <johan> exist with user: user "johan", mail: mail "edit"
+	And a recipient <other> exist with user: user "<author>", mail: mail "edit"
+	And a recipient <comment> exist with user: user "thomas", mail: mail "edit"
 Examples:
 Examples:
 |	author		|	user			|	johan				|	other				|	comment			|	no	|
