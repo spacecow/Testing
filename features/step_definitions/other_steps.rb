@@ -96,7 +96,7 @@ Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   end 
   state.should == :something_selected 
 end
-Then /^"(.*)" should be selected in the "(.*)" box$/ do |option_text,select_id| 
+Then /^"(.*)" should be selected in the "(.*)" (?:box|field)$/ do |option_text,select_id| 
   field = field_labeled(select_id) 
   selected_value = field.value[0] 
   state = :nothing_selected 

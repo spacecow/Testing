@@ -1,4 +1,4 @@
-@manage_show
+@show
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exists with username: "johan", role: "admin, teacher", language: "en", name: "Johan Sveholm"
@@ -11,7 +11,8 @@ Given a setting exists with name: "main"
 
 @registration_mail
 Scenario: List a registration mail
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "registered#user", message: "users.registered#Mafumafu##"
+Given a mail exists with sender: user "johan", subject: "registered#user", message: "users.registered#Mafumafu##"
+	And a recipient exists with user: user "junko", mail: that mail
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "User registered" within "legend"
@@ -22,7 +23,8 @@ Then I should see "User registered" within "legend"
 
 @regular_mail
 Scenario: List an empty mail
-Given a mail exists with recipient: user "thomas", sender: user "johan", subject: "no_subject", message: ""
+Given a mail exists with sender: user "johan", subject: "no_subject", message: ""
+	And a recipient exists with user: user "thomas", mail: that mail
 	And a user is logged in as "thomas"
 When I go to the show page of that mail
 Then I should see "<no subject>" within "legend"
@@ -32,7 +34,8 @@ Then I should see "<no subject>" within "legend"
 	And I should see "Sent atless than a minute ago"
 	
 Scenario: List a regular mail
-Given a mail exists with recipient: user "johan", sender: user "junko", subject: "A boring subject", message: "A boring message"
+Given a mail exists with sender: user "junko", subject: "A boring subject", message: "A boring message"
+	And a recipient exists with user: user "johan", mail: that mail	
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "A boring subject" within "legend"
@@ -44,7 +47,8 @@ Then I should see "A boring subject" within "legend"
 	And I should not see "en, A boring message"
 
 Scenario: List mail, Vote created
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#vote", message: "votes.created#Chat room##"
+Given a mail exists with sender: user "junko", subject: "created#vote", message: "votes.created#Chat room##"
+	And a recipient exists with user: user "johan", mail: that mail
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Vote created" within "legend"
@@ -54,7 +58,8 @@ Then I should see "Vote created" within "legend"
 	And I should see "MessageJunko Sumii has voted for:'Chat room'"
 
 Scenario: List mail, Todo created
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room##"
+Given a mail exists with sender: user "junko", subject: "created#todo", message: "todos.created#Chat room##"
+	And a recipient exists with user: user "johan", mail: that mail
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo created" within "legend"
@@ -64,7 +69,8 @@ Then I should see "Todo created" within "legend"
 	And I should see "MessageJunko Sumii has created a new Todo:'Chat room'"
 	
 Scenario: List mail, Comment added
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "added#comment", message: "comments.added#Chat room#todo#Awesome comment!"
+Given a mail exists with sender: user "junko", subject: "added#comment", message: "comments.added#Chat room#todo#Awesome comment!"
+	And a recipient exists with user: user "johan", mail: that mail
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Comment added" within "legend"
@@ -75,7 +81,8 @@ Then I should see "Comment added" within "legend"
 	And I should see "Awesome comment!"
 	
 Scenario: List mail, Todo updated
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#todo", message: "todos.updated#Chat room##"
+Given a mail exists with sender: user "johan", subject: "updated#todo", message: "todos.updated#Chat room##"
+	And a recipient exists with user: user "junko", mail: that mail
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Todo updated" within "legend"
@@ -85,7 +92,8 @@ Then I should see "Todo updated" within "legend"
 	And I should see "MessageJohan Sveholm has updated the Todo:'Chat room'"
 	
 Scenario: List mail, Vote changed
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "changed#vote", message: "votes.changed#Chat room##"
+Given a mail exists with sender: user "johan", subject: "changed#vote", message: "votes.changed#Chat room##"
+	And a recipient exists with user: user "junko", mail: that mail
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Vote changed" within "legend"
@@ -95,7 +103,8 @@ Then I should see "Vote changed" within "legend"
 	And I should see "MessageJohan Sveholm has changed the vote for:'Chat room'"	
 	
 Scenario: List mail, Comment updated
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo#Awesomer comment!"
+Given a mail exists with sender: user "johan", subject: "updated#comment", message: "comments.updated#Chat room#todo#Awesomer comment!"
+	And a recipient exists with user: user "junko", mail: that mail
 	And a user is logged in as "god"
 When I go to the show page of that mail
 Then I should see "Comment updated" within "legend"
@@ -106,7 +115,8 @@ Then I should see "Comment updated" within "legend"
 	And I should see "Awesomer comment!"
 
 Scenario: List mail, Vote canceled
-Given a mail exists with sender: user "johan", recipient: user "junko", subject: "canceled#vote", message: "votes.canceled#Chat room##"
+Given a mail exists with sender: user "johan", subject: "canceled#vote", message: "votes.canceled#Chat room##"
+	And a recipient exists with user: user "junko", mail: that mail
 	And a user is logged in as "junko"
 When I go to the show page of that mail
 Then I should see "Vote canceled" within "legend"
@@ -116,7 +126,8 @@ Then I should see "Vote canceled" within "legend"
 	And I should see "MessageJohan Sveholm has canceled the vote for:'Chat room'"
 
 Scenario: List mail, Todo closed
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room##"
+Given a mail exists with sender: user "junko", subject: "closed#todo", message: "todos.closed#Chat room##"
+	And a recipient exists with user: user "johan", mail: that mail
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo closed" within "legend"
@@ -126,7 +137,8 @@ Then I should see "Todo closed" within "legend"
 	And I should see "MessageJunko Sumii has closed the Todo:'Chat room'"
 
 Scenario: List mail, Todo re-opened
-Given a mail exists with sender: user "junko", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room##"
+Given a mail exists with sender: user "junko", subject: "reopened#todo", message: "todos.reopened#Chat room##"
+	And a recipient exists with user: user "johan", mail: that mail
 	And a user is logged in as "johan"
 When I go to the show page of that mail
 Then I should see "Todo re-opened" within "legend"
@@ -135,17 +147,23 @@ Then I should see "Todo re-opened" within "legend"
 	And I should see "Sent atless than a minute ago"
 	And I should see "MessageJunko Sumii has re-opened the Todo:'Chat room'"
 
+@god
 Scenario: Links for god
-Given a mail exists with sender: user "junko", recipient: user "reiko", subject: "added#comment", message: "comments.added#Chat room#todo"
+Given a mail exists with sender: user "junko", subject: "added#comment", message: "comments.added#Chat room#todo#Fuck Christmas!"
+	And a recipient exists with user: user "reiko", mail: that mail
+	And a recipient exists with user: user "thomas", mail: that mail
 	And a user is logged in as "god"
 When I go to the show page of that mail
-	And I follow "Junko Sumii" within "div#main"
+	And I follow "Junko Sumii" within "div.pairs"
 Then I should be redirected to the show page of user: "junko"
 When I go to the show page of the mail
-	And I follow "Reiko Arikawa"
+	And I follow "Reiko Arikawa" within "div.pairs"
 Then I should be redirected to the show page of user: "reiko"
 When I go to the show page of the mail
-	And I follow "Junko Sumii has added a comment to the Todo:'Chat room'"
+	And I follow "Thomas Osburg" within "div.pairs"
+Then I should be redirected to the show page of user: "thomas"
+When I go to the show page of the mail
+	And I follow "Junko Sumii has added a comment to the Todo:'Chat room'" within "div.pairs"
 Then I should be redirected to the show page of that todo
 When I go to the show page of the mail
 	And I follow "Edit" within "div#links"
@@ -162,7 +180,8 @@ Then I should be redirected to the mails page
 	And 0 mails should exist
 	
 Scenario Outline: Links for student&teacher
-Given a mail exists with sender: user "johan", recipient: user "<user>", subject: "added#comment", message: "comments.added#Chat room#todo"
+Given a mail exists with sender: user "johan", subject: "added#comment", message: "comments.added#Chat room#todo"
+	And a recipient exists with user: user "<user>", mail: that mail
 	And a user is logged in as "<user>"
 When I go to the show page of that mail
 	And I should see options "Mailbox" within "div#links"
@@ -183,11 +202,16 @@ Examples:
 |	junko		|	Junko Sumii		|
 
 Scenario Outline: Registrants, observers or admins cannot read other peoples email
-Given a mail: "johan" exists with sender: user "god", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat room"
-	And a mail: "thomas" exists with sender: user "johan", recipient: user "thomas", subject: "updated#todo", message: "todos.updated#Chat room"
-	And a mail: "prince" exists with sender: user "thomas", recipient: user "prince", subject: "added#comment", message: "comments.added#Chat room#todo"
-	And a mail: "junko" exists with sender: user "prince", recipient: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo"
-	And a mail: "god" exists with sender: user "junko", recipient: user "god", subject: "updated#comment", message: "comments.updated#Chat room#todo"
+Given a mail: "johan" exists with sender: user "god", subject: "created#todo", message: "todos.created#Chat room"
+	And a recipient exists with user: user "johan", mail: that mail
+	And a mail: "thomas" exists with sender: user "johan", subject: "updated#todo", message: "todos.updated#Chat room"
+	And a recipient exists with user: user "thomas", mail: that mail
+	And a mail: "prince" exists with sender: user "thomas", subject: "added#comment", message: "comments.added#Chat room#todo"
+	And a recipient exists with user: user "prince", mail: that mail
+	And a mail: "junko" exists with sender: user "prince", subject: "updated#comment", message: "comments.updated#Chat room#todo"
+	And a recipient exists with user: user "junko", mail: that mail
+	And a mail: "god" exists with sender: user "junko", subject: "updated#comment", message: "comments.updated#Chat room#todo"
+	And a recipient exists with user: user "god", mail: that mail
 	And a user is logged in as "<user>"
 When I go to the show page of mail: "god"
 Then I <god> be redirected to the show page of mail: "god"

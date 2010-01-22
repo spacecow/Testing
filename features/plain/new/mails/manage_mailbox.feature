@@ -9,32 +9,35 @@ Given a setting exists with name: "main"
 @mailbox_list
 Scenario: List mails in mailbox
 Given a mail: "createtodo" exists with sender: user "junko", subject: "created#todo"
-	And a recipient exists with user: user "johan", mail: mail "createtodo"
+		And a recipient exists with user: user "johan", mail: mail "createtodo"
 	And a mail: "updatetodo" exists with sender: user "johan", subject: "updated#todo"
-	And a recipient exists with user: user "junko", mail: mail "updatetodo"
+		And a recipient exists with user: user "junko", mail: mail "updatetodo"
 	And a mail: "addcomment" exists with sender: user "junko", subject: "added#comment"
-	And a recipient exists with user: user "thomas", mail: mail "addcomment"
+		And a recipient exists with user: user "thomas", mail: mail "addcomment"
 	And a mail: "updatecomment" exists with sender: user "thomas", subject: "updated#comment"
-	And a recipient exists with user: user "johan", mail: mail "updatecomment"
+		And a recipient exists with user: user "johan", mail: mail "updatecomment"
 	And a mail: "changevote" exists with sender: user "johan", subject: "changed#vote"
-	And a recipient exists with user: user "junko", mail: mail "changevote"
+		And a recipient exists with user: user "junko", mail: mail "changevote"
 	And a mail: "createvote" exists with sender: user "junko", subject: "created#vote"
-	And a recipient exists with user: user "thomas", mail: mail "createvote"
+		And a recipient exists with user: user "thomas", mail: mail "createvote"
 	And a mail: "cancelvote" exists with sender: user "thomas", subject: "canceled#vote"
-	And a recipient exists with user: user "johan", mail: mail "cancelvote"
+		And a recipient exists with user: user "johan", mail: mail "cancelvote"
 	And a mail: "closetodo" exists with sender: user "junko", subject: "closed#todo"
-	And a recipient exists with user: user "johan", mail: mail "closetodo"
+		And a recipient exists with user: user "johan", mail: mail "closetodo"
 	And a mail: "reopentodo" exists with sender: user "johan", subject: "reopened#todo"
-	And a recipient exists with user: user "junko", mail: mail "reopentodo"
+		And a recipient exists with user: user "junko", mail: mail "reopentodo"
 	And a mail: "subject" exists with sender: user "johan", subject: "A boring subject"
-	And a recipient exists with user: user "junko", mail: mail "subject"
+		And a recipient exists with user: user "junko", mail: mail "subject"
 	And a mail: "nosubject" exists with sender: user "johan", subject: "no_subject"
-	And a recipient exists with user: user "junko", mail: mail "nosubject"
+		And a recipient exists with user: user "junko", mail: mail "nosubject"
+	And a mail: "registeruser" exists with sender: user "johan", subject: "registered#user"
+		And a recipient exists with user: user "junko", mail: mail "registeruser"
 	And a user is logged in as "junko"
 When I go to the box mails page
 Then I should see "Mailbox" within "h1"
 And I should see "mails" table
 |	Sender				|	Subject							|	Sent at									|
+|	Johan Sveholm	|	User registered			|	less than a minute ago	|
 |	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
 |	Johan Sveholm	|	A boring subject		|	less than a minute ago	|
 |	Johan Sveholm	|	Todo re-opened			|	less than a minute ago	|

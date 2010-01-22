@@ -15,6 +15,7 @@ form.formtastic fieldset.buttons { padding-left: 145px; }
 form.formtastic fieldset ol li { margin-bottom: 0px; }
 form.formtastic fieldset.inputs ol .subjects { padding-left: 145px; }
 form.formtastic fieldset.inputs ol .subjects label {
+  color: red;
   padding: 2px 0 0 2px;
   float: left;
   width: 100px;
@@ -53,6 +54,8 @@ form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
   margin-right: 0.5em;
 }
 form.formtastic fieldset.inputs ol li.radio fieldset ol li label { text-align: left; }
+form.formtastic fieldset.inputs ol li.check_boxes fieldset ol li { margin-left: 0.8em; }
+form.formtastic fieldset.inputs ol li.check_boxes fieldset ol li label { text-align: left; }
 form.formtastic fieldset.inputs ol span.horizontal li.radio fieldset ol li {
   float: left;
   margin-left: 5px;

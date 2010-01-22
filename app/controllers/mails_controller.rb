@@ -19,13 +19,11 @@ class MailsController < ApplicationController
   
   def new
   	@mail = Mail.new( :sender_id => current_user.id )
-  	@recipients = User.all.reject{|e| e==current_user }
   end
   
   def create
   	@mail.subject = @mail.subject.gsub(/#/,'*')
   	@mail.message = @mail.message.gsub(/#/,'*')
-  	@recipients = User.all.reject{|e| e==current_user }
     if @mail.save
     	@mail.update_attribute( :message, @mail.message.gsub("\n", "<br />"))
       flash[:notice] = t('notice.send_success',:object=>t(:mail).downcase)
@@ -52,7 +50,7 @@ class MailsController < ApplicationController
   def destroy
     @mail = Mail.find(params[:id])
     @mail.destroy
-    flash[:notice] = "Successfully destroyed mail."
+    flash[:notice] = t(:deleted,:object=>t(:mail).downcase)
     redirect_to mails_url
   end
 end

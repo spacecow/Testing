@@ -2,19 +2,23 @@
 <fieldset class="form">
 <legend class="form"><%= t(:editing,:object=>t(:mail)) %></legend>
 
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
+
 <%- semantic_form_for @mail do |f| -%>
 	<% f.inputs do %>
-		<%= f.input :recipient, :label => t( 'recipient' ), :collection => @recipients %>
+		<%= f.input :users, :label => t( 'recipient' ), :as => :check_boxes %>
 		<%= f.input :sender, :label => t( 'sender' ) %>
 		<%= f.input :subject, :label => t( 'subject' ), :required => false %>
 		<%= f.input :message, :label => t( 'mail_message' ), :required => false %>
 	<% end %>
-	<% f.buttons do %>
-		<%= f.commit_button t(:update) %>
-	<% end %>
+	<fieldset class="buttons">
+		<%= submit_tag t(:update), :name => 'mail[mailing]' %>
+	</fieldset>
 <%- end -%>
 
-<div class="links">
+<div id="links">
 	<% if can? :show, @mail %>
 		<%= link_to t('show'), @mail %>
 	<% end %>

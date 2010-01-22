@@ -77,3 +77,6 @@ Then 0 events should exist
   And 0 galleries should exist 
   And 0 comments should exist
   And 0 registrants should exist
+  
+Scenario: Passed events faded / seperate table (NOT IMPLEMENTED)
+Given not implemented

@@ -191,7 +191,7 @@ en:
       both_blank: "can't both be blank"
       does_not_exist: "does not exist"
   message:
-    asterisk: "All the fields that are marked with an asterisk (*) must be filled in before submitting."
+    asterisk: "All fields that are marked with an asterisk (*) must be filled in before submitting."
     avatar_upload: "Upload your profile picture"
     change_password: "Change password for user: {{object}}"
     choose_a_day: "Choose a day"

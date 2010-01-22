@@ -34,7 +34,7 @@ class Ability
   			can [:add_comment, :edit_comment], Event
 	  		can [:box, :create], Mail
 	  		can :show, Mail do |mail|
-	  			mail.try(:recipient) == user
+	  			mail.recipients.map(&:user).include?( user )
 	  		end	  	
   		end
   		if user.role? :observer
