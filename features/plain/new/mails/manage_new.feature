@@ -65,3 +65,6 @@ Then I should be redirected to the box mails page
 When I go to the new mail page
 When I follow "List Mails" within "div.links"
 Then I should be redirected to the mails page
+
+Scenario: Instead of creating many mails, one mail with many recipients! (NOT IMPLEMENTED)
+Given not implemented

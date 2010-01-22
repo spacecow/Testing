@@ -72,6 +72,6 @@ class CommentsController < ApplicationController
 	    	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
       ) 
     end
-  	Thread.new{ UserMailer.deliver_registration_confirmation( User.first ) }
+  	UserMailer.deliver_registration_confirmation( User.first )
   end	    
 end
