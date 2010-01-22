@@ -1,4 +1,4 @@
-@manage_todos
+@todos
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exists with username: "johan", role: "admin, teacher", language: "en", name: "Johan Sveholm"
@@ -26,7 +26,9 @@ Then I should be redirected to the todos page
   And I should see "Successfully created todo."
   And a todo should exist with subjects_mask: 1, user: user "junko", title: "Chat*room", description: "Wouldn't that be fun!"
   And 1 mails should exist
-  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "created#todo", message: "todos.created#Chat*room##"
+  And a mail: "create" should exist with sender: user "junko", subject: "created#todo", message: "todos.created#Chat*room##"
+  And 1 recipients should exist
+  And a recipient should exist with user: user "johan", mail: mail "create"
   
 @edit_todo
 Scenario: Edit a Todo
@@ -47,7 +49,10 @@ When I fill in "Title" with "Chatter#room"
 Then I should be redirected to the todos page
   And I should see "Successfully updated todo."
   And a todo should exist with subjects_mask: 5, user: user "junko", title: "Chatter*room", description: "Wouldn't that be fun!<br />"
-  And a mail should exist with sender: user "junko", recipient: user "johan", subject: "updated#todo", message: "todos.updated#Chatter*room##"
+  And 1 mails should exist
+  And a mail: "edit" should exist with sender: user "junko", subject: "updated#todo", message: "todos.updated#Chatter*room##"
+  And 1 recipients should exist
+  And a recipient should exist with user: user "johan", mail: mail "edit"
 
 Scenario: Delete a Todo and its dependencies
 Given a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
@@ -88,11 +93,13 @@ When I follow "Close"
 Then I should be redirected to the todos page
 	And I should see "Todo List - Open"
 	And I should not see "Chat room"
-	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "closed#todo", message: "todos.closed#Chat room##"	
-	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "closed#todo", message: "todos.closed#Chat room##"	
-	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "closed#todo", message: "todos.closed#Chat room##"	
-	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "closed#todo", message: "todos.closed#Chat room##"	
+	And 1 mails should exist
+	And <no> recipients should exist
+	And a mail: "close" should exist with sender: user "<user>", subject: "closed#todo", message: "todos.closed#Chat room##"	
+	And a recipient <johan> exist with user: user "johan", mail: mail "close"
+	And a recipient <other> exist with user: user "<author>", mail: mail "close"
+	And a recipient <comment> exist with user: user "junko", mail: mail "close"
+	And a recipient <vote> exist with user: user "mika", mail: mail "close"
 Examples:
 |	user		|	author	|	johan				|	other				|	comment			|	vote		| no	|
 |	junko		|	junko		|	should			|	should not	|	should not	|	should	| 2		|
@@ -121,11 +128,13 @@ Then I should see "Chat room - closed"
 When I follow "Re-open"
 Then I should be redirected to the show page of that todo
 	And I should see "Chat room"
-	And <no> mails should exist
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
-	And a mail <other> exist with sender: user "<user>", recipient: user "<author>", subject: "reopened#todo", message: "todos.reopened#Chat room##"
-	And a mail <comment> exist with sender: user "<user>", recipient: user "junko", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
-	And a mail <vote> exist with sender: user "<user>", recipient: user "mika", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
+	And 1 mails should exist
+	And <no> recipients should exist
+	And a mail: "reopen" should exist with sender: user "<user>", subject: "reopened#todo", message: "todos.reopened#Chat room##"	
+	And a recipient <johan> exist with user: user "johan", mail: mail "reopen"
+	And a recipient <other> exist with user: user "<author>", mail: mail "reopen"
+	And a recipient <comment> exist with user: user "junko", mail: mail "reopen"
+	And a recipient <vote> exist with user: user "mika", mail: mail "reopen"
 Examples:
 |	user		|	author	|	johan				|	other				|	comment			|	vote		| no	|
 |	junko		|	junko		|	should			|	should not	|	should not	|	should	| 2		|

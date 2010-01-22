@@ -7,7 +7,7 @@
 			<th><%= t('subject') %></th>		
 			<th><%= t('sent_at') %></th>		
 	</tr>
-	<%= render :partial => 'private_mail', :collection => @mails %>
+	<%= render :partial => 'private_mail', :collection => @recipients, :as => :recipient %>
 </table>
 
 <div id="links">

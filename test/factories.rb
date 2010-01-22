@@ -84,6 +84,9 @@ Factory.define :photo do |f|
   f.photo_updated_at Time.now
 end
 
+Factory.define :recipient do |f|
+end
+
 Factory.define :registrant do |f|
 end
 
