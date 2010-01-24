@@ -1,4 +1,11 @@
 class UserMailer < ActionMailer::Base
+  def notification(user, topic, message)
+    recipients  user.email
+    from        "johan@reserve-gakuwarinet.com"
+    subject     topic
+    body        message
+  end
+
   def registration_confirmation(user)
     recipients  user.email
     from        "johan@reserve-gakuwarinet.com"

@@ -38,7 +38,7 @@ Then I should see "Listing Mail" within "h1"
 And I should see "mails" table
 |	Recipient 										|	Sender				|	Subject							|	Sent at									|
 |	Junko Sumii										|	Johan Sveholm	|	User registered			|	less than a minute ago	|
-|	Junko Sumii, Thomas Osburg		|	Johan Sveholm	|	<no subject>				|	less than a minute ago	|
+|	Junko Sumii, Thomas Osburg		|	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
 |	Junko Sumii										|	Johan Sveholm	|	A boring subject		|	less than a minute ago	|
 |	Junko Sumii										|	Johan Sveholm	|	Todo re-opened			|	less than a minute ago	|
 |	Johan Sveholm									|	Junko Sumii		|	Todo closed					|	less than a minute ago	|
@@ -78,6 +78,3 @@ Then I should be redirected to the mails page
 When I go to the mails page
 	And I follow "New Mail" within "div#links"
 Then I should be redirected to the new mail page
-
-Scenario: Johan should see all recipients on the show page (NOT IMPLEMENTED)
-Given not implemented
