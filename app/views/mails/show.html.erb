@@ -17,7 +17,7 @@
   	<%= link_to t(:edit), edit_mail_path(@mail) %>
   <% end %>
   <% if can? :destroy, @mail %>
-  	<%= link_to t(:destroy), @mail, :confirm => 'Are you sure?', :method => :delete %>
+  	<%= link_to t(:delete), @mail, :confirm => 'Are you sure?', :method => :delete %>
   <% end %>
 </div>
 

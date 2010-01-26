@@ -146,7 +146,9 @@ private
   		UserMailer.deliver_notification(
   			user,
   			t(message,:object=>t(category)),
-  		  t("#{category.pluralize}.#{message}",:name=>current_user,:subject=>@todo.title,:object=>category=='todo'?'':'todo')+"\n\n#{opts[:content]}"
+  		  t("#{category.pluralize}.#{message}",:name=>current_user,:subject=>@todo.title,:object=>category=='todo'?'':'todo')+"\n\n#{opts[:content]}",
+  		  login_user_url,
+  		  user.username
   		)    
     end
   end	  

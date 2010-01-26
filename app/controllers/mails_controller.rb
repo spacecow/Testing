@@ -40,7 +40,7 @@ class MailsController < ApplicationController
   	params[:mail][:subject] = params[:mail][:subject].gsub(/#/,'*')
   	params[:mail][:message] = params[:mail][:message].gsub(/#/,'*')
     if @mail.update_attributes(params[:mail])
-      flash[:notice] = "Successfully updated mail."
+      flash[:notice] = t('notice.update_success',:object=>t(:mail).downcase)
       redirect_to @mail
     else
       render :action => 'edit'
@@ -50,7 +50,7 @@ class MailsController < ApplicationController
   def destroy
     @mail = Mail.find(params[:id])
     @mail.destroy
-    flash[:notice] = t(:deleted,:object=>t(:mail).downcase)
+    flash[:notice] = t('notice.delete_success',:object=>t(:mail).downcase)
     redirect_to mails_url
   end
 end
