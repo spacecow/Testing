@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   #config.gem "declarative_authorization", :source => "http://gemcutter.org"
   config.gem "cancan"
   config.gem "sanitize"
+  config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
 	
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 
