@@ -37,8 +37,8 @@ class MailsController < ApplicationController
   end
   
   def update
-  	params[:mail][:subject] = params[:mail][:subject].gsub(/#/,'*')
-  	params[:mail][:message] = params[:mail][:message].gsub(/#/,'*')
+#  	params[:mail][:subject] = params[:mail][:subject].gsub(/#/,'*')
+#  	params[:mail][:message] = params[:mail][:message].gsub(/#/,'*')
     if @mail.update_attributes(params[:mail])
       flash[:notice] = t('notice.update_success',:object=>t(:mail).downcase)
       redirect_to @mail

@@ -1,6 +1,6 @@
 <div class="show">
 <fieldset class="show">
-<legend><%= @subject.size>1 ? t( h( @subject[0] ), :object=>t( h( @subject[1] ))) : @subject[0]=="no_subject" ? t( h( @subject )) : h( @subject ) %></legend>
+<legend><%= @subject.size>1 ? t( h( @subject[0] ), :object=>t( h( @subject[1] )), :no=>h( @subject[2] )) : @subject[0]=="no_subject" ? t( h( @subject )) : h( @subject ) %></legend>
 
 <div class="pairs">
 	<%= render :partial => 'pairs', :locals => { :object => @mail } %>

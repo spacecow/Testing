@@ -24,12 +24,32 @@ class InvitationsController < ApplicationController
   end
 
   def deliver
-  	func = "deliver_update_#{params[:version]}".to_sym
 		@users = User.find( params[:users] )
+		
+		mess = ""
+		File.open "app/views/user_mailer/update_#{params[:version]}.erb", 'r' do |f|
+			f.readlines.each do |line|
+				break if line=="//johan\n"
+				mess += line
+			end
+		end
+		
+		p mess.gsub("\n", "<br />")
+  	mail = Mail.create!(
+    	:sender_id => current_user.id,
+    	:subject => "version_update#version##{params[:version].gsub(/_/,'.')}",
+    	:message => mess.gsub("\n", "<br />")
+    )
+    @users.each do |user|
+  		Recipient.create!( :mail_id=>mail.id, :user_id=>user.id )
+  	end
+    
+  	func = "deliver_update_#{params[:version]}".to_sym
 #  	UserMailer.send( func, User.first, login_user_url, User.first.username )
   	@users.each do |user|
   		UserMailer.send( func, user, login_user_url, user.username ) if user.info_update
 		end
+
     flash[:notice] = t('invitations.sent')
 		redirect_to new_invitation_path  	
   end

@@ -55,7 +55,8 @@ Scenario Outline: Links from index page
 Given a course: "ruby2" exists with name: "Ruby I"
 	And a user is logged in as "<user>"
 When I go to the template classes page
-	And I select "Monday" from "Choose a day"
+Then 2 template_classes should exist
+When I select "Monday" from "Choose a day"
 	And I press "Go!"
 	And I follow "Info" within "table#Ruby tr td#links"
 Then I should be redirected to the show page of template class: "ruby"
@@ -94,15 +95,10 @@ When I go to the template classes page
 	And I select "Monday" from "Choose a day"
 	And I press "Go!"
 	And I follow "+" within template_class "ruby"
-Then I should be redirected to the new template class page
-	And "Monday" should be selected in the "Day" box
-	And the "Course" field should have options "Ruby II"
-When I press "Create"
-Then I should be redirected to the error template classes page
-	And the "Course" field should have options "Ruby II"
-When I press "Create"
-Then I should be redirected to the error template classes page
-	And the "Course" field should have options "Ruby II"
+Then I should be redirected to the template classes page
+	And 3 template_classes should exist
+	And 2 template_classes should exist with start_time: "18:50", end_time: "20:50"
+
 Examples:
 |	user		|
 |	johan		|
@@ -121,8 +117,5 @@ Examples:
 Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Be able to add template course and get course filled in automatically (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Take away course from edit (NOT IMPLEMENTED)
+Scenario: Should a duplication of a class duplicate other fields as well? (NOT IMPLEMENTED)
 Given not implemented

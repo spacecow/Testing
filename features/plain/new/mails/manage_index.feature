@@ -32,11 +32,14 @@ Given a mail: "createtodo" exists with sender: user "junko", subject: "created#t
 	And a recipient exists with user: user "junko", mail: mail "nosubject"
 	And a mail: "registeruser" exists with sender: user "johan", subject: "registered#user"
 	And a recipient exists with user: user "junko", mail: mail "registeruser"
+Given a mail exists with sender: user "johan", subject: "version_update#version#0.20"
+	And a recipient exists with user: user "junko", mail: that mail	
 	And a user is logged in as "johan"
 When I go to the mails page
 Then I should see "Listing Mail" within "h1"
 And I should see "mails" table
 |	Recipient 										|	Sender				|	Subject							|	Sent at									|
+|	Junko Sumii										|	Johan Sveholm	|	Update Version 0.20	|	less than a minute ago	|
 |	Junko Sumii										|	Johan Sveholm	|	User registered			|	less than a minute ago	|
 |	Junko Sumii, Thomas Osburg		|	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
 |	Junko Sumii										|	Johan Sveholm	|	A boring subject		|	less than a minute ago	|

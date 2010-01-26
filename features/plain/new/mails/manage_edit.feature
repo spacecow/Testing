@@ -54,7 +54,7 @@ Then I should be redirected to the show page of that mail
 	And a recipient should exist with user: user "johan", mail: that mail
 
 @edit_staket
-Scenario: Subjects or messages cannot contain #
+Scenario: Subjects or messages can contain # in edit mode, since only the super user can edit
 Given a mail exists with sender: user "junko", subject: "A boring subject", message: "A boring message"
 	And a recipient exists with user: user "aya", mail: that mail
 	And a user is logged in as "johan"
@@ -63,7 +63,7 @@ When I go to the edit page of that mail
 	And I fill in "Message" with "a#message"
 	And I press "Update"
 Then 1 mails should exist
-	And a mail should exist with sender: user "junko", subject: "one*more*subject", message: "a*message"
+	And a mail should exist with sender: user "junko", subject: "one#more#subject", message: "a#message"
 	And 1 recipients should exist
 	And a recipient should exist with user: user "aya", mail: that mail
 

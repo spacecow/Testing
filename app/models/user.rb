@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 	end
 
 	def unread_mail?
-		mails.map(&:read).grep(false).size > 0
+		recipients.map(&:read).grep(false).size > 0
 	end
 	
 	def invitation_token=(token)

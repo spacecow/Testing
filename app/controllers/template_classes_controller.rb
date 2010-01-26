@@ -39,15 +39,14 @@ class TemplateClassesController < ApplicationController
 		if @template_course.blank?
 	  	@courses = sort_courses
 		elsif @template_course.split.size > 1
-			@courses = Course.all( :conditions => ["name = ?",@template_course])
+			@template_class.course = Course.first( :conditions => ["name = ?",@template_course])
+			@template_class.start_time = params[:start_time]
+			@template_class.end_time = params[:end_time]
+			@template_class.save
+			redirect_to template_classes_path
 		else
 			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
 		end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @template_class }
-    end
   end
 
   def create

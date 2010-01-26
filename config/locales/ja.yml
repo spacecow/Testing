@@ -149,6 +149,7 @@ ja:
   successfully: "首尾よく"
   sure?: "確かですか"
   suspended: "利用停止"
+  system: "システム"
   teacher: "講師"
   template_class: "テンプレート・クラス"
   tel: "電話番号"
@@ -182,6 +183,7 @@ ja:
   registered: "{{object}}が登録されました"
   reopened: "{{object}}が再び開かれました"
   updated: "{{object}}が更新されました"
+  version_update: "アップデート {{object}} {{no}}"
   error:
     blank: "{{object}}は空白のままにしておく事は出来ません"
     no_pass_key: "パスワードをリセットするために正しいパスキーを手に入れて"

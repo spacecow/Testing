@@ -9,6 +9,18 @@ Given a setting exists with name: "main"
 	And a user: "god" exists with username: "god", role: "god, teacher", language: "en", name: "God Almighty"
 	And a todo exists with subjects_mask: 1, title: "Chat room"
 
+@version_update_mail
+Scenario: Version update mail
+Given a mail exists with sender: user "johan", subject: "version_update#version#0.20", message: "Update again!"
+	And a recipient exists with user: user "junko", mail: that mail
+	And a user is logged in as "junko"
+When I go to the show page of that mail
+Then I should see "Update Version 0.20" within "legend"
+	And I should see "SenderJohan Sveholm"
+	And I should see "RecipientJunko Sumii"
+	And I should see "Sent atless than a minute ago"
+	And I should see "MessageUpdate again!"
+
 @registration_mail
 Scenario: List a registration mail
 Given a mail exists with sender: user "johan", subject: "registered#user", message: "users.registered#Mafumafu##"
