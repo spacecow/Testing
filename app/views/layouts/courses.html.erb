@@ -18,13 +18,13 @@
       </div>
       <div class="clear"></div>
     <%- end -%>
-		<% if can? :index, Event.new %>		    
+		<% if can? :index, Event %>		    
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">
-						<% if can? :index, Todo.new %>
+						<% if can? :index, Todo %>
 							<li><%= link_to t('todos.title'), todos_path %>
-							<% if can? :index, Vote.new %>	
+							<% if can? :index, Vote %>	
 								<ul>
 									<li>------------------</li>
 									<li><%= link_to t('votes.title'), votes_path %></li>							
@@ -33,8 +33,12 @@
 							</li>
 						<% end %>
 						
+						<% if can? :index, TemplateClass %>	
+							<li><%= link_to t('template_klasses.title'), template_classes_path %></li>
+						<% end %>
+
 						<li><%= link_to t('events.title'), events_path %>
-							<% if can? :index, Registrant.new %>	
+							<% if can? :index, Registrant %>	
 								<ul>
 									<li>------------------</li>
 									<li><%= link_to t('registrants.title'), registrants_path %></li>							
@@ -42,11 +46,11 @@
 							<% end %>
 						</li>				
 						
-						<% if can? :index, User.new %>	
+						<% if can? :index, User %>	
 							<li><%= link_to t('users.title'), users_path %></li>									
 						<% end %>
 						
-						<% if can? :index, User.new %>	
+						<% if can? :index, Kanji %>	
 							<li><%= link_to t('kanjis.title'), kanjis_path %></li>									
 						<% end %>
 					</ul>

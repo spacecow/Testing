@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 	
 	#attr_accessible :username, :email, :password, :password_confirmation, :roles_mask, :role, :name, :invitation_token
 	
-	ROLES = %w[god admin observer teacher student registrant photographer]
+	ROLES = %w[god admin observer teacher student registrant photographer beta-tester]
 	LANGUAGES_EN = [['Japanese','ja'],['English','en']]
 	LANGUAGES_JA = [['日本語','ja'],['英語','en']]
 

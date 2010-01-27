@@ -12,7 +12,7 @@ Given a course exists with name: "Ruby I"
 When I go to the new template class page
 Then I should see "New Template Class" within "legend"
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"
-	And the "Capacity" field should contain "8"
+	And the "Capacity" field should contain "0"
 	And the "Day" field should have options "BLANK, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
 	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"
 	And I should see "Ex. 18:40" within "li#template_class_end_time_string_input"

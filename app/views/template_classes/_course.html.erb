@@ -22,7 +22,7 @@
 		<% time_classes_and_levels.group_by(&:course_level).sort.each do |level,time_classes| %>
 			<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>">
 				<td class="course_level" rowspan="<%= time_classes.size %>" id="templateclass_<%= time_classes[0].id %>">
-					<%= time_classes[0].course_level %>&nbsp;<%= link_to('+',new_template_class_path( :template_day=>@template_day, :template_course=>time_classes[0].course.name, :start_time=>time_classes[0].start_time, :end_time=>time_classes[0].end_time )) %>
+					<%= time_classes[0].course_level %>&nbsp;<%= link_to('+',new_template_class_path( :template_day=>@template_day, :template_course=>time_classes[0].course.name, :start_time=>time_classes[0].start_time, :end_time=>time_classes[0].end_time, :capacity=>time_classes[0].capacity )) %>
 				</td>	
 				<% time_classes.each do |time_class| %>
 					<%= render time_class %>

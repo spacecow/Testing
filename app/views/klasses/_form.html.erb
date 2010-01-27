@@ -1,93 +1,15 @@
-﻿<table>
-	<tr>
-		<td>
-			<p>
-			  <%= f.label :course_id, t( 'course' ) %>
-			  <%= f.collection_select :course_id,
-			    Course.all, :id, :name,
-			    { :include_blank => true },
-			    :onchange => 'this.form.submit();' %>
-			</p>
-			<p>
-			  <%= f.label :teacher_id, t( 'teacher' ) %>
-			  <%= f.collection_select :teacher_id,
-			    @teachers, :id, :name,
-		      :include_blank => true %> 
-			</p>			
-			<p>
-			  <%= f.label :classroom_id, t( 'classroom' ) %>
-			  <%= f.collection_select :classroom_id,
-			    Classroom.all, :id, :name,
-			    :include_blank => true %>
-			</p>
-			<p>
-			  <%= f.label :capacity, t( 'capacity' ) %>
-			  <%= f.text_field :capacity, :size=>5 %>
-			</p>
-			<p>
-			  <%= f.label :date, t('klass_date') %>
-			  <% parsed_date = klass_date.split("-") %>
-			  <%= f.date_select :date,
-			    :default => klass_date == "" ? nil : {
-			      :year=>parsed_date[0],
-			      :month=>parsed_date[1],
-			      :day=>parsed_date[2] },
-			    :order=>[ :month, :day, :year ] %>
-			</p>
-			<p>
-			  <%= f.label :start_time_string, t( 'start_time' ) %>
-			  <%= f.text_field :start_time_string, :size=>5 %>
-			</p>
-			<p>
-			  <%= f.label :end_time_string, t( 'end_time' ) %>
-			  <%= f.text_field :end_time_string, :size=>5 %>
-			</p>
-			<p>
-			  <%= f.label :title, t( 'title' ) %>
-			  <%= f.text_field :title, :size=>20 %>
-			</p>
-			<p>
-			  <%= f.label :mail_sending, t( 'mail_sending' ) %>
-			  <%= f.text_field :mail_sending, :size=>5 %>
-			</p>
-			<p>
-			  <%= f.label :cancel, t('cancel') %>
-			  <table><tr>
-			    <td bgcolor="#AAAAFF"><%= f.radio_button :cancel, false %>OFF</td>
-			    <td bgcolor="#FFAAAA"><%= f.radio_button :cancel, true %>ON</td>
-			  </tr></table>
-			</p>
-			<p>
-			  <%= f.label :description, t( 'description' ) %>
-			  <%= f.text_area :description, :rows=>8, :cols=>27 %>
-			</p>
-			<p>
-			  <%= f.label :note, t( 'note' ) %>
-			  <%= f.text_area :note, :rows=>8, :cols=>27 %>
-			</p>
-			<p>
-			  <%= f.submit label_text, :class=>"submit" %>
-			</p>
-		</td>
-		<td valign="top">
-			<div class="students">
-				<% unless @klass.students.empty? %>
-					<h3><%= t('students.title') %></h3>
-					<% @klass.attendances.each do |attendance| %>
-						<div class="<%= attendance.student.username %>">
-							<li>
-								<% if !attendance.chosen %>
-									<i>(<%= link_to h( attendance.student ), attendance %> <%= link_to t('choose'), attendance_path( attendance, :attendance => { :student_id => attendance.student_id.to_s }, :redirect => "klass" ), :method => :put, :class => :grid %>)</i>
-								<% elsif attendance.cancel %>
-									<i>(<%= link_to h( attendance.student ), attendance %> <%= link_to t('show'), attendance, :class=>"grid" %> <%= link_to t('edit'), edit_attendance_path( attendance ), :class=>"grid" %> <%= link_to t('uncancel'), attendance_path( attendance, :attendance => { :student_id => "Uncancel" }, :redirect => "klass" ), :method => :put, :class => :grid %> <%= link_to t('delete'), attendance_path( attendance, :attendance => { :student_id => t('destroy') }, :redirect => "klass" ), :confirm=>t('sure?'), :method => :put, :class => :grid %>)</i>
-								<% else %>
-									<%= link_to h( attendance.student ), attendance %> <%= link_to t('show'), attendance, :class=>"grid" %> <%= link_to t('edit'), edit_attendance_path( attendance ), :class=>"grid" %> <%= link_to t('cancel'), attendance_path( attendance, :attendance => { :student_id => "Cancel" }, :redirect => "klass" ), :method => :put, :class => :grid %> <%= link_to t('delete'), attendance_path( attendance, :attendance => { :student_id => t('destroy') }, :redirect => "klass" ), :confirm=>t('sure?'), :method => :put, :class => :grid %> <%= link_to t('unchoose'), attendance_path( attendance, :attendance => { :student_id => "" }, :redirect => "klass" ), :method => :put, :class => :grid %>
-								<% end %>
-							</li>
-						</	div>
-					<% end %>
-				<% end %>
-			</div>
-		</td>
-	</tr>
-</table>
+﻿<% f.inputs do %>
+	<%= f.input :course, :label => t( :course ), :collection => @courses %>
+	<%= f.input :date, :label => t( :klass_date ) %>
+	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 17:50" %>
+	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 18:40" %>
+	<span class="horizontal"><label><%= f.input :cancel, :label => t( :cancel ), :as => :radio %></label></span>
+	<%= f.input :capacity, :label => t( 'capacity' ) %>
+	<%# f.input :mail_sending, :label => t( :mail_sending ), :required => false %>	
+	<%= f.input :title, :label => t( 'title' ), :required => false %>
+	<%= f.input :description, :label => t( :description ), :required => false %>
+	<%= f.input :note, :label => t( :note ), :required => false %>	
+<% end %>
+<% f.buttons do %>
+	<%= f.commit_button t( label_text ) %>
+<% end %>

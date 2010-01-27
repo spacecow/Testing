@@ -38,16 +38,19 @@ class Ability
 	  		end	  	
   		end
   		if user.role? :observer
-	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant]
+	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
 	  	elsif user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant]
+	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass]
 	  	end
 			if user.role? :photographer
 				can [:create, :update], Photo
 				can [:edit, :destroy], Photo do |photo|
 					photo.try(:user) == user
 				end
-			end	  	
+			end
+			if user.role? "beta-tester"
+				can :manage, TemplateClass
+			end
   	end
   end
 end

@@ -1,5 +1,5 @@
 ﻿<% f.inputs do %>
-	<%= f.input :course, :label => t( 'course' ), :collection => @courses, :include_blank => ( @courses.size==1 ? false : true ) if label_text=='create' %>
+	<%= f.input :course, :label => t( 'course' ), :collection => @courses %>
 	<%= f.input :day, :label => t( 'day' ), :as => :select, :collection => @days %>
 	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 17:50" %>
 	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 18:40" %>

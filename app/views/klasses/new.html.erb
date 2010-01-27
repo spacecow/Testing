@@ -1,12 +1,22 @@
 ﻿<div class="form">
 <%= error_messages_for :klass %>
-<fieldset>
-<legend><%= t( 'klasses.new' ) %></legend>
+<fieldset class="form">
+<legend class="form"><%= t( 'klasses.new' ) %></legend>
 
-<% form_for(@klass) do |f| %>
-  <%= render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
+
+<% semantic_form_for(@klass) do |f| %>
+  <% #render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'create', :klass_date=>@klass_date } %>
 <% end %>
 
-<%= link_to t('back'), klasses_path %>
+<div id="links">
+	<% if can? :index, Klass %>
+		<%= link_to t(:list,:object=>t('klasses.title')), klasses_path %>
+	<% end %>
+</div>
+
 </fieldset>
 </div>

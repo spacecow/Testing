@@ -31,7 +31,7 @@ class TemplateClassesController < ApplicationController
   end
 
   def new
-    @template_class = TemplateClass.new( :capacity => 8, :day => params[:template_day] )
+    @template_class = TemplateClass.new( :capacity => 0, :day => params[:template_day] )
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 		@template_course = params[:template_course]
@@ -42,6 +42,7 @@ class TemplateClassesController < ApplicationController
 			@template_class.course = Course.first( :conditions => ["name = ?",@template_course])
 			@template_class.start_time = params[:start_time]
 			@template_class.end_time = params[:end_time]
+			@template_class.capacity = params[:capacity]
 			@template_class.save
 			redirect_to template_classes_path
 		else

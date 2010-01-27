@@ -97,7 +97,7 @@ When I go to the template classes page
 	And I follow "+" within template_class "ruby"
 Then I should be redirected to the template classes page
 	And 3 template_classes should exist
-	And 2 template_classes should exist with start_time: "18:50", end_time: "20:50"
+	And 2 template_classes should exist with start_time: "18:50", end_time: "20:50", capacity: 8
 
 Examples:
 |	user		|

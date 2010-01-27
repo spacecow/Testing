@@ -2,6 +2,8 @@
   <%= error_messages_for :attendance %>
 <% end %>
 
+<% if false %>
+
 <h1><%= t('klasses.listing') %> - <%= @klass_date.strftime("%A") %></h1>
 
 <% form_for :klass,
@@ -50,4 +52,6 @@
 	  </tr>
 	<% end %>
 	</table>
+<% end %>
+
 <% end %>
