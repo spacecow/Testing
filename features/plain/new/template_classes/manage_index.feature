@@ -119,3 +119,6 @@ Given not implemented
 
 Scenario: Should a duplication of a class duplicate other fields as well? (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Choose a day with I18n (NOT IMPLEMENTED)
+Given not implemented

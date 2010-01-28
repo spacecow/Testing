@@ -18,7 +18,7 @@
 
 <div id="links">
 	<% if can? :new, TemplateClass %>
-		<%= link_to t( 'template_klasses.new' ), new_template_class_path( :template_day=>@template_day ) %><br />
+		<%= link_to t(:new,:object=>t(:template_klass)), new_template_class_path( :template_day=>@template_day ) %><br />
 	<% end %>
 </div>
 

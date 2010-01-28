@@ -76,7 +76,9 @@ en:
   katakana: "Katakana"
   klass: "Class"
   klass_date: "Date"
+  klass_day: ""
   klass_time: "Time"
+  klass_year: ""
   kunyomi: "Kunyomi"
   language: "Language"
   latest: "Latest"
@@ -191,6 +193,7 @@ en:
     message:
       both_blank: "can't both be blank"
       does_not_exist: "does not exist"
+      zero: "can't be zero"
   message:
     asterisk: "All fields that are marked with an asterisk (*) must be filled in before submitting."
     avatar_upload: "Upload your profile picture"

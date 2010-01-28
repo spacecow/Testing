@@ -74,3 +74,8 @@ form.formtastic fieldset.inputs ol li.datetime fieldset ol {
   text-align: right;
   padding-left: 146px;
 }
+form.formtastic fieldset.inputs ol li.date fieldset legend span.label { width: 140px; }
+form.formtastic fieldset.inputs ol li.date fieldset ol {
+  text-align: right;
+  padding-left: 146px;
+}

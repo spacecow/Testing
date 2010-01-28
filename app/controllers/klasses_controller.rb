@@ -3,42 +3,51 @@ class KlassesController < ApplicationController
 
   def new
 		@courses = sort_courses
-
+		@class_date = params[:class_date]
+		p @class_date
+		@klass.date = @class_date.blank? ? nil : Date.parse( @class_date ) + 1.day
 #    @klass = Klass.new()
-		@klass_date = DateTime.current.to_s #params[ :klass_date ]
-		@teachers = []
-#		
+#		@klass_date = DateTime.current.to_s #params[ :klass_date ]
+#		@teachers = []
+  end
+
+  def create
+  	@courses = sort_courses
+  	if @klass.save
+		else
+			render :action => :new	
+		end
+#    @klass = Klass.new( params[ :klass ])
+#    @klass_date = @klass.date.to_s
+#		@teachers = []
+#		if !params[:klass][:course_id].blank?
+#			@teachers = Teacher.all(
+#				:conditions=>["courses.name = ?", Course.find( params[:klass][:course_id] ).name],
+#			  :include=>[:person, :courses])    
+#		end
 #    respond_to do |format|
-#      format.html # new.html.erb
-#      format.xml  { render :xml => @klass }
+#      if @klass.save
+#        flash[:notice] = 'Klass was successfully created.'
+#        format.html { redirect_to klasses_path( :date => @klass.date ) }
+#        format.xml  { render :xml => @klass, :status => :created, :location => @klass }
+#      else
+#        format.html { render :action => "new" }
+#        format.xml  { render :xml => @klass.errors, :status => :unprocessable_entity }
+#      end
 #    end
   end
-#  
-#  def add_student
-#    StudentClass.new( :klass_id=>params[:klass_id], :cancel=>false ).save
-#    redirect_to :action=>'index', :year=>params[:year], :month=>params[:month], :day=>params[:day]
-#  end
-#
-#  def add_course
-#    Klass.new(
-#      :course_id=>params[:course_id],
-#      :date=>DateTime.new(
-#               params[:year].to_i,
-#               Date::MONTHNAMES.index( params[:month] ),
-#               params[:day].to_i ),
-#      :start_time=>Time.parse( params[:start_time ]),
-#      :end_time=>Time.parse( params[:end_time ]),
-#			:cancel=>false
-#    ).save
-#    redirect_to :action=>'index',
-#      :year=>params[:year],
-#      :month=>params[:month],
-#      :day=>params[:day]
-#  end
-#
-#  # GET /klasses
-#  # GET /klasses.xml
-#  def index
+
+
+
+  def index
+		@months = t('date.month_names').compact.zip((1..12).to_a )
+		@days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
+		@years  = (2009..2020).map{|e| e.to_s+t(:klass_year)}.zip((2009..2020).to_a )
+		
+		@class_month = params[:class_month].to_i || Date.current.month
+		@class_day   = params[:class_day].to_i   || Date.current.day
+		@class_year  = params[:class_year].to_i  || Date.current.year
+		
 #    if params[:date]
 #	    @klass_date = DateTime.parse( params[:date] )
 #	    @month = Date::MONTHNAMES[ @klass_date.month ]
@@ -92,6 +101,29 @@ class KlassesController < ApplicationController
 #      format.html # index.html.erb
 #      format.xml  { render :xml => @klasses }
 #    end
+  end
+
+#  
+#  def add_student
+#    StudentClass.new( :klass_id=>params[:klass_id], :cancel=>false ).save
+#    redirect_to :action=>'index', :year=>params[:year], :month=>params[:month], :day=>params[:day]
+#  end
+#
+#  def add_course
+#    Klass.new(
+#      :course_id=>params[:course_id],
+#      :date=>DateTime.new(
+#               params[:year].to_i,
+#               Date::MONTHNAMES.index( params[:month] ),
+#               params[:day].to_i ),
+#      :start_time=>Time.parse( params[:start_time ]),
+#      :end_time=>Time.parse( params[:end_time ]),
+#			:cancel=>false
+#    ).save
+#    redirect_to :action=>'index',
+#      :year=>params[:year],
+#      :month=>params[:month],
+#      :day=>params[:day]
 #  end
 #  
 #  def schema

@@ -1,6 +1,25 @@
-<% if @attendance %>
-  <%= error_messages_for :attendance %>
+<div id="list">
+	
+<h1><%= t( 'klasses.title' ) %></h1>
+<div class="intro">
+</div>
+
+<% form_for :class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| %>
+  <label for="class_date"><%= t(:klass_date) %>: </label>
+  <%= select_tag :class_month, options_for_select( @months, @class_month ) %>
+  <%= select_tag :class_day,   options_for_select( @days,   @class_day ) %>
+  <%= select_tag :class_year,  options_for_select( @years,  @class_year ) %>
+  <%= f.submit "Go!"%>
 <% end %>
+<br />
+
+<div id="links">
+	<% if can? :new, Klass %>
+		<%= link_to t(:new,:object=>t(:klass)), new_klass_path( :class_date => "#{@class_year}-#{@class_month}-#{@class_day}" ) %><br />
+	<% end %>
+</div>
+
+</div>
 
 <% if false %>
 

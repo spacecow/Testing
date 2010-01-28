@@ -9,7 +9,7 @@
 
 <% semantic_form_for(@klass) do |f| %>
   <% #render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
-  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'create', :klass_date=>@klass_date } %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'create' } %>
 <% end %>
 
 <div id="links">

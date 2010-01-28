@@ -9,7 +9,11 @@ class Klass < ActiveRecord::Base
 
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}  
   
-  validates_presence_of :course_id, :date, :start_time, :end_time
+  validates_presence_of :course, :date
+	validate :start_time_cannot_be_blank
+	validate :end_time_cannot_be_blank  
+	validates_numericality_of :capacity
+	validate :capacity_cannot_be_zero
 
 	def date_and_time_interval
 		date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval
@@ -20,8 +24,13 @@ class Klass < ActiveRecord::Base
 		end_time.to_s(:time) if end_time
 	end
 	
-	def end_time_string=(end_time_str)
-		self.end_time = Time.parse( end_time_str ) if end_time_str != ""
+	def end_time_string=( end_time_str )
+		if( end_time_str.match(/^(\d)?\d$/))
+			end_time_str += ":00"	
+		end
+		if ok_time_format( end_time_str )
+			self.end_time = Time.parse( end_time_str ) if end_time_str != ""
+		end
 	rescue ArgumentError
 	end
 
@@ -36,8 +45,13 @@ class Klass < ActiveRecord::Base
 		start_time.to_s(:time) if start_time
 	end
 	
-	def start_time_string=(start_time_str)
-		self.start_time = Time.parse( start_time_str ) if start_time_str != ""
+	def start_time_string=( start_time_str )
+		if( start_time_str.match(/^(\d)?\d$/))
+			start_time_str += ":00"	
+		end
+		if ok_time_format( start_time_str )
+			self.start_time = Time.parse( start_time_str ) if start_time_str != ""
+		end
 	rescue ArgumentError
 	end
 	#-----------------------------------------------
@@ -80,5 +94,23 @@ protected
       errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_teacher') ) if !teacher_id.nil?
       errors.add_to_base( I18n.translate('klasses.error.edit_courses_with_students') ) if !students.empty?
 		end
+	end
+
+private
+	def start_time_cannot_be_blank
+		errors.add :start_time_string, I18n.t('activerecord.errors.messages.blank') if start_time.nil?
+	end
+	def end_time_cannot_be_blank
+		errors.add :end_time_string, I18n.t('activerecord.errors.messages.blank') if end_time.nil?
+	end
+	def capacity_cannot_be_zero
+		errors.add :capacity, I18n.t('error.message.zero') if capacity == 0 unless errors.on( :capacity )
+	end
+
+	def ok_time_format( time_string )
+		time_string.match(/^(\d)?\d:\d\d$/)
+	end	
+	def is_number( time_string )
+		time_string.match(/^\d+$/)	
 	end
 end

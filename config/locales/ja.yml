@@ -73,7 +73,9 @@ ja:
   kanji: "漢字"
   klass: "クラス"
   klass_date: "日付"
+  klass_day: "日"
   klass_time: "時間"
+  klass_year: "年"
   kunyomi: "訓読み"
   language: "言語"
   latest: "最新"
@@ -192,6 +194,7 @@ ja:
     message:
       both_blank: "テキスト領域は両方が空白のままにしておけない"
       does_not_exist: "がありません"
+      zero: "はゼロではいけません"
   message:
     asterisk: "アステリスクがある所は必要な情報。"
     avatar_upload: "プロフィール写真ををアップロード"

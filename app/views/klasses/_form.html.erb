@@ -1,6 +1,6 @@
 ﻿<% f.inputs do %>
 	<%= f.input :course, :label => t( :course ), :collection => @courses %>
-	<%= f.input :date, :label => t( :klass_date ) %>
+	<%= f.input :date, :label => t( :klass_date ), :as => :date, :include_blank => @class_date.blank? ? true : false %>
 	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 17:50" %>
 	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 18:40" %>
 	<span class="horizontal"><label><%= f.input :cancel, :label => t( :cancel ), :as => :radio %></label></span>
