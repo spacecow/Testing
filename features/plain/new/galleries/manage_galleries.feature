@@ -11,7 +11,7 @@ Given a setting exists with name: "main"
 Scenario: Show gallery description if there is one
 Given a user is logged in as "johan"
 When I go to the show page of gallery: "happy xmas"
-Then I should see "Happy Christmas Party - 2009-12-19 - Gallery" within "legend"
+Then I should see "Happy Christmas Party - 2009-12/19 - Gallery" within "legend"
 	And I should see "This is the Christmas gallery! Edit"
   And I should see options "Happy Christmas Party, Add Photo, Galleries" within "div.links"
   
@@ -26,11 +26,11 @@ Then I should see "Non-happy Christmas Party - To be announced - Gallery" within
 Scenario: A registrant should be able to see the gallery
 Given a user is logged in as "mika"
 When I go to the show page of gallery: "happy xmas"
-Then I should see "Happy Christmas Party - 2009-12-19 - Gallery" within "legend"
+Then I should see "Happy Christmas Party - 2009-12/19 - Gallery" within "legend"
 	And I should see options "Happy Christmas Party" within "div.links"
 	
 Scenario: A photographer should be able to add pictures to a gallery
 Given a user is logged in as "reiko"
 When I go to the show page of gallery: "happy xmas"
-Then I should see "Happy Christmas Party - 2009-12-19 - Gallery" within "legend"
+Then I should see "Happy Christmas Party - 2009-12/19 - Gallery" within "legend"
 	And I should see options "Happy Christmas Party, Add Photo" within "div.links"

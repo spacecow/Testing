@@ -7,38 +7,16 @@
 	<% end %>
 </div>
 
+<div id="upcoming_events">
+	<%= render :partial=>"events", :locals=>{ :events=>@upcoming_events, :title=>'upcoming_events' } %>
+</div>
+<div id="past_events">
+	<%= render :partial=>"events", :locals=>{ :events=>@past_events, :title=>'past_events' } %>
+</div>
 
-<table cellpadding="1" cellspacing="1" id="events">
-	<tr>
-			<th><%= t('event') %></th>		
-			<th><%= t('date_and_time') %></th>
-			<th><%= t('place') %></th>
-			<th><%= t('event_cost') %></th>		
-	</tr>
-	<% for event in @events %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="event_<%= event.id %>">
-      	<td><%= event.title( japanese? )%></td>
-      	<td><%=h event.date %></td>
-      	<td><%=h event.place_to_s %></td>
-      	<td><%=h event.cost_to_s %></td>
-  		<td>
-    			<% if can? :show, event %>
-    				<%= link_to t('show'), event %>
-    			<% end %>
-    			<% if can? :edit, event %>
-    				<%= link_to t('edit'), edit_event_path(event) %>
-    			<% end %>
-    			<% if can? :destroy, event %>
-    				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete %>
-    			<% end %>
-			</td>    	
-		</tr>
-	<% end %>
-</table>
-
-<div class="links">
-<% if can? :new, Event.new %>	
-	<p><%= link_to t('events.new'), new_event_path, :class=>"link" %></p>
+<div id="links">
+<% if can? :new, Event %>	
+	<p><%= link_to t(:new,:object=>t(:event)), new_event_path %></p>
 <% end %>
 </div>
 

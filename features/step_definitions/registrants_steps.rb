@@ -1,5 +1,5 @@
 Then(/^I should see "(.+)" table$/) do |category, table|
-  html_table = table_at("##{category}").to_a
+  html_table = table_at("#{category}").to_a
   html_table.map! { |r| r.map! { |c| c.gsub(/<.+?>/, '') } }
   table.diff!(html_table)
 end

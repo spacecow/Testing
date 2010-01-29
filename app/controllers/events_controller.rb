@@ -9,7 +9,8 @@ class EventsController < ApplicationController
 
 	
 	def index
-    @events = Event.all( :order => :start_date ).reverse
+    @past_events = Event.all( :conditions => ["start_date < ?", DateTime.current ], :order => :start_date ).reverse
+    @upcoming_events = Event.all( :order => :start_date ).reject{|e| e.start_date && e.start_date < DateTime.current }.reverse
     @setting = Setting.find_by_name( "main" )
   end
   

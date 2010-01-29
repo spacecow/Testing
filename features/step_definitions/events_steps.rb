@@ -1,7 +1,3 @@
-Then(/^I should see events table$/) do |table|
-  table.diff!(table_at("#events").to_a)
-end
-
 Given /^I am registered for that event$/ do
 	When "I go to the show page of that event"
 		And "I press \"Apply\""

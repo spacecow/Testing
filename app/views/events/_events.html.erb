@@ -1,0 +1,29 @@
+<br />
+<h1><%= t( title ) %></h1>
+<table cellpadding="1" cellspacing="1" id="<%= title %>">
+	<tr>
+			<th><%= t('event_name') %></th>		
+			<th><%= t('date_and_time') %></th>
+			<th><%= t('place') %></th>
+			<th><%= t('event_cost') %></th>		
+	</tr>
+	<% for event in events %>
+		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="event_<%= event.id %>">
+      	<td><%= event.title( japanese? )%></td>
+      	<td><%=h event.date %></td>
+      	<td><%=h event.place_to_s %></td>
+      	<td><%=h event.cost_to_s %></td>
+  		<td>
+    			<% if can? :show, event %>
+    				<%= link_to t('show'), event %>
+    			<% end %>
+    			<% if can? :edit, event %>
+    				<%= link_to t('edit'), edit_event_path(event) %>
+    			<% end %>
+    			<% if can? :destroy, event %>
+    				<%= link_to t('delete'), event, :confirm => 'Are you sure?', :method => :delete %>
+    			<% end %>
+			</td>    	
+		</tr>
+	<% end %>
+</table>

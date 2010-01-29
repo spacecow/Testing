@@ -9,6 +9,7 @@ class Klass < ActiveRecord::Base
 
 	named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}  
   
+  validates_inclusion_of :cancel, :in => [false, true]
   validates_presence_of :course, :date
 	validate :start_time_cannot_be_blank
 	validate :end_time_cannot_be_blank  

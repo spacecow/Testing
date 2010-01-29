@@ -13,7 +13,7 @@ Then "class_month" should have options "January, February, March, April, May, Ju
 	And "class_day" should have no blank option	
 	And "class_year" should have no blank option		
  	And "January" should be selected in "class_month"
- 	And "28" should be selected in "class_day"
+ 	And "29" should be selected in "class_day"
  	And "2010" should be selected in "class_year"
 When I select "February" from "class_month"
 	And I select "15" from "class_day"
@@ -47,7 +47,4 @@ Examples:
 |	2010	|	January		|	31	|
 
 Scenario: Let day have appear with AJAX so its easier to get the date right (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Each part of the date must be coded so they have the same code for each language (NOT IMPLEMENTED)
 Given not implemented

@@ -34,7 +34,6 @@ class InvitationsController < ApplicationController
 			end
 		end
 		
-		p mess.gsub("\n", "<br />")
   	mail = Mail.create!(
     	:sender_id => current_user.id,
     	:subject => "version_update#version##{params[:version].gsub(/_/,'.')}",

@@ -1,10 +1,10 @@
 ﻿<% f.inputs do %>
-	<%= f.input :course, :label => t( 'course' ), :collection => @courses %>
+	<span id="course"><%= f.input :course, :label => t( 'course' ), :collection => @courses %></span>
 	<%= f.input :day, :label => t( 'day' ), :as => :select, :collection => @days %>
 	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 17:50" %>
 	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 18:40" %>
 	<span class="horizontal"><label><%= f.input :inactive, :label => t( :inactive ), :as => :radio %></label></span>
-	<%= f.input :capacity, :label => t( 'capacity' ) %>
+	<span id="capacity"><%= f.input :capacity, :label => t( 'capacity' ) %></span>
 	<%= f.input :mail_sending, :label => t( :mail_sending ), :required => false if false %>	
 	<%= f.input :title, :label => t( 'title' ), :required => false %>
 	<%= f.input :description, :label => t( :description ), :required => false %>

@@ -4,7 +4,8 @@ class KlassesController < ApplicationController
   def new
 		@courses = sort_courses
 		@class_date = params[:class_date]
-		p @class_date
+		
+		@klass.capacity = nil
 		@klass.date = @class_date.blank? ? nil : Date.parse( @class_date ) + 1.day
 #    @klass = Klass.new()
 #		@klass_date = DateTime.current.to_s #params[ :klass_date ]
@@ -14,6 +15,8 @@ class KlassesController < ApplicationController
   def create
   	@courses = sort_courses
   	if @klass.save
+  		flash[:notice] = t('notice.create_success', :object => t(:klass))
+  		redirect_to klasses_path
 		else
 			render :action => :new	
 		end
@@ -44,9 +47,9 @@ class KlassesController < ApplicationController
 		@days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
 		@years  = (2009..2020).map{|e| e.to_s+t(:klass_year)}.zip((2009..2020).to_a )
 		
-		@class_month = params[:class_month].to_i || Date.current.month
-		@class_day   = params[:class_day].to_i   || Date.current.day
-		@class_year  = params[:class_year].to_i  || Date.current.year
+		@class_month = params[:class_month] || Date.current.month
+		@class_day   = params[:class_day]   || Date.current.day
+		@class_year  = params[:class_year]  || Date.current.year
 		
 #    if params[:date]
 #	    @klass_date = DateTime.parse( params[:date] )

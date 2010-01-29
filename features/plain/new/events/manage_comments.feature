@@ -106,8 +106,3 @@ Then I should be redirected to the show page of its event
 
 Scenario: Delete with ajax (NOT IMPLEMENTED)
 Given not implemented
-
-Scenario: The default mafumafu picture for comments is not visible (NOT IMPLEMENTED)
-Given not implemented
-
-

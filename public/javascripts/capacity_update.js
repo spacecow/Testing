@@ -1,8 +1,8 @@
 $( function(){
-	$("select#template_class_course_id").live( "change", function(){
-		if( $("select#template_class_course_id :selected").text().split(' ')[1] == "I" )
-			$("input#template_class_capacity").val("8");
+	$("span#course select").live( "change", function(){
+		if( $("span#course select :selected").text().split(' ')[1] == "I" )
+			$("span#capacity input").val("8");
 		else
-			$("input#template_class_capacity").val("6");
+			$("span#capacity input").val("6");
 	});
 });

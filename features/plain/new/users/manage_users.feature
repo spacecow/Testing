@@ -24,3 +24,6 @@ Then 1 events should exist
 	And 0 comments should exist
 	And 0 votes should exist
 	And 1 users should exist
+	
+Scenario: Permalinks (NOT IMPLEMENTED)
+Given not implemented
