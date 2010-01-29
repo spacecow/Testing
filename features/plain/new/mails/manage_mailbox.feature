@@ -35,7 +35,7 @@ Given a mail: "createtodo" exists with sender: user "junko", subject: "created#t
 	And a user is logged in as "junko"
 When I go to the box mails page
 Then I should see "Mailbox" within "h1"
-And I should see "mails" table
+And I should see "#mails" table
 |	Sender				|	Subject							|	Sent at									|
 |	Johan Sveholm	|	User registered			|	less than a minute ago	|
 |	Johan Sveholm	|	&lt;no subject&gt;	|	less than a minute ago	|
@@ -72,7 +72,7 @@ Given a mail: "createtodo" exists with sender: user "junko", subject: "created#t
 	And a user is logged in as "johan"
 When I go to the box mails page
 Then I should see "Mailbox" within "h1"
-And I should see "mails" table
+And I should see "#mails" table
 |	Sender				|	Subject					|	Sent at									|
 |	Junko Sumii		|	Todo closed			|	less than a minute ago	|
 |	Thomas Osburg	|	Vote canceled		|	less than a minute ago	|
@@ -107,7 +107,7 @@ Given a mail: "createtodo" exists with sender: user "junko", subject: "created#t
 	And a user is logged in as "thomas"
 When I go to the box mails page
 Then I should see "Mailbox" within "h1"
-And I should see "mails" table
+And I should see "#mails" table
 |	Sender			|	Subject				|	Sent at									|
 |	Junko Sumii	|	Vote created	|	less than a minute ago	|
 |	Junko Sumii	|	Comment added	|	less than a minute ago	|

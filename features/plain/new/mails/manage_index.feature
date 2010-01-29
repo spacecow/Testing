@@ -37,7 +37,7 @@ Given a mail exists with sender: user "johan", subject: "version_update#version#
 	And a user is logged in as "johan"
 When I go to the mails page
 Then I should see "Listing Mail" within "h1"
-And I should see "mails" table
+And I should see "#mails" table
 |	Recipient 										|	Sender				|	Subject							|	Sent at									|
 |	Junko Sumii										|	Johan Sveholm	|	Update Version 0.20	|	less than a minute ago	|
 |	Junko Sumii										|	Johan Sveholm	|	User registered			|	less than a minute ago	|
