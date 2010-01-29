@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
   	#@users = User.all
   	@users = [ User.first ]    
     if @invitation.save
-    	UserMailer.deliver_invitation( @invitation, signup_url( @invitation.token ))
+    	UserMailer.send_later( :deliver_invitation, @invitation, signup_url( @invitation.token ))
       flash[:notice] = t('invitations.sent')
       redirect_to new_invitation_path
     else
@@ -46,7 +46,7 @@ class InvitationsController < ApplicationController
   	func = "deliver_update_#{params[:version]}".to_sym
 #  	UserMailer.send( func, User.first, login_user_url, User.first.username )
   	@users.each do |user|
-  		UserMailer.send( func, user, login_user_url, user.username ) if user.info_update
+  		UserMailer.send_later( func, user, login_user_url, user.username ) if user.info_update
 		end
 
     flash[:notice] = t('invitations.sent')

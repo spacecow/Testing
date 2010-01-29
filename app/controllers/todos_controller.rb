@@ -143,7 +143,7 @@ private
     
   	recipients.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
   		Recipient.create!( :mail_id=>mail.id, :user_id=>user.id )
-  		UserMailer.deliver_notification(
+  		UserMailer.send_later( :deliver_notification,
   			user,
   			t(message,:object=>t(category)),
   		  t("#{category.pluralize}.#{message}",:name=>current_user,:subject=>@todo.title,:object=>category=='todo'?'':'todo')+"\n\n#{opts[:content].blank? ? '' : opts[:content].gsub("<br />", "\n")}",
