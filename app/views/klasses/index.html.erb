@@ -13,6 +13,11 @@
 <% end %>
 <br />
 
+<% @keys = sort_in_mogi_order @class_groups.keys %>
+<% @keys.each do |key| %>
+	<%= render :partial => 'course', :locals => { :classes => @class_groups[key] } %>
+<% end %>
+
 <div id="links">
 	<% if can? :new, Klass %>
 		<%= link_to t(:new,:object=>t(:klass)), new_klass_path( :class_date => "#{@class_year}-#{@class_month}-#{@class_day}" ) %><br />

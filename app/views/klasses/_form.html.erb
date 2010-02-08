@@ -8,7 +8,8 @@
 	<%# f.input :mail_sending, :label => t( :mail_sending ), :required => false %>	
 	<%= f.input :title, :label => t( 'title' ), :required => false %>
 	<%= f.input :description, :label => t( :description ), :required => false %>
-	<%= f.input :note, :label => t( :note ), :required => false %>	
+	<%= f.input :note, :label => t( :note ), :required => false %>
+	<%= hidden_field_tag :class_course, @class_course %>	
 <% end %>
 <% f.buttons do %>
 	<%= f.commit_button t( label_text ) %>

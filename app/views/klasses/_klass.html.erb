@@ -1,77 +1,23 @@
-<td class="table-units">
-  <%= klass.time_interval %>
-</td>
-<td>
-	<%= link_to t( 'show' ), klass, :class => "grid" %>
-	<%  if clearance < 3 %>
-		<%= link_to t( 'edit' ), edit_klass_path(klass), :class => "grid" %>
-	  <%= link_to t('delete'), klass_path( klass, :date=>klass_date ),
-	        :confirm => "Are you sure?\n" +
-						association_delete_error_message(
-							klass.attendances,
-							t('klasses.error.try_to_delete_klass_with_students' )
-						),
-	        :method => :delete,
-	        :class=>"grid" %>
+<td id="time_interval"><%= h klass.time_interval %></td>
+<td id="unit"></td>
+<td id="classroom"><%= h klass.classroom %></td>
+<td id="teacher"></td>
+<td id="student1"></td>
+<td id="student2"></td>
+<td id="student3"></td>
+<td id="student4"></td>
+<td id="student5"></td>
+<td id="student6"></td>
+<td id="student7"></td>
+<td id="student8"></td>
+<td id="links">
+	<% if can? :show, klass %>
+		<%= link_to t('show'), klass %>
 	<% end %>
-</td>
-<td>
-  <% form_for(klass) do |f| %>
-    <% if clearance?(2) %>
-      <%= f.collection_select :classroom_id,
-          ( classrooms - collitions.map{|e| e.classroom } + ( klass.classroom ? [klass.classroom] : [] )).sort_by(&:name),
-            :id,
-            :name,
-          { :include_blank=>true },
-          { :onchange => 'this.form.submit();',
-            :class => klass.classroom ? "table-units" : "drop-box-empty" } %>
-    <% else %>
-      <center style="font-size: small;"><%= klass.classroom ? klass.classroom.name : "" %></center>
-    <% end %>
-</td>
-<td id="teacher">
-	  <% if clearance?(2) %>
-	    <%= f.collection_select :teacher_id,
-	        ( teachers - collitions.map{|e| e.teacher } + ( klass.teacher ? [klass.teacher] : [] )).sort_by(&:name),
-	          :id,
-	          :name,
-	        { :include_blank=>true },
-	        { :onchange => 'this.form.submit();',
-	          :class => klass.teacher ? ( klass.teacher_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
-	  <% else %>
-	    <center style="font-size: small;"><%= klass.teacher ? klass.teacher.name : "" %></center>
-	  <% end %>
-  <% end %>
-</td>
-<% attendances = klass.attendances.reject(&:cancel) %>
-<% if attendances.size >0 %>
-	<% attendances.each_with_index do |attendance,i| %>
-    <% if clearance <= 2 %>
-	    <% form_for(attendance) do |f| %>	
-				<div class="attendance_<%= attendance.id %>">
-				<td id="student_<%= i+1 %>">
-					<% moves = @moves.reject{|e1,e2| no_place_to_move.include?( e1.split[2].to_i )} %>
-	        <%= f.select :student_id,
-	          available_students.map{|e| [e.name,e.id]} +
-	            ( attendance.chosen ? [[attendance.student.name,attendance.student.id]] : [] ) +
-	            ( !moves.empty? ? @line + moves : [] ) +
-	            ( attendance.chosen ? @line + @options : [] ),
-	          { :include_blank=>true,            
-	            :selected=>attendance.chosen ? attendance.student.id : nil },
-	          { :onchange => 'this.form.submit();',
-	            :class => attendance.chosen ? ( attendance.student_gender == 1 ? "drop-box-man" : "drop-box-woman" ) : "drop-box-empty" } %>
-	        <%= hidden_field_tag :relations, attendance_relations.join(',') %>
-	        <%= hidden_field_tag :klass_relations, klass_relations.join(',') %>
-	        <%= hidden_field_tag :date, klass_date %>
-				</td>
-				</div>
-		  <% end %>
-		<% else %>
-			<td><center style="font-size: small;"><%= attendance.chosen ? attendance.student.name : "?" %></center></td>
-		<% end %>
+	<% if can? :edit, klass %>
+		<%= link_to t('edit'), edit_klass_path(klass) %>
 	<% end %>
-<% end %>
-<% (8-attendances.size).times do |student| %>
-  <td id="student_<%= student+attendances.size+1 %>" >
-  </td>
-<% end %>
+	<% if can? :destroy, klass %>
+		<%= link_to t('delete'), klass, :confirm => 'Are you sure?', :method => :delete %>
+	<% end %>
+</td>	

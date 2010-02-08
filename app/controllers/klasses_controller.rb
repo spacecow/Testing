@@ -1,19 +1,18 @@
 class KlassesController < ApplicationController  
+  before_filter :load_courses, :only => [:new, :create]
   load_and_authorize_resource
 
   def new
-		@courses = sort_courses
-		@class_date = params[:class_date]
-		
-		@klass.capacity = nil
-		@klass.date = @class_date.blank? ? nil : Date.parse( @class_date ) + 1.day
-#    @klass = Klass.new()
-#		@klass_date = DateTime.current.to_s #params[ :klass_date ]
-#		@teachers = []
+		if @class_course && @class_course.split.size > 1  #just one course
+			Klass.create!( params[:klass] )
+			redirect_to klasses_path and return
+		end
+		@klass = Klass.new(
+			:capacity => nil,
+			:date => params[:class_date].blank? ? nil : Date.parse( params[:class_date] ) + 1.day )
   end
 
-  def create
-  	@courses = sort_courses
+  def create  	
   	if @klass.save
   		flash[:notice] = t('notice.create_success', :object => t(:klass))
   		redirect_to klasses_path
@@ -50,6 +49,10 @@ class KlassesController < ApplicationController
 		@class_month = params[:class_month] || Date.current.month
 		@class_day   = params[:class_day]   || Date.current.day
 		@class_year  = params[:class_year]  || Date.current.year
+
+		@klasses = Klass.find_all_by_date( "#{@class_year}-#{@class_month}-#{@class_day}", :include => :course )
+    @class_groups = @klasses.group_by{|e| e.course.category }
+
 		
 #    if params[:date]
 #	    @klass_date = DateTime.parse( params[:date] )
@@ -300,4 +303,13 @@ private
 		end
 		@courses		
 	end
+	
+	def load_courses
+		@class_course = params[:class_course]
+		if @class_course.blank?
+	  	@courses = sort_courses
+		else
+			@courses = Course.all( :conditions => ["name like (?)",@class_course+"%"], :order=>:name )
+		end			
+	end	
 end

@@ -1,14 +1,23 @@
-﻿<div class="form">
+﻿<%= javascript_include_tag "capacity_update.js" %>
+<div class="form">
 <%= error_messages_for :klass %>
-<fieldset>
-<legend><%= t('klasses.editing') %></legend>
+<fieldset class="form">
+<legend class="form"><%= t( :editing, :object=>t(:klass)) %></legend>
 
-<% form_for(@klass) do |f| %>
-  <%= render :partial=>"form", :locals => { :f=>f, :label_text => t('update'), :klass_date=>"" } %>
-	<%= hidden_field_tag :redirect, params[:redirect] %>
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
+
+<% semantic_form_for(@klass) do |f| %>
+  <% #render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
+  <%= render :partial=>"form", :locals=>{ :f=>f, :label_text => 'update' } %>
 <% end %>
 
-<%= link_to t('show'), @klass, :class=>:link %> |
-<%= link_to t('back'), klasses_path( :date => @klass.date ), :class=>:link %>
+<div id="links">
+	<% if can? :index, Klass %>
+		<%= link_to t(:list,:object=>t('klasses.title')), klasses_path %>
+	<% end %>
+</div>
+
 </fieldset>
 </div>

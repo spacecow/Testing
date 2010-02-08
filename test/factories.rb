@@ -50,6 +50,7 @@ Factory.define :kanjis_onyomis do |f|
 end
 
 Factory.define :klass do |f|
+  f.capacity 8
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )
