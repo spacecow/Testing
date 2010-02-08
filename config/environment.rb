@@ -35,6 +35,8 @@ Rails::Initializer.run do |config|
   config.gem "cancan"
   config.gem "sanitize"
   config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
+  config.gem 'collectiveidea-delayed_job', :lib => 'delayed_job', :source => 'http://gems.github.com'
+
 	
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 

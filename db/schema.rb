@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100121145650) do
+ActiveRecord::Schema.define(:version => 20100129150813) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(:version => 20100121145650) do
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
+  end
+
+  create_table "classes", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_id"
+    t.integer  "classroom_id"
+    t.integer  "capacity"
+    t.datetime "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "cancel"
+    t.integer  "mail_sending"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -61,6 +78,19 @@ ActiveRecord::Schema.define(:version => 20100121145650) do
   create_table "courses_students", :id => false, :force => true do |t|
     t.integer  "student_id"
     t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

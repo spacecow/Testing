@@ -26,6 +26,6 @@ config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http:/
 #config.gem 'selenium-client', :lib => 'selenium/client', :version => ">=1.2.14"
 config.gem "rspec", :lib => false, :version => ">=1.2.9"
 config.gem "rspec-rails", :lib => false, :version => ">=1.2.9"
-config.gem "webrat", :lib => false, :version => ">=0.5.3"
-config.gem "cucumber", :lib => false, :version => ">=0.4.3"
+config.gem "webrat", :lib => false, :version => "=0.5.3"
+config.gem "cucumber", :lib => false, :version => "=0.4.4"
 config.gem "pickle", :lib => false, :version => ">=0.1.21"
