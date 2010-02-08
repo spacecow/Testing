@@ -3,7 +3,7 @@ Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 
-Scenario: Index view
+Scenario: Classes display of date
 Given a user is logged in as "johan"
 When I go to the klasses page
 Then "class_month" should have options "January, February, March, April, May, June, July, August, September, October, November, December"
@@ -23,7 +23,20 @@ Then I should be redirected to the klasses page
  	And "February" should be selected in "class_month"
  	And "15" should be selected in "class_day"
  	And "2012" should be selected in "class_year"
-	
+
+Scenario: View of classes
+Given a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
+	And a klass: "rails" exists with course: course "rails", start_time: "12:00", end_time: "13:00", date: "2010-03-01"
+	And a user is logged in as "johan"
+#When I go to the klasses page
+#	And I should see "II" within "table#Ruby tr td.course_level"
+#	And I should see "18:50~20:50" within "table#Ruby tr td#time_interval"
+#	And I should see "" within "table#Ruby tr td#unit"
+#	And I should see "1" within "table#Ruby tr td#classroom"
+#	And I should see "" within "table#Ruby tr td#teacher"
+#	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
+#	And I should not see "Rails"
+
 @index_links
 Scenario Outline: Links from index page
 Given a user is logged in as "johan"
