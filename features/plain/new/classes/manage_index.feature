@@ -157,9 +157,8 @@ Then I should be redirected to the klasses page
 	And 2 klasses should exist
 	And 2 klasses should exist with start_time: "18:50", end_time: "20:50", capacity: 6, date: "2010-02-28", course: course "ruby1"
 
-
 Scenario: Let day have appear with AJAX so its easier to get the date right (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Make loading of classes a pre-filter (NOT IMPLEMENTED)
+Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
 Given not implemented

@@ -64,6 +64,7 @@ Examples:
 |	johan	|
 |	aya		|
 
+@allow-rescue
 Scenario Outline: Not everyone can create a class
 Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"

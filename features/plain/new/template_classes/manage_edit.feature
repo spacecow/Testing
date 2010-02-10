@@ -57,7 +57,7 @@ Examples:
 
 Scenario Outline: Links from edit page
 Given a user is logged in as "<user>"
-	Then 1 template_classes should exist
+	Then 0 template_classes should exist
 When I go to the edit page of that template class
 Then I should see options "Info, Del, List Template Classes" within "div#links"
 When I follow "Info" within "div#links"

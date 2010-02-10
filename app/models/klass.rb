@@ -1,6 +1,6 @@
 class Klass < ActiveRecord::Base
   belongs_to :course
-  belongs_to :teacher
+  belongs_to :teacher, :class_name => 'User'
   belongs_to :classroom
   has_many :attendances
   has_many :students, :through => :attendances
@@ -15,6 +15,18 @@ class Klass < ActiveRecord::Base
 	validate :end_time_cannot_be_blank  
 	validates_numericality_of :capacity
 	validate :capacity_cannot_be_zero
+
+	def year
+		date.year
+	end
+	
+	def month
+		date.month
+	end
+	
+	def day
+		date.day
+	end
 
 	def date_and_time_interval
 		date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval

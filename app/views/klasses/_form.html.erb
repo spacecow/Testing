@@ -1,11 +1,10 @@
 ﻿<% f.inputs do %>
-	<span id="course"><%= f.input :course, :label => t( :course ), :collection => @courses %></span>
-	<%= f.input :date, :label => t( :klass_date ), :as => :date, :order=>[ :month, :day, :year ], :include_blank => @class_date.blank? ? true : false %>
+	<%= f.input :course, :label => t( :course ), :collection => @courses if label_text == 'create' %>
+	<%= f.input :date, :label => t( :klass_date ), :as => :date, :order=>[ :month, :day, :year ], :include_blank => @class_date.blank? ? true : false if label_text == 'create' %>
 	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 17:50" %>
 	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'numeric' }, :hint => "#{t :ex} 18:40" %>
 	<span class="horizontal"><label><%= f.input :cancel, :label => t( :cancel ), :as => :radio %></label></span>
-	<span id="capacity"><%= f.input :capacity, :label => t( 'capacity' ) %></span>
-	<%# f.input :mail_sending, :label => t( :mail_sending ), :required => false %>	
+	<%= f.input :capacity, :label => t( 'capacity' ) %>
 	<%= f.input :title, :label => t( 'title' ), :required => false %>
 	<%= f.input :description, :label => t( :description ), :required => false %>
 	<%= f.input :note, :label => t( :note ), :required => false %>

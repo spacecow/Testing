@@ -14,9 +14,9 @@
 <% end %>
 
 <div id="links">
-	<% if can? :index, Klass %>
-		<%= link_to t(:list,:object=>t('klasses.title')), klasses_path %>
-	<% end %>
+	<%= link_to t(:show), @klass if can? :show, @klass %>
+	<%= link_to t(:destroy), @klass, :confirm => t(:sure?), :method => :delete if can? :destroy, @klass %>
+	<%= link_to t(:list,:object=>t('klasses.title')), klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day ) if can? :index, Klass %>
 </div>
 
 </fieldset>

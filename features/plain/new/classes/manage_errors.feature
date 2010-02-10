@@ -17,7 +17,7 @@ Then I should be redirected to the error klasses page
 Scenario Outline: Capacity errors　旭蟹　red frog crab
 Given a user is logged in as "johan"
 When I go to the new klass page
-And I fill in "Capacity" with "<input>"
+	And I fill in "Capacity" with "<input>"
 	And I press "Create"
 Then I should be redirected to the error klasses page
 	And I should see "Capacity*<error>"
@@ -27,6 +27,19 @@ Examples:
 | 					|	is not a number	|	should not	|
 | asahigani	|	is not a number	|	should not	|
 | 0					|	can't be zero		|	should   		|
+
+@capacity_errors_edit
+Scenario: Capacity errors for a class in edit mode
+Given a course exists with name: "Ruby I"
+	And a klass exists with course: that course
+	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
+	And a user is logged in as "aya"
+When I go to the edit page of that klass
+	And I fill in "Capacity" with ""
+	And I press "Update"
+Then I should be redirected to the error show page of that klass
+	And I should see "is not a number" as error message for klass capacity
+
 
 @time_errors
 Scenario Outline: Time errors　磯蟹　beach crab

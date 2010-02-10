@@ -1,1 +1,27 @@
-﻿
+﻿<div class="show">
+<fieldset class="show">
+<legend><%= t('template_class') %></legend>
+
+<div class="pairs">
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :title ), :right => h( @klass.title ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :course ), :right => link_to( h( @klass.course ), @klass.course ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :teacher ), :right => link_to( h( @klass.teacher ), @klass.teacher ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :classroom ), :right => link_to( h( @klass.classroom ), @klass.classroom ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :capacity ), :right => h( @klass.capacity ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :klass_date ), :right => h( @klass.date.to_s.split[0] ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :start_time ), :right => h( @klass.start_time.to_s( :time )) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :end_time ), :right => h( @klass.end_time.to_s( :time )) } %>
+	<%# render :partial => 'includes/pair', :locals => { :left => t( :mail_sending ), :right => h( @klass.mail_sending ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :cancel ), :right => h( @klass.cancel ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :description ), :right => h( @klass.description ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :note ), :right => h( @klass.note ) } %>
+</div>
+
+<div id="links">
+		<%= link_to t(:edit), edit_klass_path(@klass) if can? :edit, @klass %>
+		<%= link_to t(:destroy), @klass, :confirm => t(:sure?), :method => :delete if can? :destroy, @klass %>
+		<%= link_to t(:list,:object=>t('klasses.title')), klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day ) if can? :index, Klass %>
+</div>
+
+</fieldset>
+</div>

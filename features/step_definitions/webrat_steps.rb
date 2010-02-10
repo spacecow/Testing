@@ -21,10 +21,7 @@ When /^I press "([^\"]*)"$/ do |button|
 end
 
 When /^I follow "([^\"]*)"$/ do |link|
-  begin
-  	click_link(link)
-  rescue CanCan::AccessDenied
-  end
+  click_link(link)
 end
 
 When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, parent|

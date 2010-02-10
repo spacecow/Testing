@@ -19,27 +19,37 @@ class KlassesController < ApplicationController
 		else
 			render :action => :new	
 		end
-#    @klass = Klass.new( params[ :klass ])
-#    @klass_date = @klass.date.to_s
-#		@teachers = []
-#		if !params[:klass][:course_id].blank?
-#			@teachers = Teacher.all(
-#				:conditions=>["courses.name = ?", Course.find( params[:klass][:course_id] ).name],
-#			  :include=>[:person, :courses])    
-#		end
-#    respond_to do |format|
-#      if @klass.save
-#        flash[:notice] = 'Klass was successfully created.'
-#        format.html { redirect_to klasses_path( :date => @klass.date ) }
-#        format.xml  { render :xml => @klass, :status => :created, :location => @klass }
-#      else
-#        format.html { render :action => "new" }
-#        format.xml  { render :xml => @klass.errors, :status => :unprocessable_entity }
-#      end
-#    end
   end
 
+  def edit
+  end
 
+  def update
+		if @klass.update_attributes( params[:klass] )
+  		flash[:notice] = t('notice.update_success', :object => t(:klass))
+  		redirect_to klasses_path
+		else
+			render :action => :edit
+		end
+	end
+
+  def destroy
+    @klass = Klass.find( params[:id] )
+
+#		error = association_delete_error_message(
+#			@klass.attendances,
+#			t('klasses.error.try_to_delete_klass_with_students' ))
+										
+#		if( !error.blank? )
+#      flash[:error] = error
+#      redirect_to :back #klasses_path( :date => params[:date] )
+#      return
+#    end
+    
+    @klass.destroy
+    flash[:notice] = t('notice.delete_success', :object => t(:klass))
+    redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day )
+  end
 
   def index
 		@months = t('date.month_names').compact.zip((1..12).to_a )
@@ -265,25 +275,7 @@ class KlassesController < ApplicationController
 #
 #  # DELETE /klasses/1
 #  # DELETE /klasses/1.xml
-#  def destroy
-#    @klass = Klass.find( params[:id] )
-#
-#		error = association_delete_error_message(
-#			@klass.attendances,
-#			t('klasses.error.try_to_delete_klass_with_students' ))
-#										
-#		if( !error.blank? )
-#      flash[:error] = error
-#      redirect_to :back #klasses_path( :date => params[:date] )
-#      return
-#    end
-#    
-#    @klass.destroy
-#    respond_to do |format|
-#      format.html { redirect_to :back } #klasses_path( :date => params[:date] )}
-#      format.xml  { head :ok }
-#    end
-#  end
+
 #
 ##  def authorize
 ##    unless session[:user_name]
