@@ -1,5 +1,5 @@
-Then /^I should see "([^\"]*)" as notice flash message$/ do |message|
-  Then "I should see \"#{message}\" within \"div#notice\""
+Then /^I should see "([^\"]*)" as (notice|error) flash message$/ do |message,type|
+  Then "I should see \"#{message}\" within \"div##{type}\""
 end
 
 Then /^I should see links "([^\"]*)" at the bottom of the page$/ do |options|

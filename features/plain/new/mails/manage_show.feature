@@ -213,6 +213,7 @@ Examples:
 |	prince	|	Prince Philip	|
 |	junko		|	Junko Sumii		|
 
+@allow-rescue
 Scenario Outline: Registrants, observers or admins cannot read other peoples email
 Given a mail: "johan" exists with sender: user "god", subject: "created#todo", message: "todos.created#Chat room"
 	And a recipient exists with user: user "johan", mail: that mail

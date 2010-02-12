@@ -14,6 +14,7 @@ Given(/^#{capture_model} exists?(?: with #{capture_fields})?$/) do |name, fields
 		roles_code["student"] = 16
 		roles_code["registrant"] = 32
 		roles_code["photographer"] = 64
+		roles_code["beta-tester"] = 128
 		
 		roles_mask = 0
 		roles.split(', ').each do |role|

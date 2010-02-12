@@ -3,6 +3,21 @@ Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 
+@generate
+Scenario: When choosing a date that does not have any classes, they should be generated
+Given a course: "ruby" exists with name: "Ruby II"
+	And a classroom: "1" exists with name: "1"
+	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
+Given a user is logged in as "johan"
+When I go to the klasses page
+	And I select "March" from "class_month"
+	And I select "28" from "class_day"
+	And I select "2010" from "class_year"
+	And I press "Go!"
+Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-28"
+	And 1 klasses should exist
+	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
+
 @allow-rescue
 Scenario Outline: Some users cannot reach the list of classes
 Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
@@ -17,17 +32,20 @@ Examples:
 | junko			|
 | mika			|
 
+@observer
 Scenario: List classes for observer
 Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a user is logged in as "thomas"
+Then 1 klasses should exist
 When I go to the klasses page
 	And I select "February" from "class_month"
 	And I select "28" from "class_day"
 	And I select "2010" from "class_year"
 	And I press "Go!"
 Then I should see options "Info" within "table#Ruby tr td#links"
+	And 1 klasses should exist
 
 Scenario: Classes display of date
 Given a user is logged in as "johan"
@@ -161,4 +179,7 @@ Scenario: Let day have appear with AJAX so its easier to get the date right (NOT
 Given not implemented
 
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Implement versioning? (NOT IMPLEMENTED)
 Given not implemented

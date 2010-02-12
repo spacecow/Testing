@@ -69,6 +69,8 @@ class ApplicationController < ActionController::Base
   def set_default_user_language
 		#@current_settings ||= Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
+  	
+  	#I18n.locale = "en" 
     
     I18n.locale = ( current_user2 ? current_user2.language : ( session[:language] ? session[:language] : "ja" )) #( @setting ? @setting.language : "ja" )))
   end  

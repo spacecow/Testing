@@ -3,11 +3,6 @@ Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user: "aya" exists with username: "aya", role: "admin, teacher", language: "en", name: "Junko Sumii"
-	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
-	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
-	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
-	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant, student", language: "ja", name: "Akira Kurosawa"	
-	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
 	And a course: "ruby" exists with name: "Ruby II"
 	And a course: "rails" exists with name: "Rails II"
 	And a classroom: "1" exists with name: "1"
@@ -42,7 +37,8 @@ Examples:
 |	aya			|
 
 Scenario: List Template Classes for observer
-Given a user is logged in as "thomas"
+Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
+	And a user is logged in as "thomas"
 When I go to the template classes page
 	And I select "Monday" from "Choose a day:"
 	And I press "Go!"
@@ -51,9 +47,9 @@ Then I should see "Info" within "table#Ruby tr td#links"
 	And I should not see "Del" within "table#Ruby tr td#links"
 
 @index_links
-Scenario Outline: Links from index page
+Scenario: Links from index page
 Given a course: "ruby2" exists with name: "Ruby I"
-	And a user is logged in as "<user>"
+	And a user is logged in as "aya"
 When I go to the template classes page
 Then 2 template_classes should exist
 When I select "Monday" from "Choose a day"
@@ -99,13 +95,12 @@ Then I should be redirected to the template classes page
 	And 3 template_classes should exist
 	And 2 template_classes should exist with start_time: "18:50", end_time: "20:50", capacity: 8
 
-Examples:
-|	user		|
-|	johan		|
-|	aya			|
-
+@allow-rescue
 Scenario Outline: Some users cannot reach this page
-Given a user is logged in as "<user>"
+Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
+	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
+	And a user is logged in as "<user>"
 When I go to the template classes page
 Then I should be redirected to the events page
 Examples:

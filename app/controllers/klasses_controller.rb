@@ -51,7 +51,7 @@ class KlassesController < ApplicationController
     redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day )
   end
 
-  def index
+  def index	
 		@months = t('date.month_names').compact.zip((1..12).to_a )
 		@days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
 		@years  = (2009..2020).map{|e| e.to_s+t(:klass_year)}.zip((2009..2020).to_a )
@@ -59,64 +59,29 @@ class KlassesController < ApplicationController
 		@class_month = params[:class_month] || Date.current.month
 		@class_day   = params[:class_day]   || Date.current.day
 		@class_year  = params[:class_year]  || Date.current.year
+		@class_date  = DateTime.parse("#{@class_year}-#{@class_month}-#{@class_day}")
 
-		@klasses = Klass.find_all_by_date( "#{@class_year}-#{@class_month}-#{@class_day}", :include => :course )
-    @class_groups = @klasses.group_by{|e| e.course.category }
-
-		
-#    if params[:date]
-#	    @klass_date = DateTime.parse( params[:date] )
-#	    @month = Date::MONTHNAMES[ @klass_date.month ]
-#	    @day = @klass_date.day
-#	    @year = @klass_date.year
-#    else
-#	    @month = params[:month] ? params[:month] : Date::MONTHNAMES[ Date.current.month ]
-#	    @day = params[:day] ? params[:day] : Date.current.day
-#	    @year = params[:year] ? params[:year] : Date.current.year
-#		  @klass_date = DateTime.new( @year.to_i,Date::MONTHNAMES.index( @month ),@day.to_i )
-#    end
-#    
-#    #@attendance = Attendance.find(params[:attendance]) if params[:attendance]
-#    
-#    @line = [["----------","line"]]
-#    @moves = [["Move to 1","Move to 1"],["Move to 2","Move to 2"],["Move to 3","Move to 3"],["Move to 4","Move to 4"]]
-#    @options = [["Cancel","Cancel"],["Delete","Delete"]]
-#    
-#    @klasses = Klass.find_all_by_date( @klass_date, :include=>[ :course, :classroom, :teacher, :attendances, { :students => :person }])
-#    if clearance?(2)
-#			if @klasses.size == 0
-#	  		TemplateClass.find( :all, :conditions => [ "day = ?", @klass_date.strftime("%A") ]).each do |t|
-#	    		Klass.new(
-#						:course_id=>t.course_id,
-#						:teacher_id=>t.teacher_id,
-#						:classroom_id=>t.classroom_id,
-#						:capacity=>t.capacity,      
-#						:date=>@klass_date,
-#						:start_time=>t.start_time,
-#						:end_time=>t.end_time,
-#						:title=>t.title,
-#						:description=>t.description,
-#						:cancel=>t.inactive,
-#						:mail_sending=>t.mail_sending,
-#						:note=>t.note
-#		    	).save
-#	  		end
-#	  	end
-#	  	@klasses = Klass.find_all_by_date( @klass_date, :include=>[ :course, :classroom, { :teacher=> :person }, :attendances, { :students => :person }])
-#		end
-#
-#    @klass_groups = @klasses.group_by{|e| e.course.category }
-#    
-#    #_groups = Klass.find_all_by_date( @klass_date, :include=>['course','classroom',{ :teacher=>:person }, :students ]).group_by{|e| e.course.category 
-#    @classrooms = Classroom.all
-#    @teachers = Teacher.find( :all, :include=>[:person,:courses] )
-#    
-#    @collition = {}
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @klasses }
-#    end
+		@klasses = Klass.find_all_by_date( @class_date, :include => :course )
+		if @klasses.size == 0
+			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|
+    		p Klass.create!(
+					:course_id=>t.course_id,
+					:teacher_id=>t.teacher_id,
+					:classroom_id=>t.classroom_id,
+					:capacity=>t.capacity,      
+					:date=>@class_date,
+					:start_time=>t.start_time,
+					:end_time=>t.end_time,
+					:title=>t.title,
+					:description=>t.description,
+					:cancel=>t.inactive,
+					:mail_sending=>t.mail_sending,
+					:note=>t.note
+	    	)
+			end
+			@klasses = Klass.find_all_by_date( @class_date, :include => :course )
+		end
+    @class_groups = @klasses.group_by{|e| e.course.category }		
   end
 
 #  

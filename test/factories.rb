@@ -9,6 +9,7 @@ Factory.define :comment do |f|
 end
 
 Factory.define :course do |f|
+	f.sequence(:name){|n| "name#{n}" }
 end
 
 Factory.define :course_time do |f|
@@ -54,6 +55,7 @@ Factory.define :klass do |f|
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )
+	f.course {|course| course.association(:course)}
 end
 
 Factory.define :kunyomi do |f|
@@ -123,6 +125,7 @@ Factory.define :template_class do |f|
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )		
 	f.day Date.current.strftime("%a").downcase
+	f.course {|course| course.association(:course)}
 end
 
 Factory.define :unit do |f|

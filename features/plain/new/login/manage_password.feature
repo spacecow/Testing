@@ -23,13 +23,7 @@ Then I should see "A mail has been sent to you." within "#notice"
 
 @password
 Scenario: Try to switch language in the middle of an error message
-When I go to path "/login_user"
-	And I follow "パスワードを忘れました！"
-Then I should see "ユーザー確認" within "legend"
-	And I should see "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
-When I press "送信"
-	And I follow "English"
-Then I should be redirected to path "/toggle_user_language"
+Given not implemented
 
 Scenario: Errors for the user confirmation form
 When I go to path "/login_user"

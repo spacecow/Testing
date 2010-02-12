@@ -46,7 +46,7 @@ Then I should be redirected to the klasses page
 	And "March" should be selected in "class_month"
  	And "28" should be selected in "class_day"
  	And "2012" should be selected in "class_year"
-	And 1 template_classes should exist
+	And 1 klasses should exist
 When I go to the show page of that klass
 	And I follow "Del" at the bottom of the page
 Then I should be redirected to the klasses page
@@ -54,13 +54,13 @@ Then I should be redirected to the klasses page
  	And "28" should be selected in "class_day"
  	And "2012" should be selected in "class_year"
  	And I should see "Successfully deleted Class" as notice flash message
-	And 0 template_classes should exist
+	And 0 klasses should exist
 
 @allow-rescue
 Scenario Outline: Some users cannot reach this page
-Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+Given a klass exists
+	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
-	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant, student", language: "ja", name: "Akira Kurosawa"	
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
 Given a user is logged in as "<user>"
 When I go to the show page of that klass
@@ -75,7 +75,7 @@ Scenario Outline: Visual links for authorized users
 Given a klass exists
 	And a user is logged in as "<user>"
 When I go to the show page of that klass
-Then I should see links "" at the bottom of the page
+Then I should see links "<links>" at the bottom of the page
 Examples:
 |	user		|	links										|
 | johan		|	Edit, Del, List Classes	|

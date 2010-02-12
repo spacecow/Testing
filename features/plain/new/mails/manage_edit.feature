@@ -67,6 +67,7 @@ Then 1 mails should exist
 	And 1 recipients should exist
 	And a recipient should exist with user: user "aya", mail: that mail
 
+@allow-rescue
 Scenario Outline: Try to edit a mail without permission
 Given a mail exists with sender: user "junko", subject: "A boring subject", message: "A boring message"
 	And a recipient exists with user: user "aya", mail: that mail
