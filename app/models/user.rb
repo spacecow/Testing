@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
 	include NameValidations
 	
+	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'
+	has_many :klasses, :through => :attendances
+		
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants
 	has_many :comments, :dependent => :destroy

@@ -2,7 +2,8 @@ class Klass < ActiveRecord::Base
   belongs_to :course
   belongs_to :teacher, :class_name => 'User'
   belongs_to :classroom
-  has_many :attendances
+  
+  has_many :attendances, :dependent => :destroy
   has_many :students, :through => :attendances
 
 	versioned :only => :note
@@ -15,6 +16,10 @@ class Klass < ActiveRecord::Base
 	validate :end_time_cannot_be_blank  
 	validates_numericality_of :capacity
 	validate :capacity_cannot_be_zero
+
+	def name
+		course.to_s+date.day.to_s
+	end
 
 	def year
 		date.year

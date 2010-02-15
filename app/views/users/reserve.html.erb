@@ -1,0 +1,18 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t( :reserve ) %></legend>
+
+<% semantic_form_for @user do |f| %>
+	<% f.inputs do %>
+		<%= f.input :klasses, :as=>:check_boxes, :label=>t('klasses.title') %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t(:reserve) %>
+	<% end %>
+<% end %>
+
+<div id="links">
+</div>
+
+</fieldset>
+</div>
