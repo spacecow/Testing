@@ -4,7 +4,11 @@
 
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
-		<%= f.input :klasses, :as=>:check_boxes, :label=>t('klasses.title') %>
+		<%= f.input :klasses,
+			:as=>:check_boxes,
+			:label=>t('klasses.title'),
+			:collection => Klass.all(:conditions=>["date >= ?", Date.current], :order=>"date, start_time"),
+			:required=>false %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:reserve) %>

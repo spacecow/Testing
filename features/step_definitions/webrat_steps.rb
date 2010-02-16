@@ -131,6 +131,7 @@ Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
 end
 
 Then /^I should see \/([^\/]*)\/$/ do |regexp|
+#Then /^I should see \/(.+)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
   response.should contain(regexp)
 end

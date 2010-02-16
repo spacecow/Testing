@@ -23,6 +23,9 @@ module NavigationHelpers
 		when /^the edit page (?:for|of) (.+)$/
 			edit_polymorphic_path( model($1) )
 
+		when /^the reserve page (?:for|of) (.+)$/
+			polymorphic_path( model($1) )+"/reserve"
+
 #		when /^the delete page (?:for|of) (.+)$/
 #			polymorphic_path( model($1) ), :method => :delete
 			

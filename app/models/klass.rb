@@ -18,7 +18,7 @@ class Klass < ActiveRecord::Base
 	validate :capacity_cannot_be_zero
 
 	def name
-		course.to_s+date.day.to_s
+		month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval
 	end
 
 	def year
@@ -31,6 +31,14 @@ class Klass < ActiveRecord::Base
 	
 	def day
 		date.day
+	end
+	
+	def wday
+		date.wday-1
+	end
+	
+	def wday_to_s
+		I18n.t( 'date.day_names' )[wday]
 	end
 
 	def date_and_time_interval
