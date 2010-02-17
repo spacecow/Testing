@@ -122,7 +122,8 @@ Factory.define :todo do |f|
 end
 
 Factory.define :template_class do |f|
-	f.start_time Time.parse( "12:00" )
+  f.capacity 8
+  f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )		
 	f.day Date.current.strftime("%a").downcase
 	f.course {|course| course.association(:course)}

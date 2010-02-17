@@ -83,10 +83,6 @@ class KlassesController < ApplicationController
 		end
     @class_groups = @klasses.group_by{|e| e.course.category }		
   end
-  
-  def reserve
-  	
-  end
 
 #  
 #  def add_student

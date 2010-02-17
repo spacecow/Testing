@@ -1,5 +1,5 @@
 class Attendance < ActiveRecord::Base
-  belongs_to :student
+  belongs_to :student, :class_name => 'User'
   belongs_to :klass
   
   def student_id=(student)

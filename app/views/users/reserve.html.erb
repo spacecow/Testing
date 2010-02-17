@@ -2,17 +2,34 @@
 <fieldset class="form">
 <legend class="form"><%= t( :reserve ) %></legend>
 
+<% unless @reservable_klasses.empty? %>
+<div class="reservable">
+Classes you can reserve
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
 		<%= f.input :klasses,
 			:as=>:check_boxes,
-			:label=>t('klasses.title'),
-			:collection => Klass.all(:conditions=>["date >= ?", Date.current], :order=>"date, start_time"),
+			:label=>false,
+			:collection => @reservable_klasses,
 			:required=>false %>
+		<% @reserved_klasses.each do |klass| %>
+			<%= hidden_field_tag "user[klass_ids][]", klass.id %>
+		<% end %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:reserve) %>
 	<% end %>
+<% end %>
+</div>
+<% end %>
+
+<% unless @reserved_klasses.empty? %>
+<div class="reserved">
+Reserved classes
+<% @reserved_klasses.each do |klass| %>
+	<%= klass.name %>
+<% end %>
+</div>
 <% end %>
 
 <div id="links">

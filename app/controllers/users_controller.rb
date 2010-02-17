@@ -122,6 +122,13 @@ class UsersController < ApplicationController
       render :action => 'change_password'
     end
 	end
+	
+	def reserve
+		@klasses = {}
+		Klass.all(:conditions=>["date >= ?", Date.current]).map{|e| @klasses[e.name] = current_user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
+		@reservable_klasses = @klasses.values.reject{|e| current_user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@reserved_klasses = @klasses.values.reject{|e| !current_user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+	end
 end
 
 

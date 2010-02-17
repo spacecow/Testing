@@ -20,15 +20,77 @@ Then I should see "New Template Class" within "legend"
 When I follow "List Template Classes" within "div#links"
 	Then I should be redirected to the template classes page
 	
-Scenario: Errors
-Given a user is logged in as "johan"
+@course_errors
+Scenario: Course errors for template class
+Given a course exists with name: "Ruby I"
+	And a user is logged in as "johan"
 When I go to the new template class page
-	And I fill in "Capacity" with ""
+	And I select "" from "Course"
 	And I press "Create"
 Then I should be redirected to the error template classes page
-	And I should see "Course*can't be blank"
-	And I should see "Capacity*can't be blank"
-	And I should see "Day*MondayTuesdayWednesdayThursdayFridaySaturdaySundaycan't be blank"
+	And I should see "can't be blank" as error message for template_class course
+
+@capacity_errors
+Scenario Outline: Capacity errors for template class
+Given a user is logged in as "johan"
+When I go to the new template class page
+	And I fill in "Capacity" with "<input>"
+	And I press "Create"
+Then I should be redirected to the error template classes page
+	And I should see "<error>" as error message for template_class capacity
+Examples:
+|	input			|	error						|	zero				|
+| 					|	is not a number	|	should not	|
+| asahigani	|	is not a number	|	should not	|
+| 0					|	can't be zero		|	should   		|
 	
+@capacity_errors_edit
+Scenario: Capacity errors for a template class in edit mode
+Given a course exists with name: "Ruby I"
+	And a template class exists with course: that course
+	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
+	And a user is logged in as "aya"
+When I go to the edit page of that template class
+	And I fill in "Capacity" with ""
+	And I press "Update"
+Then I should be redirected to the error show page of that template class
+	And I should see "is not a number" as error message for template_class capacity
+
+@time_errors
+Scenario Outline: Time errors for template class
+Given a user is logged in as "johan"
+When I go to the new template class page
+	And I fill in "Start time" with "<input>"
+	And I fill in "End time" with "<input>"
+	And I press "Create"
+Then I should be redirected to the error template classes page
+	And I should see "can't be blank" as error message for template_class start_time_string
+	And I should see "can't be blank" as error message for template_class end_time_string
+Examples:
+|	input		|
+| 				|
+|	isogani	|
+|	b13			|
+|	b13f		|
+|	13d			|
+|	-3			|
+|	24			|
+
+@time_ok
+Scenario Outline: Time ok
+Given a user is logged in as "johan"
+When I go to the new template class page
+	And I fill in "Start time" with "<input>"
+	And I fill in "End time" with "<input>"
+	And I press "Create"
+Then I should be redirected to the error template classes page
+	And the "Start time" field should contain "<output>"		
+	And the "End time" field should contain "<output>"		
+Examples:
+|	input	|	output	|	
+| 3:13	|	03:13		|
+|	13		|	13:00		|
+|	0			|	00:00		|
+
 Scenario: Change capacity automatically when changing between conversation/grammar (NOT IMPLEMENTED)
 Given not implemented	
