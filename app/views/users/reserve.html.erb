@@ -2,9 +2,10 @@
 <fieldset class="form">
 <legend class="form"><%= t( :reserve ) %></legend>
 
+<div class="intro">
 <% unless @reservable_klasses.empty? %>
 <div class="reservable">
-Classes you can reserve
+<h2><%= t('header.classes_to_reserve') %></h2>
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
 		<%= f.input :klasses,
@@ -12,9 +13,8 @@ Classes you can reserve
 			:label=>false,
 			:collection => @reservable_klasses,
 			:required=>false %>
-		<% @reserved_klasses.each do |klass| %>
-			<%= hidden_field_tag "user[klass_ids][]", klass.id %>
-		<% end %>
+		<%= @reserved_klasses.map{|klass| hidden_field_tag "user[klass_ids][]", klass.id} %>
+		<%= @class_history.map{|klass| hidden_field_tag "user[klass_ids][]", klass.id} %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:reserve) %>
@@ -22,13 +22,27 @@ Classes you can reserve
 <% end %>
 </div>
 <% end %>
+</div>
 
 <% unless @reserved_klasses.empty? %>
 <div class="reserved">
-Reserved classes
+<h2><%= t('header.already_reserved_classes') %></h2>
+<ul>
 <% @reserved_klasses.each do |klass| %>
-	<%= klass.name %>
+	<li><%= klass.name %></li>
 <% end %>
+</ul>
+</div>
+<% end %>
+
+<% unless @class_history.empty? %>
+<div class="history">
+<h2><%= t('header.class_history') %></h2>
+<ul>
+<% @class_history.each do |klass| %>
+	<li><%= klass.name %></li>
+<% end %>
+</ul>
 </div>
 <% end %>
 

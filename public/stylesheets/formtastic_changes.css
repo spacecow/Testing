@@ -9,6 +9,8 @@
   margin-right: 0.5em;
 }
 .numeric_mixin { width: 10em; }
+div.reservable form.user fieldset.inputs ol li fieldset ol { padding: 0; }
+div.reservable form.user fieldset.buttons { padding-left: 0; }
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
 form.formtastic fieldset.buttons { padding-left: 145px; }

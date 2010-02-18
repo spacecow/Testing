@@ -1,0 +1,13 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form">Enlisted Courses</legend>
+
+<% semantic_form_for @user do |f| %>
+	<%= f.input :courses, :as=>:check_boxes, :label=>false %>
+<% end %>
+
+<div id="links">
+</div>
+
+</fieldset>
+</div>

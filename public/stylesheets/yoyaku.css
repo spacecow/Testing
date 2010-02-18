@@ -436,6 +436,15 @@ a:hover {
   margin: 0.4em 0 1em 0;
 }
 #container #main .form fieldset.form .intro:hover { background: #f5ffee; }
+#container #main .form fieldset.form h2 {
+  color: #222266;
+  border-bottom: 3px dotted #aabbaa;
+  font: 14px sans-serif;
+  margin-bottom: 2px;
+}
+#container #main .form fieldset.form h2 a { font: 18px sans-serif; }
+#container #main .form fieldset.form h2 a:hover { color: #eeffee; }
+#container #main .form fieldset.form .history { margin-top: 1em; }
 #container #main .form fieldset.form .links { margin-top: 1em; }
 #container #main .form #update_container #text_message {
   width: 400px;

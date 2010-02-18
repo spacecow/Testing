@@ -13,7 +13,7 @@ class Ability
 		else
 			can :destroy, UserSession
 			can [:new_event_register, :create_event_register], User
-			can :update, User do |u|
+			can [:update,:reserve], User do |u|
 				u == user
 			end
   		can :create, Registrant

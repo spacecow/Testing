@@ -125,9 +125,14 @@ class UsersController < ApplicationController
 	
 	def reserve
 		@klasses = {}
-		Klass.all(:conditions=>["date >= ?", Date.current]).map{|e| @klasses[e.name] = current_user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
-		@reservable_klasses = @klasses.values.reject{|e| current_user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@reserved_klasses = @klasses.values.reject{|e| !current_user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		Klass.all(:conditions=>["date >= ?", Date.current]).map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
+		@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@reserved_klasses = @klasses.values.reject{|e| !@user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@class_history = @user.klasses.reject{|e| e.date >= Date.current }
+	end
+	
+	def courses
+		@courses = Course.all
 	end
 end
 

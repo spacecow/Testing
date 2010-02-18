@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  has_and_belongs_to_many :students
+  has_and_belongs_to_many :students, :join_table => 'courses_students'
   has_many :template_classes
   has_many :klasses
   has_many :teachings

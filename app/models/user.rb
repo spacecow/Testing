@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 	
 	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'
 	has_many :klasses, :through => :attendances
+	has_and_belongs_to_many :courses, :join_table => 'courses_students', :foreign_key => 'student_id'
 		
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants

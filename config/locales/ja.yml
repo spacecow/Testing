@@ -198,6 +198,10 @@ ja:
       both_blank: "テキスト領域は両方が空白のままにしておけない"
       does_not_exist: "がありません"
       zero: "はゼロではいけません"
+  header:
+    already_reserved_classes: "もう予約されていたクラス"
+    class_history: "過去のクラス"
+    classes_to_reserve: "予約できるクラス"
   message:
     asterisk: "アステリスクがある所は必要な情報。"
     avatar_upload: "プロフィール写真ををアップロード"

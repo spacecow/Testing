@@ -198,6 +198,10 @@ en:
       both_blank: "can't both be blank"
       does_not_exist: "does not exist"
       zero: "can't be zero"
+  header:
+    already_reserved_classes: "Already Reserved Classes"
+    class_history: "Class History"
+    classes_to_reserve: "Classes to Reserve"
   message:
     asterisk: "All fields that are marked with an asterisk (*) must be filled in before submitting."
     avatar_upload: "Upload your profile picture"
