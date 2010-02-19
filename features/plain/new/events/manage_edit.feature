@@ -5,7 +5,7 @@ Given a setting exists with name: "main"
 
 Scenario: Edit an event
 Given a user is logged in as "aya"
-	And a event exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ"
+	And a event exist with title_en: "Christmas Party", title_ja: "繧ｯ繝ｪ繧ｹ繝槭せ繝代�ｼ繝�繧｣"
 When I go to the events page
 	And I follow "Edit" within that event
 	And I fill in "Title (en)*" with ""

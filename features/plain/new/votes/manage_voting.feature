@@ -8,6 +8,7 @@ Given a setting exists with name: "main"
 	And a todo: "chat" exists with subjects_mask: 3, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
 	And a todo: "friends" exists with subjects_mask: 2, user: user "prince", title: "Have friends", description: "I want friends for Christmas!"
 
+@allow-rescue
 Scenario: Regular registrants should not be able to vote
 Given a user is logged in as "mika"
 When I go to the votes page
@@ -15,6 +16,7 @@ Then I should be redirected to the events page
 When I go to the new vote page
 Then I should be redirected to the events page
 
+@allow-rescue
 Scenario Outline: Regular users should not be able to see the vote index
 Given a user is logged in as "<user>"
 When I go to the votes page
@@ -33,8 +35,10 @@ When I go to the todos page
 Then I should be redirected to the todos page
 	And I should see "Points: 1" within todo "chatting"
 	And a vote should exist with user: user "<user>", todo: todo "chatting", points: 1
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "created#vote", message: "votes.created#Chatting room"
+	And a mail <johan> exist with sender: user "<user>", subject: "created#vote", message: "votes.created#Chatting room"
+	And a recipient <johan> exist with user: user "johan"
 	And <no> mails should exist
+	And <no> recipients should exist
 Examples:
 |	author	|	user		|	johan				| no	|
 |	junko		|	junko		|	should			|	1		|
@@ -75,8 +79,10 @@ When I go to the todos page
 Then 1 votes should exist
 	And I should see "Points: 4" within todo "chatting"
 	And a vote should exist with user: user "<user>", todo: todo "chatting", points: 4
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "changed#vote", message: "votes.changed#Chatting room"
+	And a mail <johan> exist with sender: user "<user>", subject: "changed#vote", message: "votes.changed#Chatting room"
+	And a recipient <johan> exist with user: user "johan"
 	And <no> mails should exist
+	And <no> recipients should exist
 Examples:
 |	author	|	user		|	johan				| no	|
 |	junko		|	junko		|	should			|	1		|
@@ -95,8 +101,10 @@ When I go to the todos page
 	And I follow "cancel" within todo: "chatting"
 Then 0 votes should exist
 	And I should see "Points: 0" within todo "chatting"
-	And a mail <johan> exist with sender: user "<user>", recipient: user "johan", subject: "canceled#vote", message: "votes.canceled#Chatting room"
+	And a mail <johan> exist with sender: user "<user>", subject: "canceled#vote", message: "votes.canceled#Chatting room"
+	And a recipient <johan> exist with user: user "johan"
 	And <no> mails should exist
+	And <no> recipients should exist
 Examples:
 |	author	|	user		|	johan				| no	|
 |	junko		|	junko		|	should			|	1		|

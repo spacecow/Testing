@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.login_user '/login_user/:username', :controller => 'user_sessions', :action => 'new'
 	map.login_user '/login_user', :controller => "user_sessions", :action => "new"
 	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
+	map.mypage '/mypage', :controller => "events", :action => "index"
 	
 	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
 

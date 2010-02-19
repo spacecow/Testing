@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.edit_registration')
-      	redirect_to events_path
+      	redirect_to mypage_path
     	else
     		render :action => "crop"
   		end
@@ -125,14 +125,30 @@ class UsersController < ApplicationController
 	
 	def reserve
 		@klasses = {}
-		Klass.all(:conditions=>["date >= ?", Date.current]).map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
+		Klass.all(
+			:conditions=>["date >= ?", Date.current],
+			:include=>:course ).
+				reject{|e| !@user.courses.include?( e.course )}.
+				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
 		@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		@reserved_klasses = @klasses.values.reject{|e| !@user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		@class_history = @user.klasses.reject{|e| e.date >= Date.current }
 	end
 	
 	def courses
-		@courses = Course.all
+		@courses = sort_courses
+	end
+	
+private
+
+	def sort_courses
+  	@courses = []
+  	@sorting = Sorting.new
+  	@courses_groups = Course.all( :order=>:name ).group_by(&:category)
+		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
+			@courses_groups[key].map{|course| @courses.push course }
+		end
+		@courses		
 	end
 end
 

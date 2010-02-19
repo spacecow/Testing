@@ -10,6 +10,7 @@ Then I should see "Reserve" as title
 
 Scenario: Same class should not be displayed double
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
 	And a klass exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a user is logged in as "aya"
@@ -20,6 +21,7 @@ Then I should see "2/16(Thursday) - Ruby I - 12:00~13:00"
 @already_reserved
 Scenario Outline: If a class exists doubled, the one in use should be displayed
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
 	And a klass: "klass16-1" exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass16-2" exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And an attendance exists with student: user "johan", klass: klass "<klass>"
@@ -32,21 +34,25 @@ Examples:
 |	klass16-1	|
 |	klass16-2	|
 
-Scenario: Classes should be displayed in order after day, time interval
+@multiple
+Scenario: Classes should be displayed in order after day, time interval and only courses belonging to the user
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
+	And a course: "rails" exists with name: "Rails II"
 	And a klass exists with date: "2012-02-17", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
+	And a klass exists with date: "2012-02-16", course: course "rails", start_time: "12:00", end_time: "13:00"
 	And a klass exists with date: "2012-02-16", course: course "ruby", start_time: "11:00", end_time: "12:00"
 	And a klass exists with date: "2012-02-19", course: course "ruby", start_time: "09:00", end_time: "13:00"
 	And a klass exists with date: "2012-02-19", course: course "ruby", start_time: "17:00", end_time: "18:00"
 	And a klass exists with date: "2012-02-17", course: course "ruby", start_time: "09:00", end_time: "13:00"
 	And a user is logged in as "aya"
 When I go to the reserve page for user: "johan"
-Then I should see "2/16(Thursday) - Ruby I - 11:00~12:00 2/16(Thursday) - Ruby I - 12:00~13:00 2/17(Friday) - Ruby I - 09:00~13:00 2/17(Friday) - Ruby I - 12:00~13:00 2/19(Sunday) - Ruby I - 09:00~13:00 2/19(Sunday) - Ruby I - 17:00~18:00"
+Then I should see "2/16(Thursday) - Ruby I - 11:00~12:00 2/17(Friday) - Ruby I - 09:00~13:00 2/17(Friday) - Ruby I - 12:00~13:00 2/19(Sunday) - Ruby I - 09:00~13:00 2/19(Sunday) - Ruby I - 17:00~18:00"
 
 @reserve
 Scenario: Reserve a class
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
 	And a klass exists with date: "2012-02-17", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass16" exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a user is logged in as "aya"
@@ -63,6 +69,7 @@ Then 1 attendances should exist with student: user "johan", klass: klass "klass1
 @another_class
 Scenario: Reserve another class
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
 	And a klass: "klass17" exists with date: "2012-02-17", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass16" exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass15" exists with date: "2010-02-15", course: course "ruby", start_time: "12:00", end_time: "13:00"
@@ -92,6 +99,7 @@ Then 1 attendances should exist with student: user "johan", klass: klass "klass1
 
 Scenario: If there are no classes to reserve, that section should not be visable
 Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
 	And a klass: "klass17" exists with date: "2012-02-17", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass16" exists with date: "2012-02-16", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And an attendance exists with student: user "johan", klass: klass "klass16"

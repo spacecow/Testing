@@ -33,7 +33,7 @@ When I go to the events page
 Then I should see "div#upcoming_events table#upcoming_events" table
 |	Event						|	Date&amp;Time												|	Place						|	Cost											|
 |	Talking Party 2	|	2012-01/09 18:00 - 20:00						|	AER 28th floor	|	1500円, non Japanese free	|
-|	Talking Party 2	|	To be announced											|	AER 28th floor	|	1500円, non Japanese free	|
+|	Talking Party 3	|	To be announced											|	AER 28th floor	|	1500円, non Japanese free	|
 And I should see "div#past_events table#past_events" table
 |	Event						|	Date&amp;Time												|	Place						|	Cost											|
 |	Talking Party		|	01/09 18:00 - 20:00									|	AER 28th floor	|	1500円, non Japanese free	|
@@ -58,13 +58,7 @@ Then 0 events should exist
   And 0 comments should exist
   And 0 registrants should exist
   
-Scenario: Passed events faded / seperate table (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Events with no start date should be put in upcoming events (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Display events with no dates in table (NOT IMPLEMENTED)
+Scenario: Events with no start date/end date should be put in upcoming events (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Should be able to display only date (NOT IMPLEMENTED)

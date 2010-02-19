@@ -6,7 +6,7 @@ Given a setting exists with name: "main"
 Scenario: Create an event
 Given a user is logged in as "aya"
 When I go to the events page
-	And I follow "New Event" within "div.links"
+	And I follow "New Event" at the bottom of the page
 	And I fill in "Title (en)*" with "Christmas Party"
 	And I select "2009, December, 19, 19, 00" from dropmenus "event_start_date"
 	And I select "2009, December, 19, 21, 00" from dropmenus "event_end_date"

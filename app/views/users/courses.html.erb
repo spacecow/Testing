@@ -3,7 +3,12 @@
 <legend class="form">Enlisted Courses</legend>
 
 <% semantic_form_for @user do |f| %>
-	<%= f.input :courses, :as=>:check_boxes, :label=>false %>
+	<% f.inputs do %>
+		<%= f.input :courses, :as=>:check_boxes, :label=>false, :collection=>@courses %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t(:update) %>
+	<% end %>
 <% end %>
 
 <div id="links">

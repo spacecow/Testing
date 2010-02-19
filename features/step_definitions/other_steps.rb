@@ -1,3 +1,7 @@
+Given /^a courses_student join model exists with course: "([^\"]*)", student: "([^\"]*)"$/ do |course, student|
+	User.find_by_username( student ).courses << Course.find_by_name( course )
+end
+
 Then /^(\d+) teachers should exist$/ do |no|
 	User.with_role( "teacher" ).size.should == no.to_i
 end

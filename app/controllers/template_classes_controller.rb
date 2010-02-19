@@ -44,6 +44,7 @@ class TemplateClassesController < ApplicationController
 			@template_class.end_time = params[:end_time]
 			@template_class.capacity = params[:capacity]
 			@template_class.save
+			flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
 			redirect_to template_classes_path
 		else
 			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
