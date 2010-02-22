@@ -1,13 +1,17 @@
 <div id="list">
 	<h1><%= t('users.title') %></h1>
-	<table cellpadding="2" cellspacing="1">
-		<tr>
-			<th class="list-topics"><%= t('username') %></th>			
-			<th class="list-topics"><%= t('name') %></th>	
-			<th class="list-topics"><%= t('name_hurigana') %></th>		
-			<th class="list-topics"><%= t('email') %></th>		
-			<th class="list-topics"><%= t('tel') %></th>
-		</tr>
-		<%= render :partial => @users %>
-	</table>
+	<% form_tag edit_multiple_users_path do %>
+		<table cellpadding="2" cellspacing="1">
+			<tr>
+				<th></th>
+				<th class="list-topics"><%= t('username') %></th>			
+				<th class="list-topics"><%= t('name') %></th>	
+				<th class="list-topics"><%= t('name_hurigana') %></th>		
+				<th class="list-topics"><%= t('email') %></th>		
+				<th class="list-topics"><%= t('tel') %></th>
+			</tr>
+			<%= render :partial => @users %>
+		</table>
+		<%= submit_tag t('courses.title') %>
+	<% end %>
 </div>

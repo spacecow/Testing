@@ -1,0 +1,26 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t( :editing_multiple, :object=>t(:user)) %></legend>
+
+<% semantic_form_for :user, :url => update_multiple_users_path do |f| %>
+	<% f.inputs do %>
+		<ul>
+			<% @users.each do |user| %>
+				<li>
+					<%= hidden_field_tag "user_ids[]", user.id %>
+					<%= user %>
+				</li>
+			<% end %>
+		</ul>
+		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t(:update) %>
+	<% end %>			
+
+  <%# render :partial=>"form", :locals => { :f=>f, :label_text => t('create'), :klass_date=>@klass_date } %>
+  <%# render :partial=>"form", :locals=>{ :f=>f, :label_text => 'update' } %>
+<% end %>
+
+</fieldset>
+</div>

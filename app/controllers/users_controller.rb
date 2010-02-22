@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-	load_and_authorize_resource
+	before_filter :find_multiple_users, :only => [:edit_multiple, :update_multiple]
+  load_and_authorize_resource
 
 	def show
 		@user = User.find( params[:id] )
@@ -138,8 +139,24 @@ class UsersController < ApplicationController
 	def courses
 		@courses = sort_courses
 	end
+
+	def edit_multiple
+		@courses = sort_courses
+	end
+	
+	def update_multiple
+		@users.each do |user|
+			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
+		end
+		flash[:notice] = "yeah!"
+		redirect_to users_path
+	end
 	
 private
+
+  def find_multiple_users
+    @users = User.find( params[:user_ids] )
+  end
 
 	def sort_courses
   	@courses = []

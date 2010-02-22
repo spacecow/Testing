@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :user_sessions
 
-  map.resources :users, :member => { :courses=>:get, :reserve=>:get, :new_event_register => :post, :create_event_register => :put, :edit_role => :get, :update_role => :put }, :collection => { :change_password => :get, :update_password => :put }
+  map.resources :users, :member => { :courses=>:get, :reserve=>:get, :new_event_register => :post, :create_event_register => :put, :edit_role => :get, :update_role => :put }, :collection => { :edit_multiple => :post, :update_multiple =>:put, :change_password => :get, :update_password => :put }
 
 	map.resources :comments
   map.resources :registrants

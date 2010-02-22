@@ -13,3 +13,14 @@ end
 Then /^I should see "([^\"]*)" as title$/ do |title|
 	Then "I should see \"#{title}\" within \"legend\""
 end
+
+When /^I check #{capture_model}$/ do |model|
+  scope = get_scope( model )
+  within "##{scope}" do |element|
+		element.check( "" )
+	end
+end
+
+def get_scope( model )
+	model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+end

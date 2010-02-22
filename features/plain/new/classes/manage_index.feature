@@ -47,6 +47,7 @@ When I go to the klasses page
 Then I should see options "Info" within "table#Ruby tr td#links"
 	And 1 klasses should exist
 
+@display_date
 Scenario: Classes display of date
 Given a user is logged in as "johan"
 When I go to the klasses page
@@ -61,6 +62,7 @@ When I select "February" from "class_month"
 	And I select "2012" from "class_year"
 	And I press "Go!"
 Then I should be redirected to the klasses page
+	And I should see "Classes - Wednesday" within "h1"
  	And "February" should be selected in "class_month"
  	And "15" should be selected in "class_day"
  	And "2012" should be selected in "class_year"
