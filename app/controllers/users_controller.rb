@@ -136,7 +136,7 @@ class UsersController < ApplicationController
 		@class_history = @user.klasses.reject{|e| e.date >= Date.current }
 	end
 	
-	def courses
+	def edit_courses
 		@courses = sort_courses
 	end
 

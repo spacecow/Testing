@@ -1,5 +1,5 @@
 <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="user_<%= user.id %>">
-	<td><%= check_box_tag "user_ids[]", user.id %></td>
+	<td><%= label_tag "user_ids[]", "" %><%= check_box_tag "user_ids[]", user.id %></td>
 	<td><%=h user.username %></td>
 	<td><%=h user.name %></td>
 	<td><%=h user.name_hurigana %></td>
@@ -15,6 +15,9 @@
 		<% if can? :edit_role, user %>
 	  	<%= link_to t(:role), edit_role_user_path( user ) %>
 	  <% end %>
+		<% if can? :edit_courses, user %>
+	  	<%= link_to t('courses.title'), edit_courses_user_path( user ) %>
+	  <% end %>	  
 		<% if can? :destroy, user %>
 	  	<%= link_to t('delete'), user, :confirm => 'Are you sure?', :method => :delete %>
 	  <% end %>

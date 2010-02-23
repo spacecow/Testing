@@ -3,12 +3,12 @@
 <legend class="form"><%= t( :editing_multiple, :object=>t(:user)) %></legend>
 
 <% semantic_form_for :user, :url => update_multiple_users_path do |f| %>
+	<%= @users.join(", ") %>
 	<% f.inputs do %>
 		<ul>
 			<% @users.each do |user| %>
 				<li>
 					<%= hidden_field_tag "user_ids[]", user.id %>
-					<%= user %>
 				</li>
 			<% end %>
 		</ul>
