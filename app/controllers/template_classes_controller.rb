@@ -45,7 +45,7 @@ class TemplateClassesController < ApplicationController
 			@template_class.capacity = params[:capacity]
 			@template_class.save
 			flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
-			redirect_to template_classes_path
+			redirect_to template_classes_path( :template_day=>@template_class.day )
 		else
 			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
 		end
@@ -74,7 +74,7 @@ class TemplateClassesController < ApplicationController
     if @template_class.save
       flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
       #format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
-      redirect_to template_classes_path
+      redirect_to template_classes_path( :template_day=>@template_class.day )
     else
       render :action => "new"
     end
@@ -113,10 +113,10 @@ class TemplateClassesController < ApplicationController
   end
 
   def destroy
-#    @template_day = @template_class.day
+    @template_day = @template_class.day
     @template_class.destroy
     flash[:notice] = t('notice.delete_success', :object=>t(:template_class).downcase )
-		redirect_to template_classes_path #(template_classes_path( :template_day=>@template_class.day )) }
+		redirect_to template_classes_path( :template_day=>@template_day )
   end
 
   def no_of_ten_minutes

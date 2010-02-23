@@ -91,6 +91,3 @@ Examples:
 | 3:13	|	03:13		|
 |	13		|	13:00		|
 |	0			|	00:00		|
-
-Scenario: Change capacity automatically when changing between conversation/grammar (NOT IMPLEMENTED)
-Given not implemented	

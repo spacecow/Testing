@@ -93,8 +93,16 @@ When I go to the template classes page
 	And I follow "+" within template_class "ruby"
 Then I should be redirected to the template classes page
 	And I should see "Successfully created template class" as notice flash message
+	And "Monday" should be selected in the "Choose a day" box
 	And 3 template_classes should exist
 	And 2 template_classes should exist with start_time: "18:50", end_time: "20:50", capacity: 8
+When I follow "Del" within "table#Ruby tr td#links"
+Then I should be redirected to the template classes page
+	And I should see "Successfully deleted template class" as notice flash message
+	And "Monday" should be selected in the "Choose a day" box
+	And 2 template_classes should exist
+	And 1 template_classes should exist with start_time: "18:50", end_time: "20:50", capacity: 8
+
 
 @allow-rescue
 Scenario Outline: Some users cannot reach this page
@@ -113,8 +121,5 @@ Examples:
 Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Should a duplication of a class duplicate other fields as well? (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Choose a day with I18n (NOT IMPLEMENTED)
+Scenario: A duplication of a class should duplicate all fields (NOT IMPLEMENTED)
 Given not implemented

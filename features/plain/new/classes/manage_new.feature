@@ -80,5 +80,5 @@ Examples:
 | junko			|
 | mika			|
 
-Scenario: Capacity changed automatically by change of course (AJAX)
+Scenario: Capacity changed automatically by change of course. Try with cucumber (AJAX)
 Given not implemented
