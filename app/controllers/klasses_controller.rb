@@ -62,9 +62,9 @@ class KlassesController < ApplicationController
 		@class_date  = DateTime.parse("#{@class_year}-#{@class_month}-#{@class_day}")
 
 		@klasses = Klass.find_all_by_date( @class_date, :include => :course )
-		if @klasses.size == 0
+		if can?( :manage, Klass ) && @klasses.size == 0
 			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|
-    		p Klass.create!(
+    		Klass.create!(
 					:course_id=>t.course_id,
 					:teacher_id=>t.teacher_id,
 					:classroom_id=>t.classroom_id,

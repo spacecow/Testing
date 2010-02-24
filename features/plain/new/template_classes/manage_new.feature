@@ -2,7 +2,6 @@ Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user: "aya" exists with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
-	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
 	
 Scenario Outline: Only authorized users can create a template class
 	And a user is logged in as "<user>"
@@ -12,13 +11,12 @@ Examples:
 |	user	|
 |	johan	|
 |	aya		|
-|	reiko	|
 
 @new
 Scenario: Create a new template class
 Given a course: "ruby" exists with name: "Ruby I"
 	And a course exists with name: "Rails II"
-	And a user is logged in as "reiko"
+	And a user is logged in as "aya"
 When I go to the new template class page
 Then the "Capacity" field should contain "0"
 When I fill in "Title" with "A funny title"
@@ -46,6 +44,7 @@ Given a user: "thomas" exists with username: "thomas", role: "observer, teacher"
 	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"	
 	And a user is logged in as "<user>"
 When I go to the new template class page
 Then I should be redirected to the events page
@@ -55,6 +54,7 @@ Examples:
 | prince		|
 | junko			|
 | mika			|
+|	reiko			|
 
 Scenario: Links from new page
 Given a user is logged in as "johan"

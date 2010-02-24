@@ -35,7 +35,8 @@ class Ability
 	  		can [:box, :create], Mail
 	  		can :show, Mail do |mail|
 	  			mail.recipients.map(&:user).include?( user )
-	  		end	  	
+	  		end
+	  		can :read, Klass
   		end
   		if user.role? :observer
 	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
@@ -49,7 +50,6 @@ class Ability
 				end
 			end
 			if user.role? "beta-tester"
-				can :manage, TemplateClass
 			end
   	end
   end

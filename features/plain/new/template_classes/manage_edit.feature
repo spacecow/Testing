@@ -79,6 +79,7 @@ Given a user: "thomas" exists with username: "thomas", role: "observer, teacher"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "kurosawa" exists with username: "kurosawa", role: "registrant, student", language: "ja", name: "Akira Kurosawa"	
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"	
 	And a template class exists
 	And a user is logged in as "<user>"
 When I go to the edit page of that template class
@@ -90,6 +91,7 @@ Examples:
 | junko			|
 | kurosawa	|
 | mika			|
+|	reiko			|
 
 Scenario: You should not be able to move a class in time and make it interfere with teacher/room opitons (NOT IMPLEMENTED)
 Given not implemented

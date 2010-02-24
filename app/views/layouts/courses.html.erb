@@ -33,8 +33,15 @@
 							</li>
 						<% end %>
 						
-						<% if can? :index, TemplateClass %>	
-							<li><%= link_to t('template_klasses.title'), template_classes_path %></li>
+						<% if can? :index, Klass %>
+							<li><%= link_to t('klasses.title'), klasses_path %>
+							<% if can? :index, TemplateClass %>	
+								<ul>
+									<li>------------------</li>
+									<li><%= link_to t('template_klasses.title'), template_classes_path %></li>							
+								</ul>
+							<% end %>							
+							</li>
 						<% end %>
 
 						<li><%= link_to t('events.title'), events_path %>

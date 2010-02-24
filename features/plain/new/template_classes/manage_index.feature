@@ -109,6 +109,7 @@ Scenario Outline: Some users cannot reach this page
 Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"	
 	And a user is logged in as "<user>"
 When I go to the template classes page
 Then I should be redirected to the events page
@@ -117,6 +118,7 @@ Examples:
 | prince		|
 | junko			|
 | mika			|
+|	reiko			|
 
 Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
 Given not implemented

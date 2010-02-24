@@ -2,13 +2,14 @@
 Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+	And a user: "aya" exist with username: "aya", role: "teacher, admin", language: "en", name: "Aya Komatsu"
 
 @generate
-Scenario: When choosing a date that does not have any classes, they should be generated
+Scenario Outline: When choosing a date that does not have any classes, they should be generated if the user is admin
 Given a course: "ruby" exists with name: "Ruby II"
 	And a classroom: "1" exists with name: "1"
 	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
-Given a user is logged in as "johan"
+Given a user is logged in as "<user>"
 When I go to the klasses page
 	And I select "March" from "class_month"
 	And I select "28" from "class_day"
@@ -17,27 +18,49 @@ When I go to the klasses page
 Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-28"
 	And 1 klasses should exist
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
+Examples:
+|	user	|
+| johan	|
+| aya		|
 
 @allow-rescue
-Scenario Outline: Some users cannot reach the list of classes
-Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
-	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
-	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
-	And a user is logged in as "<user>"
+Scenario: Registrants cannot reach the list of classes
+Given a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
+	And a user is logged in as "mika"
 When I go to the klasses page
 Then I should be redirected to the events page
+
+Scenario Outline: When choosing a date that does not have any classes, no classes will be generated if the user is student/teacher/observer
+Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
+Given a course: "ruby" exists with name: "Ruby II"
+	And a classroom: "1" exists with name: "1"
+	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
+Given a user is logged in as "<user>"
+When I go to the klasses page
+	And I select "March" from "class_month"
+	And I select "28" from "class_day"
+	And I select "2010" from "class_year"
+	And I press "Go!"
+Then 0 klasses should exist
 Examples:
 |	user			|
 | prince		|
 | junko			|
-| mika			|
+| thomas		|
+|	reiko			|
 
 @observer
-Scenario: List classes for observer
+Scenario Outline: List classes for observer/student/teacher
 Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
+	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
-	And a user is logged in as "thomas"
+	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
+	And a user is logged in as "<user>"
 Then 1 klasses should exist
 When I go to the klasses page
 	And I select "February" from "class_month"
@@ -46,6 +69,12 @@ When I go to the klasses page
 	And I press "Go!"
 Then I should see options "Info" within "table#Ruby tr td#links"
 	And 1 klasses should exist
+Examples:
+|	user			|
+| prince		|
+| junko			|
+| thomas		|
+|	reiko			|
 
 @display_date
 Scenario: Classes display of date

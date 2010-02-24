@@ -24,3 +24,20 @@ end
 def get_scope( model )
 	model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
 end
+
+
+#-------------------- NAVIGATION BAR
+
+When /^I follow "([^\"]*)" in the navigation bar$/ do |link|
+	When "I follow \"#{link}\" within \"div#banner\""
+end
+
+Then /^I should not see "([^\"]*)" in the navigation bar$/ do |link|
+	Then "I should not see \"#{link}\" within \"div#banner\""
+end
+
+#-------------------- USER NAVIGATION BAR
+
+Then /^I should see commands "([^\"]*)" in the user navigation bar$/ do |commands|
+	Then "I should see options \"#{commands}\" within \"div#user_nav\""
+end
