@@ -25,6 +25,7 @@ When I check "Rails II"
 	And I check "Ruby III"
 	And I press "Update"
 Then I should be redirected to the users page
+	And I should see "Successfully updated courses" as notice flash message
 	And 1 courses_students should exist with course: course "ruby", student: user "thomas"
 	And 1 courses_students should exist with course: course "ruby", student: user "prince"
 	And 1 courses_students should exist with course: course "ruby", student: user "junko"
@@ -32,3 +33,6 @@ Then I should be redirected to the users page
 	And 1 courses_students should exist with course: course "rails", student: user "prince"
 	And 1 courses_students should exist with course: course "rails", student: user "junko"
 	And 6 courses_students should exist
+
+Scenario: Flash message (NOT IMPLEMENTED)
+Given not implemented

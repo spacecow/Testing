@@ -48,7 +48,11 @@ class UsersController < ApplicationController
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	flash[:notice] = t('users.notice.edit_registration')
+      	unless params[:user][:klass_ids].blank?
+      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+      	else
+      		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
+      	end
       	redirect_to mypage_path
     	else
     		render :action => "crop"
@@ -148,7 +152,7 @@ class UsersController < ApplicationController
 		@users.each do |user|
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
-		flash[:notice] = "yeah!"
+		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
 		redirect_to users_path
 	end
 	

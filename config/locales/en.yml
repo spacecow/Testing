@@ -76,6 +76,7 @@ en:
   kanji: "Kanji"
   katakana: "Katakana"
   klass: "Class"
+  klass_es: "Class(es)"
   klass_date: "Date"
   klass_day: ""
   klass_time: "Time"
@@ -217,6 +218,7 @@ en:
     change_success: "Successfully changed {{object}}."
     delete_success: "Successfully deleted {{object}}."
     mail_sent: "A mail has been sent to you."
+    reserve_success: "Successfully reserved {{object}}."
     send_success: "Successfully sent {{object}}."
     update_success: "Successfully updated {{object}}."
   

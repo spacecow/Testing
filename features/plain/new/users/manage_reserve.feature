@@ -64,7 +64,10 @@ Then I should see "Classes to Reserve" within "div.reservable"
 	And the page should have no "history" section
 	And I check "2/16(Thursday) - Ruby I - 12:00~13:00"
 	And I press "Reserve"
-Then 1 attendances should exist with student: user "johan", klass: klass "klass16"
+Then I should be redirected to path "/mypage"
+	And I should see "Successfully reserved class(es)." as notice flash message
+	And 1 attendances should exist with student: user "johan", klass: klass "klass16"
+	And 1 attendances should exist
 
 @another_class
 Scenario: Reserve another class
@@ -135,4 +138,7 @@ Examples:
 |	johan 	|	reserve page for user: "johan"	|	reserve page for user: "prince"	|
 
 Scenario: Links on reservation page (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Flash message (NOT IMPLEMENTED)
 Given not implemented

@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 	acts_as_authentic
 
   has_attached_file :avatar, :styles => {
+  		:micro =>  { :geometry => "30x30#",   :processors => [:cropper]},
 	  	:mini =>  { :geometry => "40x40#",   :processors => [:cropper]},
 	  	:small => { :geometry => "100x100#", :processors => [:cropper]},
 	  	:large => { :geometry => "500x500>" }},

@@ -8,6 +8,9 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     
+		when /mypage/
+			'/mypage'    
+    
 		when /the root page/
 			'/'
     
@@ -23,8 +26,8 @@ module NavigationHelpers
 		when /^the edit page (?:for|of) (.+)$/
 			edit_polymorphic_path( model($1) )
 
-		when /^the (reserve|courses) page (?:for|of) (.+)$/
-			polymorphic_path( model($2) )+"/#{$1}"
+		when /^the (reserve|edit courses) page (?:for|of) (.+)$/
+			polymorphic_path( model($2) )+"/#{$1.downcase.gsub(' ','_')}"
 
 #		when /^the delete page (?:for|of) (.+)$/
 #			polymorphic_path( model($1) ), :method => :delete

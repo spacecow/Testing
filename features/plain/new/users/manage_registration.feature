@@ -92,6 +92,7 @@ Then "Exchange Student" should be selected in "user_occupation"
 	And the "I would like to forward my internal mail to my external." checkbox should be checked
 When I select "Japanese" from "In which language would you like this site to be?*"
 	And I press "Update"
+	And I should see "Successfully updated user." as notice flash message
 	And I follow "ﾌﾟﾛﾌｨｰﾙ編集"
 Then "" should be selected in "user_occupation"	
 	And "10代" should be selected in "user_age"
@@ -102,7 +103,7 @@ When I select "英語" from "このサイトはどんな言語で利用する？
 Then "Exchange Student" should be selected in "user_occupation"
 	And "user_occupation" should have a blank option
 	And "10's" should be selected in "user_age"
-	And "user_age" should have no blank option	
+	And "user_age" should have no blank option
 
 #@avatar
 #Scenario: Avatar error messages

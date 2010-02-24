@@ -73,6 +73,7 @@ ja:
   japanese: "日本語"
   kanji: "漢字"
   klass: "クラス"
+  klass_es: "クラス"
   klass_date: "日付"
   klass_day: ""
   klass_time: "時間"
@@ -216,6 +217,7 @@ ja:
     change_success: "正常に{{object}}が変更されました"
     delete_success: "正常に{{object}}が削除されました"
     mail_sent: "メールが送信されました"
+    reserve_success: "正常に{{object}}が予約されました"
     send_success: "正常に{{object}}が送信されました"
     update_success: "正常に{{object}}が更新されました"
     
