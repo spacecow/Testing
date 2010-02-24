@@ -113,22 +113,26 @@ When I go to the reserve page for user: "johan"
 	And the page should have no "history" section
 
 @allow-rescue
-Scenario Outline: Regular users can only see their own reservation page
+Scenario Outline: Regular users can only see their own reservation page, but admins have no limit
 Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
+	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
 	And a user is logged in as "<user>"
-When I go to the reserve page for user: "junko"
-Then I should be redirected to the <page>
+When I go to the reserve page for user: "<user>"
+Then I should be redirected to the <own-page>
+When I go to the reserve page for user: "prince"
+Then I should be redirected to the <other-page>
 Examples:
-|	user		|	page														|
-|	thomas	|	events page											|
-|	prince	|	events page											|
-|	junko 	|	reserve page for user: "junko"	|
-|	mika		|	events page											|
-|	aya		 	|	reserve page for user: "junko"	|
-|	johan 	|	reserve page for user: "junko"	|
+|	user		|	own-page												|	other-page											|
+|	thomas	|	events page											|	events page											|
+|	prince	|	events page											|	events page											|
+|	junko 	|	reserve page for user: "junko"	|	events page											|
+|	mika		|	events page											|	events page											|
+|	reiko 	|	reserve page for user: "reiko"	|	events page											|
+|	aya		 	|	reserve page for user: "aya"		|	reserve page for user: "prince"	|
+|	johan 	|	reserve page for user: "johan"	|	reserve page for user: "prince"	|
 
 Scenario: Links on reservation page (NOT IMPLEMENTED)
 Given not implemented

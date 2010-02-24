@@ -13,7 +13,7 @@ class Ability
 		else
 			can :destroy, UserSession
 			can [:new_event_register, :create_event_register], User
-			can [:update,:reserve], User do |u|
+			can :update, User do |u|
 				u == user
 			end
   		can :create, Registrant
@@ -40,7 +40,11 @@ class Ability
   		end
   		if user.role? :observer
 	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
-	  	elsif user.role? :admin
+	  	elsif user.role? :student
+	  		can :reserve, User do |u|
+  				u == user
+  		end
+  		elsif user.role? :admin
 	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass]
 	  	end
 			if user.role? :photographer

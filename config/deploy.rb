@@ -1,4 +1,4 @@
-set :application, "staff"
+set :application, "yoyaku"
 set :deploy_to, "/home/deploy/app/#{application}"
 
 role :app, "74.207.244.236"

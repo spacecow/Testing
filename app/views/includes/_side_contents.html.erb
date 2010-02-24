@@ -9,7 +9,7 @@
 				<% end %>
 			<% end %>
 			<% if current_user2 %>
-				<% if can? :reserve, User %>
+				<% if can? :reserve, current_user %>
 					<li><%= link_to t(:reserve), reserve_user_path( current_user2 ) %></li>
 				<% end %>
 				<li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
@@ -25,7 +25,7 @@
 			<% end %>
 		</ul>
 	</div>
-	<% if current_user2 %>	
+	<% if current_user2 %>
 		<%= image_tag avatar_mini_url( current_user2 ) %>
 		<div class="info">    
 			<%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
