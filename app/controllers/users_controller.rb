@@ -129,13 +129,19 @@ class UsersController < ApplicationController
 	end
 	
 	def reserve
+		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
+		start_date = todays_date + 6.day
+		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		@klasses = {}
 		Klass.all(
-			:conditions=>["date >= ?", Date.current],
+			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
 			:include=>:course ).
 				reject{|e| !@user.courses.include?( e.course )}.
-				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : e }
-		@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]) }
+		@reservable_klasses = []
+		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
+			@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		end	
 		@reserved_klasses = @klasses.values.reject{|e| !@user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		@class_history = @user.klasses.reject{|e| e.date >= Date.current }
 	end

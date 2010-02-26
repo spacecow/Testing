@@ -136,6 +136,10 @@ Then /^I have ([0-9]+) classe?s? "([^\"]*)"$/ do |no, name|
   Klass.course_name( name ).size.should == no.to_i
 end
 
+Given /^I generate classes for reservation from "([^\"]*)"$/ do |date|
+  Klass.generate_classes_for_reservation( Date.parse( date ))
+end
+
 #- F - U - N - C - T - I - O - N - S -----------------------------------------------------
 
 def get_class( name )

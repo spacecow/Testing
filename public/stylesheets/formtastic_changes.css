@@ -17,10 +17,10 @@ form.formtastic fieldset.buttons { padding-left: 145px; }
 form.formtastic fieldset ol li { margin-bottom: 0px; }
 form.formtastic fieldset.inputs ol .subjects { padding-left: 145px; }
 form.formtastic fieldset.inputs ol .subjects label {
-  color: red;
+  border: 1px solid black;
   padding: 2px 0 0 2px;
   float: left;
-  width: 100px;
+  width: 97px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }

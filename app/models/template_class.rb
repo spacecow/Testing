@@ -76,6 +76,23 @@ class TemplateClass < ActiveRecord::Base
     start_time.to_s(:time)+"~"+end_time.to_s(:time)
   end    
   
+  def create_class( date )
+		Klass.create!(
+			:course_id=>self.course_id,
+			:teacher_id=>self.teacher_id,
+			:classroom_id=>self.classroom_id,
+			:capacity=>self.capacity,      
+			:date=>date,
+			:start_time=>self.start_time,
+			:end_time=>self.end_time,
+			:title=>self.title,
+			:description=>self.description,
+			:cancel=>self.inactive,
+			:mail_sending=>self.mail_sending,
+			:note=>self.note
+  	)
+  end
+  
 private
 	def capacity_cannot_be_zero
 		errors.add :capacity, I18n.t('error.message.zero') if capacity == 0 unless errors.on( :capacity )

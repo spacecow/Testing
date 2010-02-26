@@ -27,7 +27,12 @@ module NavigationHelpers
 			edit_polymorphic_path( model($1) )
 
 		when /^the (reserve|edit courses) page (?:for|of) (.+)$/
-			polymorphic_path( model($2) )+"/#{$1.downcase.gsub(' ','_')}"
+			path = $1
+			params = $2.split(" on ")
+			path = path.downcase.gsub(' ','_')
+			mdl  = params[0]
+			date = params.size == 1 ? "" : "?majballe=#{params[1].gsub('"','')}"
+			polymorphic_path( model(mdl) )+"/#{path}#{date}"
 
 #		when /^the delete page (?:for|of) (.+)$/
 #			polymorphic_path( model($1) ), :method => :delete

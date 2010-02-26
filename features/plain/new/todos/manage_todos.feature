@@ -15,9 +15,9 @@ Then I should be redirected to the events page
 When I go to the todos page
 Then I should be redirected to the events page
 
-@new_todo
-Scenario: Create new todo
-Given a user is logged in as "junko"
+@new
+Scenario Outline: Create new todo
+Given a user is logged in as "<user>"
 When I go to the new todo page
   And I fill in "Title" with "Chat#room"
   And I fill in "Description" with "Wouldn't that be fun!"
@@ -25,16 +25,20 @@ When I go to the new todo page
   And I press "Create"
 Then I should be redirected to the todos page
   And I should see "Successfully created todo."
-  And a todo should exist with subjects_mask: 1, user: user "junko", title: "Chat*room", description: "Wouldn't that be fun!"
-  And 1 mails should exist
-  And a mail: "create" should exist with sender: user "junko", subject: "created#todo", message: "todos.created#Chat*room##"
-  And 1 recipients should exist
-  And a recipient should exist with user: user "johan", mail: mail "create"
+  And a todo should exist with subjects_mask: 1, user: user "<user>", title: "Chat*room", description: "Wouldn't that be fun!"
+  And <no> mails should exist
+  And a mail <johan> exist with sender: user "junko", subject: "created#todo", message: "todos.created#Chat*room##"
+  And <no> recipients should exist
+  And a recipient <johan> exist with user: user "johan"
+Examples:
+|	user	|	johan				|	no	|
+|	junko	|	should			|	1		|	
+|	johan	|	should not	|	0		|
   
-@edit_todo
-Scenario: Edit a Todo
+@edit
+Scenario Outline: Edit a Todo
 Given a todo exists with subjects_mask: 1, user: user "junko", title: "Chat#room", description: "Wouldn't that be fun!<br />yeah!"
-	And a user is logged in as "junko"
+	And a user is logged in as "<user>"
 When I go to the edit page of that todo
 Then the "Description" field should not contain "Wouldn't that be fun! yeah!"
 	And the "Description" field should contain "Wouldn't that be fun!"
@@ -50,10 +54,14 @@ When I fill in "Title" with "Chatter#room"
 Then I should be redirected to the todos page
   And I should see "Successfully updated todo."
   And a todo should exist with subjects_mask: 5, user: user "junko", title: "Chatter*room", description: "Wouldn't that be fun!<br />"
-  And 1 mails should exist
-  And a mail: "edit" should exist with sender: user "junko", subject: "updated#todo", message: "todos.updated#Chatter*room##"
-  And 1 recipients should exist
-  And a recipient should exist with user: user "johan", mail: mail "edit"
+  And <no> mails should exist
+  And a mail <johan> exist with sender: user "<user>", subject: "updated#todo", message: "todos.updated#Chatter*room##"
+  And <no> recipients should exist
+  And a recipient <johan> exist with user: user "johan"
+Examples:
+|	user	|	johan				|	no	|
+|	junko	|	should			|	1		|
+|	johan	|	should not	|	0		|
 
 Scenario: Delete a Todo and its dependencies
 Given a todo exists with subjects_mask: 1, user: user "junko", title: "Chat room", description: "Wouldn't that be fun!"
@@ -154,4 +162,7 @@ Scenario: Button for update comment doesnt look pretty (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Todo List should go to closed if you are at the show page of a closed todo (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Johan should not send a mail to himself when he creates a todo (NOT IMPLEMENTED)
 Given not implemented

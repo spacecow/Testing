@@ -3,7 +3,9 @@
 <legend class="form"><%= t( :reserve ) %></legend>
 
 <div class="intro">
-<% unless @reservable_klasses.empty? %>
+<% if @reservable_klasses.empty? %>
+<%= t('message.no_reservations_today') %>
+<% else %>
 <div class="reservable">
 <h2><%= t('header.classes_to_reserve') %></h2>
 <% semantic_form_for @user do |f| %>
@@ -19,6 +21,7 @@
 	<% f.buttons do %>
 		<%= f.commit_button t(:reserve) %>
 	<% end %>
+	<%= t('message.time_for_reservation') %>
 <% end %>
 </div>
 <% end %>

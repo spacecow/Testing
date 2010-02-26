@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :invitation_id, :message => 'is required'
 	validates_uniqueness_of :invitation_id
 	
-	validates_presence_of :password,	 :if => :change_password
+	validates_presence_of :password, :if => :change_password
 	
 	#attr_accessible :username, :email, :password, :password_confirmation, :roles_mask, :role, :name, :invitation_token
 	

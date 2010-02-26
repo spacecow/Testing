@@ -113,6 +113,19 @@ class Klass < ActiveRecord::Base
   def to_s
     course_name + (": ") + time_interval
   end
+
+	def self.generate_classes_for_reservation( date )
+		#date = d + 5.day
+		#date += 1.day while date.strftime("%a") != "Mon"
+		while( date.strftime("%a") != "Sun" )
+			unless Klass.find_by_date( date )
+				TemplateClass.find_all_by_day( date.strftime("%a").downcase ).each do |t|
+		  		t.create_class date
+				end
+			end
+			date += 1.day
+		end
+	end
   
 protected
 	def validate_on_update

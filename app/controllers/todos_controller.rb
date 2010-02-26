@@ -10,7 +10,7 @@ class TodosController < ApplicationController
   def index
   	@status = params[:status] || "open"
   	@subject = params[:subject] || "all"
-  	@sort = params[:sort] || "points"
+  	@sort = params[:sort] || "created_at"
   	@order = params[:order] || "descending"
   	@setting = Setting.find_by_name( "main" )
     if @status == "is_closed"
@@ -133,15 +133,16 @@ private
   	@todo.votes.each{ |vote| recipients.push vote.user } if opts[:votes]
   	recipients.push @todo.user if opts[:author]
   	recipients.push johan
+  	recipients = recipients.reject{|e| e==nil}.uniq.reject{|e| e==current_user }
   	
   	mail = Mail.create!(
     	:sender_id => current_user.id,
     	#:recipient_id => user.id,
     	:subject => "#{message}##{category}",
     	:message => "#{category.pluralize}.#{message}##{@todo.title}##{category=='todo'?'':'todo'}##{opts[:content]}"
-    )   	
+    ) unless recipients.empty?  	
     
-  	recipients.reject{|e| e==nil}.uniq.reject{|e| e==current_user }.each do |user|
+  	recipients.each do |user|
   		Recipient.create!( :mail_id=>mail.id, :user_id=>user.id )
   		UserMailer.send_later( :deliver_notification,
   			user,

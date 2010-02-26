@@ -209,7 +209,9 @@ ja:
     change_password: "{{object}}様のパスワードの変更を受付けます"
     forgotten_password: "パスワードを忘れました！"
     info_update: "システム内メールを外部メールボックスに転送したい"
+    no_reservations_today: "今日は予約出来ません"
     provide_username_or_email: "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
+    time_for_reservation: "予約時間は土曜日午前12から火曜日午後5まで"
     which_language: "このサイトはどんな言語で利用する？"
   notice:
     add_success: "正常に{{object}}が追加されました"
