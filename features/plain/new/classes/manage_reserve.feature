@@ -10,9 +10,16 @@ Given a template class exists with day: "mon"
 	And a template class exists with day: "thu"
 	And a template class exists with day: "fri"
 	And a template class exists with day: "sat"
-	And a klass exists with date: "2010-03-18"
-When I generate classes for reservation from "2010-03-15"
-Then 6 klasses should exist
+	And a klass exists with date: "2010-03-11"
+#When I generate classes for reservation from "2010-03-08"
+When I generate classes for reservation
+Then 1 klasses should exist with date: "2010-03-08"
+	And 1 klasses should exist with date: "2010-03-09"
+	And 1 klasses should exist with date: "2010-03-10"
+	And 1 klasses should exist with date: "2010-03-11"
+	And 1 klasses should exist with date: "2010-03-12"
+	And 1 klasses should exist with date: "2010-03-13"
+	And 6 klasses should exist
 
 Scenario: Systematically spread out reservations according to level of the user (NOT IMPLEMENTED)
 Given not implemented

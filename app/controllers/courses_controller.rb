@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  load_and_authorize_resource
+  
   def index
     @sorting = Sorting.new
   	@courses_groups = Course.all.group_by(&:category)

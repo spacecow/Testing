@@ -114,7 +114,14 @@ class Klass < ActiveRecord::Base
     course_name + (": ") + time_interval
   end
 
-	def self.generate_classes_for_reservation( date )
+	def self.generate_classes_for_reservation
+		date = Date.current + 5.day
+		date += 1.day while date.strftime("%a") != "Mon"
+		generate_classes_for_reservation_from( date.strftime( "%Y-%m-%d" ))
+	end
+
+	def self.generate_classes_for_reservation_from( date )
+		date = Date.parse( date )
 		#date = d + 5.day
 		#date += 1.day while date.strftime("%a") != "Mon"
 		while( date.strftime("%a") != "Sun" )

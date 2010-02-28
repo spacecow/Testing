@@ -119,7 +119,6 @@ Then /^class "([^\"]*)" should have student "([^\"]*)"$/ do |klass,username|
 	end
 end
 
-
 #Only works if only one class is assigned to that specific course
 Then /^class "([^\"]*)" should have ([0-9]+) students?$/ do |name,no|
 	if name.to_i > 0
@@ -137,7 +136,11 @@ Then /^I have ([0-9]+) classe?s? "([^\"]*)"$/ do |no, name|
 end
 
 Given /^I generate classes for reservation from "([^\"]*)"$/ do |date|
-  Klass.generate_classes_for_reservation( Date.parse( date ))
+  Klass.generate_classes_for_reservation_from( date )
+end
+
+Given /^I generate classes for reservation$/ do
+  Klass.generate_classes_for_reservation
 end
 
 #- F - U - N - C - T - I - O - N - S -----------------------------------------------------

@@ -4,7 +4,7 @@
 
 <div class="pairs">
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :title ), :right => h( @klass.title ) } %>
-	<%= render :partial => 'includes/pair', :locals => { :left => t( :course ), :right => link_to( h( @klass.course ), @klass.course ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :course ), :right => can?( :show, Course ) ? link_to( h( @klass.course ), @klass.course ) : h( @klass.course ) } %>
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :teacher ), :right => link_to( h( @klass.teacher ), @klass.teacher ) } %>
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :classroom ), :right => link_to( h( @klass.classroom ), @klass.classroom ) } %>
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :capacity ), :right => h( @klass.capacity ) } %>

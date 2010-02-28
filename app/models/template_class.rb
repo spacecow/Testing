@@ -82,7 +82,7 @@ class TemplateClass < ActiveRecord::Base
 			:teacher_id=>self.teacher_id,
 			:classroom_id=>self.classroom_id,
 			:capacity=>self.capacity,      
-			:date=>date,
+			:date=>date.strftime( "%Y-%m-%d" ),
 			:start_time=>self.start_time,
 			:end_time=>self.end_time,
 			:title=>self.title,
@@ -90,7 +90,7 @@ class TemplateClass < ActiveRecord::Base
 			:cancel=>self.inactive,
 			:mail_sending=>self.mail_sending,
 			:note=>self.note
-  	)
+  	).date
   end
   
 private

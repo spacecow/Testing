@@ -1,6 +1,11 @@
 <table cellpadding="0" cellspacing="1", border="0" class="course" id="<%= classes[0].course.category %>">
   <tr>
-    <th class="title" colspan="2"><%= t(:object_course, :object => classes[0].course_category) %>&nbsp;<%= link_to('+',new_klass_path( :class_date => "#{@class_year}-#{@class_month}-#{@class_day}", :class_course=>classes[0].course.category )) %></th>
+    <th class="title" colspan="2"><%= t(:object_course, :object => classes[0].course_category) %>&nbsp;
+    	<%= link_to('+',new_klass_path(
+    	  :class_date => "#{@class_year}-#{@class_month}-#{@class_day}",
+    	  :class_course=>classes[0].course.category )
+    	  ) if can? :create, Klass %>
+    </th>
   </tr>
   <tr>
 	  <th class="subtitle" rowspan="2"><%= t :lesson %></th>
@@ -31,7 +36,7 @@
 							:start_time=>time_classes[0].start_time,
 							:end_time=>time_classes[0].end_time,
 							:capacity=>time_classes[0].capacity }
-						) %>
+						) if can? :create, Klass %>
 				</td>	
 				<% time_classes.each do |time_class| %>
 					<%= render time_class %>

@@ -89,6 +89,13 @@ class UserMailer < ActionMailer::Base
     from        "johan@reserve-gakuwarinet.com"
     subject     "Update, Version 0.21"
     body				:user => user, :login_user_url => login_user_url, :username => username
-  end      
+  end
+  
+  def update_0_25( user, login_user_url, username )
+    recipients  user.email
+    from        "johan@reserve-gakuwarinet.com"
+    subject     "Update, Version 0.25"
+    body				:user => user, :login_user_url => login_user_url, :username => username
+  end         
 end
 
