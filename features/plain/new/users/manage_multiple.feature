@@ -7,7 +7,16 @@ Given a setting exist with name: "main"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
 	
-Scenario: Edit multiple
+@roles
+Scenario: Edit multiple roles
+Given a user is logged in as "aya"
+When I go to the users page
+	And I check user "thomas"
+	And I check user "prince"
+	And I check user "junko"
+	And I press "Roles"
+
+Scenario: Edit multiple courses
 Given a course: "rails" exists with name: "Rails II"
 	And a course: "fortran" exists with name: "Fortran I"
 	And a course: "ruby" exists with name: "Ruby III"

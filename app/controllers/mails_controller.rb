@@ -27,6 +27,9 @@ class MailsController < ApplicationController
     if @mail.save
     	@mail.update_attribute( :message, @mail.message.gsub("\n", "<br />"))
       flash[:notice] = t('notice.send_success',:object=>t(:mail).downcase)
+      @mail.users.each do |user|
+      	UserMailer.send_later( :deliver_mail, user, @mail.subject, @mail.message.gsub( "<br />", "\n" ))
+    	end
       redirect_to box_mails_url
     else
       render :action => 'new'

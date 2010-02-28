@@ -1,4 +1,11 @@
 class UserMailer < ActionMailer::Base
+	def mail( user, title, message )
+    recipients  user.email
+    from        "johan@reserve-gakuwarinet.com"
+    subject     title
+    body        message
+	end
+
   def notification(user, topic, message, login_user_url, username )
     recipients  user.email
     from        "johan@reserve-gakuwarinet.com"

@@ -151,6 +151,7 @@ class UsersController < ApplicationController
 	end
 
 	def edit_multiple
+		@commit = params[:commit]
 		@courses = sort_courses
 	end
 	

@@ -12,7 +12,7 @@
 				</li>
 			<% end %>
 		</ul>
-		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses %>
+		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == "Courses" %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:update) %>
