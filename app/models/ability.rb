@@ -40,11 +40,13 @@ class Ability
   		end
   		if user.role? :observer
 	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
-	  	elsif user.role? :student
+	  	end
+	  	if user.role? :student
 	  		can :reserve, User do |u|
   				u == user
-  		end
-  		elsif user.role? :admin
+  			end
+			end
+  		if user.role? :admin
 	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass]
 	  	end
 			if user.role? :photographer

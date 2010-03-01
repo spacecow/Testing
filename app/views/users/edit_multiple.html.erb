@@ -12,7 +12,12 @@
 				</li>
 			<% end %>
 		</ul>
-		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == "Courses" %>
+		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == t('courses.title') %>
+		
+		<%= f.input :roles, :as=>:check_boxes, :label=>false, :collection=>User::ROLES[1,User::ROLES.length-1] if @commit == t(:roles) %>
+
+		<%# hidden_field_tag "user[roles][]", "" %>
+		
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:update) %>

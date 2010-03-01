@@ -11,10 +11,25 @@ Given a setting exist with name: "main"
 Scenario: Edit multiple roles
 Given a user is logged in as "aya"
 When I go to the users page
-	And I check user "thomas"
-	And I check user "prince"
-	And I check user "junko"
+	And I check user "aya"
+	And I check user "johan"
+	And I check user "mika"
 	And I press "Roles"
+Then I should see "Johan Sveholm, Aya Komatsu, Mika Mikachan"
+	And the "admin" checkbox should not be checked
+	And the "observer" checkbox should not be checked
+	And the "teacher" checkbox should not be checked
+	And the "student" checkbox should not be checked
+	And the "registrant" checkbox should not be checked
+	And the "photographer" checkbox should not be checked
+	And the "beta-tester" checkbox should not be checked
+When I check "teacher"
+	And I check "registrant"
+	And I press "Update"
+Then I should be redirected to the users page
+	And a user should exist with username: "johan", :roles_mask 40
+	And a user should exist with username: "mika", :roles_mask 40
+	And a user should exist with username: "aya", :roles_mask 40
 
 Scenario: Edit multiple courses
 Given a course: "rails" exists with name: "Rails II"
