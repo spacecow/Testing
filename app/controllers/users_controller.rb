@@ -137,7 +137,7 @@ class UsersController < ApplicationController
 			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
 			:include=>:course ).
 				reject{|e| !@user.courses.include?( e.course )}.
-				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]) }
+				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
 		@reservable_klasses = []
 		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
 			@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
@@ -159,7 +159,11 @@ class UsersController < ApplicationController
 		@users.each do |user|
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
-		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
+		if !params[:user][:course_ids].nil?
+			flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
+    elsif !params[:user][:roles].nil?			
+    	flash[:notice] = t('notice.update_success',:object=>t('roles').downcase)
+		end
 		redirect_to users_path
 	end
 	

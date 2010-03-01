@@ -11,11 +11,10 @@ Given a setting exist with name: "main"
 Scenario: Edit multiple roles
 Given a user is logged in as "aya"
 When I go to the users page
-	And I check user "aya"
 	And I check user "johan"
 	And I check user "mika"
 	And I press "Roles"
-Then I should see "Johan Sveholm, Aya Komatsu, Mika Mikachan"
+Then I should see "Johan Sveholm, Mika Mikachan"
 	And the "admin" checkbox should not be checked
 	And the "observer" checkbox should not be checked
 	And the "teacher" checkbox should not be checked
@@ -27,9 +26,13 @@ When I check "teacher"
 	And I check "registrant"
 	And I press "Update"
 Then I should be redirected to the users page
-	And a user should exist with username: "johan", :roles_mask 40
-	And a user should exist with username: "mika", :roles_mask 40
-	And a user should exist with username: "aya", :roles_mask 40
+	And I should see "Successfully updated roles" as notice flash message
+	And a user should exist with username: "johan", roles_mask: 40
+	And a user should exist with username: "mika", roles_mask: 40
+	And a user should exist with username: "aya", roles_mask: 10
+	And a user should exist with username: "thomas", roles_mask: 12
+	And a user should exist with username: "prince", roles_mask: 40
+	And a user should exist with username: "junko", roles_mask: 48
 
 Scenario: Edit multiple courses
 Given a course: "rails" exists with name: "Rails II"
@@ -57,6 +60,3 @@ Then I should be redirected to the users page
 	And 1 courses_students should exist with course: course "rails", student: user "prince"
 	And 1 courses_students should exist with course: course "rails", student: user "junko"
 	And 6 courses_students should exist
-
-Scenario: Flash message (NOT IMPLEMENTED)
-Given not implemented
