@@ -1,21 +1,30 @@
-<td id="time_interval"><%= h klass.time_interval %></td>
-<td id="unit"></td>
-<td id="classroom"><%= h klass.classroom %></td>
-<td id="teacher"></td>
-<% klass.attendances.each_with_index do |a,i| %>
-	<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
-<% end %>
-<% (8-klass.attendances.count).times do |i| %>
-	<td id="student<%= (i+1) %>"></td>
-<% end %>
-<td id="links">
-	<% if can? :show, klass %>
-		<%= link_to t('show'), klass %>
+<% semantic_form_for klass do |f| -%>
+	<% f.inputs do %>
+		<td id="time_interval"><%= h klass.time_interval %></td>
+		<td id="unit"></td>
+		<td id="classroom"><%= h klass.classroom %></td>
+		<td id="teacher">
+			<%= f.input :teacher, :label => t( :teacher ), :label=>false %>
+		</td>
+		<% klass.attendances.each_with_index do |a,i| %>
+			<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
+		<% end %>
+		<% (8-klass.attendances.count).times do |i| %>
+			<td id="student<%= (i+1) %>"></td>
+		<% end %>
+		<td id="links">
+			<% if can? :show, klass %>
+				<%= link_to t('show'), klass %>
+			<% end %>
+			<% if can? :edit, klass %>
+				<%= link_to t('edit'), edit_klass_path(klass) %>
+			<% end %>
+			<% if can? :destroy, klass %>
+				<%= link_to t('delete'), klass, :confirm => 'Are you sure?', :method => :delete %>
+			<% end %>
+		</td>	
 	<% end %>
-	<% if can? :edit, klass %>
-		<%= link_to t('edit'), edit_klass_path(klass) %>
+	<% f.buttons do %>
+		<td><%= f.commit_button "OK!" %></td>
 	<% end %>
-	<% if can? :destroy, klass %>
-		<%= link_to t('delete'), klass, :confirm => 'Are you sure?', :method => :delete %>
-	<% end %>
-</td>	
+<% end -%>

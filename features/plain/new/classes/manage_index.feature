@@ -4,6 +4,22 @@ Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user: "aya" exist with username: "aya", role: "teacher, admin", language: "en", name: "Aya Komatsu"
 
+@teachers
+Scenario: Choose teachers
+Given a course: "ruby" exists with name: "Ruby I"
+	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
+	And a klass: "ruby2" exists with course: course "ruby", start_time: "21:00", end_time: "23:00", date: "2010-02-28"
+	And a user is logged in as "aya"
+When I go to the klasses page
+	And I select "February" from "class_month"
+	And I select "28" from "class_day"
+	And I select "2010" from "class_year"
+	And I press "Go!"
+	Then I should see "bajs" within klass: "ruby"
+#Then "td#teacher li select" should have options "Johan Sveholm, Aya Komatsu"
+Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu"
+	And "" should be selected in "table#Ruby tr td.teacher"
+
 @generate
 Scenario Outline: When choosing a date that does not have any classes, they should be generated if the user is admin
 Given a course: "ruby" exists with name: "Ruby II"

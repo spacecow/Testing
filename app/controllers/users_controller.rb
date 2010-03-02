@@ -50,6 +50,12 @@ class UsersController < ApplicationController
       if( params[:user][:avatar].blank? )
       	unless params[:user][:klass_ids].blank?
       		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+			  	#mail = Mail.create!(
+			    #	:sender_id => User.first.id,
+			    #	:subject => "Reservation",
+			    #	:message => "You have reserved a class!"
+			    #)
+			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
       	else
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
       	end

@@ -112,6 +112,10 @@ Then I should be redirected to path "/mypage"
 	And I should see "Successfully reserved class(es)." as notice flash message
 	And 1 attendances should exist with student: user "johan", klass: klass "klass16"
 	And 1 attendances should exist
+	#And a mail should exist with subject: "Reservation", message: "You have reserved a class!"
+	#And 1 mails should exist
+	#And a recipient should exist with user: user "johan", mail: that mail
+	#And 1 recipients should exist
 
 @another_class
 Scenario: Reserve another class

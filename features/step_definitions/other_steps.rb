@@ -132,6 +132,16 @@ When /^I select "([^\"]*)" from dropmenus "([^\"]*)"$/ do |selections, menu|
 	end
 end
 
+Then /^within #{capture_model}, "([^\"]*)" should have options "([^\"]*)"$/ do |model, select_id, options|
+	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+	p scope
+	within "##{scope}" do |element|
+		p element
+	  field = element.field_with_id(select_id)
+	  field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
+	end  
+end
+
 Then /^"(.*)" should have options "(.*)"$/ do |select_id, options| 
   field = field_with_id(select_id)
   field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
