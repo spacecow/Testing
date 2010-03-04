@@ -1,3 +1,11 @@
+When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
+	When "I go to the klasses page"
+	And "I select \"#{date.split[0]}\" from \"class_month\""
+	And "I select \"#{date.split[1]}\" from \"class_day\""
+	And "I select \"#{date.split[2]}\" from \"class_year\""
+	And "I press \"Go!\""
+end
+
 Given /^the following [ck]lass records?$/ do |table|
   table.hashes.each do |hash|
   	klass_hash = {}

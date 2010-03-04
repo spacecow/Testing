@@ -27,7 +27,7 @@ class KlassesController < ApplicationController
   def update
 		if @klass.update_attributes( params[:klass] )
   		flash[:notice] = t('notice.update_success', :object => t(:klass))
-  		redirect_to klasses_path
+  		redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day )
 		else
 			render :action => :edit
 		end
@@ -61,7 +61,7 @@ class KlassesController < ApplicationController
 		@class_year  = params[:class_year]  || Date.current.year
 		@class_date  = DateTime.parse("#{@class_year}-#{@class_month}-#{@class_day}")
 
-		@klasses = Klass.find_all_by_date( @class_date, :include => :course )
+		@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teacher] )
 		if can?( :manage, Klass ) && @klasses.size == 0
 			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|
     		t.create_class @class_date
@@ -69,6 +69,8 @@ class KlassesController < ApplicationController
 			@klasses = Klass.find_all_by_date( @class_date, :include => :course )
 		end
     @class_groups = @klasses.group_by{|e| e.course.category }		
+    
+    @teachers = User.with_role( "teacher" )
   end
 
 #  

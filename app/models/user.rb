@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 	include NameValidations
+
+  has_many :teachings, :dependent => :destroy, :foreign_key=>'teacher_id'
+  has_many :teaching_courses, :through=>:teachings, :source=>'course'
 	
 	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'
 	has_many :klasses, :through => :attendances

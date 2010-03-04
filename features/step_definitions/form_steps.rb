@@ -13,3 +13,16 @@ end
 Then /^I should see "([^\"]*)" as hint for (\w+) (\w+)$/ do |message, model, field|
   Then "I should see /^#{message}$/ within \"li##{model}_#{field}_input p.inline-hint\""
 end
+
+# -------------------------- SELECTIONS
+
+When /^I select "([^\"]*)" from "([^\"]*)" within #{capture_model}$/ do |value, field, model|
+	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+	within "##{scope}" do |element|
+  	element.select(value, :from => field)
+  end
+end
+
+Then /^I should (not )?see a button "([^\"]*)"$/ do |negative, label|
+  Then "the xpath \"//input[@value='#{label}']\" should #{negative}exist"
+end

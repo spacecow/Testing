@@ -41,3 +41,13 @@ end
 Then /^I should see commands "([^\"]*)" in the user navigation bar$/ do |commands|
 	Then "I should see options \"#{commands}\" within \"div#user_nav\""
 end
+
+#-------------------- XPATH
+
+Then /^the xpath "([^\"]*)" should exist$/ do |xpath|
+  assert_have_xpath( xpath )
+end
+
+Then /^the xpath "([^\"]*)" should not exist$/ do |xpath|
+  assert_have_no_xpath( xpath )
+end

@@ -88,7 +88,23 @@ Then /^I should not see a button '([^\"]*)'$/ do |label|
   assert_have_no_xpath( "//input[@id='#{label}']" )
 end
 
-Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id| 
+Then /^within #{capture_model}, "([^\"]*)" should be selected in "([^\"]*)"$/ do |model, option_text,select_id|
+	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+	within "##{scope}" do |element|
+	  field = element.field_with_id(select_id) 
+	  selected_value = field.value[0] 
+	  state = :nothing_selected 
+	  field.options.each do |option| 
+	    if option.element.to_html =~ /value="#{selected_value}"/ 
+	      state = :something_selected 
+	      option.element.inner_html.should == option_text 
+	    end
+	  end 
+	  state.should == :something_selected 		
+	end
+end
+
+Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   field = field_with_id(select_id) 
   selected_value = field.value[0] 
   state = :nothing_selected 
@@ -100,6 +116,7 @@ Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   end 
   state.should == :something_selected 
 end
+
 Then /^"(.*)" should be selected in the "(.*)" (?:box|field)$/ do |option_text,select_id| 
   field = field_labeled(select_id) 
   selected_value = field.value[0] 
@@ -134,9 +151,7 @@ end
 
 Then /^within #{capture_model}, "([^\"]*)" should have options "([^\"]*)"$/ do |model, select_id, options|
 	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
-	p scope
 	within "##{scope}" do |element|
-		p element
 	  field = element.field_with_id(select_id)
 	  field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
 	end  

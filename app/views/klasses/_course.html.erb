@@ -38,13 +38,23 @@
 							:capacity=>time_classes[0].capacity }
 						) if can? :create, Klass %>
 				</td>	
-				<% time_classes.each do |time_class| %>
-					<%= render time_class %>
+				<% time_classes.each do |klass| %>
+					<% taken = @klasses.
+						 reject{|e| e==klass }.
+						 reject{|e| e.end_time<klass.start_time||e.start_time>klass.end_time}.
+						 map(&:teacher) %>
+					<%= render :partial => "klass", :locals => {
+						:klass=>klass,
+						:teachers=>@teachers.
+						reject{|e| !e.teaching_courses.include?( klass.course )}.
+						reject{|e| taken.include?(e)}
+					}%>
 					</tr>
 					<% index += 1 %>
-					<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>">
+					<% if time_classes[-1]!=klass %>
+						<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= klass.id+1 %>">
+					<% end %>
 				<% end %>
-			</tr>			
 		<% end %>
 	<% end %>
 </table>

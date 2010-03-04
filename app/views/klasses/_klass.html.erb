@@ -4,7 +4,7 @@
 		<td id="unit"></td>
 		<td id="classroom"><%= h klass.classroom %></td>
 		<td id="teacher">
-			<%= f.input :teacher, :label => t( :teacher ), :label=>false %>
+			<%= f.input :teacher, :label => t( :teacher ), :label=>false, :collection=>teachers %>
 		</td>
 		<% klass.attendances.each_with_index do |a,i| %>
 			<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
