@@ -1,7 +1,15 @@
 <div id="list">
 	<h1><%= t('users.title') %></h1>
+	<%- form_for :sorting, todos_path, :html => { :method=>'get' } do |f| -%>
+		<div class="sorting">
+			<label for="status"><%= t(:sort) %></label>
+	  	<%= select_tag :status, options_for_select( User::STATUS_DROP.map{|e| [t(e[0]),e[1]]}, @status), :include_blank => false %>
+	  	<%= f.submit "Go!" %>
+		</div>
+	<%- end -%>
+	
 	<% form_tag edit_multiple_users_path do %>
-		<table cellpadding="2" cellspacing="1">
+		<table cellpadding="2" cellspacing="1" id="users">
 			<tr>
 				<th></th>
 				<th class="list-topics"><%= t('username') %></th>			
@@ -12,7 +20,9 @@
 			</tr>
 			<%= render :partial => @users %>
 		</table>
-		<%# submit_tag t('courses.title') %>
+		<%= submit_tag t(:student_courses) if @status=="student" %>
+		<%= submit_tag t(:teacher_courses) if @status=="teacher" %>
 		<%= submit_tag t(:roles) %>
 	<% end %>
 </div>
+

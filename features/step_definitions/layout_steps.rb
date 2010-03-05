@@ -1,14 +1,25 @@
+#-------------------- FLASH
+
 Then /^I should see "([^\"]*)" as (notice|error) flash message$/ do |message,type|
   Then "I should see \"#{message}\" within \"div##{type}\""
 end
+
+#-------------------- LINKS
 
 Then /^I should see links "([^\"]*)" at the bottom of the page$/ do |options|
   Then "I should see options \"#{options}\" within \"div#links\""
 end
 
+Then /^I should see links "([^\"]*)" within #{capture_model}$/ do |links, model|
+  scope = get_scope( model )
+  Then "I should see options \"#{links}\" within \"tr##{scope} td#links\""
+end
+
 When /^I follow "([^\"]*)" at the bottom of the page$/ do |link|
   click_link_within("div#links", link)
 end
+
+#-------------------- PAGE
 
 Then /^I should see "([^\"]*)" as title$/ do |title|
 	Then "I should see \"#{title}\" within \"legend\""
@@ -21,10 +32,13 @@ When /^I check #{capture_model}$/ do |model|
 	end
 end
 
-def get_scope( model )
-	model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
-end
+#-------------------- TABLE
 
+Then /^I should (not )?see "([^\"]*)" within the (.+) table$/ do |negative, text, model|
+  text.split(", ").each do |t|
+  	Then "I should #{negative}see \"#{t}\" within \"table##{model}\""
+  end
+end
 
 #-------------------- NAVIGATION BAR
 
@@ -50,4 +64,10 @@ end
 
 Then /^the xpath "([^\"]*)" should not exist$/ do |xpath|
   assert_have_no_xpath( xpath )
+end
+
+#--------------------
+
+def get_scope( model )
+	model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
 end

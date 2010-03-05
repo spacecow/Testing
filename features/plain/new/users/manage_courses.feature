@@ -22,7 +22,7 @@ When I go to the edit courses page for user: "johan"
 	And I check "Ruby III"
 	And I check "Fortran I"
 	And I press "Update"
-Then I should be redirected to mypage
+Then I should be redirected to the users page
 	And 1 courses_students should exist with course: course "ruby", student: user "johan"
 	And 1 courses_students should exist with course: course "fortran", student: user "johan"
 	And 2 courses_students should exist
@@ -39,7 +39,8 @@ Then the "Ruby III" checkbox should be checked
 When I uncheck "Fortran I"
 	And I check "Rails II"
 	And I press "Update"
-Then I should be redirected to mypage
+Then I should be redirected to the users page
+	And I should see "Successfully updated courses"
 	And 1 courses_students should exist with course: course "ruby", student: user "johan"
 	And 1 courses_students should exist with course: course "rails", student: user "johan"
 	And 2 courses_students should exist

@@ -4,7 +4,7 @@
 
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
-		<%= f.input :courses, :as=>:check_boxes, :label=>false, :collection=>@courses %>
+		<%= f.input :student_courses, :as=>:check_boxes, :label=>false, :collection=>@courses %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:update) %>

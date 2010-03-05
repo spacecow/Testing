@@ -2,11 +2,11 @@ class User < ActiveRecord::Base
 	include NameValidations
 
   has_many :teachings, :dependent => :destroy, :foreign_key=>'teacher_id'
-  has_many :teaching_courses, :through=>:teachings, :source=>'course'
+  has_many :teacher_courses, :through=>:teachings, :source=>'course'
 	
 	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'
 	has_many :klasses, :through => :attendances
-	has_and_belongs_to_many :courses, :join_table => 'courses_students', :foreign_key => 'student_id'
+	has_and_belongs_to_many :student_courses, :join_table => 'courses_students', :foreign_key => 'student_id', :class_name=>'Course'
 		
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants
@@ -62,6 +62,12 @@ class User < ActiveRecord::Base
 	ROLES = %w[god admin observer teacher student registrant photographer beta-tester]
 	LANGUAGES_EN = [['Japanese','ja'],['English','en']]
 	LANGUAGES_JA = [['日本語','ja'],['英語','en']]
+  STATUS_DROP = [
+  	["all", "all"],
+    ["teachers.title","teacher"],
+    ["students.title","student"],
+	]
+	STATUS_HASH = {"teacher"=>"teachers.title", "student"=>"students.title"}
 
 	def role_symbols
     roles.map(&:to_sym)

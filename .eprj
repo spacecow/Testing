@@ -103,6 +103,8 @@
             <string>config\routes.rb</string>
             <key>schedule</key>
             <string>app\models\schedule.rb</string>
+            <key>todo.</key>
+            <string>app\models\todo.rb</string>
             <key>todo.rb</key>
             <string>app\models\todo.rb</string>
             <key>todo_co</key>

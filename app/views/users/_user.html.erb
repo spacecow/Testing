@@ -15,7 +15,7 @@
 		<% if can? :edit_role, user %>
 	  	<%= link_to t(:role), edit_role_user_path( user ) %>
 	  <% end %>
-		<% if can? :edit_courses, user %>
+		<% if can?(:edit_courses, user) && @status!="all"%>
 	  	<%= link_to t('courses.title'), edit_courses_user_path( user ) %>
 	  <% end %>	  
 		<% if can? :destroy, user %>

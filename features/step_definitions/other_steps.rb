@@ -1,5 +1,5 @@
 Given /^a courses_student join model exists with course: "([^\"]*)", student: "([^\"]*)"$/ do |course, student|
-	User.find_by_username( student ).courses << Course.find_by_name( course )
+	User.find_by_username( student ).student_courses << Course.find_by_name( course )
 end
 
 Then /^(\d+) teachers should exist$/ do |no|
@@ -117,7 +117,7 @@ Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   state.should == :something_selected 
 end
 
-Then /^"(.*)" should be selected in the "(.*)" (?:box|field)$/ do |option_text,select_id| 
+Then /^"(.*)" should be selected in the "(.*)" (?:box|field|menu)$/ do |option_text,select_id| 
   field = field_labeled(select_id) 
   selected_value = field.value[0] 
   state = :nothing_selected 
@@ -193,15 +193,15 @@ Then /^I should see links "([^\"]*)"$/ do |links|
   end
 end
 
-Then /^I should see links "([^\"]*)" within #{capture_model}$/ do |links, model|
-  links.split(', ').each_with_index do |link,i|
-    if i==0
-      And "I should see \"#{link}\" within #{model}"
-    else
-      And "I should see \"| #{link}\" within #{model}"
-    end
-  end
-end
+#Then /^I should see links "([^\"]*)" within #{capture_model}$/ do |links, model|
+#  links.split(', ').each_with_index do |link,i|
+#    if i==0
+#      And "I should see \"#{link}\" within #{model}"
+#    else
+#      And "I should see \"| #{link}\" within #{model}"
+#    end
+#  end
+#end
 
 Then /^I should not see links "([^\"]*)" within #{capture_model}$/ do |links, model|
   links.split(', ').each_with_index do |link,i|

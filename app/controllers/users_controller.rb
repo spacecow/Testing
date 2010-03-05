@@ -7,7 +7,8 @@ class UsersController < ApplicationController
 	end
 
 	def index
-		@users = User.all
+		@status = params[:status] || "all"
+		@users = @status=="all" ? User.all : User.with_role( @status )
 	end
 
   def new
@@ -59,7 +60,11 @@ class UsersController < ApplicationController
       	else
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
       	end
-      	redirect_to mypage_path
+      	if !params[:user][:student_course_ids].blank?
+      		redirect_to users_path	
+      	else
+      		redirect_to mypage_path
+      	end
     	else
     		render :action => "crop"
   		end
@@ -165,7 +170,7 @@ class UsersController < ApplicationController
 		@users.each do |user|
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
-		if !params[:user][:course_ids].nil?
+		if !params[:user][:course_ids].nil? || !params[:user][:teacher_course_ids].nil?
 			flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
     elsif !params[:user][:roles].nil?			
     	flash[:notice] = t('notice.update_success',:object=>t('roles').downcase)
