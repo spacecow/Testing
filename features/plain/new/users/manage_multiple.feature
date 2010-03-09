@@ -84,9 +84,9 @@ When I check "Fortran I"
 	And I press "Update"
 Then I should be redirected to the users page
 	And I should see "Successfully updated courses" as notice flash message
-	And 1 teachings should exist with course: course "ruby", teacher: user "thomas"
-	And 1 teachings should exist with course: course "ruby", teacher: user "prince"
-	And 1 teachings should exist with course: course "fortran", teacher: user "thomas"
-	And 1 teachings should exist with course: course "fortran", teacher: user "prince"
-	And 4 teachings should exist
+	And a courses_teacher should exist with course: course "ruby", teacher: user "thomas"
+	And a courses_teacher should exist with course: course "ruby", teacher: user "prince"
+	And a courses_teacher should exist with course: course "fortran", teacher: user "thomas"
+	And a courses_teacher should exist with course: course "fortran", teacher: user "prince"
+	And 4 courses_teachers should exist
 	And 0 courses_students should exist

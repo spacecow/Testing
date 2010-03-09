@@ -18,6 +18,9 @@ end
 Factory.define :courses_student do |f|
 end
 
+Factory.define :courses_teacher do |f|
+end
+
 Factory.define :event do |f|
 	f.sequence(:title_en){|n| "Event #{n}" }
 	f.sequence(:title_ja){|n| "イベント#{n}" }

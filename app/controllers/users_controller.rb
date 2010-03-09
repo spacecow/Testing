@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	unless params[:user][:klass_ids].blank?
+      	if !params[:user][:klass_ids].blank?
       		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 			  	#mail = Mail.create!(
 			    #	:sender_id => User.first.id,
@@ -57,10 +57,12 @@ class UsersController < ApplicationController
 			    #	:message => "You have reserved a class!"
 			    #)
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-      	else
+      	elsif !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
+      		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
+    		else
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
       	end
-      	if !params[:user][:student_course_ids].blank?
+      	if !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
       		redirect_to users_path	
       	else
       		redirect_to mypage_path
@@ -147,7 +149,7 @@ class UsersController < ApplicationController
 		Klass.all(
 			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
 			:include=>:course ).
-				reject{|e| !@user.courses.include?( e.course )}.
+				reject{|e| !@user.student_courses.include?( e.course )}.
 				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
 		@reservable_klasses = []
 		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
@@ -158,6 +160,7 @@ class UsersController < ApplicationController
 	end
 	
 	def edit_courses
+		@status = params[:status]
 		@courses = sort_courses
 	end
 
@@ -170,7 +173,7 @@ class UsersController < ApplicationController
 		@users.each do |user|
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
-		if !params[:user][:course_ids].nil? || !params[:user][:teacher_course_ids].nil?
+		if !params[:user][:student_course_ids].nil? || !params[:user][:teacher_course_ids].nil?
 			flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
     elsif !params[:user][:roles].nil?			
     	flash[:notice] = t('notice.update_success',:object=>t('roles').downcase)

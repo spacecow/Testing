@@ -1,6 +1,7 @@
 class Klass < ActiveRecord::Base
   belongs_to :course
-  belongs_to :teacher, :class_name => 'User'
+  has_one :teaching, :dependent => :destroy
+  has_one :teacher, :class_name => 'User', :through => :teaching
   belongs_to :classroom
   
   has_many :attendances, :dependent => :destroy

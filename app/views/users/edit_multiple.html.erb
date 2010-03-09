@@ -12,7 +12,7 @@
 				</li>
 			<% end %>
 		</ul>
-		<%= f.input :course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == t(:student_courses) %>
+		<%= f.input :student_course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == t(:student_courses) %>
 		<%= f.input :teacher_course_ids, :as=>:check_boxes, :label=>false, :collection=>@courses if @commit == t(:teacher_courses) %>
 		
 		<%= f.input :roles, :as=>:check_boxes, :label=>false, :collection=>User::ROLES[1,User::ROLES.length-1] if @commit == t(:roles) %>

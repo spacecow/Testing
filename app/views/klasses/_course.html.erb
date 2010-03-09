@@ -46,7 +46,7 @@
 					<%= render :partial => "klass", :locals => {
 						:klass=>klass,
 						:teachers=>@teachers.
-						reject{|e| !e.teaching_courses.include?( klass.course )}.
+						reject{|e| !e.teacher_courses.include?( klass.course )}.
 						reject{|e| taken.include?(e)}
 					}%>
 					</tr>
