@@ -19,10 +19,10 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "rails" exists with course: course "rails", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a user is logged in as "aya"
 When I browse to the klasses page of "February 28 2010"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
-	And within klass: "rails", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "ruby", "" should be selected in "klass_teacher_id"
-	And within klass: "rails", "" should be selected in "klass_teacher_id"
+Then within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
+	And within klass: "rails", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "ruby", "" should be selected as teacher
+	And within klass: "rails", "" should be selected as teacher
 	
 @double
 Scenario: Teachers cannot teach more than one class at the same time
@@ -32,13 +32,16 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a klass: "ruby2" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a user is logged in as "aya"
+Then 0 teachings should exist
 When I browse to the klasses page of "February 28 2010"
-	And I select "Aya Komatsu" from "klass_teacher_id" within klass "ruby"
+	And I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu"
-	And within klass: "ruby2", "klass_teacher_id" should have options "BLANK, Johan Sveholm"
-	And within klass: "ruby", "Aya Komatsu" should be selected in "klass_teacher_id"
-	And within klass: "ruby2", "" should be selected in "klass_teacher_id"
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya"
+	And 1 teachings should exist
+	And within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm"
+	And within klass: "ruby", "Aya Komatsu" should be selected as teacher
+	And within klass: "ruby2", "" should be selected as teacher
 
 @extended_double
 Scenario: Teachers cannot teach more than one class at the same time
@@ -57,55 +60,70 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "fortran" exists with course: course "fortran", start_time: "21:00", end_time: "23:00", date: "2010-02-28"
 	And a klass: "fortran2" exists with course: course "fortran", start_time: "22:00", end_time: "23:30", date: "2010-02-28"
 	And a user is logged in as "aya"
+Then 0 teachings should exist
 When I browse to the klasses page of "February 28 2010"
-	And I select "Aya Komatsu" from "klass_teacher_id" within klass "fortran"
+	And I select "Aya Komatsu" as teacher within klass "fortran"
 	And I press "OK!" within klass "fortran"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
-	And within klass: "ruby2", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "rails", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "fortran", "klass_teacher_id" should have options "BLANK, Aya Komatsu"
-	And within klass: "fortran2", "klass_teacher_id" should have options "BLANK"
-	And within klass: "ruby", "" should be selected in "klass_teacher_id"
-	And within klass: "ruby2", "" should be selected in "klass_teacher_id"
-	And within klass: "rails", "" should be selected in "klass_teacher_id"
-	And within klass: "fortran", "Aya Komatsu" should be selected in "klass_teacher_id"
-	And within klass: "fortran2", "" should be selected in "klass_teacher_id"
-When I select "Johan Sveholm" from "klass_teacher_id" within klass "ruby"
+Then a teaching should exist with klass: klass "fortran", teacher: user "aya"
+	And 1 teachings should exist
+	And within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "rails", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "fortran", the teacher field should have options "BLANK, Aya Komatsu"
+	And within klass: "fortran2", the teacher field should have options "BLANK"
+	And within klass: "ruby", "" should be selected as teacher
+	And within klass: "ruby2", "" should be selected as teacher
+	And within klass: "rails", "" should be selected as teacher
+	And within klass: "fortran", "Aya Komatsu" should be selected as teacher
+	And within klass: "fortran2", "" should be selected as teacher
+When I select "Johan Sveholm" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
-	And within klass: "ruby2", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "rails", "klass_teacher_id" should have options "BLANK, Prince Philip"
-	And within klass: "fortran", "klass_teacher_id" should have options "BLANK, Aya Komatsu"
-	And within klass: "fortran2", "klass_teacher_id" should have options "BLANK"
-	And within klass: "ruby", "Johan Sveholm" should be selected in "klass_teacher_id"
-	And within klass: "ruby2", "" should be selected in "klass_teacher_id"
-	And within klass: "rails", "" should be selected in "klass_teacher_id"
-	And within klass: "fortran", "Aya Komatsu" should be selected in "klass_teacher_id"
-	And within klass: "fortran2", "" should be selected in "klass_teacher_id"	
-When I select "Prince Philip" from "klass_teacher_id" within klass "ruby2"
+Then a teaching should exist with klass: klass "fortran", teacher: user "aya"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan"
+	And 2 teachings should exist	
+Then within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "rails", the teacher field should have options "BLANK, Prince Philip"
+	And within klass: "fortran", the teacher field should have options "BLANK, Aya Komatsu"
+	And within klass: "fortran2", the teacher field should have options "BLANK"
+	And within klass: "ruby", "Johan Sveholm" should be selected as teacher
+	And within klass: "ruby2", "" should be selected as teacher
+	And within klass: "rails", "" should be selected as teacher
+	And within klass: "fortran", "Aya Komatsu" should be selected as teacher
+	And within klass: "fortran2", "" should be selected as teacher
+When I select "Prince Philip" as teacher within klass "ruby2"
 	And I press "OK!" within klass "ruby2"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
-	And within klass: "ruby2", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "rails", "klass_teacher_id" should have options "BLANK, Prince Philip"
-	And within klass: "fortran", "klass_teacher_id" should have options "BLANK, Aya Komatsu"
-	And within klass: "fortran2", "klass_teacher_id" should have options "BLANK"
-	And within klass: "ruby", "Johan Sveholm" should be selected in "klass_teacher_id"
-	And within klass: "ruby2", "Prince Philip" should be selected in "klass_teacher_id"
-	And within klass: "rails", "" should be selected in "klass_teacher_id"
-	And within klass: "fortran", "Aya Komatsu" should be selected in "klass_teacher_id"
-	And within klass: "fortran2", "" should be selected in "klass_teacher_id"	
-When I select "Prince Philip" from "klass_teacher_id" within klass "rails"
+	And a teaching should exist with klass: klass "fortran", teacher: user "aya"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan"
+	And a teaching should exist with klass: klass "ruby2", teacher: user "prince"
+	And 3 teachings should exist		
+Then within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "rails", the teacher field should have options "BLANK, Prince Philip"
+	And within klass: "fortran", the teacher field should have options "BLANK, Aya Komatsu"
+	And within klass: "fortran2", the teacher field should have options "BLANK"
+	And within klass: "ruby", "Johan Sveholm" should be selected as teacher
+	And within klass: "ruby2", "Prince Philip" should be selected as teacher
+	And within klass: "rails", "" should be selected as teacher
+	And within klass: "fortran", "Aya Komatsu" should be selected as teacher
+	And within klass: "fortran2", "" should be selected as teacher
+When I select "Prince Philip" as teacher within klass "rails"
 	And I press "OK!" within klass "rails"
-Then within klass: "ruby", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Aya Komatsu"
-	And within klass: "ruby2", "klass_teacher_id" should have options "BLANK, Johan Sveholm, Prince Philip"
-	And within klass: "rails", "klass_teacher_id" should have options "BLANK, Prince Philip"
-	And within klass: "fortran", "klass_teacher_id" should have options "BLANK, Aya Komatsu"
-	And within klass: "fortran2", "klass_teacher_id" should have options "BLANK"
-	And within klass: "ruby", "Johan Sveholm" should be selected in "klass_teacher_id"
-	And within klass: "ruby2", "Prince Philip" should be selected in "klass_teacher_id"
-	And within klass: "rails", "Prince Philip" should be selected in "klass_teacher_id"
-	And within klass: "fortran", "Aya Komatsu" should be selected in "klass_teacher_id"
-	And within klass: "fortran2", "" should be selected in "klass_teacher_id"	
+	And a teaching should exist with klass: klass "fortran", teacher: user "aya"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan"
+	And a teaching should exist with klass: klass "ruby2", teacher: user "prince"
+	And a teaching should exist with klass: klass "rails", teacher: user "prince"
+	And 4 teachings should exist			
+Then within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
+	And within klass: "rails", the teacher field should have options "BLANK, Prince Philip"
+	And within klass: "fortran", the teacher field should have options "BLANK, Aya Komatsu"
+	And within klass: "fortran2", the teacher field should have options "BLANK"
+	And within klass: "ruby", "Johan Sveholm" should be selected as teacher
+	And within klass: "ruby2", "Prince Philip" should be selected as teacher
+	And within klass: "rails", "Prince Philip" should be selected as teacher
+	And within klass: "fortran", "Aya Komatsu" should be selected as teacher
+	And within klass: "fortran2", "" should be selected as teacher
 
 @generate
 Scenario Outline: When choosing a date that does not have any classes, they should be generated if the user is admin

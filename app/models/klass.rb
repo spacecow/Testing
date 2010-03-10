@@ -1,7 +1,10 @@
 class Klass < ActiveRecord::Base
   belongs_to :course
+  
   has_one :teaching, :dependent => :destroy
   has_one :teacher, :class_name => 'User', :through => :teaching
+  accepts_nested_attributes_for :teaching
+  
   belongs_to :classroom
   
   has_many :attendances, :dependent => :destroy
