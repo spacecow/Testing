@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	if !params[:user][:klass_ids].blank?
+      	if !params[:user][:student_klass_ids].blank?
       		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 			  	#mail = Mail.create!(
 			    #	:sender_id => User.first.id,
@@ -150,13 +150,13 @@ class UsersController < ApplicationController
 			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
 			:include=>:course ).
 				reject{|e| !@user.student_courses.include?( e.course )}.
-				map{|e| @klasses[e.name] = @user.klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
+				map{|e| @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
 		@reservable_klasses = []
 		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
-			@reservable_klasses = @klasses.values.reject{|e| @user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+			@reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		end	
-		@reserved_klasses = @klasses.values.reject{|e| !@user.klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@class_history = @user.klasses.reject{|e| e.date >= Date.current }
+		@reserved_klasses = @klasses.values.reject{|e| !@user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@class_history = @user.student_klasses.reject{|e| e.date >= Date.current }
 	end
 	
 	def edit_courses

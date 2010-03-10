@@ -47,7 +47,7 @@ class Ability
   			end
 			end
   		if user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass]
+	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course]
 	  	end
 			if user.role? :photographer
 				can [:create, :update], Photo

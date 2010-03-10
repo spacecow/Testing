@@ -1,3 +1,19 @@
+#--------------------- FORM
+
+When /^I select "([^\"]*)" as teacher within klass "([^\"]*)"$/ do |teacher, model|
+	When "I select \"#{teacher}\" from \"klass_teaching_attributes_teacher_id\" within klass \"#{model}\""
+end
+
+Then /^within klass: "([^\"]*)", the teacher field should have options "([^\"]*)"$/ do |model, options|
+  Then "within klass: \"#{model}\", \"klass_teaching_attributes_teacher_id\" should have options \"#{options}\""
+end
+
+Then /^within klass: "([^\"]*)", "([^\"]*)" should be selected as teacher$/ do |model, teacher|
+  Then "within klass: \"#{model}\", \"#{teacher}\" should be selected in \"klass_teaching_attributes_teacher_id\""
+end
+
+#---------------------
+
 When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
 	When "I go to the klasses page"
 	And "I select \"#{date.split[0]}\" from \"class_month\""

@@ -6,6 +6,7 @@ class ChangeFieldsForTeaching < ActiveRecord::Migration
 		add_column :teachings, :cost, :integer
 		remove_column :teachings, :note
 		add_column :teachings, :status, :integer
+		remove_column :klasses, :teacher_id
   end
 
   def self.down
@@ -15,5 +16,6 @@ class ChangeFieldsForTeaching < ActiveRecord::Migration
   	add_column :teachings, :cost, :integer, :default => 1500
   	add_column :teachings, :note, :text
   	remove_column :teachings, :status
+  	add_column :klasses, :teacher_id, :integer
   end
 end
