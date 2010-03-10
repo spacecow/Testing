@@ -5,7 +5,7 @@ class ChangeFieldsForTeaching < ActiveRecord::Migration
 		remove_column :teachings, :cost
 		add_column :teachings, :cost, :integer
 		remove_column :teachings, :note
-		add_column :teachings, :status, :integer
+		add_column :teachings, :status_mask, :integer, :default => 0
 		remove_column :klasses, :teacher_id
   end
 
@@ -15,7 +15,7 @@ class ChangeFieldsForTeaching < ActiveRecord::Migration
   	remove_column :teachings, :cost
   	add_column :teachings, :cost, :integer, :default => 1500
   	add_column :teachings, :note, :text
-  	remove_column :teachings, :status
+  	remove_column :teachings, :status_mask
   	add_column :klasses, :teacher_id, :integer
   end
 end

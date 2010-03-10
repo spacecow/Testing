@@ -35,6 +35,7 @@ en:
   classroom: "Classroom"
   close: "Close"
   comment: "Comment"
+  confirm: "Confirm"
   course: "Course"
   create: "Create"
   crop: "Crop"
@@ -204,6 +205,7 @@ en:
   header:
     already_reserved_classes: "Already Reserved Classes"
     class_history: "Class History"
+    classes_to_confirm: "Classes to Confirm"
     classes_to_reserve: "Classes to Reserve"
   message:
     asterisk: "All fields that are marked with an asterisk (*) must be filled in before submitting."
@@ -212,14 +214,16 @@ en:
     choose_a_day: "Choose a day"
     forgotten_password: "I have forgotten my password!"
     info_update: "I would like to forward my internal mail to my external."
+    no_confirmations: "You have no classes to confirm."
     no_reservations_today: "You can do no reservations today."
     provide_username_or_email: "Please provide your username or email and an email will be sent to you with instructions of how to reset your password."
     time_for_reservation: "Reservations can be made from Sat 12am to Tue 5pm."
     which_language: "In which language would you like this site to be?"
   notice:
     add_success: "Successfully added {{object}}."
-    create_success: "Successfully created {{object}}."
     change_success: "Successfully changed {{object}}."
+    confirm_success: "Successfully confirmed {{object}}."
+    create_success: "Successfully created {{object}}."
     delete_success: "Successfully deleted {{object}}."
     mail_sent: "A mail has been sent to you."
     reserve_success: "Successfully reserved {{object}}."

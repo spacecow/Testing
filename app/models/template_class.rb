@@ -79,7 +79,7 @@ class TemplateClass < ActiveRecord::Base
   def create_class( date )
 		Klass.create!(
 			:course_id=>self.course_id,
-			:teacher_id=>self.teacher_id,
+			#:teacher_id=>self.teacher_id,
 			:classroom_id=>self.classroom_id,
 			:capacity=>self.capacity,      
 			:date=>date.strftime( "%Y-%m-%d" ),

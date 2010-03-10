@@ -115,7 +115,8 @@ class Klass < ActiveRecord::Base
 	end
 	
   def to_s
-    course_name + (": ") + time_interval
+    #course_name + (": ") + time_interval
+    name
   end
 
 	def self.generate_classes_for_reservation

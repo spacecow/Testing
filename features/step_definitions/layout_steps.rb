@@ -56,6 +56,11 @@ Then /^I should see commands "([^\"]*)" in the user navigation bar$/ do |command
 	Then "I should see options \"#{commands}\" within \"div#user_nav\""
 end
 
+When /^I follow "([^\"]*)" in the user navigation bar$/ do |link|
+	When "I follow \"#{link}\" within \"div#user_nav\""
+end
+
+
 #-------------------- XPATH
 
 Then /^the xpath "([^\"]*)" should exist$/ do |xpath|

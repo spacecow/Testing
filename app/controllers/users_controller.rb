@@ -57,6 +57,8 @@ class UsersController < ApplicationController
 			    #	:message => "You have reserved a class!"
 			    #)
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
+      	elsif !params[:user][:teacher_klass_ids].blank?
+      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
       	elsif !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
       		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
     		else
@@ -139,6 +141,14 @@ class UsersController < ApplicationController
     else
       render :action => 'change_password'
     end
+	end
+	
+	def confirm
+		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
+		klasses = Klass.all(
+			:conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", todays_date, current_user.id],
+			:include=>:teaching ).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@confirmable_klasses = klasses
 	end
 	
 	def reserve

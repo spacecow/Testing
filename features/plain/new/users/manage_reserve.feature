@@ -192,3 +192,6 @@ Given not implemented
 
 Scenario: Change to Tokyo time! (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Implement mailing (NOT IMPLEMENTED)
+Given not implemented

@@ -6,9 +6,10 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :student_courses, :join_table => 'courses_students', :foreign_key => 'student_id', :class_name=>'Course'
 	
 	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'
-	has_many :student_klasses, :through => :attendances, :source=>'klass'
-	has_many :teachings, :foreign_key => "teacher_id"
-	has_many :teacher_klasses, :through => :teachings
+	has_many :student_klasses, :through => :attendances, :source => 'klass'
+	has_many :teachings, :dependent => :destroy, :foreign_key => "teacher_id"
+	has_many :teacher_klasses, :through => :teachings, :source => 'klass'
+	accepts_nested_attributes_for :teachings	
 		
 	has_many :registrants, :dependent => :destroy
 	has_many :events, :through => :registrants

@@ -13,6 +13,18 @@ div.reservable form.user fieldset.inputs ol li fieldset ol { padding: 0; }
 div.reservable form.user fieldset.buttons { padding-left: 0; }
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
+form.user fieldset.inputs ol fieldset.inputs ol li.check_boxes {
+  float: left;
+  position: absolute;
+}
+form.user fieldset.inputs ol fieldset.inputs ol li.string {
+  margin-left: 3em;
+  float: left;
+}
+form.user fieldset.inputs ol fieldset.inputs ol li.string input {
+  background: #eeffee;
+  border: 0;
+}
 form.formtastic fieldset.buttons { padding-left: 145px; }
 form.formtastic fieldset ol li { margin-bottom: 0px; }
 form.formtastic fieldset.inputs ol .subjects { padding-left: 145px; }

@@ -9,9 +9,12 @@
 				<% end %>
 			<% end %>
 			<% if current_user2 %>
-				<% if can? :reserve, current_user %>
-					<li><%= link_to t(:reserve), reserve_user_path( current_user2 ) %></li>
+				<% if current_user.role? :teacher %>
+					<li><%= link_to t(:confirm), confirm_user_path( current_user2 ) %></li>
 				<% end %>
+				<% if current_user.role? :student %>
+					<li><%= link_to t(:reserve), reserve_user_path( current_user2 ) %></li>
+				<% end %>				
 				<li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
 				<li><%= link_to t( 'logout.text' ), logout_user_path %></li>
 				<% if can? :box, Mail %>

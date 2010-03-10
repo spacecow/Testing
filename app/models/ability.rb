@@ -18,9 +18,7 @@ class Ability
 			end
   		can :create, Registrant
 	  	
-	    if user.role? :god
-				can :manage, :all	
-	  	elsif( user.role? :student ) || ( user.role? :teacher ) || ( user.role? :observer ) || ( user.role? :admin )
+	  	if( user.role? :student ) || ( user.role? :teacher ) || ( user.role? :observer ) || ( user.role? :admin )
 	  		can :create, Comment
 	  		can [:update, :destroy], Comment do |comment|
   				comment.try(:user) == user
@@ -38,17 +36,6 @@ class Ability
 	  		end
 	  		can :read, Klass
   		end
-  		if user.role? :observer
-	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
-	  	end
-	  	if user.role? :student
-	  		can :reserve, User do |u|
-  				u == user
-  			end
-			end
-  		if user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course]
-	  	end
 			if user.role? :photographer
 				can [:create, :update], Photo
 				can [:edit, :destroy], Photo do |photo|
@@ -56,6 +43,25 @@ class Ability
 				end
 			end
 			if user.role? "beta-tester"
+			end
+	  	if user.role? :student
+	  		can :reserve, User do |u|
+  				u == user
+  			end
+			end
+	  	if user.role? :teacher
+	  		can :confirm, User do |u|
+  				u == user
+  			end
+			end			
+  		if user.role? :observer
+	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
+	  	end
+  		if user.role? :admin
+	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course]
+	  	end
+	  	if user.role? :god
+				can :manage, :all
 			end
   	end
   end
