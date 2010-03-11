@@ -3,29 +3,42 @@ class Teaching < ActiveRecord::Base
   belongs_to :klass
   
   def confirm
-  	status_mask
+    status? :confirmed
   end
   
   def confirm=( value )
-		#self.status_mask = value[1].to_i
-		p "!!!!!!!!!!!!!!!!!!!!!"
-		p status_value value[1]
-	end
+    if value[1].blank?
+      reset_status :confirmed
+    else    
+      add_status :confirmed
+    end
+  end
+
+  def reset_status( value )
+    self.status_mask &= 2**STATUS.size-1 - status_value( value )
+  end
+
+  def add_status( value )
+    self.status_mask |= status_value( value )
+  end
   
+  STATUS = %w[confirmed]
+
+  def status?( value )
+    status.include?( value.to_s )
+  end
   
-	STATUS = %w[confirm]
-  
-  def status_value( status )
-  	#sta.include? role.to_s
-  	2**STATUS.index( status.to_s )
+  def status_value( value )
+    index = STATUS.index( value.to_s )
+    index.nil? ? 0 : 2**index
   end
   
   def status
     STATUS.reject {|r| ((status_mask || 0) & 2**STATUS.index(r)).zero? }
   end	
   
-	def status=( status )
-    self.status_mask = (status & STATUS).map {|r| 2**STATUS.index(r)}.sum
+  def status=( value )
+    self.status_mask = (value & STATUS).map {|r| 2**STATUS.index(r)}.sum
   end
 
 end

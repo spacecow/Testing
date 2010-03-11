@@ -117,6 +117,9 @@ Then I should be redirected to path "/mypage"
 	#And a recipient should exist with user: user "johan", mail: that mail
 	#And 1 recipients should exist
 
+Scenario: Sort class history? (NOT IMPLEMENTED)
+Given not implemented
+
 @another_class
 Scenario: Reserve another class
 Given a course: "ruby" exists with name: "Ruby I"

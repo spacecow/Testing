@@ -203,10 +203,12 @@ ja:
       does_not_exist: "がありません"
       zero: "はゼロではいけません"
   header:
+    already_confirmed_classes: "もう確認されていたクラス"
     already_reserved_classes: "もう予約されていたクラス"
     class_history: "過去のクラス"
     classes_to_confirm: "確認できるクラス"
     classes_to_reserve: "予約できるクラス"
+    teaching_history: "過去の教えたクラス"
   message:
     asterisk: "アステリスクがある所は必要な情報。"
     avatar_upload: "プロフィール写真ををアップロード"

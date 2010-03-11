@@ -49,6 +49,7 @@ class UsersController < ApplicationController
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
+      	p params
       	if !params[:user][:student_klass_ids].blank?
       		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 			  	#mail = Mail.create!(
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
 			    #	:message => "You have reserved a class!"
 			    #)
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-      	elsif !params[:user][:teacher_klass_ids].blank?
+      	elsif !params[:user][:teachings_attributes].blank?
       		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
       	elsif !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
       		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
@@ -145,10 +146,17 @@ class UsersController < ApplicationController
 	
 	def confirm
 		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
-		klasses = Klass.all(
-			:conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", todays_date, current_user.id],
-			:include=>:teaching ).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@confirmable_klasses = klasses
+		klasses = @user.teacher_klasses.all(
+			:conditions=>["date >= ?",todays_date]
+		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		#Klass.all(
+		#	:conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", todays_date, current_user.id],
+		#	:include=>:teaching ).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		@confirmable_klasses = klasses.reject{|e| e.teaching.status?( :confirmed )}
+		@confirmed_klasses = klasses.reject{|e| !e.teaching.status?( :confirmed )}
+		@teaching_history = @user.teacher_klasses.all(
+			:conditions=>["date < ?",todays_date]
+		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 	end
 	
 	def reserve
@@ -166,7 +174,7 @@ class UsersController < ApplicationController
 			@reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		end	
 		@reserved_klasses = @klasses.values.reject{|e| !@user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@class_history = @user.student_klasses.reject{|e| e.date >= Date.current }
+		@class_history = @user.student_klasses.reject{|e| e.date >= todays_date }
 	end
 	
 	def edit_courses

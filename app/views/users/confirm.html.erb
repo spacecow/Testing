@@ -10,9 +10,11 @@
 <h2><%= t('header.classes_to_confirm') %></h2>
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
-		<% f.inputs :for => [:teachings, @confirmable_klasses.map(&:teaching)] do |builder| %>
-			<%= builder.input :klass, :as => :string, :input_html => { :disabled => true }, :label => false %>
-			<%= builder.input :confirm, :label => false, :as => :check_boxes, :collection => [['',:confirm]] %>
+		<% @confirmable_klasses.map(&:teaching).each do |teaching| %>
+			<% f.inputs :for => [:teachings, teaching] do |builder| %>
+				<%= builder.input :klass, :as => :string, :input_html => { :disabled => true }, :label => false %>
+				<%= builder.input :confirm, :label => false, :as => :check_boxes, :collection => [['',:confirm]] %>
+			<% end %>
 		<% end %>
 		<%# f.input :teacher_klasses, :as=>:check_boxes, :label=>false,
 								:collection => @confirmable_klasses, :required=>false %>
@@ -27,29 +29,26 @@
 <% end %>
 </div>
 
-<% if false %>
-<% unless @reserved_klasses.empty? %>
-<div class="reserved">
-<h2><%= t('header.already_reserved_classes') %></h2>
+<% unless @confirmed_klasses.empty? %>
+<div class="confirmed">
+<h2><%= t('header.already_confirmed_classes') %></h2>
 <ul>
-<% @reserved_klasses.each do |klass| %>
+<% @confirmed_klasses.each do |klass| %>
 	<li><%= klass.name %></li>
 <% end %>
 </ul>
 </div>
 <% end %>
 
-<% unless @class_history.empty? %>
-<div class="history">
-<h2><%= t('header.class_history') %></h2>
+<% unless @teaching_history.empty? %>
+<div class="taught">
+<h2><%= t('header.teaching_history') %></h2>
 <ul>
-<% @class_history.each do |klass| %>
+<% @teaching_history.each do |klass| %>
 	<li><%= klass.name %></li>
 <% end %>
 </ul>
 </div>
-<% end %>
-
 <% end %>
 
 <div id="links">
