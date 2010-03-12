@@ -11,6 +11,18 @@
 .numeric_mixin { width: 10em; }
 div.reservable form.user fieldset.inputs ol li fieldset ol { padding: 0; }
 div.reservable form.user fieldset.buttons { padding-left: 0; }
+td#teacher fieldset.inputs {
+  float: left;
+  margin-top: 1px;
+}
+td#teacher input.confirmed {
+  color: green;
+  font-weight: bold;
+}
+td#teacher input.unconfirmed {
+  color: red;
+  font-weight: bold;
+}
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
 form.user fieldset.inputs ol fieldset.inputs ol li.check_boxes {
@@ -24,6 +36,7 @@ form.user fieldset.inputs ol fieldset.inputs ol li.string {
 form.user fieldset.inputs ol fieldset.inputs ol li.string input {
   background: #eeffee;
   border: 0;
+  color: #000000;
 }
 form.formtastic fieldset.buttons { padding-left: 145px; }
 form.formtastic fieldset ol li { margin-bottom: 0px; }

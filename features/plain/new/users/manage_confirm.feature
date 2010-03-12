@@ -7,9 +7,6 @@ Given a setting exist with name: "main"
 Scenario: Make cost inherit from courses_teachers (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: Check that already class history does not get erased when a new class is confirmed (NOT IMPLEMENTED)
-Given not implemented
-
 Scenario: Links on confirmation page (NOT IMPLEMENTED)
 Given not implemented
 
@@ -63,8 +60,8 @@ When I go to the confirm page for user: "johan" on "2010-03-26"
 	And the page should have no "confirmed" section
 	And I should see "Teaching History" within "div.taught"
 	And I should see "3/19(Friday)" within "div.taught"
-	And I should see "3/20(Saturday)"
-	And I should see "3/18(Thursday)"
+	And I should not see "3/20(Saturday)"
+	And I should not see "3/18(Thursday)"
 
 Scenario: Only show classes that have been confirmed taught in the history? (NOT IMPLEMENTED)
 Given not implemented
@@ -140,3 +137,25 @@ Then I should be redirected to path "/mypage"
 	#And 1 mails should exist
 	#And a recipient should exist with user: user "johan", mail: that mail
 	#And 1 recipients should exist
+
+@confirm_again
+Scenario: Check that already class history does not get erased when a new class is confirmed (NOT IMPLEMENTED)
+Given a klass: "klass18" exists with date: "2010-03-04"
+	And a klass: "klass19" exists with date: "2010-03-19"
+	And a klass: "klass20" exists with date: "2010-03-20"
+	And a teaching exists with klass: klass "klass18", teacher: user "prince", status_mask: 1
+	And a teaching exists with klass: klass "klass19", teacher: user "prince", status_mask: 0
+	And a teaching exists with klass: klass "klass20", teacher: user "prince", status_mask: 1
+Given a user is logged in as "prince"	
+When I go to the confirm page for user: "prince" on "2010-03-10"
+Then I should see "3/19(Friday)" within the confirmable section
+	And I should see "3/20(Saturday)" within "div.confirmed"
+	And I should see "3/4(Thursday)" within "div.taught"
+When I confirm klass "klass19" for user "prince" from "2010-03-10"
+	And I press "Confirm"
+Then I should be redirected to path "/mypage"
+	And I should see "Successfully confirmed class(es)." as notice flash message
+	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 1
+	And a teaching should exist with klass: klass "klass19", teacher: user "prince", status_mask: 1
+	And a teaching should exist with klass: klass "klass20", teacher: user "prince", status_mask: 1
+	

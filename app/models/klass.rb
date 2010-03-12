@@ -21,6 +21,14 @@ class Klass < ActiveRecord::Base
 	validates_numericality_of :capacity
 	validate :capacity_cannot_be_zero
 
+	def toggle_confirmation=( value )
+		if value == "?"
+			teaching.confirm = ["",:confirmed]
+		else
+			teaching.confirm = ["",""]
+		end
+	end
+
 	def name
 		month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval
 	end

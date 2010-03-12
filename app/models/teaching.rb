@@ -2,6 +2,14 @@ class Teaching < ActiveRecord::Base
   belongs_to :teacher, :class_name => 'User'
   belongs_to :klass
   
+  def confirmed_symbol
+  	if status? :confirmed
+  		"O"
+  	else
+  		"?"
+		end
+  end
+  
   def confirm
     status? :confirmed
   end

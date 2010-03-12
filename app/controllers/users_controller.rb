@@ -49,7 +49,6 @@ class UsersController < ApplicationController
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	p params
       	if !params[:user][:student_klass_ids].blank?
       		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 			  	#mail = Mail.create!(
@@ -155,8 +154,9 @@ class UsersController < ApplicationController
 		@confirmable_klasses = klasses.reject{|e| e.teaching.status?( :confirmed )}
 		@confirmed_klasses = klasses.reject{|e| !e.teaching.status?( :confirmed )}
 		@teaching_history = @user.teacher_klasses.all(
-			:conditions=>["date < ?",todays_date]
-		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+			:conditions=>["date < ?",todays_date]).
+			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
+			reject{|e| !e.teaching.status?( :confirmed )}
 	end
 	
 	def reserve
