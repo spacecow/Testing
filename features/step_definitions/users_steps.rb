@@ -15,7 +15,7 @@ end
 
 #----------------------Confirm page
 
-When /^I confirm #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |klass_model, user_model, date|
+When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |action, klass_model, user_model, date|
   klass = model( klass_model )
   user = model( user_model )
   index = Klass.all(
@@ -23,7 +23,7 @@ When /^I confirm #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |kla
 		:include=>:teaching
 		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
 		  index( klass )
-	field_with_id( "user_teachings_attributes_#{index}_confirm_confirm" ).check
+	field_with_id( "user_teachings_attributes_#{index}_confirm_#{action}" ).choose
 end
 
 Then /^I should see "([^\"]*)" within the confirmable section$/ do |text|

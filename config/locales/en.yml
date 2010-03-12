@@ -208,6 +208,7 @@ en:
     class_history: "Class History"
     classes_to_confirm: "Classes to Confirm"
     classes_to_reserve: "Classes to Reserve"
+    declined_classes: "Declined Classes"
     teaching_history: "Teaching History"
   message:
     asterisk: "All fields that are marked with an asterisk (*) must be filled in before submitting."

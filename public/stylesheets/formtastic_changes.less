@@ -43,8 +43,12 @@ td#teacher{
 		color:green;
 		font-weight:bold;
 	}
-	input.unconfirmed{
+	input.declined{
 		color:red;
+		font-weight:bold;
+	}	
+	input.unconfirmed{
+		color:magenta;
 		font-weight:bold;
 	}	
 }
@@ -69,13 +73,27 @@ form.user{
 		ol{
 			fieldset.inputs{
 				ol{
-					li.check_boxes{
-						float:left;
-						position:absolute;
+					padding:0;
+					margin:0 0 0 0.9em;
+					li.radio{
+						fieldset{
+							ol{								
+								li{
+									float:left;
+									label{
+										padding:0;
+										margin:0 0 0 0.2em;
+										input{
+											
+										}
+									}
+								}
+							}
+						}
 					}
 					li.string{
-						margin-left:3em;
-						float:left;
+						margin-right:14em;
+						float:right;
 						input{
 							background:#efe;
 							border:0;

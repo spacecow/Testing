@@ -26,6 +26,7 @@ Then I should see "Confirm" as title
 	And I should not see "3/20(Saturday)" within the confirmable section
 	And the page should have no "confirmed" section
 	And the page should have no "taught" section
+	And the page should have no "declined" section
 
 @view_confirmed
 Scenario: View of confirmed classes
@@ -45,6 +46,7 @@ Then I should see "Classes to Confirm" within "div.confirmable"
 	And I should see "3/19(Friday)" within "div.confirmed"
 	And I should not see "3/20(Saturday)" within "div.confirmed"
 	And the page should have no "taught" section
+	And the page should have no "declined" section
 
 @view_history
 Scenario: View of classes taught
@@ -62,6 +64,28 @@ When I go to the confirm page for user: "johan" on "2010-03-26"
 	And I should see "3/19(Friday)" within "div.taught"
 	And I should not see "3/20(Saturday)"
 	And I should not see "3/18(Thursday)"
+	And the page should have no "declined" section
+
+@view_declined
+Scenario: View of classes taught
+Given a klass: "klass04" exists with date: "2010-03-04"
+	And a klass: "klass05" exists with date: "2010-03-05"
+	And a klass: "klass19" exists with date: "2010-03-19"
+	And a klass: "klass20" exists with date: "2010-03-20"
+	And a teaching exists with klass: klass "klass04", teacher: user "aya", status_mask: 1
+	And a teaching exists with klass: klass "klass05", teacher: user "aya", status_mask: 2
+	And a teaching exists with klass: klass "klass19", teacher: user "aya", status_mask: 1
+	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 2
+Given a user is logged in as "johan"	
+When I go to the confirm page for user: "aya" on "2010-03-10"
+	Then the page should have no "confirmable" section
+	And I should see "Already Confirmed Classes" within "div.confirmed"
+	And I should see "3/19(Friday)" within "div.confirmed"
+	And I should see "Teaching History" within "div.taught"
+	And I should see "3/4(Thursday)" within "div.taught"
+	And I should see "Declined Classes" within "div.declined"
+	And I should see "3/5(Friday)" within "div.declined"
+	And I should see "3/20(Saturday)" within "div.declined"
 
 Scenario: Only show classes that have been confirmed taught in the history? (NOT IMPLEMENTED)
 Given not implemented
@@ -118,44 +142,61 @@ When I go to the confirm page for user: "johan" on "2010-03-06"
 Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00, 3/18(Thursday) - Ruby I - 12:00~13:00, 3/19(Friday) - Ruby I - 09:00~13:00, 3/19(Friday) - Ruby I - 12:00~13:00, 3/20(Saturday) - Ruby I - 09:00~13:00, 3/20(Saturday) - Ruby I - 17:00~18:00" within the confirmable section
 
 @confirm
-Scenario: Confirm a class
+Scenario: Confirm & decline classes
 Given a course: "ruby" exists with name: "Ruby I"
+	And a klass: "klass20" exists with date: "2010-03-20", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass19" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "klass18" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+	And a teaching exists with klass: klass "klass20", teacher: user "prince"
 	And a teaching exists with klass: klass "klass19", teacher: user "prince"
 	And a teaching exists with klass: klass "klass18", teacher: user "prince"
 	And a user is logged in as "prince"
 When I go to the confirm page for user: "prince" on "2010-03-06"
-	And I confirm klass "klass18" for user "prince" from "2010-03-06"
+	And I confirmed klass "klass18" for user "prince" from "2010-03-06"
+	And I declined klass "klass20" for user "prince" from "2010-03-06"
 	And I press "Confirm"
 Then I should be redirected to path "/mypage"
 	And I should see "Successfully confirmed class(es)." as notice flash message
+	And a teaching should exist with klass: klass "klass20", teacher: user "prince", status_mask: 2
 	And a teaching should exist with klass: klass "klass19", teacher: user "prince", status_mask: 0
 	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 1
-	And 2 teachings should exist
+	And 3 teachings should exist
 	#And a mail should exist with subject: "Reservation", message: "You have reserved a class!"
 	#And 1 mails should exist
 	#And a recipient should exist with user: user "johan", mail: that mail
 	#And 1 recipients should exist
 
 @confirm_again
-Scenario: Check that already class history does not get erased when a new class is confirmed (NOT IMPLEMENTED)
-Given a klass: "klass18" exists with date: "2010-03-04"
+Scenario: Check that already class history does not get erased when a new class is confirmed
+Given a klass: "klass04" exists with date: "2010-03-04"
+	And a klass: "klass05" exists with date: "2010-03-05"
+	And a klass: "klass18" exists with date: "2010-03-18"
 	And a klass: "klass19" exists with date: "2010-03-19"
 	And a klass: "klass20" exists with date: "2010-03-20"
-	And a teaching exists with klass: klass "klass18", teacher: user "prince", status_mask: 1
+	And a klass: "klass21" exists with date: "2010-03-21"
+	And a teaching exists with klass: klass "klass04", teacher: user "prince", status_mask: 1
+	And a teaching exists with klass: klass "klass05", teacher: user "prince", status_mask: 2
+	And a teaching exists with klass: klass "klass18", teacher: user "prince", status_mask: 0
 	And a teaching exists with klass: klass "klass19", teacher: user "prince", status_mask: 0
 	And a teaching exists with klass: klass "klass20", teacher: user "prince", status_mask: 1
-Given a user is logged in as "prince"	
+	And a teaching exists with klass: klass "klass21", teacher: user "prince", status_mask: 2
+	And a user is logged in as "prince"
+Then 6 teachings should exist
 When I go to the confirm page for user: "prince" on "2010-03-10"
-Then I should see "3/19(Friday)" within the confirmable section
+Then I should see "3/18(Thursday)" within the confirmable section
+	And I should see "3/19(Friday)" within the confirmable section
 	And I should see "3/20(Saturday)" within "div.confirmed"
 	And I should see "3/4(Thursday)" within "div.taught"
-When I confirm klass "klass19" for user "prince" from "2010-03-10"
+	And I should see "3/5(Friday)" within "div.declined"
+	And I should see "3/21(Sunday)" within "div.declined"
+When I confirmed klass "klass19" for user "prince" from "2010-03-10"
 	And I press "Confirm"
 Then I should be redirected to path "/mypage"
 	And I should see "Successfully confirmed class(es)." as notice flash message
-	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 1
+	And a teaching should exist with klass: klass "klass04", teacher: user "prince", status_mask: 1
+	And a teaching should exist with klass: klass "klass05", teacher: user "prince", status_mask: 2
+	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 0
 	And a teaching should exist with klass: klass "klass19", teacher: user "prince", status_mask: 1
 	And a teaching should exist with klass: klass "klass20", teacher: user "prince", status_mask: 1
-	
+	And a teaching should exist with klass: klass "klass21", teacher: user "prince", status_mask: 2
+	And 6 teachings should exist

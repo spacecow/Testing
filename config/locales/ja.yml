@@ -58,7 +58,7 @@ ja:
   event_cost: "会費"
   event_date: "日付"
   event_name: "イベント名"  
-  ex: "例え"
+  ex: "例"
   feature: "機能"
   female: "女性"
   gallery: "ギャラリー"
@@ -208,6 +208,7 @@ ja:
     class_history: "過去のクラス"
     classes_to_confirm: "確認できるクラス"
     classes_to_reserve: "予約できるクラス"
+    declined_classes: "辞退されていたクラス"
     teaching_history: "過去の教えたクラス"
   message:
     asterisk: "アステリスクがある所は必要な情報。"

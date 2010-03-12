@@ -1,0 +1,34 @@
+* Template Class
+-------------------------
+The template classes works as a basis for the regular classes.
+If you model a typical monday with template classes, whenever
+the system has to create classes for a coming monday, it will
+use the template classes as a basic model for how a typical
+monday will look like.
+
+* Classes
+---------
+Students can reserve classes and teachers can confirm classes
+that has been set up by admin. Teacher confirmation can also
+be done manually by admin at the class page for each day.
+
+* Reserve
+---------
+"Reserve" is now a command in the user navigation menu,
+(if you are a student) next to "Edit Profile". Try to reserve
+some classes and then see your reservation on the class page
+for that day.
+
+* Confirm
+---------
+"Confirm" is now a command in the user navigation menu,
+(if you are a teacher). Teachers that have not yet confirm their
+classes appear with a questionmark (?) next to their name at
+that specific class. Teachers that have confirmed their classes
+appear with an ok-mark (O). This will be restricted for admin
+to see in the final version, but for the time being, available
+for all beta-testers.
+
+//johan
+
+<%= @login_user_url %>/<%= @username %>

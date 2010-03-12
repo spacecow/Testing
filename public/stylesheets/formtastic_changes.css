@@ -19,19 +19,28 @@ td#teacher input.confirmed {
   color: green;
   font-weight: bold;
 }
-td#teacher input.unconfirmed {
+td#teacher input.declined {
   color: red;
+  font-weight: bold;
+}
+td#teacher input.unconfirmed {
+  color: magenta;
   font-weight: bold;
 }
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
-form.user fieldset.inputs ol fieldset.inputs ol li.check_boxes {
-  float: left;
-  position: absolute;
+form.user fieldset.inputs ol fieldset.inputs ol {
+  padding: 0;
+  margin: 0 0 0 0.9em;
+}
+form.user fieldset.inputs ol fieldset.inputs ol li.radio fieldset ol li { float: left; }
+form.user fieldset.inputs ol fieldset.inputs ol li.radio fieldset ol li label {
+  padding: 0;
+  margin: 0 0 0 0.2em;
 }
 form.user fieldset.inputs ol fieldset.inputs ol li.string {
-  margin-left: 3em;
-  float: left;
+  margin-right: 14em;
+  float: right;
 }
 form.user fieldset.inputs ol fieldset.inputs ol li.string input {
   background: #eeffee;

@@ -23,7 +23,28 @@ Then within klass: "ruby", the teacher field should have options "BLANK, Johan S
 	And within klass: "rails", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
 	And within klass: "ruby", "" should be selected as teacher
 	And within klass: "rails", "" should be selected as teacher
+
+@switch
+Scenario: When switching teachers, the teaching should remain
+Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
+	And a courses_teacher exists with course: course "ruby", teacher: user "aya"
+	And a klass: "ruby" exists with course: course "ruby", date: "2010-02-28"
+	And a user is logged in as "aya"
+Then 0 teachings should exist
+When I browse to the klasses page of "February 28 2010"
+	And I select "Aya Komatsu" as teacher within klass "ruby"
+	And I press "OK!" within klass "ruby"
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya"
+	And 1 teachings should exist
+When I select "Johan Sveholm" as teacher within klass "ruby"
+	And I press "OK!" within klass "ruby"
+Then 2 teachings should exist
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan"
+	And a teaching should exist with klass: klass "ruby", teacher: user "aya"
 	
+
+
 @double
 Scenario: Teachers cannot teach more than one class at the same time
 Given a course: "ruby" exists with name: "Ruby I"
@@ -323,11 +344,14 @@ Then I should be redirected to the klasses page
 	And 2 klasses should exist
 	And 2 klasses should exist with start_time: "18:50", end_time: "20:50", capacity: 6, date: "2010-02-28", course: course "ruby1"
 
-Scenario: Let day have appear with AJAX so its easier to get the date right (NOT IMPLEMENTED)
-Given not implemented
-
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Implement versioning? (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: When a class is deleted teachings&attendances should be deleted or not be able to (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: If a teacher is choosen he cannot be changed unless he cancels (NOT IMPLEMENTED)
 Given not implemented

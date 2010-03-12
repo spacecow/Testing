@@ -145,18 +145,22 @@ class UsersController < ApplicationController
 	
 	def confirm
 		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
-		klasses = @user.teacher_klasses.all(
-			:conditions=>["date >= ?",todays_date]
-		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		#Klass.all(
-		#	:conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", todays_date, current_user.id],
-		#	:include=>:teaching ).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@confirmable_klasses = klasses.reject{|e| e.teaching.status?( :confirmed )}
-		@confirmed_klasses = klasses.reject{|e| !e.teaching.status?( :confirmed )}
-		@teaching_history = @user.teacher_klasses.all(
-			:conditions=>["date < ?",todays_date]).
-			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
+
+		sorted_klasses = @user.teacher_klasses.all.
+			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		coming_klasses = sorted_klasses.
+			reject{|e| e.date < todays_date}
+
+		@confirmable_classes = coming_klasses.
+			reject{|e| e.teaching.status?( :confirmed )}.
+			reject{|e| e.teaching.status?( :declined )}
+		@confirmed_classes = coming_klasses.
 			reject{|e| !e.teaching.status?( :confirmed )}
+		@teaching_history = sorted_klasses.
+			reject{|e| e.date >= todays_date}.
+			reject{|e| !e.teaching.status?( :confirmed )}
+		@declined_classes = sorted_klasses.
+			reject{|e| !e.teaching.status?( :declined )}
 	end
 	
 	def reserve

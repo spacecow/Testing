@@ -3,8 +3,11 @@ class Klass < ActiveRecord::Base
   
   has_one :teaching, :dependent => :destroy
   has_one :teacher, :class_name => 'User', :through => :teaching
-  accepts_nested_attributes_for :teaching
-  
+	#accepts_nested_attributes_for :teaching
+
+  has_many :teachings, :dependent => :destroy
+  has_many :teachers, :class_name => 'User', :through => :teachings
+	
   belongs_to :classroom
   
   has_many :attendances, :dependent => :destroy
@@ -21,11 +24,23 @@ class Klass < ActiveRecord::Base
 	validates_numericality_of :capacity
 	validate :capacity_cannot_be_zero
 
+	def teaching_attributes=( hash )
+		if !hash[:id]
+			build_teaching( hash )
+		elsif teaching = teachings.find_by_teacher_id( hash[:teacher_id].to_i )
+			#self.teaching.update_attribute( :teacher)
+		else
+			teachings.build( hash )
+		end
+	end
+
 	def toggle_confirmation=( value )
 		if value == "?"
-			teaching.confirm = ["",:confirmed]
-		else
-			teaching.confirm = ["",""]
+			teaching.confirm = "confirmed"
+		elsif value == "O"
+			teaching.confirm = "declined"
+		elsif value == "X"
+			teaching.confirm = ""
 		end
 	end
 

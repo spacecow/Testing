@@ -3,22 +3,25 @@
 <legend class="form"><%= t( :confirm ) %></legend>
 
 <div class="intro">
-<% if @confirmable_klasses.empty? %>
+<% if @confirmable_classes.empty? %>
 <%= t('message.no_confirmations') %>
 <% else %>
 <div class="confirmable">
 <h2><%= t('header.classes_to_confirm') %></h2>
+<div style="width:3em;float:left;text-align:right;">Yes</div>
+<div style="width:3em;float:left;margin-left:0.3em;">No</div>
+<div class="clear"></div>
 <% semantic_form_for @user do |f| %>
 	<% f.inputs do %>
-		<% @confirmable_klasses.map(&:teaching).each do |teaching| %>
+		<% @confirmable_classes.map(&:teaching).each do |teaching| %>
 			<% f.inputs :for => [:teachings, teaching] do |builder| %>
 				<%= builder.input :klass, :as => :string, :input_html => { :disabled => true }, :label => false %>
-				<%= builder.input :confirm, :label => false, :as => :check_boxes, :collection => [['',:confirm]] %>
+				<%= builder.input :confirm, :label => false, :as => :radio, :collection => [['','confirmed'],['','declined']] %>				
 			<% end %>
 		<% end %>
-		<%# f.input :teacher_klasses, :as=>:check_boxes, :label=>false,
-								:collection => @confirmable_klasses, :required=>false %>
-		<%# @reserved_klasses.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
+		<%# f.input :teacher_classes, :as=>:check_boxes, :label=>false,
+								:collection => @confirmable_classes, :required=>false %>
+		<%# @reserved_classes.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
 		<%# @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
 	<% end %>
 	<% f.buttons do %>
@@ -29,11 +32,11 @@
 <% end %>
 </div>
 
-<% unless @confirmed_klasses.empty? %>
+<% unless @confirmed_classes.empty? %>
 <div class="confirmed">
 <h2><%= t('header.already_confirmed_classes') %></h2>
 <ul>
-<% @confirmed_klasses.each do |klass| %>
+<% @confirmed_classes.each do |klass| %>
 	<li><%= klass.name %></li>
 <% end %>
 </ul>
@@ -45,6 +48,17 @@
 <h2><%= t('header.teaching_history') %></h2>
 <ul>
 <% @teaching_history.each do |klass| %>
+	<li><%= klass.name %></li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
+<% unless @declined_classes.empty? %>
+<div class="declined">
+<h2><%= t('header.declined_classes') %></h2>
+<ul>
+<% @declined_classes.each do |klass| %>
 	<li><%= klass.name %></li>
 <% end %>
 </ul>

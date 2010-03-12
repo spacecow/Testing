@@ -2,23 +2,32 @@ class Teaching < ActiveRecord::Base
   belongs_to :teacher, :class_name => 'User'
   belongs_to :klass
   
+  STATUS = %w[confirmed declined]
+  
   def confirmed_symbol
   	if status? :confirmed
   		"O"
-  	else
+  	elsif status? :declined
+  		"X"
+		else
   		"?"
 		end
   end
   
-  def confirm
-    status? :confirmed
-  end
+  #def confirm
+  #  status? :confirmed
+  #end
   
   def confirm=( value )
-    if value[1].blank?
+    if value.blank?
       reset_status :confirmed
-    else    
+      reset_status :declined
+    elsif value=="confirmed"
+      reset_status :declined
       add_status :confirmed
+    elsif value=="declined"
+      reset_status :confirmed
+      add_status :declined
     end
   end
 
@@ -27,10 +36,10 @@ class Teaching < ActiveRecord::Base
   end
 
   def add_status( value )
+  	p "!!!!!!!!!!!!!!"
+  	p value
     self.status_mask |= status_value( value )
   end
-  
-  STATUS = %w[confirmed]
 
   def status?( value )
     status.include?( value.to_s )

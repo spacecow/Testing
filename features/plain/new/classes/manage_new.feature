@@ -82,3 +82,12 @@ Examples:
 
 Scenario: Capacity changed automatically by change of course. Try with cucumber (AJAX)
 Given not implemented
+
+Scenario: Be able to input time with japanese numbers too (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Change to japanese date order, year-month-day (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: Other name for klass list (NOT IMPLEMENTED)
+Given not implemented
