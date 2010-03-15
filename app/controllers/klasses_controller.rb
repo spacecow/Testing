@@ -61,12 +61,12 @@ class KlassesController < ApplicationController
 		@class_year  = params[:class_year]  || Date.current.year
 		@class_date  = DateTime.parse("#{@class_year}-#{@class_month}-#{@class_day}")
 
-		@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teacher] )
+		@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teachings,:teachers] )
 		if can?( :manage, Klass ) && @klasses.size == 0
 			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|
     		t.create_class @class_date
 			end
-			@klasses = Klass.find_all_by_date( @class_date, :include => :course )
+			@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teachings,:teachers] )
 		end
     @class_groups = @klasses.group_by{|e| e.course.category }		
     

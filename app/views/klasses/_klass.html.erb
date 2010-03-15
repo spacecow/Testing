@@ -5,11 +5,11 @@
 		<td id="classroom"><%= h klass.classroom %></td>
 		<td id="teacher">
 			<%# f.input :teacher, :label => t( :teacher ), :label=>false, :collection=>teachers %>
-			<% klass.build_teaching unless klass.teaching %>
+			<%# klass.build_teaching unless klass.teaching %>
 			<% f.inputs :for => :teaching do |builder| %>
     		<%= builder.input :teacher, :label=>false, :collection=>teachers %>
   		<% end %>
-  		<%# submit_tag klass.teaching.confirmed_symbol,
+  		<%= submit_tag klass.teaching.confirmed_symbol,
   			:name => 'klass[toggle_confirmation]',
   			:class => klass.teaching.status?( :confirmed ) ? :confirmed :
   			(klass.teaching.status?( :declined ) ? :declined : :unconfirmed ) unless klass.teaching.teacher.nil? %>

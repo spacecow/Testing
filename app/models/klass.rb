@@ -3,7 +3,7 @@ class Klass < ActiveRecord::Base
   
   has_one :teaching, :dependent => :destroy
   has_one :teacher, :class_name => 'User', :through => :teaching
-	#accepts_nested_attributes_for :teaching
+	accepts_nested_attributes_for :teaching
 
   has_many :teachings, :dependent => :destroy
   has_many :teachers, :class_name => 'User', :through => :teachings
@@ -24,13 +24,28 @@ class Klass < ActiveRecord::Base
 	validates_numericality_of :capacity
 	validate :capacity_cannot_be_zero
 
+	after_update :save_teachings
+
+	def teaching
+		return Teaching.new if self.teachings.empty?
+		teachings.find_by_current( true )
+	end
+
 	def teaching_attributes=( hash )
-		if !hash[:id]
-			build_teaching( hash )
-		elsif teaching = teachings.find_by_teacher_id( hash[:teacher_id].to_i )
-			#self.teaching.update_attribute( :teacher)
+		if hash[:id].nil?
+			build_teaching( hash.merge( :current=>true ))
+		elsif teachings.map(&:teacher_id).include?( hash[:teacher_id].to_i )
+			teachings.map{|e| e.current = false }
+			teachings[teachings.map(&:teacher_id).index( hash[:teacher_id].to_i )].current = true
 		else
-			teachings.build( hash )
+			teachings.map{|e| e.current = false }
+			teachings.build( hash.merge( :current=>true ))
+		end
+	end
+	
+	def save_teachings
+		teachings.each do |t|
+			t.save(false)
 		end
 	end
 

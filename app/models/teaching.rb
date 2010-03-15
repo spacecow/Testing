@@ -29,6 +29,7 @@ class Teaching < ActiveRecord::Base
       reset_status :confirmed
       add_status :declined
     end
+    save!
   end
 
   def reset_status( value )
@@ -36,8 +37,6 @@ class Teaching < ActiveRecord::Base
   end
 
   def add_status( value )
-  	p "!!!!!!!!!!!!!!"
-  	p value
     self.status_mask |= status_value( value )
   end
 
