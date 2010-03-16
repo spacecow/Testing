@@ -14,9 +14,9 @@ class Teaching < ActiveRecord::Base
 		end
   end
   
-  #def confirm
-  #  status? :confirmed
-  #end
+  def confirm
+    #status? :confirmed
+  end
   
   def confirm=( value )
     if value.blank?

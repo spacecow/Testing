@@ -11,7 +11,7 @@ Scenario: View of a user's courses page
 Given a user is logged in as "aya"
 When I browse to the teachers page
 	And I follow "Courses" within user "johan"
-Then I should see "Enlisted Courses" as title
+Then I should see "Enlisted Courses - Johan Sveholm" as title
 	And I should see "Ruby III Rails II Fortran I"
 	And the "Ruby III" checkbox should not be checked
   And the "Rails II" checkbox should not be checked
@@ -32,6 +32,7 @@ Then I should be redirected to the users page
 	And 2 courses_students should exist
 	And 0 teachings should exist
 	
+@teachers
 Scenario: Select teacher courses
 Given a user is logged in as "aya"
 When I browse to the teachers page

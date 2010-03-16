@@ -56,6 +56,7 @@ en:
   end_date: "End date"
   end_time: "End time"
   english: "English"
+  enlisted_courses: "Enlisted {{status}} Courses"
   event: "Event"
   event_cost: "Cost"
   event_date: "Date"
@@ -179,6 +180,7 @@ en:
   version: "Version"
   vote: "Vote"
   when: "When"
+  yen_h: "円/h"
   
   add: "Add {{object}}"
   added: "{{object}} added"

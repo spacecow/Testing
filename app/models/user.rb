@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
 
   has_many :courses_teachers, :dependent => :destroy, :foreign_key=>'teacher_id'
   has_many :teacher_courses, :through=>:courses_teachers, :source=>'course'
+	accepts_nested_attributes_for :courses_teachers, :reject_if => lambda{|a| a['chosen']=="0"}
+	
 	has_and_belongs_to_many :student_courses, :join_table => 'courses_students', :foreign_key => 'student_id', :class_name=>'Course'
 	
 	has_many :attendances, :dependent => :destroy, :foreign_key => 'student_id'

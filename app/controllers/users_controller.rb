@@ -59,12 +59,12 @@ class UsersController < ApplicationController
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
       	elsif !params[:user][:teachings_attributes].blank?
       		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
-      	elsif !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
+      	elsif !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
     		else
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
       	end
-      	if !params[:user][:student_course_ids].blank? || !params[:user][:teacher_course_ids].blank?
+      	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		redirect_to users_path	
       	else
       		redirect_to mypage_path
@@ -73,7 +73,12 @@ class UsersController < ApplicationController
     		render :action => "crop"
   		end
     else
-      render :action => 'edit'
+    	if !params[:user][:courses_teachers_attributes].blank?
+				@status = params[:status]
+    		render :action => 'edit_courses'
+      else
+      	render :action => 'edit'
+    	end
     end
   end
 
@@ -158,9 +163,9 @@ class UsersController < ApplicationController
 			reject{|e| !e.teaching.status?( :confirmed )}
 		@teaching_history = sorted_klasses.
 			reject{|e| e.date >= todays_date}.
-			reject{|e| !e.teaching.status?( :confirmed )}
+			reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
 		@declined_classes = sorted_klasses.
-			reject{|e| !e.teaching.status?( :declined )}
+			reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
 	end
 	
 	def reserve
@@ -184,6 +189,9 @@ class UsersController < ApplicationController
 	def edit_courses
 		@status = params[:status]
 		@courses = sort_courses
+		@courses.each do |course|
+			@user.courses_teachers.build( :course_id => course.id ) unless @user.teacher_courses.include? course
+		end
 	end
 
 	def edit_multiple

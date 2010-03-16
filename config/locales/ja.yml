@@ -54,6 +54,7 @@ ja:
   end_date: "決算日"
   end_time: "終わりの時間"
   english: "英語"
+  enlisted_courses: "Enlisted Courses"
   event: "イベント"
   event_cost: "会費"
   event_date: "日付"
@@ -179,6 +180,7 @@ ja:
   version: "バージョン"
   vote: "投票"
   when: "いつ"
+  yen_h: "yen/h"
   
   add: "{{object}}を書き足す"
   added: "{{object}}が書き足されました"

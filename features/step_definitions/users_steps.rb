@@ -13,7 +13,13 @@ When /^I browse to the (teachers|students) page$/ do |category|
 	And "I press \"Go!\""
 end
 
-#----------------------Confirm page
+When /^I browse to the (teacher|student) courses page for #{capture_model}$/ do |category, user|
+	When "I browse to the #{category}s page"
+	And "I follow \"Courses\" within #{user}"
+end
+
+
+#---------------------- Confirm Page
 
 When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |action, klass_model, user_model, date|
   klass = model( klass_model )
@@ -41,5 +47,28 @@ Then /^I should not see "([^\"]*)" within the confirmable section$/ do |text|
 		end
 	rescue Spec::Expectations::ExpectationNotMetError
 		success.should be_true
+	end
+end
+
+#---------------------- Teacher Courses Page
+
+Then /^I should see courses "([^\"]*)" within the form$/ do |text|
+	Then "I should see \"#{text}\" in the string fields within \"fieldset.form\""
+end
+
+When /^I check course (\d+)$/ do |index|
+	field_with_id( "user_courses_teachers_attributes_#{index}_chosen" ).check
+end
+
+Then /^I fill in the cost with "([^\"]*)" for course (\d+)$/ do |cost, index|
+	field = field_with_id( "user_courses_teachers_attributes_#{index}_cost" )
+	fill_in(field, :with => cost)
+end
+
+#--------------------------------------
+
+Then /^I should see "([^\"]*)" in the string fields within "([^\"]*)"$/ do |text, scope|
+  response.body.should have_selector( "#{scope} li.string input" ) do |content|
+		content.map{|e| e['value']}.join(', ').should contain(text)	
 	end
 end
