@@ -19,6 +19,7 @@ Factory.define :courses_student do |f|
 end
 
 Factory.define :courses_teacher do |f|
+	f.cost "1500"
 end
 
 Factory.define :event do |f|

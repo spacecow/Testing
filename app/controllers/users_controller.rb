@@ -75,6 +75,7 @@ class UsersController < ApplicationController
     else
     	if !params[:user][:courses_teachers_attributes].blank?
 				@status = params[:status]
+				@courses = sort_courses @user.courses_teachers.map(&:course)
     		render :action => 'edit_courses'
       else
       	render :action => 'edit'
@@ -190,7 +191,7 @@ class UsersController < ApplicationController
 		@status = params[:status]
 		@courses = sort_courses
 		@courses.each do |course|
-			@user.courses_teachers.build( :course_id => course.id ) unless @user.teacher_courses.include? course
+			@user.courses_teachers.build( :course_id => course.id, :cost => @user.cost ) unless @user.teacher_courses.include? course
 		end
 	end
 
@@ -217,10 +218,10 @@ private
     @users = User.find( params[:user_ids] )
   end
 
-	def sort_courses
+	def sort_courses( courses=Course.all )
   	@courses = []
   	@sorting = Sorting.new
-  	@courses_groups = Course.all( :order=>:name ).group_by(&:category)
+  	@courses_groups = courses.sort_by(&:name).group_by(&:category)
 		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
 			@courses_groups[key].map{|course| @courses.push course }
 		end

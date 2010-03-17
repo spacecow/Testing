@@ -7,11 +7,13 @@
 		<%= hidden_field_tag :status, @status %>
 		<%= f.input :student_courses, :as=>:check_boxes, :label=>false, :collection=>@courses if @status=="student" %>
 		<% if @status=="teacher" %>
-			<% f.inputs :for => :courses_teachers do |f2| %>
-				<%= f2.input :course_id, :as => :hidden %>
-				<%= f2.input :chosen, :label => " ", :required => false %>
-				<%= f2.input :course, :label => false, :as=>:string, :input_html=>{:disabled=>true} %>
-				<%= f2.input :cost, :label => t(:yen_h) %>
+			<% @courses.each do |course| %>
+				<% f.inputs :for => [:courses_teachers, @user.courses_teachers.select{|e| e.course == course}] do |f2| %>
+					<%= f2.input :course_id, :as => :hidden %>
+					<%= f2.input :chosen, :label => " ", :required => false %>
+					<%= f2.input :course, :label => false, :as=>:string, :input_html=>{:disabled=>true} %>
+					<%= f2.input :cost, :label => t(:yen_h) %>
+				<% end %>
 			<% end %>
 		<% end %>
 		<%# f.input :teacher_courses, :as=>:check_boxes, :label=>false, :collection=>@courses  %>
