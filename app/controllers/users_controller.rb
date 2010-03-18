@@ -45,6 +45,7 @@ class UsersController < ApplicationController
   end
   
   def update
+  	p params[:user][:courses_teachers_attributes]
   	@user = User.find( params[:id] )
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])

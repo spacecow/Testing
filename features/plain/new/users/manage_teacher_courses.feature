@@ -19,6 +19,27 @@ Given a courses_teacher exists with teacher: user "aya", course: course "rails",
 When I browse to the teacher courses page for user "aya"
 Then I should see courses "Ruby III, 1500, Rails II, 1400, Fortran I, 1500" within the form
 
+@checked
+Scenario: Courses already existing should be checked
+Given a courses_teacher exists with teacher: user "aya", course: course "rails", chosen: true, cost: "1400"
+	And a user is logged in as "aya"
+When I browse to the teacher courses page for user "aya"
+	And course 0 should not be checked
+	And course 1 should be checked
+	And course 2 should not be checked
+
+@checked
+Scenario: A deselected course should be deleted
+Given a courses_teacher exists with teacher: user "aya", course: course "rails", chosen: true, cost: "1400"
+	And a user is logged in as "aya"
+When I browse to the teacher courses page for user "aya"
+	And I uncheck course 1
+	And I check course 2
+	And I press "Update"
+	And 1 courses_teachers should exist
+Then a courses_teacher should exist with teacher: user "aya", course: course "fortran", chosen: true, cost: 1400
+	
+
 Scenario: With no selection, no associations should be created
 Given a user is logged in as "aya"
 When I browse to the teacher courses page for user "johan"
@@ -84,7 +105,4 @@ Scenario: Hide with ajax the cost for those courses not selected (NOT IMPLEMENTE
 Given not implemented
 
 Scenario: Clean up with css (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: A deselected course should be deleted (NOT IMPLEMENTED)
 Given not implemented
