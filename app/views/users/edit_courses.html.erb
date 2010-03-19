@@ -8,11 +8,12 @@
 		<%= f.input :student_courses, :as=>:check_boxes, :label=>false, :collection=>@courses if @status=="student" %>
 		<% if @status=="teacher" %>
 			<% @courses.each do |course| %>
-				<% f.inputs :for => [:courses_teachers, @user.courses_teachers.select{|e| e.course == course}] do |f2| %>
+				<% teaching = @user.courses_teachers.select{|e| e.course == course} %>
+				<% f.inputs :for => [:courses_teachers, teaching] do |f2| %>
 					<%= f2.input :course_id, :as => :hidden %>
 					<%= f2.input :chosen, :label => " ", :required => false %>
-					<%= f2.input :course, :label => false, :as=>:string, :input_html=>{:disabled=>true} %>
-					<%= f2.input :cost, :label => t(:yen_h) %>
+					<span id="course"><%= f2.input :course, :label => false, :as=>:string, :input_html=>{:disabled=>true} %></span>
+					<span id="cost"><%= f2.input :cost, :label => t(:yen_h) %></span>
 				<% end %>
 			<% end %>
 		<% end %>

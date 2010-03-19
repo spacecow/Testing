@@ -38,11 +38,35 @@ form.user fieldset.inputs ol fieldset.inputs ol li.radio fieldset ol li label {
   padding: 0;
   margin: 0 0 0 0.2em;
 }
-form.user fieldset.inputs ol fieldset.inputs ol li.string {
+form.user fieldset.inputs ol fieldset.inputs ol li.boolean {
+  width: 2em;
+  float: left;
+}
+form.user fieldset.inputs ol fieldset.inputs ol li.boolean label {
+  padding: 0;
+  margin: 0;
+  width: 2em;
+}
+form.user fieldset.inputs ol fieldset.inputs ol span#cost li {
+  width: 10em;
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+form.user fieldset.inputs ol fieldset.inputs ol span#cost li label { width: 3em; }
+form.user fieldset.inputs ol fieldset.inputs ol span#cost li input { width: 3em; }
+form.user fieldset.inputs ol fieldset.inputs ol span#course li.string { float: left; }
+form.user fieldset.inputs ol fieldset.inputs ol span#course li.string input {
+  background: #eeffee;
+  width: 10em;
+  border: 0;
+  color: #000000;
+}
+form.user fieldset.inputs ol fieldset.inputs ol span#klass li.string {
   margin-right: 14em;
   float: right;
 }
-form.user fieldset.inputs ol fieldset.inputs ol li.string input {
+form.user fieldset.inputs ol fieldset.inputs ol span#klass li.string input {
   background: #eeffee;
   border: 0;
   color: #000000;

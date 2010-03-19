@@ -45,7 +45,9 @@ class UsersController < ApplicationController
   end
   
   def update
-  	p params[:user][:courses_teachers_attributes]
+  	params[:user][:courses_teachers_attributes].each do |k,v|
+			v.merge!( :_delete =>true ) if v[:chosen] == "0"
+		end
   	@user = User.find( params[:id] )
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
     if @user.update_attributes(params[:user])
@@ -66,7 +68,7 @@ class UsersController < ApplicationController
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
       	end
       	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
-      		redirect_to users_path	
+      		redirect_to users_path( :status => "teacher" )
       	else
       		redirect_to mypage_path
       	end
@@ -75,6 +77,9 @@ class UsersController < ApplicationController
   		end
     else
     	if !params[:user][:courses_teachers_attributes].blank?
+		  	params[:user][:courses_teachers_attributes].each do |k,v|
+		  		@user.courses_teachers.select{|e| e.id == v[:id].to_i}.map{|e| e.chosen = false} if v[:chosen] == "0"
+				end
 				@status = params[:status]
 				@courses = sort_courses @user.courses_teachers.map(&:course)
     		render :action => 'edit_courses'

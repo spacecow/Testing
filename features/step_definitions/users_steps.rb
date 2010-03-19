@@ -7,18 +7,6 @@ Then /^the page should have no "([^\"]*)" section$/ do |section|
 	assert_have_no_xpath("//div[@class='#{section}']")
 end
 
-When /^I browse to the (teachers|students) page$/ do |category|
-	When "I go to the users page"
-	And "I select \"#{category.capitalize}\" from \"Sort\""
-	And "I press \"Go!\""
-end
-
-When /^I browse to the (teacher|student) courses page for #{capture_model}$/ do |category, user|
-	When "I browse to the #{category}s page"
-	And "I follow \"Courses\" within #{user}"
-end
-
-
 #---------------------- Confirm Page
 
 When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |action, klass_model, user_model, date|
@@ -76,6 +64,22 @@ end
 Then /^I fill in the cost with "([^\"]*)" for course (\d+)$/ do |cost, index|
 	field = field_with_id( "user_courses_teachers_attributes_#{index}_cost" )
 	fill_in(field, :with => cost)
+end
+
+When /^I browse to the (teachers|students) page$/ do |category|
+	When "I go to the users page"
+	And "I select \"#{category.capitalize}\" from \"Sort\""
+	And "I press \"Go!\""
+end
+
+When /^I browse to the (teacher|student) courses page for #{capture_model}$/ do |category, user|
+	When "I browse to the #{category}s page"
+	And "I follow \"Courses\" within #{user}"
+end
+
+Then /^I should automatically browse to the (teachers|students) page$/ do |category|
+	Then "I should be redirected to the users page"
+	And "\"#{category.capitalize}\" should be selected in the \"Sort\" field"
 end
 
 #--------------------------------------

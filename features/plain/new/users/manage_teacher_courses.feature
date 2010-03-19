@@ -28,7 +28,7 @@ When I browse to the teacher courses page for user "aya"
 	And course 1 should be checked
 	And course 2 should not be checked
 
-@checked
+@deselect
 Scenario: A deselected course should be deleted
 Given a courses_teacher exists with teacher: user "aya", course: course "rails", chosen: true, cost: "1400"
 	And a user is logged in as "aya"
@@ -36,9 +36,44 @@ When I browse to the teacher courses page for user "aya"
 	And I uncheck course 1
 	And I check course 2
 	And I press "Update"
-	And 1 courses_teachers should exist
-Then a courses_teacher should exist with teacher: user "aya", course: course "fortran", chosen: true, cost: 1400
-	
+Then I should automatically browse to the teachers page
+	And I should see "Successfully updated courses"	
+	And a courses_teacher should exist with teacher: user "aya", course: course "fortran", chosen: true, cost: 1500
+	And 1 courses_teachers should exist	
+
+@deselect_with_error
+Scenario: A deselected course should be deleted even if it has errors
+Given a courses_teacher exists with teacher: user "aya", course: course "rails", chosen: true, cost: "1400"
+	And a user is logged in as "aya"
+When I browse to the teacher courses page for user "aya"
+	And I uncheck course 1
+	And I fill in the cost with "" for course 1
+	And I check course 2
+	And I press "Update"
+Then I should automatically browse to the teachers page
+	And I should see "Successfully updated courses"
+	And a courses_teacher should exist with teacher: user "aya", course: course "fortran", chosen: true, cost: 1500
+	And 1 courses_teachers should exist	
+
+@deselect_error_page
+Scenario: A deselected course should not be displayed on the error page
+Given a courses_teacher exists with teacher: user "aya", course: course "rails", chosen: true, cost: "1400"
+	And a user is logged in as "aya"
+When I browse to the teacher courses page for user "aya"
+	And I uncheck course 1
+	And I check course 2
+	And I fill in the cost with "" for course 2
+	And I press "Update"
+Then I should be redirected to the error show page for user "aya"	
+	And course 0 should not be checked
+	And course 1 should be checked
+	And I should see courses "Rails II, 1400, Fortran I, " within the form
+When I fill in the cost with "2000" for course 1
+	And I press "Update"
+Then I should automatically browse to the teachers page
+	And I should see "Successfully updated courses"	
+	And a courses_teacher should exist with teacher: user "aya", course: course "fortran", chosen: true, cost: 2000
+	And 1 courses_teachers should exist	
 
 Scenario: With no selection, no associations should be created
 Given a user is logged in as "aya"
@@ -72,7 +107,7 @@ Then I should be redirected to the error show page for user "johan"
 	And I should see courses "Rails II" within the form
 When I fill in the cost with "1500" for course 0
 	And I press "Update"
-Then I should be redirected to the users page
+Then I should automatically browse to the teachers page
 	And I should see "Successfully updated courses"	
 	And a courses_teacher should exist with teacher: user "johan", course: course "rails", chosen: true, cost: 1500
 	And 1 courses_teachers should exist
@@ -91,18 +126,12 @@ When I browse to the teacher courses page for user "johan"
 	And I check course 2
 	And I fill in the cost with "<cost>" for course 2
 	And I press "Update"
-Then I should be redirected to the users page
+Then I should automatically browse to the teachers page
 	And I should see "Successfully updated courses"	
-Then a courses_teacher should exist with teacher: user "johan", course: course "fortran", chosen: true, cost: 3500
+	And a courses_teacher should exist with teacher: user "johan", course: course "fortran", chosen: true, cost: 3500
 	And 1 courses_teachers should exist
 Examples:
 |	cost	|
 |	3500	|
 |	3５0０	|
 |	３５００	|
-
-Scenario: Hide with ajax the cost for those courses not selected (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Clean up with css (NOT IMPLEMENTED)
-Given not implemented

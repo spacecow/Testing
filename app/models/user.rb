@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :courses_teachers, :dependent => :destroy, :foreign_key=>'teacher_id'
   has_many :teacher_courses, :through=>:courses_teachers, :source=>'course'
-	accepts_nested_attributes_for :courses_teachers, :reject_if => lambda{|a| a['chosen']=="0"}
+	accepts_nested_attributes_for :courses_teachers, :reject_if => lambda{|a| a['chosen']=="0"}, :allow_destroy=>true
 	
 	has_and_belongs_to_many :student_courses, :join_table => 'courses_students', :foreign_key => 'student_id', :class_name=>'Course'
 	
@@ -74,29 +74,21 @@ class User < ActiveRecord::Base
 	]
 	STATUS_HASH = {"teacher"=>"teachers.title", "student"=>"students.title"}
 
-	def role_symbols
-    roles.map(&:to_sym)
-    #roles.include? role.to_s
+  def avatar_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
   end
-  
-  def role?( role )
-  	roles.include? role.to_s
+
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
-	
+
 	def new_registrant_attributes=( registrant_attributes )
 		registrant_attributes.each do |attributes|
 			registrants.build( attributes )	
 		end
 	end  
   
-  def cropping?
-    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
-  end
-  
-  def avatar_geometry(style = :original)
-    @geometry ||= {}
-    @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
-  end
 
 	def invitation_token
 		invitation.token if invitation	
@@ -110,6 +102,17 @@ class User < ActiveRecord::Base
 		self.invitation = Invitation.find_by_token( token )
 	end
   
+	#-------------------- Roles
+
+  def role?( role )
+  	roles.include? role.to_s
+  end
+	
+	def role_symbols
+    roles.map(&:to_sym)
+    #roles.include? role.to_s
+  end
+
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   end

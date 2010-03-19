@@ -37,6 +37,7 @@ en:
   comment: "Comment"
   confirm: "Confirm"
   course: "Course"
+  cost: "Cost (yen/h)"
   create: "Create"
   crop: "Crop"
   date_and_time: "Date&Time"
