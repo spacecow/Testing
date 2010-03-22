@@ -1,1 +1,1 @@
-page.replace_html :bajs, "fuck"
+page << "$('part_answer').value='"+@part_answer+"'"

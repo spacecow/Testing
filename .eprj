@@ -131,6 +131,12 @@
             <string>app\models\user_mailer.rb</string>
             <key>user_sess</key>
             <string>app\controllers\user_sessions_controller.rb</string>
+            <key>users</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>users_con</key>
+            <string>app\controllers\users_controller.rb</string>
+            <key>users_contro</key>
+            <string>app\controllers\users_controller.rb</string>
             <key>webrat</key>
             <string>features\step_definitions\webrat_steps.rb</string>
             <key>yo</key>

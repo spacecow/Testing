@@ -7,6 +7,13 @@ Then /^the page should have no "([^\"]*)" section$/ do |section|
 	assert_have_no_xpath("//div[@class='#{section}']")
 end
 
+#---------------------- Salary Page
+When /^I browse to the salary users page for "([^\"]*)"$/ do |month|
+	When "I go to the salary users page"
+	And "I select \"#{month}\" from \"Month\""
+	And "I press \"Go!\""
+end
+
 #---------------------- Confirm Page
 
 When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |action, klass_model, user_model, date|

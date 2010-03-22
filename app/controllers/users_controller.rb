@@ -45,8 +45,10 @@ class UsersController < ApplicationController
   end
   
   def update
-  	params[:user][:courses_teachers_attributes].each do |k,v|
-			v.merge!( :_delete =>true ) if v[:chosen] == "0"
+		unless params[:user][:courses_teachers_attributes].nil?
+	  	params[:user][:courses_teachers_attributes].each do |k,v|
+				v.merge!( :_delete =>true ) if v[:chosen] == "0"
+			end
 		end
   	@user = User.find( params[:id] )
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
@@ -173,6 +175,15 @@ class UsersController < ApplicationController
 			reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
 		@declined_classes = sorted_klasses.
 			reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
+	end
+	
+	def salary
+		@months = t('date.month_names').compact.zip((1..12).to_a )
+		@salary_month = params[:salary_month] || Date.current.month
+		
+		@start_date = Date.parse( "#{Date.current.year}-#{@salary_month}-01" )
+		@end_date = Date.parse( "#{Date.current.year}-#{@salary_month.to_i+1}-01" )
+		@teachers = User.with_role( :teacher )
 	end
 	
 	def reserve

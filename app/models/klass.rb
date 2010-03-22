@@ -43,6 +43,10 @@ class Klass < ActiveRecord::Base
 		end
 	end
 	
+	def duration
+		end_time - start_time
+	end
+	
 	def save_teachings
 		teachings.each do |t|
 			t.save(false)

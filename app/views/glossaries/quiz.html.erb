@@ -2,14 +2,16 @@
 <fieldset class="form">
 <legend class="form"><%= t('quiz') %></legend>
 <%= @glossary.japanese %><br />
-<h2><%= @kanji.title %></h2>
-<% form_remote_for :kanji, :url => check_glossary_path( @kanji ), :html => { :method => :put } do |f| %>
+<h2><%= @correct_answer %></h2>
+<% form_remote_for :glossary, :url => check_glossary_path( @glossary ), :html => { :method => :put } do |f| %>
 <p>
-  <%= t('onyomi') %>
-  <%= text_field_tag :question, nil, :id => 'question' %>
+  <%# t('onyomi') %>
+  <%# text_field_tag :question, nil, :id => 'question' %>
 </p>
-  <%= text_field_tag :answer, nil, :onkeypress => "alert('bajs')" %>
-  <%= f.submit %>
+	<%= hidden_field_tag :correct_answer, @correct_answer0 %>
+	<%= text_field_tag :part_answer, @part_answer %>
+  <%= text_field_tag :answer %>
+  <%= f.submit "Next" %>
 <% end %>
 <div id="bajs">
 </div>

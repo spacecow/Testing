@@ -2,6 +2,8 @@ class Teaching < ActiveRecord::Base
   belongs_to :teacher, :class_name => 'User'
   belongs_to :klass
   
+  before_create :set_cost
+  
   STATUS = %w[confirmed declined]
   
   def confirmed_symbol
@@ -57,4 +59,15 @@ class Teaching < ActiveRecord::Base
     self.status_mask = (value & STATUS).map {|r| 2**STATUS.index(r)}.sum
   end
 
+	def to_s
+		klass.to_s
+	end
+	
+private
+
+	def set_cost
+		hour = ( klass.duration/3600 ).round
+		course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first
+		self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
+	end
 end

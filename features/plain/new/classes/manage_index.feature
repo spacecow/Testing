@@ -24,6 +24,23 @@ Then within klass: "ruby", the teacher field should have options "BLANK, Johan S
 	And within klass: "ruby", "" should be selected as teacher
 	And within klass: "rails", "" should be selected as teacher
 
+@cost
+Scenario: Cost for classes of 2 hours should be double
+Given a course: "ruby1" exists with name: "Ruby I"
+	And a course: "ruby2" exists with name: "Ruby II"
+	And a courses_teacher exists with course: course "ruby1", teacher: user "johan", cost: "1500"
+	And a courses_teacher exists with course: course "ruby2", teacher: user "aya", cost: "1500"
+	And a klass: "ruby1" exists with course: course "ruby1", date: "2010-02-28", start_time: "10:00", end_time: "12:00"
+	And a klass: "ruby2" exists with course: course "ruby2", date: "2010-02-28", start_time: "10:00", end_time: "10:50"
+	And a user is logged in as "aya"
+When I browse to the klasses page of "February 28 2010"
+	And I select "Aya Komatsu" as teacher within klass "ruby2"
+	And I press "OK!" within klass "ruby2"
+Then a teaching should exist with klass: klass "ruby2", teacher: user "aya", cost: "1500"
+When I select "Johan Sveholm" as teacher within klass "ruby1"
+	And I press "OK!" within klass "ruby1"
+Then a teaching should exist with klass: klass "ruby1", teacher: user "johan", cost: "3000"	
+
 @switch
 Scenario: When switching teachers, the teaching should remain
 Given a course: "ruby" exists with name: "Ruby I"
@@ -54,33 +71,33 @@ Then within klass: "ruby", "Aya Komatsu" should be selected as teacher
 @toggle
 Scenario: Toggle status
 Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
-	And a courses_teacher exists with course: course "ruby", teacher: user "aya"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan", cost: "2500"
+	And a courses_teacher exists with course: course "ruby", teacher: user "aya", cost: "2000"
 	And a klass: "ruby" exists with course: course "ruby", date: "2010-02-28"
 	And a user is logged in as "johan"
 When I browse to the klasses page of "February 28 2010"
 	And I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 0
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 0, cost: "2000"
 When I press "?"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 1
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 1, cost: "2000"
 	And 1 teachings should exist
 When I press "O"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
 	And 1 teachings should exist
 When I select "Johan Sveholm" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 0
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2, cost: "2000"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 0, cost: "2500"
 	And 2 teachings should exist
 When I press "?"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 1
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2, cost: "2000"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 1, cost: "2500"
 	And 2 teachings should exist
 When I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false, status_mask: 1
+Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
+	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false, status_mask: 1, cost: "2500"
 	And 2 teachings should exist	
 
 @double

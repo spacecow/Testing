@@ -1,0 +1,26 @@
+<div class="show">
+<fieldset class="show">
+<legend><%= t(:salary) %></legend>
+
+<% form_for :user, :url => { :action=>'salary' }, :html => { :method=>'get' } do |f| %>
+  <label for="salary_month"><%= t(:month) %>: </label>
+  <%= select_tag :salary_month, options_for_select( @months, @salary_month.to_i ) %>
+  <span id="day"></span>
+  <%= f.submit "Go!"%>
+<% end %>
+<br />
+
+<% @teachers.each do |teacher| %>
+	<div id="user_<%= teacher.id %>">
+		<h1><%= teacher %></h1>
+		<ul>
+			<% teacher.teachings.select{|e| e.klass.date >= @start_date && e.klass.date < @end_date}.each do |teaching| %>
+				<li><b><%= teaching.cost+"円" %></b> - <%= teaching %></li>
+			<% end %>
+			<b><%= teacher.teachings.map{|e| e.cost.to_i}.sum.to_s+"円" %></b>
+		</ul>
+	</div>
+<% end %>
+
+</fieldset>
+</div>

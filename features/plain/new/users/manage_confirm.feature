@@ -55,7 +55,7 @@ Given a klass: "klass18" exists with date: "2010-03-18"
 	And a klass: "klass20" exists with date: "2010-03-20"
 	And a teaching exists with klass: klass "klass18", teacher: user "johan", status_mask: 0
 	And a teaching exists with klass: klass "klass19", teacher: user "johan", status_mask: 1
-	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 1
+	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 1 
 Given a user is logged in as "johan"	
 When I go to the confirm page for user: "johan" on "2010-03-26"
 	Then the page should have no "confirmable" section
@@ -200,3 +200,6 @@ Then I should be redirected to path "/mypage"
 	And a teaching should exist with klass: klass "klass20", teacher: user "prince", status_mask: 1
 	And a teaching should exist with klass: klass "klass21", teacher: user "prince", status_mask: 2
 	And 6 teachings should exist
+	
+Scenario: What happends when a teaching is not current? (NOT IMPLEMENTED)
+Given not implemented

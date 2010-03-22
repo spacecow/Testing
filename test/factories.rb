@@ -116,6 +116,7 @@ end
 #end
 
 Factory.define :teaching do |f|
+	f.current true
 end
 
 Factory.define :todo do |f|

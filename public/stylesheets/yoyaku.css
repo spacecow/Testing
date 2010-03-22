@@ -485,6 +485,13 @@ a:hover {
   border: 1px solid #7f9db9;
 }
 #container #main .show fieldset.show .intro:hover { background: #f5ffee; }
+#container #main .show fieldset.show h1 {
+  color: #222266;
+  border-bottom: 3px dotted #aabbaa;
+  font: 18px sans-serif;
+}
+#container #main .show fieldset.show h1 a { font: 18px sans-serif; }
+#container #main .show fieldset.show h1 a:hover { color: #eeffee; }
 #container #main .show fieldset.show fieldset.gallery {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
