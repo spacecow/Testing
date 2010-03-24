@@ -3,13 +3,24 @@ class Teaching < ActiveRecord::Base
   belongs_to :klass
   
   before_create :set_cost
+  before_create :set_status_mask
   
-  STATUS = %w[confirmed declined]
+  STATUS = %w[confirmed declined unconfirmed taught canceled untaught]
   
   def confirmed_symbol
   	if status? :confirmed
   		"O"
   	elsif status? :declined
+  		"X"
+		else
+  		"?"
+		end
+  end
+
+  def taught_symbol
+  	if status? :taught
+  		"O"
+  	elsif status? :canceled
   		"X"
 		else
   		"?"
@@ -22,17 +33,34 @@ class Teaching < ActiveRecord::Base
   
   def confirm=( value )
     if value.blank?
-      reset_status :confirmed
       reset_status :declined
+      add_status :unconfirmed
     elsif value=="confirmed"
-      reset_status :declined
+      reset_status :unconfirmed
       add_status :confirmed
+      add_status :untaught
     elsif value=="declined"
       reset_status :confirmed
+      reset_status :untaught
       add_status :declined
     end
     save!
   end
+  
+  def taught=( value )
+    if value.blank?
+      reset_status :canceled
+      add_status :untaught
+    elsif value=="taught"
+      reset_status :untaught
+      add_status :taught
+    elsif value=="canceled"
+      reset_status :taught
+      add_status :canceled
+    end
+    save!
+  end
+  
 
   def reset_status( value )
     self.status_mask &= 2**STATUS.size-1 - status_value( value )
@@ -69,5 +97,9 @@ private
 		hour = ( klass.duration/3600 ).round
 		course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first
 		self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
+	end
+	
+	def set_status_mask
+		add_status :unconfirmed
 	end
 end

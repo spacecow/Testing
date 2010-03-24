@@ -1,18 +1,21 @@
-<% semantic_form_for klass do |f| -%>
-	<% f.inputs do %>
+<% form_for klass, :method=>:put do |f| -%>
 		<td id="time_interval"><%= h klass.time_interval %></td>
 		<td id="unit"></td>
 		<td id="classroom"><%= h klass.classroom %></td>
 		<td id="teacher">
 			<%# f.input :teacher, :label => t( :teacher ), :label=>false, :collection=>teachers %>
 			<%# klass.build_teaching unless klass.teaching %>
-			<% f.inputs :for => :teaching do |builder| %>
-    		<%= builder.input :teacher, :label=>false, :collection=>teachers %>
+			<% f.fields_for :teaching do |builder| %>
+    		<%= builder.collection_select :teacher_id, teachers, :id, :name, :include_blank=>true %>
   		<% end %>
   		<%= submit_tag klass.teaching.confirmed_symbol,
   			:name => 'klass[toggle_confirmation]',
-  			:class => klass.teaching.status?( :confirmed ) ? :confirmed :
-  			(klass.teaching.status?( :declined ) ? :declined : :unconfirmed ) unless klass.teaching.teacher.nil? %>
+  			:class => klass.teaching.status[0],
+  			:disabled => (klass.teaching.status?( :confirmed )&&klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
+  			
+  		<%=	submit_tag klass.teaching.taught_symbol,
+  			:name => 'klass[toggle_taught]',
+  			:class => klass.teaching.status[1] if klass.teaching.status? :confirmed %>
 		</td>
 		<% klass.attendances.each_with_index do |a,i| %>
 			<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
@@ -31,8 +34,7 @@
 				<%= link_to t('delete'), klass, :confirm => 'Are you sure?', :method => :delete %>
 			<% end %>
 		</td>	
-	<% end %>
-	<% f.buttons do %>
-		<td><%= f.commit_button "OK!" %></td>
-	<% end %>
+
+		<td><%= f.submit "OK!" %></td>
+
 <% end -%>

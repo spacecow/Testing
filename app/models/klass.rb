@@ -63,6 +63,16 @@ class Klass < ActiveRecord::Base
 		end
 	end
 
+	def toggle_taught=( value )
+		if value == "?"
+			teaching.taught = "taught"
+		elsif value == "O"
+			teaching.taught = "canceled"
+		elsif value == "X"
+			teaching.taught = ""
+		end
+	end
+
 	def name
 		month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval
 	end

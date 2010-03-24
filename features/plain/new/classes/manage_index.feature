@@ -67,38 +67,6 @@ And 2 teachings should exist
 	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false
 	And a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true
 Then within klass: "ruby", "Aya Komatsu" should be selected as teacher
-	
-@toggle
-Scenario: Toggle status
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_teacher exists with course: course "ruby", teacher: user "johan", cost: "2500"
-	And a courses_teacher exists with course: course "ruby", teacher: user "aya", cost: "2000"
-	And a klass: "ruby" exists with course: course "ruby", date: "2010-02-28"
-	And a user is logged in as "johan"
-When I browse to the klasses page of "February 28 2010"
-	And I select "Aya Komatsu" as teacher within klass "ruby"
-	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 0, cost: "2000"
-When I press "?"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 1, cost: "2000"
-	And 1 teachings should exist
-When I press "O"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
-	And 1 teachings should exist
-When I select "Johan Sveholm" as teacher within klass "ruby"
-	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2, cost: "2000"
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 0, cost: "2500"
-	And 2 teachings should exist
-When I press "?"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: false, status_mask: 2, cost: "2000"
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: true, status_mask: 1, cost: "2500"
-	And 2 teachings should exist
-When I select "Aya Komatsu" as teacher within klass "ruby"
-	And I press "OK!" within klass "ruby"
-Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false, status_mask: 1, cost: "2500"
-	And 2 teachings should exist	
 
 @double
 Scenario: Teachers cannot teach more than one class at the same time

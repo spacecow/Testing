@@ -19,11 +19,23 @@ td#teacher input.confirmed {
   color: green;
   font-weight: bold;
 }
+td#teacher input.taught {
+  color: green;
+  font-weight: bold;
+}
 td#teacher input.declined {
   color: red;
   font-weight: bold;
 }
+td#teacher input.canceled {
+  color: red;
+  font-weight: bold;
+}
 td#teacher input.unconfirmed {
+  color: magenta;
+  font-weight: bold;
+}
+td#teacher input.untaught {
   color: magenta;
   font-weight: bold;
 }

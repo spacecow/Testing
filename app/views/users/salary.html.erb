@@ -14,10 +14,12 @@
 	<div id="user_<%= teacher.id %>">
 		<h1><%= teacher %></h1>
 		<ul>
+			<% total = 0 %>
 			<% teacher.teachings.select{|e| e.klass.date >= @start_date && e.klass.date < @end_date}.each do |teaching| %>
 				<li><b><%= teaching.cost+"円" %></b> - <%= teaching %></li>
+				<% total += teaching.cost.to_i %>
 			<% end %>
-			<b><%= teacher.teachings.map{|e| e.cost.to_i}.sum.to_s+"円" %></b>
+			<b><%= total.to_s+"円 (total)" unless total==0 %></b>
 		</ul>
 	</div>
 <% end %>

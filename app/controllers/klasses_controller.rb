@@ -31,6 +31,7 @@ class KlassesController < ApplicationController
 		else
 			render :action => :edit
 		end
+		p Teaching.all
 	end
 
   def destroy

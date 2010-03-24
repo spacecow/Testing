@@ -22,9 +22,11 @@ Then "<month>" should be selected in the "Month" field
 	And I should see "Johan Sveholm" within "div.show"
 	And I should <feb> "3000円 - 2/1(Monday) - Ruby II" within user "johan"
 	And I should <feb> "1500円 - 2/28(Sunday) - Ruby II" within user "johan"
+	And I should <feb> "4500円 (total)" within user "johan"
 	And I should see "Aya Komatsu" within "div.show"
 	And I should <mar> "2600円 - 3/1(Monday) - Ruby II" within user "aya"
 	And I should <mar> "1300円 - 3/31(Wednesday) - Ruby II" within user "aya"
+	And I should <mar> "3900円 (total)" within user "aya"
 Examples:
 |	month			|	feb			|	mar			|
 |	February	|	see			|	not see	|
