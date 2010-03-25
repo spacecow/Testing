@@ -161,6 +161,7 @@ ja:
   subject: "件名"
   successfully: "首尾よく"
   sure?: "確かですか"
+  sure_with_teachings?: "確かですか\nクラスの講師情報も削除する"
   suspended: "利用停止"
   system: "システム"
   teacher: "講師"

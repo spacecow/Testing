@@ -3,9 +3,9 @@ class KlassesController < ApplicationController
   load_and_authorize_resource
 
   def new
-		if @class_course && @class_course.split.size > 1  #just one course
+		if @class_course && @class_course.split.size > 1  #Duplicate class
 			Klass.create!( params[:klass] )
-			redirect_to klasses_path and return
+			redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day ) and return
 		end
 		@klass = Klass.new(
 			:capacity => nil,

@@ -33,7 +33,7 @@
 				<%= link_to t('edit'), edit_klass_path(klass) %>
 			<% end %>
 			<% if can? :destroy, klass %>
-				<%= link_to t('delete'), klass, :confirm => 'Are you sure?', :method => :delete %>
+				<%= link_to t('delete'), klass, :confirm => klass.teachings.empty? ? t(:sure?) : t(:sure_with_teachings?), :method => :delete %>
 			<% end %>
 		</td>	
 

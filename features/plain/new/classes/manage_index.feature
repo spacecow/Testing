@@ -18,7 +18,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a klass: "rails" exists with course: course "rails", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a user is logged in as "aya"
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 Then within klass: "ruby", the teacher field should have options "BLANK, Johan Sveholm, Aya Komatsu, Prince Philip"
 	And within klass: "rails", the teacher field should have options "BLANK, Johan Sveholm, Prince Philip"
 	And within klass: "ruby", "" should be selected as teacher
@@ -33,7 +33,7 @@ Given a course: "ruby1" exists with name: "Ruby I"
 	And a klass: "ruby1" exists with course: course "ruby1", date: "2010-02-28", start_time: "10:00", end_time: "12:00"
 	And a klass: "ruby2" exists with course: course "ruby2", date: "2010-02-28", start_time: "10:00", end_time: "10:50"
 	And a user is logged in as "aya"
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Aya Komatsu" as teacher within klass "ruby2"
 	And I press "OK!" within klass "ruby2"
 Then a teaching should exist with klass: klass "ruby2", teacher: user "aya", cost: "1500"
@@ -49,7 +49,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", date: "2010-02-28"
 	And a user is logged in as "aya"
 Then 0 teachings should exist
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then within klass: "ruby", "Aya Komatsu" should be selected as teacher
@@ -77,7 +77,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby2" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a user is logged in as "aya"
 Then 0 teachings should exist
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya"
@@ -86,6 +86,20 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya"
 	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm"
 	And within klass: "ruby", "Aya Komatsu" should be selected as teacher
 	And within klass: "ruby2", "" should be selected as teacher
+
+@deleting
+Scenario: When deleting a class that has teachings, the teachings should be deleted
+Given a course: "ruby" exists with name: "Ruby II"
+	And a klass: "ruby" exists with course: course "ruby", date: "2011-02-28"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
+	And a courses_teacher exists with course: course "ruby", teacher: user "aya"
+	And a teaching exists with klass: klass "ruby", teacher: user "aya", current: false
+	And a teaching exists with klass: klass "ruby", teacher: user "johan", current: true
+	And a user is logged in as "aya"
+Then 2 teachings should exist
+When I browse to the klasses page of "February 28, 2011"
+	And I follow "Del" within "table#Ruby tr td#links"
+Then 0 teachings should exist
 
 @extended_double
 Scenario: Teachers cannot teach more than one class at the same time
@@ -105,7 +119,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "fortran2" exists with course: course "fortran", start_time: "22:00", end_time: "23:30", date: "2010-02-28"
 	And a user is logged in as "aya"
 Then 0 teachings should exist
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Aya Komatsu" as teacher within klass "fortran"
 	And I press "OK!" within klass "fortran"
 Then a teaching should exist with klass: klass "fortran", teacher: user "aya"
@@ -175,11 +189,7 @@ Given a course: "ruby" exists with name: "Ruby II"
 	And a classroom: "1" exists with name: "1"
 	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
 Given a user is logged in as "<user>"
-When I go to the klasses page
-	And I select "March" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "March 28, 2010"
 Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-28"
 	And 1 klasses should exist
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
@@ -202,11 +212,7 @@ Given a course: "ruby" exists with name: "Ruby II"
 	And a classroom: "1" exists with name: "1"
 	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
 Given a user is logged in as "<user>"
-When I go to the klasses page
-	And I select "March" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "March 28, 2010"
 Then 0 klasses should exist
 Examples:
 |	user			|
@@ -223,11 +229,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
 	And a user is logged in as "<user>"
 Then 1 klasses should exist
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "February 28, 2010"
 Then I should see options "Info" within "table#Ruby tr td#links"
 	And 1 klasses should exist
 Examples:
@@ -247,15 +249,11 @@ Then "class_month" should have options "January, February, March, April, May, Ju
 	And "class_month" should have no blank option	
 	And "class_day" should have no blank option	
 	And "class_year" should have no blank option		
-When I select "February" from "class_month"
-	And I select "15" from "class_day"
-	And I select "2012" from "class_year"
+When I select "February 15, 2012" as date
 	And I press "Go!"
 Then I should be redirected to the klasses page
 	And I should see "Classes - Wednesday" within "h1"
- 	And "February" should be selected in "class_month"
- 	And "15" should be selected in "class_day"
- 	And "2012" should be selected in "class_year"
+ 	And "February 15, 2012" should be selected as date
 
 Scenario: List classes according to day
 Given a course: "ruby" exists with name: "Ruby I"
@@ -263,11 +261,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2010-02-28"
 	And a klass: "rails" exists with course: course "rails", start_time: "12:00", end_time: "13:00", date: "2010-03-01"
 	And a user is logged in as "johan"
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "February 28, 2010"
 Then I should see "I" within "table#Ruby tr td.course_level"
 	And I should see "18:50~20:50" within "table#Ruby tr td#time_interval"
 	And I should see "" within "table#Ruby tr td#unit"
@@ -275,9 +269,7 @@ Then I should see "I" within "table#Ruby tr td.course_level"
 	And I should see "" within "table#Ruby tr td#teacher"
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
 	And I should not see "Rails"
-When I select "March" from "class_month"
-	And I select "1" from "class_day"
-	And I select "2010" from "class_year"
+When I select "March 1, 2010" as date
 	And I press "Go!"
 	And I should see "II" within "table#Rails tr td.course_level"
 	And I should see "12:00~13:00" within "table#Rails tr td#time_interval"	
@@ -290,16 +282,10 @@ When I select "March" from "class_month"
 @index_links
 Scenario Outline: Check that the date is correct in the form when creating a new class
 Given a user is logged in as "johan"
-When I go to the klasses page
-When I select "<month>" from "class_month"
-	And I select "<day>" from "class_day"
-	And I select "<year>" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "<month> <day>, <year>"
 	And I follow "New Class" within "div#list div#links"
 Then I should be redirected to the new klass page
-	And "<year>" should be selected in "klass_date_1i"
-	And "<month>" should be selected in "klass_date_2i"
-	And "<day>" should be selected in "klass_date_3i"
+	And "<month> <day>, <year>" should be selected as klass date
 	And "klass_date_1i" should have no blank option	
 	And "klass_date_2i" should have no blank option	
 	And "klass_date_3i" should have no blank option	
@@ -309,7 +295,7 @@ Examples:
 |	2020	|	December	|	1		|
 |	2010	|	January		|	31	|
 
-@index_links
+@links
 Scenario: Links from index page
 Given a course exists with name: "Rails II"
 	And a course exists with name: "Ruby II"
@@ -317,20 +303,19 @@ Given a course exists with name: "Rails II"
 	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", date: "2010-02-28", capacity: 6
 	And a user is logged in as "johan"
 Then 1 klasses should exist
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "February 28, 2010"
 	And I follow "Info" within "table#Ruby tr td#links"
 Then I should be redirected to the show page of that klass
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+When I browse to the klasses page of "February 28, 2010"
 	And I follow "Edit" within "table#Ruby tr td#links"
 Then I should be redirected to the edit page of that klass
+
+@new
+Scenario: When creating a new class the categories should stay fixed
+Given a course exists with name: "Rails II"
+	And a course: "ruby2" exists with name: "Ruby II"	
+	And a course: "ruby1" exists with name: "Ruby I"
+	And a user is logged in as "johan"
 When I go to the klasses page
 	And I follow "New Class" within "div#list div#links"
 Then I should be redirected to the new klass page
@@ -341,39 +326,45 @@ Then I should be redirected to the error klasses page
 When I press "Create"
 Then I should be redirected to the error klasses page
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"	
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+
+@similar
+Scenario: When creating a class in the same category, the categories should stay fixed
+Given a course exists with name: "Rails II"
+	And a course: "ruby2" exists with name: "Ruby II"	
+	And a course: "ruby1" exists with name: "Ruby I"
+	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
+	And a user is logged in as "johan"
+When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within "table#Ruby"
 Then I should be redirected to the new klass page
+	And "February 28, 2011" should be selected as klass date
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II"
 	And the "Start time" field should be empty
 	And the "End time" field should be empty
 When I press "Create"
 Then I should be redirected to the error klasses page
+	And "February 28, 2011" should be selected as klass date
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II"
 When I press "Create"
 Then I should be redirected to the error klasses page
+	And "February 28, 2011" should be selected as klass date
 	And the "Course" field should have options "BLANK, Ruby I, Ruby II"	
-When I go to the klasses page
-	And I select "February" from "class_month"
-	And I select "28" from "class_day"
-	And I select "2010" from "class_year"
-	And I press "Go!"
+
+@duplicate
+Scenario: Duplicate a class
+Given a course: "ruby" exists with name: "Ruby I"
+	And a klass exists with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
+	And a user is logged in as "johan"
+When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within that klass
-Then I should be redirected to the klasses page
+Then I should automatically browse to the klasses page of "February 28, 2011"
+	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
 	And 2 klasses should exist
-	And 2 klasses should exist with start_time: "18:50", end_time: "20:50", capacity: 6, date: "2010-02-28", course: course "ruby1"
 
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: Implement versioning? (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: When a class is deleted teachings&attendances should be deleted or not be able to (NOT IMPLEMENTED)
 Given not implemented
 
 Scenario: If a teacher is choosen he cannot be changed unless he cancels (NOT IMPLEMENTED)

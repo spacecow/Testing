@@ -38,7 +38,7 @@ class TemplateClassesController < ApplicationController
 
 		if @template_course.blank?
 	  	@courses = sort_courses
-		elsif @template_course.split.size > 1
+		elsif @template_course.split.size > 1 #Make a duplication
 			@template_class.course = Course.first( :conditions => ["name = ?",@template_course])
 			@template_class.start_time = params[:start_time]
 			@template_class.end_time = params[:end_time]
