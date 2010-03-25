@@ -182,7 +182,9 @@ class UsersController < ApplicationController
 		@salary_month = params[:salary_month] || Date.current.month
 		
 		@start_date = Date.parse( "#{Date.current.year}-#{@salary_month}-01" )
-		@end_date = Date.parse( "#{Date.current.year}-#{@salary_month.to_i+1}-01" )
+		end_month = (@salary_month.to_i+1)%12
+		end_year  = Date.current.year+(@salary_month.to_i+1)/12
+		@end_date = Date.parse( "#{end_year}-#{end_month}-01" )
 		@teachers = User.with_role( :teacher )
 	end
 	

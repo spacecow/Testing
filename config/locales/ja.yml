@@ -104,6 +104,7 @@ ja:
   name_kana: "名前 (カタカナ)"
   nationality: "国籍"
   no_subject: "&lt;件名なし&gt;"
+  not_confirmed: "確認されていない"
   note: "備考"
   notice: "注意"
   object_course: "{{object}}コース"

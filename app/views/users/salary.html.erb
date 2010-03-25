@@ -11,13 +11,17 @@
 <br />
 
 <% @teachers.each do |teacher| %>
-	<div id="user_<%= teacher.id %>">
+	<div id="user_<%= teacher.id %>" style="margin-bottom:0.5em;">
 		<h1><%= teacher %></h1>
 		<ul>
 			<% total = 0 %>
-			<% teacher.teachings.select{|e| e.klass.date >= @start_date && e.klass.date < @end_date}.each do |teaching| %>
-				<li><b><%= teaching.cost+"円" %></b> - <%= teaching %></li>
-				<% total += teaching.cost.to_i %>
+			<% teacher.teachings.between_dates(@start_date,@end_date).confirmed.each do |teaching| %>
+				<% if teaching.status? :taught %>
+					<li><b><%= teaching.cost+"円" %></b> - <%= teaching %></li>
+					<% total += teaching.cost.to_i %>
+				<% else %>
+					<li><i><%= teaching.cost+"円" %> - <%= teaching %> (<%= t(:not_confirmed) %>)</li></i>
+				<% end %>
 			<% end %>
 			<b><%= total.to_s+"円 (total)" unless total==0 %></b>
 		</ul>

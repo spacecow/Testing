@@ -9,11 +9,13 @@
     		<%= builder.collection_select :teacher_id, teachers, :id, :name, :include_blank=>true %>
   		<% end %>
   		<%= submit_tag klass.teaching.confirmed_symbol,
+  			:id => 'confirm',
   			:name => 'klass[toggle_confirmation]',
   			:class => klass.teaching.status[0],
-  			:disabled => (klass.teaching.status?( :confirmed )&&klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
+  			:disabled => (klass.teaching.status?( :confirmed )&&!klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
   			
   		<%=	submit_tag klass.teaching.taught_symbol,
+  			:id => 'teach',
   			:name => 'klass[toggle_taught]',
   			:class => klass.teaching.status[1] if klass.teaching.status? :confirmed %>
 		</td>

@@ -1,4 +1,24 @@
-#--------------------- FORM
+#--------------------- Index form
+
+When /^I press the (.+) button$/ do |button_id|
+  field_with_id( button_id ).click
+end
+
+Then /^the (.+) button should be disabled$/ do |button_id|
+  field_with_id( button_id ).disabled?.should be_true
+end
+
+Then /^the (.+) button should not be disabled$/ do |button_id|
+  field_with_id( button_id ).disabled?.should_not be_true
+end
+
+Then /^I should see no (.+) button$/ do |button_id|
+  assert_have_no_xpath("//input[@id='#{button_id}']")
+end
+
+Then /^I should see a (.+) button$/ do |button_id|
+  assert_have_xpath("//input[@id='#{button_id}']")
+end
 
 When /^I select "([^\"]*)" as teacher within klass "([^\"]*)"$/ do |teacher, model|
 	When "I select \"#{teacher}\" from \"klass_teaching_attributes_teacher_id\" within klass \"#{model}\""

@@ -1,46 +1,306 @@
-cucumber features/plain/new/classes/manage_index.feature:178 # Scenario: Let day have appear with AJAX so its easier to get the date right (NOT IMPLEMENTED)
-cucumber features/plain/new/classes/manage_index.feature:181 # Scenario: Not beable to delete a class with students (NOT IMPLEMENTED)
-cucumber features/plain/new/classes/manage_index.feature:184 # Scenario: Implement versioning? (NOT IMPLEMENTED)
-cucumber features/plain/new/classes/manage_new.feature:83 # Scenario: Capacity changed automatically by change of course (AJAX)
-cucumber features/plain/new/events/manage_comments.feature:50 # Scenario: A comment cannot be blank (AJAX)
-cucumber features/plain/new/events/manage_comments.feature:107 # Scenario: Delete with ajax (NOT IMPLEMENTED)
-cucumber features/plain/new/events/manage_events.feature:61 # Scenario: Events with no start date/end date should be put in upcoming events (NOT IMPLEMENTED)
-cucumber features/plain/new/events/manage_events.feature:64 # Scenario: Should be able to display only date (NOT IMPLEMENTED)
-cucumber features/plain/new/invitations/manage_invitations.feature:36 # Scenario: Have a version page where updates are listed (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_login.feature:51 # Scenario: If a userinputs a wrong url, he should be taken to the root page (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_login.feature:54 # Scenario: No error messages! (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_password.feature:24 # Scenario: Try toswitch language in the middle of an error message (NOT IMPLEMENTED)
-cucumber features/plain/new/mails/manage_mailbox.feature:162 # Scenario: Automatic mail when a event comment is written (NOT IMPLEMENTED)
-cucumber features/plain/new/mails/manage_mailbox.feature:165 # Scenario: Automatic mail when a photo is uploaded (NOT IMPLEMENTED)
-cucumber features/plain/new/mails/manage_new.feature:88 # Scenario: When the number of users increases, check_boxes are no longer an option - nested form? (NOTIMPLEMENTED)
-cucumber features/plain/new/other/manage_other.feature:1 # Scenario: Cannot close notify/error, fade with jquery (NOT IMPLEMENTED)
-cucumber features/plain/new/other/manage_other.feature:4 # Scenario: Jump back to where you were after update of profile (NOT IMPLEMENTED)
-cucumber features/plain/new/other/manage_other.feature:7 # Scenario: Change from px to em (NOT IMPLEMENTED)
-cucumber features/plain/new/other/manage_other.feature:10 # Scenario: Create a message system (NOT IMPLEMENTED)
-cucumber features/plain/new/other/manage_other.feature:13 # Scenario: Explain the * in the forms (NOT IMPLEMENTED)
-cucumber features/plain/new/photos/manage_photos.feature:84 # Scenario: Set size for caption and uploader (NOT IMPLEMENTED)
-cucumber features/plain/new/photos/manage_photos.feature:87 # Scenario: Circulethrough pictures only in the same gallery (NOT IMPLEMENTED)
-cucumber features/plain/new/registrants/manage_registrants.feature:16 # Scenario: Send a confirmation mail (NOT IMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_edit.feature:94 # Scenario:You should not be able to move a class in time and make it interfere with teacher/room opitons (NOT IMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_errors.feature:95 # Scenario: Change capacity automatically when changing between conversation/grammar (NOTIMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_index.feature:113 # Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_index.feature:116 # Scenario: Should a duplication of a class duplicate other fields as well? (NOT IMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_index.feature:119 # Scenario: Choose a day with I18n (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_comments.feature:10 # Scenario: A comment cannot be blank (AJAX)
-cucumber features/plain/new/todos/manage_comments.feature:44 # Scenario: Add a comment with line feed (DONT KNOW WHY THIS DOESNT WORK)
-cucumber features/plain/new/todos/manage_comments.feature:118 # Scenario: Updated at (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_comments.feature:121 # Scenario: Mail should not be created if comment is blank (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_index.feature:94 # Scenario: Implementa search function (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_todos.feature:147 # Scenario: Get rid of the error box, add errors to subjects (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_todos.feature:150 # Scenario: Closed/Open - better names in Japanese, make it easier to understand (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_todos.feature:153 # Scenario: Button for update comment doesnt look pretty (NOT IMPLEMENTED)
-cucumber features/plain/new/todos/manage_todos.feature:156 # Scenario: Todo List should go to closed if you are at the show page of a closed todo (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_passwords.feature:43 # Scenario: Be able to change password when you are logged in (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_registration.feature:121 # Scenario: Klargoer vad som aer foer och efternamn (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_registration.feature:124 # Scenario: Nationality drop-down (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_registration.feature:127 # Scenario: Avatar strular vid registreringoegonblicket (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_registration.feature:130 # Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_registration.feature:133 # Scenario: Not be able to enter a 20+ digit number as telephone number (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_reserve.feature:133 # Scenario: Links on reservation page (NOT IMPLEMENTED)
-cucumber features/plain/new/users/manage_users.feature:28 # Scenario: Permalinks (NOT IMPLEMENTED)
-cucumber features/plain/new/votes/manage_voting.feature:134 # Scenario: Make voting AJAX! (NOT IMPLEMENTED)
+Using the default profile...
+@index
+
+
+  Background: 
+    Given a setting exist with name: "main"
+    And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+    And a user: "aya" exist with username: "aya", role: "teacher, admin", language: "en", name: "Aya Komatsu"
+    And a course: "ruby" exists with name: "Ruby I"
+    And a courses_teacher exists with course: course "ruby", teacher: user "johan", cost: "2500"
+    And a courses_teacher exists with course: course "ruby", teacher: user "aya", cost: "2000"
+    And a klass: "ruby" exists with course: course "ruby", date: "2010-02-28", start_time: "10:00", end_time: "10:50"
+    And a user is logged in as "johan"
+
+  @confirm
+  Scenario: Confirm a teacher
+    Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 4
+    When I browse to the klasses page of "February 28 2010"
+    When I press the confirm button
+    Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 33
+    And 1 teachings should exist
+    And there should be no teach button
+      expected following text to not match xpath //input[@id='teach']:
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Mafumafu: index</title>
+      <link href="/stylesheets/yoyaku.css?1269328183" media="screen" rel="stylesheet" type="text/css">
+      <link href="/stylesheets/formtastic.css?1264145050" media="screen" rel="stylesheet" type="text/css">
+      <link href="/stylesheets/formtastic_changes.css?1269420249" media="screen" rel="stylesheet" type="text/css">
+      <script src="/javascripts/jquery-1.3.2.min.js?1259911877" type="text/javascript"></script><script src="/javascripts/application.js?1261379989" type="text/javascript"></script><script src="/javascripts/prototype.js?1259911877" type="text/javascript"></script><script src="/javascripts/effects.js?1259911877" type="text/javascript"></script><script src="/javascripts/dragdrop.js?1259911877" type="text/javascript"></script><script src="/javascripts/controls.js?1259911877" type="text/javascript"></script><script src="/javascripts/application.js?1261379989" type="text/javascript"></script>
+      </head>
+      <body>
+      	<div id="container">	
+        
+            <div id="notice">
+              
+              <p>Successfully updated Class.</p>    
+            </div>
+            <div class="clear"></div>
+      				    
+      		  <div id="banner">
+      			  <table border="0" align="center"><tr><td>
+      				  <ul id="nav">
+      <li>
+      <a href="/todos">Todo List</a>
+      								
+      								<ul>
+      <li>------------------</li>
+      									<li><a href="/votes">Votes</a></li>							
+      								</ul>
+      </li>
+      						
+      						
+      						
+      							<li>
+      <a href="/klasses">Classes</a>
+      								
+      								<ul>
+      <li>------------------</li>
+      									<li><a href="/template_classes">Template Classes</a></li>							
+      								</ul>
+      </li>
+      						
+      
+      						<li>
+      <a href="/events">Events</a>
+      								
+      								<ul>
+      <li>------------------</li>
+      									<li><a href="/registrants">Applicants</a></li>							
+      								</ul>
+      </li>				
+      						
+      							
+      							<li><a href="/users">Users</a></li>									
+      						
+      						
+      							
+      							<li><a href="/kanjis">Kanji</a></li>									
+      						
+      					</ul>
+      </td></tr></table>
+      </div>
+      		
+      		<div id="right_column">
+      			<div id="user_nav">
+      	<div class="commands">
+      		<ul>
+      <li><a href="/users/245/confirm">Confirm</a></li>
+      				
+      								
+      				<li><a href="/users/245/edit">Edit Profile</a></li>
+      				<li><a href="/logout_user">Logout</a></li>
+      				
+      					<li class=""><a href="/mails/box">Mail</a></li>
+      				
+      				
+      		      <li><a href="/invitations/new">Send Invitation</a></li>
+      		    
+      			
+      		</ul>
+      </div>
+      	
+      		<img alt="Mafumafu" src="/images/mafumafu.jpg?1263973848"><div class="info">    
+      			Logged in as johan
+      		</div>
+      	
+      	<div class="clear"></div>
+      </div>
+      
+      	<div id="beta_testers">
+      		<div class="title">Beta Testers</div>
+      		
+      			<ul>
+      <li><a href="/users/245">Johan Sveholm</a></li>
+      <li><a href="/users/246">Aya Komatsu</a></li>
+      </ul>
+      <div class="clear"></div>
+      	</div>    	              
+      
+      
+      		</div>
+      		<div id="main">
+      	    <script src="/javascripts/day_update.js?1267078528" type="text/javascript"></script><div id="list">
+      	
+      <h1>Classes - Sunday</h1>
+      <div class="intro">
+      </div>
+      
+      <form action="/klasses" method="get">
+        <label for="class_date">Date: </label>
+        <select id="class_month" name="class_month"><option value="1">January</option>
+      <option value="2" selected>February</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8">August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option></select><select id="class_day" name="class_day"><option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28" selected>28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option></select><select id="class_year" name="class_year"><option value="2009">2009</option>
+      <option value="2010" selected>2010</option>
+      <option value="2011">2011</option>
+      <option value="2012">2012</option>
+      <option value="2013">2013</option>
+      <option value="2014">2014</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option></select><span id="day"></span>
+        <input id="class_submit" name="commit" type="submit" value="Go!">
+      </form>
+      <br><table cellpadding="0" cellspacing="1" border="0" class="course" id="Ruby">
+      <tr>
+      <th class="title" colspan="2">Ruby Course 
+          	<a href="/klasses/new?class_course=Ruby&amp;class_date=2010-2-28">+</a>
+          </th>
+        </tr>
+      <tr>
+      <th class="subtitle" rowspan="2">Lesson</th>
+      		<th class="subtitle" rowspan="2">Time</th>
+      		<th class="subtitle" rowspan="2">Unit</th>
+      		<th class="subtitle" rowspan="2">Classroom</th>
+      		<th class="subtitle" rowspan="2">Teacher</th>
+          <th class="subtitle" colspan="8">Student</th>		
+        </tr>
+      <tr>
+      <th class="template-table-topics-sub">1</th>
+          
+            <th class="template-table-topics-sub">2</th>
+          
+            <th class="template-table-topics-sub">3</th>
+          
+            <th class="template-table-topics-sub">4</th>
+          
+            <th class="template-table-topics-sub">5</th>
+          
+            <th class="template-table-topics-sub">6</th>
+          
+            <th class="template-table-topics-sub">7</th>
+          
+            <th class="template-table-topics-sub">8</th>
+          
+        </tr>
+      <tr class="list-line-odd" id="klass_123">
+      <td class="course_level" rowspan="1">
+      					I 
+      					<a href="/klasses/new?class_course=Ruby+I&amp;klass%5Bcapacity%5D=8&amp;klass%5Bcourse_id%5D=123&amp;klass%5Bdate%5D=2010-2-28&amp;klass%5Bend_time%5D=Sat+Jan+01+10%3A50%3A00+UTC+2000&amp;klass%5Bstart_time%5D=Sat+Jan+01+10%3A00%3A00+UTC+2000">+</a>
+      				</td>	
+      				
+      					
+      					<form action="/klasses/123" class="edit_klass" id="edit_klass_123" method="post">
+      <div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="put"></div>		<td id="time_interval">10:00~10:50</td>
+      		<td id="unit"></td>
+      		<td id="classroom"></td>
+      		<td id="teacher">
+      			
+      			
+      			<input id="klass_teaching_attributes_id" name="klass[teaching_attributes][id]" type="hidden" value="148"><select id="klass_teaching_attributes_teacher_id" name="klass[teaching_attributes][teacher_id]"><option value=""></option>
+      <option value="245">Johan Sveholm</option>
+      <option value="246" selected>Aya Komatsu</option></select><input class="confirmed" id="confirm" name="klass[toggle_confirmation]" type="submit" value="O"><input class="untaught" id="teach" name="klass[toggle_taught]" type="submit" value="?">
+      </td>
+      		
+      		
+      			<td id="student1"></td>
+      		
+      			<td id="student2"></td>
+      		
+      			<td id="student3"></td>
+      		
+      			<td id="student4"></td>
+      		
+      			<td id="student5"></td>
+      		
+      			<td id="student6"></td>
+      		
+      			<td id="student7"></td>
+      		
+      			<td id="student8"></td>
+      		
+      		<td id="links">
+      			
+      				<a href="/klasses/123">Info</a>
+      			
+      			
+      				<a href="/klasses/123/edit">Edit</a>
+      			
+      			
+      				<a href="/klasses/123" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit(); };return false;">Del</a>
+      			
+      		</td>	
+      
+      		<td><input id="klass_submit" name="commit" type="submit" value="OK!"></td>
+      
+      </form>
+      					</tr>
+      </table>
+      <div id="links">
+      	
+      		<a href="/klasses/new?class_date=2010-2-28">New Class</a><br>
+      </div>
+      
+      </div>
+      
+      
+      			<div id="footer">
+      				Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	
+      			</div>
+      	  </div>
+      		<div class="clear"></div>
+      	</div>    
+      </body>
+      </html>
+      .
+      <false> is not true. (Test::Unit::AssertionFailedError)
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:48:in `assert_block'
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:500:in `_wrap_assertion'
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:46:in `assert_block'
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:63:in `assert'
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:495:in `_wrap_assertion'
+      c:/ruby/lib/ruby/1.8/test/unit/assertions.rb:61:in `assert'
+      ./features/step_definitions/klasses_steps.rb:16:in `/^there should be no (.+) button$/'
+      features/plain/new/classes/manage_toggle_status.feature:27:in `And there should be no teach button'
+
+Failing Scenarios:
+cucumber features/plain/new/classes/manage_toggle_status.feature:21 # Scenario: Confirm a teacher
+
+1 scenario (1 failed)
+14 steps (1 failed, 13 passed)
+0m2.844s
