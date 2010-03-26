@@ -11,13 +11,13 @@ Given a setting exist with name: "main"
 
 @no_teaching
 Scenario: If no teacher is selected, no teaching should be created
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I press "OK!" within klass "ruby"
 Then 0 teachings should exist
 	
 @toggle
 Scenario: Default status mask for a Teaching
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Aya Komatsu" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 4
@@ -25,7 +25,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 
 Scenario: Confirm a teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 4
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the confirm button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 33
 	And 1 teachings should exist
@@ -34,7 +34,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 @taught
 Scenario: Confirm a teacher having taught the class
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 33
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 9
 	And 1 teachings should exist
@@ -42,7 +42,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 
 Scenario: Confirm a teacher having canceled his class
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 9
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 17
 	And 1 teachings should exist
@@ -50,7 +50,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 
 Scenario: Toggle the class back to untaught
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 17
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 33
 	And 1 teachings should exist
@@ -59,7 +59,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 @decline
 Scenario: Decline a teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 33
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the confirm button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 2
 	And 1 teachings should exist
@@ -67,7 +67,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 
 Scenario: Unconfirm a teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 2
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 When I press the confirm button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 4
 	And 1 teachings should exist
@@ -75,7 +75,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 	
 Scenario: Choose another teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 2
-When I browse to the klasses page of "February 28 2010"
+When I browse to the klasses page of "February 28, 2010"
 	And I select "Johan Sveholm" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 2, cost: 2000
