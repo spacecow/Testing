@@ -99,6 +99,17 @@ class Teaching < ActiveRecord::Base
 		klass.to_s
 	end
 	
+#------- Klass methods	
+	
+	def date
+		klass.date
+	end
+
+	def time_interval
+		klass.time_interval
+	end
+
+	
 private
 
 	def set_cost #unless it is created by factory through cucumber with another value

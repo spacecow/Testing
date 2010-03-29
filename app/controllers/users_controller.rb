@@ -163,6 +163,7 @@ class UsersController < ApplicationController
 		sorted_klasses = @user.teacher_klasses.all.
 			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		coming_klasses = sorted_klasses.
+			reject{|e| e.teaching.nil? }.
 			reject{|e| e.date < todays_date}
 
 		@confirmable_classes = coming_klasses.
@@ -171,6 +172,7 @@ class UsersController < ApplicationController
 		@confirmed_classes = coming_klasses.
 			reject{|e| !e.teaching.status?( :confirmed )}
 		@teaching_history = sorted_klasses.
+			reject{|e| e.teaching.nil? }.
 			reject{|e| e.date >= todays_date}.
 			reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
 		@declined_classes = sorted_klasses.

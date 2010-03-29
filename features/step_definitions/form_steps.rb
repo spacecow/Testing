@@ -32,3 +32,15 @@ end
 Then /^I should (not )?see a field "([^\"]*)" for (.+)$/ do |negative, field, model|
   Then "the xpath \"//li[@id='#{model}_#{field.downcase}_input']\" should #{negative}exist"
 end
+
+Then /^I should not see "([^\"]*)" within the form$/ do |text|
+	success = false
+	begin
+	  response.body.should have_selector( "div.form" ) do |content|
+			content.should_not contain(text)
+			success = true
+		end
+	rescue Spec::Expectations::ExpectationNotMetError
+		success.should be_true
+	end
+end
