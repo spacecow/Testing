@@ -38,7 +38,9 @@ ActionController::Routing::Routes.draw do |map|
   	:new_event_register => :post,
   	:create_event_register => :put,
   	:edit_role => :get,
-  	:update_role => :put },
+  	:update_role => :put,
+  	:daily_teacher_reminder => :get,
+  	:weekly_teacher_schedule => :get,},
   :collection => {
   	:edit_multiple => :post,
   	:update_multiple =>:put,
