@@ -369,3 +369,9 @@ Given not implemented
 
 Scenario: If a teacher is choosen he cannot be changed unless he cancels (NOT IMPLEMENTED)
 Given not implemented
+
+Scenario: Should be able to delete teaching (NOT IMPLEMENTED)
+Given not implemented
+
+Scenario: If a teaching isnt current, the teacher should be able to be chosen elsewhere (NOT IMPLEMENTED)
+Given not implemented

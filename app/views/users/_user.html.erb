@@ -21,5 +21,7 @@
 		<% if can? :destroy, user %>
 	  	<%= link_to t('delete'), user, :confirm => 'Are you sure?', :method => :delete %>
 	  <% end %>
+	  <%= image_submit_tag("weekly_mail.gif") %>
+	  <%= image_submit_tag("daily_mail.gif") %>
 	</td>  
 </tr>
