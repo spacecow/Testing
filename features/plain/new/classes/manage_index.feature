@@ -6,6 +6,22 @@ Given a setting exist with name: "main"
 	And a user: "prince" exist with username: "prince", role: "teacher, registrant", language: "en", name: "Prince Philip"
 	And a user: "junko" exist with username: "junko", role: "student, registrant", language: "en", name: "Junko Sumii"
 
+@not_current
+Scenario: A teaching that is not active (current) does not interfere with other klasses when choosing teacher
+Given a course: "ruby" exists with name: "Ruby I"
+	And a course: "rails" exists with name: "Rails II"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
+	And a courses_teacher exists with course: course "ruby", teacher: user "prince"
+	And a courses_teacher exists with course: course "rails", teacher: user "johan"
+	And a klass: "ruby" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2011-02-28"
+	And a klass: "rails" exists with course: course "rails", start_time: "18:50", end_time: "20:50", date: "2011-02-28"
+	And a teaching exists with klass: klass "ruby", teacher: user "johan", current: false
+	And a teaching exists with klass: klass "ruby", teacher: user "prince", current: true
+	And a user is logged in as "aya"
+When I browse to the klasses page of "February 28, 2011"
+Then within klass: "ruby", "Prince Philip" should be selected as teacher
+Then within klass: "rails", the teacher field should have options "BLANK, Johan Sveholm"
+
 @teachers
 Scenario: View of teachers according to what courses they can teach
 Given a course: "ruby" exists with name: "Ruby I"
@@ -373,5 +389,5 @@ Given not implemented
 Scenario: Should be able to delete teaching (NOT IMPLEMENTED)
 Given not implemented
 
-Scenario: If a teaching isnt current, the teacher should be able to be chosen elsewhere (NOT IMPLEMENTED)
+Scenario: Test to drop the ok buttons if javascript is turned on (NOT IMPLEMENTED)
 Given not implemented

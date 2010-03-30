@@ -42,7 +42,7 @@
 					<% taken = @klasses.
 						 reject{|e| e==klass }.
 						 reject{|e| e.end_time<klass.start_time||e.start_time>klass.end_time}.
-						 map(&:teacher) %>
+						 map{|e| e.teaching.teacher} %>
 					<%= render :partial => "klass", :locals => {
 						:klass=>klass,
 						:teachers=>@teachers.
