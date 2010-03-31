@@ -31,7 +31,7 @@
 					<%= link_to '+', new_klass_path(
 						:class_course=>time_classes[0].course.name,
 						:klass => {
-							:date => "#{@class_year}-#{@class_month}-#{@class_day}",
+							:date => Time.zone.parse("#{@class_year}-#{@class_month}-#{@class_day}"),
 							:course_id=>time_classes[0].course.id,
 							:start_time=>time_classes[0].start_time,
 							:end_time=>time_classes[0].end_time,
