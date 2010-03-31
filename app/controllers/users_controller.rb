@@ -232,7 +232,20 @@ class UsersController < ApplicationController
 		end
 		redirect_to users_path
 	end
+
+	def daily_teacher_reminder
+		date = Date.current
+		SystemMailer.daily_teacher_reminder_to_at( @user, "#{date.year}-#{date.month}-#{date.day}" )
+		redirect_to users_path( :status => "teacher" ) and return
+	end
 	
+	def weekly_teacher_schedule
+		date = Date.current+1.day
+		SystemMailer.weekly_teacher_schedule_to_from( @user, "#{date.year}-#{date.month}-#{date.day}" )
+		redirect_to users_path( :status => "teacher" ) and return
+	end
+
+
 private
 
   def find_multiple_users

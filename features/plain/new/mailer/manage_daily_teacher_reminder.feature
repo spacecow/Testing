@@ -18,6 +18,9 @@ Then I should see "Hello!" in the email body
 	And I should see "それでは本日もよろしくお願いいたします！" in the email body
 	And I should see "FROM AYA" in the email body
 
+Scenario: Teachings should be current and confirmed (NOT IMPLEMENTED)
+Given not implemented
+
 Scenario: A teacher should only be informed about todays classes
 Given a klass: "class04" exists with date: "2010-04-04"
 	And a klass: "class05" exists with date: "2010-04-05"
