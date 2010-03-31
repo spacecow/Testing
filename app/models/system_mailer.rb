@@ -44,7 +44,7 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def daily_english_teacher_reminder( user, title, schedule )
-    recipients  user.email
+    recipients  "Yoyaku@GAKUWARINET.com" #user.email
     from        "Yoyaku@GAKUWARINET.com"
     subject     title
     body        :schedule => schedule
@@ -72,7 +72,7 @@ class SystemMailer < ActionMailer::Base
 
 
 	def weekly_schedule( user, title, schedule )
-    recipients  user.email
+    recipients  "Yoyaku@GAKUWARINET.com" #user.email
     from        "Yoyaku@GAKUWARINET.com"
     subject     title
     body        :schedule => schedule

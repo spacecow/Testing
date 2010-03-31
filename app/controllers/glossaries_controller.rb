@@ -7,6 +7,7 @@ class GlossariesController < ApplicationController
     @correct_answer = params[:correct_answer]
     @part_answer = params[:part_answer]
     @kanji = Kanji.find( params[:kanji_id] )
+
     #kanjis = @glossary.japanese.split(//)
     #begin
     #  @kanji = Kanji.find_by_title( kanjis[@index] )
@@ -15,16 +16,19 @@ class GlossariesController < ApplicationController
   end
 
   def quiz_init
-    
-    @glossary = Glossary.find( rand( Glossary.count )+1 )
+    glossary_id = params[:glossary_id] || rand( Glossary.count )+1
+    @glossary = Glossary.find( glossary_id.to_i )
     kanjis = @glossary.japanese.split(//)
-    index = 0
+    index = ( params[:index] || 0 ).to_i
     begin
       @kanji = Kanji.find_by_title( kanjis[index] )
       index+=1
     end while ( index < kanjis.size && !@kanji ) # && !@kanji )
+    
+    @correct_answer = @kanji.meanings.map(&:title).join(", ")
     @part_answer = ""
-    @kanji.onyomis.map{|e| e.reading.size/3 }.sum.times{ @part_answer += "*" }
+    @correct_answer.size.times{ @part_answer += "*" }
+  #  @kanji.onyomis.map{|e| e.reading.size/3 }.sum.times{ @part_answer += "*" }
     
     #@glossary_hash = {}
     #@glossary.japanese.split(//).each do |kanji_title|
@@ -33,32 +37,44 @@ class GlossariesController < ApplicationController
     #  end 
     #end
     
-    redirect_to quiz_glossaries_path( :glossary_id => @glossary.id, :index => 0, :kanji_id => @kanji.id, :correct_answer => @kanji.onyomis.map(&:reading), :part_answer=>@part_answer )
+    redirect_to quiz_glossaries_path(
+    	:glossary_id => @glossary.id,
+    	:index => index,
+    	:kanji_id => @kanji.id,
+    	:correct_answer => @correct_answer,
+    	:part_answer=>@part_answer )
   end
 
 	def check
     @correct_answer = params[:correct_answer]
     @part_answer = params[:part_answer]
     @answer = params[:answer]
+    @index = params[:index]
+    stars = ""; @answer.size.times{ stars+="*" }
     
-    @new_part_answer = @correct_answer.gsub(/#{@answer}/, '*')
+    @new_part_answer = @correct_answer.gsub(/#{@answer}/, stars)
     new_parts = @new_part_answer.split(//)
     corrects = @correct_answer.split(//)
     parts = @part_answer.split(//)
-    p new_parts
-    p parts
     
     new_parts.each_with_index do |part,i|
     	if part=="*"
     		parts[i] = corrects[i]
   		end
     end
-		p parts
 
     @part_answer = parts.join
+
+		if @part_answer==@correct_answer
+			redirect_to quiz_init_glossaries_path(
+				:index => @index, :glossary_id => @glossary.id
+			) and return
+		end
     
     respond_to do |format|
-      format.html{ redirect_to quiz_init_glossaries_path }
+      format.html{ redirect_to quiz_glossaries_path(
+      	:glossary_id => params[:glossary_id]
+      )}
       format.js
     end	
 	end
