@@ -191,6 +191,10 @@ class Klass < ActiveRecord::Base
 		end
 	end
   
+  def to_mail_date
+  	"#{month.to_s}/#{day.to_s}(#{%w(月 火 水 木 金 土 日)[wday]})"
+  end
+  
 protected
 	def validate_on_update
 		if course_id != Klass.find( id ).course_id

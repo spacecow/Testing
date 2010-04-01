@@ -12,8 +12,8 @@ Scenario: I&II should be replaced with　文法&会話　in the mails
 	And a teaching exists with klass: klass "7", teacher: user "johan"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
 	And "johan@space.com" opens the email with subject "来週のシフトについて"
-Then I should see "4/6(火)" in the email body
-	#And I should see "4/7(Wednesday) - 初級文法 - 12:00~12:50" in the email body
+Then I should see "4/6(火) 12:00~12:50(初級会話)" in the email body
+	And I should see "4/7(水) 12:00~12:50(初級文法)" in the email body
 
 #4/6(火曜日) - 初級 II - 12:00~12:50
 #4/6(火曜日) - 初級 I - 13:00~15:00
@@ -30,4 +30,4 @@ Then I should see "4/6(火)" in the email body
 #4/10(土） 15:00～18:00、18:30～20:30(初級・文法)
 
 
-4/10() 15:00~15:50(初級会話), 1600~18:00(初級文法),　18:30~20:30(初級文法)
+#4/10() 15:00~15:50(初級会話), 1600~18:00(初級文法),　18:30~20:30(初級文法)

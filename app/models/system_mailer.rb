@@ -1,8 +1,13 @@
 class SystemMailer < ActionMailer::Base
 
 	def self.send_teacher_schedule( teachings, function, title )
+		schedule = ""
 		teachings.each do |user,value|
-			schedule = "4/6(火)"
+			date_teachings = teachings[user].group_by(&:date)
+			date_teachings.keys.sort.each do |date|
+				schedule += date_teachings[date][0].to_mail_date+" "
+				schedule += date_teachings[date].sort_by(&:time_interval).map(&:to_mail_time_interval).join(", ")+"\n"
+			end
 			#teachings[user].
 			#	sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
 			#	map(&:to_mail).join("\n")
