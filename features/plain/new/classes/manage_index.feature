@@ -206,7 +206,7 @@ Given a course: "ruby" exists with name: "Ruby II"
 	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
 Given a user is logged in as "<user>"
 When I browse to the klasses page of "March 28, 2010"
-Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-28"
+Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-27 15"
 	And 1 klasses should exist
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
 Examples:
@@ -374,7 +374,7 @@ Given a course: "ruby" exists with name: "Ruby I"
 When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within that klass
 Then I should automatically browse to the klasses page of "February 28, 2011"
-	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-27 15:00:00"
+	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-27 15"
 	And 2 klasses should exist
 
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)

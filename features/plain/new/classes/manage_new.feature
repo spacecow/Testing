@@ -21,7 +21,7 @@ When I go to the new klass page
 	And I press "Create"
 Then I should be redirected to the klasses page
 	And I should see "Successfully created Class."
-	And a klass should exist with course: course "ruby", date: "2010-2-20", start_time: "13:00", end_time: "14:00", capacity: 8, title: "Did you know", description: "ishigani in Japanese", note: "is stone crab in English"
+	And a klass should exist with course: course "ruby", date: "2010-2-19 15", start_time: "13:00", end_time: "14:00", capacity: 8, title: "Did you know", description: "ishigani in Japanese", note: "is stone crab in English"
 	And 1 klasses should exist
 
 @new_view

@@ -7,7 +7,8 @@ Given a setting exist with name: "main"
 Scenario: List a class
 Given a course: "ruby" exists with name: "Ruby I"
 	And a classroom: "room1" exists with name: "1"
-	And a klass exists with date: "2012-3-28", teacher: user "aya", course: course "ruby", classroom: classroom "room1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note"
+	And a klass exists with date: "2012-3-28", course: course "ruby", classroom: classroom "room1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note"
+	And a teaching exists with teacher: user "aya", klass: that klass
 	And a user is logged in as "johan"
 When I go to the show page of that klass
 Then I should see "Class" within "legend"

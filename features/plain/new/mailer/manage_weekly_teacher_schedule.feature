@@ -3,16 +3,16 @@ Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", email: "johan@space.com"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu", email: "aya@space.com"
 	
+@check
 Scenario: Check format of mail of weekly teacher schedule
-Given a course exists with name: "Ruby II"
-Given a klass exists with date: "2010-04-05", course: that course, start_time: "12:00", end_time: "13:00"
-	And a teaching exists with klass: that klass, teacher: user "johan"
+Given a course: "1" exists with name: "初級 I"
+	And a klass: "6-1" exists with date: "2010-04-06", course: "2", start_time: "12:00", end_time: "12:50"
+	And a teaching exists with klass: "6-1", teacher: user "johan"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "来週のシフトについて"
 Then I should see "お疲れ様です。" in the email body	
 	And I should see "梅津です。" in the email body	
-	And I should see "4/5(Monday) - Ruby II - 12:00~13:00" in the email body
 	And I should see "来週のシフトの確認をお願いします。" in the email body
 	And I should see "以上、確認しましたのメール返信お願いします。" in the email body
 

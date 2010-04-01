@@ -99,6 +99,11 @@ class Teaching < ActiveRecord::Base
 		klass.to_s
 	end
 	
+	def to_mail
+		ret = klass.to_s.gsub(/ II/,"会話")
+		ret.gsub(/ I/,"文法")
+	end
+	
 #------- Klass methods	
 	
 	def date

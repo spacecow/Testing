@@ -2,13 +2,16 @@ class SystemMailer < ActionMailer::Base
 
 	def self.send_teacher_schedule( teachings, function, title )
 		teachings.each do |user,value|
-			schedule = teachings[user].
-				sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
-				map(&:to_s).join("\n")
+			schedule = "4/6(火)"
+			#teachings[user].
+			#	sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
+			#	map(&:to_mail).join("\n")
 			func = "deliver_#{function}".to_sym
 			SystemMailer.send( func, user, title, schedule )
 		end	
 	end
+	
+	#月, 火, 水, 木, 金, 土, 日
 
 	def self.get_teachings( start_date, end_date )
 		Teaching.all(
@@ -44,7 +47,7 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def daily_english_teacher_reminder( user, title, schedule )
-    recipients  "Yoyaku@GAKUWARINET.com" #user.email
+    recipients  user.email
     from        "Yoyaku@GAKUWARINET.com"
     subject     title
     body        :schedule => schedule
@@ -72,7 +75,7 @@ class SystemMailer < ActionMailer::Base
 
 
 	def weekly_schedule( user, title, schedule )
-    recipients  "Yoyaku@GAKUWARINET.com" #user.email
+    recipients  user.email
     from        "Yoyaku@GAKUWARINET.com"
     subject     title
     body        :schedule => schedule

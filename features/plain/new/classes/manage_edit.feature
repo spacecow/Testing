@@ -40,7 +40,7 @@ When I fill in "Capacity" with "6"
 	And I press "Update"
 Then I should be redirected to the klasses page
 	And I should see "Successfully updated Class" as notice flash message
-	And a klass should exist with date: "2012-3-28", course: course "ruby", start_time: "12:00", end_time: "13:00", title: "A funnier title", capacity: 6, cancel: true, description: "A funnier description", note: "A funnier note"
+	And a klass should exist with date: "2012-3-27 15", course: course "ruby", start_time: "12:00", end_time: "13:00", title: "A funnier title", capacity: 6, cancel: true, description: "A funnier description", note: "A funnier note"
 	And 1 klasses should exist
 
 @allow-rescue

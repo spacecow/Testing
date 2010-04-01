@@ -13,12 +13,12 @@ Given a template class exists with day: "mon"
 	And a klass exists with date: "2010-03-11"
 When I generate classes for reservation from "2010-03-08"
 #When I generate classes for reservation
-Then 1 klasses should exist with date: "2010-03-08"
-	And 1 klasses should exist with date: "2010-03-09"
-	And 1 klasses should exist with date: "2010-03-10"
-	And 1 klasses should exist with date: "2010-03-11"
-	And 1 klasses should exist with date: "2010-03-12"
-	And 1 klasses should exist with date: "2010-03-13"
+Then 1 klasses should exist with date: "2010-03-07 15"
+	And 1 klasses should exist with date: "2010-03-08 15"
+	And 1 klasses should exist with date: "2010-03-09 15"
+	And 1 klasses should exist with date: "2010-03-10 15"
+	And 1 klasses should exist with date: "2010-03-11 15"
+	And 1 klasses should exist with date: "2010-03-12 15"
 	And 6 klasses should exist
 
 Scenario: Systematically spread out reservations according to level of the user (NOT IMPLEMENTED)

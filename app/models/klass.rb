@@ -178,7 +178,7 @@ class Klass < ActiveRecord::Base
 	end
 
 	def self.generate_classes_for_reservation_from( date )
-		date = Date.parse( date )
+		date = Time.zone.parse( date )
 		#date = d + 5.day
 		#date += 1.day while date.strftime("%a") != "Mon"
 		while( date.strftime("%a") != "Sun" )

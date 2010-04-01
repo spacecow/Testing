@@ -4,9 +4,7 @@ class KlassesController < ApplicationController
 
   def new
 		if @class_course && @class_course.split.size > 1  #Duplicate class
-			p params[:klass][:date]
 			Klass.create!( params[:klass] )
-			p Klass.all
 			redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day ) and return
 		end
 		@klass = Klass.new(
@@ -62,7 +60,7 @@ class KlassesController < ApplicationController
 		@class_day   = params[:class_day]   || DateTime.current.day
 		@class_year  = params[:class_year]  || DateTime.current.year
 		@class_date  = Time.zone.parse("#{@class_year}-#{@class_month}-#{@class_day}")
-		Klass.all.map(&:date)
+		
 		@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teachings,:teachers] )
 		if can?( :manage, Klass ) && @klasses.size == 0
 			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|

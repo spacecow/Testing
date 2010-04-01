@@ -25,7 +25,8 @@
   <% @time_groups = classes.group_by(&:time_interval) %>
 	<% @time_groups.sort.each do |time, time_classes_and_levels| %>
 		<% time_classes_and_levels.group_by(&:course_level).sort.each do |level,time_classes| %>
-			<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= time_classes[0].id %>">
+			<% index += 1 %>
+			<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= time_classes[0].id %>">	
 				<td class="course_level" rowspan="<%= time_classes.size %>">
 					<%= time_classes[0].course_level %>&nbsp;
 					<%= link_to '+', new_klass_path(
@@ -50,7 +51,6 @@
 						reject{|e| taken.include?(e)}
 					}%>
 					</tr>
-					<% index += 1 %>
 					<% if time_classes[-1]!=klass %>
 						<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= klass.id+1 %>">
 					<% end %>
