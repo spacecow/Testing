@@ -142,6 +142,10 @@ class Klass < ActiveRecord::Base
     start_time.to_s(:time)+"~"+end_time.to_s(:time)
   end
     
+  def japanese_time_interval
+    time_interval.gsub(/~/,'～')
+  end
+    
   def course_name
     course.name
   end

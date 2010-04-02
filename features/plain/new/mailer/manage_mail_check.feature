@@ -6,14 +6,37 @@ Given a setting exists with name: "main"
 
 @check
 Scenario: I&II should be replaced with　文法&会話　in the mails
-	And a klass: "6" exists with date: "2010-04-06", course: course "2", start_time: "12:00", end_time: "12:50"
+Given a klass: "6" exists with date: "2010-04-06", course: course "2", start_time: "12:00", end_time: "12:50"
 	And a klass: "7" exists with date: "2010-04-07", course: course "1", start_time: "12:00", end_time: "12:50"
 	And a teaching exists with klass: klass "6", teacher: user "johan"
 	And a teaching exists with klass: klass "7", teacher: user "johan"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
 	And "johan@space.com" opens the email with subject "来週のシフトについて"
-Then I should see "4/6(火) 12:00~12:50(初級会話)" in the email body
-	And I should see "4/7(水) 12:00~12:50(初級文法)" in the email body
+Then I should see "4/6(火) 12:00～12:50(会話)" in the email body
+	And I should see "4/7(水) 12:00～12:50(文法)" in the email body
+
+Scenario: If there are two classes on the same they, they should be listed on the same line
+Given a klass: "6-1" exists with date: "2010-04-06", course: course "2", start_time: "12:00", end_time: "12:50"
+	And a klass: "6-2" exists with date: "2010-04-06", course: course "1", start_time: "13:00", end_time: "15:00"
+	And a teaching exists with klass: klass "6-1", teacher: user "johan"
+	And a teaching exists with klass: klass "6-2", teacher: user "johan"
+When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+	And "johan@space.com" opens the email with subject "来週のシフトについて"
+Then I should see "4/6(火) 12:00～12:50(会話), 13:00～15:00(文法)" in the email body
+
+Scenario: If a teacher is assigned a class for another level, that should be marked
+Given a course: "nyuumon" exists with name: "入門 I"
+	And a klass: "5" exists with date: "2010-04-05", course: course "2", start_time: "12:00", end_time: "12:50"
+	And a klass: "7" exists with date: "2010-04-07", course: course "1", start_time: "12:00", end_time: "12:50"
+	And a klass: "8" exists with date: "2010-04-08", course: course "nyuumon", start_time: "12:00", end_time: "12:50"
+	And a teaching exists with klass: klass "5", teacher: user "johan"
+	And a teaching exists with klass: klass "7", teacher: user "johan"
+	And a teaching exists with klass: klass "8", teacher: user "johan"
+When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+	And "johan@space.com" opens the email with subject "来週のシフトについて"
+Then I should see "4/5(月) 12:00～12:50(会話)" in the email body
+	And I should see "4/7(水) 12:00～12:50(文法)" in the email body
+	And I should see "4/8(木) 12:00～12:50(入門文法)" in the email body
 
 #4/6(火曜日) - 初級 II - 12:00~12:50
 #4/6(火曜日) - 初級 I - 13:00~15:00

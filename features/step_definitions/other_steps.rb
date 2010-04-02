@@ -178,7 +178,10 @@ end
 Then /^I should see options "([^\"]*)" within "([^\"]*)"$/ do |options, selector|
 	response.body.should have_selector( selector ) do |content|
   	content.should have_selector( 'a' ) do |links|
-  		links.map(&:inner_html).join(', ').should == options
+			array = []
+			links.map{|e| e.inner_html =~ (/alt="(.+?)"/); array.push $1}
+			(links.map{|e| e.inner_html.size < 50 ? e.inner_html : nil}.compact |
+				array.compact).join(', ').should == options
 		end
 	end
 end

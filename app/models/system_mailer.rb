@@ -1,16 +1,28 @@
 class SystemMailer < ActionMailer::Base
+	def self.get_main_course( teachings )
+		hash = {}; max=0; res=0
+			teachings.each{|e|
+				hash[e.course_category] = ( hash[e.course_category] || 0 )+1
+				if( hash[e.course_category] > max )
+					max = hash[e.course_category]
+					res = e.course_category
+				end
+			}
+			res	
+	end
 
 	def self.send_teacher_schedule( teachings, function, title )
 		schedule = ""
 		teachings.each do |user,value|
+			main_course = get_main_course( teachings[user] )
 			date_teachings = teachings[user].group_by(&:date)
-			date_teachings.keys.sort.each do |date|
+			date_teachings.keys.sort.each_with_index do |date,index|
 				schedule += date_teachings[date][0].to_mail_date+" "
-				schedule += date_teachings[date].sort_by(&:time_interval).map(&:to_mail_time_interval).join(", ")+"\n"
+				schedule += date_teachings[date].
+					sort_by(&:time_interval).
+					map{|e| e.to_mail_time_interval(main_course)}.join(", ")
+				schedule += "\n" unless (index+1)==date_teachings.keys.size
 			end
-			#teachings[user].
-			#	sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
-			#	map(&:to_mail).join("\n")
 			func = "deliver_#{function}".to_sym
 			SystemMailer.send( func, user, title, schedule )
 		end	
@@ -40,13 +52,13 @@ class SystemMailer < ActionMailer::Base
 	end
 
   def self.daily_teacher_reminder_at( date )
-  	todays_date = Date.parse( date )
+  	todays_date = Time.zone.parse( date )
   	teachings = get_teachings( todays_date, todays_date + 1.day )
 		send_teacher_schedule( teachings, "daily_english_teacher_reminder", "reminder" )
 	end
 
   def self.daily_teacher_reminder_to_at( teacher, date )
-  	todays_date = Date.parse( date )
+  	todays_date = Time.zone.parse( date )
   	teachings = get_teachings_to( todays_date, todays_date + 1.day, teacher )
 		send_teacher_schedule( teachings, "daily_english_teacher_reminder", "reminder" )
 	end
@@ -65,14 +77,14 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def self.weekly_teacher_schedule_from( date )
-		start_date = Date.parse( date )
+		start_date = Time.zone.parse( date )
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		teachings = get_teachings( start_date, start_date + 7.day )
 		send_teacher_schedule( teachings, "weekly_schedule", "来週のシフトについて" )
 	end
 
 	def self.weekly_teacher_schedule_to_from( teacher, date )
-		start_date = Date.parse( date )
+		start_date = Time.zone.parse( date )
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		teachings = get_teachings_to( start_date, start_date + 7.day, teacher )
 		send_teacher_schedule( teachings, "weekly_schedule", "来週のシフトについて" )
@@ -85,4 +97,12 @@ class SystemMailer < ActionMailer::Base
     subject     title
     body        :schedule => schedule
 	end
+	
+#private
+#  # we override the template_path to render localized templates (since rails does not support that :-( )
+#  # This thing is not testable since you cannot access the instance of a mailer...
+#  def initialize_defaults(method_name)
+#    super
+#    @template = "#{I18n.locale}_#{method_name}"
+#  end	
 end

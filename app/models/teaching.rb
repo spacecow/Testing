@@ -105,9 +105,13 @@ class Teaching < ActiveRecord::Base
 		klass.to_mail_date
 	end
 	
-	def to_mail_time_interval
-		course = klass.course.name.gsub(/ II/,"会話").gsub(/ I/,"文法")
-		"#{klass.time_interval}(#{course})"
+	def to_mail_time_interval(main_course)
+		if klass.course.category == main_course
+			course = klass.course.level.gsub(/II/,"会話").gsub(/I/,"文法")
+		else
+			course = klass.course.name.gsub(/\sII/,"会話").gsub(/\sI/,"文法")
+		end
+		"#{klass.japanese_time_interval}(#{course})"
 	end
 		
 #------- Klass methods	
@@ -120,11 +124,9 @@ class Teaching < ActiveRecord::Base
 		klass.date
 	end
 
-	def time_interval
-		klass.time_interval
-	end
-
-	
+	def course_category
+    klass.course_category
+  end
 private
 
 	def set_cost #unless it is created by factory through cucumber with another value

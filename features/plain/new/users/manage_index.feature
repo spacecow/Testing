@@ -38,11 +38,17 @@ When I browse to the teachers page
 Then "Teachers" should be selected in the "Sort" menu
 	And I should see "Johan Sveholm, Aya Komatsu, Thomas Osburg, Prince Philip" within the users table
 	And I should not see "Junko Sumii, Mika Mikachan, Reiko Arikawa"
-	And I should see links "Info, Edit, Role, Courses, Del" within user "johan"
+	And I should see links "Info, Edit, Role, Courses, Del, Weekly Mail, Daily Mail" within user "johan"
 	And I should see a button "Roles"
 	And I should see a button "Teacher Courses"
 When I follow "Courses" within user "thomas"
 Then I should be redirected to the edit courses page of user "thomas"
+When I browse to the teachers page
+	And I follow "Weekly Mail" within user "thomas"
+Then I should be redirected to the mailer page
+When I browse to the teachers page
+	And I follow "Daily Mail" within user "thomas"
+Then I should be redirected to the mailer page
 
 Scenario: View of students
 Given a user is logged in as "johan"
