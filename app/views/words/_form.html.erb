@@ -1,0 +1,16 @@
+<% form_for @word do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :japanese %><br />
+    <%= f.text_field :japanese %>
+  </p>
+  <p>
+    <%= f.label :reading %><br />
+    <%= f.text_field :reading %>
+  </p>
+  <p>
+    <%= f.label :meaning %><br />
+    <%= f.text_field :meaning %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

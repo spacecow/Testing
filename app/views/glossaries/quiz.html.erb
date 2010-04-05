@@ -1,18 +1,23 @@
+<%= javascript_include_tag "check_answer.js" %>
+
 <div class="form">
 <fieldset class="form">
 <legend class="form"><%= t('quiz') %></legend>
-<%= @glossary.japanese %><br />
-<h2><%= @correct_answer %></h2>
+<div id="japanese"><%= @glossary.japanese %></div>
+<div id="question"><%= @question %></div>
+<div id="part"><%= @part_answer %></div>
+<div id="correct" style="color: #efe;"><%= @correct_answer %></div>
 <% form_for :glossary, :url => check_glossary_path( @glossary ), :html => { :method => :put } do |f| %>
 <p>
   <%# t('onyomi') %>
   <%# text_field_tag :question, nil, :id => 'question' %>
 </p>
-	<%= hidden_field_tag :correct_answer, @correct_answer %>
-	<%= hidden_field_tag :index, @index %>
+	<%= hidden_field_tag :question, @question %>
 	<%= hidden_field_tag :glossary_id, @glossary.id %>
-	<%= text_field_tag :part_answer, @part_answer %>
-  <%= text_field_tag :answer %>
+	<%= hidden_field_tag :index, @index %>
+  <%= hidden_field_tag :part_answer, @part_answer %>
+  <%= hidden_field_tag :word, @word %>
+  <%= text_field_tag :answer, nil, :class=>:focus %>
   <%= f.submit "Next" %>
 <% end %>
 <div id="kanji">

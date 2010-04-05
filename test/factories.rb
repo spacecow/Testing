@@ -155,3 +155,6 @@ end
 Factory.define :vote do |f|
 	f.points 3
 end
+
+Factory.define :word do |f|
+end

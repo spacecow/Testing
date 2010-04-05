@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :words
+
   map.mailer 'mailer', :controller => 'mailer', :action => 'index'
   map.resources :mails, :collection => { :box => :get }
 

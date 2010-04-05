@@ -13,6 +13,7 @@ $(document).ready(function(){
   	$.post($(this).attr("action"), $(this).serialize(), null, "script" );
   	return false;
   })
+  $("input.focus:last").focus();
 })
 
 /*

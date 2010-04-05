@@ -1,0 +1,20 @@
+<% title "Word" %>
+
+<p>
+  <strong>Japanese:</strong>
+  <%=h @word.japanese %>
+</p>
+<p>
+  <strong>Reading:</strong>
+  <%=h @word.reading %>
+</p>
+<p>
+  <strong>Meaning:</strong>
+  <%=h @word.meaning %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_word_path(@word) %> |
+  <%= link_to "Destroy", @word, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", words_path %>
+</p>
