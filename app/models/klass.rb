@@ -195,8 +195,12 @@ class Klass < ActiveRecord::Base
 		end
 	end
   
-  def to_mail_date
-  	"#{month.to_s}/#{day.to_s}(#{%w(月 火 水 木 金 土 日)[wday]})"
+  def to_mail_date(language)
+  	if language=='ja'
+  		"#{month.to_s}/#{day.to_s}(#{%w(月 火 水 木 金 土 日)[wday]})"
+		elsif language=='en'
+			"#{month.to_s}/#{day.to_s}(#{%w(mon tue wed thu fri sat sun)[wday]})"
+		end
   end
   
 protected

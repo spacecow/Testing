@@ -148,6 +148,7 @@ en:
   roles: "Roles"
   room: "Room"
   salary: "Salary"
+  schedule_for_next_week: "Schedule for next week"
   search: "Search"
   send: "Send"
   sender: "Sender"
