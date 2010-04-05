@@ -101,16 +101,24 @@ class Teaching < ActiveRecord::Base
 	
 #------- Mail methods
 	
-	def to_mail_date
-		klass.to_mail_date
+	def to_mail_date(language)
+		klass.to_mail_date(language)
 	end
 	
-	def to_mail_time_interval(main_course)
-		if klass.course.category == main_course
-			course = klass.course.level.gsub(/II/,"会話").gsub(/I/,"文法")
-		else
-			course = klass.course.name.gsub(/\sII/,"会話").gsub(/\sI/,"文法")
-		end
+	def to_mail_time_interval(main_course, language)
+		if language=='ja'
+			if klass.course.category == main_course
+				course = klass.course.level.gsub(/II/,"会話").gsub(/I/,"文法")
+			else
+				course = klass.course.name.gsub(/ II/,"会話").gsub(/ I/,"文法")
+			end
+		elsif language=='en'
+			if klass.course.category == main_course
+				course = klass.course.level.gsub(/II/,"conv.").gsub(/I/,"gram.")
+			else
+				course = klass.course.name.gsub(/ II/,"conv.").gsub(/ I/," gram.")
+			end
+		end			
 		"#{klass.japanese_time_interval}(#{course})"
 	end
 		

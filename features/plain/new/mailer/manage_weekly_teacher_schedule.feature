@@ -1,20 +1,32 @@
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", email: "johan@space.com"
-	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu", email: "aya@space.com"
+	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu", email: "aya@space.com"
 	
 @check
-Scenario: Check format of mail of weekly teacher schedule
-Given a course: "1" exists with name: "初級 I"
-	And a klass: "6-1" exists with date: "2010-04-06", course: "2", start_time: "12:00", end_time: "12:50"
-	And a teaching exists with klass: "6-1", teacher: user "johan"
+Scenario: Check format of mail of weekly teacher schedule in japanese
+Given a klass exists with date: "2010-04-06"
+	And a teaching exists with klass: that klass, teacher: user "aya"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
-Then "johan@space.com" should receive 1 email
-When "johan@space.com" opens the email with subject "来週のシフトについて"
+Then "aya@space.com" should receive 1 email
+When "aya@space.com" opens the email with subject "来週のシフトについて"
 Then I should see "お疲れ様です。" in the email body	
 	And I should see "梅津です。" in the email body	
 	And I should see "来週のシフトの確認をお願いします。" in the email body
 	And I should see "以上、確認しましたのメール返信お願いします。" in the email body
+	
+@check
+Scenario: Check format of mail of weekly teacher schedule in english
+Given a klass exists with date: "2010-04-06"
+	And a teaching exists with klass: that klass, teacher: user "johan"
+When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+Then "johan@space.com" should receive 1 email
+When "johan@space.com" opens the email with subject "Schedule for next week"
+Then I should see "Hello!" in the email body
+	And I should see "this is Hitomi." in the email body
+	And I should see "please check next week's schedule and" in the email body
+	And I should see "when you get this mail, please reply to me!" in the email body
+	And I should see "see you~!" in the email body
 
 Scenario: A teacher should only be informed about classes the coming week
 Given a klass: "class04" exists with date: "2010-04-04"
@@ -29,12 +41,12 @@ Given a klass: "class04" exists with date: "2010-04-04"
 	And a teaching exists with klass: klass "class12", teacher: user "johan"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
 Then "johan@space.com" should receive 1 email
-When "johan@space.com" opens the email with subject "来週のシフトについて"
-Then I should not see "4/4(Sunday)" in the email body
-	And I should see "4/5(Monday)" in the email body
-	And I should see "4/10(Saturday)" in the email body
-	And I should see "4/11(Sunday)" in the email body
-	And I should not see "4/12(Monday)" in the email body
+When "johan@space.com" opens the email with subject "Schedule for next week"
+Then I should not see "4/4(sun)" in the email body
+	And I should see "4/5(mon)" in the email body
+	And I should see "4/10(sat)" in the email body
+	And I should see "4/11(sun)" in the email body
+	And I should not see "4/12(mon)" in the email body
 
 @single
 Scenario: Send to a single teacher
@@ -56,9 +68,3 @@ Given a course: "ruby1" exists with name: "Ruby I"
 When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
 Then "johan@space.com" should receive 1 email
 	And "aya@space.com" should receive 1 email
-When "johan@space.com" opens the email with subject "来週のシフトについて"
-Then I should see "4/5(Monday) - Ruby I - 12:00~13:00" in the email body
-	And I should not see "4/10(Saturday)" in the email body
-When "aya@space.com" opens the email with subject "来週のシフトについて"
-Then I should not see "4/5(Monday)" in the email body
-	And I should see "4/10(Saturday) - Ruby II - 14:00~15:00" in the email body

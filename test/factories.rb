@@ -9,7 +9,7 @@ Factory.define :comment do |f|
 end
 
 Factory.define :course do |f|
-	f.sequence(:name){|n| "name#{n}" }
+	f.sequence(:name){|n| "name#{n} I" }
 end
 
 Factory.define :course_time do |f|
