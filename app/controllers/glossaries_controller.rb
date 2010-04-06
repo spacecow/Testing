@@ -6,8 +6,9 @@ class GlossariesController < ApplicationController
     @question = params[:question]
     @word = params[:word]
     @glossary.japanese.gsub!(/(#{@word})/,'<b><font color="red">\1</font></b>')
-    @index = params[:index].to_i
-    @correct_answer = Kanji.find_by_title(@word).meanings.map(&:title).join(", ")
+    @start_index = params[:start_index].to_i
+    @end_index = params[:end_index].to_i
+    @correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
     @part_answer = params[:part_answer]
     #@kanji = Kanji.find( params[:kanji_id] )
 
@@ -18,6 +19,26 @@ class GlossariesController < ApplicationController
     ##end while ( @index < kanjis.size && !@kanji ) # && !@kanji )
   end
 
+	def banned?( word )
+		banned = {
+			"の"=>"banned",
+			"は"=>"banned",
+			"み"=>"banned",
+			"べ"=>"banned",
+			"お"=>"banned",
+			"です"=>"banned",
+			"で"=>"banned",
+			"ない"=>"banned",
+			"シス"=>"banned",
+			"シ"=>"banned",
+			"ステム"=>"banned",
+			"え"=>"banned"
+		}
+		return true if word.nil?
+		return true if banned[word.japanese]
+		false
+	end
+
   def quiz_init
   	@glossary = case params[:glossary_id]
   	when nil
@@ -27,37 +48,46 @@ class GlossariesController < ApplicationController
     	Glossary.find( params[:glossary_id] )
     end	
     
-		kanji, index = get_kanji_index( @glossary, params[:index] )
-    
-    correct_answer = kanji.meanings.map(&:title).join(", ")
-    part_answer = correct_answer.gsub(/\w/,'*')
+    kanjis = @glossary.japanese.split(//)
+    start_index = ( params[:start_index] || 0 ).to_i
+  	end_index = ( params[:end_index] || kanjis.size ).to_i
+    begin
+      end_index-=1
+      if start_index > end_index
+    		end_index = kanjis.size-1
+    		start_index+=1
+    	end
+    	if start_index > end_index
+    		gs = Glossary.all( :select=>'id' ).map(&:id)
+    		@glossary = Glossary.find( gs[rand(gs.length)] )
+		    kanjis = @glossary.japanese.split(//)
+		    start_index = 0
+		  	end_index = kanjis.size-1
+  		end
+      word = Word.find_by_japanese( kanjis[start_index..end_index].join )
+    end while ( banned?(word) && start_index <= end_index )
+		    
+    correct_answer = word.meaning.gsub(/\(.+?\)/,"")
+    part_answer = correct_answer.gsub!(/\w/,'*')
     
     redirect_to quiz_glossaries_path(
     	:glossary_id => @glossary.id,
-    	:word => kanji.title,
-    	:index => index,
+    	:word => word.japanese,
+    	:start_index => start_index,
+    	:end_index => end_index,
     	:question => "Meaning?",
     	:part_answer => part_answer
     )
   end
 
-	def get_kanji_index( glossary, index )
-    kanjis = glossary.japanese.split(//)
-    index = ( index || -1 ).to_i
-    begin
-      kanji = Kanji.find_by_title( kanjis[index+=1] )
-    end while ( index < kanjis.size && kanji.nil? )
-		[kanji, index]
-	end
-
 	def check
-    @index = params[:index]    
+    @start_index = params[:start_index] 
+    @end_index = params[:end_index]   
     @answer = params[:answer]
     @word = params[:word]
-    @index = params[:index]
     @part_answer = params[:part_answer]
-    @correct_answer = Kanji.find_by_title(@word).meanings.map(&:title).join(", ")
-    
+    @correct_answer = Word.find_by_japanese(@word).meaning
+        
     @new_part_answer = @correct_answer.gsub(/#{@answer}/, @answer.gsub(/./,'*'))
     new_parts = @new_part_answer.split(//)
     corrects = @correct_answer.split(//)
@@ -71,10 +101,11 @@ class GlossariesController < ApplicationController
 
     @part_answer = parts.join
 
-		if @part_answer==@correct_answer
+		if @part_answer==@correct_answer || @answer=="skip"
 			redirect_to quiz_init_glossaries_path(
 				:glossary_id => @glossary.id,
-				:index => @index,
+				:start_index => @start_index,
+				:end_index => @end_index,
 				:word => @word
 			) and return
 		end
@@ -84,7 +115,8 @@ class GlossariesController < ApplicationController
       	:glossary_id => params[:glossary_id],
       	:word => params[:word],
       	:question => params[:question],
-      	:index => @index,
+      	:start_index => @start_index,
+      	:end_index => @end_index,
       	:part_answer => @part_answer
       )}
       format.js

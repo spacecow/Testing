@@ -14,7 +14,8 @@
 </p>
 	<%= hidden_field_tag :question, @question %>
 	<%= hidden_field_tag :glossary_id, @glossary.id %>
-	<%= hidden_field_tag :index, @index %>
+	<%= hidden_field_tag :start_index, @start_index %>
+	<%= hidden_field_tag :end_index, @end_index %>
   <%= hidden_field_tag :part_answer, @part_answer %>
   <%= hidden_field_tag :word, @word %>
   <%= text_field_tag :answer, nil, :class=>:focus %>

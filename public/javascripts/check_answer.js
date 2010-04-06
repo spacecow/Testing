@@ -19,7 +19,7 @@ $( function(){
 		$("input#answer").val("");
 
 		if( new_part_answer == correct_answer ){
-			$("input#answer").val(correct_answer);
+			$("input#answer").val("skip");
 			$("input#glossary_submit").click();
 		}
 		
