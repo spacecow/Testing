@@ -11,18 +11,23 @@ class SystemMailer < ActionMailer::Base
 			res	
 	end
 
-	def self.send_teacher_schedule( teachings, function )
+	def self.get_schedule( teachings, user )
 		schedule = ""
+		main_course = get_main_course( teachings )
+		date_teachings = teachings.group_by(&:date)
+		date_teachings.keys.sort.each_with_index do |date,index|
+			schedule += date_teachings[date][0].to_mail_date(user.language)+" "
+			schedule += date_teachings[date].
+				sort_by(&:time_interval).
+				map{|e| e.to_mail_time_interval(main_course, user.language)}.join(", ")
+			schedule += "\n" unless (index+1)==date_teachings.keys.size
+		end
+		schedule
+	end
+
+	def self.send_teacher_schedule( teachings, function )
 		teachings.each do |user,value|
-			main_course = get_main_course( teachings[user] )
-			date_teachings = teachings[user].group_by(&:date)
-			date_teachings.keys.sort.each_with_index do |date,index|
-				schedule += date_teachings[date][0].to_mail_date(user.language)+" "
-				schedule += date_teachings[date].
-					sort_by(&:time_interval).
-					map{|e| e.to_mail_time_interval(main_course, user.language)}.join(", ")
-				schedule += "\n" unless (index+1)==date_teachings.keys.size
-			end
+			schedule = get_schedule( teachings[user], user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
 			SystemMailer.send( func, user, schedule )
 		end	
@@ -84,7 +89,8 @@ class SystemMailer < ActionMailer::Base
 
 	def self.weekly_teacher_schedule_from( date )
 		start_date, end_date = get_weekly_interval( date )
-		teachings = get_teachings( start_date, end_date )
+		p "bajs"
+		teachings = Teaching.between_dates( start_date, end_date ).group_by(&:teacher)
 		weekly_teacher_schedule_with( teachings )
 	end
 
