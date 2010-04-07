@@ -10,9 +10,10 @@ class Teaching < ActiveRecord::Base
   
   STATUS = %w[confirmed declined unconfirmed taught canceled untaught]
   
-  named_scope :between_dates, lambda { |start,stop| {:conditions => "klass_id = klasses.id and klasses.date >= '#{start}' and klasses.date < '#{stop}'", :include=>[:klass,:teacher]}}
+  named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:teacher]}}
+  named_scope :teacher, lambda { |teacher_id| {:conditions => ["teacher_id = ?", teacher_id]}}
   named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0 and status_mask & #{2**STATUS.index('canceled')} = 0"}
-	named_scope :wit, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
+	named_scope :with, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
     
   def confirmed_symbol
   	if status? :confirmed
