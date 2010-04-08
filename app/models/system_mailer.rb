@@ -26,8 +26,9 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def self.send_teacher_schedule( teachings, function )
-		teachings.each do |user,value|
-			schedule = get_schedule( teachings[user], user )
+		teachings.each do |user_id,value|
+		  user = User.find( user_id )
+			schedule = get_schedule( teachings[user_id], user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
 			SystemMailer.send( func, user, schedule )
 		end	
@@ -38,13 +39,13 @@ class SystemMailer < ActionMailer::Base
 	def self.get_teachings( start_date, end_date )
 		Teaching.all(
 		  :conditions=>["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start_date, end_date],
-		  :include=>[:klass,:teacher] ).group_by(&:teacher)
+		  :include=>[:klass,:teacher] )
 	end
 
 	def self.get_teachings_to( start_date, end_date, teacher )
 		Teaching.all(
 		  :conditions=>["teacher_id = ? and klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", teacher.id, start_date, end_date],
-		  :include=>[:klass,:teacher] ).group_by(&:teacher)
+		  :include=>[:klass,:teacher] ).group_by(&:teacher_id)
 	end
 
 
@@ -58,15 +59,19 @@ class SystemMailer < ActionMailer::Base
 
   def self.daily_teacher_reminder_at( date )
   	todays_date = Time.zone.parse( date )
-  	teachings = get_teachings( todays_date, todays_date + 1.day )
-		send_teacher_schedule( teachings, "daily_teacher_reminder" )
+  	teachings = Teaching.between_dates( todays_date, todays_date+1.day ).group_by(&:teacher_id)
+		daily_teacher_reminder_with( teachings )
 	end
 
   def self.daily_teacher_reminder_to_at( teacher, date )
   	todays_date = Time.zone.parse( date )
-  	teachings = get_teachings_to( todays_date, todays_date + 1.day, teacher )
-		send_teacher_schedule( teachings, "daily_teacher_reminder" )
+  	teachings = Teaching.between_dates( todays_date, todays_date+1.day ).teacher(teacher.id).group_by(&:teacher_id)
+		daily_teacher_reminder_with( teachings )
 	end
+	
+	def self.daily_teacher_reminder_with( teachings )
+	  send_teacher_schedule( teachings, "daily_teacher_reminder" )
+  end
 
 	def daily_teacher_reminder_in_english( user, schedule )
     recipients  user.email
@@ -89,14 +94,13 @@ class SystemMailer < ActionMailer::Base
 
 	def self.weekly_teacher_schedule_from( date )
 		start_date, end_date = get_weekly_interval( date )
-		p "bajs"
-		teachings = Teaching.between_dates( start_date, end_date ).group_by(&:teacher)
+		teachings = Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
 		weekly_teacher_schedule_with( teachings )
 	end
 
 	def self.weekly_teacher_schedule_to_from( teacher, date )
 		start_date, end_date = get_weekly_interval( date )
-		teachings = get_teachings_to( start_date, end_date, teacher )
+		teachings = Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
 		weekly_teacher_schedule_with( teachings )
 	end
 	

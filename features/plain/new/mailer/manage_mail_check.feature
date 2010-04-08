@@ -29,6 +29,7 @@ When the system sends out the weekly schedule to concerned teachers from "2010-0
 	And "aya@space.com" opens the email with subject "来週のシフトについて"
 Then I should see "4/6(火) 12:00～12:50(会話), 13:00～15:00(文法)" in the email body
 
+@mark
 Scenario Outline: If a teacher is assigned a class for another level, that should be marked
 Given a course: "nyuumon" exists with name: "入門 I"
 	And a klass: "5" exists with date: "2010-04-05", course: course "2", start_time: "12:00", end_time: "12:50"
