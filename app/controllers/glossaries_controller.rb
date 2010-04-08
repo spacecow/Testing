@@ -32,6 +32,22 @@ class GlossariesController < ApplicationController
 			"シス"=>"banned",
 			"シ"=>"banned",
 			"ステム"=>"banned",
+			"な"=>"banned",
+			"い"=>"banned",
+			"ボー"=>"banned",
+			"ー"=>"banned",
+			"が"=>"banned",
+			"を"=>"banned",
+			"って"=>"banned",
+			"て"=>"banned",
+			"ぞ"=>"banned",
+			"どう"=>"banned",
+			"ど"=>"banned",
+			"わ"=>"banned",
+			"に"=>"banned",
+			"さ"=>"banned",
+			"し"=>"banned",
+			"々"=>"banned",
 			"え"=>"banned"
 		}
 		return true if word.nil?
@@ -50,7 +66,7 @@ class GlossariesController < ApplicationController
     
     kanjis = @glossary.japanese.split(//)
     start_index = ( params[:start_index] || 0 ).to_i
-  	end_index = ( params[:end_index] || kanjis.size ).to_i
+  	end_index = ( params[:end_index] || [kanjis.size, 8].min ).to_i
     begin
       end_index-=1
       if start_index > end_index
@@ -62,7 +78,7 @@ class GlossariesController < ApplicationController
     		@glossary = Glossary.find( gs[rand(gs.length)] )
 		    kanjis = @glossary.japanese.split(//)
 		    start_index = 0
-		  	end_index = kanjis.size-1
+		  	end_index = [kanjis.size-1, 8].min
   		end
       word = Word.find_by_japanese( kanjis[start_index..end_index].join )
     end while ( banned?(word) && start_index <= end_index )
