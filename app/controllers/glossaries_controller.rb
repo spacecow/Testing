@@ -8,9 +8,14 @@ class GlossariesController < ApplicationController
     @glossary.japanese.gsub!(/(#{@word})/,'<b><font color="red">\1</font></b>')
     @start_index = params[:start_index].to_i
     @end_index = params[:end_index].to_i
-    @correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
     @part_answer = params[:part_answer]
     #@kanji = Kanji.find( params[:kanji_id] )
+        
+    if @question == "Reading?"
+    	@correct_answer = to_hiragana(Word.find_by_japanese(@word).reading)
+  	else
+  		@correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+		end
 
     ##kanjis = @glossary.japanese.split(//)
     ##begin
@@ -19,23 +24,34 @@ class GlossariesController < ApplicationController
     ##end while ( @index < kanjis.size && !@kanji ) # && !@kanji )
   end
 
-	def banned?( word )
-		banned = {
-			"の"=>"banned",
-			"は"=>"banned",
-			"み"=>"banned",
-			"べ"=>"banned",
-			"お"=>"banned",
-			"です"=>"banned",
-			"で"=>"banned",
-			"ない"=>"banned",
-			"シス"=>"banned",
-			"シ"=>"banned",
-			"ステム"=>"banned",
-			"え"=>"banned"
+	def hiragana?( letter )
+		hiragana = {
+"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
+"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
+"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
+"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
+"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
+"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
 		}
+		return true if hiragana[letter]
+	end
+	
+	def to_hiragana( word )
+		hiragana = {
+"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
+"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
+"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
+"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
+"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
+"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
+		}
+		hiraganad = word.split(//).map{|e| hiragana[e]}.join
+		hiraganad.gsub(/ixy/,'y').gsub(/xtsu(\w)/,'\1\1')
+	end
+	
+	def banned?( word )
 		return true if word.nil?
-		return true if banned[word.japanese]
+		#return true if hiragana[word.japanese.split[0]]
 		false
 	end
 
@@ -48,26 +64,39 @@ class GlossariesController < ApplicationController
     	Glossary.find( params[:glossary_id] )
     end	
     
+    question = params[:question] || "Meaning?"
     kanjis = @glossary.japanese.split(//)
     start_index = ( params[:start_index] || 0 ).to_i
-  	end_index = ( params[:end_index] || kanjis.size ).to_i
-    begin
-      end_index-=1
-      if start_index > end_index
-    		end_index = kanjis.size-1
-    		start_index+=1
-    	end
-    	if start_index > end_index
-    		gs = Glossary.all( :select=>'id' ).map(&:id)
-    		@glossary = Glossary.find( gs[rand(gs.length)] )
-		    kanjis = @glossary.japanese.split(//)
-		    start_index = 0
-		  	end_index = kanjis.size-1
-  		end
-      word = Word.find_by_japanese( kanjis[start_index..end_index].join )
-    end while ( banned?(word) && start_index <= end_index )
-		    
-    correct_answer = word.meaning.gsub(/\(.+?\)/,"")
+  	end_index = ( params[:end_index] || [kanjis.size,5].min ).to_i
+    
+    if question[0..7] == "Meaning?"
+	    begin
+	    	while hiragana? kanjis[start_index]
+	    		start_index+=1
+	    	end
+	    	
+	      end_index-=1
+	      if start_index > end_index
+	    		end_index = [kanjis.size-1,5].min
+	    		start_index+=1
+	    	end
+	    	if start_index > end_index
+	    		gs = Glossary.all( :select=>'id' ).map(&:id)
+	    		@glossary = Glossary.find( gs[rand(gs.length)] )
+			    kanjis = @glossary.japanese.split(//)
+			    start_index = 0
+			  	end_index = kanjis.size-1
+	  		end
+	      word = Word.find_by_japanese( kanjis[start_index..end_index].join )
+	    end while ( banned?(word) && start_index <= end_index )	  	
+	  	
+	  	correct_answer = to_hiragana(word.reading)
+	    question = "Reading?"
+    else
+    	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
+    	correct_answer = word.meaning.gsub(/\(.+?\)/,"")
+    	question = "Meaning? (#{word.reading})"	
+    end
     part_answer = correct_answer.gsub!(/\w/,'*')
     
     redirect_to quiz_glossaries_path(
@@ -75,7 +104,7 @@ class GlossariesController < ApplicationController
     	:word => word.japanese,
     	:start_index => start_index,
     	:end_index => end_index,
-    	:question => "Meaning?",
+    	:question => question,
     	:part_answer => part_answer
     )
   end
@@ -87,6 +116,7 @@ class GlossariesController < ApplicationController
     @word = params[:word]
     @part_answer = params[:part_answer]
     @correct_answer = Word.find_by_japanese(@word).meaning
+    @question = params[:question]
         
     @new_part_answer = @correct_answer.gsub(/#{@answer}/, @answer.gsub(/./,'*'))
     new_parts = @new_part_answer.split(//)
@@ -103,6 +133,7 @@ class GlossariesController < ApplicationController
 
 		if @part_answer==@correct_answer || @answer=="skip"
 			redirect_to quiz_init_glossaries_path(
+				:question => @question,
 				:glossary_id => @glossary.id,
 				:start_index => @start_index,
 				:end_index => @end_index,
@@ -114,7 +145,7 @@ class GlossariesController < ApplicationController
       format.html{ redirect_to quiz_glossaries_path(
       	:glossary_id => params[:glossary_id],
       	:word => params[:word],
-      	:question => params[:question],
+      	:question => @question,
       	:start_index => @start_index,
       	:end_index => @end_index,
       	:part_answer => @part_answer
