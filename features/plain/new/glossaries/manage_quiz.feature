@@ -6,7 +6,7 @@ Given a setting exist with name: "main"
 	And a meaning: "fever" exists with title: "fever"
 	And a meaning: "mania" exists with title: "mania"
 	And a meaning: "passion" exists with title: "passion"
-	And meaning "heat, temperature, fever, mania, passion" is kanji "netsu"'s meanings
+	And meaning "heat, temperature, fever, mania, passion" are kanji "netsu"'s meanings
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 
 @reading
@@ -92,7 +92,7 @@ Then "熱帯魚" should be marked
 #	And a meaning: "zone" exist with title: "zone"
 #	And a meaning: "region" exist with title: "region"
 #	And a meaning: "fish" exists with title: "fish"
-#	And meaning "sash, belt, obi, zone, region" is kanji "obi"'s meanings
+#	And meaning "sash, belt, obi, zone, region" are kanji "obi"'s meanings
 #	And a meaning "fish" is one of kanji "fish"'s meanings
 #	And a user is logged in as "johan"
 #When I go to the quiz init glossaries page

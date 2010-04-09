@@ -9,23 +9,26 @@ class GlossariesController < ApplicationController
     @start_index = params[:start_index].to_i
     @end_index = params[:end_index].to_i
     @part_answer = params[:part_answer]
-    p @kunyomi = params[:kunyomi].to_i
+    @kunyomi = params[:kunyomi].to_i
     #@kanji = Kanji.find( params[:kanji_id] )
         
     if @question[0..7] == "Reading?"
     	@correct_answer = case @start_index == @end_index
   		when false; to_hiragana(Word.find_by_japanese(@word).reading)
-  		when true; to_hiragana( Kanji.find_by_title(@word).kunyomis[@kunyomi].reading )
+  		when true
+  			kanji = Kanji.find_by_title(@word)
+  			to_hiragana( kanji.kunyomis[@kunyomi].reading )
 			end
-  	else
-  		@correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+  	elsif @question[0..7] == "Meaning?"
+    	@correct_answer = case @start_index == @end_index
+  		when false; Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+  		when true
+				kanji = Kanji.find_by_title(@word)
+		  	reading = kanji.kunyomis[@kunyomi].reading
+		  	kunyomi_word = get_kunyomi_word( reading ,kanji.title )
+		  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+			end
 		end
-
-    ##kanjis = @glossary.japanese.split(//)
-    ##begin
-    ##  @kanji = Kanji.find_by_title( kanjis[@index] )
-    ##  @index+=1
-    ##end while ( @index < kanjis.size && !@kanji ) # && !@kanji )
   end
 
 	def hiragana?( letter )
@@ -65,6 +68,14 @@ class GlossariesController < ApplicationController
 		false
 	end
 
+	def kunyomi_left( kanji_s, kunyomi_no )
+		kanji = Kanji.find_by_title( kanji_s )
+		kanji.kunyomis.size > (kunyomi_no)
+		#p to_hiragana(kanji.kunyomis[kunyomi_no])
+		#end
+		#true
+	end
+	
   def quiz_init
   	@glossary = case params[:glossary_id]
   	when nil
@@ -73,13 +84,18 @@ class GlossariesController < ApplicationController
     else
     	Glossary.find( params[:glossary_id] )
     end	
-    
+
+    kunyomi = params[:kunyomi].to_i || -1
     question = params[:question] || "Meaning?"
     kanjis = @glossary.japanese.split(//)
     start_index = ( params[:start_index] || 0 ).to_i
   	end_index = ( params[:end_index] || [kanjis.size,start_index+5].min ).to_i
     
-    if question[0..7] == "Meaning?"
+    if question[0..7] == "Meaning?" && start_index == end_index &&
+    	 kunyomi_left(kanjis[start_index],kunyomi+1) #kunyomi
+		  word, correct_answer, question, kunyomi =
+				get_kunyomi_reading_info( kanjis[start_index], kunyomi+1 )
+	  elsif question[0..7] == "Meaning?"
 	    begin
 	    	while hiragana? kanjis[start_index]
 	    		start_index+=1
@@ -99,24 +115,23 @@ class GlossariesController < ApplicationController
 			  	end_index = kanjis.size-1
 	  		end
 	  		if start_index == end_index
-	  			word = Kanji.find_by_title( kanjis[start_index] )
-	  			correct_answer = to_hiragana( word.kunyomis[0].reading )
-	  			question = "Reading? (#{word.kunyomis[0].reading.gsub(/(.+)\./,word.title)})"
-	  			kunyomi = 0
+	  			word, correct_answer, question, kunyomi =
+	  				get_kunyomi_reading_info( kanjis[start_index], 0 )
 	      else
 	      	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
 	      	correct_answer = to_hiragana(word.reading) unless word.nil?
 	      	question = "Reading?"
       	end
 	    end while ( banned?(word) && start_index <= end_index )	  	
-	  	
-
-    else
+	  elsif question[0..7] == "Reading?" && start_index == end_index #kunyomi
+			word, correct_answer, question, kunyomi =
+				get_kunyomi_meaning_info( kanjis[start_index], kunyomi )
+	  else
     	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
     	correct_answer = word.meaning.gsub(/\(.+?\)/,"")
     	question = "Meaning? (#{word.reading})"	
     end
-    part_answer = correct_answer.gsub!(/\w/,'*')
+    part_answer = correct_answer.gsub(/\w/,'*')
     
     redirect_to quiz_glossaries_path(
     	:glossary_id => @glossary.id,
@@ -136,14 +151,26 @@ class GlossariesController < ApplicationController
     @word = params[:word]
     @part_answer = params[:part_answer]
     @question = params[:question]
+    @kunyomi = params[:kunyomi].to_i
 
-    if @question == "Reading?"
-    	@correct_answer = to_hiragana(Word.find_by_japanese(@word).reading)
-  	else
-  		@correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+    if @question[0..7] == "Reading?"
+    	@correct_answer = case @start_index == @end_index
+  		when false; to_hiragana(Word.find_by_japanese(@word).reading)
+  		when true
+  			kanji = Kanji.find_by_title(@word)
+  			to_hiragana( kanji.kunyomis[@kunyomi].reading )
+			end
+  	elsif @question[0..7] == "Meaning?"
+    	@correct_answer = case @start_index == @end_index
+  		when false; Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+  		when true
+				kanji = Kanji.find_by_title(@word)
+				reading = kanji.kunyomis[@kunyomi].reading
+		  	kunyomi_word = get_kunyomi_word( reading, kanji.title )
+		  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+			end
 		end
-
-        
+		        
     @new_part_answer = @correct_answer.gsub(/#{@answer}/, @answer.gsub(/./,'*'))
     new_parts = @new_part_answer.split(//)
     corrects = @correct_answer.split(//)
@@ -163,7 +190,8 @@ class GlossariesController < ApplicationController
 				:glossary_id => @glossary.id,
 				:start_index => @start_index,
 				:end_index => @end_index,
-				:word => @word
+				:word => @word,
+				:kunyomi => @kunyomi
 			) and return
 		end
     
@@ -219,9 +247,30 @@ class GlossariesController < ApplicationController
     flash[:notice] = "Successfully destroyed glossary."
     redirect_to glossaries_url
   end
-  
-  def authorize
-  end  
-  def authorize_view
-  end      
+
+private
+	def get_kunyomi_reading_info( kanji, kunyomi_no )
+		word = Kanji.find_by_title( kanji )
+		reading = word.kunyomis[kunyomi_no].reading
+		correct_answer = to_hiragana( reading )
+		question = "Reading? (#{get_kunyomi_word(reading,word.title)})"
+		[word, correct_answer, question, kunyomi_no]
+	end
+	
+	def get_kunyomi_meaning_info( kanji, kunyomi_no )
+  	word = Kanji.find_by_title( kanji )
+  	reading = word.kunyomis[kunyomi_no].reading
+  	kunyomi_word = get_kunyomi_word( reading, word.title )
+  	correct_answer = Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+  	question = "Meaning? (#{kunyomi_word})"
+  	[word, correct_answer, question, kunyomi_no]
+	end	
+	
+	def get_kunyomi_word( reading, kanji )
+		if reading =~ /(.+)\./
+			reading.gsub(/.+\./,kanji)
+		else
+			reading.gsub(/.+/,kanji)
+		end
+	end
 end
