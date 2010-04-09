@@ -9,10 +9,14 @@ class GlossariesController < ApplicationController
     @start_index = params[:start_index].to_i
     @end_index = params[:end_index].to_i
     @part_answer = params[:part_answer]
+    p @kunyomi = params[:kunyomi].to_i
     #@kanji = Kanji.find( params[:kanji_id] )
         
-    if @question == "Reading?"
-    	@correct_answer = to_hiragana(Word.find_by_japanese(@word).reading)
+    if @question[0..7] == "Reading?"
+    	@correct_answer = case @start_index == @end_index
+  		when false; to_hiragana(Word.find_by_japanese(@word).reading)
+  		when true; to_hiragana( Kanji.find_by_title(@word).kunyomis[@kunyomi].reading )
+			end
   	else
   		@correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
 		end
@@ -46,12 +50,18 @@ class GlossariesController < ApplicationController
 "ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
 		}
 		hiraganad = word.split(//).map{|e| hiragana[e]}.join
-		hiraganad.gsub(/ixy/,'y').gsub(/xtsu(\w)/,'\1\1')
+		hiraganad.gsub(/jixy/,'j').gsub(/hixy/,'h').gsub(/ixy/,'y').gsub(/xtsu(\w)/,'\1\1')
 	end
 	
 	def banned?( word )
 		return true if word.nil?
-		#return true if hiragana[word.japanese.split[0]]
+		banned = {
+			"シス"=>"banned",
+			"ステム"=>"banned",
+			"シ"=>"banned"
+		}
+		return false if word.instance_of? Kanji
+		return true unless banned[word.japanese].nil?
 		false
 	end
 
@@ -67,17 +77,18 @@ class GlossariesController < ApplicationController
     question = params[:question] || "Meaning?"
     kanjis = @glossary.japanese.split(//)
     start_index = ( params[:start_index] || 0 ).to_i
-  	end_index = ( params[:end_index] || [kanjis.size,5].min ).to_i
+  	end_index = ( params[:end_index] || [kanjis.size,start_index+5].min ).to_i
     
     if question[0..7] == "Meaning?"
 	    begin
 	    	while hiragana? kanjis[start_index]
 	    		start_index+=1
+    			end_index = [end_index+1,kanjis.size].min
 	    	end
 	    	
 	      end_index-=1
 	      if start_index > end_index
-	    		end_index = [kanjis.size-1,5].min
+	    		end_index = [kanjis.size-1,start_index+5].min
 	    		start_index+=1
 	    	end
 	    	if start_index > end_index
@@ -87,11 +98,19 @@ class GlossariesController < ApplicationController
 			    start_index = 0
 			  	end_index = kanjis.size-1
 	  		end
-	      word = Word.find_by_japanese( kanjis[start_index..end_index].join )
+	  		if start_index == end_index
+	  			word = Kanji.find_by_title( kanjis[start_index] )
+	  			correct_answer = to_hiragana( word.kunyomis[0].reading )
+	  			question = "Reading? (#{word.kunyomis[0].reading.gsub(/(.+)\./,word.title)})"
+	  			kunyomi = 0
+	      else
+	      	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
+	      	correct_answer = to_hiragana(word.reading) unless word.nil?
+	      	question = "Reading?"
+      	end
 	    end while ( banned?(word) && start_index <= end_index )	  	
 	  	
-	  	correct_answer = to_hiragana(word.reading)
-	    question = "Reading?"
+
     else
     	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
     	correct_answer = word.meaning.gsub(/\(.+?\)/,"")
@@ -101,11 +120,12 @@ class GlossariesController < ApplicationController
     
     redirect_to quiz_glossaries_path(
     	:glossary_id => @glossary.id,
-    	:word => word.japanese,
+    	:word => word.instance_of?(Word) ? word.japanese : word.title,
     	:start_index => start_index,
     	:end_index => end_index,
     	:question => question,
-    	:part_answer => part_answer
+    	:part_answer => part_answer,
+    	:kunyomi => kunyomi
     )
   end
 
@@ -115,8 +135,14 @@ class GlossariesController < ApplicationController
     @answer = params[:answer]
     @word = params[:word]
     @part_answer = params[:part_answer]
-    @correct_answer = Word.find_by_japanese(@word).meaning
     @question = params[:question]
+
+    if @question == "Reading?"
+    	@correct_answer = to_hiragana(Word.find_by_japanese(@word).reading)
+  	else
+  		@correct_answer = Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
+		end
+
         
     @new_part_answer = @correct_answer.gsub(/#{@answer}/, @answer.gsub(/./,'*'))
     new_parts = @new_part_answer.split(//)
