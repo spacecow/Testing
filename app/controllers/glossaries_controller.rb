@@ -30,51 +30,6 @@ class GlossariesController < ApplicationController
 			end
 		end
   end
-
-	def hiragana?( letter )
-		hiragana = {
-"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
-"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
-"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
-"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
-"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
-"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
-		}
-		return true if hiragana[letter]
-	end
-	
-	def to_hiragana( word )
-		hiragana = {
-"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
-"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
-"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
-"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
-"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
-"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
-		}
-		hiraganad = word.split(//).map{|e| hiragana[e]}.join
-		hiraganad.gsub(/jixy/,'j').gsub(/hixy/,'h').gsub(/ixy/,'y').gsub(/xtsu(\w)/,'\1\1')
-	end
-	
-	def banned?( word )
-		return true if word.nil?
-		banned = {
-			"シス"=>"banned",
-			"ステム"=>"banned",
-			"シ"=>"banned"
-		}
-		return false if word.instance_of? Kanji
-		return true unless banned[word.japanese].nil?
-		false
-	end
-
-	def kunyomi_left( kanji_s, kunyomi_no )
-		kanji = Kanji.find_by_title( kanji_s )
-		kanji.kunyomis.size > (kunyomi_no)
-		#p to_hiragana(kanji.kunyomis[kunyomi_no])
-		#end
-		#true
-	end
 	
   def quiz_init
   	@glossary = case params[:glossary_id]
@@ -91,10 +46,9 @@ class GlossariesController < ApplicationController
     start_index = ( params[:start_index] || 0 ).to_i
   	end_index = ( params[:end_index] || [kanjis.size,start_index+5].min ).to_i
     
-    if question[0..7] == "Meaning?" && start_index == end_index &&
-    	 kunyomi_left(kanjis[start_index],kunyomi+1) #kunyomi
+    if question[0..7] == "Meaning?" && start_index == end_index && kunyomi_left(kanjis[start_index],kunyomi+1) #kunyomi
 		  word, correct_answer, question, kunyomi =
-				get_kunyomi_reading_info( kanjis[start_index], kunyomi+1 )
+				get_kunyomi_reading_info( kanjis[start_index], next_kunyomi(kanjis[start_index],kunyomi+1))
 	  elsif question[0..7] == "Meaning?"
 	    begin
 	    	while hiragana? kanjis[start_index]
@@ -272,5 +226,68 @@ private
 		else
 			reading.gsub(/.+/,kanji)
 		end
+	end
+
+	def hiragana?( letter )
+		hiragana = {
+"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
+"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
+"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
+"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
+"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
+"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
+		}
+		return true if hiragana[letter]
+	end
+	
+	def to_hiragana( word )
+		hiragana = {
+"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
+"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
+"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
+"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
+"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
+"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
+		}
+		hiraganad = word.split(//).map{|e| hiragana[e]}.join
+		hiraganad.gsub(/jixy/,'j').gsub(/hixy/,'h').gsub(/ixy/,'y').gsub(/xtsu(\w)/,'\1\1')
+	end
+	
+	def banned?( word )
+		return true if word.nil?
+		banned = {
+			"シス"=>"banned",
+			"ステム"=>"banned",
+			"シ"=>"banned"
+		}
+		return false if word.instance_of? Kanji
+		return true unless banned[word.japanese].nil?
+		false
+	end
+
+	def kunyomi_left( kanji_s, kunyomi_no )
+		kanji = Kanji.find_by_title( kanji_s )
+		while kanji.kunyomis.size > (kunyomi_no)
+  		reading = kanji.kunyomis[kunyomi_no].reading
+  		kunyomi_word = get_kunyomi_word( reading, kanji.title )
+  		unless Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).nil?
+  			return true
+  		end
+  		kunyomi_no += 1
+		end
+		false
+	end	
+	
+	def next_kunyomi( kanji_s, kunyomi_no )
+		kanji = Kanji.find_by_title( kanji_s )
+		while kanji.kunyomis.size > (kunyomi_no)
+  		reading = kanji.kunyomis[kunyomi_no].reading
+  		kunyomi_word = get_kunyomi_word( reading, kanji.title )
+  		unless Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).nil?
+  			return kunyomi_no
+  		end
+  		kunyomi_no += 1
+		end
+		kunyomi_no
 	end
 end
