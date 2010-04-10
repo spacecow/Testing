@@ -4,7 +4,9 @@ class Word < ActiveRecord::Base
 	def self.generate_default_csv
 		generate_csv( "data/edict.utf" )
 	end
-  
+
+private
+
   def self.generate_csv( file )
   	Word.delete_all
   	File.open file.gsub(/utf/,'csv'), 'w' do |outfile|
