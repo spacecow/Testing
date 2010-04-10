@@ -270,9 +270,8 @@ private
 		while kanji.kunyomis.size > (kunyomi_no)
   		reading = kanji.kunyomis[kunyomi_no].reading
   		kunyomi_word = get_kunyomi_word( reading, kanji.title )
-  		unless Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).nil?
-  			return true
-  		end
+  		word = Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')])
+  		return true if word.meaning =~ /\(P\)/ unless word.nil?
   		kunyomi_no += 1
 		end
 		false
@@ -283,9 +282,8 @@ private
 		while kanji.kunyomis.size > (kunyomi_no)
   		reading = kanji.kunyomis[kunyomi_no].reading
   		kunyomi_word = get_kunyomi_word( reading, kanji.title )
-  		unless Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).nil?
-  			return kunyomi_no
-  		end
+  		word = Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')])
+  		return kunyomi_no if word.meaning =~ /\(P\)/ unless word.nil?
   		kunyomi_no += 1
 		end
 		kunyomi_no

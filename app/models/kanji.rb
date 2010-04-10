@@ -4,8 +4,8 @@ class Kanji < ActiveRecord::Base
 	has_and_belongs_to_many :kunyomis
 	validates_presence_of :title
 	
-	def self.generate_default_csv
-		generate_csv( "data/kanjidic.utf" )
+	def self.generate_default_models
+		generate_models( "data/kanjidic.utf" )
 	end
 
 private
@@ -36,7 +36,7 @@ private
 		word =~ /[{].+[}]/
 	end  
 	
-  def self.generate_csv( file )
+  def self.generate_models( file )
   	Kanji.delete_all
   	File.open file, 'r' do |infile|
 			infile.readlines.each_with_index do |line,i|
