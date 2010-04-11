@@ -1,6 +1,6 @@
 Background:
 Given a setting exist with name: "main"
-	And a glossary exist with japanese: "帯黄色"
+	And a glossary exist with japanese: "帯ひカ。黄色"
 	And a word: "tai" exists with japanese: "帯", reading: "たい", meaning: "band (P)"
 	And a word: "obi" exists with japanese: "帯", reading: "おび", meaning: "sash (P)"
 	And a word: "obiru" exists with japanese: "帯びる", reading: "おびる", meaning: "(v) to wear"

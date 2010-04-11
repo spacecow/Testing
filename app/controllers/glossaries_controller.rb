@@ -51,7 +51,7 @@ class GlossariesController < ApplicationController
 				get_kunyomi_reading_info( kanjis[start_index], next_kunyomi(kanjis[start_index],kunyomi+1))
 	  elsif question[0..7] == "Meaning?"
 	    begin
-	    	while hiragana? kanjis[start_index]
+	    	while not_kanji? kanjis[start_index]
 	    		start_index+=1
     			end_index = [end_index+1,kanjis.size].min
 	    	end
@@ -228,16 +228,21 @@ private
 		end
 	end
 
+	def not_kanji?( letter )
+		return hiragana?(letter) || katakana?(letter) || puncuation?(letter)
+		#hiragana?( letter ) # || letter == "。"
+	end
+
 	def hiragana?( letter )
-		hiragana = {
-"ぁ"=>"xa", "あ"=>"a", "ぃ"=>"xi", "い"=>"i", "ぅ"=>"xu", "う"=>"u", "ぇ"=>"xe", "え"=>"e", "ぉ"=>"xo",
-"お"=>"o", "か"=>"ka", "が"=>"ga", "き"=>"ki", "ぎ"=>"gi", "く"=>"ku", "ぐ"=>"gu", "け"=>"ke", "げ"=>"ge", "こ"=>"ko", "ご"=>"go", "さ"=>"sa", "ざ"=>"za", "し"=>"shi", "じ"=>"ji", "す"=>"su", "ず"=>"zu", "せ"=>"se", "ぜ"=>"ze", "そ"=>"so", "ぞ"=>"zo", "た"=>"ta",
-"だ"=>"da", "ち"=>"chi", "ぢ"=>"di", "っ"=>"xtsu", "つ"=>"tsu", "づ"=>"du", "て"=>"te", "で"=>"de", "と"=>"to", "ど"=>"do", "な"=>"na", "に"=>"ni", "ぬ"=>"nu", "ね"=>"ne", "の"=>"no", "は"=>"ha",
-"ば"=>"ba", "ぱ"=>"pa", "ひ"=>"hi", "び"=>"bi", "ぴ"=>"pi", "ふ"=>"hu", "ぶ"=>"bu", "ぷ"=>"pu", "へ"=>"he", "べ"=>"be", "ぺ"=>"pe", "ほ"=>"ho", "ぼ"=>"bo", "ぽ"=>"po", "ま"=>"ma", "み"=>"mi",
-"む"=>"mu", "め"=>"me", "も"=>"mo", "ゃ"=>"xya", "や"=>"ya", "ゅ"=>"xyu", "ゆ"=>"yu", "ょ"=>"xyo", "よ"=>"yo", "ら"=>"ra", "り"=>"ri", "る"=>"ru", "れ"=>"re", "ろ"=>"ro", "ゎ"=>"xwa", "わ"=>"wa",
-"ゐ"=>"wi", "ゑ"=>"wu", "を"=>"wo", "ん"=>"n"
-		}
-		return true if hiragana[letter]
+		letter =~ /[ぁ-ゞ]/
+	end
+	
+	def puncuation?( letter )
+		letter =~ /[。]/
+	end
+	
+	def katakana?( letter )
+		letter =~ /[ァ-ヶ]/
 	end
 	
 	def to_hiragana( word )
