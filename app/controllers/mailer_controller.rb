@@ -8,6 +8,11 @@ class MailerController < ApplicationController
 		@menu_day   = params[:menu_day]   || DateTime.current.day
 		@menu_year  = params[:menu_year]  || DateTime.current.year
 		@menu_date  = Time.zone.parse("#{@menu_year}-#{@menu_month}-#{@menu_day}")  	
+		
+		user = User.find( params[:user_id] )
+		start_date, end_date = SystemMailer.get_weekly_interval( @menu_date.to_s )
+		teachings = Teaching.between_dates( start_date, end_date ).teacher(user.id).group_by(&:teacher_id)
+		@schedule = SystemMailer.get_schedule( teachings[user.id], user )
   end
 
 end

@@ -205,6 +205,7 @@ class GlossariesController < ApplicationController
 private
 	def get_kunyomi_reading_info( kanji, kunyomi_no )
 		word = Kanji.find_by_title( kanji )
+		return [word, "", "", ""] if word.kunyomis.empty?
 		reading = word.kunyomis[kunyomi_no].reading
 		correct_answer = to_hiragana( reading )
 		question = "Reading? (#{get_kunyomi_word(reading,word.title)})"
@@ -265,7 +266,7 @@ private
 			"ステム"=>"banned",
 			"シ"=>"banned"
 		}
-		return false if word.instance_of? Kanji
+		return word.kunyomis.empty? if word.instance_of? Kanji
 		return true unless banned[word.japanese].nil?
 		false
 	end

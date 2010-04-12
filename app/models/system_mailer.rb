@@ -33,21 +33,6 @@ class SystemMailer < ActionMailer::Base
 			SystemMailer.send( func, user, schedule )
 		end	
 	end
-	
-	#月, 火, 水, 木, 金, 土, 日
-
-	def self.get_teachings( start_date, end_date )
-		Teaching.all(
-		  :conditions=>["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start_date, end_date],
-		  :include=>[:klass,:teacher] )
-	end
-
-	def self.get_teachings_to( start_date, end_date, teacher )
-		Teaching.all(
-		  :conditions=>["teacher_id = ? and klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", teacher.id, start_date, end_date],
-		  :include=>[:klass,:teacher] ).group_by(&:teacher_id)
-	end
-
 
 #=========================== Teachers
 
@@ -88,31 +73,39 @@ class SystemMailer < ActionMailer::Base
 	end	
 #---------------- Weekly schedule
 
+	def self.get_weekly_interval( date )
+		start_date = Time.zone.parse( date )+1.day
+		start_date += 1.day while start_date.strftime("%a") != "Mon"
+		end_date = start_date + 7.day
+		[start_date, end_date]
+	end
+	
+	def self.get_weekly_teachings_from( date )
+		start_date, end_date = get_weekly_interval( date )
+		Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
+	end
+	
+	def self.get_weekly_teachings_to_from( teacher, date )
+		start_date, end_date = get_weekly_interval( date )
+		Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+	end
+
 	def self.next_weeks_teacher_schedule
 		weekly_teacher_schedule_from(( Time.zone.current + 1.day ).strftime( "%Y-%m-%d" ))
 	end
 
 	def self.weekly_teacher_schedule_from( date )
-		start_date, end_date = get_weekly_interval( date )
-		teachings = Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
+		teachings = get_weekly_teachings_from( date )
 		weekly_teacher_schedule_with( teachings )
 	end
 
 	def self.weekly_teacher_schedule_to_from( teacher, date )
-		start_date, end_date = get_weekly_interval( date )
-		teachings = Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+		teachings = get_weekly_teachings_to_from( teacher, date )
 		weekly_teacher_schedule_with( teachings )
 	end
 	
 	def self.weekly_teacher_schedule_with( teachings )
 		send_teacher_schedule( teachings, "weekly_teacher_schedule" )
-	end
-
-	def self.get_weekly_interval( date )
-		start_date = Time.zone.parse( date )
-		start_date += 1.day while start_date.strftime("%a") != "Mon"
-		end_date = start_date + 7.day
-		[start_date, end_date]
 	end
 
 	def weekly_teacher_schedule_in_english( user, schedule )
