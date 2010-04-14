@@ -40,6 +40,7 @@ en:
   cost: "Cost (yen/h)"
   create: "Create"
   crop: "Crop"
+  daily_teacher_reminder: "Daily Teacher Reminder"
   date_and_time: "Date&Time"
   day: "Day"
   delete: "Del"
@@ -185,6 +186,7 @@ en:
   user_name: "User name"
   version: "Version"
   vote: "Vote"
+  weekly_teacher_schedule: "Weekly Teacher Schedule"
   when: "When"
   yen_h: "円/h"
   

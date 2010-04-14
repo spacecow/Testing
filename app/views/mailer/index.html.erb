@@ -3,15 +3,22 @@
 
 <% form_for :mailer, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| %>
   <label for="menu_date"><%= t(:menu_date) %>: </label>
-  <%= select_tag :menu_year,  options_for_select( @years,  @menu_year.to_i ) %>
-  <%= select_tag :menu_month, options_for_select( @months, @menu_month.to_i ) %>
-  <%= select_tag :menu_day,   options_for_select( @days,   @menu_day.to_i ) %>
-  <%= hidden_field_tag :user_id, @user.id %>
+  <%= select_tag :menu_year,  		options_for_select( @years,  		@menu_year.to_i ) %>
+  <%= select_tag :menu_month, 		options_for_select( @months, 		@menu_month.to_i ) %>
+  <%= select_tag :menu_day,   		options_for_select( @days,   		@menu_day.to_i ) %>
+  <%= select_tag :menu_language,	options_for_select( @languages, @menu_language ) %>
+  <%= select_tag :menu_teacher,		options_for_select( @teachers,  @menu_teacher ) %>
+  <%= select_tag :menu_type,			options_for_select( @types, 		@menu_type ) %>
   <span id="day"></span>
   <%= f.submit "Go!"%>
 <% end %>
 
-<%= @schedule %>
-<br />
+<div id="mail_container">
+	<div id="text_message">
+		<%= @mail %>
+	</div>
+	<div class="right_column">
+	</div>
+</div>
 
 </div>

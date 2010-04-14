@@ -1,4 +1,6 @@
 class SystemMailer < ActionMailer::Base
+	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule]
+
 	def self.get_main_course( teachings )
 		hash = {}; max=0; res=0
 			teachings.each{|e|
@@ -39,10 +41,6 @@ class SystemMailer < ActionMailer::Base
 
 #---------------- Daily reminder
 
-	def self.daily_teacher_reminder
-		daily_teacher_reminder_at( Time.zone.current.strftime( "%Y-%m-%d" ))
-	end
-
 	def self.get_daily_interval( date )
 		[Time.zone.parse( date ), Time.zone.parse( date )+1.day]
 	end
@@ -55,6 +53,11 @@ class SystemMailer < ActionMailer::Base
 	def self.get_daily_teachings_to_at( teacher, date )
 		start_date, end_date = get_daily_interval( date )
 		Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+	end
+
+
+	def self.daily_teacher_reminder
+		daily_teacher_reminder_at( Time.zone.current.strftime( "%Y-%m-%d" ))
 	end
 
   def self.daily_teacher_reminder_at( date )
@@ -87,7 +90,7 @@ class SystemMailer < ActionMailer::Base
 #---------------- Weekly schedule
 
 	def self.get_weekly_interval( date )
-		start_date = Time.zone.parse( date )+1.day
+		start_date = Time.zone.parse( date )
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		end_date = start_date + 7.day
 		[start_date, end_date]
@@ -134,12 +137,4 @@ class SystemMailer < ActionMailer::Base
     subject     "来週のシフトについて"
     body        :schedule => schedule
 	end
-	
-#private
-#  # we override the template_path to render localized templates (since rails does not support that :-( )
-#  # This thing is not testable since you cannot access the instance of a mailer...
-#  def initialize_defaults(method_name)
-#    super
-#    @template = "#{I18n.locale}_#{method_name}"
-#  end	
 end

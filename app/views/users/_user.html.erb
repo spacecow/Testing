@@ -22,8 +22,8 @@
 	  	<%= link_to t('delete'), user, :confirm => 'Are you sure?', :method => :delete %>
 	  <% end %>
 	  <% if @status=="teacher" %>
-		  <%= link_to image_tag("weekly_mail.gif", :title => "Weekly Mail", :alt => "Weekly Mail"), mailer_path( :user_id=>user.id ) %>
-		  <%= link_to image_tag("daily_mail.gif", :title => "Daily Mail", :alt => "Daily Mail"), mailer_path( :user_id=>user.id ) %>
+		  <%= link_to image_tag("weekly_mail.gif", :title => "Weekly Mail", :alt => "Weekly Mail"), mailer_path( :menu_teacher=>user.name, :menu_language=>user.language, :menu_type=>'weekly_teacher_schedule' ) %>
+		  <%= link_to image_tag("daily_mail.gif", :title => "Daily Mail", :alt => "Daily Mail"), mailer_path( :menu_teacher=>user.name, :menu_language=>user.language, :menu_type=>'daily_teacher_reminder' ) %>
 		<% end %>
 	</td>  
 </tr>

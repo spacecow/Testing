@@ -27,7 +27,6 @@ end
 When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
 	When "I go to the klasses page"
 	And "I select \"#{date}\" as date"
-	And "I press \"Go!\""
 end
 
 Then /^I should automatically browse to the klasses page of "([^\"]*)"/ do |date|
@@ -39,6 +38,7 @@ When /^I select "(\w+) (\d(?:\d)?), (\d{4})" as date$/ do |month, day, year|
 	And "I select \"#{month}\" from \"menu_month\""
 	And "I select \"#{day}\" from \"menu_day\""
 	And "I select \"#{year}\" from \"menu_year\""
+	And "I press \"Go!\""
 end
 
 Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as date$/ do |month, day, year|

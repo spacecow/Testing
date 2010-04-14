@@ -40,6 +40,7 @@ ja:
   course: "講座"
   create: "作成"
   crop: "切断"
+  daily_teacher_reminder: "毎日思い起こさせる講師メール"
   date_and_time: "日時"
   day: "曜日"
   delete: "削除"
@@ -96,6 +97,7 @@ ja:
   mail_sending: "MAIL SENDING"
   mails: "メール"
   meaning: "意味"
+  menu_date: "日付"
   mobile_phone: "携帯番号"
   month: "月"
   multi: "倍数"
@@ -184,6 +186,7 @@ ja:
   user_name: "ユーザー名"
   version: "バージョン"
   vote: "投票"
+  weekly_teacher_schedule: "一週間の講師スケジュール"
   when: "いつ"
   yen_h: "yen/h"
   

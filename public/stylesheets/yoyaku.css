@@ -729,6 +729,13 @@ a:hover {
   border: 1px solid #7f9db9;
 }
 #container #main #list .intro:hover { background: #f5ffee; }
+#container #main #list div#mail_container div#text_message {
+  margin-top: 1em;
+  width: 400px;
+  background: white;
+  border: 2px dashed;
+  padding: 5px;
+}
 #container #main #list table {
   border-collapse: separate;
   border-spacing: 1px;
