@@ -12,6 +12,7 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def self.get_schedule( teachings, user )
+		return nil if teachings.nil?
 		schedule = ""
 		main_course = get_main_course( teachings )
 		date_teachings = teachings.group_by(&:date)
@@ -42,15 +43,27 @@ class SystemMailer < ActionMailer::Base
 		daily_teacher_reminder_at( Time.zone.current.strftime( "%Y-%m-%d" ))
 	end
 
+	def self.get_daily_interval( date )
+		[Time.zone.parse( date ), Time.zone.parse( date )+1.day]
+	end
+
+	def self.get_daily_teachings_at( date )
+		start_date, end_date = get_daily_interval( date )
+		Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
+	end
+	
+	def self.get_daily_teachings_to_at( teacher, date )
+		start_date, end_date = get_daily_interval( date )
+		Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+	end
+
   def self.daily_teacher_reminder_at( date )
-  	todays_date = Time.zone.parse( date )
-  	teachings = Teaching.between_dates( todays_date, todays_date+1.day ).group_by(&:teacher_id)
+  	teachings = get_daily_teachings_at( date )  	
 		daily_teacher_reminder_with( teachings )
 	end
 
   def self.daily_teacher_reminder_to_at( teacher, date )
-  	todays_date = Time.zone.parse( date )
-  	teachings = Teaching.between_dates( todays_date, todays_date+1.day ).teacher(teacher.id).group_by(&:teacher_id)
+  	teachings = get_daily_teachings_to_at( teacher, date )
 		daily_teacher_reminder_with( teachings )
 	end
 	

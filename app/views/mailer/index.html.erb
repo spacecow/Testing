@@ -6,6 +6,7 @@
   <%= select_tag :menu_year,  options_for_select( @years,  @menu_year.to_i ) %>
   <%= select_tag :menu_month, options_for_select( @months, @menu_month.to_i ) %>
   <%= select_tag :menu_day,   options_for_select( @days,   @menu_day.to_i ) %>
+  <%= hidden_field_tag :user_id, @user.id %>
   <span id="day"></span>
   <%= f.submit "Go!"%>
 <% end %>

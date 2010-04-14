@@ -19,3 +19,10 @@ end
 When /^the system sends out the daily teacher reminder to #{capture_model} at "([^\"]*)"$/ do |teacher,date|
 	SystemMailer.daily_teacher_reminder_to_at( model( teacher ), date )
 end
+
+When /^I browse to the "(Daily Mail)" page for #{capture_model} of "([^\"]*)"$/ do |link, teacher, date|
+	When "I browse to the teachers page"
+	When "I follow \"#{link}\" within #{teacher}"
+	And "I select \"#{date}\" as date"
+	And "I press \"Go!\""
+end

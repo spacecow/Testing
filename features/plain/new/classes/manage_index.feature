@@ -259,12 +259,12 @@ Examples:
 Scenario: Classes display of date
 Given a user is logged in as "johan"
 When I go to the klasses page
-Then "class_month" should have options "January, February, March, April, May, June, July, August, September, October, November, December"
-	And "class_day" should have options "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31"
-	And "class_year" should have options "2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020"
-	And "class_month" should have no blank option	
-	And "class_day" should have no blank option	
-	And "class_year" should have no blank option		
+Then "menu_month" should have options "January, February, March, April, May, June, July, August, September, October, November, December"
+	And "menu_day" should have options "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31"
+	And "menu_year" should have options "2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020"
+	And "menu_month" should have no blank option	
+	And "menu_day" should have no blank option	
+	And "menu_year" should have no blank option		
 When I select "February 15, 2012" as date
 	And I press "Go!"
 Then I should be redirected to the klasses page

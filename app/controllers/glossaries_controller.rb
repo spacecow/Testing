@@ -239,7 +239,7 @@ private
 	end
 	
 	def puncuation?( letter )
-		letter =~ /[。]/
+		letter =~ /[。\s、！]/
 	end
 	
 	def katakana?( letter )

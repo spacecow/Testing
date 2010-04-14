@@ -5,7 +5,7 @@ class KlassesController < ApplicationController
   def new
 		if @class_course && @class_course.split.size > 1  #Duplicate class
 			Klass.create!( params[:klass] )
-			redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day ) and return
+			redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day ) and return
 		end
 		@klass = Klass.new(
 			:capacity => nil,
@@ -27,7 +27,7 @@ class KlassesController < ApplicationController
   def update
 		if @klass.update_attributes( params[:klass] )
   		flash[:notice] = t('notice.update_success', :object => t(:klass))
-  		redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day )
+  		redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day )
 		else
 			render :action => :edit
 		end
@@ -48,7 +48,7 @@ class KlassesController < ApplicationController
     
     @klass.destroy
     flash[:notice] = t('notice.delete_success', :object => t(:klass))
-    redirect_to klasses_path( :class_year=>@klass.year, :class_month=>@klass.month, :class_day=>@klass.day )
+    redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day )
   end
 
   def index	
@@ -56,9 +56,9 @@ class KlassesController < ApplicationController
 		@days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
 		@years  = (2009..2020).map{|e| e.to_s+t(:klass_year)}.zip((2009..2020).to_a )
 		
-		@class_month = params[:class_month] || DateTime.current.month
-		@class_day   = params[:class_day]   || DateTime.current.day
-		@class_year  = params[:class_year]  || DateTime.current.year
+		@class_month = params[:menu_month] || DateTime.current.month
+		@class_day   = params[:menu_day]   || DateTime.current.day
+		@class_year  = params[:menu_year]  || DateTime.current.year
 		@class_date  = Time.zone.parse("#{@class_year}-#{@class_month}-#{@class_day}")
 		
 		@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teachings,:teachers] )
