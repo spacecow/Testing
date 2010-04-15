@@ -15,7 +15,7 @@ class MailerController < ApplicationController
 		@menu_date  		= Time.zone.parse("#{@menu_year}-#{@menu_month}-#{@menu_day}")
 		@menu_language	= params[:menu_language]
 		@menu_teacher		= params[:menu_teacher]
-		@meny_type			= params[:menu_type]
+		@menu_type			= params[:menu_type]
 		
 		user = User.find_by_name( @menu_teacher )
 		teachings = SystemMailer.get_daily_teachings_to_at( user, @menu_date.to_s )

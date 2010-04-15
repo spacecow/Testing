@@ -66,7 +66,7 @@ Then "menu_language" should have options "<languages>"
 Examples:
 |	user	|	languages					|	language	|	types																						|	type										|
 |	johan	|	Japanese, English	|	English		|	Daily Teacher Reminder, Weekly Teacher Schedule |	Daily Teacher Reminder	|
-|	aya		|	日本語, 英語						|	英語				|	毎日思い起こされる講師メール, 一週間の講師スケジュール										|	毎日思い起こされる講師メール					|
+|	aya		|	日本語, 英語						|	英語				|	毎日思い起こさせる講師メール, 一週間の講師スケジュール										|	毎日思い起こさせる講師メール					|
 
 
 @different

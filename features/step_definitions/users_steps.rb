@@ -75,7 +75,7 @@ end
 
 When /^I browse to the (teachers|students) page$/ do |category|
 	When "I go to the users page"
-	And "I select \"#{category.capitalize}\" from \"Sort\""
+	And "I select \"#{I18n.t(category+".title")}\" from \"status\""
 	And "I press \"Go!\""
 end
 
