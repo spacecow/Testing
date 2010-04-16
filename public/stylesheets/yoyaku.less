@@ -546,13 +546,23 @@ a{ .global_a; }
 			  font: 14px sans-serif;
 			}			
 			.intro{	.global_intro; }
-			div#mail_container{
-				div#text_message{
-					margin-top:1em;
-					width:400px;
-					background:white;
-					border:2px dashed;
-					padding:5px;
+			form{
+				div#mail_container{
+					div#text_message{
+						float:left;
+						textarea{
+							margin-top:1em;
+							width:30em;
+							height:10em;
+							background:white;
+							border:0.2em dashed;
+							padding:0.5em;
+							resize:none;
+						}
+					}
+					div#right_column{
+						float:right;
+					}
 				}
 			}
 			table{

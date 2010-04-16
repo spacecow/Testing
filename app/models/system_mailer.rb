@@ -13,16 +13,16 @@ class SystemMailer < ActionMailer::Base
 			res	
 	end
 
-	def self.get_schedule( teachings, user )
+	def self.get_schedule( teachings, user, language = user.language )
 		return nil if teachings.nil?
 		schedule = ""
 		main_course = get_main_course( teachings )
 		date_teachings = teachings.group_by(&:date)
 		date_teachings.keys.sort.each_with_index do |date,index|
-			schedule += date_teachings[date][0].to_mail_date(user.language)+" "
+			schedule += date_teachings[date][0].to_mail_date(language)+" "
 			schedule += date_teachings[date].
 				sort_by(&:time_interval).
-				map{|e| e.to_mail_time_interval(main_course, user.language)}.join(", ")
+				map{|e| e.to_mail_time_interval(main_course, language)}.join(", ")
 			schedule += "\n" unless (index+1)==date_teachings.keys.size
 		end
 		schedule
@@ -47,12 +47,14 @@ class SystemMailer < ActionMailer::Base
 
 	def self.get_daily_teachings_at( date )
 		start_date, end_date = get_daily_interval( date )
-		Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
+		Teaching.between_dates( start_date, end_date ).current.
+			confirmed.untaught.group_by(&:teacher_id)
 	end
 	
 	def self.get_daily_teachings_to_at( teacher, date )
 		start_date, end_date = get_daily_interval( date )
-		Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+		Teaching.between_dates( start_date, end_date ).current.
+			confirmed.untaught.teacher(teacher.id).group_by(&:teacher_id)
 	end
 
 
@@ -89,34 +91,36 @@ class SystemMailer < ActionMailer::Base
 	end	
 #---------------- Weekly schedule
 
-	def self.get_weekly_interval( date )
-		start_date = Time.zone.parse( date )
+	def self.get_weekly_interval_at( date )
+		start_date = Time.zone.parse( date )+1.day
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		end_date = start_date + 7.day
 		[start_date, end_date]
 	end
 	
-	def self.get_weekly_teachings_from( date )
-		start_date, end_date = get_weekly_interval( date )
-		Teaching.between_dates( start_date, end_date ).group_by(&:teacher_id)
+	def self.get_weekly_teachings_at( date )
+		start_date, end_date = get_weekly_interval_at( date )
+		Teaching.between_dates( start_date, end_date ).current.
+			not_declined.group_by(&:teacher_id)
 	end
 	
-	def self.get_weekly_teachings_to_from( teacher, date )
-		start_date, end_date = get_weekly_interval( date )
-		Teaching.between_dates( start_date, end_date ).teacher(teacher.id).group_by(&:teacher_id)
+	def self.get_weekly_teachings_to_at( teacher, date )
+		start_date, end_date = get_weekly_interval_at( date )
+		Teaching.between_dates( start_date, end_date ).current.
+			not_declined.teacher(teacher.id).group_by(&:teacher_id)
 	end
 
 	def self.next_weeks_teacher_schedule
-		weekly_teacher_schedule_from(( Time.zone.current + 1.day ).strftime( "%Y-%m-%d" ))
+		weekly_teacher_schedule_at(( Time.zone.current + 1.day ).strftime( "%Y-%m-%d" ))
 	end
 
-	def self.weekly_teacher_schedule_from( date )
-		teachings = get_weekly_teachings_from( date )
+	def self.weekly_teacher_schedule_at( date )
+		teachings = get_weekly_teachings_at( date )
 		weekly_teacher_schedule_with( teachings )
 	end
 
-	def self.weekly_teacher_schedule_to_from( teacher, date )
-		teachings = get_weekly_teachings_to_from( teacher, date )
+	def self.weekly_teacher_schedule_to_at( teacher, date )
+		teachings = get_weekly_teachings_to_at( teacher, date )
 		weekly_teacher_schedule_with( teachings )
 	end
 	

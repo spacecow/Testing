@@ -34,19 +34,6 @@ Then /^I should automatically browse to the klasses page of "([^\"]*)"/ do |date
 	And "\"#{date}\" should be selected as date"
 end
 
-When /^I select "(\w+) (\d(?:\d)?), (\d{4})" as date$/ do |month, day, year|
-	And "I select \"#{month}\" from \"menu_month\""
-	And "I select \"#{day}\" from \"menu_day\""
-	And "I select \"#{year}\" from \"menu_year\""
-	And "I press \"Go!\""
-end
-
-Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as date$/ do |month, day, year|
-	And "\"#{month}\" should be selected in \"menu_month\""
- 	And "\"#{day}\" should be selected in \"menu_day\""
- 	And "\"#{year}\" should be selected in \"menu_year\""
-end
-
 #.. New/Edit form
 
 Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as (.+) date$/ do |month, day, year, model|

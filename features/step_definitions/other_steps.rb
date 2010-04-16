@@ -104,6 +104,21 @@ Then /^within #{capture_model}, "([^\"]*)" should be selected in "([^\"]*)"$/ do
 	end
 end
 
+Then /^within "([^\"]*)", "([^\"]*)" should be selected in "([^\"]*)"$/ do |scope, option_text,select_id|
+	within "##{scope}" do |element|
+	  field = element.field_with_id(select_id) 
+	  selected_value = field.value[0] 
+	  state = :nothing_selected 
+	  field.options.each do |option| 
+	    if option.element.to_html =~ /value="#{selected_value}"/ 
+	      state = :something_selected 
+	      option.element.inner_html.should == option_text 
+	    end
+	  end 
+	  state.should == :something_selected 		
+	end
+end
+
 Then /^"(.*)" should be selected in "(.*)"$/ do |option_text,select_id|
   field = field_with_id(select_id) 
   selected_value = field.value[0] 

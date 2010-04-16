@@ -729,13 +729,16 @@ a:hover {
   border: 1px solid #7f9db9;
 }
 #container #main #list .intro:hover { background: #f5ffee; }
-#container #main #list div#mail_container div#text_message {
+#container #main #list form div#mail_container div#text_message textarea {
   margin-top: 1em;
-  width: 400px;
+  width: 30em;
+  height: 10em;
   background: white;
-  border: 2px dashed;
-  padding: 5px;
+  border: 0.2em dashed;
+  padding: 0.5em;
+  resize: none;
 }
+#container #main #list form div#mail_container div#right_column { float: left; }
 #container #main #list table {
   border-collapse: separate;
   border-spacing: 1px;

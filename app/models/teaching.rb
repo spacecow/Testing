@@ -12,8 +12,11 @@ class Teaching < ActiveRecord::Base
   
   named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:teacher]}}
   named_scope :teacher, lambda { |teacher_id| {:conditions => ["teacher_id = ?", teacher_id]}}
-  named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0 and status_mask & #{2**STATUS.index('canceled')} = 0"}
-	named_scope :with, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
+  named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0"}# and status_mask & #{2**STATUS.index('canceled')} = 0"}
+  named_scope :untaught, {:conditions => "status_mask & #{2**STATUS.index('untaught')} > 0"}
+  named_scope :not_declined, {:conditions => "status_mask & #{2**STATUS.index('declined')} = 0"}
+	named_scope :current, {:conditions => "current = true" }
+	#named_scope :with, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
     
   def confirmed_symbol
   	if status? :confirmed

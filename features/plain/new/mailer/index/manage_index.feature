@@ -31,38 +31,18 @@ Examples:
 |	mika		|
 |	reiko		|
 
-@language
-Scenario: Choose language
-Given a user is logged in as "johan"
-	And a klass exists with date: "2011-12-24"
-	And a teaching exists with klass: that klass, teacher: user "thomas"
-When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
-	And I select "Japanese" as language
-Then I should see the daily teacher reminder mail in japanese within "div#text_message"
-
-@teacher
-Scenario: Choose teacher
-Given a klass: "1" exists with date: "2011-12-24", start_time: "12:12"
-	And a klass: "2" exists with date: "2011-12-24", start_time: "15:56"
-	And a teaching exists with klass: klass "1", teacher: user "thomas"
-	And a teaching exists with klass: klass "2", teacher: user "johan"
-	And a user is logged in as "johan"
-When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
-	And I select "Johan Sveholm" as teacher
-Then I should not see "12:12" within "div#text_message"
-	And I should see "15:56" within "div#text_message"
-
 @view
 Scenario Outline: Mail view in different languages
 Given a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu"
 Given a user is logged in as "<user>"
-When I browse to the "Daily Mail" page for user "thomas"
-Then "menu_language" should have options "<languages>"
-	And "<language>" should be selected as language
+When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
+Then "December 24, 2011" should be selected as date in the select menu
+	And "menu_language" should have options "<languages>"
+	And "<language>" should be selected as language in the select menu
 	And "menu_teacher" should have options "Johan Sveholm, Thomas Osburg, Aya Komatsu"
-	And "Thomas Osburg" should be selected as teacher
+	And "Thomas Osburg" should be selected as teacher in the select menu
 	And "menu_type" should have options "<types>"
-	And "<type>" should be selected as type
+	And "<type>" should be selected as type in the select menu
 Examples:
 |	user	|	languages					|	language	|	types																						|	type										|
 |	johan	|	Japanese, English	|	English		|	Daily Teacher Reminder, Weekly Teacher Schedule |	Daily Teacher Reminder	|
@@ -76,15 +56,15 @@ Given a user is logged in as "johan"
 	And a course exists with name: "Ruby I"
 	And a klass: "1" exists with date: "2011-12-24", course: that course, start_time: "12:00", end_time: "12:50"
 	And a klass: "2" exists with date: "2011-12-24", course: that course, start_time: "13:00", end_time: "15:00"
-	And a teaching exists with klass: klass "1", teacher: user "thomas"
-	And a teaching exists with klass: klass "2", teacher: user "prince"
+	And a teaching exists with klass: klass "1", teacher: user "thomas", status_mask: 33
+	And a teaching exists with klass: klass "2", teacher: user "prince", status_mask: 33
 When I browse to the "Daily Mail" page for user "<user>" of "December 24, 2011"
 	And I should see the daily teacher reminder mail in <language> within "div#text_message"
-	And I should see "12/24" within "div#text_message"
+	And I should see "12/24(<day>)" within "div#text_message"
 Examples:
-|	user		|	language	|
-|	thomas	|	English		|
-|	prince	|	Japanese	|
+|	user		|	language	|	day	|
+|	thomas	|	English		|	sat	|
+|	prince	|	Japanese	|	土		|
 
 Scenario: One can only see remainer mail for days with classes
 Given a user is logged in as "johan"
@@ -93,13 +73,3 @@ Given a user is logged in as "johan"
 	And a teaching exists with klass: that klass, teacher: user "thomas"
 When I browse to the "Daily Mail" page for user "thomas" of "December 23, 2011"
 Then I should not see "12/24" within "div#text_message"
-
-Scenario: Change day
-Given a user is logged in as "johan"
-	And a course exists with name: "Ruby I"
-	And a klass exists with date: "2011-12-24", course: that course, start_time: "12:00", end_time: "12:50"
-	And a teaching exists with klass: that klass, teacher: user "thomas"
-When I browse to the "Daily Mail" page for user "thomas" of "December 23, 2011"
-	And I select "December 24, 2011" as date
-Then I should see "12/24" within "div#text_message"
-

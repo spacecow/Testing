@@ -18,12 +18,26 @@ class MailerController < ApplicationController
 		@menu_type			= params[:menu_type]
 		
 		user = User.find_by_name( @menu_teacher )
-		teachings = SystemMailer.get_daily_teachings_to_at( user, @menu_date.to_s )
-		schedule = SystemMailer.get_schedule( teachings[user.id], user )
+		func = "get_#{@menu_type.split('_')[0]}_teachings_to_at".to_sym
+		teachings = SystemMailer.send( func, user, @menu_date.to_s )
+		schedule = SystemMailer.get_schedule( teachings[user.id], user, @menu_language )
 		
 		language = @menu_language == "ja" ? "japanese" : "english"
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" ).
 			gsub(/<%= @schedule %>/,schedule) unless schedule.nil?
+  end
+  
+  def send_mail
+  	user = User.find_by_name( params[:menu_teacher] )
+  	UserMailer.send_later( :deliver_mail, user, "bajs", params[:body].keys[0])
+		redirect_to mailer_path(
+			:menu_month => params[:menu_month],
+			:menu_day => params[:menu_day],
+			:menu_year => params[:menu_year],
+			:menu_language => params[:menu_language],
+			:menu_type => params[:menu_type],
+			:menu_teacher => params[:menu_teacher]
+		)
   end
 end
 
@@ -31,7 +45,7 @@ def get_mail( path )
 	mail = ""
 	File.open "app/views/#{path}", 'r' do |f|
 		f.readlines.each do |line|
-			mail += line+"<br />"
+			mail += line
 		end
 	end
 	mail

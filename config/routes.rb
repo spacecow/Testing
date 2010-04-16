@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :words
 
   map.mailer 'mailer', :controller => 'mailer', :action => 'index'
+  map.send_mail 'send_mail', :controller => 'mailer', :action => 'send_mail'
   map.resources :mails, :collection => { :box => :get }
 
   map.resources :reset_passwords

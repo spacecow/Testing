@@ -7,7 +7,7 @@ Given a setting exists with name: "main"
 Scenario: Check format of mail of weekly teacher schedule in japanese
 Given a klass exists with date: "2010-04-06"
 	And a teaching exists with klass: that klass, teacher: user "aya"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "aya@space.com" should receive 1 email
 When "aya@space.com" opens the email with subject "来週のシフトについて"
 Then I should see "お疲れ様です。" in the email body	
@@ -15,11 +15,39 @@ Then I should see "お疲れ様です。" in the email body
 	And I should see "来週のシフトの確認をお願いします。" in the email body
 	And I should see "以上、確認しましたのメール返信お願いします。" in the email body
 	
+@not_current
+Scenario Outline: Teachings that are not current are not affected
+Given a klass exists with date: "2010-04-06"
+	And a teaching exists with klass: that klass, teacher: user "aya", current: <current>, status_mask: <status>
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
+Then "aya@space.com" should receive 0 email
+Examples:
+|	current	|	status	|
+|	false		|	33			|
+|	false		|	2				|
+|	false		|	4				|
+|	false		|	9				|
+|	false		|	17			|
+|	true		|	2				|
+
+@current
+Scenario Outline: Teachings should be current
+Given a klass exists with date: "2010-04-06"
+	And a teaching exists with klass: that klass, teacher: user "aya", current: <current>, status_mask: <status>
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
+Then "aya@space.com" should receive 1 email
+Examples:
+|	current	|	status	|
+|	true		|	33			|
+|	true		|	4				|
+|	true		|	9				|
+|	true		|	17			|
+	
 @check
 Scenario: Check format of mail of weekly teacher schedule in english
 Given a klass exists with date: "2010-04-06"
 	And a teaching exists with klass: that klass, teacher: user "johan"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Schedule for next week"
 Then I should see "Hello!" in the email body
@@ -39,7 +67,7 @@ Given a klass: "class04" exists with date: "2010-04-04"
 	And a teaching exists with klass: klass "class10", teacher: user "johan"
 	And a teaching exists with klass: klass "class11", teacher: user "johan"
 	And a teaching exists with klass: klass "class12", teacher: user "johan"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Schedule for next week"
 Then I should not see "4/4(sun)" in the email body
@@ -54,7 +82,7 @@ Given a klass: "class05" exists with date: "2010-04-05"
 	And a klass: "class10" exists with date: "2010-04-10"
 	And a teaching exists with klass: klass "class05", teacher: user "johan"
 	And a teaching exists with klass: klass "class10", teacher: user "aya"
-When the system sends out the weekly schedule to user "johan" from "2010-04-05"
+When the system sends out the weekly schedule to user "johan" at "2010-04-04"
 Then "johan@space.com" should receive 1 email
 	And "aya@space.com" should receive no email
 
@@ -65,6 +93,6 @@ Given a course: "ruby1" exists with name: "Ruby I"
 	And a klass: "class10" exists with date: "2010-04-10", course: course "ruby2", start_time: "14:00", end_time: "15:00"
 	And a teaching exists with klass: klass "class05", teacher: user "johan"
 	And a teaching exists with klass: klass "class10", teacher: user "aya"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "johan@space.com" should receive 1 email
 	And "aya@space.com" should receive 1 email

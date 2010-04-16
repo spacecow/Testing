@@ -11,7 +11,7 @@ Given a klass: "6" exists with date: "2010-04-06", course: course "2", start_tim
 	And a klass: "7" exists with date: "2010-04-07", course: course "1", start_time: "12:00", end_time: "12:50"
 	And a teaching exists with klass: klass "6", teacher: user "<user>"
 	And a teaching exists with klass: klass "7", teacher: user "<user>"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 	And "<user>@space.com" opens the email with subject "<subject>"
 Then I should see "<tuesday>" in the email body
 	And I should see "<wednesday>" in the email body
@@ -25,7 +25,7 @@ Given a klass: "6-1" exists with date: "2010-04-06", course: course "2", start_t
 	And a klass: "6-2" exists with date: "2010-04-06", course: course "1", start_time: "13:00", end_time: "15:00"
 	And a teaching exists with klass: klass "6-1", teacher: user "aya"
 	And a teaching exists with klass: klass "6-2", teacher: user "aya"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 	And "aya@space.com" opens the email with subject "来週のシフトについて"
 Then I should see "4/6(火) 12:00～12:50(会話), 13:00～15:00(文法)" in the email body
 
@@ -38,7 +38,7 @@ Given a course: "nyuumon" exists with name: "入門 I"
 	And a teaching exists with klass: klass "5", teacher: user "<user>"
 	And a teaching exists with klass: klass "7", teacher: user "<user>"
 	And a teaching exists with klass: klass "8", teacher: user "<user>"
-When the system sends out the weekly schedule to concerned teachers from "2010-04-05"
+When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 	And "<user>@space.com" opens the email with subject "<subject>"
 Then I should see "<monday>" in the email body
 	And I should see "<wednesday>" in the email body
