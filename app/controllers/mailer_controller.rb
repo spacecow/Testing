@@ -29,7 +29,8 @@ class MailerController < ApplicationController
   
   def send_mail
   	user = User.find_by_name( params[:menu_teacher] )
-  	UserMailer.send_later( :deliver_mail, user, "bajs", params[:body].keys[0])
+  	p params[:body]
+  	UserMailer.send_later( :deliver_mail, user, "bajs", params[:body])
 		redirect_to mailer_path(
 			:menu_month => params[:menu_month],
 			:menu_day => params[:menu_day],
@@ -45,7 +46,7 @@ def get_mail( path )
 	mail = ""
 	File.open "app/views/#{path}", 'r' do |f|
 		f.readlines.each do |line|
-			mail += line
+			mail += line.chomp+"\r"
 		end
 	end
 	mail

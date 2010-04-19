@@ -17,7 +17,7 @@
 <%- form_for :mail, :url => { :action=>'send_mail' } do |f| -%>
 <div id="mail_container">
 	<div id="text_message">
-		<%= text_area :body, @mail %>
+		<%= text_area_tag :body, @mail %>
 		<%= hidden_field_tag :menu_year, @menu_year.to_i %>
 		<%= hidden_field_tag :menu_month, @menu_month.to_i %>
 		<%= hidden_field_tag :menu_day, @menu_day.to_i %>

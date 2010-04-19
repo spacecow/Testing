@@ -16,7 +16,7 @@ Then I should see "12/24(sat) 12:00～13:00(gram.)" within "div#text_message"
 Scenario: When changing language not only should the language of the message change, but also the language of the schedule
 When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 	And I select "Japanese" as language in the select menu
-Then the "mail_body" field should contain the daily teacher reminder mail in japanese
+Then the "body" field should contain the daily teacher reminder mail in japanese
 	And I should see "12/24(土) 12:00～13:00(文法)" within "div#text_message"
 
 @teacher
