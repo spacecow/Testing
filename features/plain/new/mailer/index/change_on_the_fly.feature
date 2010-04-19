@@ -34,5 +34,5 @@ Scenario: Choose type
 	And a teaching exists with klass: klass "2", teacher: user "thomas"
 When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 	And I select "Weekly Teacher Schedule" as type in the select menu
-Then I should see the weekly teacher schedule mail in english within "div#text_message"
+Then the "body" field should contain the weekly teacher schedule mail in english
 	And I should see "12/27" within "div#text_message"

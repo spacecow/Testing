@@ -37,7 +37,7 @@ Given a user: "aya" exist with username: "aya", role: "admin, teacher", language
 Given a user is logged in as "<user>"
 When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 Then "December 24, 2011" should be selected as date in the select menu
-	And "menu_language" should have options "<languages>"
+	And "menu_language" should have options "<languages>" in the select menu
 	And "<language>" should be selected as language in the select menu
 	And "menu_teacher" should have options "Johan Sveholm, Thomas Osburg, Aya Komatsu"
 	And "Thomas Osburg" should be selected as teacher in the select menu

@@ -14,6 +14,10 @@ Then /^I should see "([^\"]*)" as hint for (\w+) (\w+)$/ do |message, model, fie
   Then "I should see /^#{message}$/ within \"li##{model}_#{field}_input p.inline-hint\""
 end
 
+Then /^"([^\"]*)" should contain "([^\"]*)"$/ do |field, value|
+  field_with_id(field).value.should =~ /#{value}/
+end
+
 # -------------------------- SELECTIONS
 
 When /^I select "([^\"]*)" from "([^\"]*)" within #{capture_model}$/ do |value, field, model|

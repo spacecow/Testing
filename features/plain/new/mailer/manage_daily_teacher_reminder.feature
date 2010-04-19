@@ -11,11 +11,7 @@ When the system sends out the daily teacher reminder to concerned teachers at "2
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Reminder"
 Then I should see "Hello!" in the email body
-	And I should see "I just want to let you know you have class today." in the email body
-	And I should see "Please come to class 10mins before class start!" in the email body
-	And I should see "If you are going to be late ,please call me~!" in the email body
-	And I should see "それでは本日もよろしくお願いいたします！" in the email body
-	And I should see "FROM AYA" in the email body
+	And I should see the daily teacher reminder mail in english in the email body
 
 @not_current_confirmed_untaught
 Scenario Outline: Teachings that are either current, confirmed nor untaught are not affected

@@ -36,12 +36,16 @@ Then /^I should see the (.+) mail in (.+) in the email body$/ do |mail, language
 	end
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (.+)$/ do |field, mail, language|
+Then /^the "([^\"]*)" field should contain the (.+) mail in (.+)$/ do |id, mail, language|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
-			Then "the \"#{field}\" field should contain \"#{line}\"" unless line == "<%= @schedule %>\n"
+			Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" unless line == "<%= @schedule %>\n"
 		end
 	end  
+end
+
+Then /^"([^\"]*)" should have options "([^\"]*)" in the select menu$/ do |id, options|
+  Then "within \"select_menu\", \"#{id}\" should have options \"#{options}\""
 end
 
 #....... Menu
