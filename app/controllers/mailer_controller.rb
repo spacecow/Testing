@@ -23,6 +23,10 @@ class MailerController < ApplicationController
 		schedule = SystemMailer.get_schedule( teachings[user.id], user, @menu_language )
 		
 		language = @menu_language == "ja" ? "japanese" : "english"
+		@subject = case @menu_type
+			when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
+			when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
+		end
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" ).
 			gsub(/<%= @schedule %>/,schedule) unless schedule.nil?
   end
@@ -30,7 +34,8 @@ class MailerController < ApplicationController
   def send_mail
   	user = User.find_by_name( params[:menu_teacher] )
   	p params[:body]
-  	UserMailer.send_later( :deliver_mail, user, "bajs", params[:body])
+  	UserMailer.send_later( :deliver_mail, user, params[:schedule], params[:body])
+  	flash[:notice] = t('notice.mail_sent_to',:object=>user.email)
 		redirect_to mailer_path(
 			:menu_month => params[:menu_month],
 			:menu_day => params[:menu_day],
