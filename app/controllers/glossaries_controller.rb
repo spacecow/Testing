@@ -69,8 +69,12 @@ class GlossariesController < ApplicationController
 			  	end_index = kanjis.size-1
 	  		end
 	  		if start_index == end_index
-	  			word, correct_answer, question, kunyomi =
-	  				get_kunyomi_reading_info( kanjis[start_index], 0 )
+	  			if kunyomi_left(kanjis[start_index], 0 )
+		  			word, correct_answer, question, kunyomi =
+		  				get_kunyomi_reading_info( kanjis[start_index], 0 )
+			  	else
+			  		word = nil
+		  		end	
 	      else
 	      	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
 	      	correct_answer = to_hiragana(word.reading) unless word.nil?
