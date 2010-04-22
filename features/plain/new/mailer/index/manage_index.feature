@@ -39,9 +39,9 @@ When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 Then "December 24, 2011" should be selected as date in the select menu
 	And "menu_language" should have options "<languages>" in the select menu
 	And "<language>" should be selected as language in the select menu
-	And "menu_teacher" should have options "Johan Sveholm, Thomas Osburg, Aya Komatsu"
+	And "menu_teacher" should have options "Johan Sveholm, Thomas Osburg, Aya Komatsu" in the select menu
 	And "Thomas Osburg" should be selected as teacher in the select menu
-	And "menu_type" should have options "<types>"
+	And "menu_type" should have options "<types>" in the select menu
 	And "<type>" should be selected as type in the select menu
 Examples:
 |	user	|	languages					|	language	|	types																						|	type										|
@@ -59,7 +59,7 @@ Given a user is logged in as "johan"
 	And a teaching exists with klass: klass "1", teacher: user "thomas", status_mask: 33
 	And a teaching exists with klass: klass "2", teacher: user "prince", status_mask: 33
 When I browse to the "Daily Mail" page for user "<user>" of "December 24, 2011"
-	And I should see the daily teacher reminder mail in <language> within "div#text_message"
+	Then the "body" field should contain the daily teacher reminder mail in <language>
 	And I should see "12/24(<day>)" within "div#text_message"
 Examples:
 |	user		|	language	|	day	|

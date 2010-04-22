@@ -238,6 +238,7 @@ ja:
     create_success: "正常に{{object}}が作成されました"
     delete_success: "正常に{{object}}が削除されました"
     mail_sent: "メールが送信されました"
+    mail_sent_to: "{{object}}}にメールが送信されました"
     reserve_success: "正常に{{object}}が予約されました"
     send_success: "正常に{{object}}が送信されました"
     update_success: "正常に{{object}}が更新されました"

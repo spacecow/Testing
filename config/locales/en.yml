@@ -239,6 +239,7 @@ en:
     create_success: "Successfully created {{object}}."
     delete_success: "Successfully deleted {{object}}."
     mail_sent: "A mail has been sent to you."
+    mail_sent_to: "A mail has been sent to {{object}}."
     reserve_success: "Successfully reserved {{object}}."
     send_success: "Successfully sent {{object}}."
     update_success: "Successfully updated {{object}}."
