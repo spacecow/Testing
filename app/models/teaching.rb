@@ -67,7 +67,7 @@ private
 
 	def set_cost
 		hour = ( klass.duration/3600 ).round
-		course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first
+		course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first unless teacher.nil?
 		self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
 	end
 end
