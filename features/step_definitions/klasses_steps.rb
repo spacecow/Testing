@@ -1,4 +1,61 @@
-#--------------------- FORM
+#======================== Index form
+
+#------ Toggle status
+
+When /^I press the (.+) button$/ do |button_id|
+  field_with_id( button_id ).click
+end
+
+Then /^the (.+) button should be disabled$/ do |button_id|
+  field_with_id( button_id ).disabled?.should be_true
+end
+
+Then /^the (.+) button should not be disabled$/ do |button_id|
+  field_with_id( button_id ).disabled?.should_not be_true
+end
+
+Then /^I should see no (.+) button$/ do |button_id|
+  assert_have_no_xpath("//input[@id='#{button_id}']")
+end
+
+Then /^I should see a (.+) button$/ do |button_id|
+  assert_have_xpath("//input[@id='#{button_id}']")
+end
+
+#------ Select date
+
+When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
+	When "I go to the klasses page"
+	And "I select \"#{date}\" as date"
+	And "I press \"Go!\""
+end
+
+Then /^I should automatically browse to the klasses page of "([^\"]*)"/ do |date|
+	Then "I should be redirected to the klasses page"
+	And "\"#{date}\" should be selected as date"
+end
+
+When /^I select "(\w+) (\d(?:\d)?), (\d{4})" as date$/ do |month, day, year|
+	And "I select \"#{month}\" from \"class_month\""
+	And "I select \"#{day}\" from \"class_day\""
+	And "I select \"#{year}\" from \"class_year\""
+end
+
+Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as date$/ do |month, day, year|
+	And "\"#{month}\" should be selected in \"class_month\""
+ 	And "\"#{day}\" should be selected in \"class_day\""
+ 	And "\"#{year}\" should be selected in \"class_year\""
+end
+
+#.. New/Edit form
+
+Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as (.+) date$/ do |month, day, year, model|
+	Then "\"#{year}\" should be selected in \"#{model}_date_1i\""
+	And "\"#{month}\" should be selected in \"#{model}_date_2i\""
+	And "\"#{day}\" should be selected in \"#{model}_date_3i\""
+end
+
+#------ Select teacher
 
 When /^I select "([^\"]*)" as teacher within klass "([^\"]*)"$/ do |teacher, model|
 	When "I select \"#{teacher}\" from \"klass_teaching_attributes_teacher_id\" within klass \"#{model}\""
@@ -13,14 +70,6 @@ Then /^within klass: "([^\"]*)", "([^\"]*)" should be selected as teacher$/ do |
 end
 
 #---------------------
-
-When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
-	When "I go to the klasses page"
-	And "I select \"#{date.split[0]}\" from \"class_month\""
-	And "I select \"#{date.split[1]}\" from \"class_day\""
-	And "I select \"#{date.split[2]}\" from \"class_year\""
-	And "I press \"Go!\""
-end
 
 Given /^the following [ck]lass records?$/ do |table|
   table.hashes.each do |hash|

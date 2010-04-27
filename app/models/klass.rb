@@ -26,6 +26,10 @@ class Klass < ActiveRecord::Base
 
 	after_update :save_teachings
 
+	def capacity=( i )
+		super( convert_japanese_numbers(i.to_s) )
+	end
+
 	def teaching
 		return Teaching.new if self.teachings.empty?
 		teachings.find_by_current( true )
@@ -63,6 +67,16 @@ class Klass < ActiveRecord::Base
 		end
 	end
 
+	def toggle_taught=( value )
+		if value == "?"
+			teaching.taught = "taught"
+		elsif value == "O"
+			teaching.taught = "canceled"
+		elsif value == "X"
+			teaching.taught = ""
+		end
+	end
+
 	def name
 		month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval
 	end
@@ -97,9 +111,7 @@ class Klass < ActiveRecord::Base
 	end
 	
 	def end_time_string=( end_time_str )
-		if( end_time_str.match(/^(\d)?\d$/))
-			end_time_str += ":00"	
-		end
+		end_time_str = convert_time( end_time_str )
 		if ok_time_format( end_time_str )
 			self.end_time = Time.parse( end_time_str ) if end_time_str != ""
 		end
@@ -118,9 +130,7 @@ class Klass < ActiveRecord::Base
 	end
 	
 	def start_time_string=( start_time_str )
-		if( start_time_str.match(/^(\d)?\d$/))
-			start_time_str += ":00"	
-		end
+		start_time_str = convert_time( start_time_str )
 		if ok_time_format( start_time_str )
 			self.start_time = Time.parse( start_time_str ) if start_time_str != ""
 		end
@@ -205,5 +215,16 @@ private
 	end	
 	def is_number( time_string )
 		time_string.match(/^\d+$/)	
+	end
+  def convert_japanese_numbers( s )
+		numbers = {"０"=>"0", "１"=>"1", "２"=>"2", "３"=>"3", "４"=>"4", "５"=>"5", "６"=>"6", "７"=>"7", "８"=>"8", "９"=>"9"}
+  	numbers.each{|k,v| s.gsub!(/#{k}/, "#{v}")} if !s.nil? && s.match(/[０-９]/)
+  	s
+  end
+	def convert_time( s )
+		s = convert_japanese_numbers(s)
+		s.gsub!(/^(\d?\d)$/,'\1:00')
+		s.gsub!(/^(\d?\d)(\d\d)$/,'\1:\2')
+		s
 	end
 end

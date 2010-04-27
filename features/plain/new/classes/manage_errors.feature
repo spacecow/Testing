@@ -14,7 +14,7 @@ Then I should be redirected to the error klasses page
 	And I should see "Course*Ruby Ican't be blank"
 
 @capacity_errors
-Scenario Outline: Capacity errors@ˆ®ŠI@red frog crab
+Scenario Outline: Capacity errorsã€€æ—­èŸ¹ã€€red frog crab
 Given a user is logged in as "johan"
 When I go to the new klass page
 	And I fill in "Capacity" with "<input>"
@@ -26,7 +26,7 @@ Examples:
 |	input			|	error						|	zero				|
 | 					|	is not a number	|	should not	|
 | asahigani	|	is not a number	|	should not	|
-| 0					|	can't be zero		|	should   		|
+| ï¼					|	can't be zero		|	should   		|
 
 @capacity_errors_edit
 Scenario: Capacity errors for a class in edit mode
@@ -40,9 +40,17 @@ When I go to the edit page of that klass
 Then I should be redirected to the error show page of that klass
 	And I should see "is not a number" as error message for klass capacity
 
+@capacity_ok
+Scenario: Capacity can be told with japanese numbers
+Given a user is logged in as "johan"
+When I go to the new klass page
+	And I fill in "Capacity" with "ï¼“"
+	And I press "Create"
+Then I should be redirected to the error klasses page
+	And the "Capacity" field should contain "3"
 
 @time_errors
-Scenario Outline: Time errors@ˆéŠI@beach crab
+Scenario Outline: Time errorsã€€ç£¯èŸ¹ã€€beach crab
 Given a user is logged in as "johan"
 When I go to the new klass page
 	And I fill in "Start time" with "<input>"
@@ -72,7 +80,11 @@ Then I should be redirected to the error klasses page
 	And the "Start time" field should contain "<output>"		
 	And the "End time" field should contain "<output>"		
 Examples:
-|	input	|	output	|	
+|	input	|	output	|
+|	1250	|	12:50		|
 | 3:13	|	03:13		|
 |	13		|	13:00		|
 |	0			|	00:00		|
+|	ï¼‘ï¼“		|	13:00		|
+|	ï¼˜ï¼“ï¼		|	08:30		|
+|	ï¼‘:0ï¼–	|	01:06		|

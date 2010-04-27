@@ -42,7 +42,7 @@ Examples:
 |	input			|	error						|	zero				|
 | 					|	is not a number	|	should not	|
 | asahigani	|	is not a number	|	should not	|
-| 0					|	can't be zero		|	should   		|
+| ０					|	can't be zero		|	should   		|
 	
 @capacity_errors_edit
 Scenario: Capacity errors for a template class in edit mode
@@ -55,6 +55,15 @@ When I go to the edit page of that template class
 	And I press "Update"
 Then I should be redirected to the error show page of that template class
 	And I should see "is not a number" as error message for template_class capacity
+
+@capacity_ok
+Scenario: Capacity can be told with japanese numbers
+Given a user is logged in as "johan"
+When I go to the new template class page
+	And I fill in "Capacity" with "３"
+	And I press "Create"
+Then I should be redirected to the error template classes page
+	And the "Capacity" field should contain "3"
 
 @time_errors
 Scenario Outline: Time errors for template class
@@ -88,6 +97,10 @@ Then I should be redirected to the error template classes page
 	And the "End time" field should contain "<output>"		
 Examples:
 |	input	|	output	|	
+|	1250	|	12:50		|
 | 3:13	|	03:13		|
 |	13		|	13:00		|
 |	0			|	00:00		|
+|	１３		|	13:00		|
+|	８３０		|	08:30		|
+|	１:0６	|	01:06		|

@@ -2,14 +2,31 @@ class Teaching < ActiveRecord::Base
   belongs_to :teacher, :class_name => 'User'
   belongs_to :klass
   
+  validates_presence_of :teacher_id, :klass_id
+  validates_uniqueness_of :teacher_id, :scope => :klass_id
+  
   before_create :set_cost
+  before_create :set_status_mask
   
-  STATUS = %w[confirmed declined]
+  STATUS = %w[confirmed declined unconfirmed taught canceled untaught]
   
+  named_scope :between_dates, lambda { |start,stop| {:conditions => "klass_id = klasses.id and klasses.date >= '#{start}' and klasses.date < '#{stop}'", :include=>:klass}} # and klasses.date >= #{start} and klasses.date < #{stop}", :include=>:klass} }
+  named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0 and status_mask & #{2**STATUS.index('canceled')} = 0"}
+    
   def confirmed_symbol
   	if status? :confirmed
   		"O"
   	elsif status? :declined
+  		"X"
+		else
+  		"?"
+		end
+  end
+
+  def taught_symbol
+  	if status? :taught
+  		"O"
+  	elsif status? :canceled
   		"X"
 		else
   		"?"
@@ -22,25 +39,44 @@ class Teaching < ActiveRecord::Base
   
   def confirm=( value )
     if value.blank?
-      reset_status :confirmed
-      reset_status :declined
+      set_status :unconfirmed
     elsif value=="confirmed"
-      reset_status :declined
-      add_status :confirmed
+      set_status :confirmed
+      add_status :untaught
     elsif value=="declined"
-      reset_status :confirmed
-      add_status :declined
+      set_status :declined
     end
     save!
+  end
+  
+  def taught=( value )
+    if value.blank?
+      reset_status :canceled
+      add_status :untaught
+    elsif value=="taught"
+      reset_status :untaught
+      add_status :taught
+    elsif value=="canceled"
+      reset_status :taught
+      add_status :canceled
+    end
+    save!
+  end
+  
+
+  def add_status( value )
+    self.status_mask |= status_value( value )
   end
 
   def reset_status( value )
     self.status_mask &= 2**STATUS.size-1 - status_value( value )
   end
-
-  def add_status( value )
-    self.status_mask |= status_value( value )
+  
+  def set_status( value )
+		self.status_mask = status_value( value )  	
   end
+
+
 
   def status?( value )
     status.include?( value.to_s )
@@ -65,9 +101,15 @@ class Teaching < ActiveRecord::Base
 	
 private
 
-	def set_cost
-		hour = ( klass.duration/3600 ).round
-		course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first unless teacher.nil?
-		self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
+	def set_cost #unless it is created by factory through cucumber with another value
+		if cost.nil?
+			hour = ( klass.duration/3600 ).round
+			course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first unless teacher.nil?
+			self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
+		end
+	end
+	
+	def set_status_mask #unless it is created by factory through cucumber with another value
+		add_status :unconfirmed if self.status_mask == 0
 	end
 end

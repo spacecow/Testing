@@ -16,6 +16,10 @@ class TemplateClass < ActiveRecord::Base
 	
 	DAYS = %w( mon tue wed thu fri sat sun )
 
+	def capacity=( i )
+		super( convert_japanese_numbers(i.to_s) )
+	end
+
   def course_category
     course.category
   end
@@ -41,9 +45,7 @@ class TemplateClass < ActiveRecord::Base
 	end
 	
 	def end_time_string=( end_time_str )
-		if( end_time_str.match(/^(\d)?\d$/))
-			end_time_str += ":00"	
-		end
+		end_time_str = convert_time( end_time_str )
 		if ok_time_format( end_time_str )
 			self.end_time = Time.parse( end_time_str ) if end_time_str != ""
 		end
@@ -55,9 +57,7 @@ class TemplateClass < ActiveRecord::Base
 	end
 	
 	def start_time_string=( start_time_str )
-		if( start_time_str.match(/^(\d)?\d$/))
-			start_time_str += ":00"	
-		end
+		start_time_str = convert_time( start_time_str )
 		if ok_time_format( start_time_str )
 			self.start_time = Time.parse( start_time_str ) if start_time_str != ""
 		end
@@ -110,6 +110,18 @@ private
 		time_string.match(/^(\d)?\d:\d\d$/)
 	end	
   
+  def convert_japanese_numbers( s )
+		numbers = {"０"=>"0", "１"=>"1", "２"=>"2", "３"=>"3", "４"=>"4", "５"=>"5", "６"=>"6", "７"=>"7", "８"=>"8", "９"=>"9"}
+  	numbers.each{|k,v| s.gsub!(/#{k}/, "#{v}")} if s.match(/[０-９]/)
+  	s
+  end
+  
+	def convert_time( s )
+		s = convert_japanese_numbers(s)
+		s.gsub!(/^(\d?\d)$/,'\1:00')
+		s.gsub!(/^(\d?\d)(\d\d)$/,'\1:\2')
+		s
+	end  
 protected
 	def validate_on_update
 		if course_id != TemplateClass.find( id ).course_id
