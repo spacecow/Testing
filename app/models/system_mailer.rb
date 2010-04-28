@@ -59,7 +59,7 @@ class SystemMailer < ActionMailer::Base
 
 
 	def self.daily_teacher_reminder
-		daily_teacher_reminder_at( Time.zone.current.strftime( "%Y-%m-%d" ))
+		daily_teacher_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ))
 	end
 
   def self.daily_teacher_reminder_at( date )
@@ -111,7 +111,7 @@ class SystemMailer < ActionMailer::Base
 	end
 
 	def self.next_weeks_teacher_schedule
-		weekly_teacher_schedule_at(( Time.zone.current + 1.day ).strftime( "%Y-%m-%d" ))
+		weekly_teacher_schedule_at(( Time.zone.now + 1.day ).strftime( "%Y-%m-%d" ))
 	end
 
 	def self.weekly_teacher_schedule_at( date )
