@@ -32,7 +32,7 @@ class Klass < ActiveRecord::Base
 
 	def teaching
 		return Teaching.new if self.teachings.empty?
-		teachings.find_by_current( true )
+		self.teachings.find_by_current( true )
 	end
 
 	def teaching_attributes=( hash )
