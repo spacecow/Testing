@@ -23,7 +23,8 @@ end
 When /^I select "([^\"]*)" from "([^\"]*)" within #{capture_model}$/ do |value, field, model|
 	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
 	within "##{scope}" do |element|
-  	element.select(value, :from => field)
+  	#element.field_by_xpath( "//select[@id='#{field}']" ).set( value )
+  	element.select( value, :from => field )
   end
 end
 

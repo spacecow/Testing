@@ -23,6 +23,7 @@ When I browse to the klasses page of "February 28, 2010"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 4
 	And 1 teachings should exist
 
+@confirm
 Scenario: Confirm a teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 4
 When I browse to the klasses page of "February 28, 2010"
@@ -30,6 +31,7 @@ When I press the confirm button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 33
 	And 1 teachings should exist
 	And I should see a teach button
+	And the teacher select menu should be disabled
 
 @taught
 Scenario: Confirm a teacher having taught the class
@@ -73,13 +75,14 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 	And 1 teachings should exist
 	And I should see no teach button
 	
+@another
 Scenario: Choose another teacher
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 2
 When I browse to the klasses page of "February 28, 2010"
 	And I select "Johan Sveholm" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 2, cost: 2000
-	And a teaching should exist with klass: klass "ruby", teacher: user "johan", status_mask: 4, cost: 2500
+	And 1 teachings should exist with klass: klass "ruby", teacher: user "johan", status_mask: 4, cost: 2500
 	And 2 teachings should exist
 
 #When I press "?"

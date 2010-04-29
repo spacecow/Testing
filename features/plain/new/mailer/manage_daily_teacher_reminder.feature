@@ -14,7 +14,7 @@ Then I should see "Hello!" in the email body
 	And I should see the daily teacher reminder mail in english in the email body
 
 @not_current_confirmed_untaught
-Scenario Outline: Teachings that are either current, confirmed nor untaught are not affected
+Scenario Outline: Teachings that are neither current, confirmed nor untaught are not affected
 Given a klass exists with date: "2010-04-04"
 	And a teaching exists with klass: that klass, teacher: user "aya", current: <current>, status_mask: <status>
 When the system sends out the daily teacher reminder to concerned teachers at "2010-04-04"
@@ -72,6 +72,3 @@ Given a course: "ruby1" exists with name: "Ruby I"
 When the system sends out the daily teacher reminder to concerned teachers at "2010-04-05"
 Then "johan@space.com" should receive 1 email
 	And "aya@space.com" should receive 1 email
-
-#Scenario: If a teaching is not current it should not appear (NOT IMPLEMENTED)
-#Given not implemented

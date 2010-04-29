@@ -1,13 +1,17 @@
 class SystemMailer < ActionMailer::Base
 	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule]
 
-	def self.get_main_course( teachings )
+	def self.get_main_course( user )
+		get_frequent_word( user.teacher_courses.map(&:category))
+	end
+	
+	def self.get_frequent_word( words )
 		hash = {}; max=0; res=0
-			teachings.each{|e|
-				hash[e.course_category] = ( hash[e.course_category] || 0 )+1
-				if( hash[e.course_category] > max )
-					max = hash[e.course_category]
-					res = e.course_category
+			words.each{|w|
+				hash[w] = ( hash[w] || 0 )+1
+				if( hash[w] > max )
+					max = hash[w]
+					res = w
 				end
 			}
 			res	
@@ -16,7 +20,7 @@ class SystemMailer < ActionMailer::Base
 	def self.get_schedule( teachings, user, language = user.language )
 		return nil if teachings.nil?
 		schedule = ""
-		main_course = get_main_course( teachings )
+		main_course = get_main_course( user )
 		date_teachings = teachings.group_by(&:date)
 		date_teachings.keys.sort.each_with_index do |date,index|
 			schedule += date_teachings[date][0].to_mail_date(language)+" "

@@ -4,13 +4,15 @@
 <h1><%= t( 'klasses.title' ) %> - <%= t('date.day_names')[(@class_date.wday+6)%7] %></h1>
 <div class="intro">
 </div>
-<% form_for :class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| %>
-  <label for="class_date"><%= t(:klass_date) %>: </label>
-  <%= select_tag :menu_year,  options_for_select( @years,  @class_year.to_i ) %>
-  <%= select_tag :menu_month, options_for_select( @months, @class_month.to_i ) %>
-  <%= select_tag :menu_day,   options_for_select( @days,   @class_day.to_i ) %>
-  <span id="day"></span>
-  <%= f.submit "Go!"%>
+<%- form_for :class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| -%>
+  <div id="select_menu">
+	  <label for="class_date"><%= t(:klass_date) %>: </label>
+	  <%= select_tag :menu_year,  options_for_select( @years,  @class_year.to_i ) %>
+	  <%= select_tag :menu_month, options_for_select( @months, @class_month.to_i ) %>
+	  <%= select_tag :menu_day,   options_for_select( @days,   @class_day.to_i ) %>
+	  <span id="day"></span>
+	  <%= f.submit "Go!"%>
+	</div>
 <% end %>
 <br />
 

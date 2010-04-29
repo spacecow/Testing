@@ -9,6 +9,7 @@ Given a setting exist with name: "main"
 	And a word: "kiru" exists with japanese: "黄る", reading: "きる", meaning: "to yellow (P)"
 	And a kanji: "obi" exists with title: "帯"
 	And a kanji: "yellow" exists with title: "黄"
+	And a kanji: "colour" exists with title: "色"
 	And a kunyomi: "obiru" exists with reading: "お.びる"
 	And a kunyomi: "obi" exists with reading: "おび"
 	And a kunyomi: "ki" exists with reading: "き"
@@ -17,6 +18,8 @@ Given a setting exist with name: "main"
 	And a kunyomi: "kiru" exists with reading: "き.る"
 	And kunyomi "obiru, obi" are kanji "obi"'s kunyomis
 	And kunyomi "ki, kiro, kiromi, kiru" are kanji "yellow"'s kunyomis
+	And a meaning: "colour" exists with title: "colour"
+	And meaning "colour" is one of kanji "colour"'s meanings
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user is logged in as "johan"
 	And I go to the quiz init glossaries page
@@ -52,3 +55,8 @@ Scenario: A kunyomi that does not exist or is not marked as (P) as word should n
 When I answer with "obiru, to wear, obi, sash, ki, yellow"
 Then I should see "Reading? (黄る)" as question
 	And I should see "kiru" as correct answer
+	
+@meaning
+Scenario: When there are no kunyomis, the kanjis meaning is displayed
+When I answer with "obiru, to wear, obi, sash, ki, yellow, kiru, to yellow"
+Then show me the page

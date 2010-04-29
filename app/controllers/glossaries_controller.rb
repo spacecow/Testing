@@ -24,9 +24,13 @@ class GlossariesController < ApplicationController
   		when false; Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
   		when true
 				kanji = Kanji.find_by_title(@word)
-		  	reading = kanji.kunyomis[@kunyomi].reading
-		  	kunyomi_word = get_kunyomi_word( reading ,kanji.title )
-		  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+		  	if kanji.kunyomis.nil?
+		  		kanji.meanings.join(', ')
+		  	else
+			  	reading = kanji.kunyomis[@kunyomi].reading
+			  	kunyomi_word = get_kunyomi_word( reading ,kanji.title )
+			  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+				end
 			end
 		end
   end
@@ -73,7 +77,8 @@ class GlossariesController < ApplicationController
 		  			word, correct_answer, question, kunyomi =
 		  				get_kunyomi_reading_info( kanjis[start_index], 0 )
 			  	else
-			  		word = nil
+			  		word, correct_answer, question = get_meaning_info( kanjis[start_index] )
+			  		p "#{word}-#{correct_answer}-#{question}"
 		  		end	
 	      else
 	      	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
@@ -225,6 +230,13 @@ private
   	[word, correct_answer, question, kunyomi_no]
 	end	
 	
+	def get_meaning_info( s )
+  	kanji = Kanji.find_by_title( s )
+  	correct_answer = kanji.meanings.join(', ')
+  	question = "Meaning?"
+  	[kanji, correct_answer, question]
+	end	
+	
 	def get_kunyomi_word( reading, kanji )
 		if reading =~ /(.+)\./
 			reading.gsub(/.+\./,kanji)
@@ -270,7 +282,7 @@ private
 			"ステム"=>"banned",
 			"シ"=>"banned"
 		}
-		return word.kunyomis.empty? if word.instance_of? Kanji
+		return false if word.instance_of? Kanji
 		return true unless banned[word.japanese].nil?
 		false
 	end

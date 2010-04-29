@@ -265,11 +265,11 @@ Then "menu_month" should have options "January, February, March, April, May, Jun
 	And "menu_month" should have no blank option	
 	And "menu_day" should have no blank option	
 	And "menu_year" should have no blank option		
-When I select "February 15, 2012" as date
+When I select "February 15, 2012" as date in the select menu
 	And I press "Go!"
 Then I should be redirected to the klasses page
 	And I should see "Classes - Wednesday" within "h1"
- 	And "February 15, 2012" should be selected as date
+ 	And "February 15, 2012" should be selected as date in the select menu
 
 Scenario: List classes according to day
 Given a course: "ruby" exists with name: "Ruby I"
@@ -285,7 +285,7 @@ Then I should see "I" within "table#Ruby tr td.course_level"
 	And I should see "" within "table#Ruby tr td#teacher"
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
 	And I should not see "Rails"
-When I select "March 1, 2010" as date
+When I select "March 1, 2010" as date in the select menu
 	And I press "Go!"
 	And I should see "II" within "table#Rails tr td.course_level"
 	And I should see "12:00~13:00" within "table#Rails tr td#time_interval"	
@@ -377,17 +377,14 @@ Then I should automatically browse to the klasses page of "February 28, 2011"
 	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-27 15"
 	And 2 klasses should exist
 
+@pending
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Implement versioning? (NOT IMPLEMENTED)
-Given not implemented
 
-Scenario: If a teacher is choosen he cannot be changed unless he cancels (NOT IMPLEMENTED)
-Given not implemented
-
+@pending
 Scenario: Should be able to delete teaching (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Test to drop the ok buttons if javascript is turned on (NOT IMPLEMENTED)
-Given not implemented

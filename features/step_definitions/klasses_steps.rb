@@ -14,6 +14,10 @@ Then /^the (.+) button should not be disabled$/ do |button_id|
   field_with_id( button_id ).disabled?.should_not be_true
 end
 
+Then /^the teacher select menu should be disabled$/ do
+	field_by_xpath( "//select[@id='klass_teaching_attributes_teacher_id']" ).disabled?.should be_true
+end
+
 Then /^I should see no (.+) button$/ do |button_id|
   assert_have_no_xpath("//input[@id='#{button_id}']")
 end
@@ -26,12 +30,12 @@ end
 
 When /^I browse to the klasses page of "([^\"]*)"$/ do |date|
 	When "I go to the klasses page"
-	And "I select \"#{date}\" as date"
+	And "I select \"#{date}\" as date in the select menu"
 end
 
 Then /^I should automatically browse to the klasses page of "([^\"]*)"/ do |date|
 	Then "I should be redirected to the klasses page"
-	And "\"#{date}\" should be selected as date"
+	And "\"#{date}\" should be selected as date in the select menu"
 end
 
 #.. New/Edit form
