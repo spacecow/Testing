@@ -34,7 +34,7 @@ class MailerController < ApplicationController
   def send_mail
   	user = User.find_by_name( params[:menu_teacher] )
   	p params[:body]
-  	UserMailer.send_later( :deliver_mail, user, params[:schedule], params[:body])
+  	UserMailer.send_later( :deliver_mail, user, params[:subject], params[:body])
   	flash[:notice] = t('notice.mail_sent_to',:object=>user.email)
 		redirect_to mailer_path(
 			:menu_month => params[:menu_month],

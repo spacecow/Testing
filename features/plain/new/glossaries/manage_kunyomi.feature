@@ -55,8 +55,3 @@ Scenario: A kunyomi that does not exist or is not marked as (P) as word should n
 When I answer with "obiru, to wear, obi, sash, ki, yellow"
 Then I should see "Reading? (黄る)" as question
 	And I should see "kiru" as correct answer
-	
-@meaning
-Scenario: When there are no kunyomis, the kanjis meaning is displayed
-When I answer with "obiru, to wear, obi, sash, ki, yellow, kiru, to yellow"
-Then show me the page

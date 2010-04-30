@@ -24,12 +24,12 @@ class GlossariesController < ApplicationController
   		when false; Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
   		when true
 				kanji = Kanji.find_by_title(@word)
-		  	if kanji.kunyomis.nil?
-		  		kanji.meanings.join(', ')
-		  	else
+		  	if kunyomi_left(@word, 0)
 			  	reading = kanji.kunyomis[@kunyomi].reading
 			  	kunyomi_word = get_kunyomi_word( reading ,kanji.title )
 			  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+		  	else
+		  		kanji.meanings.map(&:title).join(', ')
 				end
 			end
 		end
@@ -78,7 +78,6 @@ class GlossariesController < ApplicationController
 		  				get_kunyomi_reading_info( kanjis[start_index], 0 )
 			  	else
 			  		word, correct_answer, question = get_meaning_info( kanjis[start_index] )
-			  		p "#{word}-#{correct_answer}-#{question}"
 		  		end	
 	      else
 	      	word = Word.find_by_japanese( kanjis[start_index..end_index].join )
@@ -127,10 +126,14 @@ class GlossariesController < ApplicationController
     	@correct_answer = case @start_index == @end_index
   		when false; Word.find_by_japanese(@word).meaning.gsub(/\(.+?\)/,"")
   		when true
-				kanji = Kanji.find_by_title(@word)
-				reading = kanji.kunyomis[@kunyomi].reading
-		  	kunyomi_word = get_kunyomi_word( reading, kanji.title )
-		  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+			kanji = Kanji.find_by_title(@word)
+		  	if kunyomi_left(@word, 0)
+			  	reading = kanji.kunyomis[@kunyomi].reading
+			  	kunyomi_word = get_kunyomi_word( reading ,kanji.title )
+			  	Word.find_by_japanese( kunyomi_word, :conditions=>["reading = ?",reading.gsub(/[.-]/,'')]).meaning.gsub(/\(.+?\)/,"")
+		  	else
+		  		kanji.meanings.map(&:title).join(', ')
+				end
 			end
 		end
 		        
@@ -232,7 +235,7 @@ private
 	
 	def get_meaning_info( s )
   	kanji = Kanji.find_by_title( s )
-  	correct_answer = kanji.meanings.join(', ')
+  	correct_answer = kanji.meanings.map(&:title).join(', ')
   	question = "Meaning?"
   	[kanji, correct_answer, question]
 	end	
@@ -289,6 +292,7 @@ private
 
 	def kunyomi_left( kanji_s, kunyomi_no )
 		kanji = Kanji.find_by_title( kanji_s )
+		return false if kanji.kunyomis.empty?
 		while kanji.kunyomis.size > (kunyomi_no)
   		reading = kanji.kunyomis[kunyomi_no].reading
   		kunyomi_word = get_kunyomi_word( reading, kanji.title )
