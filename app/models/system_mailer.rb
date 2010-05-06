@@ -81,17 +81,17 @@ class SystemMailer < ActionMailer::Base
   end
 
 	def daily_teacher_reminder_in_english( user, schedule )
-    recipients  user.email
+    recipients  user.email #"Yoyaku@GAKUWARINET.com"
     from        "Yoyaku@GAKUWARINET.com"
     subject     "Reminder"
-    body        :schedule => schedule
+    body        :schedule => schedule, :name => user.name
 	end	
 
 	def daily_teacher_reminder_in_japanese( user, schedule )
-    recipients  user.email
+    recipients  user.email #"Yoyaku@GAKUWARINET.com"
     from        "Yoyaku@GAKUWARINET.com"
     subject     "mada"
-    body        :schedule => schedule
+    body        :schedule => schedule, :name => user.name
 	end	
 #---------------- Weekly schedule
 

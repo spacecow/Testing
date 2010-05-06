@@ -1,3 +1,4 @@
+<% if false %>
 <%= javascript_include_tag "day_update.js" %>
 <div id="list">
 	
@@ -16,10 +17,10 @@
 <% end %>
 <br />
 
-<% @keys = sort_in_mogi_order @class_groups.keys %>
-<% @keys.each do |key| %>
-	<%= render :partial => 'course', :locals => { :classes => @class_groups[key] } %>
-<% end %>
+<%# @keys = sort_in_mogi_order @class_groups.keys %>
+<%# @keys.each do |key| %>
+	<%# render :partial => 'course', :locals => { :classes => @class_groups[key] } %>
+<%# end %>
 
 <div id="links">
 	<% if can? :new, Klass %>
@@ -28,57 +29,4 @@
 </div>
 
 </div>
-
-<% if false %>
-
-<h1><%= t('klasses.listing') %> - <%= @klass_date.strftime("%A") %></h1>
-
-<% form_for :klass,
-            :url => { :action=>'index' },
-            :html => { :method=>'get' } do |f| %>
-  <%= select_tag :month, options_for_select( Date::MONTHNAMES, @month ),
-    :onchange => "this.form.submit();", :selected=>@month %>
-
-  <%= select_tag :day, options_for_select( 1..31, @day.to_i ),
-    :onchange => "this.form.submit();", :selected=>@day %>
-
-  <%= select_tag :year, options_for_select( 2005..2020, @year.to_i ),
-    :onchange => "this.form.submit();", :selected=>@year %>
-<% end %>
-
-<br />
-<br />
-
-<% @keys = sort_in_mogi_order @klass_groups.keys %>
-<% @keys.each do |key| %>
-  <div id="table">
-    <%= render :partial=>"course", :locals=>{
-    			:course_klasses=>@klass_groups[key],
-    			:klass_date=>@klass_date,
-    			:classrooms=>@classrooms,
-    			:collition=>@collition } %><br />
-  </div>
-<% end %>
-
-<div id="links">
-	<%= link_to t('klasses.new'), new_klass_path( :klass_date=>@klass_date ), :class=>"link" %><br />
-</div>
-
-<% if clearance?(1) %>
-	<table>
-	<% Klass.find( :all, :include=>'course' ).each do |klass| %>
-	  <tr>
-	    <td><%=h klass.date.strftime("%x") %></td>
-	    <td><%=h klass.course.name %></td>
-	    <td><%=h klass.course.inactive %></td>
-	    <td><%= link_to 'Show', klass %></td>
-	    <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
-	    <td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?',
-	      :method => :delete %>
-	    </td>
-	  </tr>
-	<% end %>
-	</table>
-<% end %>
-
 <% end %>

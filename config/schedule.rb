@@ -1,3 +1,7 @@
 every :reboot do
-	runner "QueuedMailing.deliver_queued_with_notification_on_failure!"
+	rake "jobs:work"
+end
+
+every 1.day, :at => '7:00 pm' do
+  runner "SystemMailer.daily_teacher_reminder"
 end

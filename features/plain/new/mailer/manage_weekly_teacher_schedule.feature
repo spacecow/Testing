@@ -10,10 +10,7 @@ Given a klass exists with date: "2010-04-06"
 When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "aya@space.com" should receive 1 email
 When "aya@space.com" opens the email with subject "来週のシフトについて"
-Then I should see "お疲れ様です。" in the email body	
-	And I should see "梅津です。" in the email body	
-	And I should see "来週のシフトの確認をお願いします。" in the email body
-	And I should see "以上、確認しましたのメール返信お願いします。" in the email body
+Then I should see the weekly teacher schedule mail in japanese in the email body
 	
 @not_current
 Scenario Outline: Teachings that are not current are not affected

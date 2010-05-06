@@ -20,5 +20,5 @@ Scenario: Send a mail
 When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 	And I press "Send"
 Then "thomas@space.com" should receive 1 email
-When "thomas@space.com" opens the email with subject "bajs"
+When "thomas@space.com" opens the email with subject "Reminder"
 Then I should see the daily teacher reminder mail in english in the email body

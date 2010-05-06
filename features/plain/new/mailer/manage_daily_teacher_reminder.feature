@@ -10,8 +10,7 @@ Given a klass exists with date: "2010-04-05"
 When the system sends out the daily teacher reminder to concerned teachers at "2010-04-05"
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Reminder"
-Then I should see "Hello!" in the email body
-	And I should see the daily teacher reminder mail in english in the email body
+Then I should see the daily teacher reminder mail in english in the email body
 
 @not_current_confirmed_untaught
 Scenario Outline: Teachings that are neither current, confirmed nor untaught are not affected
