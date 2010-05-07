@@ -9,6 +9,7 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
+    	Rails.cache.delete( 'beta_testers' )
     	#flash[:notice] = t( 'login.notice.success' )
       redirect_to events_path
     else

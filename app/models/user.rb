@@ -79,6 +79,10 @@ class User < ActiveRecord::Base
     @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
   end
 
+  def self.beta_testers
+  	Rails.cache.fetch( 'beta_testers' ){ all( :select => 'name, id, current_login_at' ) }
+  end
+  
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end

@@ -18,7 +18,8 @@
       </div>
       <div class="clear"></div>
     <%- end -%>
-		<% if can? :index, Event %>		    
+		<% if can? :index, Event %>
+			<% cache 'banner' do %>
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">
@@ -63,6 +64,7 @@
 					</ul>
 				</td></tr></table>
 			</div>
+			<% end %>
 		<% end %>
 		<div id="right_column">
 			<%= render :partial => "/includes/side_contents" %>

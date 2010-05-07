@@ -1,3 +1,4 @@
+<% cache current_user2 ? current_user2.cache_key : 'non_user_nav' do %>
 <div id="user_nav">
 	<div class="commands">
 		<ul>
@@ -36,12 +37,13 @@
 	<% end %>
 	<div class="clear"></div>
 </div>
+<% end %>
 <% if current_user %>
 	<div id="beta_testers">
 		<div class="title">Beta Testers</div>
 		<% if current_user.role == "god" %>
 			<ul>
-			<% User.all.each do |e| %>
+			<% User.beta_testers.each do |e| %>
 			  <li>
 			  	<%= link_to e.name, e %>
 			  	<% if !e.current_login_at.nil? %>
