@@ -1,4 +1,4 @@
-<% cache current_user2 ? current_user2.cache_key : 'non_user_nav' do %>
+<% cache current_user2 ? current_user2.cache_key : (japanese? ? 'japanese_non_user_nav' : 'english_non_user_nav') do %>
 <div id="user_nav">
 	<div class="commands">
 		<ul>

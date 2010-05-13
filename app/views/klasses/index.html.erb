@@ -1,7 +1,6 @@
-<% if false %>
 <%= javascript_include_tag "day_update.js" %>
 <div id="list">
-	
+
 <h1><%= t( 'klasses.title' ) %> - <%= t('date.day_names')[(@class_date.wday+6)%7] %></h1>
 <div class="intro">
 </div>
@@ -17,10 +16,10 @@
 <% end %>
 <br />
 
-<%# @keys = sort_in_mogi_order @class_groups.keys %>
-<%# @keys.each do |key| %>
-	<%# render :partial => 'course', :locals => { :classes => @class_groups[key] } %>
-<%# end %>
+<% class_groups_keys = sort_in_mogi_order( @class_groups.keys ) %>
+<% class_groups_keys.each do |key| %>
+	<%= render :partial => 'course', :locals => { :classes => @class_groups[key] } %>
+<% end %>
 
 <div id="links">
 	<% if can? :new, Klass %>
@@ -29,4 +28,3 @@
 </div>
 
 </div>
-<% end %>

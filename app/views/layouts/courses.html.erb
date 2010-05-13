@@ -19,7 +19,7 @@
       <div class="clear"></div>
     <%- end -%>
 		<% if can? :index, Event %>
-			<% cache 'banner' do %>
+			<% cache current_user2 ? "banner_#{current_user2.cache_key}" : (japanese? ? 'japanese_banner' : 'english_banner') do %>
 		  <div id="banner">
 			  <table border="0" align="center"><tr><td>
 				  <ul id="nav">

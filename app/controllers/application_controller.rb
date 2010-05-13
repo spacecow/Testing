@@ -34,7 +34,6 @@ class ApplicationController < ActionController::Base
  
 	def current_user_session2
 		return @current_user_session2 if defined?( @current_user_session2 )
-		p @current_user_session2 = UserSession.find
 		@current_user_session2 = UserSession.find
 	end
  
