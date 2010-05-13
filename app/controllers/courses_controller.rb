@@ -5,11 +5,6 @@ class CoursesController < ApplicationController
     @sorting = Sorting.new
   	@courses_groups = Course.all.group_by(&:category)
 		@keys = @sorting.sort_in_mogi_order( @courses_groups.keys )
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @courses }
-    end
   end
 
   # GET /courses/1
@@ -79,26 +74,18 @@ class CoursesController < ApplicationController
     end
   end
 
-  # DELETE /courses/1
-  # DELETE /courses/1.xml
   def destroy
-    @course = Course.find(params[:id])
-
     errors = association_delete_error_messages(
-    	[@course.template_classes, @course.klasses],
+    	[@course.template_classes_count, @course.klasses_count],
     	[t( 'courses.error.try_to_delete_course_with_template_classes' ),
     	 t( 'courses.error.try_to_delete_course_with_klasses' )])
 	    	 
 		if( !errors.empty? )
       flash[:error] = errors.join("<br />")
-      redirect_to courses_path
-      return
+      redirect_to courses_path and return
     end
 
     @course.destroy
-    respond_to do |format|
-      format.html { redirect_to(courses_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to courses_path
   end
 end

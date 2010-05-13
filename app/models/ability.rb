@@ -55,7 +55,7 @@ class Ability
   			end
 			end			
   		if user.role? :observer
-	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass]
+	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass, Course]
 	  	end
   		if user.role? :admin
 	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course, Mailer]

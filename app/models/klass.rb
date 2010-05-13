@@ -1,5 +1,5 @@
 class Klass < ActiveRecord::Base
-  belongs_to :course
+  belongs_to :course, :counter_cache => true
   
   has_one :teaching, :dependent => :destroy
   has_one :teacher, :class_name => 'User', :through => :teaching

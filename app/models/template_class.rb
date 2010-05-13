@@ -1,5 +1,5 @@
 class TemplateClass < ActiveRecord::Base
-  belongs_to :course
+  belongs_to :course, :counter_cache => true
   belongs_to :course_time
   belongs_to :teacher, :class_name => 'User'
   belongs_to :classroom
