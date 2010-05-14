@@ -10,6 +10,10 @@ Then /^I should see links "([^\"]*)" at the bottom of the page$/ do |options|
   Then "I should see options \"#{options}\" within \"div#links\""
 end
 
+Then /^I should see no links at the bottom of the page$/ do
+  Then "I should see options \"\" within \"div#links\""
+end
+
 Then /^I should see links "([^\"]*)" within #{capture_model}$/ do |links, model|
   scope = get_scope( model )
   Then "I should see options \"#{links}\" within \"tr##{scope} td#links\""

@@ -1,68 +1,19 @@
 <div class="form">
-<%= error_messages_for :course %>
+<fieldset class="form">
+<legend class="form"><%= t( 'courses.new' ) %></legend>
 
-<fieldset>
-<legend><%= t('courses.editing') %></legend>
+<div class="intro">
+	<%= t('message.asterisk') %>
+</div>
 
-<% form_for(@course) do |f| %>
-  <%= render :partial => "form", :locals => { :f=>f, :label_text=>t('update') } %>
+<% semantic_form_for @course do |f| %>
+  <%= render "form", :f=>f, :label_text=>t(:create) %>
 <% end %>
 
-<%= link_to t('show'), @course, :class=>"link" %> |
-<%= link_to t('back'), courses_path, :class=>"link" %>
-
-<center>
-<table border="0" cellspacing="0" cellpadding="5">
-	<tr><td>
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr><th align="left"><h3><%= t( 'klasses.title' ) %></h3></th></tr>
-			<% @course.klasses.group_by{|e| e.date.strftime("%x")}.sort.each do |date,klass_group| %>
-				<tr><td><%= klass_group[0].date.strftime("%x") %>: <%= t( 'date.day_names' )[klass_group[0].date.strftime("%w").to_i] %><br /></td></tr>
-				<% klass_group.sort_by(&:start_time).each do |klass| %>
-					<div class="klass_<%= klass.id %>">
-						<tr>
-							<td style="font-size: x-small">
-								(<%= klass.attendances.size %>)
-								<%= link_to h( klass.time_interval ), klass, :class => "grid" %>
-								<%= link_to t( 'edit' ), edit_klass_path( klass, :redirect => "courses" ), :class => "grid" %>
-								<%= link_to t( 'delete' ), klass,
-									:confirm => "Are you sure?\n"+
-										association_delete_error_message(
-										klass.attendances,
-										t('klasses.error.try_to_delete_klass_with_students' )),
-									:method => :delete,
-									:class => "grid" %>	
-							</td>
-						</tr>
-					</div>
-				<% end %>
-			<% end %>
-		</table>
-	</td>
-	<td valign="top">
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr><th align="left"><h3><%= t( 'template_klasses.title' ) %></h3></th></tr>
-			<% @keys.each do |key| %>
-				<tr><td><%= @template_klass_groups[key][0].day %></td></tr>
-				<% @template_klass_groups[key].sort_by(&:start_time).each do |template_klass| %>
-					<div class="template_klass_<%= template_klass.id %>">
-						<tr>
-							<td style="font-size: x-small">
-								<%= link_to h( template_klass.time_interval ), template_klass, :class => "grid" %>
-								<%= link_to t( 'edit' ), edit_template_class_path( template_klass, :redirect => "courses" ), :class => "grid" %>
-								<%= link_to t( 'delete' ), template_klass, :confirm => 'Are you sure?', :method => :delete, :class => "grid" %>
-							</td>
-						</tr>
-					</div>
-				<% end %>
-			<% end %>
-		</table>	
-	</td></tr>
-</table>
-</center>
-
-<%= link_to t('show'), @course, :class=>"link" %> |
-<%= link_to t('back'), courses_path, :class=>"link" %>
+<div id="links">
+	<%= link_to t(:show), @course if can? :show, Course %>
+	<%= link_to t(:list,:object=>t('courses.title')), courses_path if can? :index, Course %>
+</div>
 
 </fieldset>
 </div>

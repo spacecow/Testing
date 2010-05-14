@@ -115,6 +115,7 @@ form.formtastic fieldset.inputs ol li p.inline-hints {
   font-style: italic;
   margin-left: 145px;
 }
+form.formtastic fieldset.inputs ol li ul.errors { margin-left: 12.2em; }
 form.formtastic fieldset.inputs ol li.boolean label {
   padding-left: 144px;
   width: 410px;
@@ -128,9 +129,10 @@ form.formtastic fieldset.inputs ol li.radio fieldset legend span.label {
 form.formtastic fieldset.inputs ol li.radio fieldset ol li label { text-align: left; }
 form.formtastic fieldset.inputs ol li.check_boxes fieldset ol li { margin-left: 0.8em; }
 form.formtastic fieldset.inputs ol li.check_boxes fieldset ol li label { text-align: left; }
+form.formtastic fieldset.inputs ol span.horizontal li.radio fieldset legend { position: absolute; }
 form.formtastic fieldset.inputs ol span.horizontal li.radio fieldset ol li {
   float: left;
-  margin-left: 5px;
+  margin: 0.4em 0 1em 0.6em;
 }
 form.formtastic fieldset.inputs ol li.text textarea {
   width: 300px;

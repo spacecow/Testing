@@ -182,6 +182,9 @@ form.formtastic{
 					font-size:10px;
 					font-style:italic;
 					margin-left:@label_width + 5px;
+				}
+				ul.errors{
+					margin-left:12.2em;
 				}				
 			}
 			li.boolean{
@@ -224,10 +227,13 @@ form.formtastic{
 			span.horizontal{
 				li.radio{
 					fieldset{
+						legend{
+							position:absolute;
+						}
 						ol{
 							li{
 								float:left;
-								margin-left:5px;
+								margin:0.4em 0 1em 0.6em;
 							}
 						}
 					}

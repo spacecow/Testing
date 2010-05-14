@@ -1,16 +1,4 @@
 <td><%= h course.name %></td>
-  <td class="list-actions">
-  	<div class="<%= course.category %>_<%= course.level %>">
-    <%= link_to t( 'show' ), course %>
-    <% if true %>
-	    <%= link_to t( 'edit' ), edit_course_path( course ) %>
-	    <%= link_to t( 'delete' ),
-	       course,
-
-	    <% end %>
-    </div>
-  </td>
-  
 <td id="links">
 	<% if can? :show, course %>
 		<%= link_to t(:show), course %>
