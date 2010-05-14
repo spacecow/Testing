@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
   
   def index
     @sorting = Sorting.new
-  	@courses_groups = Course.all.group_by(&:category)
+  	@courses_groups = Course.all( :select=>"name, id, klasses_count, template_classes_count" ).group_by(&:category)
 		@keys = @sorting.sort_in_mogi_order( @courses_groups.keys )
   end
 
@@ -40,20 +40,12 @@ class CoursesController < ApplicationController
     @keys = @sorting.sort_by_day @template_klass_groups.keys    
   end
 
-  # POST /courses
-  # POST /courses.xml
   def create
-    @course = Course.new(params[:course])
-
-    respond_to do |format|
-      if @course.save
-        flash[:notice] = 'Course was successfully created.'
-        format.html { redirect_to(@course) }
-        format.xml  { render :xml => @course, :status => :created, :location => @course }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
-      end
+		if @course.save
+      flash[:notice] = t('notice.create_success', :object => t(:course))
+      redirect_to @course
+    else
+      render :action => "new"
     end
   end
 
