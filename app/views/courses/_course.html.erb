@@ -7,7 +7,7 @@
 		<%= link_to t(:edit), edit_course_path( course ) %>
 	<% end %>
 	<% if can? :destroy, course %>
-		<%= link_to t(:delete), course, :method => :delete, :confirm => t(:sure?)+
+		<%= link_to t(:delete), course, :method => :delete, :confirm => t(:sure?)+"\n"+
 		 	association_delete_error_messages(
 			[ course.template_classes_count, course.klasses_count ],
 			[ t( 'courses.error.try_to_delete_course_with_template_classes' ),

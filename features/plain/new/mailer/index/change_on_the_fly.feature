@@ -2,7 +2,7 @@ Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
-	And a course exists with name: "Ruby I"
+	And a course exists with name: "Ruby I", level_en: "gram.", level_ja: "文法"
 	And a klass: "1" exists with date: "2011-12-24", course: that course, start_time: "12:00", end_time: "13:00"
 	And a courses_teacher exists with course: that course, teacher: user "thomas"
 	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 33

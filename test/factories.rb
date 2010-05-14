@@ -10,6 +10,8 @@ end
 
 Factory.define :course do |f|
 	f.sequence(:name){|n| "name#{n} I" }
+	f.level_ja "レベル"
+	f.level_en "level"
 end
 
 Factory.define :course_time do |f|

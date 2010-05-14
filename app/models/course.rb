@@ -6,8 +6,9 @@ class Course < ActiveRecord::Base
   has_many :teachers, :through=>:courses_teachers
   has_many :schedules
     
-  validates_presence_of :name
+  validates_presence_of :name, :level_ja, :level_en
   validates_uniqueness_of :name
+  validates_inclusion_of :inactive, :in => [false, true]
   
   def category
     name.split[0]
@@ -16,6 +17,14 @@ class Course < ActiveRecord::Base
   def level
     name.split[1]
   end
+
+	def level_to_s( language )
+		if language == "ja"
+			level_ja
+		else
+			level_en
+		end
+	end
 
   def to_s
     "#{name}"

@@ -1,29 +1,27 @@
-<div class="form">
-<fieldset>
-<legend><%= t('course') %></legend><p>
+<div class="show">
+<fieldset class="show">
+<legend><%= t(:course) %></legend>
 
-  <b><%= t( 'name' ) %>: </b>
-  <%=h @course.name %>
-</p>
+<div class="pairs">
+	<%= render 'includes/pair', :left => t(:name), :right => h(@course.name) %>
+	<%= render 'includes/pair', :left => t(:inactive), :right => h(@course.inactive) %>
+	<%= render 'includes/pair', :left => t(:description), :right => h(@course.description) %>
+	<%= render 'includes/pair', :left => t(:note), :right => h(@course.note) %>
+</div>
 
-<p>
-  <b><%= t( 'description' ) %>: </b>
-  <%=h @course.description %>
-</p>
+<div id="links">
+		<%= link_to t(:edit), edit_course_path(@course) if can? :edit, @course %>
+		<%= link_to t(:list,:object=>t('courses.title')), courses_path if can? :index, Course %>
+		<% if can? :destroy, @course %>
+			<%= link_to t(:delete), @course, :method => :delete, :confirm => t(:sure?)+"\n"+
+			 	association_delete_error_messages(
+				[ @course.template_classes_count, @course.klasses_count ],
+				[ t( 'courses.error.try_to_delete_course_with_template_classes' ),
+					t( 'courses.error.try_to_delete_course_with_klasses' )]).join("\n") %>
+		<% end %>
+</div>
 
-<p>
-  <b><%= t( 'inactive' ) %>: </b>
-  <%=h @course.inactive %>
-</p>
-
-<p>
-  <b><%= t( 'note' ) %>: </b>
-  <%=h @course.note %>
-</p>
-
-<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
-<%= link_to t('back'), courses_path, :class=>"link" %><br />	
-
+<% if false %>
 <table border="0" cellspacing="0" cellpadding="5">
 	<tr><td>
 		<table border="0" cellspacing="0" cellpadding="0">
@@ -69,6 +67,8 @@
 <% if !( @course.template_classes.empty? && @course.klasses.empty? ) %>
 	<%= link_to t('edit'), edit_course_path(@course), :class=>"link" %> |
 	<%= link_to t('back'), courses_path, :class=>"link" %><br />	
+<% end %>
+
 <% end %>
 
 </fieldset>

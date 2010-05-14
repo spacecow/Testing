@@ -252,6 +252,9 @@ form.formtastic{
 			li.string{
 				input{ .global_width; }
 				input.numeric{ .numeric_mixin; }
+				input.non-japanese{
+					ime-mode: disabled;
+				}
 			}
 			li.password{ input{ .global_width; }}
 			li.datetime, li.date{

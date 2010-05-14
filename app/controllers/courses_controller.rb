@@ -7,34 +7,17 @@ class CoursesController < ApplicationController
 		@keys = @sorting.sort_in_mogi_order( @courses_groups.keys )
   end
 
-  # GET /courses/1
-  # GET /courses/1.xml
   def show
-    @course = Course.find(params[:id], :include=>[ :klasses, :template_classes ])
-  	@sorting = Sorting.new
-    @template_klass_groups = @course.template_classes.group_by( &:day )
-    @keys = @sorting.sort_by_day @template_klass_groups.keys    
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @course }
-    end
-  end
+    #@course = Course.find(params[:id], :include=>[ :klasses, :template_classes ])
+  	#@sorting = Sorting.new
+    #@template_klass_groups = @course.template_classes.group_by( &:day )
+    #@keys = @sorting.sort_by_day @template_klass_groups.keys    
+	end
 
-  # GET /courses/new
-  # GET /courses/new.xml
   def new
-    @course = Course.new()
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @course }
-    end
   end
 
-  # GET /courses/1/edit
   def edit
-    @course = Course.find(params[:id])
   	@sorting = Sorting.new
     @template_klass_groups = @course.template_classes.group_by( &:day )
     @keys = @sorting.sort_by_day @template_klass_groups.keys    
@@ -49,20 +32,12 @@ class CoursesController < ApplicationController
     end
   end
 
-  # PUT /courses/1
-  # PUT /courses/1.xml
   def update
-    @course = Course.find(params[:id])
-
-    respond_to do |format|
-      if @course.update_attributes(params[:course])
-        flash[:notice] = 'Course was successfully updated.'
-        format.html { redirect_to(@course) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
-      end
+    if @course.update_attributes(params[:course])
+      flash[:notice] = t('notice.update_success', :object => t(:course))
+      redirect_to @course
+    else
+      render :action => "edit"
     end
   end
 
@@ -74,7 +49,7 @@ class CoursesController < ApplicationController
 	    	 
 		if( !errors.empty? )
       flash[:error] = errors.join("<br />")
-      redirect_to courses_path and return
+      redirect_to :back and return
     end
 
     @course.destroy

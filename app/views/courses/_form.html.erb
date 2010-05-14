@@ -1,5 +1,7 @@
 ﻿<% f.inputs do %>
 	<%= f.input :name, :label => t(:name) %>
+	<%= f.input :level_ja, :label => t( :level_ja ) %>
+	<%= f.input :level_en, :label => t( :level_en ) %>
 	<span class="horizontal"><%= f.input :inactive, :label => t(:inactive), :as=>:radio %></span>
 	<%= f.input :description, :label => t(:description), :required=>false %>
 	<%= f.input :note, :label => t(:note), :required=>false %>

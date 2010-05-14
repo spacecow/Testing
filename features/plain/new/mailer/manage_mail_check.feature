@@ -1,7 +1,7 @@
 Background:
 Given a setting exists with name: "main"
-	And a course: "1" exists with name: "初級 I"
-	And a course: "2" exists with name: "初級 II"
+	And a course: "1" exists with name: "初級 I", level_ja: "文法", level_en: "gram."
+	And a course: "2" exists with name: "初級 II", level_ja: "会話", level_en: "conv."
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", email: "johan@space.com"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu", email: "aya@space.com"
 
@@ -35,7 +35,7 @@ Then I should see "4/6(火) 12:00～12:50(会話), 13:00～15:00(文法)" in the
 
 @mark
 Scenario Outline: If a teacher is assigned a class for another level, that should be marked
-Given a course: "nyuumon" exists with name: "入門 I"
+Given a course: "nyuumon" exists with name: "入門 I", level_ja: "文法", level_en: "gram."
 	And a klass: "5" exists with date: "2010-04-05", course: course "2", start_time: "12:00", end_time: "12:50"
 	And a klass: "7" exists with date: "2010-04-07", course: course "1", start_time: "12:00", end_time: "12:50"
 	And a klass: "8" exists with date: "2010-04-08", course: course "nyuumon", start_time: "12:00", end_time: "12:50"

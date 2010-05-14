@@ -6,6 +6,10 @@ Then /^there should be no "([^\"]*)" field$/ do |field|
   end
 end
 
+Then /^the "([^\"]*)" field should be emtpy$/ do |field|
+  Then "the \"#{field}\" field should contain \"\""
+end
+
 Then /^I should see "([^\"]*)" as error message for (\w+) (\w+)$/ do |message, model, field|
   Then "I should see /^#{message}$/ within \"li##{model}_#{field}_input ul.errors li\""
 end
