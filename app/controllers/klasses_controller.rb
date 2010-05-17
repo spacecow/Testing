@@ -252,7 +252,7 @@ private
 		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
 			@courses_groups[key].map{|course| @courses.push course }
 		end
-		@courses		
+		@courses.map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 	end
 	
 	def load_courses
@@ -261,6 +261,7 @@ private
 	  	@courses = sort_courses
 		else
 			@courses = Course.all( :conditions => ["name like (?)",@class_course+"%"], :order=>:name )
-		end			
+		end
+		@courses.map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 	end	
 end

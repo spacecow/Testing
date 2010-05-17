@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100514081915) do
+ActiveRecord::Schema.define(:version => 20100517072239) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20100514081915) do
     t.integer  "template_classes_count", :default => 0
     t.string   "level_ja"
     t.string   "level_en"
+    t.string   "capacity"
   end
 
   create_table "courses_students", :id => false, :force => true do |t|
@@ -188,7 +189,6 @@ ActiveRecord::Schema.define(:version => 20100514081915) do
   create_table "klasses", :force => true do |t|
     t.integer  "course_id"
     t.integer  "classroom_id"
-    t.integer  "capacity",                  :default => 0
     t.datetime "date"
     t.time     "start_time"
     t.time     "end_time"
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20100514081915) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "capacity"
   end
 
   create_table "klasses_students", :id => false, :force => true do |t|
@@ -402,10 +403,10 @@ ActiveRecord::Schema.define(:version => 20100514081915) do
     t.datetime "updated_at"
     t.integer  "teacher_id"
     t.integer  "classroom_id"
-    t.integer  "capacity",                    :default => 0
     t.time     "start_time"
     t.time     "end_time"
     t.integer  "mail_sending",   :limit => 1, :default => 0
+    t.string   "capacity"
   end
 
   create_table "todos", :force => true do |t|

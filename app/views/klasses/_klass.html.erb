@@ -25,9 +25,13 @@
 		<% klass.attendances.each_with_index do |a,i| %>
 			<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
 		<% end %>
-		<% (8-klass.attendances.count).times do |i| %>
+		<% (klass.capacity.to_i-klass.attendances.count).times do |i| %>
 			<td id="student<%= (i+1) %>"></td>
-		<% end %>
+    <% end %>
+    <% (8-klass.capacity.to_i).times do |i| %>
+  		<td>x</td>
+  	<% end %>
+
 		<td id="links">
 			<% if can? :show, klass %>
 				<%= link_to t('show'), klass %>
