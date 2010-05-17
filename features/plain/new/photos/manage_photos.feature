@@ -81,8 +81,5 @@ When I go to the show page of gallery "Christmas"
 	And I follow "sadako"
 Then I should see "By: Anonymous" within "div#uploader"
 	
+@pending
 Scenario: Set size for caption and uploader (NOT IMPLEMENTED)
-Given not implemented
-
-Scenario: Circule through pictures only in the same gallery (NOT IMPLEMENTED)
-Given not implemented

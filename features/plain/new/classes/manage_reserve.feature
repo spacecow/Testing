@@ -21,5 +21,5 @@ Then 1 klasses should exist with date: "2010-03-07 15"
 	And 1 klasses should exist with date: "2010-03-12 15"
 	And 6 klasses should exist
 
+@pending
 Scenario: Systematically spread out reservations according to level of the user (NOT IMPLEMENTED)
-Given not implemented

@@ -71,6 +71,36 @@ form.todo{
 form.user{
 	fieldset.inputs{
 		ol{
+			div#teacher_cost{
+				fieldset.inputs{
+					ol{
+						span#cost{
+							li{
+								width:7em;
+								float:left;
+								label{
+									float:right;
+									width:3em;
+								}
+								input{
+									width:3em;
+								}
+								ul.errors{
+									margin:0.3em 0 0 0;
+								}
+							}
+						}
+						span#course{
+							li{
+								width:10em;
+								label{
+									width:10em;
+								}
+							}
+						}				
+					}
+				}
+			}			
 			fieldset.inputs{
 				ol{
 					padding:0;
@@ -100,33 +130,6 @@ form.user{
 							width:2em;
 						}
 					}
-					span#cost{
-						li{
-							width:10em;
-							float:left;
-								padding:0;
-								margin:0;
-
-							label{
-								width:3em;
-							}
-							input{
-								width:3em;
-							}
-						}
-					}
-					span#course{
-						li.string{
-							float:left;
-							input{
-								background:#efe;
-								width:10em;
-								border:0;
-								color:#000;
-							}
-						}
-					}
-					
 					span#klass{
 						li.string{
 							margin-right:14em;
@@ -145,7 +148,15 @@ form.user{
 }
 form.formtastic{
 	fieldset.buttons{
-		padding-left:@label_width + 5px;
+		padding-left:0;
+		ol{
+			li.normal{
+				padding:0.5em 0 0 1.2em;
+			}
+			li{
+				padding-left:@label_width + 5px;
+			}
+		}
 	}
 	fieldset{
 		ol{
@@ -260,6 +271,7 @@ form.formtastic{
 			li.datetime, li.date{
 				fieldset{
 					legend{
+						position:absolute;
 						span.label{
 							width:@label_width;
 						}

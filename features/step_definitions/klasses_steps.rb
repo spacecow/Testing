@@ -6,12 +6,20 @@ When /^I press the (.+) button$/ do |button_id|
   field_with_id( button_id ).click
 end
 
-Then /^the (.+) button should be disabled$/ do |button_id|
-  field_with_id( button_id ).disabled?.should be_true
+Then /^the "(.+)" (?:button|field) should be disabled$/ do |label|
+  begin
+  	field_labeled( label ).disabled?.should be_true
+	rescue Webrat::NotFoundError
+		field_with_id( label ).disabled?.should be_true
+	end
 end
 
-Then /^the (.+) button should not be disabled$/ do |button_id|
-  field_with_id( button_id ).disabled?.should_not be_true
+Then /^the "(.+)" (?:button|field) should not be disabled$/ do |label|
+  begin
+  	field_labeled( label ).disabled?.should_not be_true
+  rescue Webrat::NotFoundError
+  	field_with_id( label ).disabled?.should_not be_true
+	end
 end
 
 Then /^the teacher select menu should be disabled$/ do

@@ -158,9 +158,9 @@ Examples:
 |	junko		|
 |	thomas	|
 |	aya			|
-	
-Scenario: Automatic mail when a event comment is written (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
+Scenario: Automatic mail when a event comment is written (NOT IMPLEMENTED)
+
+@pending
 Scenario: Automatic mail when a photo is uploaded (NOT IMPLEMENTED)
-Given not implemented

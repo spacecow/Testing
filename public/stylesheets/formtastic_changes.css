@@ -41,6 +41,18 @@ td#teacher input.untaught {
 }
 form.comment fieldset.inputs ol li label { display: none; }
 form.todo fieldset.buttons { margin-top: 5px; }
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#cost li {
+  width: 7em;
+  float: left;
+}
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#cost li label {
+  float: right;
+  width: 3em;
+}
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#cost li input { width: 3em; }
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#cost li ul.errors { margin: 0.3em 0 0 0; }
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#course li { width: 10em; }
+form.user fieldset.inputs ol div#teacher_cost fieldset.inputs ol span#course li label { width: 10em; }
 form.user fieldset.inputs ol fieldset.inputs ol {
   padding: 0;
   margin: 0 0 0 0.9em;
@@ -59,21 +71,6 @@ form.user fieldset.inputs ol fieldset.inputs ol li.boolean label {
   margin: 0;
   width: 2em;
 }
-form.user fieldset.inputs ol fieldset.inputs ol span#cost li {
-  width: 10em;
-  float: left;
-  padding: 0;
-  margin: 0;
-}
-form.user fieldset.inputs ol fieldset.inputs ol span#cost li label { width: 3em; }
-form.user fieldset.inputs ol fieldset.inputs ol span#cost li input { width: 3em; }
-form.user fieldset.inputs ol fieldset.inputs ol span#course li.string { float: left; }
-form.user fieldset.inputs ol fieldset.inputs ol span#course li.string input {
-  background: #eeffee;
-  width: 10em;
-  border: 0;
-  color: #000000;
-}
 form.user fieldset.inputs ol fieldset.inputs ol span#klass li.string {
   margin-right: 14em;
   float: right;
@@ -83,7 +80,9 @@ form.user fieldset.inputs ol fieldset.inputs ol span#klass li.string input {
   border: 0;
   color: #000000;
 }
-form.formtastic fieldset.buttons { padding-left: 145px; }
+form.formtastic fieldset.buttons { padding-left: 0; }
+form.formtastic fieldset.buttons ol li.normal { padding: 0.5em 0 0 1.2em; }
+form.formtastic fieldset.buttons ol li { padding-left: 145px; }
 form.formtastic fieldset ol li { margin-bottom: 0px; }
 form.formtastic fieldset.inputs ol .subjects { padding-left: 145px; }
 form.formtastic fieldset.inputs ol .subjects label {
@@ -144,11 +143,13 @@ form.formtastic fieldset.inputs ol li.string input { width: 300px; }
 form.formtastic fieldset.inputs ol li.string input.numeric { width: 10em; }
 form.formtastic fieldset.inputs ol li.string input.non-japanese { ime-mode: disabled; }
 form.formtastic fieldset.inputs ol li.password input { width: 300px; }
+form.formtastic fieldset.inputs ol li.datetime fieldset legend { position: absolute; }
 form.formtastic fieldset.inputs ol li.datetime fieldset legend span.label { width: 140px; }
 form.formtastic fieldset.inputs ol li.datetime fieldset ol {
   text-align: right;
   padding-left: 146px;
 }
+form.formtastic fieldset.inputs ol li.date fieldset legend { position: absolute; }
 form.formtastic fieldset.inputs ol li.date fieldset legend span.label { width: 140px; }
 form.formtastic fieldset.inputs ol li.date fieldset ol {
   text-align: right;

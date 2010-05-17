@@ -40,7 +40,7 @@ When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 9
 	And 1 teachings should exist
-	And the confirm button should be disabled
+	And the "confirm" button should be disabled
 
 Scenario: Confirm a teacher having canceled his class
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 9
@@ -48,7 +48,7 @@ When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 17
 	And 1 teachings should exist
-	And the confirm button should be disabled
+	And the "confirm" button should be disabled
 
 Scenario: Toggle the class back to untaught
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 17
@@ -56,7 +56,7 @@ When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 33
 	And 1 teachings should exist
-	And the confirm button should not be disabled
+	And the "confirm" button should not be disabled
 
 @decline
 Scenario: Decline a teacher

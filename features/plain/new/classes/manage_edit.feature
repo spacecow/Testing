@@ -9,8 +9,8 @@ Scenario: Edit an existing template class
 Given a user is logged in as "johan"
 When I go to the edit page of that klass
 Then I should see "Editing Class" within "legend"
-	And there should be no "Course" field
-	And there should be no "Date" field
+	And the "Course" field should be disabled
+	And the "Date" field should be disabled
 	And the "Start time" field should contain "18:50"
 	And the "End time" field should contain "20:50"
 	And the "Cancel" checkbox should not be checked
@@ -25,8 +25,8 @@ When I fill in "Title" with "A funnier title"
 	And I choose "Yes"
 	And I press "Update"
 Then I should be redirected to the error show page of that klass
-	And there should be no "Course" field
-	And there should be no "Date" field
+	And the "Course" field should be disabled
+	And the "Date" field should be disabled
 	And the "Start time" field should contain "18:50"
 	And the "End time" field should contain "20:50"
 	And the "Cancel" checkbox should be checked
@@ -79,14 +79,10 @@ Then I should be redirected to the show page of that klass
 When I go to the edit page of that klass
 	And I follow "List Classes" at the bottom of the page
 Then I should be redirected to the klasses page 
-	And "March" should be selected in "class_month"
- 	And "28" should be selected in "class_day"
- 	And "2012" should be selected in "class_year"
+	And "March 28, 2012" should be selected as date in the select menu
 When I go to the edit page of that klass
 	And I follow "Del" at the bottom of the page
 Then I should be redirected to the klasses page
-	And "March" should be selected in "class_month"
- 	And "28" should be selected in "class_day"
- 	And "2012" should be selected in "class_year"
+	And "March 28, 2012" should be selected as date in the select menu
 	And I should see "Successfully deleted Class" as notice flash message
 	And 0 klasses should exist

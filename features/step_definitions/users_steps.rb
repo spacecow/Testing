@@ -47,31 +47,14 @@ end
 
 #---------------------- Teacher Courses Page
 
-Then /^I should see courses "([^\"]*)" within the form$/ do |text|
-	Then "I should see \"#{text}\" in the string fields within \"fieldset.form\""
-end
-
-When /^I check course (\d+)$/ do |index|
-	field_with_id( "user_courses_teachers_attributes_#{index}_chosen" ).check
-end
-
-When /^I uncheck course (\d+)$/ do |index|
-	field_with_id( "user_courses_teachers_attributes_#{index}_chosen" ).uncheck
-end
-
-Then /^course (\d+) should be checked$/ do |index|
-  field_with_id( "user_courses_teachers_attributes_#{index}_chosen" ).should be_checked
-end
-
-Then /^course (\d+) should not be checked$/ do |index|
-  field_with_id( "user_courses_teachers_attributes_#{index}_chosen" ).should_not be_checked
-end
-
-
-Then /^I fill in the cost with "([^\"]*)" for course (\d+)$/ do |cost, index|
-	field = field_with_id( "user_courses_teachers_attributes_#{index}_cost" )
-	fill_in(field, :with => cost)
-end
+#Then /^I should see courses "([^\"]*)" within the form$/ do |text|
+#	Then "I should see \"#{text}\" in the string fields within \"fieldset.form\""
+#end
+#
+#Then /^I fill in the cost with "([^\"]*)" for course (\d+)$/ do |cost, index|
+#	field = field_with_id( "user_courses_teachers_attributes_#{index}_cost" )
+#	fill_in(field, :with => cost)
+#end
 
 When /^I browse to the (teachers|students) page$/ do |category|
 	When "I go to the users page"

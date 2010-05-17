@@ -109,7 +109,7 @@ Then I should see "Classes to Reserve" within "div.reservable"
 	And I check "3/18(Thursday) - Ruby I - 12:00~13:00"
 	And I press "Reserve"
 Then I should be redirected to path "/mypage"
-	And I should see "Successfully reserved class(es)." as notice flash message
+	And I should see "Successfully reserved Class(es)." as notice flash message
 	And 1 attendances should exist with student: user "johan", klass: klass "klass16"
 	And 1 attendances should exist
 	#And a mail should exist with subject: "Reservation", message: "You have reserved a class!"
@@ -117,8 +117,8 @@ Then I should be redirected to path "/mypage"
 	#And a recipient should exist with user: user "johan", mail: that mail
 	#And 1 recipients should exist
 
+@pending
 Scenario: Sort class history? (NOT IMPLEMENTED)
-Given not implemented
 
 @another_class
 Scenario: Reserve another class
@@ -187,14 +187,11 @@ Examples:
 |	aya		 	|	reserve page for user: "aya"		|	reserve page for user: "prince"	|
 |	johan 	|	reserve page for user: "johan"	|	reserve page for user: "prince"	|
 
+@pending
 Scenario: Links on reservation page (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Include time, 12 from sat to 17 on tue (NOT IMPLEMENTED)
-Given not implemented
 
-Scenario: Change to Tokyo time! (NOT IMPLEMENTED)
-Given not implemented
-
+@pending
 Scenario: Implement mailing (NOT IMPLEMENTED)
-Given not implemented

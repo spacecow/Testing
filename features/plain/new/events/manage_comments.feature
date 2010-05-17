@@ -46,13 +46,8 @@ When I go to the todos page
 	And I should see "Fuck Christmas!"
 	And a comment should exist with comment: "Fuck Christmas!<br />and his goat!"
 
-
+@pending
 Scenario: A comment cannot be blank (AJAX)
-Given a user is logged in as "kurosawa"
-	When I go to the show page of event "christmas"
-	And I press "コメントを書き足す"
-Then I should be redirected to the show page of that event
-	And I should see "コメントは空白のままにしておく事は出来ません"
 
 Scenario: Add a comment
 Given a user is logged in as "reiko"
@@ -104,5 +99,5 @@ Then I should be redirected to the show page of its event
 	And I should not see "Fuck Christmas!"
 	And 0 comments should exist
 
+@pending
 Scenario: Delete with ajax (NOT IMPLEMENTED)
-Given not implemented

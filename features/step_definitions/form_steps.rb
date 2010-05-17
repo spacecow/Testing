@@ -1,9 +1,25 @@
-Then /^there should be no "([^\"]*)" field$/ do |field|
-  begin
-  	field_labeled(field).should be_nil
-  rescue Webrat::NotFoundError
-  	true.should be_true
-  end
+#Then /^there should be no "([^\"]*)" field$/ do |field|
+#  begin
+#  	field_labeled(field).should be_nil
+#  rescue Webrat::NotFoundError
+#  	true.should be_true
+#  end
+#end
+
+Then /^the "([^\"]*)" id should not exist$/ do |id|
+  assert_have_no_xpath( "//div[@id='#{id}']" )
+end
+
+Then /^within "([^\"]*)", the "([^\"]*)" field should contain "([^\"]*)"$/ do |scope, field, value|
+  within "##{scope}" do |element|
+  	element.field_labeled(field).value.should =~ /#{value}/
+	end
+end
+
+When /^I within "([^\"]*)", fill in "([^\"]*)" with "([^\"]*)"$/ do |scope, field, value|
+  within "##{scope}" do |element|
+  	element.fill_in(field, :with => value)
+	end
 end
 
 Then /^the "([^\"]*)" field should be emtpy$/ do |field|

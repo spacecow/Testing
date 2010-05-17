@@ -15,11 +15,11 @@
 		<h1><%= teacher %></h1>
 		<ul>
 			<% total = 0 %>
-			<% teacher.teachings.between_dates(@start_date,@end_date).confirmed.each do |teaching| %>
+			<% teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.each do |teaching| %>
 				<% if teaching.status? :taught %>
 					<li><b><%= teaching.cost+"円" %></b> - <%= teaching %></li>
 					<% total += teaching.cost.to_i %>
-				<% else %>
+				<% elsif !teaching.status? :canceled %>
 					<li><i><%= teaching.cost+"円" %> - <%= teaching %> (<%= t(:not_confirmed) %>)</li></i>
 				<% end %>
 			<% end %>

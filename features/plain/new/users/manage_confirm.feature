@@ -4,11 +4,8 @@ Given a setting exist with name: "main"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
 	And a user: "prince" exist with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 
-Scenario: Make cost inherit from courses_teachers (NOT IMPLEMENTED)
-Given not implemented
-
+@pending
 Scenario: Links on confirmation page (NOT IMPLEMENTED)
-Given not implemented
 
 @view_confirmable
 Scenario: View of classes that can be confirmed
@@ -87,8 +84,8 @@ When I go to the confirm page for user: "aya" on "2010-03-10"
 	And I should see "3/5(Friday)" within "div.declined"
 	And I should see "3/20(Saturday)" within "div.declined"
 
+@pending
 Scenario: Only show classes that have been confirmed taught in the history? (NOT IMPLEMENTED)
-Given not implemented
 
 @view-late
 Scenario: Confirmations can only be made before the class starts
@@ -192,7 +189,7 @@ Then I should see "3/18(Thursday)" within the confirmable section
 When I confirmed klass "klass19" for user "prince" from "2010-03-10"
 	And I press "Confirm"
 Then I should be redirected to path "/mypage"
-	And I should see "Successfully confirmed class(es)." as notice flash message
+	And I should see "Successfully confirmed Class(es)." as notice flash message
 	And a teaching should exist with klass: klass "klass04", teacher: user "prince", status_mask: 33
 	And a teaching should exist with klass: klass "klass05", teacher: user "prince", status_mask: 2
 	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 4
@@ -215,8 +212,8 @@ When I go to the confirm page for user: "johan" on "2010-03-06"
 	#And I should not see "3/19(Friday)" within the form
 	And I should see "3/20(Saturday)" within the confirmable section
 	
+@pending
 Scenario: Two teachings should not be able to be current at the same time (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Declined classes are usually NOT current (NOT IMPLEMENTED) see @not_current
-Given not implemented

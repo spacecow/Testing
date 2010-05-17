@@ -119,20 +119,17 @@ Then "Exchange Student" should be selected in "user_occupation"
 #And I press "Create"
 #Then I should not see "Avatar content type is not a picture"
 
+@pending
 Scenario: Klargoer vad som aer foer och efternamn (NOT IMPLEMENTED)
-Given not implemented
-	
+
+@pending	
 Scenario: Nationality drop-down (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Avatar strular vid registreringoegonblicket (NOT IMPLEMENTED)
-Given not implemented
 
-Scenario: Check if it is ok to have japanese in the username (NOT IMPLEMENTED)
-Given not implemented
-
+@pending
 Scenario: Not be able to enter a 20+ digit number as telephone number (NOT IMPLEMENTED)
-Given not implemented
 
 
 

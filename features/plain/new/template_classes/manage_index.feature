@@ -120,8 +120,8 @@ Examples:
 | mika			|
 |	reiko			|
 
+@pending
 Scenario: Change selection of day to ajax code (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: A duplication of a class should duplicate all fields (NOT IMPLEMENTED)
-Given not implemented

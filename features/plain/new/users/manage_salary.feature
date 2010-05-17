@@ -49,6 +49,7 @@ Examples:
 |	February	|	not see	|	see			|	not see	|
 |	March			|	not see	|	not see	|	see			|
 	
+@total
 Scenario: The total salary for a class is the hour salary times no of hours
 Given a course: "ruby" exists
 	And a klass: "ruby0101" exists with course: course "ruby", date: "2010-01-01", start_time: "10:00", end_time: "11:00"
@@ -102,8 +103,8 @@ Then I should not see "3/1(Monday)" within user "johan"
 	And I should see "3/4(Thursday) - Ruby II - 10:00~12:00" within user "johan"
 	And I should not see "3/5(Friday)" within user "johan"
 
+@pending
 Scenario: Make it work with not only month, but also year (NOT IMPLEMENTED)
-Given not implemented
 
 @allow-rescue
 Scenario Outline: Only admins can see salary overview
@@ -123,5 +124,5 @@ Examples:
 |	mika		|
 |	reiko		|
 
+@pending
 Scenario: Be able to individually change the cost for a teaching (NOT IMPLEMENTED)
-Given not implemented

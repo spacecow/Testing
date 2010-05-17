@@ -34,9 +34,9 @@ When I go to the new klass page
 Then I should see "New Class" within "legend"
 	And the "Course" field should have options "BLANK, Ruby I, Rails II, Fortran I"
 	And "" should be selected in the "Course" field
-	And "" should be selected in "klass_date_1i"
-	And "" should be selected in "klass_date_2i"
-	And "" should be selected in "klass_date_3i"
+	#And "" should be selected in "klass_date_1i"
+	#And "" should be selected in "klass_date_2i"
+	#And "" should be selected in "klass_date_3i"
 	And the "Start time" field should be empty
 	And I should see "Ex. 17:50" within "li#klass_start_time_string_input"
 	And the "End time" field should be empty
@@ -80,8 +80,5 @@ Examples:
 | junko			|
 | mika			|
 
-Scenario: Capacity changed automatically by change of course. Try with cucumber (AJAX)
-Given not implemented
-
+@pending
 Scenario: Other name for klass list (NOT IMPLEMENTED)
-Given not implemented

@@ -39,6 +39,6 @@ When I fill in "User name" with "kurosawa"
 	And I fill in "Password" with "majkvast"
 	And I press "Login"
 Then I should be redirected to the events page
-	
+
+@pending
 Scenario: Be able to change password when you are logged in (NOT IMPLEMENTED)
-Given not implemented

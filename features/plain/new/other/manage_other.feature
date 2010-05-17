@@ -1,14 +1,14 @@
+@pending
 Scenario: Cannot close notify/error, fade with jquery (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Jump back to where you were after update of profile (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Change from px to em (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Create a message system (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Explain the * in the forms (NOT IMPLEMENTED)
-Given not implemented

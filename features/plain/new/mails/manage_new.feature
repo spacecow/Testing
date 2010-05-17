@@ -84,6 +84,6 @@ Then I should be redirected to the box mails page
 When I go to the new mail page
 When I follow "List Mails" within "div#links"
 Then I should be redirected to the mails page
-	
+
+@pending
 Scenario: When the number of users increases, check_boxes are no longer an option - nested form? (NOT IMPLEMENTED)
-Given not implemented

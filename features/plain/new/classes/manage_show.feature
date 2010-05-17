@@ -44,17 +44,13 @@ Then I should be redirected to the edit page of that klass
 When I go to the show page of that klass
 	And I follow "List Classes" at the bottom of the page
 Then I should be redirected to the klasses page
-	And "March" should be selected in "class_month"
- 	And "28" should be selected in "class_day"
- 	And "2012" should be selected in "class_year"
+	And "March 28, 2012" should be selected as date in the select menu	
 	And 1 klasses should exist
 When I go to the show page of that klass
 	And I follow "Del" at the bottom of the page
 Then I should be redirected to the klasses page
-	And "March" should be selected in "class_month"
- 	And "28" should be selected in "class_day"
- 	And "2012" should be selected in "class_year"
- 	And I should see "Successfully deleted Class" as notice flash message
+	And "March 28, 2012" should be selected as date in the select menu	
+ 	And I should see "Successfully deleted Class." as notice flash message
 	And 0 klasses should exist
 
 @allow-rescue

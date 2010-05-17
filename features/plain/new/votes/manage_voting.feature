@@ -131,5 +131,5 @@ Then I should be redirected to the show page of todo: "chat"
 	And 0 votes should exist
 	And I should see "Points: 0" within todo "chat"
 
+@pending
 Scenario: Make voting AJAX! (NOT IMPLEMENTED)
-Given not implemented

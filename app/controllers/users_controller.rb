@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
       	if !params[:user][:student_klass_ids].blank?
-      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es))
 			  	#mail = Mail.create!(
 			    #	:sender_id => User.first.id,
 			    #	:subject => "Reservation",
@@ -63,11 +63,11 @@ class UsersController < ApplicationController
 			    #)
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
       	elsif !params[:user][:teachings_attributes].blank?
-      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
+      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es))
       	elsif !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
-      		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
+      		flash[:notice] = t('notice.update_success',:object=>t('courses.title'))
     		else
-      		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase)
+      		flash[:notice] = t('notice.update_success',:object=>t(:user))
       	end
       	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		redirect_to users_path( :status => "teacher" )
@@ -148,7 +148,7 @@ class UsersController < ApplicationController
 			redirect_to root_path
 		end
 		if @user.update_attributes(params[:user])
-    	flash[:notice] = t('notice.change_success', :object => t(:password).downcase )
+    	flash[:notice] = t('notice.change_success', :object => t(:password) )
     	@reset_password.update_attribute( :used, true )
     	#@reset_password.destroy
     	redirect_to root_path
@@ -181,12 +181,12 @@ class UsersController < ApplicationController
 	
 	def salary
 		@months = t('date.month_names').compact.zip((1..12).to_a )
-		@salary_month = params[:salary_month] || Date.current.month
+		@salary_month = params[:salary_month] || Time.zone.now.month
 		
-		@start_date = Date.parse( "#{Date.current.year}-#{@salary_month}-01" )
+		@start_date = Time.zone.parse( "#{Date.current.year}-#{@salary_month}-01" )
 		end_month = (@salary_month.to_i+1)%12
-		end_year  = Date.current.year+(@salary_month.to_i+1)/12
-		@end_date = Date.parse( "#{end_year}-#{end_month}-01" )
+		end_year  = Time.zone.now.year+(@salary_month.to_i+1)/12
+		@end_date = Time.zone.parse( "#{end_year}-#{end_month}-01" )
 		@teachers = User.with_role( :teacher )
 	end
 	
@@ -209,6 +209,7 @@ class UsersController < ApplicationController
 	end
 	
 	def edit_courses
+		@user = User.find(params[:id], :include => :teacher_courses )
 		@status = params[:status]
 		@courses = sort_courses
 		@courses.each do |course|
@@ -226,9 +227,9 @@ class UsersController < ApplicationController
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
 		if !params[:user][:student_course_ids].nil? || !params[:user][:teacher_course_ids].nil?
-			flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
+			flash[:notice] = t('notice.update_success',:object=>t('courses.title'))
     elsif !params[:user][:roles].nil?			
-    	flash[:notice] = t('notice.update_success',:object=>t('roles').downcase)
+    	flash[:notice] = t('notice.update_success',:object=>t('roles'))
 		end
 		redirect_to users_path
 	end

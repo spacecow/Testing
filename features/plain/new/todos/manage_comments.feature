@@ -115,11 +115,8 @@ Then I should be redirected to the show page of its todo
 	And I should not see "I wanna chat!"
 	And 0 comments should exist
 
+@pending
 Scenario: Updated at (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Mail should not be created if comment is blank (NOT IMPLEMENTED)
-Given not implemented
-
-
-Given not implemented

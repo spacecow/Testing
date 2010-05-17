@@ -9,10 +9,11 @@ class KlassesController < ApplicationController
 		end
 		@klass = Klass.new(
 			:capacity => nil,
-			:date => params[:class_date].blank? ? nil : Time.zone.parse( params[:class_date] ))
+			:date => params[:class_date].nil? ? nil : Time.zone.parse( params[:class_date] )
+		)
   end
 
-  def create  	
+  def create
   	if @klass.save
   		flash[:notice] = t('notice.create_success', :object => t(:klass))
   		redirect_to klasses_path
@@ -66,13 +67,10 @@ class KlassesController < ApplicationController
 		
 		if can?( :manage, Klass ) && @klasses.size == 0
 			TemplateClass.find_all_by_day( @class_date.strftime("%a").downcase ).each do |t|
-				p t
     		t.create_class @class_date
 			end
 			@klasses = Klass.find_all_by_date( @class_date, :include => [:course,:teachings,:teachers] )
 		end
-    
-    p @klasses
     
     #@class_groups = @klasses.group_by{|e| e.course__name.split[0] }
     @class_groups = @klasses.group_by{|e| e.course.category }

@@ -1,6 +1,12 @@
 ﻿<% f.inputs do %>
-	<span id="course"><%= f.input :course, :label => t( :course ), :collection => @courses if label_text == 'create' %></span>
-	<%= f.input :date, :label => t( :klass_date ), :as => :date, :order=>[ :month, :day, :year ], :include_blank => @class_date.blank? ? true : false if label_text == 'create' %>
+	<% if label_text == 'create' %>
+	<span id="course">
+		<%= f.input :course, :label => t( :course ), :collection => @courses %>
+	<% else %>
+		<%= f.input :course, :label => t( :course ), :as => :string, :input_html => {:class => "numeric", :disabled => true} %>
+	</span>
+	<% end %>
+	<%= f.input :date, :label => t( :klass_date ), :as => :date, :order=>[ :month, :day, :year ], :include_blank => @class_date.blank? ? true : false, :disabled => (label_text == 'create' ? false : true ) %>
 	<%= f.input :start_time_string, :label => t( 'start_time' ), :input_html => { :class => 'non-japanese numeric' }, :hint => "#{t :ex} 17:50" %>
 	<%= f.input :end_time_string, :label => t( 'end_time' ), :input_html => { :class => 'non-japanese numeric' }, :hint => "#{t :ex} 18:40" %>
 	<span class="horizontal"><label><%= f.input :cancel, :label => t( :cancel ), :as => :radio %></label></span>

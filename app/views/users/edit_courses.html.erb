@@ -2,27 +2,30 @@
 <fieldset class="form">
 <legend class="form"><%= t(:enlisted_courses,:status=>@status.capitalize) %> - <%= @user %></legend>
 
-<% semantic_form_for @user do |f| %>
+<%- semantic_form_for @user do |f| -%>
 	<% f.inputs do %>
 		<%= hidden_field_tag :status, @status %>
 		<%= f.input :student_courses, :as=>:check_boxes, :label=>false, :collection=>@courses if @status=="student" %>
 		<% if @status=="teacher" %>
-			<% @courses.each do |course| %>
+			<div id="teacher_cost">
+			<%- @courses.each do |course| -%>
 				<% teaching = @user.courses_teachers.select{|e| e.course == course} %>
-				<% f.inputs :for => [:courses_teachers, teaching] do |f2| %>
-					<%= f2.input :course_id, :as => :hidden %>
-					<%= f2.input :chosen, :label => " ", :required => false %>
-					<span id="course"><%= f2.input :course, :label => false, :as=>:string, :input_html=>{:disabled=>true} %></span>
-					<span id="cost"><%= f2.input :cost, :label => t(:yen_h) %></span>
-				<% end %>
-			<% end %>
+				<%- f.inputs :for => [:courses_teachers, teaching] do |f2| -%>
+					<div id="<%= course.name.gsub(/ /,'_') %>">
+						<%= f2.input :course_id, :as => :hidden %>
+						<span id="course"><%= f2.input :chosen, :label => course.name, :required => false %></span>
+						<span id="cost"><%= f2.input :cost, :label => t(:yen_h), :input_html => { :class => 'non-japanese' } %></span>
+					</div>
+				<%- end -%>
+			<%- end -%>
+			</div>
 		<% end %>
 		<%# f.input :teacher_courses, :as=>:check_boxes, :label=>false, :collection=>@courses  %>
 	<% end %>
 	<% f.buttons do %>
-		<%= f.commit_button t(:update) %>
+		<%= f.commit_button t(:update), :class => 'normal' %>
 	<% end %>
-<% end %>
+<%- end -%>
 
 <div id="links">
 </div>
