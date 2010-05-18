@@ -47,7 +47,7 @@ class TemplateClassesController < ApplicationController
 			flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
 			redirect_to template_classes_path( :template_day=>@template_class.day )
 		else
-			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
+			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name ).map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 		end
   end
 

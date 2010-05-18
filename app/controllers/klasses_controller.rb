@@ -252,15 +252,15 @@ private
 		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
 			@courses_groups[key].map{|course| @courses.push course }
 		end
-		@courses		
+		@courses
 	end
 	
 	def load_courses
 		@class_course = params[:class_course]
 		if @class_course.blank?
-	  	@courses = sort_courses
+	  	@courses = sort_courses.map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 		else
-			@courses = Course.all( :conditions => ["name like (?)",@class_course+"%"], :order=>:name )
-		end			
+			@courses = Course.all( :conditions => ["name like (?)",@class_course+"%"], :order=>:name ).map{|e| ["#{e.name} (#{e.capacity})",e.id]}
+		end
 	end	
 end

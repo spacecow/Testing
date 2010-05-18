@@ -5,7 +5,8 @@ Given a setting exist with name: "main"
 	And a user exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 	And a user exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
 
-Scenario: Edit an existing template class
+@edit
+Scenario: Edit an existing class
 Given a user is logged in as "johan"
 When I go to the edit page of that klass
 Then I should see "Editing Class" within "legend"

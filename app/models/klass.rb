@@ -219,7 +219,7 @@ private
 		errors.add :end_time_string, I18n.t('activerecord.errors.messages.blank') if end_time.nil?
 	end
 	def capacity_cannot_be_zero
-		errors.add :capacity, I18n.t('error.message.zero') if capacity == 0 unless errors.on( :capacity )
+		errors.add :capacity, I18n.t('error.message.zero') if capacity == "0" unless errors.on( :capacity )
 	end
 
 	def ok_time_format( time_string )

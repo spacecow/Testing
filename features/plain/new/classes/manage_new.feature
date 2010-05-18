@@ -6,11 +6,11 @@ Given a setting exist with name: "main"
 @new_class
 Scenario: Create a new class
 Given a user is logged in as "johan"
-	And a course: "ruby" exists with name: "Ruby I"
+	And a course: "ruby" exists with name: "Ruby I", capacity: 8
 	And a course exists with name: "Rails II"
 	And a course exists with name: "Fortran I"
 When I go to the new klass page
-	And I select "Ruby I" from "Course"
+	And I select "Ruby I (8)" from "Course"
 	And I select "February 20, 2010" as the date
 	And I fill in "Start time" with "13:00"
 	And I fill in "End time" with "14:00"
@@ -26,13 +26,13 @@ Then I should be redirected to the klasses page
 
 @new_view
 Scenario: New view
-Given a course exists with name: "Ruby I"
-	And a course exists with name: "Fortran I"	
-	And a course exists with name: "Rails II"
+Given a course exists with name: "Ruby I", capacity: 8
+	And a course exists with name: "Fortran I", capacity: 8
+	And a course exists with name: "Rails II", capacity: 6
 	And a user is logged in as "johan"
 When I go to the new klass page
 Then I should see "New Class" within "legend"
-	And the "Course" field should have options "BLANK, Ruby I, Rails II, Fortran I"
+	And the "Course" field should have options "BLANK, Ruby I (8), Rails II (6), Fortran I (8)"
 	And "" should be selected in the "Course" field
 	#And "" should be selected in "klass_date_1i"
 	#And "" should be selected in "klass_date_2i"
@@ -42,7 +42,7 @@ Then I should see "New Class" within "legend"
 	And the "End time" field should be empty
 	And I should see "Ex. 18:40" within "li#klass_end_time_string_input"
 	And the "Cancel" checkbox should not be checked
-	And the "Capacity" field should be empty
+	And the "Capacity" field should contain ""
 	And the "Title" field should be empty
 	And the "Description" field should contain ""
 	And the "Note" field should contain ""

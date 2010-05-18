@@ -5,13 +5,13 @@ Given a setting exist with name: "main"
 	
 @course_errors
 Scenario: Course errors
-Given a course exists with name: "Ruby I"
+Given a course exists with name: "Ruby I", capacity: 8
 	And a user is logged in as "johan"
 When I go to the new klass page
 	And I select "" from "Course"
 	And I press "Create"
 Then I should be redirected to the error klasses page
-	And I should see "Course*Ruby Ican't be blank"
+	And I should see "Course*Ruby I (8)can't be blank"
 
 @capacity_errors
 Scenario Outline: Capacity errors　旭蟹　red frog crab

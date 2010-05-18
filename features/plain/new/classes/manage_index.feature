@@ -328,43 +328,43 @@ Then I should be redirected to the edit page of that klass
 
 @new
 Scenario: When creating a new class the categories should stay fixed
-Given a course exists with name: "Rails II"
-	And a course: "ruby2" exists with name: "Ruby II"	
-	And a course: "ruby1" exists with name: "Ruby I"
+Given a course exists with name: "Rails II", capacity: 6
+	And a course: "ruby2" exists with name: "Ruby II", capacity: 6
+	And a course: "ruby1" exists with name: "Ruby I", capacity: 8
 	And a user is logged in as "johan"
 When I go to the klasses page
 	And I follow "New Class" within "div#list div#links"
 Then I should be redirected to the new klass page
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6), Rails II (6)"
 When I press "Create"
 Then I should be redirected to the error klasses page
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6), Rails II (6)"
 When I press "Create"
 Then I should be redirected to the error klasses page
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"	
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6), Rails II (6)"	
 
 @similar
 Scenario: When creating a class in the same category, the categories should stay fixed
-Given a course exists with name: "Rails II"
-	And a course: "ruby2" exists with name: "Ruby II"	
-	And a course: "ruby1" exists with name: "Ruby I"
+Given a course exists with name: "Rails II", capacity: 6
+	And a course: "ruby2" exists with name: "Ruby II", capacity: 6
+	And a course: "ruby1" exists with name: "Ruby I", capacity: 8
 	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
 	And a user is logged in as "johan"
 When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within "table#Ruby"
 Then I should be redirected to the new klass page
 	And "February 28, 2011" should be selected as klass date
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II"
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6)"
 	And the "Start time" field should be empty
 	And the "End time" field should be empty
 When I press "Create"
 Then I should be redirected to the error klasses page
 	And "February 28, 2011" should be selected as klass date
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II"
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6)"
 When I press "Create"
 Then I should be redirected to the error klasses page
 	And "February 28, 2011" should be selected as klass date
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II"	
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6)"	
 
 @duplicate
 Scenario: Duplicate a class
@@ -376,6 +376,19 @@ When I browse to the klasses page of "February 28, 2011"
 Then I should automatically browse to the klasses page of "February 28, 2011"
 	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-27 15"
 	And 2 klasses should exist
+
+@declined
+Scenario: A teacher that has declined his class should be able to teach another class at the same time
+Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
+	And a klass: "ruby1" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2011-02-28"
+	And a klass: "ruby2" exists with course: course "ruby", start_time: "19:00", end_time: "21:00", date: "2011-02-28"
+	And a teaching exists with klass: klass "ruby1", teacher: user "johan", status_mask: 2, current: true
+	And a user is logged in as "johan"
+When I browse to the klasses page of "February 28, 2011"
+Then within klass: "ruby1", the teacher field should have options "BLANK, Johan Sveholm"
+	And within klass: "ruby1", "Johan Sveholm" should be selected as teacher
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm"
 
 @pending
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
