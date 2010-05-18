@@ -95,7 +95,7 @@ class TemplateClass < ActiveRecord::Base
   
 private
 	def capacity_cannot_be_zero
-		errors.add :capacity, I18n.t('error.message.zero') if capacity == 0 unless errors.on( :capacity )
+		errors.add :capacity, I18n.t('error.message.zero') if capacity == "0" unless errors.on( :capacity )
 	end
 	
 	def start_time_cannot_be_blank

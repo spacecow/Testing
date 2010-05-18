@@ -9,6 +9,7 @@ class Course < ActiveRecord::Base
   validates_presence_of :name, :level_ja, :level_en
   validates_uniqueness_of :name
   validates_inclusion_of :inactive, :in => [false, true]
+  validate :format_of_name
   
   def category
     name.split[0]
@@ -29,4 +30,9 @@ class Course < ActiveRecord::Base
   def to_s
     "#{name}"
   end
+  
+private
+	def format_of_name
+  	name.gsub!(/　/, " ") unless name.nil?
+	end
 end
