@@ -51,35 +51,59 @@ class SystemMailer < ActionMailer::Base
 
 	def self.get_daily_teachings_at( date )
 		start_date, end_date = get_daily_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.
-			confirmed.untaught.group_by(&:teacher_id)
+		Teaching.between_dates( start_date, end_date ).current.confirmed.untaught
 	end
 	
-	def self.get_daily_teachings_to_at( teacher, date )
-		start_date, end_date = get_daily_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.
-			confirmed.untaught.teacher(teacher.id).group_by(&:teacher_id)
+	def self.get_daily_staff_teachings_at( date )
+		get_daily_teachings_at( date ).staff
 	end
 
+	def self.get_daily_teachings_to_at( teacher, date )
+		get_daily_teachings_at( date ).teacher(teacher.id)
+	end
+
+
+
+	def self.daily_teacher_reminder_with( teachings )
+	  send_teacher_schedule( teachings, "daily_teacher_reminder" )
+  end
+
+	def self.daily_grouped_teacher_reminder( teachings )
+		daily_teacher_reminder_with( teachings.group_by(&:teacher_id))
+	end
+
+	def self.daily_staff_reminder_at( date )
+  	daily_grouped_teacher_reminder( get_daily_staff_teachings_at( date ))
+	end	
+
+	def self.daily_staff_reminder
+		daily_staff_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ))
+	end	
 
 	def self.daily_teacher_reminder
 		daily_teacher_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ))
 	end
 
   def self.daily_teacher_reminder_at( date )
-  	teachings = get_daily_teachings_at( date )  	
-		daily_teacher_reminder_with( teachings )
+  	daily_grouped_teacher_reminder( get_daily_teachings_at( date ))
 	end
 
   def self.daily_teacher_reminder_to_at( teacher, date )
-  	teachings = get_daily_teachings_to_at( teacher, date )
-		daily_teacher_reminder_with( teachings )
+  	daily_grouped_teacher_reminder( get_daily_teachings_to_at( teacher, date ))
+	end
+
+	def self.next_working_days_teacher_reminder
+		next_working_days_teacher_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ))
+	end
+
+	def self.next_working_days_teacher_reminder_at( date )
+		5.times do |i|
+			next_date = "#{(Time.zone.parse( date )+i.day).to_s.split[0]} 15" #only year-month-day 15
+			daily_teacher_reminder_at( next_date ) and return if Klass.find_by_date( next_date )
+		end
 	end
 	
-	def self.daily_teacher_reminder_with( teachings )
-	  send_teacher_schedule( teachings, "daily_teacher_reminder" )
-  end
-
+	
 	def daily_teacher_reminder_in_english( user, schedule )
     recipients  user.email #"Yoyaku@GAKUWARINET.com"
     from        "Yoyaku@GAKUWARINET.com"
@@ -104,34 +128,33 @@ class SystemMailer < ActionMailer::Base
 	
 	def self.get_weekly_teachings_at( date )
 		start_date, end_date = get_weekly_interval_at( date )
-		Teaching.between_dates( start_date, end_date ).current.
-			not_declined.group_by(&:teacher_id)
+		Teaching.between_dates( start_date, end_date ).current.not_declined
 	end
 	
 	def self.get_weekly_teachings_to_at( teacher, date )
-		start_date, end_date = get_weekly_interval_at( date )
-		Teaching.between_dates( start_date, end_date ).current.
-			not_declined.teacher(teacher.id).group_by(&:teacher_id)
+		get_weekly_teachings_at( date ).teacher(teacher.id)
+	end
+
+	def self.weekly_teacher_schedule_with( teachings )
+		send_teacher_schedule( teachings, "weekly_teacher_schedule" )
 	end
 
 	def self.next_weeks_teacher_schedule
 		weekly_teacher_schedule_at(( Time.zone.now + 1.day ).strftime( "%Y-%m-%d" ))
 	end
 
+	def self.weekly_grouped_teacher_schedule( teachings )
+		weekly_teacher_schedule_with( teachings.group_by(&:teacher_id))
+	end
+
 	def self.weekly_teacher_schedule_at( date )
-		teachings = get_weekly_teachings_at( date )
-		weekly_teacher_schedule_with( teachings )
+		weekly_grouped_teacher_schedule( get_weekly_teachings_at( date ))
 	end
 
 	def self.weekly_teacher_schedule_to_at( teacher, date )
-		teachings = get_weekly_teachings_to_at( teacher, date )
-		weekly_teacher_schedule_with( teachings )
+		weekly_grouped_teacher_schedule( get_weekly_teachings_to_at( teacher, date ))
 	end
 	
-	def self.weekly_teacher_schedule_with( teachings )
-		send_teacher_schedule( teachings, "weekly_teacher_schedule" )
-	end
-
 	def weekly_teacher_schedule_in_english( user, schedule )
     recipients  user.email
     from        "Yoyaku@GAKUWARINET.com"

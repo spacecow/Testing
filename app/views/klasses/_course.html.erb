@@ -49,7 +49,7 @@
 						:klass=>klass,
 						:teachers=>@teachers.
 						reject{|e| !e.teacher_courses.include?( klass.course )}.
-						reject{|e| taken.include?(e)}
+						reject{|e| taken.include?(e) unless e==klass.teacher}
 					}%>
 					</tr>
 					<% if time_classes[-1]!=klass %>

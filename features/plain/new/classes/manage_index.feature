@@ -203,10 +203,10 @@ Then within klass: "ruby", the teacher field should have options "BLANK, Johan S
 Scenario Outline: When choosing a date that does not have any classes, they should be generated if the user is admin
 Given a course: "ruby" exists with name: "Ruby II"
 	And a classroom: "1" exists with name: "1"
-	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
+	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: "8", mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
 Given a user is logged in as "<user>"
 When I browse to the klasses page of "March 28, 2010"
-Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-27 15"
+Then 1 klasses should exist with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: "8", mail_sending: 0, cancel: false, description: "A funny description", note: "A funny note", date: "2010-03-27 15"
 	And 1 klasses should exist
 	And I should see options "Info, Edit, Del" within "table#Ruby tr td#links"
 Examples:
@@ -226,7 +226,7 @@ Given a user: "thomas" exists with username: "thomas", role: "observer, teacher"
 	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
 Given a course: "ruby" exists with name: "Ruby II"
 	And a classroom: "1" exists with name: "1"
-	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
+	And a template class: "ruby" exists with course: course "ruby", classroom: classroom "1", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: "8", mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "sun"
 Given a user is logged in as "<user>"
 When I browse to the klasses page of "March 28, 2010"
 Then 0 klasses should exist
@@ -316,7 +316,7 @@ Scenario: Links from index page
 Given a course exists with name: "Rails II"
 	And a course exists with name: "Ruby II"
 	And a course: "ruby1" exists with name: "Ruby I"
-	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", date: "2010-02-28", capacity: 6
+ 	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", date: "2010-02-28", capacity: "6"
 	And a user is logged in as "johan"
 Then 1 klasses should exist
 When I browse to the klasses page of "February 28, 2010"
@@ -328,9 +328,9 @@ Then I should be redirected to the edit page of that klass
 
 @new
 Scenario: When creating a new class the categories should stay fixed
-Given a course exists with name: "Rails II", capacity: 6
-	And a course: "ruby2" exists with name: "Ruby II", capacity: 6
-	And a course: "ruby1" exists with name: "Ruby I", capacity: 8
+Given a course exists with name: "Rails II", capacity: "6"
+	And a course: "ruby2" exists with name: "Ruby II", capacity: "6"
+	And a course: "ruby1" exists with name: "Ruby I", capacity: "8"
 	And a user is logged in as "johan"
 When I go to the klasses page
 	And I follow "New Class" within "div#list div#links"
@@ -345,10 +345,10 @@ Then I should be redirected to the error klasses page
 
 @similar
 Scenario: When creating a class in the same category, the categories should stay fixed
-Given a course exists with name: "Rails II", capacity: 6
-	And a course: "ruby2" exists with name: "Ruby II", capacity: 6
-	And a course: "ruby1" exists with name: "Ruby I", capacity: 8
-	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
+Given a course exists with name: "Rails II", capacity: "6"
+	And a course: "ruby2" exists with name: "Ruby II", capacity: "6"
+	And a course: "ruby1" exists with name: "Ruby I", capacity: "8"
+	And a klass exists with course: course "ruby1", start_time: "18:50", end_time: "20:50", capacity: "6", date: "2011-02-28"
 	And a user is logged in as "johan"
 When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within "table#Ruby"
@@ -369,12 +369,12 @@ Then I should be redirected to the error klasses page
 @duplicate
 Scenario: Duplicate a class
 Given a course: "ruby" exists with name: "Ruby I"
-	And a klass exists with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-28"
+	And a klass exists with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: "6", date: "2011-02-28"
 	And a user is logged in as "johan"
 When I browse to the klasses page of "February 28, 2011"
 	And I follow "+" within that klass
 Then I should automatically browse to the klasses page of "February 28, 2011"
-	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: 6, date: "2011-02-27 15"
+	And 2 klasses should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", capacity: "6", date: "2011-02-27 15"
 	And 2 klasses should exist
 
 @declined
@@ -389,6 +389,23 @@ When I browse to the klasses page of "February 28, 2011"
 Then within klass: "ruby1", the teacher field should have options "BLANK, Johan Sveholm"
 	And within klass: "ruby1", "Johan Sveholm" should be selected as teacher
 	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm"
+
+@declined_teacher_visible
+Scenario: A teacher that has declined a class should still be visible as declined after being selected somewhere else
+Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
+	And a klass: "ruby1" exists with course: course "ruby", start_time: "18:50", end_time: "20:50", date: "2011-02-28"
+	And a klass: "ruby2" exists with course: course "ruby", start_time: "19:00", end_time: "21:00", date: "2011-02-28"
+	And a teaching exists with klass: klass "ruby1", teacher: user "johan", status_mask: 2, current: true
+	And a user is logged in as "johan"
+When I browse to the klasses page of "February 28, 2011"
+	And I select "Johan Sveholm" as teacher within klass "ruby2"
+	And I press "OK!" within klass "ruby2"
+	And within klass: "ruby2", the teacher field should have options "BLANK, Johan Sveholm"
+	And within klass: "ruby2", "Johan Sveholm" should be selected as teacher
+Then within klass: "ruby1", the teacher field should have options "BLANK, Johan Sveholm"
+	And within klass: "ruby1", "Johan Sveholm" should be selected as teacher
+
 
 @pending
 Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)

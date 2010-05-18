@@ -20,7 +20,7 @@ class MailerController < ApplicationController
 		user = User.find_by_name( @menu_teacher )
 		func = "get_#{@menu_type.split('_')[0]}_teachings_to_at".to_sym
 		teachings = SystemMailer.send( func, user, @menu_date.to_s )
-		schedule = SystemMailer.get_schedule( teachings[user.id], user, @menu_language )
+		schedule = SystemMailer.get_schedule( teachings, user, @menu_language )
 		
 		language = @menu_language == "ja" ? "japanese" : "english"
 		@subject = case @menu_type

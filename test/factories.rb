@@ -12,6 +12,7 @@ Factory.define :course do |f|
 	f.sequence(:name){|n| "name#{n} I" }
 	f.level_ja "レベル"
 	f.level_en "level"
+	f.capacity "6"
 end
 
 Factory.define :course_time do |f|
@@ -57,7 +58,7 @@ Factory.define :kanjis_onyomis do |f|
 end
 
 Factory.define :klass do |f|
-  f.capacity 8
+  f.capacity "6"
 	f.date DateTime.new( Date.current.year, Date.current.month, Date.current.day )
 	f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )
@@ -129,7 +130,7 @@ Factory.define :todo do |f|
 end
 
 Factory.define :template_class do |f|
-  f.capacity 8
+  f.capacity "6"
   f.start_time Time.parse( "12:00" )
 	f.end_time Time.parse( "15:00" )		
 	f.day Date.current.strftime("%a").downcase

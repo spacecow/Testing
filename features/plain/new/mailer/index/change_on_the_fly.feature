@@ -8,6 +8,7 @@ Given a setting exists with name: "main"
 	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 33
 	And a user is logged in as "johan"
 
+@day
 Scenario: Change day
 When I browse to the "Daily Mail" page for user "thomas" of "December 23, 2011"
 	And I select "December 24, 2011" as date in the select menu

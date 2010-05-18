@@ -56,7 +56,13 @@
 						</li>				
 						
 						<% if can? :index, User %>	
-							<li><%= link_to t('users.title'), users_path %></li>									
+							<li><%= link_to t('users.title'), users_path %>
+								<ul>
+									<li>------------------</li>
+									<li><%= link_to t('teachers.title'), users_path(:status=>'teacher') %></li>
+									<li><%= link_to t('students.title'), users_path(:status=>'student') %></li>
+								</ul>
+							</li>							
 						<% end %>
 						
 						<% if can? :index, Kanji %>	

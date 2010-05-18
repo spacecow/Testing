@@ -4,12 +4,12 @@ end
 
 #---------------- System mailer
 
-When /^the system sends out the weekly schedule to concerned teachers at "(.+)"$/ do |date|
-	SystemMailer.weekly_teacher_schedule_at( date )
+When /^the system sends out the daily staff reminder to concerned teachers$/ do
+	SystemMailer.daily_staff_reminder
 end
 
-When /^the system sends out the weekly schedule to #{capture_model} at "(.+)"$/ do |teacher,date|
-	SystemMailer.weekly_teacher_schedule_to_at( model( teacher ), date )
+When /^the system sends out the daily staff reminder to concerned teachers at "([^\"]*)"$/ do |date|
+	SystemMailer.daily_staff_reminder_at( date )
 end
 
 When /^the system sends out the daily teacher reminder to concerned teachers at "([^\"]*)"$/ do |date|
@@ -18,6 +18,22 @@ end
 
 When /^the system sends out the daily teacher reminder to #{capture_model} at "([^\"]*)"$/ do |teacher,date|
 	SystemMailer.daily_teacher_reminder_to_at( model( teacher ), date )
+end
+
+When /^the system sends out the weekly schedule to concerned teachers at "(.+)"$/ do |date|
+	SystemMailer.weekly_teacher_schedule_at( date )
+end
+
+When /^the system sends out the weekly schedule to #{capture_model} at "(.+)"$/ do |teacher,date|
+	SystemMailer.weekly_teacher_schedule_to_at( model( teacher ), date )
+end
+
+When /^the system sends out next working day's teacher reminder to concerned teachers$/ do
+	SystemMailer.next_working_days_teacher_reminder
+end
+
+When /^the system sends out next working day's teacher reminder to concerned teachers at "([^\"]*)"$/ do |date|
+	SystemMailer.next_working_days_teacher_reminder_at( date )
 end
 
 #........ Visuals
