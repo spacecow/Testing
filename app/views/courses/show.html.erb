@@ -4,6 +4,9 @@
 
 <div class="pairs">
 	<%= render 'includes/pair', :left => t(:name), :right => h(@course.name) %>
+	<%= render 'includes/pair', :left => t(:level_ja), :right => h(@course.level_ja) %>
+	<%= render 'includes/pair', :left => t(:level_en), :right => h(@course.level_en) %>
+	<%= render 'includes/pair', :left => t(:capacity), :right => h(@course.capacity) %>
 	<%= render 'includes/pair', :left => t(:inactive), :right => h(@course.inactive) %>
 	<%= render 'includes/pair', :left => t(:description), :right => h(@course.description) %>
 	<%= render 'includes/pair', :left => t(:note), :right => h(@course.note) %>
