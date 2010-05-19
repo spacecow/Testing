@@ -18,3 +18,25 @@ Given a klass exists with tomorrows date
 	And a teaching exists with klass: that klass, teacher: user "aya", current: true, status_mask: 33
 When the system sends out next working day's teacher reminder to concerned teachers
 Then "aya@space.com" should receive 1 email
+
+@format
+Scenario: Check format of mail of next working day schedule
+Given a klass exists with tomorrows date
+	And a teaching exists with klass: that klass, teacher: user "aya", current: true, status_mask: 33
+When the system sends out next working day's teacher reminder to concerned teachers
+Then "aya@space.com" should receive 1 email
+When "aya@space.com" opens the email with subject "mada"
+Then I should see the daily teacher reminder mail in japanese in the email body
+
+@test_format
+Scenario Outline: Check test format of mail of next working day schedule
+Given a klass exists with tomorrows date
+	And a teaching exists with klass: that klass, teacher: user "aya", current: true, status_mask: 33
+When the system sends out next working day's teacher reminder to concerned teachers as <title> test
+Then "<address>" should receive 1 email
+When "<address>" opens the email with subject "mada"
+Then I should see the daily teacher reminder mail in japanese in the email body addressed to user "aya"
+Examples
+|	title		|	address									|
+|	yoyaku	|	Yoyaku@GAKUWARINET.com	|
+|	johan		|	jsveholm@gmail.com			|

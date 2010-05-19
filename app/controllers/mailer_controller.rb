@@ -27,8 +27,10 @@ class MailerController < ApplicationController
 			when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
 			when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
 		end
-		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" ).
-			gsub(/<%= @schedule %>/,schedule) unless schedule.nil?
+		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
+		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
+		@mail.gsub!(/<%= @name %>/,'')
+		@mail.gsub!(/<%= @sender %>/,'Hitomi')
   end
   
   def send_mail

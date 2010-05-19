@@ -8,8 +8,30 @@ When /^the system sends out the daily staff reminder to concerned teachers$/ do
 	SystemMailer.daily_staff_reminder
 end
 
+When /^the system sends out the daily staff reminder to concerned teachers as (yoyaku|johan) test$/ do |test|
+	SystemMailer.send( "daily_staff_reminder_as_#{test}_test".to_sym )
+end
+
+When /^the system sends out the daily staff reminder to concerned teachers from "Automagic Johan"$/ do
+  SystemMailer.daily_staff_reminder_from_automagic_johan
+end
+
+When /^the system sends out the daily staff reminder to concerned teachers as (yoyaku|johan) test from "Automagic Johan"$/ do |test|
+	SystemMailer.send( "daily_staff_reminder_as_#{test}_test_from_automagic_johan".to_sym )
+end
+
 When /^the system sends out the daily staff reminder to concerned teachers at "([^\"]*)"$/ do |date|
 	SystemMailer.daily_staff_reminder_at( date )
+end
+
+
+
+When /^the system sends out the daily teacher reminder to concerned teachers$/ do
+	SystemMailer.daily_teacher_reminder
+end
+
+When /^the system sends out the daily teacher reminder to concerned teachers as (yoyaku|johan) test$/ do |test|
+	SystemMailer.send( "daily_teacher_reminder_as_#{test}_test".to_sym )
 end
 
 When /^the system sends out the daily teacher reminder to concerned teachers at "([^\"]*)"$/ do |date|
@@ -20,6 +42,8 @@ When /^the system sends out the daily teacher reminder to #{capture_model} at "(
 	SystemMailer.daily_teacher_reminder_to_at( model( teacher ), date )
 end
 
+
+
 When /^the system sends out the weekly schedule to concerned teachers at "(.+)"$/ do |date|
 	SystemMailer.weekly_teacher_schedule_at( date )
 end
@@ -28,8 +52,14 @@ When /^the system sends out the weekly schedule to #{capture_model} at "(.+)"$/ 
 	SystemMailer.weekly_teacher_schedule_to_at( model( teacher ), date )
 end
 
+
+
 When /^the system sends out next working day's teacher reminder to concerned teachers$/ do
 	SystemMailer.next_working_days_teacher_reminder
+end
+
+When /^the system sends out next working day's teacher reminder to concerned teachers as (yoyaku|johan) test$/ do |test|
+	SystemMailer.send( "next_working_days_teacher_reminder_as_#{test}_test".to_sym )
 end
 
 When /^the system sends out next working day's teacher reminder to concerned teachers at "([^\"]*)"$/ do |date|
@@ -44,10 +74,42 @@ When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: o
 	And "I select \"#{date}\" as date in the select menu" unless date.nil?
 end
 
-Then /^I should see the (.+) mail in (.+) in the email body$/ do |mail, language|
+Then /^I should see the (.+) mail in (.+) in the email body(?: addressed to #{capture_model})?$/ do |mail, language, user|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
-			Then "I should see \"#{line}\" in the email body" unless line == "<%= @schedule %>\n"
+			if line.match(/@schedule/)
+				#skip
+			elsif line.match(/@name/)
+				if user.nil?
+					Then "I should see \"#{line.gsub(/<%= @name %>/,'')}\" in the email body" 
+				else
+					Then "I should see \"#{line.gsub(/<%= @name %>/,model(user).name)}\" in the email body" 
+				end
+			elsif line.match(/@sender/)
+				Then "I should see \"#{line.gsub(/<%= @sender %>/,'Hitomi')}\" in the email body" 
+			else
+				Then "I should see \"#{line}\" in the email body" 
+			end
+		end
+	end
+end
+
+Then /^I should see the (.+) mail in (.+) in the email body(?: from "(.+)")$/ do |mail, language, sender|
+	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
+		f.readlines.each do |line|
+			if line.match(/@schedule/)
+				#skip
+			elsif line.match(/@name/)
+				Then "I should see \"#{line.gsub(/<%= @name %>/,'')}\" in the email body" 
+			elsif line.match(/@sender/)
+				if sender.nil?
+					Then "I should see \"#{line.gsub(/<%= @sender %>/,'Hitomi')}\" in the email body" 
+				else
+					Then "I should see \"#{line.gsub(/<%= @sender %>/,sender)}\" in the email body" 
+				end
+			else
+				Then "I should see \"#{line}\" in the email body" 
+			end
 		end
 	end
 end
@@ -55,7 +117,15 @@ end
 Then /^the "([^\"]*)" field should contain the (.+) mail in (.+)$/ do |id, mail, language|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
-			Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" unless line == "<%= @schedule %>\n"
+			if line.match(/@schedule/)
+				#do nothing
+			elsif line.match(/@name/)
+				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @name %>/,'').chomp+"\r"}\"" 
+			elsif line.match(/@sender/)
+				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @sender %>/,'Hitomi').chomp+"\r"}\"" 
+			else
+				Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" 
+			end
 		end
 	end  
 end

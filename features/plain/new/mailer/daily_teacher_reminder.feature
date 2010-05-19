@@ -4,13 +4,26 @@ Given a setting exists with name: "main"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu", email: "aya@space.com"
 
 @format
-Scenario: Check format of mail of daily teacher reminder
-Given a klass exists with date: "2010-04-05"
-	And a teaching exists with klass: that klass, teacher: user "johan", status_mask: 33
-When the system sends out the daily teacher reminder to concerned teachers at "2010-04-05"
+Scenario: Check format of mail of Daily Teacher Reminder for today
+Given a klass exists with todays date
+	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
+When the system sends out the daily teacher reminder to concerned teachers
 Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Reminder"
 Then I should see the daily teacher reminder mail in english in the email body
+
+@test_format
+Scenario Outline: Check test format of mail of Daily Teacher Reminder for today
+Given a klass exists with todays date
+	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
+When the system sends out the daily teacher reminder to concerned teachers as <title> test
+Then "<address>" should receive 1 email
+When "<address>" opens the email with subject "Reminder"
+Then I should see the daily teacher reminder mail in english in the email body addressed to user "johan"
+Examples
+|	title		|	address									|
+|	yoyaku	|	Yoyaku@GAKUWARINET.com	|
+|	johan		|	jsveholm@gmail.com			|
 
 @not_current_confirmed_untaught
 Scenario Outline: Teachings that are neither current, confirmed nor untaught are not affected
