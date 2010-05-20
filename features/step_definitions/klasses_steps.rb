@@ -6,6 +6,10 @@ Given /^a klass exists with tomorrows date$/ do
   Given "a klass exists with date: \"#{(Time.zone.now+1.day).to_s.split[0]}\""
 end
 
+Given /^a klass exists a week from now$/ do
+  Given "a klass exists with date: \"#{(Time.zone.now+7.day).to_s.split[0]}\""
+end
+
 #======================== Index form
 
 #------ Toggle status

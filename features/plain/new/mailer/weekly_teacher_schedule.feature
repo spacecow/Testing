@@ -93,3 +93,47 @@ Given a course: "ruby1" exists with name: "Ruby I"
 When the system sends out the weekly schedule to concerned teachers at "2010-04-04"
 Then "johan@space.com" should receive 1 email
 	And "aya@space.com" should receive 1 email
+	
+@format
+Scenario: Check format of mail of Daily Teacher Reminder for today
+Given a klass exists a week from now
+	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
+When the system sends out the weekly schedule to concerned teachers
+Then "johan@space.com" should receive 1 email
+When "johan@space.com" opens the email with subject "Schedule for next week"
+Then I should see the weekly teacher schedule mail in english in the email body
+
+@test_format
+Scenario Outline: Check test format of mail of Daily Teacher Reminder for today
+Given a klass exists a week from now
+	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
+When the system sends out the weekly schedule to concerned teachers as <title> test
+Then "<address>" should receive 1 email
+When "<address>" opens the email with subject "Schedule for next week"
+Then I should see the weekly teacher schedule mail in english in the email body addressed to user "johan"
+Examples:
+|	title		|	address									|
+|	yoyaku	|	Yoyaku@GAKUWARINET.com	|
+|	johan		|	jsveholm@gmail.com			|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

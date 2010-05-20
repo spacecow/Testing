@@ -191,6 +191,14 @@ public
 	def self.next_weeks_teacher_schedule( address=nil )
 		weekly_teacher_schedule_at(( Time.zone.now + 1.day ).strftime( "%Y-%m-%d" ), address )
 	end
+	
+	def self.next_weeks_teacher_schedule_as_johan_test
+		next_weeks_teacher_schedule( "jsveholm@gmail.com" )
+	end
+	
+	def self.next_weeks_teacher_schedule_as_yoyaku_test
+		next_weeks_teacher_schedule( "Yoyaku@GAKUWARINET.com" )
+	end		
 
 	def self.weekly_teacher_schedule_at( date, address=nil, sender='Hitomi' )
 		weekly_grouped_teacher_schedule( get_weekly_teachings_at( date ), address, sender )

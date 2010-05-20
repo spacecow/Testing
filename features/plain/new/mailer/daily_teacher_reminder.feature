@@ -20,7 +20,7 @@ When the system sends out the daily teacher reminder to concerned teachers as <t
 Then "<address>" should receive 1 email
 When "<address>" opens the email with subject "Reminder"
 Then I should see the daily teacher reminder mail in english in the email body addressed to user "johan"
-Examples
+Examples:
 |	title		|	address									|
 |	yoyaku	|	Yoyaku@GAKUWARINET.com	|
 |	johan		|	jsveholm@gmail.com			|

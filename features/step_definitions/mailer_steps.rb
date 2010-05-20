@@ -44,6 +44,14 @@ end
 
 
 
+When /^the system sends out the weekly schedule to concerned teachers$/ do
+  SystemMailer.next_weeks_teacher_schedule
+end
+
+When /^the system sends out the weekly schedule to concerned teachers as (yoyaku|johan) test$/ do |test|
+  SystemMailer.send( "next_weeks_teacher_schedule_as_#{test}_test".to_sym )
+end
+
 When /^the system sends out the weekly schedule to concerned teachers at "(.+)"$/ do |date|
 	SystemMailer.weekly_teacher_schedule_at( date )
 end
@@ -74,6 +82,22 @@ When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: o
 	And "I select \"#{date}\" as date in the select menu" unless date.nil?
 end
 
+Then /^I should see the (.+) mail in (.+) in the email body addressed to #{capture_model} from "(.+)"$/ do |mail, language, user, sender|
+	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
+		f.readlines.each do |line|
+			if line.match(/@schedule/)
+				#skip
+			elsif line.match(/@name/)
+				Then "I should see \"#{line.gsub(/<%= @name %>/,model(user).name)}\" in the email body" 
+			elsif line.match(/@sender/)
+				Then "I should see \"#{line.gsub(/<%= @sender %>/,sender)}\" in the email body" 
+			else
+				Then "I should see \"#{line}\" in the email body" 
+			end
+		end
+	end
+end
+
 Then /^I should see the (.+) mail in (.+) in the email body(?: addressed to #{capture_model})?$/ do |mail, language, user|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
@@ -102,11 +126,7 @@ Then /^I should see the (.+) mail in (.+) in the email body(?: from "(.+)")$/ do
 			elsif line.match(/@name/)
 				Then "I should see \"#{line.gsub(/<%= @name %>/,'')}\" in the email body" 
 			elsif line.match(/@sender/)
-				if sender.nil?
-					Then "I should see \"#{line.gsub(/<%= @sender %>/,'Hitomi')}\" in the email body" 
-				else
-					Then "I should see \"#{line.gsub(/<%= @sender %>/,sender)}\" in the email body" 
-				end
+				Then "I should see \"#{line.gsub(/<%= @sender %>/,sender)}\" in the email body" 
 			else
 				Then "I should see \"#{line}\" in the email body" 
 			end
