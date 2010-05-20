@@ -24,7 +24,7 @@ Given a klass exists with todays date
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33, cost: "0"
 When the system sends out the daily staff reminder to concerned teachers
 Then "johan@space.com" should receive 1 email
-When "johan@space.com" opens the email with subject "Reminder"
+When "johan@space.com" opens the email with subject "Reminder 5/20"
 Then I should see the daily teacher reminder mail in english in the email body
 
 @test_format
