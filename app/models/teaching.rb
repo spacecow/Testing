@@ -4,6 +4,7 @@ class Teaching < ActiveRecord::Base
   
   validates_presence_of :teacher_id, :klass_id
   validates_uniqueness_of :teacher_id, :scope => :klass_id
+	validate :cost_must_be_a_number
   
   before_create :set_cost
   before_create :set_status_mask
@@ -14,6 +15,7 @@ class Teaching < ActiveRecord::Base
   named_scope :teacher, lambda { |teacher_id| {:conditions => ["teacher_id = ?", teacher_id]}}
   named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0"}# and status_mask & #{2**STATUS.index('canceled')} = 0"}
   named_scope :untaught, {:conditions => "status_mask & #{2**STATUS.index('untaught')} > 0"}
+  named_scope :not_canceled, {:conditions => "status_mask & #{2**STATUS.index('canceled')} = 0"}
   named_scope :not_declined, {:conditions => "status_mask & #{2**STATUS.index('declined')} = 0"}
 	named_scope :current, {:conditions => "current = true" }
 	named_scope :staff, {:conditions => "teachings.cost = 0"}
@@ -122,6 +124,10 @@ class Teaching < ActiveRecord::Base
 		
 #------- Klass methods	
 	
+	def japanese_time_interval
+		klass.japanese_time_interval
+	end
+	
 	def time_interval
 		klass.time_interval
 	end
@@ -130,6 +136,14 @@ class Teaching < ActiveRecord::Base
 		klass.date
 	end
 
+	def date_short
+		klass.date_short
+	end
+	
+	def course
+		klass.course
+	end
+	
 	def course_category
     klass.course_category
   end
@@ -146,4 +160,10 @@ private
 	def set_status_mask #unless it is created by factory through cucumber with another value
 		add_status :unconfirmed if self.status_mask == 0
 	end
+	
+  def cost_must_be_a_number
+  	numbers = {"０"=>"0", "１"=>"1", "２"=>"2", "３"=>"3", "４"=>"4", "５"=>"5", "６"=>"6", "７"=>"7", "８"=>"8", "９"=>"9"}
+  	numbers.each{|k,v| cost.gsub!(/#{k}/, "#{v}")} if !cost.nil? && cost.match(/[０-９]/)
+  	errors.add(:cost, I18n.t('activerecord.errors.messages.not_a_number')) unless cost.nil? || cost.match(/^\d+$/) || errors.on(:cost)
+  end	
 end

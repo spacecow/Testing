@@ -32,12 +32,12 @@ class SystemMailer < ActionMailer::Base
 		schedule
 	end
 
-	def self.send_teacher_schedule( teachings, function, address, sender )
+	def self.send_teacher_schedule( teachings, function, address, sender, date )
 		teachings.each do |user_id,value|
 		  user = User.find( user_id )
 			schedule = get_schedule( teachings[user_id], user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
-			SystemMailer.send( func, user, schedule, address, sender )
+			SystemMailer.send( func, user, schedule, address, sender, date )
 		end	
 	end
 
@@ -64,12 +64,12 @@ class SystemMailer < ActionMailer::Base
 
 
 private
-	def self.daily_teacher_reminder_with( teachings, address, sender )
-	  send_teacher_schedule( teachings, "daily_teacher_reminder", address, sender )
+	def self.daily_teacher_reminder_with( teachings, address, sender, date )
+	  send_teacher_schedule( teachings, "daily_teacher_reminder", address, sender, date )
   end
 
-	def self.daily_grouped_teacher_reminder( teachings, address, sender )
-		daily_teacher_reminder_with( teachings.group_by(&:teacher_id), address, sender )
+	def self.daily_grouped_teacher_reminder( teachings, address, sender, date )
+		daily_teacher_reminder_with( teachings.group_by(&:teacher_id), address, sender, date )
 	end
 
 
@@ -100,7 +100,7 @@ public
 	end
 	
 	def self.daily_staff_reminder_at( date, address=nil, sender="Hitomi" )
-  	daily_grouped_teacher_reminder( get_daily_staff_teachings_at( date ), address, sender )
+  	daily_grouped_teacher_reminder( get_daily_staff_teachings_at( date ), address, sender, Time.zone.parse( date ))
 	end	
 
 
@@ -117,11 +117,11 @@ public
 	end
 	
   def self.daily_teacher_reminder_at( date, address=nil, sender="Hitomi" )
-  	daily_grouped_teacher_reminder( get_daily_teachings_at( date ), address, sender )
+  	daily_grouped_teacher_reminder( get_daily_teachings_at( date ), address, sender, Time.zone.parse( date ))
 	end
 
   def self.daily_teacher_reminder_to_at( teacher, date, address=nil, sender="Hitomi" )
-  	daily_grouped_teacher_reminder( get_daily_teachings_to_at( teacher, date ), address, sender )
+  	daily_grouped_teacher_reminder( get_daily_teachings_to_at( teacher, date ), address, sender, Time.zone.parse( date ))
 	end
 
 
@@ -139,23 +139,23 @@ public
 
 	def self.next_working_days_teacher_reminder_at( date, address=nil )
 		5.times do |i|
-			next_date = "#{(Time.zone.parse( date )+i.day).to_s.split[0]} 15" #only year-month-day 15
-			daily_teacher_reminder_at( next_date, address ) and return if Klass.find_by_date( next_date )
+			next_date = "#{(Time.zone.parse( date )+i.day).strftime( "%Y-%m-%d" )} 15" #only year-month-day 15
+			daily_teacher_reminder_at(( Time.zone.parse(next_date)+1.day ).strftime( "%Y-%m-%d" ), address ) and return if Klass.find_by_date( next_date )
 		end
 	end
 	
 	
-	def daily_teacher_reminder_in_english( user, schedule, address, sender )
+	def daily_teacher_reminder_in_english( user, schedule, address, sender, date )
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
-    subject     "Reminder"
+    subject     "Reminder #{date.month}/#{date.day}"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end	
 
-	def daily_teacher_reminder_in_japanese( user, schedule, address, sender="Hitomi" )
+	def daily_teacher_reminder_in_japanese( user, schedule, address, sender, date )
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
-    subject     "mada"
+    subject     "本日のスケジュール #{date.month}/#{date.day}"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end
 #---------------- Weekly schedule
@@ -178,12 +178,12 @@ public
 
 
 private
-	def self.weekly_teacher_schedule_with( teachings, address, sender )
-		send_teacher_schedule( teachings, "weekly_teacher_schedule", address, sender )
+	def self.weekly_teacher_schedule_with( teachings, address, sender, date )
+		send_teacher_schedule( teachings, "weekly_teacher_schedule", address, sender, date )
 	end
 
-	def self.weekly_grouped_teacher_schedule( teachings, address, sender )
-		weekly_teacher_schedule_with( teachings.group_by(&:teacher_id), address, sender )
+	def self.weekly_grouped_teacher_schedule( teachings, address, sender, date )
+		weekly_teacher_schedule_with( teachings.group_by(&:teacher_id), address, sender, date )
 	end
 
 
@@ -193,23 +193,23 @@ public
 	end
 
 	def self.weekly_teacher_schedule_at( date, address=nil, sender='Hitomi' )
-		weekly_grouped_teacher_schedule( get_weekly_teachings_at( date ), address, sender )
+		weekly_grouped_teacher_schedule( get_weekly_teachings_at( date ), address, sender, Time.zone.parse( date ))
 	end
 
-	def self.weekly_teacher_schedule_to_at( teacher, date, address=nil, sender='Hitomi' )
-		weekly_grouped_teacher_schedule( get_weekly_teachings_to_at( teacher, date ), address, sender )
+	def self.weekly_teacher_schedule_to_at( teacher, date, address=nil, sender='Hitomi')
+		weekly_grouped_teacher_schedule( get_weekly_teachings_to_at( teacher, date ), address, sender, Time.zone.parse( date ))
 	end
 	
 
 
-	def weekly_teacher_schedule_in_english( user, schedule, address, sender )
+	def weekly_teacher_schedule_in_english( user, schedule, address, sender, date )
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "Schedule for next week"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end
 	
-	def weekly_teacher_schedule_in_japanese( user, schedule, address, sender )
+	def weekly_teacher_schedule_in_japanese( user, schedule, address, sender, date )
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "来週のシフトについて"

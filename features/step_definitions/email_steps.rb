@@ -77,6 +77,12 @@ end
 #  open_email(address, :with_subject => subject)
 #end
 
+When /^(?:I|they|"([^"]*?)") opens? the email with subject "([^"]*?)"$/ do |address, subject|
+  subject.gsub!(/#today/,"#{Time.zone.now.month}/#{Time.zone.now.day}")
+  subject.gsub!(/#tomorrow/,"#{(Time.zone.now+1.day).month}/#{(Time.zone.now+1.day).day}")
+  open_email(address, :with_subject => subject)
+end
+
 When /^(?:I|they|"([^"]*?)") opens? the email with text "([^"]*?)"$/ do |address, text|
   open_email(address, :with_text => text)
 end
