@@ -1,11 +1,6 @@
-﻿<p>
-  <%= f.label :cost, t('cost') %>
-  <%= f.text_field h( :cost ), :size=>20 %>
-</p>
-<p>
-  <%= f.label :note, t('note') %>
-  <%= f.text_area h( :note ), :rows=>8, :cols=>27 %>
-</p>
-<p>
-	<%= f.submit label_text, :class=>:submit %>
-</p>
+﻿<% f.inputs do %>
+	<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'numeric non-japanese' } %>
+<% end %>
+<% f.buttons do %>
+	<%= f.commit_button label_text %>
+<% end %>

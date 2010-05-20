@@ -16,6 +16,11 @@ $(document).ready(function(){
   $("input.focus:last").focus();
 })
 
+$(document).ready(function() {
+	// focus on the first text input field in the first field on the page
+  $(":text:visible:enabled:first").focus();
+});
+
 /*
 $(document).ready(function(){
   $("a#edit_comment").click( function(){

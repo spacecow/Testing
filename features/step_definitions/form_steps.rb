@@ -69,3 +69,12 @@ Then /^I should not see "([^\"]*)" within the form$/ do |text|
 		success.should be_true
 	end
 end
+
+# -------------------------- CHECK BOXES
+
+When /^I check "([^\"]*)" within #{capture_model}$/ do |label, model|
+	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
+	within "##{scope}" do |element|
+		element.check( label )
+	end
+end

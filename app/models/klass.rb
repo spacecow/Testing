@@ -100,6 +100,14 @@ class Klass < ActiveRecord::Base
 	def wday_to_s
 		I18n.t( 'date.day_names' )[wday]
 	end
+	
+	def wday_abbr
+		I18n.t( 'date.abbr_day_names' )[wday]
+	end	
+
+	def date_short
+		"#{month.to_s}/#{day.to_s}(#{wday_abbr})"
+	end
 
 	def date_and_time_interval
 		date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval

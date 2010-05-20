@@ -104,6 +104,7 @@ en:
   mobile_phone: "Mobile phone"
   month: "Month"
   multi: "Multi "
+  multi_edit: "Multi Edit"
   name: "Name"
   name_hurigana: "Name/Hurigana"
   name_kana: "Name (katakana)"
@@ -171,6 +172,7 @@ en:
   sure_with_teachings?: "Are you sure?\nThe class' teacher information will also be deleted."
   teacher: "Teacher"
   teacher_courses: "Teacher Courses"
+  teaching: "Teaching"
   tel: "Telephone number"
   template_class: "Template Class"
   title: "Title"
@@ -199,6 +201,7 @@ en:
   closed: "{{object}} closed"
   created: "{{object}} created"
   editing: "Editing {{object}}"
+  editing_multiple: "Editing Multiple {{object}}"
   list: "List {{object}}"
   listing: "Listing {{object}}"
   new: "New {{object}}"
@@ -367,6 +370,8 @@ en:
       delete_teacher_with_courses: "Delete all courses depending on this teacher first"
       delete_teacher_with_classes: "Delete all classes depending on this teacher first"
       select: "Please select teachers"
+  teachings:
+    title: "Teachings"
   template_klasses:
     editing: "Editing Template Class"
     title: "Template Classes"

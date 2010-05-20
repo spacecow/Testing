@@ -3,13 +3,22 @@ Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", email: "johan@space.com"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu", email: "aya@space.com"
 
-@format
-Scenario: Check format of mail of Daily Teacher Reminder for today
+@other_days_format
+Scenario: Check other day's format of mail of Daily Teacher Reminder for today
+Given a klass exists with date: "2010-05-19"
+	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
+When the system sends out the daily teacher reminder to concerned teachers at "2010-05-19"
+Then "johan@space.com" should receive 1 email
+When "johan@space.com" opens the email with subject "Reminder 5/19"
+Then I should see the daily teacher reminder mail in english in the email body
+
+@todays_format
+Scenario: Check todays format of mail of Daily Teacher Reminder for today
 Given a klass exists with todays date
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
 When the system sends out the daily teacher reminder to concerned teachers
 Then "johan@space.com" should receive 1 email
-When "johan@space.com" opens the email with subject "Reminder"
+When "johan@space.com" opens the email with subject "Reminder #today"
 Then I should see the daily teacher reminder mail in english in the email body
 
 @test_format
@@ -18,7 +27,7 @@ Given a klass exists with todays date
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
 When the system sends out the daily teacher reminder to concerned teachers as <title> test
 Then "<address>" should receive 1 email
-When "<address>" opens the email with subject "Reminder"
+When "<address>" opens the email with subject "Reminder #today"
 Then I should see the daily teacher reminder mail in english in the email body addressed to user "johan"
 Examples:
 |	title		|	address									|
@@ -59,7 +68,7 @@ Given a klass: "class04" exists with date: "2010-04-04"
 	And a teaching exists with klass: klass "class06", teacher: user "aya", status_mask: 33
 When the system sends out the daily teacher reminder to concerned teachers at "2010-04-05"
 Then "aya@space.com" should receive 1 email
-When "aya@space.com" opens the email with subject "mada"
+When "aya@space.com" opens the email with subject "本日のスケジュール 4/5"
 Then I should not see "4/4(日)" in the email body
 	And I should see "4/5(月)" in the email body
 	And I should not see "4/6(火)" in the email body

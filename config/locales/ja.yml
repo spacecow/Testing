@@ -103,6 +103,7 @@ ja:
   mobile_phone: "携帯番号"
   month: "月"
   multi: "倍数"
+  multi_edit: "倍数編集"
   name: "名前"
   name_hurigana: "名前/ふりがな"
   name_kana: "名前 (カタカナ)"
@@ -170,6 +171,7 @@ ja:
   system: "システム"
   teacher: "講師"
   teacher_courses: "講師講座"
+  teaching: "教えるクラス"
   template_class: "テンプレート・クラス"
   tel: "電話番号"
   title: "タイトル"
@@ -199,6 +201,7 @@ ja:
   closed: "{{object}}が閉じられました"
   created: "{{object}}が作成されました"
   editing: "{{object}}編集"
+  editing_multiple: "{{object}}倍数編集"
   list: "上場{{object}}"
   listing: "上場{{object}}"
   new: "新しい{{object}}"
@@ -357,6 +360,8 @@ ja:
       delete_teacher_with_courses: "講師を削除する前に全部の関係がある講座を除いて下さい"
       delete_teacher_with_classes: "講師を削除する前に全部の関係があるクラスを除いて下さい"
       select: "講師を選択して下さい"
+  teachings:
+    title: "教えるクラス"
   template_klasses:
     editing: "テンプレート・クラス編集"
     new: "新しいテンプレート・クラス"

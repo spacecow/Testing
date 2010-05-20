@@ -6,7 +6,12 @@ class CoursesTeacher < ActiveRecord::Base
 	validates_presence_of :teacher_id, :course_id
   validates_uniqueness_of :teacher_id, :scope => :course_id
   
+  before_save :set_cost
+  
 private
+	def set_cost #unless it is created by factory through cucumber with another value
+		self.cost = teacher.cost if cost.nil?
+	end
 
 	def cost_must_be_a_number
 		unless cost.nil?

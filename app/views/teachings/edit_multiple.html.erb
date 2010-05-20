@@ -1,0 +1,18 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t( :editing_multiple, :object=>t('teachings.title')) %></legend>
+
+<% semantic_form_for :teaching, :url => update_multiple_teachings_path do |f| %>
+	<% @teachings.each do |teaching| %>
+		<%= hidden_field_tag "teaching_ids[]", teaching.id %>
+	<% end %>
+	<% f.inputs do %>	
+		<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'numeric non-japanese' } %>
+	<% end %>
+	<% f.buttons do %>
+		<%= f.commit_button t(:update) %>
+	<% end %>
+<% end %>
+
+</fieldset>
+</div>
