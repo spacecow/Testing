@@ -6,10 +6,6 @@
 #  end
 #end
 
-Then /^the "([^\"]*)" id should not exist$/ do |id|
-  assert_have_no_xpath( "//div[@id='#{id}']" )
-end
-
 Then /^within "([^\"]*)", the "([^\"]*)" field should contain "([^\"]*)"$/ do |scope, field, value|
   within "##{scope}" do |element|
   	element.field_labeled(field).value.should =~ /#{value}/
@@ -72,9 +68,19 @@ end
 
 # -------------------------- CHECK BOXES
 
+When /^I check the boxes within teachings "([^\"]*)"$/ do |models|
+	models.split(', ').each do |model|
+		When "I check the box within teaching \"#{model}\""
+	end
+end
+
 When /^I check "([^\"]*)" within #{capture_model}$/ do |label, model|
 	scope = model( model ).class.to_s.downcase + "_" + model( model ).id.to_s
 	within "##{scope}" do |element|
 		element.check( label )
 	end
+end
+
+When /^I check the box within #{capture_model}$/ do |model|
+	When "I check \"\" within #{model}"
 end

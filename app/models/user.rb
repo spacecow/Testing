@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :mails, :through => :recipients #, :foreign_key => "sender_id"
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+	named_scope :not_staff, {:conditions => "cost > 0"}
   
   #attr_accessible :username, :email, :invitation_token, :nationality, :name, :password, :password_confirmation, :language, :male, :name_hurigana, :occupation, :tel, :age, :roles, :roles_mask, :new_registrant_attributes, :christmas, :info_update, :change_password, :avatar
   
@@ -86,6 +87,10 @@ class User < ActiveRecord::Base
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
+
+	def has_traveling_expenses
+		traveling_expenses.to_i > 0
+	end
 
 	def new_registrant_attributes=( registrant_attributes )
 		registrant_attributes.each do |attributes|

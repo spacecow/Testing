@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100517072239) do
+ActiveRecord::Schema.define(:version => 20100521071518) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -446,6 +446,7 @@ ActiveRecord::Schema.define(:version => 20100517072239) do
     t.string   "last_login_ip"
     t.boolean  "info_update",         :default => true
     t.string   "cost"
+    t.string   "traveling_expenses"
   end
 
   create_table "versions", :force => true do |t|

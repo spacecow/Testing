@@ -123,30 +123,16 @@ class Teaching < ActiveRecord::Base
 	end
 		
 #------- Klass methods	
+		
+	def course; klass.course end
+	def course_category; klass.course_category end
+  def date; klass.date end
+	def date_short; klass.date_short end
+	def japanese_time_interval; klass.japanese_time_interval end
+	def month; klass.month end
+	def start_time; klass.start_time end
+	def time_interval; klass.time_interval end
 	
-	def japanese_time_interval
-		klass.japanese_time_interval
-	end
-	
-	def time_interval
-		klass.time_interval
-	end
-	
-	def date
-		klass.date
-	end
-
-	def date_short
-		klass.date_short
-	end
-	
-	def course
-		klass.course
-	end
-	
-	def course_category
-    klass.course_category
-  end
 private
 
 	def set_cost #unless it is created by factory through cucumber with another value

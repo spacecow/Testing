@@ -20,3 +20,6 @@ Examples:
 |	junko		|
 |	mika		|
 |	reiko		|
+
+@pending
+Scenario: Be able to change status in edit view

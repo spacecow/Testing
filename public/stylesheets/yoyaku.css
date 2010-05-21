@@ -739,29 +739,6 @@ a:hover {
   padding: 0.5em;
   resize: none;
 }
-#container #main #list table {
-  border-collapse: separate;
-  border-spacing: 1px;
-  margin-top: 10px;
-  font-size: 11px;
-}
-#container #main #list table tr th {
-  font-weight: bold;
-  background: #aabbaa;
-  text-align: center;
-  padding: 0 3px 0 3px;
-}
-#container #main #list table tr td span.highlight { font-weight: bold; }
-#container #main #list table tr td.non-read { font-weight: bold; }
-#container #main #list table tr.list-line-odd { background: #ccddcc; }
-#container #main #list table tr.list-line-odd:hover { background: #eeffee; }
-#container #main #list table tr.list-line-odd td { padding: 0 3px 0 3px; }
-#container #main #list table tr.list-line-even { background: #dfeedf; }
-#container #main #list table tr.list-line-even:hover { background: #eeffee; }
-#container #main #list table tr.list-line-even td { padding: 0 3px 0 3px; }
-#container #main #list table.course tr th { padding: 0 2px 0 2px; }
-#container #main #list table.course tr th.title { font-size: 14px; }
-#container #main #list table.course tr th.subtitle { color: #666666; }
 #container #main #list #links { margin-top: 1em; }
 #container #main #list form .sorting {
   margin: 10px 0 10px 110px;
@@ -849,6 +826,29 @@ a:hover {
   font-size: 10px;
   color: #ffffff;
 }
+table.listing {
+  border-collapse: separate;
+  border-spacing: 1px;
+  margin-top: 10px;
+  font-size: 11px;
+}
+table.listing tr th {
+  font-weight: bold;
+  background: #aabbaa;
+  text-align: center;
+  padding: 0 3px 0 3px;
+}
+table.listing tr td span.highlight { font-weight: bold; }
+table.listing tr td.non-read { font-weight: bold; }
+table.listing tr.list-line-odd { background: #ccddcc; }
+table.listing tr.list-line-odd:hover { background: #eeffee; }
+table.listing tr.list-line-odd td { padding: 0 3px 0 3px; }
+table.listing tr.list-line-even { background: #dfeedf; }
+table.listing tr.list-line-even:hover { background: #eeffee; }
+table.listing tr.list-line-even td { padding: 0 3px 0 3px; }
+table.course tr th { padding: 0 2px 0 2px; }
+table.course tr th.title { font-size: 14px; }
+table.course tr th.subtitle { color: #666666; }
 table.salary tr td { padding-right: 1em; }
 table.salary tr td.bold { font-weight: bold; }
 table.salary tr.italic { font-style: italic; }

@@ -16,7 +16,10 @@
 		<%= f.input :tel, :label => t( 'tel' ), :required => false %>
 		<%= f.input :email, :label => t( :email ) %>
 		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN, :include_blank => true, :required => false %>
-		<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'non-japanese numeric' } if @user.role?( :teacher ) && can?( :manage, User ) %>
+<% if @user.role?( :teacher ) && can?( :manage, User ) %>
+		<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'non-japanese numeric' } %>
+		<%= f.input :traveling_expenses, :label => t( :traveling_expenses ), :input_html => { :class => 'non-japanese numeric' } %>		
+<% end %>
 		<hr>
 		<%= f.input :username, :label => t( :user_name ), :input_html => { :disabled => true } %>
 		<%= f.input :password, :label => t( :password_new ) %>

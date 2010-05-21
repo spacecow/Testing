@@ -16,7 +16,7 @@ class TeachingsController < ApplicationController
 	def edit_multiple
 		if @teachings.nil?
 			flash[:error] = "Select at least one teaching in order to multi edit."
-			redirect_to salary_users_path
+			redirect_to salary_users_path( :salary_month => params[:salary_month_backtrack] )
 		end
 	end
 	
@@ -24,7 +24,8 @@ class TeachingsController < ApplicationController
 		@teachings.each do |teaching|
 			teaching.update_attributes!( params[:teaching].reject{|k,v| v.blank? } )
 		end
-		redirect_to salary_users_path
+		flash[:notice] = "No changes." if params[:teaching][:cost].blank?
+		redirect_to salary_users_path( :salary_month => @teachings[0].klass.date.month )
 	end	
 
 private

@@ -4,6 +4,11 @@ Then /^I should see "([^\"]*)" as (notice|error) flash message$/ do |message,typ
   Then "I should see \"#{message}\" within \"div##{type}\""
 end
 
+Then /^I should see no (notice|error) flash message$/ do |type|
+  assert_have_no_xpath( "//div[@id='#{type}']" )
+end
+
+
 #-------------------- LINKS
 
 Then /^I should see links "([^\"]*)" at the bottom of the page$/ do |options|
@@ -73,6 +78,14 @@ end
 
 Then /^the xpath "([^\"]*)" should not exist$/ do |xpath|
   assert_have_no_xpath( xpath )
+end
+
+Then /^the "([^\"]*)" id should not exist$/ do |id|
+  Then "the \"#{id}\" id should not exist for \"div\""
+end
+
+Then /^the "([^\"]*)" id should not exist for "(.+)"$/ do |id, tag|
+  assert_have_no_xpath( "//#{tag}[@id='#{id}']" )
 end
 
 #--------------------

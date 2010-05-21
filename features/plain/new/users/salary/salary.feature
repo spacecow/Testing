@@ -100,21 +100,24 @@ Given a course: "ruby" exists with name: "Ruby II"
 	And a user is logged in as "johan"
 When I browse to the salary users page for "March"
 Then I should see "#johan" table
-|	4200円	|	3/2(tue)	|	Ruby II	|	10:00～12:00	|	X	|	Edit	|
-|	4200円	|	3/4(thu)	|	Ruby II	|	10:00～12:00	|	O	|	Edit	|
-|	4200円	|						|					|							|		|				|
+|	|	4200円	|	3/2(tue)	|	Ruby II	|	10:00～12:00	|	X	|	Edit	|
+|	|	4200円	|	3/4(thu)	|	Ruby II	|	10:00～12:00	|	O	|	Edit	|
+|	|	4200円	|						|					|							|		|				|
 
 @pending
-Scenario: Confirm teaching in salary mode
-
-@pending
-Scenario: Multi-update
+Scenario: Be able to confirm teaching in salary mode
 
 @pending
 Scenario: Make it work with not only month, but also year (NOT IMPLEMENTED)
 
 @pending
 Scenario: Add travel expenses
+
+@pending
+Scenario: Make it sortable on persons
+
+@pending
+Scenario: Make it not inlcude staff
 
 @allow-rescue
 Scenario Outline: Only admins can see salary overview

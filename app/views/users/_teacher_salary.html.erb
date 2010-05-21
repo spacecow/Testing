@@ -1,23 +1,36 @@
 <% form_tag edit_multiple_teachings_path do %>
+	<%= hidden_field_tag :salary_month_backtrack, @salary_month %>
 	<div id="user_<%= teacher.id %>" style="margin-bottom:0.5em;">
 	<h1><%= teacher %></h1>
-	<table id="<%= teacher.username %>" class="salary">
+	<table id="<%= teacher.username %>" class="salary listing">
 		<% total = 0 %>
-		<% teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.each do |teaching| %>
-		<tr class="<%= teaching.status?(:taught) ? '' : 'italic' %>" id="teaching_<%= teaching.id %>">
-			<td><%= label_tag "teaching_ids[]", "" %><%= check_box_tag "teaching_ids[]", teaching.id %></td>
-			<td class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teaching.cost+"円" %></td>
-			<td><%= teaching.date_short %></td>
-			<td><%= teaching.course %></td>
-			<td><%= teaching.japanese_time_interval %></td>
-			<td><%= teaching.status?(:taught) ? 'O' : 'X' %></td>
-			<td><%= link_to t(:edit), edit_teaching_path( teaching ) %></td>
-			<% total += teaching.cost.to_i if teaching.status?(:taught) %>
-		</tr>
+		<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
+		<% index = 0 %>
+		<% groups.keys.sort.each do |key| %>
+			<% groups[key].sort_by(&:start_time).each do |teaching| %>
+				<tr class="<%= teaching.status?(:taught) ? '' : 'italic' %> <%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="teaching_<%= teaching.id %>">
+					<td><%= label_tag "teaching_ids[]", "" %><%= check_box_tag "teaching_ids[]", teaching.id %></td>
+					<td class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teaching.cost+"円" %></td>
+<% if teacher.has_traveling_expenses %>
+					<td id="traveling_expenses" class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teacher.traveling_expenses+"円" %></td>
+					<% total += teacher.traveling_expenses.to_i %>
+<% end %>
+					<td><%= teaching.date_short %></td>
+					<td><%= teaching.course %></td>
+					<td><%= teaching.japanese_time_interval %></td>
+					<td><%= teaching.status?(:taught) ? 'O' : 'X' %></td>
+					<td><%= link_to t(:edit), edit_teaching_path( teaching ) %></td>
+					<% total += teaching.cost.to_i if teaching.status?(:taught) %>
+				</tr>
+			<% end %>
+			<% index += 1 %>
 		<% end %>
 		<tr>
 			<td></td>
 			<td id="total" class="bold"><%= "#{total.to_s}円" unless total==0 %></td>
+<% if teacher.has_traveling_expenses %>
+			<td id="traveling_expenses"></td>
+<% end %>
 			<td></td>
 			<td></td>
 			<td></td>

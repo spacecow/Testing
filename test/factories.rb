@@ -119,6 +119,8 @@ end
 
 Factory.define :teaching do |f|
 	f.current true
+	f.klass {|klass| klass.association(:klass)}
+	f.teacher {|teacher| teacher.association(:user)}
 end
 
 Factory.define :todo do |f|

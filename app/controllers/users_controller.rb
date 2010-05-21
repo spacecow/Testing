@@ -187,7 +187,7 @@ class UsersController < ApplicationController
 		end_month = (@salary_month.to_i+1)%12
 		end_year  = Time.zone.now.year+(@salary_month.to_i+1)/12
 		@end_date = Time.zone.parse( "#{end_year}-#{end_month}-01" )
-		@teachers = User.with_role( :teacher )
+		@teachers = User.with_role( :teacher ).not_staff
 	end
 	
 	def reserve
