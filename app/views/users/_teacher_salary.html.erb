@@ -7,13 +7,17 @@
 		<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
 		<% index = 0 %>
 		<% groups.keys.sort.each do |key| %>
-			<% groups[key].sort_by(&:start_time).each do |teaching| %>
+			<% groups[key].sort_by(&:start_time).each_with_index do |teaching,i| %>
 				<tr class="<%= teaching.status?(:taught) ? '' : 'italic' %> <%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="teaching_<%= teaching.id %>">
 					<td><%= label_tag "teaching_ids[]", "" %><%= check_box_tag "teaching_ids[]", teaching.id %></td>
 					<td class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teaching.cost+"円" %></td>
 <% if teacher.has_traveling_expenses %>
-					<td id="traveling_expenses" class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teacher.traveling_expenses+"円" %></td>
-					<% total += teacher.traveling_expenses.to_i %>
+					<% if i==0 %>
+						<td id="traveling_expenses" class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teacher.traveling_expenses+"円" %></td>
+						<% total += teacher.traveling_expenses.to_i if teaching.status?(:taught) %>
+					<% else %>
+						<td></td>
+					<% end %>
 <% end %>
 					<td><%= teaching.date_short %></td>
 					<td><%= teaching.course %></td>
@@ -27,7 +31,7 @@
 		<% end %>
 		<tr>
 			<td></td>
-			<td id="total" class="bold"><%= "#{total.to_s}円" unless total==0 %></td>
+			<td id="total" class="bold"><%= "#{total.to_s}円" %></td>
 <% if teacher.has_traveling_expenses %>
 			<td id="traveling_expenses"></td>
 <% end %>
