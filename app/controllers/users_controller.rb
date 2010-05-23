@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
       	if !params[:user][:student_klass_ids].blank?
-      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es))
+      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 			  	#mail = Mail.create!(
 			    #	:sender_id => User.first.id,
 			    #	:subject => "Reservation",
@@ -63,11 +63,11 @@ class UsersController < ApplicationController
 			    #)
 			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
       	elsif !params[:user][:teachings_attributes].blank?
-      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es))
+      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase )
       	elsif !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
-      		flash[:notice] = t('notice.update_success',:object=>t('courses.title'))
+      		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase )
     		else
-      		flash[:notice] = t('notice.update_success',:object=>t(:user))
+      		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase )
       	end
       	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		redirect_to users_path( :status => "teacher" )
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
   def destroy
   	@user = User.find( params[:id] )
     @user.destroy
-    flash[:notice] = "Successfully deleted user."
+    flash[:notice] = t('notice.delete_success',:object=>t(:user).downcase )
     redirect_to users_url
   end
     
@@ -148,7 +148,7 @@ class UsersController < ApplicationController
 			redirect_to root_path
 		end
 		if @user.update_attributes(params[:user])
-    	flash[:notice] = t('notice.change_success', :object => t(:password) )
+    	flash[:notice] = t('notice.change_success', :object => t(:password).downcase )
     	@reset_password.update_attribute( :used, true )
     	#@reset_password.destroy
     	redirect_to root_path
@@ -227,9 +227,9 @@ class UsersController < ApplicationController
 			user.update_attributes!( params[:user].reject{|k,v| v.blank? } )
 		end
 		if !params[:user][:student_course_ids].nil? || !params[:user][:teacher_course_ids].nil?
-			flash[:notice] = t('notice.update_success',:object=>t('courses.title'))
+			flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase)
     elsif !params[:user][:roles].nil?			
-    	flash[:notice] = t('notice.update_success',:object=>t('roles'))
+    	flash[:notice] = t('notice.update_success',:object=>t('roles').downcase)
 		end
 		redirect_to users_path
 	end

@@ -152,17 +152,17 @@ Examples:
 |	thomas	|	thomas	| should 			|	should not	|	should			|	should	| 3		|
 |	johan		|	thomas	| should not	|	should 			|	should			|	should	| 3		|
 	
+@pending
 Scenario: Get rid of the error box, add errors to subjects (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Closed/Open - better names in Japanese, make it easier to understand (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Button for update comment doesnt look pretty (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Todo List should go to closed if you are at the show page of a closed todo (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: Johan should not send a mail to himself when he creates a todo (NOT IMPLEMENTED)
-Given not implemented

@@ -27,23 +27,23 @@ When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]
 	field_with_id( "user_teachings_attributes_#{index}_confirm_#{action}" ).choose
 end
 
-Then /^I should see "([^\"]*)" within the confirmable section$/ do |text|
-	response.body.should have_selector( "li.string input" ) do |content|
-		content.map{|e| e['value']}.join(', ').should contain(text)	
-	end
-end
-
-Then /^I should not see "([^\"]*)" within the confirmable section$/ do |text|
-	success = false
-	begin
-	  response.body.should have_selector( "li.string input" ) do |content|
-			content.map{|e| e['value']}.join(', ').should_not contain(text)
-			success = true
-		end
-	rescue Spec::Expectations::ExpectationNotMetError
-		success.should be_true
-	end
-end
+#Then /^I should see "([^\"]*)" within the confirmable section$/ do |text|
+#	response.body.should have_selector( "li.string input" ) do |content|
+#		content.map{|e| e['value']}.join(', ').should contain(text)	
+#	end
+#end
+#
+#Then /^I should not see "([^\"]*)" within the confirmable section$/ do |text|
+#	success = false
+#	begin
+#	  response.body.should have_selector( "li.string input" ) do |content|
+#			content.map{|e| e['value']}.join(', ').should_not contain(text)
+#			success = true
+#		end
+#	rescue Spec::Expectations::ExpectationNotMetError
+#		success.should be_true
+#	end
+#end
 
 #---------------------- Teacher Courses Page
 

@@ -42,7 +42,7 @@ When I browse to the teacher courses page for user "aya"
 	And I check "Fortran I"
 	And I press "Update"
 Then I should automatically browse to the teachers page
-	And I should see "Successfully updated Courses."
+	And I should see "Successfully updated courses."
 	And a courses_teacher should exist with course: course "ruby", teacher: user "aya", chosen: true
 	And a courses_teacher should exist with course: course "fortran", teacher: user "aya", chosen: true
 	And 2 courses_teachers should exist
@@ -103,7 +103,7 @@ When I browse to the teacher courses page for user "johan"
 	And I within "Ruby_III", fill in "円/h" with "<cost>"
 	And I press "Update"
 Then I should be redirected to the users page
-	And I should see "Successfully updated Courses."
+	And I should see "Successfully updated courses."
 	And 0 courses_teachers should exist
 Examples:
 |	cost	|
@@ -123,7 +123,7 @@ Then I should be redirected to the error show page for user "johan"
 When I within "Rails_II", fill in "円/h" with "1500"
 	And I press "Update"
 Then I should automatically browse to the teachers page
-	And I should see "Successfully updated Courses."	
+	And I should see "Successfully updated courses."	
 	And a courses_teacher should exist with teacher: user "johan", course: course "rails", chosen: true, cost: 1500
 	And 1 courses_teachers should exist
 Examples:
@@ -142,7 +142,7 @@ When I browse to the teacher courses page for user "johan"
 	And I within "Fortran_I", fill in "円/h" with "<cost>"
 	And I press "Update"
 Then I should automatically browse to the teachers page
-	And I should see "Successfully updated Courses."	
+	And I should see "Successfully updated courses."	
 	And a courses_teacher should exist with teacher: user "johan", course: course "fortran", chosen: true, cost: 3500
 	And 1 courses_teachers should exist
 Examples:

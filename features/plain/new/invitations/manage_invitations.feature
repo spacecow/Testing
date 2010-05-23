@@ -33,5 +33,5 @@ Then 1 mails should exist
 	And a mail: "update" should exist with sender: user "johan", subject: "version_update#version#0.19", message: "* English is English!<br />* 日本語は日本語！<br /><br />"
 	And a recipient should exist with user: user "johan", mail: mail "update"
 
+@pending
 Scenario: Have a version page where updates are listed (NOT IMPLEMENTED)
-Given not implemented

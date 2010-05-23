@@ -3,6 +3,8 @@ class TeachingsController < ApplicationController
 	load_and_authorize_resource
 
   def edit
+  	p @teaching.status[0]
+  	p @teaching.status[1]
   end
   
   def update

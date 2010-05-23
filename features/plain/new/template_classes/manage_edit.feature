@@ -14,6 +14,14 @@ Examples:
 |	johan	|
 |	aya		|
 
+@return_day
+Scenario: After editing a template class one should return to the same day
+Given a template class exists with day: "tue"
+	And a user is logged in as "johan"
+When I go to the edit page of that template class
+	And I press "Update"
+Then "Tuesday" should be selected as day in the select menu
+
 Scenario: Edit an existing template class
 Given a course: "ruby" exists with name: "Ruby I"
 	And a course: "rails" exists with name: "Rails II"
@@ -52,7 +60,7 @@ When I select "Tuesday" from "Day"
 	And I fill in "Capacity" with "6"
 	And I press "Update"
 Then I should be redirected to the template classes page
-	And I should see "Successfully updated template class" within "#notice"
+	And I should see "Successfully updated template class" as notice flash message
 	And a template class should exist with course: course "ruby", classroom: classroom "room1", start_time: "12:00", end_time: "13:00", title: "A funnier title", capacity: 6, mail_sending: 0, inactive: true, description: "A funnier description", note: "A funnier note", day: "tue"
 	And 1 template_classes should exist
 
@@ -93,5 +101,5 @@ Examples:
 | mika			|
 |	reiko			|
 
+@pending
 Scenario: You should not be able to move a class in time and make it interfere with teacher/room opitons (NOT IMPLEMENTED)
-Given not implemented

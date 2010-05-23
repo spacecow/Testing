@@ -4,20 +4,21 @@ class TemplateClassesController < ApplicationController
   
   def add_course
   	TemplateClass.create!(
-  		:day => params[ :template_day ],
+  		:day => params[ :menu_day ],
   		:course_id => params[ :course_id ],
   		:start_time => params[ :start_time ],
   		:end_time => params[ :end_time ]
   	)
-		redirect_to template_classes_path( :template_day => params[ :template_day ])
+		redirect_to template_classes_path( :menu_day => params[ :menu_day ])
 	end
   
   def index
-		@template_day = params[ :template_day ] || Date.current.strftime( "%a" ).downcase
+		@template_day = params[ :menu_day ] || Date.current.strftime( "%a" ).downcase
 #    @template_klasses = TemplateClass.find_all_by_day( @template_day, :include => [ :course, :course_time, :classroom, { :teacher=>:person }])
 		@template_classes = TemplateClass.find_all_by_day( @template_day, :include => :course )
     @template_groups = @template_classes.group_by{|e| e.course.category }
     @days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
+		@teachers = User.with_role( :teacher )
 #
 #		@classrooms = Classroom.all
 #		@teachers = Teacher.find( :all, :include => :person )
@@ -31,7 +32,7 @@ class TemplateClassesController < ApplicationController
   end
 
   def new
-    @template_class = TemplateClass.new( :capacity => 0, :day => params[:template_day] )
+    @template_class = TemplateClass.new( :day => params[ :template_day ])
 #		@teachers = [] you should not be able to choose teacher before course has been chosen
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 		@template_course = params[:template_course]
@@ -45,7 +46,7 @@ class TemplateClassesController < ApplicationController
 			@template_class.capacity = params[:capacity]
 			@template_class.save
 			flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
-			redirect_to template_classes_path( :template_day=>@template_class.day )
+			redirect_to template_classes_path( :menu_day=>@template_class.day )
 		else
 			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name ).map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 		end
@@ -66,15 +67,14 @@ class TemplateClassesController < ApplicationController
 		if @template_course.blank?
 	  	@courses = sort_courses
 		elsif @template_course.split.size > 1
-			@courses = Course.all( :conditions => ["name = ?",@template_course])
+			@courses = Course.all( :conditions => ["name = ?",@template_course]).map{|e| ["#{e.name} (#{e.capacity})",e.id]}
 		else
-			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name )
-		end
+			@courses = Course.all( :conditions => ["name like (?)",@template_course+"%"], :order=>:name ).map{|e| ["#{e.name} (#{e.capacity})",e.id]}		end
 
     if @template_class.save
       flash[:notice] = t( 'notice.create_success', :object => t( :template_class ).downcase )
       #format.html { redirect_to( template_classes_path( :template_day=>@template_class.day )) }
-      redirect_to template_classes_path( :template_day=>@template_class.day )
+      redirect_to template_classes_path( :menu_day=>@template_class.day )
     else
       render :action => "new"
     end
@@ -82,7 +82,6 @@ class TemplateClassesController < ApplicationController
 
 
   def edit
-    @template_class = TemplateClass.find(params[:id])
 		@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
 		@courses = Course.all
 		#@teachers = Teacher.all(
@@ -91,17 +90,16 @@ class TemplateClassesController < ApplicationController
   end
   
   def update
-    @template_class = TemplateClass.find(params[:id])
   	@days = t( 'date.day_names' ).zip( TemplateClass::DAYS )
     @courses = Course.all
     course_id = @template_class.course_id
 
-    if @template_class.update_attributes(params[:template_class])          
+    if @template_class.update_attributes(params[:template_class])
       flash[:notice] = t( 'notice.update_success', :object => t( :template_class ).downcase )
     	if params[:redirect] == "courses"
     		redirect_to edit_course_path( @template_class.course_id )
 			else
-				redirect_to( template_classes_path( :template_day=>@template_class.day ))
+				redirect_to( template_classes_path( :menu_day=>@template_class.day ))
 			end
     else
       @template_class.update_attribute( :course_id, course_id )          
@@ -116,7 +114,7 @@ class TemplateClassesController < ApplicationController
     @template_day = @template_class.day
     @template_class.destroy
     flash[:notice] = t('notice.delete_success', :object=>t(:template_class).downcase )
-		redirect_to template_classes_path( :template_day=>@template_day )
+		redirect_to template_classes_path( :menu_day=>@template_day )
   end
 
   def no_of_ten_minutes

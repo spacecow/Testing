@@ -5,8 +5,7 @@ Given a setting exists with name: "main"
 
 Scenario: Create an event
 Given a user is logged in as "aya"
-When I go to the events page
-	And I follow "New Event" at the bottom of the page
+When I go to the new event page
 	And I fill in "Title (en)*" with "Christmas Party"
 	And I select "2009, December, 19, 19, 00" from dropmenus "event_start_date"
 	And I select "2009, December, 19, 21, 00" from dropmenus "event_end_date"
@@ -16,6 +15,6 @@ When I go to the events page
 Then I should be redirected to the error events page
 When I fill in "Title (ja)*" with "クリスマスパーティ"
 	And I press "Create"
-Then a event should exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", description_en: "It's Christmas!", end_date: "2009-12-19 21:00:00", due_date: "2009-12-10 23:59:00", start_date: "2009-12-19 19:00:00"
+Then a event should exist with title_en: "Christmas Party", title_ja: "クリスマスパーティ", description_en: "It's Christmas!", end_date: "2009-12-19 12:00:00", due_date: "2009-12-10 14:59:00", start_date: "2009-12-19 10:00:00"
   And a gallery should exist with event: that event
 	And I should be redirected to the events page

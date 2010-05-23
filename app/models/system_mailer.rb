@@ -189,7 +189,7 @@ private
 
 public
 	def self.next_weeks_teacher_schedule( address=nil )
-		weekly_teacher_schedule_at(( Time.zone.now + 1.day ).strftime( "%Y-%m-%d" ), address )
+		weekly_teacher_schedule_at(( Time.zone.now ).strftime( "%Y-%m-%d" ), address )
 	end
 	
 	def self.next_weeks_teacher_schedule_as_johan_test

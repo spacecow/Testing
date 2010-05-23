@@ -2,14 +2,13 @@
 <fieldset class="form">
 <legend class="form"><%= t( :editing, :object=>t(:teaching)) %></legend>
 
-<div class="intro">
 <div class="pairs">
 	<%= render 'includes/pair', :left => t(:klass_date), :right => h(@teaching.date_short) %>
 	<%= render 'includes/pair', :left => t(:course), :right => h(@teaching.course) %>
 	<%= render 'includes/pair', :left => t(:klass_time), :right => h(@teaching.time_interval) %>
 	<%= render 'includes/pair', :left => t(:teacher), :right => h(@teaching.teacher) %>
 </div>
-</div>
+
 <% semantic_form_for @teaching do |f| %>
   <%= render :partial => "form", :locals => { :f=>f, :label_text=>"Update" } %>
 <% end %>

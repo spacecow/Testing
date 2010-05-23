@@ -6,7 +6,7 @@ Given a setting exist with name: "main"
 @new_class
 Scenario: Create a new class
 Given a user is logged in as "johan"
-	And a course: "ruby" exists with name: "Ruby I", capacity: 8
+	And a course: "ruby" exists with name: "Ruby I", capacity: "8"
 	And a course exists with name: "Rails II"
 	And a course exists with name: "Fortran I"
 When I go to the new klass page
@@ -26,9 +26,9 @@ Then I should be redirected to the klasses page
 
 @new_view
 Scenario: New view
-Given a course exists with name: "Ruby I", capacity: 8
-	And a course exists with name: "Fortran I", capacity: 8
-	And a course exists with name: "Rails II", capacity: 6
+Given a course exists with name: "Ruby I", capacity: "8"
+	And a course exists with name: "Fortran I", capacity: "8"
+	And a course exists with name: "Rails II", capacity: "6"
 	And a user is logged in as "johan"
 When I go to the new klass page
 Then I should see "New Class" within "legend"

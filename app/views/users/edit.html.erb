@@ -18,7 +18,7 @@
 		<%= f.input :occupation, :label => t( 'occupation' ), :as => :select, :collection => japanese? ? Registrant::OCCUPATIONS_JA : Registrant::OCCUPATIONS_EN, :include_blank => true, :required => false %>
 <% if @user.role?( :teacher ) && can?( :manage, User ) %>
 		<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'non-japanese numeric' } %>
-		<%= f.input :traveling_expenses, :label => t( :traveling_expenses ), :input_html => { :class => 'non-japanese numeric' } %>		
+		<%= f.input :traveling_expenses, :label => t( :traveling_expenses ), :input_html => { :class => 'non-japanese numeric' }, :required => false %>		
 <% end %>
 		<hr>
 		<%= f.input :username, :label => t( :user_name ), :input_html => { :disabled => true } %>

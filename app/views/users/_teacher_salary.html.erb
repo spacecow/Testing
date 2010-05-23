@@ -1,47 +1,62 @@
-<% form_tag edit_multiple_teachings_path do %>
-	<%= hidden_field_tag :salary_month_backtrack, @salary_month %>
-	<div id="user_<%= teacher.id %>" style="margin-bottom:0.5em;">
-	<h1><%= teacher %></h1>
-	<table id="<%= teacher.username %>" class="salary listing">
-		<% total = 0 %>
-		<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
-		<% index = 0 %>
-		<% groups.keys.sort.each do |key| %>
-			<% groups[key].sort_by(&:start_time).each_with_index do |teaching,i| %>
-				<tr class="<%= teaching.status?(:taught) ? '' : 'italic' %> <%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="teaching_<%= teaching.id %>">
-					<td><%= label_tag "teaching_ids[]", "" %><%= check_box_tag "teaching_ids[]", teaching.id %></td>
-					<td class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teaching.cost+"円" %></td>
-<% if teacher.has_traveling_expenses %>
-					<% if i==0 %>
-						<td id="traveling_expenses" class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teacher.traveling_expenses+"円" %></td>
-						<% total += teacher.traveling_expenses.to_i if teaching.status?(:taught) %>
-					<% else %>
-						<td></td>
-					<% end %>
-<% end %>
-					<td><%= teaching.date_short %></td>
-					<td><%= teaching.course %></td>
-					<td><%= teaching.japanese_time_interval %></td>
-					<td><%= teaching.status?(:taught) ? 'O' : 'X' %></td>
-					<td><%= link_to t(:edit), edit_teaching_path( teaching ) %></td>
-					<% total += teaching.cost.to_i if teaching.status?(:taught) %>
-				</tr>
+<div class="salary_info">
+	<% form_tag edit_multiple_teachings_path do %>
+		<%= hidden_field_tag :salary_month_backtrack, @salary_month %>
+		<div id="user_<%= teacher.id %>" style="margin-bottom:0.5em;">
+		<h1><%= teacher %></h1>
+		<table id="<%= teacher.username %>" class="salary listing">
+			<% total = 0 %>
+			<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
+			<% index = 0 %>
+			<% groups.keys.sort.each do |key| %>
+				<% groups[key].sort_by(&:start_time).each_with_index do |teaching,i| %>
+					<tr class="<%= teaching.status?(:taught) ? '' : 'italic' %> <%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="teaching_<%= teaching.id %>">
+						<td><%= label_tag "teaching_ids[]", "" %><%= check_box_tag "teaching_ids[]", teaching.id %></td>
+						<td class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teaching.cost+"円" %></td>
+	<% if teacher.has_traveling_expenses %>
+						<% if i==0 %>
+							<td id="traveling_expenses" class="<%= teaching.status?(:taught) ? 'bold' : '' %>"><%= teacher.traveling_expenses+"円" %></td>
+							<% total += teacher.traveling_expenses.to_i if teaching.status?(:taught) %>
+						<% else %>
+							<td></td>
+						<% end %>
+	<% end %>
+						<td><%= teaching.date_short %></td>
+						<td><%= teaching.course %></td>
+						<td><%= teaching.japanese_time_interval %></td>
+						<td><%= link_to t(:edit), edit_teaching_path( teaching ) %></td>
+						<% total += teaching.cost.to_i if teaching.status?(:taught) %>
+					</tr>
+				<% end %>
+				<% index += 1 %>
 			<% end %>
-			<% index += 1 %>
-		<% end %>
-		<tr>
-			<td></td>
-			<td id="total" class="bold"><%= "#{total.to_s}円" %></td>
-<% if teacher.has_traveling_expenses %>
-			<td id="traveling_expenses"></td>
-<% end %>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-	<%= submit_tag t(:multi_edit) %>
+			<tr>
+				<td></td>
+				<td id="total" class="bold"><%= "#{total.to_s}円" %></td>
+	<% if teacher.has_traveling_expenses %>
+				<td id="traveling_expenses"></td>
+	<% end %>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<%= submit_tag t(:multi_edit) %>
+		</div>
+	<% end %>
 </div>
-<% end %>
+
+<div class="salary_status">
+	<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
+	<% groups.keys.sort.each do |key| %>
+		<% groups[key].sort_by(&:start_time).each_with_index do |teaching,i| %>
+			<% form_for teaching, :method=>:put do |f| -%>
+				<%=	submit_tag teaching.taught_symbol,
+					:id => 'teach',
+					:name => 'teaching[toggle_taught_basic]',
+					:class => teaching.status[1] %>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>
+<div class="clear"></div>

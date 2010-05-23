@@ -4,15 +4,15 @@ Given a setting exist with name: "main"
 	And a user exist with username: "johan", role: "admin", language: "en"
 	
 Scenario: Visual & Links
-Given a course exists with name: "Ruby I"
-	And a course exists with name: "Ruby II"
-	And a course exists with name: "Rails II"
+Given a course exists with name: "Ruby I", capacity: "8"
+	And a course exists with name: "Ruby II", capacity: "6"
+	And a course exists with name: "Rails II", capacity: "6"
 	And a user exists with username: "kurosawa", name: "Akira Kurosawa", role: "teacher"
 	And a user is logged in as "johan"
 When I go to the new template class page
 Then I should see "New Template Class" within "legend"
-	And the "Course" field should have options "BLANK, Ruby I, Ruby II, Rails II"
-	And the "Capacity" field should contain "0"
+	And the "Course" field should have options "BLANK, Ruby I (8), Ruby II (6), Rails II (6)"
+	And the "Capacity" field should be blank
 	And the "Day" field should have options "BLANK, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
 	And I should see "Ex. 17:50" within "li#template_class_start_time_string_input"
 	And I should see "Ex. 18:40" within "li#template_class_end_time_string_input"
@@ -32,30 +32,22 @@ Then I should be redirected to the error template classes page
 
 @capacity_errors
 Scenario Outline: Capacity errors for template class
-Given a user is logged in as "johan"
-When I go to the new template class page
-	And I fill in "Capacity" with "<input>"
-	And I press "Create"
-Then I should be redirected to the error template classes page
-	And I should see "<error>" as error message for template_class capacity
-Examples:
-|	input			|	error						|	zero				|
-| 					|	is not a number	|	should not	|
-| asahigani	|	is not a number	|	should not	|
-| ０					|	can't be zero		|	should   		|
-	
-@capacity_errors_edit
-Scenario: Capacity errors for a template class in edit mode
 Given a course exists with name: "Ruby I"
 	And a template class exists with course: that course
-	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
-	And a user is logged in as "aya"
-When I go to the edit page of that template class
-	And I fill in "Capacity" with ""
-	And I press "Update"
-Then I should be redirected to the error show page of that template class
-	And I should see "is not a number" as error message for template_class capacity
-
+	And a user is logged in as "johan"
+When I go to the <path>
+	And I fill in "Capacity" with "<input>"
+	And I press "<button>"
+Then I should see "<error>" as error message for template_class capacity
+Examples:
+|	path															|	input			|	button	|	error						|
+|	new template class page						| 					|	Create	|	is not a number	|
+|	new template class page						| asahigani	|	Create	|	is not a number	|
+|	new template class page						| ０					|	Create	|	can't be zero		|
+|	edit page of that template class	| 					|	Update	|	is not a number	|
+|	edit page of that template class	| asahigani	|	Update	|	is not a number	|
+|	edit page of that template class	| ０					|	Update	|	can't be zero		|
+	
 @capacity_ok
 Scenario: Capacity can be told with japanese numbers
 Given a user is logged in as "johan"

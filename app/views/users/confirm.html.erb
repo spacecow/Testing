@@ -15,7 +15,7 @@
 	<% f.inputs do %>
 		<% @confirmable_classes.map(&:teaching).each do |teaching| %>
 			<% f.inputs :for => [:teachings, teaching] do |builder| %>
-				<span id="klass"><%= builder.input :klass, :as => :string, :input_html => { :disabled => true }, :label => false %></span>
+				<span id="klass"><%= teaching.klass %></span>
 				<%= builder.input :confirm, :label => false, :as => :radio, :collection => [['','confirmed'],['','declined']] %>				
 			<% end %>
 		<% end %>

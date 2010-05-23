@@ -25,8 +25,8 @@ Scenario: If a teacher has traveling expenses it should be shown on the salary p
 Given a teaching exists with klass: klass "ruby", teacher: user "prince", status_mask: 9
 When I browse to the salary users page for "January"
 Then I should see "#prince" table
-|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	1800円	|				|						|					|							|		|				|
+|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	1800円	|				|						|					|							|				|
 
 Scenario: Travel expenses only counts once each day
 Given a klass: "ruby2" exists with course: course "ruby", date: "2010-01-01", start_time: "11:00", end_time: "12:00"
@@ -36,18 +36,17 @@ Given a klass: "ruby2" exists with course: course "ruby", date: "2010-01-01", st
 	And a teaching exists with klass: klass "ruby3", teacher: user "prince", status_mask: 9
 When I browse to the salary users page for "January"
 Then I should see "#prince" table
-|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	1400円	|				|	1/1(fri)	|	Ruby I	|	11:00～12:00	|	O	|	Edit	|
-|	1400円	|	400円	|	1/2(sat)	|	Ruby I	|	11:00～12:00	|	O	|	Edit	|
-|	5000円	|				|						|					|							|		|				|
+|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	1400円	|				|	1/1(fri)	|	Ruby I	|	11:00～12:00	|	Edit	|
+|	1400円	|	400円	|	1/2(sat)	|	Ruby I	|	11:00～12:00	|	Edit	|
+|	5000円	|				|						|					|							|				|
 
 Scenario: If the class is not taught the travel expenses are not included in the total
 Given a teaching exists with klass: klass "ruby", teacher: user "prince", status_mask: 33
 When I browse to the salary users page for "January"
-Then show me the page
 Then I should see "#prince" table
-|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	X	|	Edit	|
-|	0円		|				|						|					|							|		|				|
+|	1400円	|	400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	0円		|				|						|					|							|				|
 
 
 

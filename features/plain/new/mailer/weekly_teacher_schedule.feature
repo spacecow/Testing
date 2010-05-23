@@ -11,7 +11,23 @@ When the system sends out the weekly schedule to concerned teachers at "2010-04-
 Then "aya@space.com" should receive 1 email
 When "aya@space.com" opens the email with subject "来週のシフトについて"
 Then I should see the weekly teacher schedule mail in japanese in the email body
-	
+
+@date
+Scenario Outline: Next week's schedule
+Given a klass exists with date: "2010-05-31"
+	And a teaching exists with klass: that klass, teacher: user "aya"
+When the system sends out the weekly schedule to concerned teachers at "<date>"
+Then "aya@space.com" should receive 1 email
+Examples:
+|	date				|
+|	2010-05-24	|
+|	2010-05-25	|
+|	2010-05-26	|
+|	2010-05-27	|
+|	2010-05-28	|
+|	2010-05-29	|
+|	2010-05-30	|
+
 @not_current
 Scenario Outline: Teachings that are not current are not affected
 Given a klass exists with date: "2010-04-06"

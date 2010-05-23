@@ -13,5 +13,5 @@ Then I should see "#registrants" table
 When I follow "Edit" within that registrant
 Then I should be redirected to the edit page of that registrant
 
+@pending
 Scenario: Send a confirmation mail (NOT IMPLEMENTED)
-Given not implemented

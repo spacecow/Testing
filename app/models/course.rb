@@ -6,42 +6,35 @@ class Course < ActiveRecord::Base
   has_many :teachers, :through=>:courses_teachers
   has_many :schedules
     
-  validates_presence_of :name, :level_ja, :level_en, :capacity
+  validates_presence_of :name, :level_ja, :level_en
   validates_uniqueness_of :name
   validates_inclusion_of :inactive, :in => [false, true]
-  validate :capacity_must_be_a_number
-  validate :format_of_name
+	validates_numericality_of :capacity
+	validate :capacity_cannot_be_zero  
   
-  def category
-    name.split[0]
-  end
+	def capacity=( i );		super( convert_japanese_numbers( i.to_s ))	end  
+	def name=( s );				super( s.gsub( /　/, " " )) end
   
-  def level
-    name.split[1]
-  end
-
+  def category;			name.split[0]		end
+  def level;				name.split[1]		end
+  def to_s;					"#{name}"  			end
+  	
 	def level_to_s( language )
-		if language == "ja"
-			level_ja
-		else
-			level_en
+		if language == "ja";	level_ja
+		else;									level_en
 		end
 	end
-
-  def to_s
-    "#{name}"
-  end
   
 private
 
-  def capacity_must_be_a_number
-  	numbers = {"０"=>"0", "１"=>"1", "２"=>"2", "３"=>"3", "４"=>"4", "５"=>"5", "６"=>"6", "７"=>"7", "８"=>"8", "９"=>"9"}
-  	numbers.each{|k,v| capacity.gsub!(/#{k}/, "#{v}")} if !capacity.nil? && capacity.match(/[０-９]/)
-  	errors.add(:capacity, I18n.t('activerecord.errors.messages.not_a_number')) unless capacity.match(/^\d+$/) || errors.on(:capacity)
+	def capacity_cannot_be_zero
+		errors.add :capacity, I18n.t('error.message.zero') if capacity == "0" unless errors.on( :capacity )
+	end
+
+  def convert_japanese_numbers( s )
+		numbers = {"０"=>"0", "１"=>"1", "２"=>"2", "３"=>"3", "４"=>"4", "５"=>"5", "６"=>"6", "７"=>"7", "８"=>"8", "９"=>"9"}
+  	numbers.each{|k,v| s.gsub!(/#{k}/, "#{v}")} if !s.nil? && s.match(/[０-９]/)
+  	s
   end
   
-	def format_of_name
-  	name.gsub!(/　/, " ") unless name.nil?
-	end
-	
 end

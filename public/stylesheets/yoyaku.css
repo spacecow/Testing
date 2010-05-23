@@ -520,35 +520,6 @@ a:hover {
 #container #main .show fieldset.show .info span.category { font-weight: bold; }
 #container #main .show fieldset.show .info .applicants { margin-top: 5px; }
 #container #main .show fieldset.show .info .apply { margin-top: 5px; }
-#container #main .show fieldset.show .pairs { font-size: 1.1em; }
-#container #main .show fieldset.show .pairs .left_column {
-  width: 12em;
-  float: left;
-  text-align: right;
-  padding-right: 0.4em;
-  border-right: 0.1em solid;
-  margin: 0.3em 0 0.3em 0;
-}
-#container #main .show fieldset.show .pairs .left_column .left {
-  padding: 0.3em 0 0.3em 0.2em;
-  background: #ccddcc;
-}
-#container #main .show fieldset.show .pairs .right_column {
-  width: 28em;
-  float: left;
-  padding-left: 0.4em;
-  margin: 0.3em 0 0.3em 0;
-}
-#container #main .show fieldset.show .pairs .right_column .right {
-  padding: 0.3em 0 0.3em 0.2em;
-  background: #dfeedf;
-}
-#container #main .show fieldset.show .pairs .right_column .right a { font-size: 1em; }
-#container #main .show fieldset.show .pairs .right_column .right_message {
-  padding-left: 0.2em;
-  background: #dfeedf;
-}
-#container #main .show fieldset.show .pairs .right_column .right_message a { font-size: 1em; }
 #container #main .show fieldset.show hr {
   border-top: 1px dashed #7f9db9;
   background-color: #eeffee;
@@ -826,6 +797,35 @@ a:hover {
   font-size: 10px;
   color: #ffffff;
 }
+div.pairs { font-size: 1.1em; }
+div.pairs span.left_column {
+  width: 12em;
+  float: left;
+  text-align: right;
+  padding-right: 0.4em;
+  border-right: 0.1em solid;
+  margin: 0.3em 0 0.3em 0;
+}
+div.pairs span.left_column span.left {
+  padding: 0.3em 0 0.3em 0.2em;
+  background: #ccddcc;
+}
+div.pairs span.right_column {
+  width: 28em;
+  float: left;
+  padding-left: 0.4em;
+  margin: 0.3em 0 0.3em 0;
+}
+div.pairs span.right_column span.right {
+  padding: 0.3em 0 0.3em 0.2em;
+  background: #dfeedf;
+}
+div.pairs span.right_column span.right a { font-size: 1em; }
+div.pairs span.right_column .right_message {
+  padding-left: 0.2em;
+  background: #dfeedf;
+}
+div.pairs span.right_column .right_message a { font-size: 1em; }
 table.listing {
   border-collapse: separate;
   border-spacing: 1px;
@@ -849,9 +849,25 @@ table.listing tr.list-line-even td { padding: 0 3px 0 3px; }
 table.course tr th { padding: 0 2px 0 2px; }
 table.course tr th.title { font-size: 14px; }
 table.course tr th.subtitle { color: #666666; }
+div.salary_info { float: left; }
+div.salary_status {
+  margin-top: 2.9em;
+  float: left;
+}
+div.salary_status input {
+  width: 1.5em;
+  font-weight: bold;
+}
+div.salary_status input.taught { color: green; }
+div.salary_status input.unconfirmed { color: magenta; }
+div.salary_status input.untaught { color: magenta; }
 table.salary tr td { padding-right: 1em; }
-table.salary tr td.bold { font-weight: bold; }
+table.salary tr td.bold {
+  padding: 0.3em 1em 0.2em 0;
+  font-weight: bold;
+}
 table.salary tr.italic { font-style: italic; }
+table.salary tr.italic td { padding: 0.25em 1em 0.2em 0; }
 .fieldWithErrors {
   padding: 4px;
   background-color: red;

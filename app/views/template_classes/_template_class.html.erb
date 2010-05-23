@@ -1,22 +1,29 @@
-<td id="time_interval"><%= h template_class.time_interval %></td>
-<td id="unit"></td>
-<td id="classroom"><%= h template_class.classroom %></td>
-<td id="teacher"></td>
-<% template_class.capacity.to_i.times do |i| %>
-	<td id="student<%= (i+1) %>"></td>
-<% end %>
-<% (8-template_class.capacity.to_i).times do |i| %>
-  <td>x</td>
-<% end %>
-
-<td id="links">
-	<% if can? :show, template_class %>
-		<%= link_to t('show'), template_class %>
+<% semantic_form_for template_class do |f| -%>
+	<% f.inputs do %>
+		<td id="time_interval"><%= h template_class.time_interval %></td>
+		<td id="unit"></td>
+		<td id="classroom"><%= h template_class.classroom %></td>
+		<td id="teacher">
+			<%= f.input :teacher, :label => false, :required => false, :collection => teachers %>
+		</td>
+		<% template_class.capacity.to_i.times do |i| %>
+			<td id="student<%= (i+1) %>"></td>
+		<% end %>
+		<% (8-template_class.capacity.to_i).times do |i| %>
+		  <td>x</td>
+		<% end %>
+		
+		<td id="links">
+			<% if can? :show, template_class %>
+				<%= link_to t('show'), template_class %>
+			<% end %>
+			<% if can? :edit, template_class %>
+				<%= link_to t('edit'), edit_template_class_path(template_class) %>
+			<% end %>
+			<% if can? :destroy, template_class %>
+				<%= link_to t('delete'), template_class, :confirm => 'Are you sure?', :method => :delete %>
+			<% end %>
+		</td>	 
+		<td><%= f.submit "OK" %></td> 		
 	<% end %>
-	<% if can? :edit, template_class %>
-		<%= link_to t('edit'), edit_template_class_path(template_class) %>
-	<% end %>
-	<% if can? :destroy, template_class %>
-		<%= link_to t('delete'), template_class, :confirm => 'Are you sure?', :method => :delete %>
-	<% end %>
-</td>	
+<% end -%>

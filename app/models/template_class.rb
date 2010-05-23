@@ -77,9 +77,9 @@ class TemplateClass < ActiveRecord::Base
   end    
   
   def create_class( date )
-		Klass.create!(
+		klass = Klass.create!(
 			:course_id=>self.course_id,
-			#:teacher_id=>self.teacher_id,
+			:teacher=>self.teacher,
 			:classroom_id=>self.classroom_id,
 			:capacity=>self.capacity,      
 			:date=>date.strftime( "%Y-%m-%d" ),
@@ -90,7 +90,11 @@ class TemplateClass < ActiveRecord::Base
 			:cancel=>self.inactive,
 			:mail_sending=>self.mail_sending,
 			:note=>self.note
-  	).date
+  	)
+  	if self.teacher
+	  	klass.teachers << self.teacher
+	  	klass.teachings[0].update_attribute( :current, true )
+	  end
   end
   
 private

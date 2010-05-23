@@ -71,6 +71,10 @@ form.user fieldset.inputs ol fieldset.inputs ol li.boolean label {
   margin: 0;
   width: 2em;
 }
+form.user fieldset.inputs ol fieldset.inputs ol span#klass {
+  float: right;
+  margin-right: 20em;
+}
 form.user fieldset.inputs ol fieldset.inputs ol span#klass li.string {
   margin-right: 14em;
   float: right;

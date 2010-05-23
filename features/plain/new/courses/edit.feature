@@ -1,6 +1,6 @@
 Background:
 Given a setting exists with name: "main"
-	And a course exists with name: "Ruby I", level_en: "basic", level_ja: "基本"
+	And a course exists with name: "Ruby I", level_en: "basic", level_ja: "基本", capacity: "8"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
 
 Scenario Outline: Edit course for admin
@@ -34,6 +34,9 @@ Scenario: View of edit course page
 Given a user is logged in as "johan"
 When I go to the edit page for that course
 Then the "Name" field should contain "Ruby I"
+	And the "Level (ja)*" field should contain "基本"
+	And the "Level (en)*" field should contain "basic"
+	And the "Capacity" field should contain "8"
 	And the "Yes" checkbox should not be checked
 	And the "No" checkbox should be checked
 	And the "Description" field should be emtpy
@@ -46,7 +49,7 @@ When I go to the edit page for that course
 	And I choose "Yes"
 	And I fill in "Description" with "yeah!"
 	And I fill in "Note" with "even more yeah!"
-	And I press "Create"
+	And I press "Update"
 Then a course should exist with name: "Rails II", inactive: true, description: "yeah!", note: "even more yeah!", level_en: "basic", level_ja: "基本"
 	And 1 courses should exist
 	And I should see "Successfully updated Course." as notice flash message

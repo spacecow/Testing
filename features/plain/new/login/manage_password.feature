@@ -21,8 +21,8 @@ Then I should see "A mail has been sent to you." within "#notice"
 	And I should be redirected to the root page
 	And a reset password should exist with user: user "spacecow"
 
+@pending
 Scenario: Try to switch language in the middle of an error message (NOT IMPLEMENTED)
-Given not implemented
 
 Scenario: Errors for the user confirmation form
 When I go to path "/login_user"

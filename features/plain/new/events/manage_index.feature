@@ -58,8 +58,14 @@ Then 0 events should exist
   And 0 comments should exist
   And 0 registrants should exist
   
-Scenario: Events with no start date/end date should be put in upcoming events (NOT IMPLEMENTED)
-Given not implemented
+Scenario: Links on index page
+Given a user is logged in as "aya"
+When I go to the events page
+	And I follow "New Event" at the bottom of the page
+Then I should be redirected to the new event page
 
+@pending
+Scenario: Events with no start date/end date should be put in upcoming events (NOT IMPLEMENTED)
+
+@pending
 Scenario: Should be able to display only date (NOT IMPLEMENTED)
-Given not implemented

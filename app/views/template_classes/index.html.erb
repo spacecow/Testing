@@ -1,14 +1,18 @@
 ﻿<div id="list">
 	
 <h1><%= t( 'template_klasses.title' ) %></h1>
-<div class="intro">
-</div>
+<%- form_for :template_class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| -%>
+  <div id="select_menu">
+	  <label for="template_day">Choose a day: </label>
+	  <%= select_tag :menu_day, options_for_select( @days, @template_day ) %>
+	  <%= f.submit "Go!"%>
+	</div>
+<%- end -%>
 
-<% form_for :template_class, :url => { :action=>'index' }, :html => { :method=>'get' } do |f| %>
-  <label for="template_day">Choose a day: </label>
-  <%= select_tag :template_day, options_for_select( @days, @template_day ) %>
-  <%= f.submit "Go!"%>
-<% end %>
+<div class="intro">
+The Template Classes tell the basic idea of how a typical day looks like.
+The Classes for a day are generated from the Template Classes as base.
+</div>
 <br />
 
 <% @keys = sort_in_mogi_order @template_groups.keys %>

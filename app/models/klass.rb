@@ -57,61 +57,18 @@ class Klass < ActiveRecord::Base
 		end
 	end
 
-	def toggle_confirmation=( value )
-		if value == "?"
-			teaching.confirm = "confirmed"
-		elsif value == "O"
-			teaching.confirm = "declined"
-		elsif value == "X"
-			teaching.confirm = ""
-		end
-	end
+	def toggle_confirmation=( value );	teaching.toggle_confirmation = value	end
+	def toggle_taught=( value );				teaching.toggle_taught = value				end
 
-	def toggle_taught=( value )
-		if value == "?"
-			teaching.taught = "taught"
-		elsif value == "O"
-			teaching.taught = "canceled"
-		elsif value == "X"
-			teaching.taught = ""
-		end
-	end
-
-	def name
-		month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval
-	end
-
-	def year
-		date.year
-	end
-	
-	def month
-		date.month
-	end
-	
-	def day
-		date.day
-	end
-	
-	def wday
-		date.wday-1
-	end
-	
-	def wday_to_s
-		I18n.t( 'date.day_names' )[wday]
-	end
-	
-	def wday_abbr
-		I18n.t( 'date.abbr_day_names' )[wday]
-	end	
-
-	def date_short
-		"#{month.to_s}/#{day.to_s}(#{wday_abbr})"
-	end
-
-	def date_and_time_interval
-		date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval
-	end
+	def name;	month.to_s+"/"+day.to_s+"("+wday_to_s+") - "+course.to_s+" - "+time_interval	end
+	def year;	date.year	end
+	def month;	date.month	end
+	def day;		date.day	end
+	def wday;		date.wday-1	end
+	def wday_to_s;	I18n.t( 'date.day_names' )[wday]	end
+	def wday_abbr;	I18n.t( 'date.abbr_day_names' )[wday]	end	
+	def date_short;	"#{month.to_s}/#{day.to_s}(#{wday_abbr})"		end
+	def date_and_time_interval;	date.strftime("%m")+"/"+date.strftime("%d")+": "+time_interval	end
 
 	# To be able to edit time with a textfield
 	def end_time_string

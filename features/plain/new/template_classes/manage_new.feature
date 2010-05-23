@@ -14,19 +14,19 @@ Examples:
 
 @new
 Scenario: Create a new template class
-Given a course: "ruby" exists with name: "Ruby I"
-	And a course exists with name: "Rails II"
+Given a course: "ruby" exists with name: "Ruby I", capacity: "8"
+	And a course exists with name: "Rails II", capacity: "6"
 	And a user is logged in as "aya"
 When I go to the new template class page
-Then the "Capacity" field should contain "0"
+Then the "Capacity" field should be empty
 When I fill in "Title" with "A funny title"
-	And I select "Ruby I" from "Course"
+	And I select "Ruby I (8)" from "Course"
 	And I select "Monday" from "Day"
 	And I fill in "Description" with "A funny description"
 	And I fill in "Note" with "A funny note"
 	And I press "Create"
 Then I should be redirected to the error template classes page
-	And "Ruby I" should be selected in the "Course" box
+	And "Ruby I (8)" should be selected in the "Course" box
 	And "Monday" should be selected in the "Day" box
 When I fill in "Start time" with "18:50"
 	And I fill in "End time" with "20:50"
@@ -34,9 +34,9 @@ When I fill in "Start time" with "18:50"
 	And I press "Create"
 Then I should be redirected to the template classes page
 	And I should see "Successfully created template class" as notice flash message
-	And "Monday" should be selected in the "Choose a day" box
+	And "Monday" should be selected as day in the select menu
 	And a template class should exist with course: course "ruby", start_time: "18:50", end_time: "20:50", title: "A funny title", capacity: 8, mail_sending: 0, inactive: false, description: "A funny description", note: "A funny note", day: "mon"
-	And I should have 1 template classes
+	And I should have 1 template_classes
 
 @allow-rescue
 Scenario Outline: Not everyone can create a template class

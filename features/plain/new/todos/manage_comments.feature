@@ -7,12 +7,13 @@ Given a setting exists with name: "main"
 	And a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a todo: "chat" exists with subjects_mask: 1, user: user "kurosawa", title: "Chat room", description: "Wouldn't that be fun!"  
 	
+@pending
 Scenario: A comment cannot be blank (AJAX)
-Given a user is logged in as "kurosawa"
-	When I go to the show page of todo "chat"
-	And I press "コメントを書き足す"
-Then I should be redirected to the show page of that todo
-Given not implemented	
+#Given a user is logged in as "kurosawa"
+#	When I go to the show page of todo "chat"
+#	And I press "コメントを書き足す"
+#Then I should be redirected to the show page of that todo
+#Given not implemented	
 #And I should see "コメントは空白のままにしておく事は出来ません"
 
 @add_comment
@@ -41,17 +42,17 @@ Examples:
 |	thomas		|	thomas		|	should 			|	should not	|	should not	|	1		|
 |	kurosawa	|	aya				|	should 			|	should			|	should			|	3		|
 
+@pending
 Scenario: Add a comment with line feed (DONT KNOW WHY THIS DOESNT WORK)
-Given a user is logged in as "kurosawa"
-When I go to the show page of todo "chat"
-	And I fill in "Comment*" with "I wanna chat!<br />yeah!"
-	And I press "コメントを書き足す"
-Then I should see "I wanna chat!yeah!"
-When I follow "編集"
-Then the "Comment" field should contain "I wanna chat!\r\nyeah!"
-When I press "更新"
+#Given a user is logged in as "kurosawa"
+#When I go to the show page of todo "chat"
+#	And I fill in "Comment*" with "I wanna chat!<br />yeah!"
+#	And I press "コメントを書き足す"
+#Then I should see "I wanna chat!yeah!"
+#When I follow "編集"
+#Then the "Comment" field should contain "I wanna chat!\r\nyeah!"
+#When I press "更新"
 #Then I should see "I wanna chat!yeah!"	 Dont know why this doesnt work
-Given not implemented
 
 Scenario Outline: Edit & delete options for comments should be visible for respective role
 Given a comment: "fuck_christmas" exists with comment: "Fuck Christmas!", user: user "aya", todo: todo "chat"

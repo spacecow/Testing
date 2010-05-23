@@ -1,7 +1,7 @@
 Background:
 Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", cost: "2100"
-	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
+	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu", cost: "1600"
 	
 @view
 Scenario Outline: View
@@ -16,7 +16,7 @@ Examples:
 	
 @each_month
 Scenario Outline: Check listing of salary for each month
-Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip", cost: "1500"
 	And a course: "ruby" exists
 	And a klass: "ruby0101" exists with course: course "ruby", date: "2010-01-01"
 	And a klass: "ruby0131" exists with course: course "ruby", date: "2010-01-31"
@@ -63,10 +63,10 @@ Given a course: "ruby" exists with name: "Ruby I"
 	And a user is logged in as "johan"
 When I browse to the salary users page for "January"
 Then I should see "#johan" table
-|	1400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	2800円	|	1/14(thu)	|	Ruby I	|	10:00～12:00	|	O	|	Edit	|
-|	4200円	|	1/31(sun)	|	Ruby I	|	10:00～13:00	|	O	|	Edit	|
-|	8400円	|						|					|							|		|				|
+|	1400円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	2800円	|	1/14(thu)	|	Ruby I	|	10:00～12:00	|	Edit	|
+|	4200円	|	1/31(sun)	|	Ruby I	|	10:00～13:00	|	Edit	|
+|	8400円	|						|					|							|				|
 
 Scenario Outline: Salary does not carry on to the next month (NOT IMPLEMENTED)
 Given a course: "ruby" exists
@@ -100,9 +100,9 @@ Given a course: "ruby" exists with name: "Ruby II"
 	And a user is logged in as "johan"
 When I browse to the salary users page for "March"
 Then I should see "#johan" table
-|	|	4200円	|	3/2(tue)	|	Ruby II	|	10:00～12:00	|	X	|	Edit	|
-|	|	4200円	|	3/4(thu)	|	Ruby II	|	10:00～12:00	|	O	|	Edit	|
-|	|	4200円	|						|					|							|		|				|
+|	|	4200円	|	3/2(tue)	|	Ruby II	|	10:00～12:00	|	Edit	|
+|	|	4200円	|	3/4(thu)	|	Ruby II	|	10:00～12:00	|	Edit	|
+|	|	4200円	|						|					|							|				|
 
 @pending
 Scenario: Be able to confirm teaching in salary mode
@@ -111,13 +111,10 @@ Scenario: Be able to confirm teaching in salary mode
 Scenario: Make it work with not only month, but also year (NOT IMPLEMENTED)
 
 @pending
-Scenario: Add travel expenses
-
-@pending
 Scenario: Make it sortable on persons
 
 @pending
-Scenario: Make it not inlcude staff
+Scenario: Make inclusion of staff optional
 
 @allow-rescue
 Scenario Outline: Only admins can see salary overview

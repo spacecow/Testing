@@ -14,10 +14,10 @@ Given a setting exists with name: "main"
 Scenario: Salary view
 When I browse to the salary users page for "January"
 Then I should see "#johan" table
-|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	4500円	|						|					|							|		|				|
+|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	4500円	|						|					|							|				|
 
 Scenario: If no teaching is selected, admin should be redirected back to the salary page
 When I browse to the salary users page for "January"
@@ -25,10 +25,10 @@ When I browse to the salary users page for "January"
 Then I should be redirected to the salary users page
 	And I should see "Select at least one teaching in order to multi edit." as error flash message
 	And I should see "#johan" table
-|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	4500円	|						|					|							|		|				|
+|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	4500円	|						|					|							|				|
 
 Scenario: Go to the multiple teachings page
 When I browse to the salary users page for "January"
@@ -45,10 +45,10 @@ When I browse to the salary users page for "January"
 Then I should be redirected to the salary users page
 	And I should see no notice flash message
 	And I should see "#johan" table
-|	|	1000円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1000円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	3500円	|						|					|							|		|				|
+|	|	1000円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1000円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	3500円	|						|					|							|				|
 
 Scenario: Edit multiple teachings page with an emtpy field and nothing happens
 When I browse to the salary users page for "January"
@@ -59,7 +59,7 @@ When I browse to the salary users page for "January"
 Then I should be redirected to the salary users page
 	And I should see "No changes." as notice flash message
 	And I should see "#johan" table
-|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	O	|	Edit	|
-|	|	4500円	|						|					|							|		|				|
+|	|	1500円	|	1/1(fri)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/2(sat)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	1500円	|	1/3(sun)	|	Ruby I	|	10:00～11:00	|	Edit	|
+|	|	4500円	|						|					|							|				|

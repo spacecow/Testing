@@ -18,9 +18,9 @@ Given a user is logged in as "johan"
 When I go to the confirm page for user: "johan" on "2010-03-06"
 Then I should see "Confirm" as title
 	And I should see "Classes to Confirm" within "div.confirmable"
-	And I should see "3/18(Thursday)" within the confirmable section
-	And I should not see "3/19(Friday)" within the confirmable section
-	And I should not see "3/20(Saturday)" within the confirmable section
+	And I should see "3/18(Thursday)" within "div.confirmable"
+	And I should not see "3/19(Friday)" within "div.confirmable"
+	And I should not see "3/20(Saturday)" within "div.confirmable"
 	And the page should have no "confirmed" section
 	And the page should have no "taught" section
 	And the page should have no "declined" section
@@ -36,9 +36,9 @@ Given a klass: "klass18" exists with date: "2010-03-18"
 Given a user is logged in as "johan"
 When I go to the confirm page for user: "johan" on "2010-03-06"
 Then I should see "Classes to Confirm" within "div.confirmable"
-	And I should see "3/18(Thursday)" within the confirmable section
-	And I should not see "3/19(Friday)" within the confirmable section
-	And I should not see "3/20(Saturday)" within the confirmable section
+	And I should see "3/18(Thursday)" within "div.confirmable"
+	And I should not see "3/19(Friday)" within "div.confirmable"
+	And I should not see "3/20(Saturday)" within "div.confirmable"
 	And I should see "Already Confirmed Classes" within "div.confirmed"
 	And I should see "3/19(Friday)" within "div.confirmed"
 	And I should not see "3/20(Saturday)" within "div.confirmed"
@@ -119,24 +119,24 @@ Examples:
 |	johan 	|	confirm page for user: "johan"	|	confirm page for user: "junko"	|
 |	aya		 	|	confirm page for user: "aya"		|	confirm page for user: "junko"	|
 
-@order
+@pending
 Scenario: Classes should be displayed in order after day, time interval
-Given a course: "ruby" exists with name: "Ruby I"
-	And a klass: "klass19-2" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass: "klass18-2" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass: "klass18-1" exists with date: "2010-03-18", course: course "ruby", start_time: "11:00", end_time: "12:00"
-	And a klass: "klass20-1" exists with date: "2010-03-20", course: course "ruby", start_time: "09:00", end_time: "13:00"
-	And a klass: "klass20-2" exists with date: "2010-03-20", course: course "ruby", start_time: "17:00", end_time: "18:00"
-	And a klass: "klass19-1" exists with date: "2010-03-19", course: course "ruby", start_time: "09:00", end_time: "13:00"
-	And a teaching exists with klass: klass "klass19-2", teacher: user "johan"
-	And a teaching exists with klass: klass "klass18-2", teacher: user "johan"
-	And a teaching exists with klass: klass "klass18-1", teacher: user "johan"
-	And a teaching exists with klass: klass "klass20-1", teacher: user "johan"
-	And a teaching exists with klass: klass "klass20-2", teacher: user "johan"
-	And a teaching exists with klass: klass "klass19-1", teacher: user "johan"	
-	And a user is logged in as "johan"
-When I go to the confirm page for user: "johan" on "2010-03-06"
-Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00, 3/18(Thursday) - Ruby I - 12:00~13:00, 3/19(Friday) - Ruby I - 09:00~13:00, 3/19(Friday) - Ruby I - 12:00~13:00, 3/20(Saturday) - Ruby I - 09:00~13:00, 3/20(Saturday) - Ruby I - 17:00~18:00" within the confirmable section
+#Given a course: "ruby" exists with name: "Ruby I"
+#	And a klass: "klass19-2" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
+#	And a klass: "klass18-2" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+#	And a klass: "klass18-1" exists with date: "2010-03-18", course: course "ruby", start_time: "11:00", end_time: "12:00"
+#	And a klass: "klass20-1" exists with date: "2010-03-20", course: course "ruby", start_time: "09:00", end_time: "13:00"
+#	And a klass: "klass20-2" exists with date: "2010-03-20", course: course "ruby", start_time: "17:00", end_time: "18:00"
+#	And a klass: "klass19-1" exists with date: "2010-03-19", course: course "ruby", start_time: "09:00", end_time: "13:00"
+#	And a teaching exists with klass: klass "klass19-2", teacher: user "johan"
+#	And a teaching exists with klass: klass "klass18-2", teacher: user "johan"
+#	And a teaching exists with klass: klass "klass18-1", teacher: user "johan"
+#	And a teaching exists with klass: klass "klass20-1", teacher: user "johan"
+#	And a teaching exists with klass: klass "klass20-2", teacher: user "johan"
+#	And a teaching exists with klass: klass "klass19-1", teacher: user "johan"	
+#	And a user is logged in as "johan"
+#When I go to the confirm page for user: "johan" on "2010-03-06"
+#Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00, 3/18(Thursday) - Ruby I - 12:00~13:00, 3/19(Friday) - Ruby I - 09:00~13:00, 3/19(Friday) - Ruby I - 12:00~13:00, 3/20(Saturday) - Ruby I - 09:00~13:00, 3/20(Saturday) - Ruby I - 17:00~18:00" within "div.confirmable"
 
 @confirm
 Scenario: Confirm & decline classes
@@ -180,8 +180,8 @@ Given a klass: "klass04" exists with date: "2010-03-04"
 	And a user is logged in as "prince"
 Then 6 teachings should exist
 When I go to the confirm page for user: "prince" on "2010-03-10"
-Then I should see "3/18(Thursday)" within the confirmable section
-	And I should see "3/19(Friday)" within the confirmable section
+Then I should see "3/18(Thursday)" within "div.confirmable"
+	And I should see "3/19(Friday)" within "div.confirmable"
 	And I should see "3/20(Saturday)" within "div.confirmed"
 	And I should see "3/4(Thursday)" within "div.taught"
 	And I should see "3/5(Friday)" within "div.declined"
@@ -189,7 +189,7 @@ Then I should see "3/18(Thursday)" within the confirmable section
 When I confirmed klass "klass19" for user "prince" from "2010-03-10"
 	And I press "Confirm"
 Then I should be redirected to path "/mypage"
-	And I should see "Successfully confirmed Class(es)." as notice flash message
+	And I should see "Successfully confirmed class(es)." as notice flash message
 	And a teaching should exist with klass: klass "klass04", teacher: user "prince", status_mask: 33
 	And a teaching should exist with klass: klass "klass05", teacher: user "prince", status_mask: 2
 	And a teaching should exist with klass: klass "klass18", teacher: user "prince", status_mask: 4
@@ -208,9 +208,9 @@ Given a klass: "klass18" exists with date: "2010-03-18"
 	And a teaching exists with klass: klass "klass20", teacher: user "johan", current: true
 Given a user is logged in as "johan"
 When I go to the confirm page for user: "johan" on "2010-03-06"
-	And I should see "3/18(Thursday)" within the confirmable section
+	And I should see "3/18(Thursday)" within "div.confirmable"
 	#And I should not see "3/19(Friday)" within the form
-	And I should see "3/20(Saturday)" within the confirmable section
+	And I should see "3/20(Saturday)" within "div.confirmable"
 	
 @pending
 Scenario: Two teachings should not be able to be current at the same time (NOT IMPLEMENTED)

@@ -156,7 +156,7 @@ end
 
 #....... Menu
 
-When /^I select "([^\"]*)" as (teacher|language|type) in the select menu$/ do |option, category|
+When /^I select "([^\"]*)" as (teacher|language|type|day) in the select menu$/ do |option, category|
 	Then "I within \"select_menu\", select \"#{option}\" from \"menu_#{category}\""
 	And "I press \"Go!\""
 end
@@ -174,7 +174,7 @@ Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as date in the select men
  	And "within \"select_menu\", \"#{year}\" should be selected in \"menu_year\""
 end
 
-Then /^"([^\"]*)" should be selected as (teacher|language|type) in the select menu$/ do |option, category|
+Then /^"([^\"]*)" should be selected as (teacher|language|type|day) in the select menu$/ do |option, category|
   And "within \"select_menu\", \"#{option}\" should be selected in \"menu_#{category}\""
 end
 

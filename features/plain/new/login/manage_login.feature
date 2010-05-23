@@ -48,8 +48,9 @@ When I go to path "/login_user/jinjin"
 Then the "User name" field should contain "jinjin"
 Then the "Password" field should be blank
 
+@pending
 Scenario: If a user inputs a wrong url, he should be taken to the root page (NOT IMPLEMENTED)
-Given not implemented
 
+@pending
 Scenario: No error messages! (NOT IMPLEMENTED)
-Given not implemented
+

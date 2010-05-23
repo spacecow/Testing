@@ -44,11 +44,12 @@ Scenario: Create a course
 Given a user is logged in as "johan"
 When I go to the new course page
 	And I fill in "Name" with "Rails II"
-	And I fill in "Level (ja)*" with "基本"
+	And I fill in "Level (ja)*" with "蝓ｺ譛ｬ"
 	And I fill in "Level (en)*" with "basic"
+	And I fill in "Capacity" with "5"
 	And I fill in "Description" with "yeah!"
 	And I fill in "Note" with "even more yeah!"
 	And I press "Create"
-Then a course should exist with name: "Rails II", inactive: false, description: "yeah!", note: "even more yeah!", level_en: "basic", level_ja: "基本"
+Then a course should exist with name: "Rails II", inactive: false, description: "yeah!", note: "even more yeah!", level_en: "basic", level_ja: "蝓ｺ譛ｬ", capacity: "5"
 	And 1 courses should exist
 	And I should see "Successfully created Course." as notice flash message

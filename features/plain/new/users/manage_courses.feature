@@ -25,7 +25,7 @@ When I browse to the students page
 	And I check "Fortran I"
 	And I press "Update"
 Then I should be redirected to the users page
-	And I should see "Successfully updated Courses."
+	And I should see "Successfully updated courses."
 	And 1 courses_students should exist with course: course "ruby", student: user "reiko"
 	And 1 courses_students should exist with course: course "fortran", student: user "reiko"
 	And 2 courses_students should exist
@@ -54,7 +54,7 @@ When I uncheck "Fortran I"
 	And I check "Rails II"
 	And I press "Update"
 Then I should be redirected to the users page
-	And I should see "Successfully updated Courses."
+	And I should see "Successfully updated courses."
 	And 1 courses_students should exist with course: course "ruby", student: user "reiko"
 	And 1 courses_students should exist with course: course "rails", student: user "reiko"
 	And 2 courses_students should exist
@@ -74,7 +74,7 @@ When I uncheck "Fortran I"
 	And I check "Rails II"
 	And I press "Update"
 Then I should be redirected to the users page
-	And I should see "Successfully updated Courses."
+	And I should see "Successfully updated courses."
 	And a courses_teacher should exist with course: course "ruby", teacher: user "johan"
 	And a courses_teacher should exist with course: course "rails", teacher: user "johan"
 	And 2 courses_teachers should exist

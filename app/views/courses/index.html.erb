@@ -1,7 +1,7 @@
 <div id="list">
 <h1><%= t( 'courses.listing' ) %></h1>
 
-<table>
+<table class="listing">
 <% @keys.each_with_index do |key,i| %>
 	<% @courses_groups[key].each do |course| %>
 		<tr class="<%= i%2==0 ? 'list-line-odd' : 'list-line-even' %>" >

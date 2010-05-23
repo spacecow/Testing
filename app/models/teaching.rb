@@ -22,31 +22,42 @@ class Teaching < ActiveRecord::Base
 	#named_scope :with, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
     
   def confirmed_symbol
-  	if status? :confirmed
-  		"O"
-  	elsif status? :declined
-  		"X"
-		else
-  		"?"
+  	if 		status? :confirmed;	"O"
+  	elsif status? :declined;	"X"
+		else;								  		"?"
 		end
   end
 
   def taught_symbol
-  	if status? :taught
-  		"O"
-  	elsif status? :canceled
-  		"X"
-		else
-  		"?"
+  	if 		status? :taught;  	"O"
+  	elsif status? :canceled;  "X"
+		else;								  		"?"
 		end
   end
+
+	def toggle_confirmation=( value )
+		if value == "?";			self.confirm = "confirmed"
+		elsif value == "O";		self.confirm = "declined"
+		elsif value == "X";		self.confirm = ""
+		end  
+	end
+	
+	def toggle_taught=( value )
+		if value == "?";			self.taught = "taught"
+		elsif value == "O";		self.taught = "canceled"
+		elsif value == "X";		self.taught = ""
+		end
+	end
+	
+	def toggle_taught_basic=( value )
+		if value == "?";			self.taught = "taught"
+		elsif value == "O";		self.taught = ""
+		end
+	end	
   
-  def confirm
-    #status? :confirmed
-  end
   
   def confirm=( value )
-    if value.blank?
+    if value.blank?;
       set_status :unconfirmed
     elsif value=="confirmed"
       set_status :confirmed
@@ -59,6 +70,7 @@ class Teaching < ActiveRecord::Base
   
   def taught=( value )
     if value.blank?
+    	reset_status :taught
       reset_status :canceled
       add_status :untaught
     elsif value=="taught"
@@ -84,6 +96,9 @@ class Teaching < ActiveRecord::Base
 		self.status_mask = status_value( value )  	
   end
 
+	def confirm
+		
+	end
 
 
   def status?( value )
