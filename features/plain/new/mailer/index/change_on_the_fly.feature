@@ -30,11 +30,29 @@ When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 Then I should not see "12:00" within "div#text_message"
 	And I should see "15:56" within "div#text_message"
 
-@type
-Scenario: Choose type
+@type_weekly
+Scenario: Choose Weekly Teacher Schedule type
 	And a klass: "2" exists with date: "2011-12-27"
 	And a teaching exists with klass: klass "2", teacher: user "thomas"
 When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 	And I select "Weekly Teacher Schedule" as type in the select menu
 Then the "body" field should contain the weekly teacher schedule mail in english
 	And I should see "12/27" within "div#text_message"
+	
+@type_salary_last
+Scenario: Choose Last Month's Salary Summary type for last month
+	Given a klass exists last month the 23rd
+	And a teaching exists with klass: that klass, teacher: user "thomas"
+When I browse to the "Daily Mail" page for user "thomas"
+	And I select "Last Month's Salary Summary" as type in the select menu
+Then the "body" field should contain the last months salary teacher summary mail in english for "#last_month"
+	#And I should see "4/23" within "div#text_message"
+	
+@type_salary_arbitrarily
+Scenario: Choose Last Month's Salary Summary type for an arbitrarily month
+	Given a klass exists with date: "2011-11-27"
+	And a teaching exists with klass: that klass, teacher: user "thomas"
+When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
+	And I select "Last Month's Salary Summary" as type in the select menu
+Then the "body" field should contain the last months salary teacher summary mail in english for "November"
+	#And I should see "11/27" within "div#text_message"
