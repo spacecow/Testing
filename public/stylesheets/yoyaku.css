@@ -850,6 +850,16 @@ table.course tr th { padding: 0 2px 0 2px; }
 table.course tr th.title { font-size: 14px; }
 table.course tr th.subtitle { color: #666666; }
 div.salary_info { float: left; }
+table.salary_status {
+  float: left;
+  margin-top: 2.95em;
+}
+table.salary_status tr td {
+  height: 1.95em;
+  text-align: center;
+}
+table.salary_status tr td input.taught { color: green; }
+table.salary_status tr td input.untaught { color: magenta; }
 div.salary_status {
   margin-top: 2.9em;
   float: left;
@@ -861,13 +871,12 @@ div.salary_status input {
 div.salary_status input.taught { color: green; }
 div.salary_status input.unconfirmed { color: magenta; }
 div.salary_status input.untaught { color: magenta; }
-table.salary tr td { padding-right: 1em; }
-table.salary tr td.bold {
-  padding: 0.3em 1em 0.2em 0;
-  font-weight: bold;
+table.salary tr td {
+  padding-right: 1em;
+  height: 2em;
 }
+table.salary tr td.bold { font-weight: bold; }
 table.salary tr.italic { font-style: italic; }
-table.salary tr.italic td { padding: 0.25em 1em 0.2em 0; }
 .fieldWithErrors {
   padding: 4px;
   background-color: red;

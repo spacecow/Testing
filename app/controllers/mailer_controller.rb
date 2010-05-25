@@ -32,9 +32,9 @@ class MailerController < ApplicationController
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
 		@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
-		@mail.gsub!(/<%= @last_month %>/,month(language, (@menu_date-1.month).month))
-		@mail.gsub!(/<%= @this_month %>/,month(language, @menu_date.month))
 		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+1.day).strftime("%a") )
+		@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
+		@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
 		@mail.gsub!(/<%= @name %>/,'')
 		@mail.gsub!(/<%= @sender %>/,'Hitomi')
   end
@@ -54,11 +54,11 @@ class MailerController < ApplicationController
   end
 end
 
-def month( language, m )
-	if language=="ja"
-		%w(~ 1月 2月 3月 4月 5月 6月 7月 8月 9月 10月 11月 12)[m]
-	else
-		%w(~ January February March April May June July August September October November December)[m]
+def month_to_s( date, language )
+	if language=="en"
+		%w(~ January February March April May June July August September October November December)[date.month]
+	elsif language=="ja"
+		%w(~ 1月 2月 3月 4月 5月 6月 7月 8月 9月 10月 11月 12月)[date.month]
 	end
 end
 

@@ -46,17 +46,19 @@
 	<% end %>
 </div>
 
-<div class="salary_status">
+<table class="salary_status">
 	<% groups = teacher.teachings.between_dates(@start_date,@end_date).confirmed.current.not_canceled.group_by(&:date) %>
 	<% groups.keys.sort.each do |key| %>
 		<% groups[key].sort_by(&:start_time).each_with_index do |teaching,i| %>
 			<% form_for teaching, :method=>:put do |f| -%>
-				<%=	submit_tag teaching.taught_symbol,
-					:id => 'teach',
-					:name => 'teaching[toggle_taught_basic]',
-					:class => teaching.status[1] %>
+				<tr><td>
+					<%=	submit_tag teaching.taught_symbol,
+							:id => 'teach',
+							:name => 'teaching[toggle_taught_basic]',
+							:class => teaching.status[1] %>
+				</td></tr>
 			<% end %>
 		<% end %>
 	<% end %>
-</div>
+</table>
 <div class="clear"></div>

@@ -74,6 +74,12 @@ When /^the system sends out next working day's teacher reminder to concerned tea
 	SystemMailer.next_working_days_teacher_reminder_at( date )
 end
 
+
+
+When /^the system sends out the last month's salary summary to concerned teachers$/ do
+  SystemMailer.last_months_salary_summary
+end
+
 #........ Visuals
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|
@@ -134,15 +140,38 @@ Then /^I should see the (.+) mail in (.+) in the email body(?: from "(.+)")$/ do
 	end
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (.+)$/ do |id, mail, language|
+Then /^the "([^\"]*)" field should contain the (.+) mail in (english|japanese)$/ do |id, mail, language|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
+			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)")
 			if line.match(/@schedule/)
 				#do nothing
 			elsif line.match(/@name/)
 				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @name %>/,'').chomp+"\r"}\"" 
 			elsif line.match(/@sender/)
 				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @sender %>/,'Hitomi').chomp+"\r"}\"" 
+			else
+				Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" 
+			end
+		end
+	end  
+end
+
+Then /^the "([^\"]*)" field should contain the (.+) mail in (english) for "(.+)"$/ do |id, mail, language, month|
+	if month = "#last_month"
+		last_month = %w(~ January February March April May June July August September October November December)[(Time.zone.now-1.month).month]
+	else
+		last_month = month
+	end
+	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
+		f.readlines.each do |line|
+			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)")
+			if line.match(/@summary/)
+				#do nothing
+			elsif line.match(/@last_month/)
+				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @last_month %>/,last_month).chomp+"\r"}\"" 
+			elsif line.match(/@this_month/)
+				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @this_month %>/,'May').chomp+"\r"}\"" 
 			else
 				Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" 
 			end

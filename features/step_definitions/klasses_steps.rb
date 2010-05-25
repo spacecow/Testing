@@ -10,6 +10,10 @@ Given /^a klass exists a week from now$/ do
   Given "a klass exists with date: \"#{(Time.zone.now+7.day).to_s.split[0]}\""
 end
 
+Given /^a klass exists last month the (\d+)(?:st|nd|rd)$/ do |date|
+  Given "a klass exists with date: \"#{((Time.zone.now-1.month).beginning_of_month+date.to_i.day).to_s.split[0]}\""
+end
+
 #======================== Index form
 
 #------ Toggle status

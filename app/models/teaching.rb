@@ -14,6 +14,7 @@ class Teaching < ActiveRecord::Base
   named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:teacher]}}
   named_scope :teacher, lambda { |teacher_id| {:conditions => ["teacher_id = ?", teacher_id]}}
   named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0"}# and status_mask & #{2**STATUS.index('canceled')} = 0"}
+  named_scope :taught, {:conditions => "status_mask & #{2**STATUS.index('taught')} > 0"}
   named_scope :untaught, {:conditions => "status_mask & #{2**STATUS.index('untaught')} > 0"}
   named_scope :taught, {:conditions => "status_mask & #{2**STATUS.index('taught')} > 0"}
   named_scope :not_canceled, {:conditions => "status_mask & #{2**STATUS.index('canceled')} = 0"}

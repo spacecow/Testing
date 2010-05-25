@@ -106,6 +106,27 @@ private
 
 public
 
+	def self.get_last_months_interval( date )
+		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
+	end
+
+	def self.last_months_salary_summary( address=nil )
+		last_months_salary_summary_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
+	end
+
+	def self.last_months_salary_summary_at( date, address=nil )
+		get_last_months_salary_teachings_at( date )
+	end
+
+	def self.get_last_months_salary_teachings_at( date )
+		start_date, end_date = get_last_months_interval( date )
+		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
+	end
+
+	def self.get_last_months_salary_teachings_to_at( teacher, date )
+		get_last_months_salary_teachings_at( date ).teacher( teacher.id )
+	end
+
 	def self.daily_staff_reminder( address=nil, sender="Hitomi" )
 		daily_staff_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address, sender )
 	end	
