@@ -42,7 +42,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 	And 1 teachings should exist
 	And the "confirm" button should be disabled
 
-Scenario: Confirm a teacher having canceled his class
+Scenario: A teacher canceled his class
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 9
 When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
@@ -50,7 +50,7 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 	And 1 teachings should exist
 	And the "confirm" button should be disabled
 
-Scenario: Toggle the class back to untaught
+Scenario: Toggle the class back to untaught from canceled
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 17
 When I browse to the klasses page of "February 28, 2010"
 When I press the teach button
@@ -76,13 +76,13 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 	And I should see no teach button
 	
 @another
-Scenario: Choose another teacher
+Scenario: When choosing another teacher, the previous teaching should still remain in memory
 Given a teaching exists with klass: klass "ruby", teacher: user "aya", status_mask: 2
 When I browse to the klasses page of "February 28, 2010"
 	And I select "Johan Sveholm" as teacher within klass "ruby"
 	And I press "OK!" within klass "ruby"
 Then a teaching should exist with klass: klass "ruby", teacher: user "aya", status_mask: 2, cost: 2000
-	And 1 teachings should exist with klass: klass "ruby", teacher: user "johan", status_mask: 4, cost: 2500
+	And a teachings should exist with klass: klass "ruby", teacher: user "johan", status_mask: 4, cost: 2500
 	And 2 teachings should exist
 
 #When I press "?"
@@ -94,3 +94,6 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 #Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
 #	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false, status_mask: 1, cost: "2500"
 #	And 2 teachings should exist	
+
+@pending
+Scenario: Be able to set all teachers at once for a category of classes

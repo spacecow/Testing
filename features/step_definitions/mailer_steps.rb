@@ -74,6 +74,12 @@ When /^the system sends out next working day's teacher reminder to concerned tea
 	SystemMailer.next_working_days_teacher_reminder_at( date )
 end
 
+
+
+When /^the system sends out the last month's salary summary to concerned teachers$/ do
+  SystemMailer.next_working_days_teacher_reminder
+end
+
 #........ Visuals
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|
