@@ -1,5 +1,5 @@
 class SystemMailer < ActionMailer::Base
-	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule]
+	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule last_months_salary_teacher_summary]
 
 	def self.get_main_course( user )
 		get_frequent_word( user.teacher_courses.map(&:category))
@@ -17,6 +17,22 @@ class SystemMailer < ActionMailer::Base
 			res	
 	end
 
+	def self.get_summary( teachings, user, language = user.language )
+		return nil if teachings.nil?
+		schedule = ""
+		main_course = get_main_course( user )
+		date_teachings = teachings.group_by(&:date)
+		date_teachings.keys.sort.each_with_index do |date,index|
+			schedule += date_teachings[date][0].to_mail_date(language)+" "
+			schedule += date_teachings[date].
+				sort_by(&:time_interval).
+				map(&:japanese_time_interval).join(", ") + "=" +
+				date_teachings[date].map(&:hours).sum.to_s+"時間"
+			schedule += "\n" unless (index+1)==date_teachings.keys.size
+		end
+		schedule
+	end
+
 	def self.get_schedule( teachings, user, language = user.language )
 		return nil if teachings.nil?
 		schedule = ""
@@ -26,7 +42,7 @@ class SystemMailer < ActionMailer::Base
 			schedule += date_teachings[date][0].to_mail_date(language)+" "
 			schedule += date_teachings[date].
 				sort_by(&:time_interval).
-				map{|e| e.to_mail_time_interval(main_course, language)}.join(", ")
+				map{|e| e.to_time_interval_course(main_course, language)}.join(", ")
 			schedule += "\n" unless (index+1)==date_teachings.keys.size
 		end
 		schedule
@@ -60,6 +76,21 @@ class SystemMailer < ActionMailer::Base
 
 	def self.get_daily_teachings_to_at( teacher, date )
 		get_daily_teachings_at( date ).teacher(teacher.id)
+	end
+
+
+
+	def self.get_last_months_interval( date )
+		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
+	end
+	
+	def self.get_last_months_salary_teachings_at( date )
+		start_date, end_date = get_last_months_interval( date )
+		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
+	end	
+	
+	def self.get_last_months_salary_teachings_to_at( teacher, date )
+		get_last_months_salary_teachings_at( date ).teacher(teacher.id)
 	end
 
 

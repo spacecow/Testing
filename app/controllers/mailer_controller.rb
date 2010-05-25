@@ -18,17 +18,23 @@ class MailerController < ApplicationController
 		@menu_type			= params[:menu_type]
 		
 		user = User.find_by_name( @menu_teacher )
-		func = "get_#{@menu_type.split('_')[0]}_teachings_to_at".to_sym
+		func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teachings_to_at".to_sym
 		teachings = SystemMailer.send( func, user, @menu_date.to_s )
 		schedule = SystemMailer.get_schedule( teachings, user, @menu_language )
+		summary = SystemMailer.get_summary( teachings, user, @menu_language )
 		
 		language = @menu_language == "ja" ? "japanese" : "english"
 		@subject = case @menu_type
 			when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
 			when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
+			when "last_months_salary_teacher_summary"; @menu_language == "ja" ? "" : "Last Month's Salary Summary"
 		end
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
+		@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+		@mail.gsub!(/<%= @last_month %>/,month(language, (@menu_date-1.month).month))
+		@mail.gsub!(/<%= @this_month %>/,month(language, @menu_date.month))
+		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+1.day).strftime("%a") )
 		@mail.gsub!(/<%= @name %>/,'')
 		@mail.gsub!(/<%= @sender %>/,'Hitomi')
   end
@@ -46,6 +52,14 @@ class MailerController < ApplicationController
 			:menu_teacher => params[:menu_teacher]
 		)
   end
+end
+
+def month( language, m )
+	if language=="ja"
+		%w(~ 1月 2月 3月 4月 5月 6月 7月 8月 9月 10月 11月 12)[m]
+	else
+		%w(~ January February March April May June July August September October November December)[m]
+	end
 end
 
 def get_mail( path )

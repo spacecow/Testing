@@ -15,6 +15,7 @@ class Teaching < ActiveRecord::Base
   named_scope :teacher, lambda { |teacher_id| {:conditions => ["teacher_id = ?", teacher_id]}}
   named_scope :confirmed, {:conditions => "status_mask & #{2**STATUS.index('confirmed')} > 0"}# and status_mask & #{2**STATUS.index('canceled')} = 0"}
   named_scope :untaught, {:conditions => "status_mask & #{2**STATUS.index('untaught')} > 0"}
+  named_scope :taught, {:conditions => "status_mask & #{2**STATUS.index('taught')} > 0"}
   named_scope :not_canceled, {:conditions => "status_mask & #{2**STATUS.index('canceled')} = 0"}
   named_scope :not_declined, {:conditions => "status_mask & #{2**STATUS.index('declined')} = 0"}
 	named_scope :current, {:conditions => "current = true" }
@@ -55,6 +56,9 @@ class Teaching < ActiveRecord::Base
 		end
 	end	
   
+  def hours
+  	( klass.duration/3600 ).round
+  end
   
   def confirm=( value )
     if value.blank?;
@@ -128,7 +132,7 @@ class Teaching < ActiveRecord::Base
 		klass.to_mail_date(language)
 	end
 	
-	def to_mail_time_interval(main_course, language)
+	def to_time_interval_course(main_course, language)
 		if klass.course.category == main_course
 			course = klass.course.level_to_s( language )
 		else
@@ -152,9 +156,8 @@ private
 
 	def set_cost #unless it is created by factory through cucumber with another value
 		if cost.nil?
-			hour = ( klass.duration/3600 ).round
 			course_teacher = teacher.courses_teachers.select{|e| e.course_id==klass.course.id}.first unless teacher.nil?
-			self.cost = course_teacher.cost.to_i * hour unless course_teacher.nil?
+			self.cost = course_teacher.cost.to_i * hours unless course_teacher.nil?
 		end
 	end
 	
