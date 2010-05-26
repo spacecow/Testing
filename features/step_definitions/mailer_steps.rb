@@ -157,23 +157,28 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english|japanese)$/
 	end  
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (english) for "(.+)"$/ do |id, mail, language, month|
-	if month = "#last_month"
-		last_month = %w(~ January February March April May June July August September October November December)[(Time.zone.now-1.month).month]
+Then /^the "([^\"]*)" field should contain the (.+) mail in (english) for "(.+)"$/ do |id, mail, language, date|
+	months = %w(~ January February March April May June July August September October November December)
+	if date == "#last_month"
+		last_month = months[(Time.zone.now-1.month).month]
+		this_month = months[Time.zone.now.month]
+		day_6 		 = (Time.zone.now.beginning_of_month + 5.day).strftime("%a").downcase
 	else
-		last_month = month
+		last_month		= date.split[0]
+		year					= date.split[1].to_i+months.index(last_month)/12 || Time.zone.now.year
+		this_month 		= months[months.index(last_month)%12+1]
+		day_6      		= Time.zone.parse("#{year}-#{this_month}-6").strftime("%a").downcase
 	end
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
-			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)")
+			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)").chomp+"\r"
 			if line.match(/@summary/)
 				#do nothing
-			elsif line.match(/@last_month/)
-				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @last_month %>/,last_month).chomp+"\r"}\"" 
-			elsif line.match(/@this_month/)
-				Then "\"#{id}\" should contain \"#{line.gsub(/<%= @this_month %>/,'May').chomp+"\r"}\"" 
 			else
-				Then "\"#{id}\" should contain \"#{line.chomp+"\r"}\"" 
+				line.gsub!(/<%= @last_month %>/,last_month) if line.match(/@last_month/)
+				line.gsub!(/<%= @this_month %>/,this_month) if line.match(/@this_month/)
+				line.gsub!(/<%= @day_6 %>/,day_6) if line.match(/@day_6/)
+				Then "\"#{id}\" should contain \"#{line}\"" 
 			end
 		end
 	end  

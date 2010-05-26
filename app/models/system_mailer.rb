@@ -126,6 +126,8 @@ public
 	def self.get_last_months_salary_teachings_to_at( teacher, date )
 		get_last_months_salary_teachings_at( date ).teacher( teacher.id )
 	end
+	
+	
 
 	def self.daily_staff_reminder( address=nil, sender="Hitomi" )
 		daily_staff_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address, sender )

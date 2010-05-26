@@ -42,17 +42,21 @@ Then the "body" field should contain the weekly teacher schedule mail in english
 @type_salary_last
 Scenario: Choose Last Month's Salary Summary type for last month
 	Given a klass exists last month the 23rd
-	And a teaching exists with klass: that klass, teacher: user "thomas"
+	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 9
 When I browse to the "Daily Mail" page for user "thomas"
 	And I select "Last Month's Salary Summary" as type in the select menu
 Then the "body" field should contain the last months salary teacher summary mail in english for "#last_month"
-	#And I should see "4/23" within "div#text_message"
+And I should see "4/23" within "div#text_message"
 	
 @type_salary_arbitrarily
-Scenario: Choose Last Month's Salary Summary type for an arbitrarily month
-	Given a klass exists with date: "2011-11-27"
-	And a teaching exists with klass: that klass, teacher: user "thomas"
-When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
+Scenario Outline: Choose Last Month's Salary Summary type for an arbitrarily month
+	Given a klass exists with date: "<class_date>"
+	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 9
+When I browse to the "Daily Mail" page for user "thomas" of "<todays_date>"
 	And I select "Last Month's Salary Summary" as type in the select menu
-Then the "body" field should contain the last months salary teacher summary mail in english for "November"
-	#And I should see "11/27" within "div#text_message"
+Then the "body" field should contain the last months salary teacher summary mail in english for "<salary_date>"
+	And I should see "<confirm_date>" within "div#text_message"
+Examples
+|	class_date 	|	todays_date				|	salary_date		|	confirm_date	|
+|	2011-11-27	|	December 24, 2011	|	November 2011	|	11/27					|
+|	2011-12-27	|	January 24, 2012	|	December 2011	|	12/27					|

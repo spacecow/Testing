@@ -32,7 +32,7 @@ class MailerController < ApplicationController
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
 		@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
-		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+1.day).strftime("%a") )
+		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
 		@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
 		@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
 		@mail.gsub!(/<%= @name %>/,'')
