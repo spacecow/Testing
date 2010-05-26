@@ -19,9 +19,16 @@ class MailerController < ApplicationController
 		
 		user = User.find_by_name( @menu_teacher )
 		func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teachings_to_at".to_sym
-		teachings = SystemMailer.send( func, user, @menu_date.to_s )
-		schedule = SystemMailer.get_schedule( teachings, user, @menu_language )
-		summary = SystemMailer.get_summary( teachings, user, @menu_language )
+		teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
+		schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )
+		summary 			= SystemMailer.get_summary( teachings, user, @menu_language )
+		hours 				= teachings.map(&:hours).sum
+		teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
+		teaching_days = teachings.group_by(&:date).size
+		total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
+		total_cost		= teaching_cost + total_traveling_expenses
+		
+		#Traveling expenses: <%= @traveling_expenses %>円×<%= @teaching_days %>days=<%= @total_traveling_expenses %>円
 		
 		language = @menu_language == "ja" ? "japanese" : "english"
 		@subject = case @menu_type
@@ -32,6 +39,18 @@ class MailerController < ApplicationController
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
 		@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+		@mail.gsub!(/<%= @teacher %>/,user.name)
+		@mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s)
+		@mail.gsub!(/<%= @hours %>/,hours.to_s)
+		@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
+		if user.traveling_expenses.to_i > 0
+			@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}円×#{teaching_days.to_s}days=#{total_traveling_expenses}円")
+		else
+			@mail.gsub!(/<%= @traveling_expenses %>/,'')
+		end
+		@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
+		@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
+		@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
 		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
 		@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
 		@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))

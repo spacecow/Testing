@@ -4,7 +4,7 @@
 		<td id="unit"></td>
 		<td id="classroom"><%= h template_class.classroom %></td>
 		<td id="teacher">
-			<%= f.input :teacher %>
+			<%= f.input :teacher, :required => false, :label => false, :collection => teachers %>
 		</td>
 		<% template_class.capacity.to_i.times do |i| %>
 			<td id="student<%= (i+1) %>"></td>

@@ -115,8 +115,8 @@ private
 	end	
   
   def convert_japanese_numbers( s )
-		numbers = {"ÅEÅE=>"0", "ÅEÅE=>"1", "ÅEÅE=>"2", "ÅEÅE=>"3", "ÅEÅE=>"4", "ÅEÅE=>"5", "ÅEÅE=>"6", "ÅEÅE=>"7", "ÅEÅE=>"8", "ÅEÅE=>"9"}
-  	numbers.each{|k,v| s.gsub!(/#{k}/, "#{v}")} if s.match(/[ÅEÅEÅEô]/)
+		numbers = {"Ôºê"=>"0", "Ôºë"=>"1", "Ôºí"=>"2", "Ôºì"=>"3", "Ôºî"=>"4", "Ôºï"=>"5", "Ôºñ"=>"6", "Ôºó"=>"7", "Ôºò"=>"8", "Ôºô"=>"9"}
+  	numbers.each{|k,v| s.gsub!(/#{k}/, "#{v}")} if s.match(/[Ôºê-Ôºô]/)
   	s
   end
   

@@ -157,7 +157,7 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english|japanese)$/
 	end  
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (english) for "(.+)"$/ do |id, mail, language, date|
+Then /^the "([^\"]*)" field should contain the (.+) mail in (english) in "(.+)"$/ do |id, mail, language, date|
 	months = %w(~ January February March April May June July August September October November December)
 	if date == "#last_month"
 		last_month = months[(Time.zone.now-1.month).month]
@@ -174,6 +174,12 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english) for "(.+)"
 			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)").chomp+"\r"
 			if line.match(/@summary/)
 				#do nothing
+			elsif line.match(/@teacher/)
+				#do nothing
+			elsif line.match(/@hours/)
+				#do nothing				
+			elsif line.match(/@traveling_expenses/)
+				#do nothing								
 			else
 				line.gsub!(/<%= @last_month %>/,last_month) if line.match(/@last_month/)
 				line.gsub!(/<%= @this_month %>/,this_month) if line.match(/@this_month/)
