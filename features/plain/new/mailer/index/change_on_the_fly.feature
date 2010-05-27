@@ -39,41 +39,6 @@ When I browse to the "Daily Mail" page for user "thomas" of "December 24, 2011"
 Then the "body" field should contain the weekly teacher schedule mail in english
 	And I should see "12/27" within "div#text_message"
 	
-@type_salary_last
-Scenario: Choose Last Month's Salary Summary type for last month
-	Given a klass exists last month the 23rd
-	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 9, cost: "4500"
-When I browse to the "Daily Mail" page for user "thomas"
-	And I select "Last Month's Salary Summary" as type in the select menu
-Then the "body" field should contain the last months salary teacher summary mail in english in "#last_month"
-	And I should see "Thomas Osburg(1500円): 4950円" within "div#text_message"
-	And I should see "Total amount: 3時間=4500円" within "div#text_message"
-	And I should see "Traveling expenses: 450円×1days=450円" within "div#text_message"
-	And I should see "4/23" within "div#text_message"
-	
-@type_salary_arbitrarily
-Scenario Outline: Choose Last Month's Salary Summary type for an arbitrarily month
-	Given a klass exists with date: "<class_date>"
-	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 9, cost: "4500"
-When I browse to the "Daily Mail" page for user "thomas" of "<todays_date>"
-	And I select "Last Month's Salary Summary" as type in the select menu
-Then the "body" field should contain the last months salary teacher summary mail in english in "<salary_date>"
-	And I should see "Thomas Osburg(1500円): 4950円" within "div#text_message"	
-	And I should see "Total amount: 3時間=4500円" within "div#text_message"
-	And I should see "Traveling expenses: 450円×1days=450円" within "div#text_message"
-	And I should see "<confirm_date>" within "div#text_message"
-Examples:
-|	class_date 	|	todays_date				|	salary_date		|	confirm_date	|
-|	2011-11-27	|	December 24, 2011	|	November 2011	|	11/27					|
-|	2011-12-27	|	January 24, 2012	|	December 2011	|	12/27					|
-
-@no_traveling_expenses
-Scenario: If a user has no traveling expenses, it should not be shown in the mail
-	Given a klass exists with date: "2012-1-1"
-	And a teaching exists with klass: that klass, teacher: user "johan", status_mask: 9, cost: "4200"
-When I browse to the "Daily Mail" page for user "johan" of "February 2, 2012"
-	And I select "Last Month's Salary Summary" as type in the select menu
-	And I should not see "Traveling expenses" within "div#text_message"
 
 
 

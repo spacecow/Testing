@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  branch: MyString
+  account: MyString
+  signup_name: MyString
+  user_id: 1
+
+two:
+  name: MyString
+  branch: MyString
+  account: MyString
+  signup_name: MyString
+  user_id: 1

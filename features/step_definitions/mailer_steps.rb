@@ -180,6 +180,8 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english) in "(.+)"$
 				#do nothing				
 			elsif line.match(/@traveling_expenses/)
 				#do nothing								
+			elsif line.match(/@bank_name/)
+				#do nothing								
 			else
 				line.gsub!(/<%= @last_month %>/,last_month) if line.match(/@last_month/)
 				line.gsub!(/<%= @this_month %>/,this_month) if line.match(/@this_month/)

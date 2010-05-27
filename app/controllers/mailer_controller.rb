@@ -30,32 +30,45 @@ class MailerController < ApplicationController
 		
 		#Traveling expenses: <%= @traveling_expenses %>円×<%= @teaching_days %>days=<%= @total_traveling_expenses %>円
 		
-		language = @menu_language == "ja" ? "japanese" : "english"
-		@subject = case @menu_type
-			when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
-			when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
-			when "last_months_salary_teacher_summary"; @menu_language == "ja" ? "" : "Last Month's Salary Summary"
+		unless teachings.nil?
+			language = @menu_language == "ja" ? "japanese" : "english"
+			@subject = case @menu_type
+				when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
+				when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
+				when "last_months_salary_teacher_summary"; @menu_language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary"
+			end
+			@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
+			@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
+			@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+			@mail.gsub!(/<%= @teacher %>/,user.name)
+			@mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s)
+			@mail.gsub!(/<%= @hours %>/,hours.to_s)
+			@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
+			if user.traveling_expenses.to_i > 0
+				@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}円×#{teaching_days.to_s}days=#{total_traveling_expenses}円")
+			else
+				@mail.gsub!(/<%= @traveling_expenses %>/,'')
+			end
+			if user.bank.empty?
+				@mail.gsub!(/<%= @bank_name %>/,'')
+				@mail.gsub!(/<%= @bank_branch %>/,'')
+				@mail.gsub!(/<%= @bank_account %>/,'')
+				@mail.gsub!(/<%= @bank_signup_name %>/,'')
+			else
+				@mail.gsub!(/<%= @bank_name %>/,user.bank.first.name.to_s)
+				@mail.gsub!(/<%= @bank_branch %>/,user.bank.first.branch.to_s)
+				@mail.gsub!(/<%= @bank_account %>/,user.bank.first.account.to_s)
+				@mail.gsub!(/<%= @bank_signup_name %>/,user.bank.first.signup_name.to_s)
+			end
+			@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
+			@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
+			@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
+			@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
+			@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
+			@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
+			@mail.gsub!(/<%= @name %>/,'')
+			@mail.gsub!(/<%= @sender %>/,'Hitomi')
 		end
-		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
-		@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
-		@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
-		@mail.gsub!(/<%= @teacher %>/,user.name)
-		@mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s)
-		@mail.gsub!(/<%= @hours %>/,hours.to_s)
-		@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
-		if user.traveling_expenses.to_i > 0
-			@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}円×#{teaching_days.to_s}days=#{total_traveling_expenses}円")
-		else
-			@mail.gsub!(/<%= @traveling_expenses %>/,'')
-		end
-		@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
-		@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
-		@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
-		@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
-		@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
-		@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
-		@mail.gsub!(/<%= @name %>/,'')
-		@mail.gsub!(/<%= @sender %>/,'Hitomi')
   end
   
   def send_mail

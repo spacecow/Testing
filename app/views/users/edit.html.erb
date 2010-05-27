@@ -19,6 +19,12 @@
 <% if @user.role?( :teacher ) && can?( :manage, User ) %>
 		<%= f.input :cost, :label => t(:cost), :input_html => { :class => 'non-japanese numeric' } %>
 		<%= f.input :traveling_expenses, :label => t( :traveling_expenses ), :input_html => { :class => 'non-japanese numeric' }, :required => false %>		
+		<% f.inputs :for => :bank do |f2| %>
+			<%= f2.input :name, :label => t( :bank_name ), :required => false %>
+			<%= f2.input :branch, :label => t( :branch ), :required => false %>
+			<%= f2.input :account, :label => t( :account ), :required => false %>
+			<%= f2.input :signup_name, :label => t( :signup_name ), :required => false, :hint => t(:katakana) %>
+		<% end %>
 <% end %>
 		<hr>
 		<%= f.input :username, :label => t( :user_name ), :input_html => { :disabled => true } %>

@@ -1,6 +1,9 @@
 Factory.define :attendance do |f|
 end
 
+Factory.define :bank do |f|
+end
+
 Factory.define :classroom do |f|
 end
 

@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
 	include NameValidations
 
+	has_many :bank
+	accepts_nested_attributes_for :bank
+	
   has_many :courses_teachers, :dependent => :destroy, :foreign_key=>'teacher_id'
   has_many :teacher_courses, :through=>:courses_teachers, :source=>'course'
 	accepts_nested_attributes_for :courses_teachers, :reject_if => lambda{|a| a['chosen']=="0"}, :allow_destroy=>true
