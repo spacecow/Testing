@@ -30,6 +30,14 @@ class Klass < ActiveRecord::Base
 		super( convert_japanese_numbers(i.to_s) )
 	end
 
+	#def edit_teaching_attributes=( teaching_attributes )
+	#	teaching.attributes = teaching_attributes
+	#end
+
+	#def save_teaching
+	#	teaching.save( false )
+	#end
+
 	def teaching
 		return Teaching.new if self.teachings.empty?
 		self.teachings.find_by_current( true )

@@ -1,5 +1,9 @@
-Given /^a klass exists with todays date$/ do
-  Given "a klass exists with date: \"#{Time.zone.now.to_s.split[0]}\""
+Given /^a klass exists with todays date(?: with #{capture_fields})?$/ do |fields|
+  Given "a klass exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
+end
+
+Given /^a klass: "(.+)" exists with todays date(?: with #{capture_fields})?$/ do |name, fields|
+  Given "a klass \"#{name}\" exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
 end
 
 Given /^a klass exists with tomorrows date$/ do
@@ -73,15 +77,19 @@ end
 #------ Select teacher
 
 When /^I select "([^\"]*)" as teacher within klass "([^\"]*)"$/ do |teacher, model|
-	When "I select \"#{teacher}\" from \"klass_teaching_attributes_teacher_id\" within klass \"#{model}\""
+	id = model( "klass: \"#{model}\"" ).id
+	#klasses_23_teaching_attributes_teacher_id
+	When "I select \"#{teacher}\" from \"klasses_#{id}_teaching_attributes_teacher_id\" within klass \"#{model}\""
 end
 
 Then /^within klass: "([^\"]*)", the teacher field should have options "([^\"]*)"$/ do |model, options|
-  Then "within klass: \"#{model}\", \"klass_teaching_attributes_teacher_id\" should have options \"#{options}\""
+	id = model( "klass: \"#{model}\"" ).id
+  Then "within klass: \"#{model}\", \"klasses_#{id}_teaching_attributes_teacher_id\" should have options \"#{options}\""
 end
 
 Then /^within klass: "([^\"]*)", "([^\"]*)" should be selected as teacher$/ do |model, teacher|
-  Then "within klass: \"#{model}\", \"#{teacher}\" should be selected in \"klass_teaching_attributes_teacher_id\""
+	id = model( "klass: \"#{model}\"" ).id
+  Then "within klass: \"#{model}\", \"#{teacher}\" should be selected in \"klasses_#{id}_teaching_attributes_teacher_id\""
 end
 
 #---------------------

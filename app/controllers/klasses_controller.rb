@@ -77,6 +77,13 @@ class KlassesController < ApplicationController
     
     @teachers = User.with_role( "teacher" ).all( :include => :teacher_courses )
   end
+  
+  def update_individual
+  	p "-----------------------------"
+  	p params
+  	Klass.update( params[:klasses].keys, params[:klasses].values )
+  	redirect_to klasses_path
+  end
 
 #  
 #  def add_student

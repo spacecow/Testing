@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :courses
   map.resources :course_times
   map.resources :docs
-  map.resources :klasses, :collection => { :add_course => :get }
+  map.resources :klasses, :collection => { :add_course => :get, :update_individual => :put }
   map.resources :people
   map.resources :students, :collection => { :edit_multiple => :get, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
 	map.resources :tags
