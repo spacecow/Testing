@@ -196,6 +196,11 @@ en:
   when: "When"
   yen_h: "円/h"
   
+  bank_name: "Bank Name"
+  branch: "Branch"
+  account: "Account"
+  signup_name: "Signup Name"  
+  
   add: "Add {{object}}"
   added: "{{object}} added"
   canceled: "{{object}} canceled"

@@ -204,6 +204,13 @@ When /^I press "([^\"]*)" within #{capture_model}$/ do |text, model|
 	end
 end
 
+When /^I press "([^\"]*)" within "(.+)"$/ do |text, scope|
+  within "##{scope}" do |element|
+		element.click_button( text )
+	end
+end
+
+
 Then /^the "([^\"]*)" field should be blank$/ do |field|
   field_labeled(field).value.should be_nil
 end

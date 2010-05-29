@@ -137,6 +137,8 @@ class Teaching < ActiveRecord::Base
 		if klass.course.category == main_course
 			course = klass.course.level_to_s( language )
 		else
+			p "---------------------------"
+			p klass.course.level_to_s( language )
 			course = klass.course.category + (language=='ja' ? '' : ' ') + klass.course.level_to_s( language )
 		end
 		"#{klass.japanese_time_interval}(#{course})"

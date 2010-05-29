@@ -39,22 +39,28 @@
 							:capacity=>time_classes[0].capacity }
 						) if can? :create, Klass %>
 				</td>	
-				<% time_classes.each do |klass| %>
-					<% taken = @klasses.
-						 reject{|e| e==klass }.
-						 reject{|e| e.end_time<klass.start_time||e.start_time>klass.end_time}.
-						 reject{|e| e.teaching.status? :declined}.
-						 map{|e| e.teaching.teacher} %>
-					<%= render :partial => "klass", :locals => {
-						:klass=>klass,
-						:teachers=>@teachers.
-						reject{|e| !e.teacher_courses.include?( klass.course )}.
-						reject{|e| taken.include?(e) unless e==klass.teacher}
-					}%>
-					</tr>
-					<% if time_classes[-1]!=klass %>
-						<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= klass.id+1 %>">
+				<% form_tag update_individual_klasses_path, :method => :put do %>
+					<% time_classes.each do |klass| %>
+						<% taken = @klasses.
+							 reject{|e| e==klass }.
+							 reject{|e| e.end_time<klass.start_time||e.start_time>klass.end_time}.
+							 reject{|e| e.teaching.status? :declined}.
+							 map{|e| e.teaching.teacher} %>
+						<% fields_for "klasses[]", klass do |f| %>
+							<%= render :partial => "klass", :locals => {
+								:f=>f,
+								:klass=>klass,
+								:teachers=>@teachers.
+								reject{|e| !e.teacher_courses.include?( klass.course )}.
+								reject{|e| taken.include?(e) unless e==klass.teacher}
+							}%>
+						<% end %>
+			</tr>
+						<% if time_classes[-1]!=klass %>
+							<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= klass.id+1 %>">
+						<% end %>
 					<% end %>
+			<tr><td><%= submit_tag t(:update) %></td></tr>
 				<% end %>
 		<% end %>
 	<% end %>

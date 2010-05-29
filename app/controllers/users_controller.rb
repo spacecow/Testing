@@ -42,6 +42,7 @@ class UsersController < ApplicationController
   
   def edit
   	@user = User.find( params[:id] )
+  	@user.bank.build if @user.bank.empty?
   end
   
   def update

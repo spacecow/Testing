@@ -20,8 +20,8 @@ class Course < ActiveRecord::Base
   def to_s;					"#{name}"  			end
   	
 	def level_to_s( language )
-		if language == "ja";	level_ja
-		else;									level_en
+		if language == "ja";	level_ja.to_s
+		else;									level_en.to_s
 		end
 	end
   
