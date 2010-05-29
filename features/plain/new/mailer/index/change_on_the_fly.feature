@@ -75,7 +75,8 @@ When I browse to the "Daily Mail" page for user "johan" of "February 2, 2012"
 	And I select "Last Month's Salary Summary" as type in the select menu
 	And I should not see "Traveling expenses" within "div#text_message"
 
-
+@pending
+Scenario: The notifying day cannot be on a holiday
 
 
 
