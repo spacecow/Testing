@@ -44,9 +44,11 @@ class Klass < ActiveRecord::Base
 	end
 
 	def teaching_attributes=( hash )
-		if hash[:id].nil?
-			build_teaching( hash.merge( :current=>true ))
-		elsif teachings.map(&:teacher_id).include?( hash[:teacher_id].to_i )
+		#p hash
+		#if hash[:id].nil?
+		#	build_teaching( hash.merge( :current=>true ))
+		#els
+		if teachings.map(&:teacher_id).include?( hash[:teacher_id].to_i )
 			teachings.map{|e| e.current = false }
 			teachings[teachings.map(&:teacher_id).index( hash[:teacher_id].to_i )].current = true
 		else

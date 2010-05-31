@@ -860,6 +860,18 @@ table.salary_status tr td {
 }
 table.salary_status tr td input.taught { color: green; }
 table.salary_status tr td input.untaught { color: magenta; }
+input.confirmed, input.taught {
+  color: green;
+  font-weight: bold;
+}
+input.declined, input.canceled {
+  color: red;
+  font-weight: bold;
+}
+input.unconfirmed, input.untaught {
+  color: magenta;
+  font-weight: bold;
+}
 div.salary_status {
   margin-top: 2.9em;
   float: left;
@@ -868,9 +880,6 @@ div.salary_status input {
   width: 1.5em;
   font-weight: bold;
 }
-div.salary_status input.taught { color: green; }
-div.salary_status input.unconfirmed { color: magenta; }
-div.salary_status input.untaught { color: magenta; }
 table.salary tr td {
   padding-right: 1em;
   height: 2em;

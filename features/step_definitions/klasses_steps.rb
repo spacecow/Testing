@@ -23,7 +23,7 @@ end
 #------ Toggle status
 
 When /^I press the (.+) button$/ do |button_id|
-  field_with_id( button_id ).click
+  field_with_id( button_id.gsub( / /,'_' )).click
 end
 
 Then /^the "(.+)" (?:button|field) should be disabled$/ do |label|
@@ -42,8 +42,9 @@ Then /^the "(.+)" (?:button|field) should not be disabled$/ do |label|
 	end
 end
 
-Then /^the teacher select menu should be disabled$/ do
-	field_by_xpath( "//select[@id='klass_teaching_attributes_teacher_id']" ).disabled?.should be_true
+Then /^the teacher select menu should be disabled within klass "([^\"]*)"$/ do |model|
+	id = model( "klass: \"#{model}\"" ).id
+	field_by_xpath( "//select[@id='klasses_#{id}_teaching_attributes_teacher_id']" ).disabled?.should be_true
 end
 
 Then /^I should see no (.+) button$/ do |button_id|
@@ -51,7 +52,11 @@ Then /^I should see no (.+) button$/ do |button_id|
 end
 
 Then /^I should see a (.+) button$/ do |button_id|
-  assert_have_xpath("//input[@id='#{button_id}']")
+	assert_have_xpath("//input[@id='#{button_id.gsub(/ /,'_')}']")
+end
+
+Then /^I should see a (.+) button labeled "(.+)"$/ do |button_id, label|
+	assert_have_xpath("//input[@id='#{button_id.gsub(/ /,'_')}' and @value='#{label}']")
 end
 
 #------ Select date
