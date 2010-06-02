@@ -107,9 +107,7 @@ end
 Then /^I should see the (.+) mail in (.+) in the email body(?: addressed to #{capture_model})?$/ do |mail, language, user|
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
-			if line.match(/@schedule/)
-				#skip
-			elsif line.match(/@name/)
+			if line.match(/@name/)
 				if user.nil?
 					Then "I should see \"#{line.gsub(/<%= @name %>/,'')}\" in the email body" 
 				else
@@ -117,6 +115,7 @@ Then /^I should see the (.+) mail in (.+) in the email body(?: addressed to #{ca
 				end
 			elsif line.match(/@sender/)
 				Then "I should see \"#{line.gsub(/<%= @sender %>/,'Hitomi')}\" in the email body" 
+			elsif line.match(/<%= @/);
 			else
 				Then "I should see \"#{line}\" in the email body" 
 			end

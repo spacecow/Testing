@@ -1,4 +1,5 @@
-#When /^(?:I|they|"([^"]*?)") opens? the email with subject "([^"]*?)"$/ do |address, subject|
-#  subject.gsub!(/#today/,"#{Time.zone.now.month}/#{Time.zone.now.day}")
-#  open_email(address, :with_subject => subject)
-#end
+Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
+  text.gsub!(/#last_month/,(Time.zone.now-1.month).strftime("%B"))
+  current_email.body.should include(text)
+end
+

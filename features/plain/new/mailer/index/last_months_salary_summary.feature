@@ -16,7 +16,7 @@ Then the "body" field should contain the last months salary teacher summary mail
 	And I should see "Thomas Osburg(1500円): 4950円" within "div#text_message"
 	And I should see "Total amount: 3時間=4500円" within "div#text_message"
 	And I should see "Traveling expenses: 450円×1days=450円" within "div#text_message"
-	And I should see "4/23" within "div#text_message"
+	And I should see "5/23" within "div#text_message"
 	
 @alary_arbitrarily_month
 Scenario Outline: Choose Last Month's Salary Summary type for an arbitrarily month
@@ -63,7 +63,7 @@ When I browse to the "Daily Mail" page for user "thomas"
 Then I should see "77:ans bank    77777  " within "div#text_message"
 
 @no_bank_account
-Scenario: If the user has not bank account, it should not be shown
+Scenario: If the user has no bank account, it should not be shown
 When I browse to the "Daily Mail" page for user "thomas"
 	And I select "Last Month's Salary Summary" as type in the select menu
 Then I should not see "<%= @bank_name %>" within "div#text_message"

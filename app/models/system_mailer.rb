@@ -56,6 +56,15 @@ class SystemMailer < ActionMailer::Base
 			SystemMailer.send( func, user, schedule, address, sender, date )
 		end	
 	end
+	
+	def self.send_salary_summary( teachings, function, address, confirm_date )
+		teachings.each do |user_id,value|
+		  user = User.find( user_id )
+			summary = get_summary( teachings[user_id], user )
+			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
+			SystemMailer.send( func, user, summary, address, confirm_date )
+		end			
+	end
 
 #=========================== Teachers
 
@@ -80,20 +89,6 @@ class SystemMailer < ActionMailer::Base
 
 
 
-	def self.get_last_months_interval( date )
-		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
-	end
-	
-	def self.get_last_months_salary_teachings_at( date )
-		start_date, end_date = get_last_months_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
-	end	
-	
-	def self.get_last_months_salary_teachings_to_at( teacher, date )
-		get_last_months_salary_teachings_at( date ).teacher(teacher.id)
-	end
-
-
 private
 	def self.daily_teacher_reminder_with( teachings, address, sender, date )
 	  send_teacher_schedule( teachings, "daily_teacher_reminder", address, sender, date )
@@ -103,32 +98,7 @@ private
 		daily_teacher_reminder_with( teachings.group_by(&:teacher_id), address, sender, date )
 	end
 
-
-public
-
-	def self.get_last_months_interval( date )
-		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
-	end
-
-	def self.last_months_salary_summary( address=nil )
-		last_months_salary_summary_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
-	end
-
-	def self.last_months_salary_summary_at( date, address=nil )
-		get_last_months_salary_teachings_at( date )
-	end
-
-	def self.get_last_months_salary_teachings_at( date )
-		start_date, end_date = get_last_months_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
-	end
-
-	def self.get_last_months_salary_teachings_to_at( teacher, date )
-		get_last_months_salary_teachings_at( date ).teacher( teacher.id )
-	end
-	
-	
-
+public	
 	def self.daily_staff_reminder( address=nil, sender="Hitomi" )
 		daily_staff_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address, sender )
 	end	
@@ -212,6 +182,52 @@ public
     subject     "本日のスケジュール #{date.month}/#{date.day}"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end
+
+#---------------- Monthly Salary
+
+	def self.get_last_months_interval( date )
+		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
+	end
+	
+	def self.get_last_months_salary_teachings_at( date )
+		start_date, end_date = get_last_months_interval( date )
+		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
+	end	
+	
+	def self.get_last_months_salary_teachings_to_at( teacher, date )
+		get_last_months_salary_teachings_at( date ).teacher(teacher.id)
+	end
+
+private
+	def self.last_months_salary_summary_with( teachings, address, confirm_date )
+	  send_salary_summary( teachings, "last_months_salary_teacher_summary", address, confirm_date )
+  end
+
+	def self.last_months_grouped_salary_summary( teachings, address, confirm_date )
+		last_months_salary_summary_with( teachings.group_by(&:teacher_id), address, confirm_date )
+	end
+	
+public
+	def self.get_last_months_interval( date )
+		[(Time.zone.parse( date )-1.month).beginning_of_month, (Time.zone.parse( date )-1.month).end_of_month]
+	end
+
+	def self.last_months_salary_summary( address=nil )
+		last_months_salary_summary_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
+	end
+
+	def self.last_months_salary_summary_at( date, address=nil )
+		last_months_grouped_salary_summary( get_last_months_salary_teachings_at( date ), address, Time.zone.now )
+	end
+	
+	def last_months_salary_teacher_summary_in_english( user, summary, address, confirm_date )
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "#{(confirm_date-1.month).strftime("%B")}'s Salary Summary"
+    body        :summary => summary, :name => (address.nil? ? "" : user.name)
+	end	
+
+
 #---------------- Weekly schedule
 
 	def self.get_weekly_interval_at( date )

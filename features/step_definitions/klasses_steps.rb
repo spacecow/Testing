@@ -15,7 +15,11 @@ Given /^a klass exists a week from now$/ do
 end
 
 Given /^a klass exists last month the (\d+)(?:st|nd|rd)(?: with #{capture_fields})?$/ do |date, fields|
-  Given "a klass exists with date: \"#{((Time.zone.now-1.month).beginning_of_month+(date.to_i-1).day).to_s.split[0]}\", #{fields}"
+  if fields.nil?
+  	Given "a klass exists with date: \"#{((Time.zone.now-1.month).beginning_of_month+(date.to_i-1).day).to_s.split[0]}\""
+  else
+  	Given "a klass exists with date: \"#{((Time.zone.now-1.month).beginning_of_month+(date.to_i-1).day).to_s.split[0]}\", #{fields}"
+	end
 end
 
 #======================== Index form
