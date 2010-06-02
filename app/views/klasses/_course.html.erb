@@ -1,45 +1,60 @@
 <table cellpadding="0" cellspacing="1", border="0" class="course listing" id="<%= classes[0].course.category %>">
-  <tr>
-    <th class="title" colspan="2"><%= t(:object_course, :object => classes[0].course_category) %>&nbsp;
-    	<%= link_to('+',new_klass_path(
-    	  :class_date => "#{@class_year}-#{@class_month}-#{@class_day}",
-    	  :class_course=>classes[0].course.category )
-    	  ) if can? :create, Klass %>
-    </th>
-  </tr>
-  <tr>
-	  <th class="subtitle" rowspan="2"><%= t :lesson %></th>
-		<th class="subtitle" rowspan="2"><%= t :klass_time %></th>
-		<th class="subtitle" rowspan="2"><%= t :unit %></th>
-		<th class="subtitle" rowspan="2"><%= t :classroom %></th>
-		<th class="subtitle" rowspan="2"><%= t :teacher %></th>
-    <th class="subtitle" colspan="8"><%= t :student %></th>		
-  </tr>
-  <tr>
-    <% 8.times do |no| %>
-      <th class="template-table-topics-sub"><%= no+1 %></th>
-    <% end %>
-  </tr>
-
-  <% index = 0 %>
-  <% @time_groups = classes.group_by(&:time_interval) %>
-	<% @time_groups.sort.each do |time, time_classes_and_levels| %>
-		<% time_classes_and_levels.group_by(&:course_level).sort.each do |level,time_classes| %>
-			<% index += 1 %>
-			<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= time_classes[0].id %>">	
-				<td class="course_level" rowspan="<%= time_classes.size %>">
-					<%= time_classes[0].course_level %>&nbsp;
-					<%= link_to '+', new_klass_path(
-						:class_course=>time_classes[0].course.name,
-						:klass => {
-							:date => Time.zone.parse("#{@class_year}-#{@class_month}-#{@class_day}"),
-							:course_id=>time_classes[0].course.id,
-							:start_time=>time_classes[0].start_time,
-							:end_time=>time_classes[0].end_time,
-							:capacity=>time_classes[0].capacity }
-						) if can? :create, Klass %>
-				</td>	
-				<% form_tag update_individual_klasses_path, :method => :put do %>
+		<% form_tag update_individual_klasses_path, :method => :put do %>
+	  <tr>
+	    <th class="title" colspan="2"><%= t(:object_course, :object => classes[0].course_category) %>&nbsp;
+	    	<%= link_to('+',new_klass_path(
+	    	  :class_date => "#{@class_year}-#{@class_month}-#{@class_day}",
+	    	  :class_course=>classes[0].course.category )
+	    	  ) if can? :create, Klass %>
+	    </th>
+			<th colspan="2">
+			<%= submit_tag t(:update) %>
+			<% if classes.map{|e| e.teaching.status? :unconfirmed}.grep(false).empty? ||
+						classes.map{|e| e.teaching.status? :confirmed}.grep(false).empty? ||
+						classes.map{|e| e.teaching.status? :declined}.grep(false).empty? %>
+				<%= submit_tag classes.first.teaching.confirmed_symbol,
+					:id => 'multiple_confirm',
+					:name => "confirm_multiple_button[toggle_confirmation]",
+					:class => classes.first.teaching.status[0] %>
+			<% end %>
+			<%=	submit_tag classes.first.teaching.taught_symbol,
+				:id => 'multiple_teach',
+				:name => "teach_multiple_button[toggle_taught]",
+				:class => classes.first.teaching.status[1] if classes.first.teaching.status? :confirmed %>
+			</th>
+	  </tr>
+	  <tr>
+		  <th class="subtitle" rowspan="2"><%= t :lesson %></th>
+			<th class="subtitle" rowspan="2"><%= t :klass_time %></th>
+			<th class="subtitle" rowspan="2"><%= t :unit %></th>
+			<th class="subtitle" rowspan="2"><%= t :classroom %></th>
+			<th class="subtitle" rowspan="2"><%= t :teacher %></th>
+	    <th class="subtitle" colspan="8"><%= t :student %></th>		
+	  </tr>
+	  <tr>
+	    <% 8.times do |no| %>
+	      <th class="template-table-topics-sub"><%= no+1 %></th>
+	    <% end %>
+	  </tr>
+	
+	  <% index = 0 %>
+	  <% @time_groups = classes.group_by(&:time_interval) %>
+		<% @time_groups.sort.each do |time, time_classes_and_levels| %>
+			<% time_classes_and_levels.group_by(&:course_level).sort.each do |level,time_classes| %>
+				<% index += 1 %>
+				<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= time_classes[0].id %>">	
+					<td class="course_level" rowspan="<%= time_classes.size %>">
+						<%= time_classes[0].course_level %>&nbsp;
+						<%= link_to '+', new_klass_path(
+							:class_course=>time_classes[0].course.name,
+							:klass => {
+								:date => Time.zone.parse("#{@class_year}-#{@class_month}-#{@class_day}"),
+								:course_id=>time_classes[0].course.id,
+								:start_time=>time_classes[0].start_time,
+								:end_time=>time_classes[0].end_time,
+								:capacity=>time_classes[0].capacity }
+							) if can? :create, Klass %>
+					</td>	
 					<% time_classes.each do |klass| %>
 						<% taken = @klasses.
 							 reject{|e| e==klass }.
@@ -60,8 +75,7 @@
 							<tr class="<%= index%2==0 ? 'list-line-odd' : 'list-line-even' %>" id="klass_<%= klass.id+1 %>">
 						<% end %>
 					<% end %>
-			<tr><td><%= submit_tag t(:update) %></td></tr>
-				<% end %>
+			<% end %>
 		<% end %>
 	<% end %>
 </table>

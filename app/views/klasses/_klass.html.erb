@@ -12,13 +12,13 @@
 	<% end %>
 	<%= submit_tag klass.teaching.confirmed_symbol,
 		:id => 'confirm',
-		:name => 'klass[toggle_confirmation]',
+		:name => "klass_#{klass.id}_confirm_button[toggle_confirmation]",
 		:class => klass.teaching.status[0],
 		:disabled => (klass.teaching.status?( :confirmed )&&!klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
 		
 	<%=	submit_tag klass.teaching.taught_symbol,
 		:id => 'teach',
-		:name => 'klass[toggle_taught]',
+		:name => "klass_#{klass.id}_teach_button[toggle_taught]",
 		:class => klass.teaching.status[1] if klass.teaching.status? :confirmed %>
 </td>
 <% klass.attendances.each_with_index do |a,i| %>
@@ -42,4 +42,4 @@
 		<%= link_to t('delete'), klass, :confirm => klass.teachings.empty? ? t(:sure?) : t(:sure_with_teachings?), :method => :delete %>
 	<% end %>
 </td>	
-<td><%= f.submit "OK!" %></td>
+<td><%= f.submit "OK!", :name => "klass_#{klass.id}_ok_button" %></td>

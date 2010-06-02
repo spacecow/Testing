@@ -79,10 +79,27 @@ class KlassesController < ApplicationController
   end
   
   def update_individual
-  	p "-----------------------------"
-  	p params
-  	Klass.update( params[:klasses].keys, params[:klasses].values )
-  	redirect_to klasses_path
+  	button = params.keys.grep(/_button/)
+  	multiple_button = params.keys.grep(/multiple_button/)
+  	klass_id = button.first.match(/klass_(\d+)_\w+_button/)[1] unless button.blank? if multiple_button.blank?
+  	if klass_id.nil?
+  		if multiple_button.blank?
+  			Klass.update( params[:klasses].keys, params[:klasses].values )
+  		else
+				params[:klasses].keys.each do |key|
+					Klass.find( key.to_i ).update_attributes(params[multiple_button.first])
+				end
+			end
+  		klass = Klass.find( params[:klasses].keys.first )
+		else
+			klass = Klass.find( klass_id.to_i )
+			if button.first.match(/ok_button/)
+				klass.update_attributes( params[:klasses][klass_id] )
+			else
+				klass.update_attributes( params[button.first] )
+			end
+		end
+  	redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day )
   end
 
 #  
