@@ -44,9 +44,9 @@ Then "December 24, 2011" should be selected as date in the select menu
 	And "menu_type" should have options "<types>" in the select menu
 	And "<type>" should be selected as type in the select menu
 Examples:
-|	user	|	languages					|	language	|	types																						|	type										|
-|	johan	|	Japanese, English	|	English		|	Daily Teacher Reminder, Weekly Teacher Schedule |	Daily Teacher Reminder	|
-|	aya		|	日本語, 英語						|	英語				|	毎日思い起こさせる講師メール, 一週間の講師スケジュール										|	毎日思い起こさせる講師メール					|
+|	user	|	languages					|	language	|	types																																					|	type										|
+|	johan	|	Japanese, English	|	English		|	Daily Teacher Reminder, Weekly Teacher Schedule, Last Month's Salary Summary	|	Daily Teacher Reminder	|
+|	aya		|	日本語, 英語						|	英語				|	毎日思い起こさせる講師メール, 一週間の講師スケジュール, 来月の講師賃金																					|	毎日思い起こさせる講師メール					|
 
 
 @different
@@ -63,8 +63,8 @@ When I browse to the "Daily Mail" page for user "<user>" of "December 24, 2011"
 	And I should see "12/24(<day>)" within "div#text_message"
 Examples:
 |	user		|	language	|	day	|
-|	thomas	|	English		|	sat	|
-|	prince	|	Japanese	|	土		|
+|	thomas	|	english		|	sat	|
+|	prince	|	japanese	|	土		|
 
 Scenario: One can only see remainer mail for days with classes
 Given a user is logged in as "johan"

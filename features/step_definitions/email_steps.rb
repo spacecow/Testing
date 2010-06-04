@@ -80,7 +80,8 @@ end
 When /^(?:I|they|"([^"]*?)") opens? the email with subject "([^"]*?)"$/ do |address, subject|
   subject.gsub!(/#today/,"#{Time.zone.now.month}/#{Time.zone.now.day}")
   subject.gsub!(/#tomorrow/,"#{(Time.zone.now+1.day).month}/#{(Time.zone.now+1.day).day}")
-  subject.gsub!(/#last_month/,"#{(Time.zone.now-1.month).strftime("%B")}")
+  subject.gsub!(/#last_month_en/,"#{(Time.zone.now-1.month).strftime("%B")}")
+  subject.gsub!(/#last_month_ja/,"#{(Time.zone.now-1.month).month}")
   open_email(address, :with_subject => subject)
 end
 
@@ -100,9 +101,9 @@ Then /^(?:I|they) should see \/([^"]*?)\/ in the email subject$/ do |text|
   current_email.should have_subject(Regexp.new(text))
 end
 
-#Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
-#  current_email.body.should include(text)
-#end
+Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
+  current_email.body.should include(text)
+end
 
 Then /^(?:I|they) should see \/([^"]*?)\/ in the email body$/ do |text|
   current_email.body.should =~ Regexp.new(text)

@@ -28,8 +28,6 @@ class MailerController < ApplicationController
 		total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
 		total_cost		= teaching_cost + total_traveling_expenses
 		
-		#Traveling expenses: <%= @traveling_expenses %>円×<%= @teaching_days %>days=<%= @total_traveling_expenses %>円
-		
 		unless teachings.nil?
 			language = @menu_language == "ja" ? "japanese" : "english"
 			@subject = case @menu_type
@@ -45,7 +43,7 @@ class MailerController < ApplicationController
 			@mail.gsub!(/<%= @hours %>/,hours.to_s)
 			@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
 			if user.traveling_expenses.to_i > 0
-				@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}円×#{teaching_days.to_s}days=#{total_traveling_expenses}円")
+				@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y")
 			else
 				@mail.gsub!(/<%= @traveling_expenses %>/,'')
 			end
@@ -63,7 +61,7 @@ class MailerController < ApplicationController
 			@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
 			@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
 			@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
-			@mail.gsub!(/<%= @day_6 %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
+			@mail.gsub!(/<%= @confirm_day %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
 			@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
 			@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
 			@mail.gsub!(/<%= @name %>/,'')

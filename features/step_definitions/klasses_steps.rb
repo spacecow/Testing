@@ -1,9 +1,17 @@
 Given /^a klass exists with todays date(?: with #{capture_fields})?$/ do |fields|
-  Given "a klass exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
+  if fields.nil?
+  	Given "a klass exists with date: \"#{Time.zone.now.to_s.split[0]}\""
+  else
+  	Given "a klass exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
+	end
 end
 
 Given /^a klass: "(.+)" exists with todays date(?: with #{capture_fields})?$/ do |name, fields|
-  Given "a klass \"#{name}\" exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
+  if fields.nil?
+  	Given "a klass \"#{name}\" exists with date: \"#{Time.zone.now.to_s.split[0]}\""
+  else
+  	Given "a klass \"#{name}\" exists with date: \"#{Time.zone.now.to_s.split[0]}\", #{fields}"
+	end
 end
 
 Given /^a klass exists with tomorrows date$/ do

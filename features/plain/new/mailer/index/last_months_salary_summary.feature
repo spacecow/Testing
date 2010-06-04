@@ -13,21 +13,21 @@ Scenario: Choose Last Month's Salary Summary type for last month
 When I browse to the "Daily Mail" page for user "thomas"
 	And I select "Last Month's Salary Summary" as type in the select menu
 Then the "body" field should contain the last months salary teacher summary mail in english in "#last_month"
-	And I should see "Thomas Osburg(1500円): 4950円" within "div#text_message"
-	And I should see "Total amount: 3時間=4500円" within "div#text_message"
-	And I should see "Traveling expenses: 450円×1days=450円" within "div#text_message"
+	And I should see "Thomas Osburg(1500y): 4950y" within "div#text_message"
+	And I should see "Teaching sum: 3h=4500y" within "div#text_message"
+	And I should see "Traveling expenses: 450y×1day=450y" within "div#text_message"
 	And I should see "5/23" within "div#text_message"
 	
-@alary_arbitrarily_month
+@salary_arbitrarily_month
 Scenario Outline: Choose Last Month's Salary Summary type for an arbitrarily month
 	Given a klass exists with date: "<class_date>", course: that course
 	And a teaching exists with klass: that klass, teacher: user "thomas", status_mask: 9
 When I browse to the "Daily Mail" page for user "thomas" of "<todays_date>"
 	And I select "Last Month's Salary Summary" as type in the select menu
 Then the "body" field should contain the last months salary teacher summary mail in english in "<salary_date>"
-	And I should see "Thomas Osburg(1500円): 4950円" within "div#text_message"	
-	And I should see "Total amount: 3時間=4500円" within "div#text_message"
-	And I should see "Traveling expenses: 450円×1days=450円" within "div#text_message"
+	And I should see "Thomas Osburg(1500y): 4950y" within "div#text_message"	
+	And I should see "Teaching sum: 3h=4500y" within "div#text_message"
+	And I should see "Traveling expenses: 450y×1day=450y" within "div#text_message"
 	And I should see "<confirm_date>" within "div#text_message"
 Examples:
 |	class_date 	|	todays_date				|	salary_date		|	confirm_date	|

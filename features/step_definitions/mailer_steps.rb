@@ -80,6 +80,10 @@ When /^the system sends out the last month's salary summary to concerned teacher
   SystemMailer.last_months_salary_summary
 end
 
+When /^the system sends out the last month's salary summary to concerned teachers as (yoyaku|johan) test$/ do |test|
+  SystemMailer.send( "last_months_salary_summary_as_#{test}_test".to_sym )
+end
+
 #........ Visuals
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|
@@ -159,32 +163,23 @@ end
 Then /^the "([^\"]*)" field should contain the (.+) mail in (english) in "(.+)"$/ do |id, mail, language, date|
 	months = %w(~ January February March April May June July August September October November December)
 	if date == "#last_month"
-		last_month = months[(Time.zone.now-1.month).month]
-		this_month = months[Time.zone.now.month]
-		day_6 		 = (Time.zone.now.beginning_of_month + 5.day).strftime("%a").downcase
+		last_month 	= months[(Time.zone.now-1.month).month]
+		this_month 	= months[Time.zone.now.month]
+		confirm_day	= (Time.zone.now.beginning_of_month + 5.day).strftime("%a").downcase
 	else
 		last_month		= date.split[0]
 		year					= date.split[1].to_i+months.index(last_month)/12 || Time.zone.now.year
 		this_month 		= months[months.index(last_month)%12+1]
-		day_6      		= Time.zone.parse("#{year}-#{this_month}-6").strftime("%a").downcase
+		confirm_day		= Time.zone.parse("#{year}-#{this_month}-6").strftime("%a").downcase
 	end
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|
 			line = line.gsub(/\(/,"\\(").gsub(/\)/,"\\)").chomp+"\r"
-			if line.match(/@summary/)
-				#do nothing
-			elsif line.match(/@teacher/)
-				#do nothing
-			elsif line.match(/@hours/)
-				#do nothing				
-			elsif line.match(/@traveling_expenses/)
-				#do nothing								
-			elsif line.match(/@bank_name/)
-				#do nothing								
+			line.gsub!(/<%= @last_month %>/,last_month) if line.match(/@last_month/)
+			line.gsub!(/<%= @this_month %>/,this_month) if line.match(/@this_month/)
+			line.gsub!(/<%= @confirm_day %>/,confirm_day) if line.match(/@confirm_day/)
+			if line.match(/<%= @/);
 			else
-				line.gsub!(/<%= @last_month %>/,last_month) if line.match(/@last_month/)
-				line.gsub!(/<%= @this_month %>/,this_month) if line.match(/@this_month/)
-				line.gsub!(/<%= @day_6 %>/,day_6) if line.match(/@day_6/)
 				Then "\"#{id}\" should contain \"#{line}\"" 
 			end
 		end

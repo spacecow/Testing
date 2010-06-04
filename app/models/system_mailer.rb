@@ -48,21 +48,22 @@ class SystemMailer < ActionMailer::Base
 		schedule
 	end
 
-	def self.send_teacher_schedule( teachings, function, address, sender, date )
-		teachings.each do |user_id,value|
+	def self.send_teacher_schedule( grouped_teachings, function, address, sender, date )
+		grouped_teachings.each do |user_id,value|
 		  user = User.find( user_id )
-			schedule = get_schedule( teachings[user_id], user )
+			schedule = get_schedule( grouped_teachings[user_id], user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
 			SystemMailer.send( func, user, schedule, address, sender, date )
 		end	
 	end
 	
-	def self.send_salary_summary( teachings, function, address, confirm_date )
-		teachings.each do |user_id,value|
+	def self.send_salary_summary( grouped_teachings, function, address, confirm_date )
+		grouped_teachings.each do |user_id,value|
+		  teachings = grouped_teachings[user_id]
 		  user = User.find( user_id )
-			summary = get_summary( teachings[user_id], user )
+			summary = get_summary( teachings, user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
-			SystemMailer.send( func, user, summary, address, confirm_date )
+			SystemMailer.send( func, teachings, user, summary, address, confirm_date )
 		end			
 	end
 
@@ -90,8 +91,8 @@ class SystemMailer < ActionMailer::Base
 
 
 private
-	def self.daily_teacher_reminder_with( teachings, address, sender, date )
-	  send_teacher_schedule( teachings, "daily_teacher_reminder", address, sender, date )
+	def self.daily_teacher_reminder_with( grouped_teachings, address, sender, date )
+	  send_teacher_schedule( grouped_teachings, "daily_teacher_reminder", address, sender, date )
   end
 
 	def self.daily_grouped_teacher_reminder( teachings, address, sender, date )
@@ -191,7 +192,7 @@ public
 	
 	def self.get_last_months_salary_teachings_at( date )
 		start_date, end_date = get_last_months_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.confirmed.taught
+		Teaching.between_dates( start_date, end_date ).current.confirmed.taught.non_staff
 	end	
 	
 	def self.get_last_months_salary_teachings_to_at( teacher, date )
@@ -199,8 +200,8 @@ public
 	end
 
 private
-	def self.last_months_salary_summary_with( teachings, address, confirm_date )
-	  send_salary_summary( teachings, "last_months_salary_teacher_summary", address, confirm_date )
+	def self.last_months_salary_summary_with( grouped_teachings, address, confirm_date )
+	  send_salary_summary( grouped_teachings, "last_months_salary_teacher_summary", address, confirm_date )
   end
 
 	def self.last_months_grouped_salary_summary( teachings, address, confirm_date )
@@ -216,16 +217,59 @@ public
 		last_months_salary_summary_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
 	end
 
+	def self.last_months_salary_summary_as_johan_test
+		last_months_salary_summary( "jsveholm@gmail.com" )
+	end
+
+	def self.last_months_salary_summary_as_yoyaku_test
+		last_months_salary_summary( "Yoyaku@GAKUWARINET.com" )
+	end
+
+	
+
 	def self.last_months_salary_summary_at( date, address=nil )
-		last_months_grouped_salary_summary( get_last_months_salary_teachings_at( date ), address, Time.zone.now )
+		last_months_grouped_salary_summary( get_last_months_salary_teachings_at( date ), address, Time.zone.now.beginning_of_month+5.day )
 	end
 	
-	def last_months_salary_teacher_summary_in_english( user, summary, address, confirm_date )
+	def last_months_salary_teacher_summary_in_english( teachings, user, summary, address, confirm_date )
+    this_month  = confirm_date.strftime("%B")
+    last_month  = (confirm_date-1.month).strftime("%B")
+    confirm_day = confirm_date.strftime("%a")
+		hours 				= teachings.map(&:hours).sum
+		teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
+		teaching_days = teachings.group_by(&:date).size
+		total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
+		total_cost		= teaching_cost + total_traveling_expenses
+		if user.traveling_expenses.to_i > 0
+			traveling_expenses = "Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}days=#{total_traveling_expenses}y"
+		else
+			traveling_expenses = ""
+		end		
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
-    subject     "#{(confirm_date-1.month).strftime("%B")}'s Salary Summary"
-    body        :summary => summary, :name => (address.nil? ? "" : user.name)
+    subject     "#{last_month}'s Salary, Please confirm"
+    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => user.bank.first.name.to_s, :bank_branch => user.bank.first.branch.to_s, :bank_account => user.bank.first.account.to_s, :bank_signup_name => user.bank.first.signup_name.to_s, :traveling_expenses => traveling_expenses
 	end	
+	
+	def last_months_salary_teacher_summary_in_japanese( teachings, user, summary, address, confirm_date )
+    this_month  = confirm_date.month
+    last_month  = ( confirm_date-1.month ).month
+    confirm_day = confirm_date.wday
+		hours 				= teachings.map(&:hours).sum
+		teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
+		teaching_days = teachings.group_by(&:date).size
+		total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
+		total_cost		= teaching_cost + total_traveling_expenses		
+		if user.traveling_expenses.to_i > 0
+			traveling_expenses = "交通: #{user.traveling_expenses}円×#{teaching_days.to_s}日=#{total_traveling_expenses}円"
+		else
+			traveling_expenses = ""
+		end		
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "確認お願いします＿#{last_month}月分賃金"
+    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => user.bank.first.name.to_s, :bank_branch => user.bank.first.branch.to_s, :bank_account => user.bank.first.account.to_s, :bank_signup_name => user.bank.first.signup_name.to_s, :traveling_expenses => traveling_expenses
+	end		
 
 
 #---------------- Weekly schedule
@@ -248,8 +292,8 @@ public
 
 
 private
-	def self.weekly_teacher_schedule_with( teachings, address, sender, date )
-		send_teacher_schedule( teachings, "weekly_teacher_schedule", address, sender, date )
+	def self.weekly_teacher_schedule_with( grouped_teachings, address, sender, date )
+		send_teacher_schedule( grouped_teachings, "weekly_teacher_schedule", address, sender, date )
 	end
 
 	def self.weekly_grouped_teacher_schedule( teachings, address, sender, date )

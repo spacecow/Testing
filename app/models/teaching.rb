@@ -21,6 +21,7 @@ class Teaching < ActiveRecord::Base
   named_scope :not_declined, {:conditions => "status_mask & #{2**STATUS.index('declined')} = 0"}
 	named_scope :current, {:conditions => "current = true" }
 	named_scope :staff, {:conditions => "teachings.cost = 0"}
+	named_scope :non_staff, {:conditions => "teachings.cost > 0"}
 	#named_scope :with, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }    
     
   def confirmed_symbol
@@ -137,8 +138,6 @@ class Teaching < ActiveRecord::Base
 		if klass.course.category == main_course
 			course = klass.course.level_to_s( language )
 		else
-			p "---------------------------"
-			p klass.course.level_to_s( language )
 			course = klass.course.category + (language=='ja' ? '' : ' ') + klass.course.level_to_s( language )
 		end
 		"#{klass.japanese_time_interval}(#{course})"
