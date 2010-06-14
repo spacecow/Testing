@@ -254,7 +254,7 @@ public
 	def last_months_salary_teacher_summary_in_japanese( teachings, user, summary, address, confirm_date )
     this_month  = confirm_date.month
     last_month  = ( confirm_date-1.month ).month
-    confirm_day = confirm_date.wday
+    confirm_day = %w(日 月 火 水 木 金 土)[confirm_date.wday]
 		hours 				= teachings.map(&:hours).sum
 		teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
 		teaching_days = teachings.group_by(&:date).size
