@@ -195,6 +195,7 @@ class UsersController < ApplicationController
 		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
 		start_date = todays_date + 6.day
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
+		start_date -= 15.hour  #the database is in american time, temporary work-around (it's ugly, i know)
 		@klasses = {}
 		Klass.all(
 			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
@@ -205,6 +206,9 @@ class UsersController < ApplicationController
 		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
 			@reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		end	
+		p "---------------------"
+		p "#{start_date}-#{start_date+6.day}"
+		p @reservable_klasses
 		@reserved_klasses = @klasses.values.reject{|e| !@user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		@class_history = @user.student_klasses.reject{|e| e.date >= todays_date }
 	end

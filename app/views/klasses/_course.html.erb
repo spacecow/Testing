@@ -8,7 +8,7 @@
 	    	  ) if can? :create, Klass %>
 	    </th>
 			<th colspan="2">
-			<%= submit_tag t(:update) %>
+			<%= submit_tag t(:update) if can? :edit, Klass %>
 			<% if classes.map{|e| e.teaching.status? :unconfirmed}.grep(false).empty? ||
 						classes.map{|e| e.teaching.status? :confirmed}.grep(false).empty? ||
 						classes.map{|e| e.teaching.status? :declined}.grep(false).empty? %>
@@ -26,8 +26,8 @@
 	  <tr>
 		  <th class="subtitle" rowspan="2"><%= t :lesson %></th>
 			<th class="subtitle" rowspan="2"><%= t :klass_time %></th>
-			<th class="subtitle" rowspan="2"><%= t :unit %></th>
-			<th class="subtitle" rowspan="2"><%= t :classroom %></th>
+			<!--<th class="subtitle" rowspan="2"><%# t :unit %></th>
+			<th class="subtitle" rowspan="2"><%# t :classroom %></th>-->
 			<th class="subtitle" rowspan="2"><%= t :teacher %></th>
 	    <th class="subtitle" colspan="8"><%= t :student %></th>		
 	  </tr>
@@ -65,6 +65,7 @@
 							<%= render :partial => "klass", :locals => {
 								:f=>f,
 								:klass=>klass,
+								:klass_no=>time_classes.size,
 								:teachers=>@teachers.
 								reject{|e| !e.teacher_courses.include?( klass.course )}.
 								reject{|e| taken.include?(e) unless e==klass.teacher}

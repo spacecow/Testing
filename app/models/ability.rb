@@ -35,6 +35,7 @@ class Ability
 	  			mail.recipients.map(&:user).include?( user )
 	  		end
 	  		can :read, Klass
+	  		can :show, Course
   		end
 			if user.role? :photographer
 				can [:create, :update], Photo

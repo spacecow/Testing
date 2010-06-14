@@ -1,31 +1,42 @@
 <td id="time_interval"><%= h klass.time_interval %></td>
-<td id="unit"></td>
-<td id="classroom"><%= h klass.classroom %></td>
+<!--<td id="unit"></td>
+<td id="classroom"><%# h klass.classroom %></td>-->
 <td id="teacher">
-	<%# f.input :teacher, :label => t( :teacher ), :label=>false, :collection=>teachers %>
-	<%# klass.build_teaching unless klass.teaching %>
-	<% f.fields_for "teaching_attributes", klass.teaching do |builder| %>
-		<%= builder.hidden_field :teacher_id if klass.teaching.status?( :confirmed ) %>
-		<%= builder.collection_select :teacher_id, teachers, :id, :name,
-			{:include_blank=>true},
-			{:disabled=>klass.teaching.status?( :confirmed ) ? true : false } %>
+	<% if can? :edit, klass %>
+		<%# f.input :teacher, :label => t( :teacher ), :label=>false, :collection=>teachers %>
+		<%# klass.build_teaching unless klass.teaching %>
+		<% f.fields_for "teaching_attributes", klass.teaching do |builder| %>
+			<%= builder.hidden_field :teacher_id if klass.teaching.status?( :confirmed ) %>
+			<%= builder.collection_select :teacher_id, teachers, :id, :name,
+				{:include_blank=>true},
+				{:disabled=>klass.teaching.status?( :confirmed ) ? true : false } %>
+		<% end %>
+		<%= submit_tag klass.teaching.confirmed_symbol,
+			:id => 'confirm',
+			:name => "klass_#{klass.id}_confirm_button[toggle_confirmation]",
+			:class => klass.teaching.status[0],
+			:disabled => (klass.teaching.status?( :confirmed )&&!klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
+			
+		<%=	submit_tag klass.teaching.taught_symbol,
+			:id => 'teach',
+			:name => "klass_#{klass.id}_teach_button[toggle_taught]",
+			:class => klass.teaching.status[1] if klass.teaching.status? :confirmed %>
+	<% else %>
+		<%= link_to( h( klass.teacher ), klass.teacher ) %>
 	<% end %>
-	<%= submit_tag klass.teaching.confirmed_symbol,
-		:id => 'confirm',
-		:name => "klass_#{klass.id}_confirm_button[toggle_confirmation]",
-		:class => klass.teaching.status[0],
-		:disabled => (klass.teaching.status?( :confirmed )&&!klass.teaching.status?( :untaught )) ? true : false unless klass.teaching.teacher.nil? %>
-		
-	<%=	submit_tag klass.teaching.taught_symbol,
-		:id => 'teach',
-		:name => "klass_#{klass.id}_teach_button[toggle_taught]",
-		:class => klass.teaching.status[1] if klass.teaching.status? :confirmed %>
 </td>
 <% klass.attendances.each_with_index do |a,i| %>
-	<td id="student<%= (i+1) %>"><%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %></td>
+	<td id="student<%= (i+1) %>">
+	<% if can? :edit, a %>
+		<%= select_tag "something", options_for_select("#{a.student_name}, #{(1..klass_no).to_a.reject{|e| e==(i+1)}.map{|e| "Move to #{e}"}.join(', ')}, Cancel, Delete".split(',')) %>
+	<%# a.student %>
+	<% elsif can? :reserve, current_user %>
+		<%= image_tag( avatar_mini_url( a.student ), :title => a.student.name, :alt => a.student.name ) %>
+	<% end %>
+	</td>
 <% end %>
 <% (klass.capacity.to_i-klass.attendances.count).times do |i| %>
-	<td id="student<%= (i+1) %>"></td>
+	<td id="student<%= (i+1+klass.attendances.count) %>"></td>
 <% end %>
 <% (8-klass.capacity.to_i).times do |i| %>
 	<td>x</td>
@@ -42,4 +53,6 @@
 		<%= link_to t('delete'), klass, :confirm => klass.teachings.empty? ? t(:sure?) : t(:sure_with_teachings?), :method => :delete %>
 	<% end %>
 </td>	
+<% if can? :edit, klass %>
 <td><%= f.submit "OK!", :name => "klass_#{klass.id}_ok_button" %></td>
+<% end %>
