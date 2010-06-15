@@ -54,8 +54,11 @@
 								:end_time=>time_classes[0].end_time,
 								:capacity=>time_classes[0].capacity }
 							) if can? :create, Klass %>
-					</td>	
-					<% time_classes.each do |klass| %>
+					</td>
+					<% time_classes.each_with_index do |klass,i| %>
+						<%= hidden_field_tag "klass_hash[#{i+1}]", klass.id %>
+					<% end %>
+					<% time_classes.each_with_index do |klass,i| %>
 						<% taken = @klasses.
 							 reject{|e| e==klass }.
 							 reject{|e| e.end_time<klass.start_time||e.start_time>klass.end_time}.
@@ -66,6 +69,7 @@
 								:f=>f,
 								:klass=>klass,
 								:klass_no=>time_classes.size,
+								:klass_index=>i,
 								:teachers=>@teachers.
 								reject{|e| !e.teacher_courses.include?( klass.course )}.
 								reject{|e| taken.include?(e) unless e==klass.teacher}

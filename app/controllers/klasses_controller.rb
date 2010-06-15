@@ -79,6 +79,9 @@ class KlassesController < ApplicationController
   end
   
   def update_individual
+  	p "---------------------"
+  	p params  	
+  	
   	button = params.keys.grep(/_button/)
   	multiple_button = params.keys.grep(/multiple_button/)
   	klass_id = button.first.match(/klass_(\d+)_\w+_button/)[1] unless button.blank? if multiple_button.blank?
@@ -94,6 +97,12 @@ class KlassesController < ApplicationController
 		else
 			klass = Klass.find( klass_id.to_i )
 			if button.first.match(/ok_button/)
+				attendances = params[:klasses][klass_id].delete("attendances") || {}
+				attendances.each do |key,value|
+					if value=~/Move to/
+						#Klass.find(250).attendances << Attendance.find(key)
+					end
+				end
 				klass.update_attributes( params[:klasses][klass_id] )
 			else
 				klass.update_attributes( params[button.first] )
