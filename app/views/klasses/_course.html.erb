@@ -55,8 +55,9 @@
 								:capacity=>time_classes[0].capacity }
 							) if can? :create, Klass %>
 					</td>
+					<% klass_hash = {} %>
 					<% time_classes.each_with_index do |klass,i| %>
-						<%= hidden_field_tag "klass_hash[#{i+1}]", klass.id %>
+						<% klass_hash[i+1] = klass.id %>
 					<% end %>
 					<% time_classes.each_with_index do |klass,i| %>
 						<% taken = @klasses.
@@ -70,6 +71,7 @@
 								:klass=>klass,
 								:klass_no=>time_classes.size,
 								:klass_index=>i,
+								:klass_hash=>klass_hash,
 								:teachers=>@teachers.
 								reject{|e| !e.teacher_courses.include?( klass.course )}.
 								reject{|e| taken.include?(e) unless e==klass.teacher}

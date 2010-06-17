@@ -94,6 +94,3 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya", stat
 #Then a teaching should exist with klass: klass "ruby", teacher: user "aya", current: true, status_mask: 2, cost: "2000"
 #	And a teaching should exist with klass: klass "ruby", teacher: user "johan", current: false, status_mask: 1, cost: "2500"
 #	And 2 teachings should exist	
-
-@pending
-Scenario: Be able to set all teachers at once for a category of classes

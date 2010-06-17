@@ -91,6 +91,22 @@ Then /^"(\w+) (\d(?:\d)?), (\d{4})" should be selected as (.+) date$/ do |month,
 	And "\"#{day}\" should be selected in \"#{model}_date_3i\""
 end
 
+#------ Select student
+
+Then /^I should see student "([^\"]*)" within klass "([^\"]*)"$/ do |student, klass|
+	user = model( "user: \"#{student}\"" )
+	klass = model( "klass: \"#{klass}\"" )
+	attendance = klass.attendances.find_by_student_id(user.id)
+  assert_have_xpath("//select[@id='klasses_#{klass.id}_attendances_#{attendance.id}\']")
+end
+
+When /^I move student "([^\"]*)" from klass "([^\"]*)" to klass (\d)$/ do |student, klass, move_no|
+	user = model( "user: \"#{student}\"" )
+	klass = model( "klass: \"#{klass}\"" )
+	attendance = klass.attendances.find_by_student_id(user.id)
+	When "I select \"Move to #{move_no}\" from \"klasses_#{klass.id}_attendances_#{attendance.id}\""
+end
+
 #------ Select teacher
 
 When /^I select "([^\"]*)" as teacher within klass "([^\"]*)"$/ do |teacher, model|
