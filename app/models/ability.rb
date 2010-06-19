@@ -46,7 +46,7 @@ class Ability
 			if user.role? "beta-tester"
 			end
 	  	if user.role? :student
-	  		can :reserve, User do |u|
+	  		can [:reserve,:update_reserve], User do |u|
   				u == user
   			end
 			end

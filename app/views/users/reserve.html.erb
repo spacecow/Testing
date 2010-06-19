@@ -8,12 +8,12 @@
 <% else %>
 <div class="reservable">
 <h2><%= t('header.classes_to_reserve') %></h2>
-<% semantic_form_for @user do |f| %>
+<% semantic_form_for @user, :url => update_reserve_user_path( @user ), :method => :put do |f| %>
 	<% f.inputs do %>
 		<%= f.input :student_klasses, :as=>:check_boxes, :label=>false,
 								:collection => @reservable_klasses, :required=>false %>
-		<%= @reserved_klasses.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
-		<%= @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
+		<%# @reserved_klasses.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
+		<%# @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
 	<% end %>
 	<% f.buttons do %>
 		<%= f.commit_button t(:reserve) %>

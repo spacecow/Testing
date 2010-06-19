@@ -53,17 +53,10 @@ class UsersController < ApplicationController
 		end
   	@user = User.find( params[:id] )
   	params[:user].delete(:occupation) if params[:user][:occupation].blank?
+    
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	if !params[:user][:student_klass_ids].blank?
-      		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
-			  	#mail = Mail.create!(
-			    #	:sender_id => User.first.id,
-			    #	:subject => "Reservation",
-			    #	:message => "You have reserved a class!"
-			    #)
-			    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-      	elsif !params[:user][:teachings_attributes].blank?
+      	if !params[:user][:teachings_attributes].blank?
       		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase )
       	elsif !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase )
@@ -206,11 +199,26 @@ class UsersController < ApplicationController
 		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
 			@reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		end	
-		p "---------------------"
-		p "#{start_date}-#{start_date+6.day}"
-		p @reservable_klasses
 		@reserved_klasses = @klasses.values.reject{|e| !@user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 		@class_history = @user.student_klasses.reject{|e| e.date >= todays_date }
+	end
+	
+	def update_reserve
+		student_klass_ids = params[:user].delete("student_klass_ids") || {}
+    if !student_klass_ids.blank?
+    	student_klass_ids.reject{|e| e.blank?}.each do |klass_id|
+  			@user.student_klasses << Klass.find( klass_id )
+  		end
+  		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+	  	#mail = Mail.create!(
+	    #	:sender_id => User.first.id,
+	    #	:subject => "Reservation",
+	    #	:message => "You have reserved a class!"
+	    #)
+	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
+	    redirect_to mypage_path and return if current_user.role? :student
+	    redirect_to users_path( :status => "student" )
+		end
 	end
 	
 	def edit_courses

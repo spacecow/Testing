@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   :member => {
   	:edit_courses=>:get,
   	:reserve=>:get,
+  	:update_reserve=>:put,
   	:confirm=>:get,
   	:new_event_register => :post,
   	:create_event_register => :put,

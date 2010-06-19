@@ -93,62 +93,9 @@ Given a course: "ruby" exists with name: "Ruby I"
 When I go to the reserve page for user: "johan" on "2010-03-06"
 Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00 3/19(Friday) - Ruby I - 09:00~13:00 3/19(Friday) - Ruby I - 12:00~13:00 3/20(Saturday) - Ruby I - 09:00~13:00 3/20(Saturday) - Ruby I - 17:00~18:00"
 
-@reserve
-Scenario: Reserve a class
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass: "klass16" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I go to the reserve page for user: "johan" on "2010-03-06"
-Then I should see "Classes to Reserve" within "div.reservable"
-	And I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And the page should have no "reserved" section
-	And the page should have no "history" section
-	And I check "3/18(Thursday) - Ruby I - 12:00~13:00"
-	And I press "Reserve"
-Then I should be redirected to path "/mypage"
-	And I should see "Successfully reserved class(es)." as notice flash message
-	And 1 attendances should exist with student: user "johan", klass: klass "klass16"
-	And 1 attendances should exist
-	#And a mail should exist with subject: "Reservation", message: "You have reserved a class!"
-	#And 1 mails should exist
-	#And a recipient should exist with user: user "johan", mail: that mail
-	#And 1 recipients should exist
 
 @pending
 Scenario: Sort class history? (NOT IMPLEMENTED)
-
-@another_class
-Scenario: Reserve another class
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass: "klass17" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass: "klass16" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass: "klass15" exists with date: "2010-02-15", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And an attendance exists with student: user "johan", klass: klass "klass16"
-	And an attendance exists with student: user "johan", klass: klass "klass15"
-	And a user is logged in as "aya"
-When I go to the reserve page for user: "johan" on "2010-03-06"
-Then I should see "Classes to Reserve" within "div.reservable"
-	And I should not see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I should not see "2/15(Monday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I should see "Reserved Classes" within "div.reserved"
-	And I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reserved"
-	And I should not see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reserved"
-	And I should not see "2/15(Monday) - Ruby I - 12:00~13:00" within "div.reserved"
-	And I should see "Class History" within "div.history"
-	And I should not see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.history"
-	And I should not see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.history"
-	And I should see "2/15(Monday) - Ruby I - 12:00~13:00" within "div.history"
-When I check "3/19(Friday) - Ruby I - 12:00~13:00"
-	And I press "Reserve"
-Then 1 attendances should exist with student: user "johan", klass: klass "klass16"
-	And 1 attendances should exist with student: user "johan", klass: klass "klass17"
-	And 1 attendances should exist with student: user "johan", klass: klass "klass15"
-	And 3 attendances should exist
 
 
 Scenario: If there are no classes to reserve, that section should not be visable
