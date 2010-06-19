@@ -244,11 +244,19 @@ public
 			traveling_expenses = "Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}days=#{total_traveling_expenses}y"
 		else
 			traveling_expenses = ""
-		end		
+		end
+		if user.bank.empty?
+			bank_name	= bank_branch = bank_account = bank_signup_name	= "X"
+		else
+			bank_name					= user.bank.first.name.to_s
+			bank_branch				= user.bank.first.branch.to_s
+			bank_account			= user.bank.first.account.to_s
+			bank_signup_name	= user.bank.first.signup_name.to_s
+		end
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "#{last_month}'s Salary, Please confirm"
-    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => user.bank.first.name.to_s, :bank_branch => user.bank.first.branch.to_s, :bank_account => user.bank.first.account.to_s, :bank_signup_name => user.bank.first.signup_name.to_s, :traveling_expenses => traveling_expenses
+    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => bank_name, :bank_branch => bank_branch, :bank_account => bank_account, :bank_signup_name => bank_signup_name, :traveling_expenses => traveling_expenses
 	end	
 	
 	def last_months_salary_teacher_summary_in_japanese( teachings, user, summary, address, confirm_date )
@@ -264,11 +272,19 @@ public
 			traveling_expenses = "交通: #{user.traveling_expenses}円×#{teaching_days.to_s}日=#{total_traveling_expenses}円"
 		else
 			traveling_expenses = ""
+		end
+		if user.bank.empty?
+			bank_name	= bank_branch = bank_account = bank_signup_name	= "X"
+		else
+			bank_name					= user.bank.first.name.to_s
+			bank_branch				= user.bank.first.branch.to_s
+			bank_account			= user.bank.first.account.to_s
+			bank_signup_name	= user.bank.first.signup_name.to_s
 		end		
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "確認お願いします＿#{last_month}月分賃金"
-    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => user.bank.first.name.to_s, :bank_branch => user.bank.first.branch.to_s, :bank_account => user.bank.first.account.to_s, :bank_signup_name => user.bank.first.signup_name.to_s, :traveling_expenses => traveling_expenses
+    body        :summary => summary, :name => (address.nil? ? "" : user.name), :last_month => last_month, :this_month => this_month, :confirm_day => confirm_day, :teacher => user.name, :yen_per_h => user.cost, :total_cost => total_cost, :hours => hours, :teaching_cost => teaching_cost, :bank_name => bank_name, :bank_branch => bank_branch, :bank_account => bank_account, :bank_signup_name => bank_signup_name, :traveling_expenses => traveling_expenses
 	end		
 
 
