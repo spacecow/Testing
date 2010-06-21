@@ -221,7 +221,7 @@ ja:
       zero: "はゼロではいけません"
   header:
     already_confirmed_classes: "もう確認されていたクラス"
-    already_reserved_classes: "もう予約されていたクラス"
+    already_reserved_classes: "予約済のクラス"
     class_history: "過去のクラス"
     classes_to_confirm: "確認できるクラス"
     classes_to_reserve: "予約できるクラス"
@@ -236,7 +236,7 @@ ja:
     no_confirmations: "確認するクラスがありません"
     no_reservations_today: "今日はクラスを予約出来ません"
     provide_username_or_email: "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
-    time_for_reservation: "予約時間は土曜日午前12から火曜日午後5まで"
+    time_for_reservation: "予約時間は土曜日午前12時から火曜日午後5時まで"
     which_language: "このサイトはどんな言語で利用する？"
   notice:
     add_success: "正常に{{object}}が追加されました"

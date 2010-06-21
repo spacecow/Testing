@@ -8,19 +8,21 @@
 	    	  ) if can? :create, Klass %>
 	    </th>
 			<th colspan="2">
-			<%= submit_tag t(:update) if can? :edit, Klass %>
-			<% if classes.map{|e| e.teaching.status? :unconfirmed}.grep(false).empty? ||
-						classes.map{|e| e.teaching.status? :confirmed}.grep(false).empty? ||
-						classes.map{|e| e.teaching.status? :declined}.grep(false).empty? %>
-				<%= submit_tag classes.first.teaching.confirmed_symbol,
-					:id => 'multiple_confirm',
-					:name => "confirm_multiple_button[toggle_confirmation]",
-					:class => classes.first.teaching.status[0] %>
+			<% if can? :edit, Klass %>
+				<%= submit_tag t(:update) %>
+				<% if classes.map{|e| e.teaching.status? :unconfirmed}.grep(false).empty? ||
+							classes.map{|e| e.teaching.status? :confirmed}.grep(false).empty? ||
+							classes.map{|e| e.teaching.status? :declined}.grep(false).empty? %>
+					<%= submit_tag classes.first.teaching.confirmed_symbol,
+						:id => 'multiple_confirm',
+						:name => "confirm_multiple_button[toggle_confirmation]",
+						:class => classes.first.teaching.status[0] %>
+				<% end %>
+				<%=	submit_tag classes.first.teaching.taught_symbol,
+					:id => 'multiple_teach',
+					:name => "teach_multiple_button[toggle_taught]",
+					:class => classes.first.teaching.status[1] if classes.first.teaching.status? :confirmed %>
 			<% end %>
-			<%=	submit_tag classes.first.teaching.taught_symbol,
-				:id => 'multiple_teach',
-				:name => "teach_multiple_button[toggle_taught]",
-				:class => classes.first.teaching.status[1] if classes.first.teaching.status? :confirmed %>
 			</th>
 	  </tr>
 	  <tr>
