@@ -15,8 +15,8 @@ class KlassesController < ApplicationController
 
   def create
   	if @klass.save
-  		flash[:notice] = t('notice.create_success', :object => t(:klass))
-  		redirect_to klasses_path
+  		flash[:notice] = t('notice.create_success', :object => t(:klass).downcase )
+  		redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day )
 		else
 			render :action => :new	
 		end
@@ -27,7 +27,7 @@ class KlassesController < ApplicationController
 
   def update
 		if @klass.update_attributes( params[:klass] )
-  		flash[:notice] = t('notice.update_success', :object => t(:klass))
+  		flash[:notice] = t('notice.update_success', :object => t(:klass).downcase )
   		redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day )
 		else
 			render :action => :edit
@@ -48,7 +48,7 @@ class KlassesController < ApplicationController
 #    end
     
     @klass.destroy
-    flash[:notice] = t('notice.delete_success', :object => t(:klass))
+    flash[:notice] = t('notice.delete_success', :object => t(:klass).downcase )
     redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day )
   end
 

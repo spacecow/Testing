@@ -2,13 +2,13 @@
 Background:
 Given a setting exist with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+	And a course: "ruby" exists with name: "Ruby I", capacity: "8"
+	And a course exists with name: "Fortran I", capacity: "8"
+	And a course exists with name: "Rails II", capacity: "6"
 
 @new_class
 Scenario: Create a new class
 Given a user is logged in as "johan"
-	And a course: "ruby" exists with name: "Ruby I", capacity: "8"
-	And a course exists with name: "Rails II"
-	And a course exists with name: "Fortran I"
 When I go to the new klass page
 	And I select "Ruby I (8)" from "Course"
 	And I select "February 20, 2010" as the date
@@ -19,17 +19,14 @@ When I go to the new klass page
 	And I fill in "Description" with "ishigani in Japanese"
 	And I fill in "Note" with "is stone crab in English"
 	And I press "Create"
-Then I should be redirected to the klasses page
-	And I should see "Successfully created Class."
+Then I should automatically browse to the klasses page of "February 20, 2010"
+	And I should see "Successfully created class."
 	And a klass should exist with course: course "ruby", date: "2010-2-19 15", start_time: "13:00", end_time: "14:00", capacity: 8, title: "Did you know", description: "ishigani in Japanese", note: "is stone crab in English"
 	And 1 klasses should exist
 
 @new_view
-Scenario: New view
-Given a course exists with name: "Ruby I", capacity: "8"
-	And a course exists with name: "Fortran I", capacity: "8"
-	And a course exists with name: "Rails II", capacity: "6"
-	And a user is logged in as "johan"
+Scenario: Class' new view
+Given a user is logged in as "johan"
 When I go to the new klass page
 Then I should see "New Class" within "legend"
 	And the "Course" field should have options "BLANK, Ruby I (8), Rails II (6), Fortran I (8)"
@@ -46,15 +43,15 @@ Then I should see "New Class" within "legend"
 	And the "Title" field should be empty
 	And the "Description" field should contain ""
 	And the "Note" field should contain ""
+	And I should see links "List Classes" at the bottom of the page
 	
-Scenario: Links from new page
+Scenario: Links from class' new page
 Given a user is logged in as "johan"
 When I go to the new klass page
-Then I should see options "List Classes" within "div#links"
-When I follow "List Classes" within "div#links"
+	And I follow "List Classes" at the bottom of the page
 Then I should be redirected to the klasses page
 
-Scenario Outline: Only users with permission can create classes
+Scenario Outline: Only admins can create a class
 	Given a user: "aya" exists with username: "aya", role: "admin, teacher", language: "en", name: "Junko Sumii"
 	And a user is logged in as "<user>"
 When I go to the new klass page
@@ -65,7 +62,7 @@ Examples:
 |	aya		|
 
 @allow-rescue
-Scenario Outline: Not everyone can create a class
+Scenario Outline: Non-admin cannot create a class
 Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
 	And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 	And a user: "junko" exists with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
@@ -79,6 +76,3 @@ Examples:
 | prince		|
 | junko			|
 | mika			|
-
-@pending
-Scenario: Other name for klass list (NOT IMPLEMENTED)

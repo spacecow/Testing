@@ -39,7 +39,11 @@ class GlossariesController < ApplicationController
   	@glossary = case params[:glossary_id]
   	when nil
   		gs = Glossary.all( :select=>'id' ).map(&:id)
-    	Glossary.find( gs[rand(gs.length)] )
+    	begin
+    		random = rand(gs.length) 
+    	end while not session[:glossary_history][random].nil?
+    	session[:glossary_history][random] = true    		
+    	Glossary.find( gs[random] )
     else
     	Glossary.find( params[:glossary_id] )
     end	
@@ -67,7 +71,11 @@ class GlossariesController < ApplicationController
 	    	end
 	    	if start_index > end_index
 	    		gs = Glossary.all( :select=>'id' ).map(&:id)
-	    		@glossary = Glossary.find( gs[rand(gs.length)] )
+		    	begin
+		    		random = rand(gs.length) 
+		    	end while not session[:glossary_history][random].nil?
+		    	session[:glossary_history][random] = true    		
+		    	@glossary = Glossary.find( gs[random] )
 			    kanjis = @glossary.japanese.split(//)
 			    start_index = 0
 			  	end_index = kanjis.size-1
@@ -176,6 +184,7 @@ class GlossariesController < ApplicationController
 
   def index
     @glossaries = Glossary.all
+    session[:glossary_history] = {}
   end
   
   def show
