@@ -11,20 +11,24 @@ Given a setting exist with name: "main"
 Scenario: View of attendances
 When I browse to the klasses page of "February 28, 2010"
 Then I should see student "junko" within klass "ruby1"
-	#And I should see no students within klass "ruby2"
+And I should see no students within klass "ruby2"
+
+Scenario: Cancel a student
+When I browse to the klasses page of "February 28, 2010"
+When I cancel student "junko" in klass "ruby1"
+And I should see no students within klass "ruby1"
 
 Scenario: Move a student from one klass to another
 When I browse to the klasses page of "February 28, 2010"
 When I move student "junko" from klass "ruby1" to klass 2
-	And I press "OK!" within klass "ruby1"
 Then I should see student "junko" within klass "ruby2"	
 
 Scenario: Moving multple students within a klass
 Given a user: "reiko" exist with username: "reiko", role: "student, registrant", language: "en", name: "Reiko Arikawa"
 	And an attendance exists with klass: klass "ruby2", student: user "reiko"
 When I browse to the klasses page of "February 28, 2010"
-	And I move student "junko" from klass "ruby1" to klass 2
-	And I move student "reiko" from klass "ruby2" to klass 1
+	And I prepare to move student "junko" from klass "ruby1" to klass 2
+	And I prepare to move student "reiko" from klass "ruby2" to klass 1
 	And I press "Update"
 Then I should see student "reiko" within klass "ruby1"
 Then I should see student "junko" within klass "ruby2"
@@ -37,10 +41,10 @@ Given a user: "reiko" exist with username: "reiko", role: "student, registrant",
 	And an attendance exists with klass: klass "ruby3", student: user "reiko"
 	And an attendance exists with klass: klass "ruby4", student: user "junko"
 When I browse to the klasses page of "February 28, 2010"
-	And I move student "junko" from klass "ruby1" to klass 2
-	And I move student "reiko" from klass "ruby2" to klass 1
-	And I move student "reiko" from klass "ruby3" to klass 2
-	And I move student "junko" from klass "ruby4" to klass 1	
+	And I prepare to move student "junko" from klass "ruby1" to klass 2
+	And I prepare to move student "reiko" from klass "ruby2" to klass 1
+	And I prepare to move student "reiko" from klass "ruby3" to klass 2
+	And I prepare to move student "junko" from klass "ruby4" to klass 1	
 	And I press "Update"
 Then I should see student "reiko" within klass "ruby1"
 	And I should see student "junko" within klass "ruby2"

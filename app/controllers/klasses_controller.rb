@@ -110,6 +110,8 @@ class KlassesController < ApplicationController
 		attendance_hash.each do |key,value|
 			if value=~/^Move to (\d+)$/
 				Klass.find( $1.to_i ).attendances << Attendance.find(key)
+			elsif value == "Cancel"
+				Attendance.find(key).update_attribute(:cancel,true)
 			end
 		end  	
   end

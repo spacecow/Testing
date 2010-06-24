@@ -51,7 +51,7 @@ class Ability
   			end
 			end
 	  	if user.role? :teacher
-	  		can :confirm, User do |u|
+	  		can [:confirm,:update_confirm], User do |u|
   				u == user
   			end
 			end			

@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   	:reserve=>:get,
   	:update_reserve=>:put,
   	:confirm=>:get,
+  	:update_confirm=>:put,
   	:new_event_register => :post,
   	:create_event_register => :put,
   	:edit_role => :get,

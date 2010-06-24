@@ -27,15 +27,14 @@ class VotesController < ApplicationController
   end
   
   def send_mail( message )
-  	johan = User.find_by_name( "Johan Sveholm" )
-  	unless current_user == johan
+  	god = User.with_role(:god).first
+  	unless current_user == god
 	  	mail = Mail.create!(
 	    	:sender_id => current_user.id,
-	    	#:recipient_id => johan.id,
 	    	:subject => "#{message}#vote",
 	    	:message => "votes.#{message}##{@vote.todo.title}"
 	    )
-	    Recipient.create!( :mail_id=>mail.id, :user_id=>johan.id )
+	    Recipient.create!( :mail_id=>mail.id, :user_id=>god.id )
     end
   end
 end

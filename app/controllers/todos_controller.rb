@@ -128,7 +128,7 @@ private
   def send_mail( message, category, opts={} )
   	opts = { :author => true }.merge!( opts )
   	recipients = []
-  	johan = User.find_by_name( "Johan Sveholm" )
+  	johan = User.with_role(:god).first
   	@todo.comments.each{ |comment| recipients.push comment.user } if opts[:comments]
   	@todo.votes.each{ |vote| recipients.push vote.user } if opts[:votes]
   	recipients.push @todo.user if opts[:author]

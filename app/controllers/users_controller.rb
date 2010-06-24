@@ -25,12 +25,13 @@ class UsersController < ApplicationController
     if @user.save
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.new_registration')
-	    	Mail.create!(
-	      	:sender_id => User.find_by_name("Johan Sveholm").id,
-	      	:recipient_id => @user.id,
+	    	god = User.with_role(:god).first
+	    	mail = Mail.create!(
+	      	:sender_id => god.id,
 	      	:subject => "registered#user",
 	      	:message => "users.registered#Mafumafu"
-	      )       	
+	      )
+	      Recipient.create!( :mail_id=>mail.id, :user_id=>god.id )
       	redirect_to events_path
     	else
     		render :action => "crop"
@@ -56,9 +57,7 @@ class UsersController < ApplicationController
     
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	if !params[:user][:teachings_attributes].blank?
-      		flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase )
-      	elsif !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
+      	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
       		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase )
     		else
       		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase )
@@ -173,6 +172,14 @@ class UsersController < ApplicationController
 			reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
 	end
 	
+	def update_confirm
+		if @user.update_attributes(params[:user])
+			flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
+		end
+    redirect_to mypage_path and return if current_user.role? :teacher
+    redirect_to users_path( :status => "teacher" )
+	end
+	
 	def salary
 		@months = t('date.month_names').compact.zip((1..12).to_a )
 		@salary_month = params[:salary_month] || Time.zone.now.month
@@ -216,9 +223,9 @@ class UsersController < ApplicationController
 	    #	:message => "You have reserved a class!"
 	    #)
 	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-	    redirect_to mypage_path and return if current_user.role? :student
-	    redirect_to users_path( :status => "student" )
 		end
+    redirect_to mypage_path and return if current_user.role? :student
+    redirect_to users_path( :status => "student" )
 	end
 	
 	def edit_courses

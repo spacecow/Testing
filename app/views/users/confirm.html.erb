@@ -11,7 +11,7 @@
 <div style="width:3em;float:left;text-align:right;">Yes</div>
 <div style="width:3em;float:left;margin-left:0.3em;">No</div>
 <div class="clear"></div>
-<% semantic_form_for @user do |f| %>
+<% semantic_form_for @user, :url => update_confirm_user_path( @user ), :method => :put do |f| %>
 	<% f.inputs do %>
 		<% @confirmable_classes.map(&:teaching).each do |teaching| %>
 			<% f.inputs :for => [:teachings, teaching] do |builder| %>

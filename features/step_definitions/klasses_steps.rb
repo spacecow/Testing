@@ -100,7 +100,25 @@ Then /^I should see student "([^\"]*)" within klass "([^\"]*)"$/ do |student, kl
   assert_have_xpath("//select[@id='klasses_#{klass.id}_attendances_#{attendance.id}\']")
 end
 
+Then /^I should see no students within klass "([^\"]*)"$/ do |klass_s|
+	klass = model( "klass: \"#{klass_s}\"" )
+	assert_have_no_xpath("//tr[@id='klass_#{klass.id}']/td[@id='student1']/select")
+end
+
+When /^I cancel student "([^\"]*)" in klass "([^\"]*)"$/ do |student_s, klass_s|
+	user = model( "user: \"#{student_s}\"" )
+	klass = model( "klass: \"#{klass_s}\"" )	
+	attendance = klass.attendances.find_by_student_id(user.id)
+	When "I select \"Cancel\" from \"klasses_#{klass.id}_attendances_#{attendance.id}\""
+	And "I press \"OK!\" within klass \"#{klass_s}\""
+end
+
 When /^I move student "([^\"]*)" from klass "([^\"]*)" to klass (\d)$/ do |student, klass, move_no|
+	When "I prepare to move student \"#{student}\" from klass \"#{klass}\" to klass #{move_no}"
+	And "I press \"OK!\" within klass \"#{klass}\""
+end
+
+When /^I prepare to move student "([^\"]*)" from klass "([^\"]*)" to klass (\d)$/ do |student, klass, move_no|
 	user = model( "user: \"#{student}\"" )
 	klass = model( "klass: \"#{klass}\"" )
 	attendance = klass.attendances.find_by_student_id(user.id)

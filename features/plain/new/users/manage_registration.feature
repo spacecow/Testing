@@ -77,6 +77,9 @@ Then I should be redirected to the events page
 	And I should see 'users.notice.new_registration'
 	And I should see "Events"
 	And a mail should exist with sender: user "johan", subject: "registered#user", message: "users.registered#Mafumafu"
+	And a recipient should exist with user: user "johan", mail: that mail
+	And 1 mails should exist
+	And 1 recipients should exist
 
 @edit_user
 Scenario: A user can not unset certain attributes that were set in an event registration
