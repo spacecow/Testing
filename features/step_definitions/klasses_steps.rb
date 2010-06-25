@@ -105,11 +105,11 @@ Then /^I should see no students within klass "([^\"]*)"$/ do |klass_s|
 	assert_have_no_xpath("//tr[@id='klass_#{klass.id}']/td[@id='student1']/select")
 end
 
-When /^I cancel student "([^\"]*)" in klass "([^\"]*)"$/ do |student_s, klass_s|
+When /^I (cancel|delete) student "([^\"]*)" in klass "([^\"]*)"$/ do |command, student_s, klass_s|
 	user = model( "user: \"#{student_s}\"" )
 	klass = model( "klass: \"#{klass_s}\"" )	
 	attendance = klass.attendances.find_by_student_id(user.id)
-	When "I select \"Cancel\" from \"klasses_#{klass.id}_attendances_#{attendance.id}\""
+	When "I select \"#{command.capitalize}\" from \"klasses_#{klass.id}_attendances_#{attendance.id}\""
 	And "I press \"OK!\" within klass \"#{klass_s}\""
 end
 
@@ -141,6 +141,18 @@ end
 Then /^within klass: "([^\"]*)", "([^\"]*)" should be selected as teacher$/ do |model, teacher|
 	id = model( "klass: \"#{model}\"" ).id
   Then "within klass: \"#{model}\", \"#{teacher}\" should be selected in \"klasses_#{id}_teaching_attributes_teacher_id\""
+end
+
+Then /^I should see "([^\"]*)" as teacher within klass: "([^\"]*)"$/ do |teacher_s, klass_s|
+  klass = model( "klass: \"#{klass_s}\"" )
+  Then "I should see \"#{teacher_s}\" within \"tr#klass_#{klass.id} td#teacher\""
+end
+
+Then /^I should see no teacher within klass: "([^\"]*)"$/ do |klass_s|
+  klass = model( "klass: \"#{klass_s}\"" )
+  response.body.should have_selector( "tr#klass_#{klass.id} td#teacher" ) do |content|
+		content.inner_html.strip.should == ""
+	end
 end
 
 #---------------------

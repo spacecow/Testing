@@ -103,20 +103,6 @@ Then a teaching should exist with klass: klass "ruby", teacher: user "aya"
 	And within klass: "ruby", "Aya Komatsu" should be selected as teacher
 	And within klass: "ruby2", "" should be selected as teacher
 
-@deleting
-Scenario: When deleting a class that has teachings, the teachings should be deleted
-Given a course: "ruby" exists with name: "Ruby II"
-	And a klass: "ruby" exists with course: course "ruby", date: "2011-02-28"
-	And a courses_teacher exists with course: course "ruby", teacher: user "johan"
-	And a courses_teacher exists with course: course "ruby", teacher: user "aya"
-	And a teaching exists with klass: klass "ruby", teacher: user "aya", current: false
-	And a teaching exists with klass: klass "ruby", teacher: user "johan", current: true
-	And a user is logged in as "aya"
-Then 2 teachings should exist
-When I browse to the klasses page of "February 28, 2011"
-	And I follow "Del" within "table#Ruby tr td#links"
-Then 0 teachings should exist
-
 @extended_double
 Scenario: Teachers cannot teach more than one class at the same time
 Given a course: "ruby" exists with name: "Ruby I"
@@ -391,15 +377,8 @@ When I browse to the klasses page of "February 28, 2011"
 Then within klass: "ruby1", the teacher field should have options "BLANK, Johan Sveholm"
 	And within klass: "ruby1", "Johan Sveholm" should be selected as teacher
 
-
-@pending
-Scenario: Not be able to delete a class with students (NOT IMPLEMENTED)
-
 @pending
 Scenario: Implement versioning? (NOT IMPLEMENTED)
-
-@pending
-Scenario: Should be able to delete teaching (NOT IMPLEMENTED)
 
 @pending
 Scenario: Test to drop the ok buttons if javascript is turned on (NOT IMPLEMENTED)

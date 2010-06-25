@@ -314,9 +314,9 @@ en:
     listing: "Listing Classes"
     editing: "Editing Class"
     error:
-      edit_courses_with_teacher: "Cancel teacher before changing course"
-      edit_courses_with_students: "Cancel students before changing course"
-      try_to_delete_klass_with_students: "Move away all students from the class before deleting"
+      edit_courses_with_teacher: "Cancel teacher before changing course."
+      edit_courses_with_students: "Cancel students before changing course."
+      try_to_delete_klass_with_students: "Move away all students ({{no}}) from the class before deleting."
   login:
     button: "Login"
     flash:

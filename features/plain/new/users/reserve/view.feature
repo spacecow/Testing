@@ -11,7 +11,8 @@ Given a setting exist with name: "main"
 Scenario: Reserve a class
 Given a user is logged in as "aya"
 When I go to the reserve page for user: "johan" on "2010-03-06"
-Then I should see "Classes to Reserve" within "div.reservable"
+Then I should see "Johan Sveholm - Reserve" as title
+	And I should see "Classes to Reserve" within "div.reservable"
 	And I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
 	And I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reservable"
 	And the page should have no "reserved" section

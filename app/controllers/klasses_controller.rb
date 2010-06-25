@@ -35,17 +35,14 @@ class KlassesController < ApplicationController
 	end
 
   def destroy
-    @klass = Klass.find( params[:id] )
-
-#		error = association_delete_error_message(
-#			@klass.attendances,
-#			t('klasses.error.try_to_delete_klass_with_students' ))
+		error = association_delete_error_message(
+			@klass.attendances.size,
+			t('klasses.error.try_to_delete_klass_with_students',:no=>@klass.attendances.size ))
 										
-#		if( !error.blank? )
-#      flash[:error] = error
-#      redirect_to :back #klasses_path( :date => params[:date] )
-#      return
-#    end
+		if( !error.blank? )
+      flash[:error] = error
+      redirect_to klasses_path( :menu_year=>@klass.year, :menu_month=>@klass.month, :menu_day=>@klass.day ) and return
+    end
     
     @klass.destroy
     flash[:notice] = t('notice.delete_success', :object => t(:klass).downcase )
@@ -112,6 +109,8 @@ class KlassesController < ApplicationController
 				Klass.find( $1.to_i ).attendances << Attendance.find(key)
 			elsif value == "Cancel"
 				Attendance.find(key).update_attribute(:cancel,true)
+			elsif value == "Delete"
+				Attendance.find(key).delete
 			end
 		end  	
   end

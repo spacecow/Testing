@@ -21,6 +21,9 @@ When I go to the courses page
 Then I should see options "Info" within "table tr td#links"
 	And I should see no links at the bottom of the page
 
+@pending
+Scenario: Success message if delete
+
 @allow-rescue
 Scenario Outline: Some users cannot reach this page
 Given a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"

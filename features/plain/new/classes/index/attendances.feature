@@ -13,15 +13,29 @@ When I browse to the klasses page of "February 28, 2010"
 Then I should see student "junko" within klass "ruby1"
 And I should see no students within klass "ruby2"
 
+@cancel
 Scenario: Cancel a student
 When I browse to the klasses page of "February 28, 2010"
-When I cancel student "junko" in klass "ruby1"
-And I should see no students within klass "ruby1"
+	And I cancel student "junko" in klass "ruby1"
+Then I should see no students within klass "ruby1"
+	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: true
+	And 1 attendances should exist
+
+@delete
+Scenario: Delete a student, when a reservation was not supposed to have taken place
+When I browse to the klasses page of "February 28, 2010"
+	And I delete student "junko" in klass "ruby1"
+Then I should see no students within klass "ruby1"
+	And 0 attendances should exist
 
 Scenario: Move a student from one klass to another
 When I browse to the klasses page of "February 28, 2010"
-When I move student "junko" from klass "ruby1" to klass 2
-Then I should see student "junko" within klass "ruby2"	
+	And I move student "junko" from klass "ruby1" to klass 2
+Then I should see student "junko" within klass "ruby2"
+	And I should see no students within klass "ruby1"
+
+@pending
+Scenario: If there is only one class, the move-option should not be visible
 
 Scenario: Moving multple students within a klass
 Given a user: "reiko" exist with username: "reiko", role: "student, registrant", language: "en", name: "Reiko Arikawa"

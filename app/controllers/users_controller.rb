@@ -213,8 +213,10 @@ class UsersController < ApplicationController
 	def update_reserve
 		student_klass_ids = params[:user].delete("student_klass_ids") || {}
     if !student_klass_ids.blank?
-    	student_klass_ids.reject{|e| e.blank?}.each do |klass_id|
-  			@user.student_klasses << Klass.find( klass_id )
+    	klass = nil
+    	student_klass_ids.reject{|e| e.blank?}.reverse.each do |klass_id|
+  			klass = Klass.find( klass_id )
+  			@user.student_klasses << klass
   		end
   		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
 	  	#mail = Mail.create!(
@@ -223,6 +225,7 @@ class UsersController < ApplicationController
 	    #	:message => "You have reserved a class!"
 	    #)
 	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
+	    redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
 		end
     redirect_to mypage_path and return if current_user.role? :student
     redirect_to users_path( :status => "student" )
