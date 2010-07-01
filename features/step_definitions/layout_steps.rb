@@ -41,6 +41,27 @@ When /^I check #{capture_model}$/ do |model|
 	end
 end
 
+When /^I follow "([^\"]*)" within the ([^\"]*) section$/ do |link, section|
+	When "I follow \"#{link}\" within \"div##{section}\""
+end
+
+Then /^I should (not )?see "([^\"]*)" within the ([^\"]*) section$/ do |neg, text, section|
+	Then "I should #{neg}see \"#{text}\" within \"div##{section}\""
+end
+
+Then /^I should see "([^\"]*)" as title within "([^\"]*)"$/ do |title, selector|
+	Then "I should see \"#{title}\" within \"#{selector} legend\""
+end
+
+Then /^I should see "([^\"]*)" as title within the ([^\"]*) section$/ do |title, section|
+  Then "I should see \"#{title}\" as title within \"div##{section}\""
+end
+
+Then /^the page should have no "([^\"]*)" ([^\"]*) section$/ do |div, section|
+	assert_have_no_xpath("//div[@#{div}='#{section}']")
+end
+
+
 #-------------------- TABLE
 
 Then /^I should (not )?see "([^\"]*)" within the (.+) table$/ do |negative, text, model|

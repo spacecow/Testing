@@ -2,6 +2,10 @@ class KlassesController < ApplicationController
   before_filter :load_courses, :only => [:new, :create]
   load_and_authorize_resource
 
+	def show
+		@klass = Klass.find(params[:id], :include=>[:attendances,:course,{:attendances=>:student}])
+	end
+
   def new
 		if @class_course && @class_course.split.size > 1  #Duplicate class
 			Klass.create!( params[:klass] )
@@ -103,14 +107,23 @@ class KlassesController < ApplicationController
   	redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day )
   end
   
-  def update_attendances( attendance_hash )
+  def update_attendance
+		update_attendances({ params[:attendance_id]=>params[:command] })
+		redirect_to :back
+	end
+	
+  def update_attendances( attendance_hash )	
 		attendance_hash.each do |key,value|
 			if value=~/^Move to (\d+)$/
 				Klass.find( $1.to_i ).attendances << Attendance.find(key)
 			elsif value == "Cancel"
-				Attendance.find(key).update_attribute(:cancel,true)
+				attendance = Attendance.find(key)
+				attendance.update_attribute(:cancel, !attendance.cancel)
 			elsif value == "Delete"
 				Attendance.find(key).delete
+			elsif value == "Late"
+				attendance = Attendance.find(key)
+				attendance.update_attribute(:late, !attendance.late)
 			end
 		end  	
   end

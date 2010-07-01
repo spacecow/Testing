@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100527032345) do
+ActiveRecord::Schema.define(:version => 20100701043837) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20100527032345) do
     t.datetime "updated_at"
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
+    t.boolean  "late",       :default => false
   end
 
   create_table "banks", :force => true do |t|
@@ -28,23 +29,6 @@ ActiveRecord::Schema.define(:version => 20100527032345) do
     t.string   "account"
     t.string   "signup_name"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "classes", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "teacher_id"
-    t.integer  "classroom_id"
-    t.integer  "capacity"
-    t.datetime "date"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.string   "title"
-    t.text     "description"
-    t.boolean  "cancel"
-    t.integer  "mail_sending"
-    t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

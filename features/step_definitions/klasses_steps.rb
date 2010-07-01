@@ -105,7 +105,7 @@ Then /^I should see no students within klass "([^\"]*)"$/ do |klass_s|
 	assert_have_no_xpath("//tr[@id='klass_#{klass.id}']/td[@id='student1']/select")
 end
 
-When /^I (cancel|delete) student "([^\"]*)" in klass "([^\"]*)"$/ do |command, student_s, klass_s|
+When /^I (late|cancel|delete) student "([^\"]*)" in klass "([^\"]*)"$/ do |command, student_s, klass_s|
 	user = model( "user: \"#{student_s}\"" )
 	klass = model( "klass: \"#{klass_s}\"" )	
 	attendance = klass.attendances.find_by_student_id(user.id)

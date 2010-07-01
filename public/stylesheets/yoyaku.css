@@ -849,6 +849,7 @@ table.listing tr.list-line-even td { padding: 0 3px 0 3px; }
 table.course tr th { padding: 0 2px 0 2px; }
 table.course tr th.title { font-size: 14px; }
 table.course tr th.subtitle { color: #666666; }
+table.course tr td.late { background: orange; }
 div.salary_info { float: left; }
 table.salary_status {
   float: left;
@@ -886,6 +887,7 @@ table.salary tr td {
 }
 table.salary tr td.bold { font-weight: bold; }
 table.salary tr.italic { font-style: italic; }
+div#attendances table tr.cancel { font-style: italic; }
 .fieldWithErrors {
   padding: 4px;
   background-color: red;

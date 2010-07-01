@@ -17,6 +17,27 @@
 	<%= render :partial => 'includes/pair', :locals => { :left => t( :note ), :right => h( @klass.note ) } %>
 </div>
 
+<div id="attendances">
+	<fieldset>
+		<legend>Students</legend>
+		<% if @klass.attendances.empty? %>
+			<%= t('message.no_students') %>
+		<% else %>
+			<table id="attendances">
+			<% @klass.attendances.each do |attendance| %>
+				<tr<%= " class=\"cancel\"" if attendance.cancel %>>
+					<td><%= attendance.student %></td>
+					<td>
+						<%= link_to(( attendance.late ? t(:mark_as_in_time) : t(:mark_as_late)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Late" ) %> 
+						<%= link_to(( attendance.cancel ? t(:uncancel) : t(:cancel)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Cancel" ) %>
+					</td>
+				</tr>
+			<% end %>
+			</table>
+		<% end %>
+	</fieldset>
+</div>
+
 <div id="links">
 		<%= link_to t(:edit), edit_klass_path(@klass) if can? :edit, @klass %>
 		<%= link_to t(:destroy), @klass, :confirm => t(:sure?), :method => :delete if can? :destroy, @klass %>

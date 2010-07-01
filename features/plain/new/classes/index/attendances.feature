@@ -5,13 +5,30 @@ Given a setting exist with name: "main"
 	And a course: "ruby" exists with name: "Ruby I"
 	And a klass: "ruby1" exists with course: course "ruby", date: "2010-02-28", start_time: "11:00", end_time: "12:00"
 	And a klass: "ruby2" exists with course: course "ruby", date: "2010-02-28", start_time: "11:00", end_time: "12:00"
-	And an attendance exists with klass: klass "ruby1", student: user "junko"
+	And an attendance "junko" exists with klass: klass "ruby1", student: user "junko"
 	And a user is logged in as "johan"
 	
 Scenario: View of attendances
 When I browse to the klasses page of "February 28, 2010"
 Then I should see student "junko" within klass "ruby1"
 And I should see no students within klass "ruby2"
+
+@late
+Scenario: Mark a student as late
+When I browse to the klasses page of "February 28, 2010"
+	And I late student "junko" in klass "ruby1"
+Then I should see student "junko" within klass "ruby1"
+	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: true
+	And 1 attendances should exist
+
+@de-late
+Scenario: De-mark a student as late
+Given attendance "junko" has extra: late: true
+When I browse to the klasses page of "February 28, 2010"
+	And I late student "junko" in klass "ruby1"
+Then I should see student "junko" within klass "ruby1"
+	And 1 attendances should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: false
+	And 1 attendances should exist
 
 @cancel
 Scenario: Cancel a student
