@@ -57,7 +57,7 @@ Then /^I should see "([^\"]*)" as title within the ([^\"]*) section$/ do |title,
   Then "I should see \"#{title}\" as title within \"div##{section}\""
 end
 
-Then /^the page should have no "([^\"]*)" ([^\"]*) section$/ do |div, section|
+Then /^the page should have no "([^\"]*)" ([^\"]*) section$/ do |section, div|
 	assert_have_no_xpath("//div[@#{div}='#{section}']")
 end
 
