@@ -53,3 +53,6 @@ When I go to the reserve page for user: "junko" on "2010-3-13"
 Then 1 attendances should exist with student: user "junko", klass: klass "25"
 	And 1 attendances should exist with student: user "junko", klass: klass "18"
 	And 2 attendances should exist
+	
+@pending
+Scenario: A student should not be able to reserve two classes that overlap in time

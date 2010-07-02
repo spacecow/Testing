@@ -116,15 +116,22 @@ class KlassesController < ApplicationController
 		attendance_hash.each do |key,value|
 			if value=~/^Move to (\d+)$/
 				Klass.find( $1.to_i ).attendances << Attendance.find(key)
-			elsif value == "Cancel"
-				attendance = Attendance.find(key)
-				attendance.update_attribute(:cancel, !attendance.cancel)
+			elsif value == I18n.t(:cancel)
+				Attendance.find(key).update_attribute(:cancel, true)
+			elsif value == I18n.t(:uncancel)
+				Attendance.find(key).update_attribute(:cancel, false)				
 			elsif value == "Delete"
 				Attendance.find(key).delete
-			elsif value == "Late"
-				attendance = Attendance.find(key)
-				attendance.update_attribute(:late, !attendance.late)
+			elsif value == I18n.t(:late)
+				Attendance.find(key).update_attribute(:late, true)
+			elsif value == I18n.t(:in_time)
+				Attendance.find(key).update_attribute(:late, false)				
+			elsif value == I18n.t(:absent)
+				Attendance.find(key).update_attribute(:absent, true)
+			elsif value == I18n.t(:present)
+				Attendance.find(key).update_attribute(:absent, false)				
 			end
+			
 		end  	
   end
 

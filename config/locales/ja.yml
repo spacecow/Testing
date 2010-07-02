@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
  
 ja:
+  absent: "欠席"
   access_denied: "ページを許可されません"
   add: "追加"
   address: "住所"
@@ -74,6 +75,7 @@ ja:
   inactive_student: "退会"
   inactive_teacher: "退職"
   info: "情報"
+  in_time: "In Time"
   is_closed: "閉じた"
   japanese: "日本語"
   kanji: "漢字"
@@ -86,6 +88,7 @@ ja:
   kunyomi: "訓読み"
   language: "言語"
   last_months_salary_teacher_summary: "来月の講師賃金"
+  late: "Late"  
   latest: "最新"
   latest_comment: "最新コメント"
   latest_version: "最新バージョン"
@@ -100,8 +103,6 @@ ja:
   mail_message: "メッセージ"
   mail_sending: "MAIL SENDING"
   mails: "メール"
-  mark_as_in_time: "Mark as In Time"
-  mark_as_late: "Mark as Late"  
   meaning: "意味"
   menu_date: "日付"
   mobile_phone: "携帯番号"
@@ -133,6 +134,7 @@ ja:
   photographer: "写真家"
   place: "場所"
   points: "ポイント"
+  present: "出席"
   preview: "プレビュー"
   previous_version: "前バージョン"
   quiz: "クイズ"

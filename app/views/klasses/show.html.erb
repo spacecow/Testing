@@ -29,9 +29,10 @@
 					<tr<%= " class=\"cancel\"" if attendance.cancel %>>
 						<td><%= attendance.student %></td>
 						<td>
-							<%= link_to(( attendance.late ? t(:mark_as_in_time) : t(:mark_as_late)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Late" ) %> 
-							<%= link_to(( attendance.cancel ? t(:uncancel) : t(:cancel)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Cancel" ) %> 
-							<%= link_to(t(:destroy), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Delete", :confirm => t(:sure?)) if can? :destroy, attendance %>
+							<%= link_to(( attendance.late ? t(:in_time) : t(:late)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => ( attendance.late ? t(:in_time) : t(:late))) %> 
+							<%= link_to(( attendance.cancel ? t(:uncancel) : t(:cancel)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => ( attendance.cancel ? t(:uncancel) : t(:cancel))) %> 
+							<%= link_to(( attendance.absent ? t(:present) : t(:absent)), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => ( attendance.absent ? t(:present) : t(:absent))) %> 
+							<%= link_to(t(:delete), :action => "update_attendance", :id => @klass.id, :attendance_id => attendance.id, :command => "Delete", :confirm => t(:sure?)) if can? :destroy, attendance %>
 						</td>
 					</tr>
 				<% end %>

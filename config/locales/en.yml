@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
  
 en:
+  absent: "Absent"
   access_denied: "Sorry, you are not allowed to access that page."
   add: "Add"
   address: "Address"
@@ -76,6 +77,7 @@ en:
   inactive_student: "Inactive"
   inactive_teacher: "Inactive"
   info: "Info"
+  in_time: "In Time"
   is_closed: "Closed"
   japanese: "Japanese"
   kanji: "Kanji"
@@ -89,6 +91,7 @@ en:
   kunyomi: "Kunyomi"
   language: "Language"
   last_months_salary_teacher_summary: "Last Month's Salary Summary"
+  late: "Late"
   latest: "Latest"
   latest_comment: "Latest comment"
   latest_version: "Latest version"
@@ -102,8 +105,6 @@ en:
   mail_address_pc: "PC address"
   mail_message: "Message"
   mail_sending: "Mail Sending"
-  mark_as_in_time: "Mark as In Time"
-  mark_as_late: "Mark as Late"
   meaning: "Meaning"
   mobile_phone: "Mobile phone"
   month: "Month"
@@ -134,6 +135,7 @@ en:
   photographer: "Photographer"
   place: "Place"
   points: "Points"
+  present: "Present"
   preview: "Preview"
   previous_version: "Previous version"
   quiz: "Quiz"

@@ -16,32 +16,40 @@ And I should see no students within klass "ruby2"
 @late
 Scenario: Mark a student as late
 When I browse to the klasses page of "February 28, 2010"
-	And I late student "junko" in klass "ruby1"
+	And I mark student "junko" as "Late" in klass "ruby1"
 Then I should see student "junko" within klass "ruby1"
-	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: true
+	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: true, absent: false
 	And 1 attendances should exist
 
-@de-late
+@in_time
 Scenario: De-mark a student as late
 Given attendance "junko" has extra: late: true
 When I browse to the klasses page of "February 28, 2010"
-	And I late student "junko" in klass "ruby1"
+	And I mark student "junko" as "In Time" in klass "ruby1"
 Then I should see student "junko" within klass "ruby1"
-	And 1 attendances should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: false
+	And 1 attendances should exist with klass: klass "ruby1", student: user "junko", cancel: false, late: false, absent: false
 	And 1 attendances should exist
 
 @cancel
 Scenario: Cancel a student
 When I browse to the klasses page of "February 28, 2010"
-	And I cancel student "junko" in klass "ruby1"
+	And I mark student "junko" as "Cancel" in klass "ruby1"
 Then I should see no students within klass "ruby1"
-	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: true
+	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: true, absent: false, late: false
+	And 1 attendances should exist
+
+@absent
+Scenario: Mark a student as absent
+When I browse to the klasses page of "February 28, 2010"
+	And I mark student "junko" as "Absent" in klass "ruby1"
+Then I should see no students within klass "ruby1"
+	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: false, absent: true, late: false
 	And 1 attendances should exist
 
 @delete
 Scenario: Delete a student, when a reservation was not supposed to have taken place
 When I browse to the klasses page of "February 28, 2010"
-	And I delete student "junko" in klass "ruby1"
+	And I mark student "junko" as "Delete" in klass "ruby1"
 Then I should see no students within klass "ruby1"
 	And 0 attendances should exist
 

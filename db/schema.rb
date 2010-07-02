@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100701043837) do
+ActiveRecord::Schema.define(:version => 20100702060957) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "student_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20100701043837) do
     t.boolean  "chosen",     :default => false
     t.integer  "version",    :default => 1
     t.boolean  "late",       :default => false
+    t.boolean  "absent",     :default => false
   end
 
   create_table "banks", :force => true do |t|
