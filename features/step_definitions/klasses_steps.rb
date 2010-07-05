@@ -294,12 +294,18 @@ Then /^I have ([0-9]+) classe?s? "([^\"]*)"$/ do |no, name|
   Klass.course_name( name ).size.should == no.to_i
 end
 
+#------------------- Generate Classes
+
 Given /^I generate classes for reservation from "([^\"]*)"$/ do |date|
   Klass.generate_classes_for_reservation_from( date )
 end
 
 Given /^I generate classes for reservation$/ do
   Klass.generate_classes_for_reservation
+end
+
+When /^I send information about reservable classes to students$/ do
+  SystemMailer.reservable_classes_information
 end
 
 #- F - U - N - C - T - I - O - N - S -----------------------------------------------------

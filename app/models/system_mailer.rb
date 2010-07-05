@@ -1,4 +1,4 @@
-class SystemMailer < ActionMailer::Base
+class SystemMailer < ActionMailer::Base	
 	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule last_months_salary_teacher_summary]
 
 	def self.get_main_course( user )
@@ -352,5 +352,24 @@ public
     from        "Yoyaku@GAKUWARINET.com"
     subject     "来週のシフトについて"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
+	end
+	
+	
+	
+	def self.reservable_classes_information
+		class_courses = Klass.all.map(&:course)
+		User.with_role( :student ).each do |student|
+			unless student.student_courses.map{|e| class_courses.include?(e) }.grep(true).empty?
+				func = "deliver_reservable_classes_information_in_#{student.language=='en' ? 'english' : 'japanese'}".to_sym
+				SystemMailer.send( func, student )
+			end
+		end
+	end
+	
+	def reservable_classes_information_in_english( user )
+    recipients  "jsveholm@gmail.com" #user.email
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "Class reservations"
+    body        :username => user.username
 	end
 end
