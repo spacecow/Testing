@@ -356,20 +356,28 @@ public
 	
 	
 	
-	def self.reservable_classes_information
+	def self.reservable_classes_information( address=nil )
 		class_courses = Klass.all.map(&:course)
 		User.with_role( :student ).each do |student|
 			unless student.student_courses.map{|e| class_courses.include?(e) }.grep(true).empty?
 				func = "deliver_reservable_classes_information_in_#{student.language=='en' ? 'english' : 'japanese'}".to_sym
-				SystemMailer.send( func, student )
+				SystemMailer.send( func, student, address )
 			end
 		end
 	end
+
+	def self.reservable_classes_information_as_johan_test
+		reservable_classes_information( "jsveholm@gmail.com" )
+	end
 	
-	def reservable_classes_information_in_english( user )
-    recipients  "jsveholm@gmail.com" #user.email
+	def self.reservable_classes_information_as_yoyaku_test
+		reservable_classes_information( "Yoyaku@GAKUWARINET.com" )
+	end		
+	
+	def reservable_classes_information_in_english( user, address )
+    recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "Class reservations"
-    body        :username => user.username
+    body        :username => user.username, :name => (address.nil? ? "" : user.name)
 	end
 end

@@ -84,6 +84,16 @@ When /^the system sends out the last month's salary summary to concerned teacher
   SystemMailer.send( "last_months_salary_summary_as_#{test}_test".to_sym )
 end
 
+
+
+When /^the system sends out information about reservable classes to concerned students$/ do
+  SystemMailer.reservable_classes_information
+end
+
+When /^the system sends out information about reservable classes to concerned students as (yoyaku|johan) test$/ do |test|
+  SystemMailer.send( "reservable_classes_information_as_#{test}_test".to_sym )
+end
+
 #........ Visuals
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|

@@ -304,10 +304,6 @@ Given /^I generate classes for reservation$/ do
   Klass.generate_classes_for_reservation
 end
 
-When /^I send information about reservable classes to students$/ do
-  SystemMailer.reservable_classes_information
-end
-
 #- F - U - N - C - T - I - O - N - S -----------------------------------------------------
 
 def get_class( name )

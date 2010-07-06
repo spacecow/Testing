@@ -11,6 +11,10 @@ every 1.day, :at => '4:00 am' do
   runner "SystemMailer.next_working_days_teacher_reminder_as_yoyaku_test"
 end
 
-every :friday, :at => '23pm' do
+every :friday, :at => '23:00 pm' do
 	runner "Klass.generate_classes_for_reservation"
+end
+
+every :friday, :at => '23:30 pm' do
+	runner "SystemMailer.reservable_classes_information"
 end
