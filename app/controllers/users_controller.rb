@@ -211,14 +211,15 @@ class UsersController < ApplicationController
 	end
 	
 	def update_reserve
-		student_klass_ids = params[:user].delete("student_klass_ids") || {}
-    if !student_klass_ids.blank?
+		student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
+    if !student_klass_ids.empty?
     	klass = nil
-    	student_klass_ids.reject{|e| e.blank?}.reverse.each do |klass_id|
+    	student_klass_ids.reverse.each do |klass_id|
   			klass = Klass.find( klass_id )
   			@user.student_klasses << klass
   		end
   		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+	  	SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
 	  	#mail = Mail.create!(
 	    #	:sender_id => User.first.id,
 	    #	:subject => "Reservation",

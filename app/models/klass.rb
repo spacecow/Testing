@@ -170,6 +170,8 @@ class Klass < ActiveRecord::Base
 		end
 	end
   
+# Mail methods --------------------------
+  
   def to_mail_date(language)
   	if language=='ja'
   		"#{month.to_s}/#{day.to_s}(#{%w(月 火 水 木 金 土 日)[wday]})"
@@ -177,6 +179,11 @@ class Klass < ActiveRecord::Base
 			"#{month.to_s}/#{day.to_s}(#{%w(mon tue wed thu fri sat sun)[wday]})"
 		end
   end
+  
+	def to_time_interval_course( language )
+		course_s = course.category + (language=='ja' ? '' : ' ') + course.level_to_s( language )
+		"#{japanese_time_interval}(#{course_s})"
+	end  
   
 protected
 	def validate_on_update

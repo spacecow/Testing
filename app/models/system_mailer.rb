@@ -47,7 +47,37 @@ class SystemMailer < ActionMailer::Base
 		end
 		schedule
 	end
+	
+	
+	
+	
+	def self.get_student_schedule( klasses, language )
+		return nil if klasses.nil?
+		schedule = ""
+		date_klasses = klasses.group_by(&:date)
+		date_klasses.keys.sort.each_with_index do |date,index|
+			schedule += date_klasses[date][0].to_mail_date(language)+" "
+			schedule += date_klasses[date].
+				sort_by(&:time_interval).
+				map{|e| e.to_time_interval_course(language)}.join(", ")
+			schedule += "\n" unless (index+1)==date_klasses.keys.size				
+		end
+		schedule
+	end
+	
+	def self.send_reservation_of_classes( klasses, user )
+		schedule = get_student_schedule( klasses, user.language )
+		func = "deliver_reservation_of_classes_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
+		SystemMailer.send( func, user, schedule )
+	end
 
+	def self.send_reservation_of_classes_by_ids( klass_ids, user )
+		send_reservation_of_classes( klass_ids.map{|e| Klass.find(e)}, user)
+	end
+
+
+
+	
 	def self.send_teacher_schedule( grouped_teachings, function, address, sender, date )
 		grouped_teachings.each do |user_id,value|
 		  user = User.find( user_id )
@@ -379,5 +409,12 @@ public
     from        "Yoyaku@GAKUWARINET.com"
     subject     "Class reservations"
     body        :username => user.username, :name => (address.nil? ? "" : user.name)
+	end
+	
+	def reservation_of_classes_in_english( user, schedule )
+    recipients  "jsveholm@gmail.com"
+    from        user.email
+    subject     "Reservation of classes"
+    body        :name => user.name, :schedule => schedule
 	end
 end
