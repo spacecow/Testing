@@ -2,7 +2,7 @@ Background:
 Given a setting exist with name: "main"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
 	And a user: "junko" exist with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
-	And a course: "ruby" exists with name: "Ruby I"
+	And a course: "ruby" exists with name: "Ruby I", level_en: "beg."
 	And a courses_student join model exists with course: "Ruby I", student: "junko"
 	And a klass: "19" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
 	And a klass: "18" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
@@ -18,6 +18,9 @@ Then I should automatically browse to the klasses page of "March 18, 2010"
 	And 1 attendances should exist with student: user "junko", klass: klass "18"
 	And 1 attendances should exist
 	And "jsveholm@gmail.com" should receive 1 email
+When "jsveholm@gmail.com" opens the email with subject "Reservation of classes"
+Then I should see "Junko Sumii" in the email body
+	And I should see "3/18(thu) 12:00～13:00(Ruby beg.)" in the email body	
 	#And a mail should exist with subject: "Reservation", message: "You have reserved a class!"
 	#And 1 mails should exist
 	#And a recipient should exist with user: user "junko", mail: that mail
@@ -59,4 +62,4 @@ Then 1 attendances should exist with student: user "junko", klass: klass "25"
 Scenario: A student should not be able to reserve two classes that overlap in time
 
 @pending
-Scenario: After reservation, a mail should go to yoyaku@gakuwarinet.com for confirmation
+Scenario: After reservation, a mail should go to yoyaku@gakuwarinet.com for confirmation, its going to jsveholm@gmail.com now
