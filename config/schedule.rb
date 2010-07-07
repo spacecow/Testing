@@ -1,5 +1,5 @@
 every :reboot do
-	command "chmod +x #{path}/script/runner"
+	#command "chmod +x #{path}/script/runner"
 	rake "jobs:work"
 end
 
