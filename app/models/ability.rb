@@ -59,7 +59,7 @@ class Ability
 	  		can :read, [Event, Todo, Photo, Todo, User, TemplateClass, Registrant, Klass, Course]
 	  	end
   		if user.role? :admin
-	  		can :manage, [Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course, Mailer]
+	  		can :manage, [Attendance, Event, Todo, User, Setting, Comment, Vote, Gallery, Photo, TemplateClass, Registrant, Klass, Course, Mailer]
 	  	end
 	  	if user.role? :god
 				can :manage, :all

@@ -1,6 +1,6 @@
 Background:
 Given a setting exists with name: "main"
-	And a user exists with username: "kurosawa_akira", language: "ja"
+	And a user exists with username: "kurosawa_akira", language: "ja", role: "registrant, student"
 	
 Scenario: Log in
 When I go to the events page
@@ -11,7 +11,16 @@ When I fill in 'user_name' with "kurosawa_akira"
 	And I press 'login.button'
 Then I should be redirected to the events page
 	And I should not see 'login.notice.success'
-	
+
+@allow-rescue
+Scenario: Log in with redirect
+When I go to the klasses page
+Then I should be redirected to path "/login_user"
+When I fill in 'user_name' with "kurosawa_akira"
+	And I fill in 'password' with "secret"
+	And I press 'login.button'
+Then I should be redirected to the klasses page
+
 Scenario: Log out
 Given a user is logged in as "kurosawa_akira"
 When I follow 'logout.text'

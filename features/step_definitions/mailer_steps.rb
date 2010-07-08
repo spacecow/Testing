@@ -80,21 +80,26 @@ When /^the system sends out the last month's salary summary to concerned teacher
   SystemMailer.last_months_salary_summary
 end
 
-When /^the system sends out the last month's salary summary to concerned teachers as (yoyaku|johan) test$/ do |test|
+When /^the system sends out the last month's salary summary to concerned teachers as (yoyaku|johan) test$/ do |test| #'
   SystemMailer.send( "last_months_salary_summary_as_#{test}_test".to_sym )
 end
 
 
 
-When /^the system sends out information about reservable classes to concerned students$/ do
-  SystemMailer.reservable_classes_information
+When /^the system sends out information about reservable classes to concerned students at "([^\"]*)"$/ do |date|
+  SystemMailer.reservable_classes_information_at( date )
 end
 
-When /^the system sends out information about reservable classes to concerned students as (yoyaku|johan) test$/ do |test|
-  SystemMailer.send( "reservable_classes_information_as_#{test}_test".to_sym )
+When /^the system sends out information about reservable classes to concerned students at "([^\"]*)" as (yoyaku|johan) test$/ do |date,test|
+  SystemMailer.send( "reservable_classes_information_as_#{test}_test_at".to_sym, date )
 end
 
 #........ Visuals
+
+Then /^I should see a link to the reserve section for (user ".+") in the email body$/ do |user|
+	user_id = model( user ).id
+	Then "I should see \"http://www.reserve-gakuwarinet.com/staff/#{user_id}/reserve\" in the email body"
+end
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|
 	When "I browse to the teachers page"

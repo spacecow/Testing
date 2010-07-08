@@ -66,9 +66,11 @@ class SystemMailer < ActionMailer::Base
 	end
 	
 	def self.send_reservation_of_classes( klasses, user )
+		start_date = klasses.first.date
+		start_date -= 1.day while start_date.strftime("%a") != "Mon"
 		schedule = get_student_schedule( klasses, user.language )
 		func = "deliver_reservation_of_classes_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
-		SystemMailer.send( func, user, schedule )
+		SystemMailer.send( func, user, schedule, start_date )
 	end
 
 	def self.send_reservation_of_classes_by_ids( klass_ids, user )
@@ -386,35 +388,61 @@ public
 	
 	
 	
-	def self.reservable_classes_information( address=nil )
-		class_courses = Klass.all.map(&:course)
+	def self.reservable_classes_information_at( date, address=nil )
+		start_date = Time.zone.parse( date ) + 6.day
+		start_date += 1.day while start_date.strftime("%a") != "Mon"
+		class_courses = Klass.all(
+			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
+			:include=>:course ).map(&:course)
 		User.with_role( :student ).each do |student|
 			unless student.student_courses.map{|e| class_courses.include?(e) }.grep(true).empty?
 				func = "deliver_reservable_classes_information_in_#{student.language=='en' ? 'english' : 'japanese'}".to_sym
-				SystemMailer.send( func, student, address )
+				SystemMailer.send( func, student, address, start_date )
 			end
 		end
 	end
 
-	def self.reservable_classes_information_as_johan_test
-		reservable_classes_information( "jsveholm@gmail.com" )
+	def self.reservable_classes_information_as_johan_test_at( date )
+		reservable_classes_information_at( date, "jsveholm@gmail.com" )
 	end
 	
-	def self.reservable_classes_information_as_yoyaku_test
-		reservable_classes_information( "Yoyaku@GAKUWARINET.com" )
+	def self.reservable_classes_information_as_yoyaku_test_at( date )
+		reservable_classes_information_at( date, "Yoyaku@GAKUWARINET.com" )
 	end		
 	
-	def reservable_classes_information_in_english( user, address )
+	def reservable_classes_information_in_english( user, address, start_date )
+  	end_date = start_date + 5.day
+  	interval = "#{start_date.month}/#{start_date.day}～#{end_date.month}/#{end_date.day}"
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
-    subject     "Class reservations"
-    body        :username => user.username, :name => (address.nil? ? "" : user.name)
+    subject     "Reservations #{interval}"
+    body        :user_id => user.id, :name => (address.nil? ? "" : user.name), :interval => interval
 	end
 	
-	def reservation_of_classes_in_english( user, schedule )
+	def reservable_classes_information_in_japanese( user, address, start_date )
+		end_date = start_date + 5.day
+		interval = "#{start_date.month}/#{start_date.day}～#{end_date.month}/#{end_date.day}"
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "予約 #{start_date.month}/#{start_date.day}～#{end_date.month}/#{end_date.day}"
+    body        :user_id => user.id, :name => (address.nil? ? "" : user.name), :interval => interval
+	end	
+	
+	def reservation_of_classes_in_english( user, schedule, start_date )
+		end_date = start_date + 5.day
+		interval = "#{start_date.month}/#{start_date.day}～#{end_date.month}/#{end_date.day}"
     recipients  "jsveholm@gmail.com"
     from        user.email
-    subject     "Reservation of classes"
+    subject     "Reservations #{interval}"
     body        :name => user.name, :schedule => schedule
 	end
+	
+	def reservation_of_classes_in_japanese( user, schedule, start_date )
+		end_date = start_date + 5.day
+		interval = "#{start_date.month}/#{start_date.day}～#{end_date.month}/#{end_date.day}"
+    recipients  "jsveholm@gmail.com"
+    from        user.email
+    subject     "予約 #{interval}"
+    body        :name => user.name, :schedule => schedule
+	end	
 end

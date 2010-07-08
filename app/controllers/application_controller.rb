@@ -3,6 +3,7 @@
  
 class ApplicationController < ActionController::Base
 	rescue_from CanCan::AccessDenied do |exception|
+    session[:original_uri] = request.request_uri
 	  flash[:error] = t( 'access_denied' )
 	  redirect_to login_user_path		
 	end

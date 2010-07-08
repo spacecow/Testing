@@ -15,6 +15,36 @@ Then I should see "Reserve" as title
 	And I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
 	And I should see "Reservations can be made from Sat 12am to Tue 5pm." within "div.reservable"
 
+@yes_class
+Scenario Outline: View of the reserve page when there are classes to reserve
+Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
+	And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
+	And a user is logged in as "aya"
+When I go to the reserve page for user: "johan" on "2010-03-06"
+Then I should see "3/<date>(<day>) - Ruby I - 12:00~13:00" within "div.reservable"
+Examples:
+|	date	|	day				|
+|	15		|	Monday		|
+|	16		|	Tuesday		|
+|	17		|	Wednesday	|
+|	18		|	Thursday	|
+|	19		|	Friday		|
+|	20		|	Saturday	|
+
+@no_class
+Scenario Outline: View of the reserve page when there are classes to reserve
+Given a course: "ruby" exists with name: "Ruby I"
+	And a courses_student join model exists with course: "Ruby I", student: "johan"
+	And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
+	And a user is logged in as "aya"
+When I go to the reserve page for user: "johan" on "2010-03-06"
+Then I should see "You can do no reservations today." within "fieldset.form div.intro"
+Examples:
+|	date	|
+|	14		|
+|	21		|
+
 @days
 Scenario Outline: Reservations can only be made from Sat to Tue
 Given a course: "ruby" exists with name: "Ruby I"

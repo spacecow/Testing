@@ -11,6 +11,7 @@ class UserSessionsController < ApplicationController
     if @user_session.save
     	Rails.cache.delete( 'beta_testers' )
     	#flash[:notice] = t( 'login.notice.success' )
+    	redirect_to session[:original_uri] and return unless session[:original_uri].blank?
       redirect_to events_path
     else
       render :action => :new

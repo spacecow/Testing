@@ -888,6 +888,14 @@ table.salary tr td {
 table.salary tr td.bold { font-weight: bold; }
 table.salary tr.italic { font-style: italic; }
 div#attendances table tr.cancel { font-style: italic; }
+div.reserved ul li.cancel { text-decoration: line-through; }
+div.history ul li.late { color: orange; }
+div.history ul li.cancel { text-decoration: line-through; }
+div.history ul li.absent {
+  text-decoration: line-through;
+  font-style: italic;
+  color: red;
+}
 .fieldWithErrors {
   padding: 4px;
   background-color: red;

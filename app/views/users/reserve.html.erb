@@ -24,23 +24,45 @@
 <% end %>
 </div>
 
-<% unless @reserved_klasses.empty? %>
+<% unless @reserved_attendances.empty? %>
 <div class="reserved">
 <h2><%= t('header.already_reserved_classes') %></h2>
 <ul>
-<% @reserved_klasses.each do |klass| %>
-	<li><%= klass.name %></li>
+<% @reserved_attendances.each do |attendance| %>
+	<% if attendance.cancel %>
+		<% if can? :edit, attendance %>
+			<li class="cancel"><%= attendance.klass.name %></li>
+		<% end %>
+	<% else %>
+		<li><%= attendance.klass.name %></li>
+	<% end %>
 <% end %>
 </ul>
 </div>
 <% end %>
 
-<% unless @class_history.empty? %>
+<% unless @attendance_history.empty? %>
 <div class="history">
 <h2><%= t('header.class_history') %></h2>
 <ul>
-<% @class_history.each do |klass| %>
-	<li><%= klass.name %></li>
+<% @attendance_history.each do |attendance| %>
+	<% if attendance.cancel %>
+		<% if can? :edit, attendance %>
+			<li class="cancel"><%= attendance.klass.name %></li>
+		<% end %>
+	<% elsif attendance.absent %>
+		<% if can? :edit, attendance %>
+			<li class="absent"><%= attendance.klass.name %></li>
+		<% end %>
+	<% elsif attendance.late %>
+		<% if can? :edit, attendance %>
+			<li class="late"><%= attendance.klass.name %></li>
+		<% else %>
+			<li><%= attendance.klass.name %></li>
+		<% end %>
+	<% else %>
+		<li><%= attendance.klass.name %></li>
+	<% end %>
 <% end %>
 </ul>
 </div>
