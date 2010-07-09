@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :stories, :collection => {:quiz=>:get, :quiz_init=>:get}, :member=>{:check=>:put}
+
   map.resources :words
 
   map.mailer 'mailer', :controller => 'mailer', :action => 'index'

@@ -1,0 +1,16 @@
+<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" id="story_<%= story.id %>">
+	<td><%=h story.japanese %></td>
+	<td><%=h story.english %></td>
+	<td id="links">
+		<% if can? :show, story %>
+	  	<%= link_to t('show'), story %>
+	  <% end %>
+		<% if can? :edit, story %>
+	  	<%= link_to t('edit'), edit_story_path(story) %>
+	  <% end %>
+		<% if can? :destroy, story %>
+	  	<%= link_to t('delete'), story, :confirm => 'Are you sure?', :method => :delete %>
+	  <% end %>
+		<%= link_to t('quiz'), quiz_init_stories_path(:story_id=>story.id) %>
+	</td>  
+</tr>

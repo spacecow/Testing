@@ -1,0 +1,17 @@
+<div class="show">
+<fieldset class="show">
+<legend><%= t('klass') %></legend>
+
+<div class="pairs">
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :japanese ), :right => h( @story.japanese ) } %>
+	<%= render :partial => 'includes/pair', :locals => { :left => t( :english ), :right => h( @story.english ) } %>
+</div>
+
+<div id="links">
+		<%= link_to t(:edit), edit_story_path(@story) if can? :edit, @story %>
+		<%= link_to t(:destroy), @story, :confirm => t(:sure?), :method => :delete if can? :destroy, @story %>
+		<%= link_to t(:list,:object=>t(:stories)), stories_path if can? :index, Story %>
+</div>
+
+</fieldset>
+</div>

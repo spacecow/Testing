@@ -1,0 +1,18 @@
+<div id="list">
+
+<table cellpadding="2" cellspacing="1" id="stories" class="listing">
+	<tr>
+		<th class="list-topics"><%= t('japanese') %></th>			
+		<th class="list-topics"><%= t('english') %></th>	
+	</tr>
+	<%= render :partial => @stories %>
+</table>
+
+<div id="links">
+	<% if can? :new, Story %>
+		<%= link_to t(:new,:object=>t(:story)), new_story_path %>
+		<%= link_to t(:quiz), quiz_init_stories_path %>
+	<% end %>
+</div>
+
+</div>

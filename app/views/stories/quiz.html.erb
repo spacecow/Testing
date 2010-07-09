@@ -1,0 +1,14 @@
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t('quiz') %></legend>
+<%= @part_answer %>
+<%= @correct_answer %>
+
+<% form_for :story, :url => check_story_path( @story ), :html => { :method => :put } do |f| %>
+  <%= text_area_tag :question, @question, :rows=>5, :cols=>100 %>
+  <%= text_field_tag :answer, nil, :class=>:focus, :size=>80 %>
+  <%= f.submit "Check" %>
+<% end %>
+
+</fieldset>
+</div>

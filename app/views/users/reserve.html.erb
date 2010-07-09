@@ -46,23 +46,7 @@
 <h2><%= t('header.class_history') %></h2>
 <ul>
 <% @attendance_history.each do |attendance| %>
-	<% if attendance.cancel %>
-		<% if can? :edit, attendance %>
-			<li class="cancel"><%= attendance.klass.name %></li>
-		<% end %>
-	<% elsif attendance.absent %>
-		<% if can? :edit, attendance %>
-			<li class="absent"><%= attendance.klass.name %></li>
-		<% end %>
-	<% elsif attendance.late %>
-		<% if can? :edit, attendance %>
-			<li class="late"><%= attendance.klass.name %></li>
-		<% else %>
-			<li><%= attendance.klass.name %></li>
-		<% end %>
-	<% else %>
-		<li><%= attendance.klass.name %></li>
-	<% end %>
+	<li <%= attendance.class_attributes if can? :edit, attendance %>><%= attendance.klass.name %></li>
 <% end %>
 </ul>
 </div>

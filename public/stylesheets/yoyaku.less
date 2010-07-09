@@ -692,8 +692,12 @@ table.salary{
 
 div#attendances{
 	table{
-		tr.cancel{
+		tr.late{ background:orange; }
+		tr.cancel{ text-decoration:line-through; }
+		tr.absent{
+			text-decoration:line-through;
 			font-style:italic;
+			color:red;
 		}
 	}
 }
