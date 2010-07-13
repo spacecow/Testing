@@ -61,9 +61,11 @@ class StoriesController < ApplicationController
   	@story = Story.find( session[:story_id] )
   	@question = session[:question]
   	@part_answer = session[:part_answer]
+  	@correct_answer = session[:correct_answer]
   end
   
-  def check    
+  def check
+  	redirect_to quiz_init_stories_path and return if params[:answer] == "skip"    
     session[:part_answer] = update_answer( session[:correct_answer], params[:answer ], session[:part_answer])
 		if session[:question] != params[:question]
 			Story.find( session[:story_id] ).update_attribute(:english,params[:question])
