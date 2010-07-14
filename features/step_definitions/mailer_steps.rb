@@ -44,6 +44,22 @@ end
 
 
 
+
+When /^the system sends out the daily student reminder to concerned students$/ do
+	SystemMailer.daily_student_reminder
+end
+
+When /^the system sends out the daily student reminder to concerned students at "([^\"]*)"$/ do |date|
+	SystemMailer.daily_student_reminder_at( date )
+end
+
+When /^the system sends out the daily student reminder to concerned students as (yoyaku|johan) test$/ do |test|
+	SystemMailer.send( "daily_student_reminder_as_#{test}_test".to_sym )
+end
+
+
+
+
 When /^the system sends out the weekly schedule to concerned teachers$/ do
   SystemMailer.next_weeks_teacher_schedule
 end
@@ -98,7 +114,7 @@ end
 
 Then /^I should see a link to the reserve section for (user ".+") in the email body$/ do |user|
 	user_id = model( user ).id
-	Then "I should see \"http://www.reserve-gakuwarinet.com/staff/#{user_id}/reserve\" in the email body"
+	Then "I should see \"http://www.reserve-gakuwarinet.com/staff/users/#{user_id}/reserve\" in the email body"
 end
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|

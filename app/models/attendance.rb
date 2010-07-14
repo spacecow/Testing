@@ -1,6 +1,8 @@
 class Attendance < ActiveRecord::Base
   belongs_to :student, :class_name => 'User'
   belongs_to :klass
+
+	named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:student]}}  
   
   def student_id=(student)
     super(student) unless student==""
@@ -29,4 +31,14 @@ class Attendance < ActiveRecord::Base
 		attributes << "absent" if absent
   	"class=\"#{attributes.join(' ')}\""
   end
+  
+# Mail methods -----------------------
+
+	def to_mail_date(language)
+		klass.to_mail_date(language)
+	end
+	
+	def to_time_interval_course( language,main_course )
+		klass.to_time_interval_course( language,main_course )
+	end
 end

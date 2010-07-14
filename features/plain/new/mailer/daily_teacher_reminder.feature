@@ -3,8 +3,8 @@ Given a setting exists with name: "main"
 	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm", email: "johan@space.com"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "ja", name: "Aya Komatsu", email: "aya@space.com"
 
-@other_days_format
-Scenario: Check other day's format of mail of Daily Teacher Reminder for today
+@other_days @format
+Scenario: Check other day's format of mail of Daily Teacher Reminder
 Given a klass exists with date: "2010-05-19"
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
 When the system sends out the daily teacher reminder to concerned teachers at "2010-05-19"
@@ -12,8 +12,8 @@ Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Reminder 5/19"
 Then I should see the daily teacher reminder mail in english in the email body
 
-@todays_format
-Scenario: Check todays format of mail of Daily Teacher Reminder for today
+@today @format
+Scenario: Check todays format of mail of Daily Teacher Reminder
 Given a klass exists with todays date
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
 When the system sends out the daily teacher reminder to concerned teachers
@@ -21,7 +21,7 @@ Then "johan@space.com" should receive 1 email
 When "johan@space.com" opens the email with subject "Reminder #today"
 Then I should see the daily teacher reminder mail in english in the email body
 
-@test_format
+@test @format @today
 Scenario Outline: Check test format of mail of Daily Teacher Reminder for today
 Given a klass exists with todays date
 	And a teaching exists with klass: that klass, teacher: user "johan", current: true, status_mask: 33
@@ -34,7 +34,7 @@ Examples:
 |	yoyaku	|	Yoyaku@GAKUWARINET.com	|
 |	johan		|	jsveholm@gmail.com			|
 
-@not_current_confirmed_untaught
+@not_current @unconfirmed @taught @other_day
 Scenario Outline: Teachings that are neither current, confirmed nor untaught are not affected
 Given a klass exists with date: "2010-04-04"
 	And a teaching exists with klass: that klass, teacher: user "aya", current: <current>, status_mask: <status>
@@ -52,7 +52,7 @@ Examples:
 |	true		|	9				|
 |	true		|	17			|
 
-@current_confirmed_untaught
+@current @confirmed @untaught
 Scenario: Teachings should be current, confirmed and untaught
 Given a klass exists with date: "2010-04-04"
 	And a teaching exists with klass: that klass, teacher: user "aya", current: true, status_mask: 33
