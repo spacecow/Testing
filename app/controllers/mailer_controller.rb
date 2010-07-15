@@ -18,55 +18,60 @@ class MailerController < ApplicationController
 		@menu_type			= params[:menu_type]
 		
 		user = User.find_by_name( @menu_teacher )
-		func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teachings_to_at".to_sym
-		teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
-		schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )
-		summary 			= SystemMailer.get_summary( teachings, user, @menu_language )
-		hours 				= teachings.map(&:hours).sum
-		teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
-		teaching_days = teachings.group_by(&:date).size
-		total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
-		total_cost		= teaching_cost + total_traveling_expenses
+		language = @menu_language == "ja" ? "japanese" : "english"
+		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		
-		unless teachings.nil?
-			language = @menu_language == "ja" ? "japanese" : "english"
-			@subject = case @menu_type
-				when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
-				when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
-				when "last_months_salary_teacher_summary"; @menu_language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary"
-			end
-			@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
-			@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
-			@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
-			@mail.gsub!(/<%= @teacher %>/,user.name)
-			@mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s)
-			@mail.gsub!(/<%= @hours %>/,hours.to_s)
-			@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
-			if user.traveling_expenses.to_i > 0
-				@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y")
-			else
-				@mail.gsub!(/<%= @traveling_expenses %>/,'')
-			end
-			if user.bank.empty?
-				@mail.gsub!(/<%= @bank_name %>/,'')
-				@mail.gsub!(/<%= @bank_branch %>/,'')
-				@mail.gsub!(/<%= @bank_account %>/,'')
-				@mail.gsub!(/<%= @bank_signup_name %>/,'')
-			else
-				@mail.gsub!(/<%= @bank_name %>/,user.bank.first.name.to_s)
-				@mail.gsub!(/<%= @bank_branch %>/,user.bank.first.branch.to_s)
-				@mail.gsub!(/<%= @bank_account %>/,user.bank.first.account.to_s)
-				@mail.gsub!(/<%= @bank_signup_name %>/,user.bank.first.signup_name.to_s)
-			end
-			@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
-			@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
-			@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
-			@mail.gsub!(/<%= @confirm_day %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
-			@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
-			@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
-			@mail.gsub!(/<%= @name %>/,'')
-			@mail.gsub!(/<%= @sender %>/,'Hitomi')
+		@subject, @mail = case @menu_type.split('_')[0..-3].join('_')
+		when "last_months_salary"; get_last_months_salary_info( user, @menu_date, @menu_language, @mail )
+		when "daily_teacher_reminder"; get_daily_teacher_reminder_info
 		end
+		
+		#func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teachings_to_at".to_sym
+		#teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
+		#schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )
+
+		start_date, end_date = SystemMailer.get_last_months_interval( @menu_date.to_s )
+		p untaught_teachings = Teaching.between_dates( start_date, end_date ).current.confirmed.untaught.non_staff		
+		flash[:error] = "#{user.name} has still unconfirmed classes." unless untaught_teachings.empty?
+		
+		#unless teachings.nil?
+			#language = @menu_language == "ja" ? "japanese" : "english"
+			#@subject = case @menu_type
+			#	when "daily_teacher_reminder"; @menu_language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder"
+			#	when "weekly_teacher_schedule"; @menu_language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule"
+			#	when "last_months_salary_teacher_summary"; @menu_language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary"
+			#end
+			#@mail.gsub!(/<%= @schedule %>/,schedule) unless schedule.nil?
+			#@mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+			#@mail.gsub!(/<%= @teacher %>/,user.name)
+			#@mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s)
+			#@mail.gsub!(/<%= @hours %>/,hours.to_s)
+			#@mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s)
+			#if user.traveling_expenses.to_i > 0
+			#	@mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y")
+			#else
+			#	@mail.gsub!(/<%= @traveling_expenses %>/,'')
+			#end
+			#if user.bank.empty?
+			#	@mail.gsub!(/<%= @bank_name %>/,'')
+			#	@mail.gsub!(/<%= @bank_branch %>/,'')
+			#	@mail.gsub!(/<%= @bank_account %>/,'')
+			#	@mail.gsub!(/<%= @bank_signup_name %>/,'')
+			#else
+			#	@mail.gsub!(/<%= @bank_name %>/,user.bank.first.name.to_s)
+			#	@mail.gsub!(/<%= @bank_branch %>/,user.bank.first.branch.to_s)
+			#	@mail.gsub!(/<%= @bank_account %>/,user.bank.first.account.to_s)
+			#	@mail.gsub!(/<%= @bank_signup_name %>/,user.bank.first.signup_name.to_s)
+			#end
+			#@mail.gsub!(/<%= @teaching_days %>/,teaching_days.to_s)
+			#@mail.gsub!(/<%= @total_traveling_expenses %>/,total_traveling_expenses.to_s)
+			#@mail.gsub!(/<%= @total_cost %>/,total_cost.to_s)
+			#@mail.gsub!(/<%= @confirm_day %>/, (@menu_date.beginning_of_month+5.day).strftime("%a").downcase )
+			#@mail.gsub!(/<%= @last_month %>/,month_to_s(@menu_date-1.month, @menu_language))
+			#@mail.gsub!(/<%= @this_month %>/,month_to_s(@menu_date, @menu_language))
+			#@mail.gsub!(/<%= @name %>/,'')
+			#@mail.gsub!(/<%= @sender %>/,'Hitomi')
+		#end
   end
   
   def send_mail
@@ -82,6 +87,55 @@ class MailerController < ApplicationController
 			:menu_teacher => params[:menu_teacher]
 		)
   end
+end
+
+def get_daily_teacher_reminder_info
+	teachings 		= SystemMailer.get__teachings_to_at( user, date.to_s )
+		#teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
+		#schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )	
+	[""]		
+end
+
+
+
+def get_last_months_salary_info( user, date, language, mail )
+	teachings 		= SystemMailer.get_last_months_salary_teachings_to_at( user, date.to_s )
+	summary 			= SystemMailer.get_summary( teachings, user, @menu_language )
+	hours 				= teachings.map(&:hours).sum
+	teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
+	teaching_days = teachings.group_by(&:date).size
+	total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
+	total_cost		= teaching_cost + total_traveling_expenses
+	
+	subject = (language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary")
+	
+	mail.gsub!(/<%= @last_month %>/,month_to_s( date-1.month,language ))
+	mail.gsub!(/<%= @this_month %>/,month_to_s( date,language ))	
+	mail.gsub!(/<%= @confirm_day %>/, ( date.beginning_of_month+5.day).strftime("%a").downcase )
+	mail.gsub!(/<%= @teacher %>/,user.name )
+	mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s )
+	mail.gsub!(/<%= @total_cost %>/,total_cost.to_s )
+	mail.gsub!(/<%= @hours %>/,hours.to_s )	
+	mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s )
+	if user.traveling_expenses.to_i > 0
+		mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y" )
+	else
+		mail.gsub!(/<%= @traveling_expenses %>/,'' )
+	end
+	if user.bank.empty?
+		mail.gsub!(/<%= @bank_name %>/,'' )
+		mail.gsub!(/<%= @bank_branch %>/,'' )
+		mail.gsub!(/<%= @bank_account %>/,'' )
+		mail.gsub!(/<%= @bank_signup_name %>/,'' )
+	else
+		mail.gsub!(/<%= @bank_name %>/,user.bank.first.name.to_s )
+		mail.gsub!(/<%= @bank_branch %>/,user.bank.first.branch.to_s )
+		mail.gsub!(/<%= @bank_account %>/,user.bank.first.account.to_s )
+		mail.gsub!(/<%= @bank_signup_name %>/,user.bank.first.signup_name.to_s )
+	end
+	mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+
+	return [subject,mail]
 end
 
 def month_to_s( date, language )
