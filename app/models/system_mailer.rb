@@ -2,19 +2,20 @@ class SystemMailer < ActionMailer::Base
 	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule last_months_salary_teacher_summary]
 
 	def self.get_main_course( user )
-		get_frequent_word( user.teacher_courses.map(&:category))
+		word = get_frequent_word( user.teacher_courses.map(&:category))
+		word.blank? ? get_frequent_word( user.student_courses.map(&:category)) : word
 	end
 	
 	def self.get_frequent_word( words )
-		hash = {}; max=0; res=0
-			words.each{|w|
-				hash[w] = ( hash[w] || 0 )+1
-				if( hash[w] > max )
-					max = hash[w]
-					res = w
-				end
-			}
-			res	
+		hash = {}; max=0; res=""
+		words.each do |w|
+			hash[w] = ( hash[w] || 0 )+1
+			if( hash[w] > max )
+				max = hash[w]
+				res = w
+			end
+		end
+		res	
 	end
 
 	def self.get_summary( teachings, user, language = user.language )
@@ -114,7 +115,7 @@ class SystemMailer < ActionMailer::Base
 	
 	def self.get_daily_attendances_at( date )
 		start_date, end_date = get_daily_interval( date )
-		Attendance.between_dates( start_date, end_date )
+		Attendance.between_dates( start_date, end_date ).not_canceled
 	end
 
 	def self.get_daily_staff_teachings_at( date )
@@ -197,8 +198,8 @@ public
 
 
 
-	def self.daily_student_reminder( address=nil )
-		daily_student_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
+	def self.daily_student_reminder( address=nil, sender="Hitomi" )
+		daily_student_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address, sender )
 	end
 
 	def self.daily_student_reminder_as_johan_test
@@ -209,8 +210,20 @@ public
 		daily_student_reminder( "Yoyaku@GAKUWARINET.com" )
 	end
 
+	def self.daily_student_reminder_as_johan_test_from_automagic_johan
+		daily_student_reminder( "jsveholm@gmail.com", "Automagic Johan" )
+	end
+	
+	def self.daily_student_reminder_as_yoyaku_test_from_automagic_johan
+		daily_student_reminder( "Yoyaku@GAKUWARINET.com", "Automagic Johan" )
+	end
+
   def self.daily_student_reminder_at( date, address=nil, sender="Hitomi" )
   	daily_grouped_student_reminder( get_daily_attendances_at( date ), address, sender, Time.zone.parse( date ))
+	end
+	
+	def self.daily_student_reminder_from_automagic_johan
+		daily_student_reminder( nil, "Automagic Johan" )
 	end
 	
 	
@@ -256,6 +269,13 @@ public
     subject     "本日のスケジュール #{date.month}/#{date.day}"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end
+	
+	def daily_student_reminder_in_japanese( user, schedule, address, sender, date )
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "本日のスケジュール #{date.month}/#{date.day}"
+    body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
+	end	
 
 #---------------- Monthly Salary
 

@@ -3,6 +3,7 @@ class Attendance < ActiveRecord::Base
   belongs_to :klass
 
 	named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:student]}}  
+	named_scope :not_canceled, {:conditions => "attendances.cancel = false"}
   
   def student_id=(student)
     super(student) unless student==""

@@ -57,6 +57,13 @@ When /^the system sends out the daily student reminder to concerned students as 
 	SystemMailer.send( "daily_student_reminder_as_#{test}_test".to_sym )
 end
 
+When /^the system sends out the daily student reminder to concerned students from "Automagic Johan"$/ do
+  SystemMailer.daily_student_reminder_from_automagic_johan
+end
+
+When /^the system sends out the daily student reminder to concerned students as (yoyaku|johan) test from "Automagic Johan"$/ do |test|
+	SystemMailer.send( "daily_student_reminder_as_#{test}_test_from_automagic_johan".to_sym )
+end
 
 
 
