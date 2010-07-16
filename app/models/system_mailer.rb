@@ -284,12 +284,20 @@ public
 	end
 	
 	def self.get_last_months_salary_teachings_at( date )
-		start_date, end_date = get_last_months_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.confirmed.taught.non_staff
+		get_last_months_taught_or_untaught_salary_teachings_at( date ).taught
 	end	
+	
+	def self.get_last_months_taught_or_untaught_salary_teachings_at( date )
+		start_date, end_date = get_last_months_interval( date )
+		Teaching.between_dates( start_date, end_date ).current.confirmed.non_staff
+	end		
 	
 	def self.get_last_months_salary_teachings_to_at( teacher, date )
 		get_last_months_salary_teachings_at( date ).teacher(teacher.id)
+	end
+	
+	def self.get_last_months_taught_or_untaught_salary_teachings_to_at( teacher, date )
+		get_last_months_taught_or_untaught_salary_teachings_at( date ).teacher(teacher.id)
 	end
 
 private

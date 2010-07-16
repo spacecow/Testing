@@ -21,18 +21,20 @@ class MailerController < ApplicationController
 		language = @menu_language == "ja" ? "japanese" : "english"
 		@mail = get_mail( "system_mailer/#{@menu_type}_in_#{language}.erb" )
 		
-		@subject, @mail = case @menu_type.split('_')[0..-3].join('_')
-		when "last_months_salary"; get_last_months_salary_info( user, @menu_date, @menu_language, @mail )
-		when "daily_teacher_reminder"; get_daily_teacher_reminder_info
-		end
+		func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teaching_info".to_sym
+		@subject, @mail = send( func, user, @menu_date, @menu_language, @mail )
+
+		#case @menu_type
+		#when "last_months_salary_teacher_summary"; get_last_months_salary_teaching_info( user, @menu_date, @menu_language, @mail )
+		#when "daily_teacher_reminder"; get_daily_teaching_info(  )
+		#end
 		
 		#func = "get_#{@menu_type.split('_')[0..-3].join('_')}_teachings_to_at".to_sym
+		
+		
 		#teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
 		#schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )
 
-		start_date, end_date = SystemMailer.get_last_months_interval( @menu_date.to_s )
-		p untaught_teachings = Teaching.between_dates( start_date, end_date ).current.confirmed.untaught.non_staff		
-		flash[:error] = "#{user.name} has still unconfirmed classes." unless untaught_teachings.empty?
 		
 		#unless teachings.nil?
 			#language = @menu_language == "ja" ? "japanese" : "english"
@@ -89,25 +91,39 @@ class MailerController < ApplicationController
   end
 end
 
-def get_daily_teacher_reminder_info
-	teachings 		= SystemMailer.get__teachings_to_at( user, date.to_s )
-		#teachings 		= SystemMailer.send( func, user, @menu_date.to_s )
-		#schedule 			= SystemMailer.get_schedule( teachings, user, @menu_language )	
-	[""]		
+def get_daily_teaching_info( user, date, language, mail )
+	teachings 		= SystemMailer.get_daily_teachings_to_at( user, date.to_s )
+	schedule 			= SystemMailer.get_schedule( teachings, user, language )	
+	
+	subject = ( language == "ja" ? "毎日思い起こさせるメール" : "Daily Reminder" )
+	
+	mail.gsub!(/<%= @sender %>/,'Hitomi' )
+	mail.gsub!(/<%= @schedule %>/,schedule ) unless schedule.nil?
+	[subject,mail]		
 end
 
+def get_weekly_teaching_info( user, date, language, mail )
+	teachings 		= SystemMailer.get_weekly_teachings_to_at( user, date.to_s )
+	schedule 			= SystemMailer.get_schedule( teachings, user, language )	
+	
+	subject = ( language == "ja" ? "一週間の講師スケジュール" : "Weekly Schedule" )
+	
+	mail.gsub!(/<%= @sender %>/,'Hitomi' )
+	mail.gsub!(/<%= @schedule %>/,schedule ) unless schedule.nil?
+	[subject,mail]		
+end
 
-
-def get_last_months_salary_info( user, date, language, mail )
-	teachings 		= SystemMailer.get_last_months_salary_teachings_to_at( user, date.to_s )
-	summary 			= SystemMailer.get_summary( teachings, user, @menu_language )
+def get_last_months_salary_teaching_info( user, date, language, mail )
+	taught_or_untaught_teachings = SystemMailer.get_last_months_taught_or_untaught_salary_teachings_to_at( user, date.to_s )
+	teachings     = taught_or_untaught_teachings.taught
+	summary 			= SystemMailer.get_summary( teachings, user, language )
 	hours 				= teachings.map(&:hours).sum
 	teaching_cost	= teachings.map{|e| e.cost.to_i}.sum
 	teaching_days = teachings.group_by(&:date).size
 	total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
 	total_cost		= teaching_cost + total_traveling_expenses
 	
-	subject = (language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary")
+	subject = ( language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary" )
 	
 	mail.gsub!(/<%= @last_month %>/,month_to_s( date-1.month,language ))
 	mail.gsub!(/<%= @this_month %>/,month_to_s( date,language ))	
@@ -134,6 +150,10 @@ def get_last_months_salary_info( user, date, language, mail )
 		mail.gsub!(/<%= @bank_signup_name %>/,user.bank.first.signup_name.to_s )
 	end
 	mail.gsub!(/<%= @summary %>/,summary) unless summary.nil?
+
+	#start_date, end_date = SystemMailer.get_last_months_interval( @menu_date.to_s )
+	#untaught_teachings = Teaching.between_dates( start_date, end_date ).current.confirmed.untaught.non_staff		
+	flash[:error] = "#{user.name} has still unconfirmed classes." unless taught_or_untaught_teachings.untaught.empty?
 
 	return [subject,mail]
 end

@@ -17,6 +17,7 @@ Then the "body" field should contain the last months salary teacher summary mail
 	And I should see "Teaching sum: 3h=4500y" within "div#text_message"
 	And I should see "Traveling expenses: 450y×1day=450y" within "div#text_message"
 	And I should see "/23" within "div#text_message"
+	And I should see no error flash message
 	
 @salary @arbitrarily_month
 Scenario Outline: Choose Last Month's Salary Summary type for an arbitrarily month
@@ -77,7 +78,7 @@ Given a klass exists last month the 22rd with course: that course
 	And a teaching: "untaught" exists with klass: that klass, teacher: user "thomas", status_mask: 33
 When I browse to the "Daily Mail" page for user "thomas"
 	And I select "Last Month's Salary Summary" as type in the select menu
-Then I should see "bajs" as error flash message
+Then I should see "Thomas Osburg has still unconfirmed classes." as error flash message
 
 @pending
 Scenario: Traveling expenses for japanese
