@@ -122,22 +122,29 @@ def get_last_months_salary_teaching_info( user, date, language, mail )
 	teaching_days = teachings.group_by(&:date).size
 	total_traveling_expenses = teaching_days*user.traveling_expenses.to_i
 	total_cost		= teaching_cost + total_traveling_expenses
+	day_of_the_week = (date.beginning_of_month+5.day).strftime("%w").to_i
 	
 	subject = ( language == "ja" ? "来月の講師料金" : "Last Month's Salary Summary" )
 	
 	mail.gsub!(/<%= @last_month %>/,month_to_s( date-1.month,language ))
 	mail.gsub!(/<%= @this_month %>/,month_to_s( date,language ))	
-	mail.gsub!(/<%= @confirm_day %>/, ( date.beginning_of_month+5.day).strftime("%a").downcase )
 	mail.gsub!(/<%= @teacher %>/,user.name )
 	mail.gsub!(/<%= @yen_per_h %>/,user.cost.to_s )
 	mail.gsub!(/<%= @total_cost %>/,total_cost.to_s )
 	mail.gsub!(/<%= @hours %>/,hours.to_s )	
 	mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s )
 	if user.traveling_expenses.to_i > 0
-		mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y" )
+		if language=="en"
+			mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y" )
+			weekday = %w(sun mon tue wed thu fri sat)[day_of_the_week]
+		elsif language=="ja"
+			mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}円×#{teaching_days.to_s}日=#{total_traveling_expenses}円" )	
+			weekday = %w(日 月 火 水 木 金 土)[day_of_the_week]
+		end
 	else
 		mail.gsub!(/<%= @traveling_expenses %>/,'' )
 	end
+	mail.gsub!(/<%= @confirm_day %>/, weekday )
 	if user.bank.empty?
 		mail.gsub!(/<%= @bank_name %>/,'' )
 		mail.gsub!(/<%= @bank_branch %>/,'' )

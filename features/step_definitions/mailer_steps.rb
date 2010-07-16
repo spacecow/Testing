@@ -198,17 +198,23 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english|japanese)$/
 	end  
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (english) in "(.+)"$/ do |id, mail, language, date|
+Then /^the "([^\"]*)" field should contain the (.+) mail in ([Ee]nglish|[Jj]apanese) in "(.+)"$/ do |id, mail, language, date|
 	months = %w(~ January February March April May June July August September October November December)
 	if date == "#last_month"
 		last_month 	= months[(Time.zone.now-1.month).month]
 		this_month 	= months[Time.zone.now.month]
 		confirm_day	= (Time.zone.now.beginning_of_month + 5.day).strftime("%a").downcase
 	else
-		last_month		= date.split[0]
-		year					= date.split[1].to_i+months.index(last_month)/12 || Time.zone.now.year
-		this_month 		= months[months.index(last_month)%12+1]
-		confirm_day		= Time.zone.parse("#{year}-#{this_month}-6").strftime("%a").downcase
+		month_index   	= months.index( date.split[0] )
+		last_month			= (language.downcase=="english" ? date.split[0] : "#{month_index}月")
+		year						= date.split[1].to_i+month_index/12 || Time.zone.now.year
+		this_month 			= (language.downcase=="english" ? months[month_index%12+1] : "#{month_index%12+1}月")
+		day_of_the_week = Time.zone.parse("#{year}-#{this_month}-6").strftime("%w").to_i
+		if language.downcase=="english"
+			confirm_day = %w(sun mon tue wed thu fri sat)[day_of_the_week]
+		elsif language.downcase=="japanese"
+			confirm_day = %w(日 月 火 水 木 金 土)[day_of_the_week]
+		end
 	end
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|

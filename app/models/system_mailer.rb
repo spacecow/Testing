@@ -28,7 +28,7 @@ class SystemMailer < ActionMailer::Base
 			schedule += date_teachings[date].
 				sort_by(&:time_interval).
 				map(&:japanese_time_interval).join(", ") + "=" +
-				date_teachings[date].map(&:hours).sum.to_s+"時間"
+				date_teachings[date].map(&:hours).sum.to_s+(language=="ja" ? "時間" : "h" )
 			schedule += "\n" unless (index+1)==date_teachings.keys.size
 		end
 		schedule
