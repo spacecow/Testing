@@ -179,11 +179,19 @@ class Klass < ActiveRecord::Base
 			"#{month.to_s}/#{day.to_s}(#{%w(mon tue wed thu fri sat sun)[wday]})"
 		end
   end
-  
-	def to_time_interval_course( language )
-		course_s = course.category + (language=='ja' ? '' : ' ') + course.level_to_s( language )
+  	
+	def to_time_interval_course( language,main_course="" )
+		if main_course.blank?
+			course_s = course.category + (language=='ja' ? '' : ' ') + course.level_to_s( language )
+		else
+			if course.category == main_course
+				course_s = course.level_to_s( language )
+			else
+				course_s = course.category + (language=='ja' ? '' : ' ') + course.level_to_s( language )
+			end
+		end
 		"#{japanese_time_interval}(#{course_s})"
-	end  
+	end
   
 protected
 	def validate_on_update

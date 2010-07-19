@@ -1,8 +1,10 @@
+<%= javascript_include_tag "check_answer.js" %>
+
 <div class="form">
 <fieldset class="form">
 <legend class="form"><%= t('quiz') %></legend>
-<%= @part_answer %>
-<%= @correct_answer %>
+<div id="part"><%= @part_answer %></div>
+<div id="correct" style="color: #efe;"><%= @correct_answer %></div>
 
 <% form_for :story, :url => check_story_path( @story ), :html => { :method => :put } do |f| %>
   <%= text_area_tag :question, @question, :rows=>5, :cols=>100 %>

@@ -1,4 +1,10 @@
 $( function(){
+	$("form").keypress( function(e){
+		if( e.which == 13 ){
+			$("input#answer").val("");
+			return false;
+		}
+	});
 	$("input#answer").live('keyup', function(e){
 		var answer = $("input#answer").val();
 		var part_answer = $("div#part").html();
@@ -16,11 +22,10 @@ $( function(){
 		}
 
 		$("div#part").html( new_part_answer );
-		$("input#answer").val("");
 
 		if( new_part_answer == correct_answer ){
 			$("input#answer").val("skip");
-			$("input#glossary_submit").click();
+			$("input#story_submit").click();
 		}
 		
 		//alert(  );

@@ -134,13 +134,8 @@ class Teaching < ActiveRecord::Base
 		klass.to_mail_date(language)
 	end
 	
-	def to_time_interval_course(main_course, language)
-		if klass.course.category == main_course
-			course = klass.course.level_to_s( language )
-		else
-			course = klass.course.category + (language=='ja' ? '' : ' ') + klass.course.level_to_s( language )
-		end
-		"#{klass.japanese_time_interval}(#{course})"
+	def to_time_interval_course( language,main_course )
+		klass.to_time_interval_course( language,main_course )
 	end
 		
 #------- Klass methods	

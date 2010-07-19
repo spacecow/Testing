@@ -2,19 +2,20 @@ class SystemMailer < ActionMailer::Base
 	TYPES = %w[daily_teacher_reminder weekly_teacher_schedule last_months_salary_teacher_summary]
 
 	def self.get_main_course( user )
-		get_frequent_word( user.teacher_courses.map(&:category))
+		word = get_frequent_word( user.teacher_courses.map(&:category))
+		word.blank? ? get_frequent_word( user.student_courses.map(&:category)) : word
 	end
 	
 	def self.get_frequent_word( words )
-		hash = {}; max=0; res=0
-			words.each{|w|
-				hash[w] = ( hash[w] || 0 )+1
-				if( hash[w] > max )
-					max = hash[w]
-					res = w
-				end
-			}
-			res	
+		hash = {}; max=0; res=""
+		words.each do |w|
+			hash[w] = ( hash[w] || 0 )+1
+			if( hash[w] > max )
+				max = hash[w]
+				res = w
+			end
+		end
+		res	
 	end
 
 	def self.get_summary( teachings, user, language = user.language )
@@ -27,7 +28,7 @@ class SystemMailer < ActionMailer::Base
 			schedule += date_teachings[date].
 				sort_by(&:time_interval).
 				map(&:japanese_time_interval).join(", ") + "=" +
-				date_teachings[date].map(&:hours).sum.to_s+"時間"
+				date_teachings[date].map(&:hours).sum.to_s+(language=="ja" ? "時間" : "h" )
 			schedule += "\n" unless (index+1)==date_teachings.keys.size
 		end
 		schedule
@@ -42,7 +43,7 @@ class SystemMailer < ActionMailer::Base
 			schedule += date_teachings[date][0].to_mail_date(language)+" "
 			schedule += date_teachings[date].
 				sort_by(&:time_interval).
-				map{|e| e.to_time_interval_course(main_course, language)}.join(", ")
+				map{|e| e.to_time_interval_course( language,main_course )}.join(", ")
 			schedule += "\n" unless (index+1)==date_teachings.keys.size
 		end
 		schedule
@@ -80,10 +81,10 @@ class SystemMailer < ActionMailer::Base
 
 
 	
-	def self.send_teacher_schedule( grouped_teachings, function, address, sender, date )
-		grouped_teachings.each do |user_id,value|
+	def self.send_schedule( grouped_attendances, function, address, sender, date )
+		grouped_attendances.each do |user_id,value|
 		  user = User.find( user_id )
-			schedule = get_schedule( grouped_teachings[user_id], user )
+			schedule = get_schedule( grouped_attendances[user_id], user )
 			func = "deliver_#{function}_#{user.language=='en' ? 'in_english' : 'in_japanese'}".to_sym
 			SystemMailer.send( func, user, schedule, address, sender, date )
 		end	
@@ -112,6 +113,11 @@ class SystemMailer < ActionMailer::Base
 		Teaching.between_dates( start_date, end_date ).current.confirmed.untaught
 	end
 	
+	def self.get_daily_attendances_at( date )
+		start_date, end_date = get_daily_interval( date )
+		Attendance.between_dates( start_date, end_date ).not_canceled
+	end
+
 	def self.get_daily_staff_teachings_at( date )
 		get_daily_teachings_at( date ).staff
 	end
@@ -124,12 +130,21 @@ class SystemMailer < ActionMailer::Base
 
 private
 	def self.daily_teacher_reminder_with( grouped_teachings, address, sender, date )
-	  send_teacher_schedule( grouped_teachings, "daily_teacher_reminder", address, sender, date )
+	  send_schedule( grouped_teachings, "daily_teacher_reminder", address, sender, date )
+  end
+
+	def self.daily_student_reminder_with( grouped_attendances, address, sender, date )
+	  send_schedule( grouped_attendances, "daily_student_reminder", address, sender, date )
   end
 
 	def self.daily_grouped_teacher_reminder( teachings, address, sender, date )
 		daily_teacher_reminder_with( teachings.group_by(&:teacher_id), address, sender, date )
 	end
+
+	def self.daily_grouped_student_reminder( attendances, address, sender, date )
+		daily_student_reminder_with( attendances.group_by(&:student_id), address, sender, date )
+	end
+
 
 public	
 	def self.daily_staff_reminder( address=nil, sender="Hitomi" )
@@ -182,6 +197,38 @@ public
 	end
 
 
+
+	def self.daily_student_reminder( address=nil, sender="Hitomi" )
+		daily_student_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address, sender )
+	end
+
+	def self.daily_student_reminder_as_johan_test
+		daily_student_reminder( "jsveholm@gmail.com" )
+	end
+
+	def self.daily_student_reminder_as_yoyaku_test
+		daily_student_reminder( "Yoyaku@GAKUWARINET.com" )
+	end
+
+	def self.daily_student_reminder_as_johan_test_from_automagic_johan
+		daily_student_reminder( "jsveholm@gmail.com", "Automagic Johan" )
+	end
+	
+	def self.daily_student_reminder_as_yoyaku_test_from_automagic_johan
+		daily_student_reminder( "Yoyaku@GAKUWARINET.com", "Automagic Johan" )
+	end
+
+  def self.daily_student_reminder_at( date, address=nil, sender="Hitomi" )
+  	daily_grouped_student_reminder( get_daily_attendances_at( date ), address, sender, Time.zone.parse( date ))
+	end
+	
+	def self.daily_student_reminder_from_automagic_johan
+		daily_student_reminder( nil, "Automagic Johan" )
+	end
+	
+	
+
+
 	def self.next_working_days_teacher_reminder( address=nil )
 		next_working_days_teacher_reminder_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
 	end
@@ -209,12 +256,26 @@ public
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end	
 
+	def daily_student_reminder_in_english( user, schedule, address, sender, date )
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "Reminder #{date.month}/#{date.day}"
+    body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
+	end	
+
 	def daily_teacher_reminder_in_japanese( user, schedule, address, sender, date )
     recipients  address.nil? ? user.email : address
     from        "Yoyaku@GAKUWARINET.com"
     subject     "本日のスケジュール #{date.month}/#{date.day}"
     body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
 	end
+	
+	def daily_student_reminder_in_japanese( user, schedule, address, sender, date )
+    recipients  address.nil? ? user.email : address
+    from        "Yoyaku@GAKUWARINET.com"
+    subject     "本日のスケジュール #{date.month}/#{date.day}"
+    body        :schedule => schedule, :name => (address.nil? ? "" : user.name), :sender => sender
+	end	
 
 #---------------- Monthly Salary
 
@@ -223,12 +284,20 @@ public
 	end
 	
 	def self.get_last_months_salary_teachings_at( date )
-		start_date, end_date = get_last_months_interval( date )
-		Teaching.between_dates( start_date, end_date ).current.confirmed.taught.non_staff
+		get_last_months_taught_or_untaught_salary_teachings_at( date ).taught
 	end	
+	
+	def self.get_last_months_taught_or_untaught_salary_teachings_at( date )
+		start_date, end_date = get_last_months_interval( date )
+		Teaching.between_dates( start_date, end_date ).current.confirmed.non_staff
+	end		
 	
 	def self.get_last_months_salary_teachings_to_at( teacher, date )
 		get_last_months_salary_teachings_at( date ).teacher(teacher.id)
+	end
+	
+	def self.get_last_months_taught_or_untaught_salary_teachings_to_at( teacher, date )
+		get_last_months_taught_or_untaught_salary_teachings_at( date ).teacher(teacher.id)
 	end
 
 private
@@ -341,7 +410,7 @@ public
 
 private
 	def self.weekly_teacher_schedule_with( grouped_teachings, address, sender, date )
-		send_teacher_schedule( grouped_teachings, "weekly_teacher_schedule", address, sender, date )
+		send_schedule( grouped_teachings, "weekly_teacher_schedule", address, sender, date )
 	end
 
 	def self.weekly_grouped_teacher_schedule( teachings, address, sender, date )

@@ -44,6 +44,29 @@ end
 
 
 
+
+When /^the system sends out the daily student reminder to concerned students$/ do
+	SystemMailer.daily_student_reminder
+end
+
+When /^the system sends out the daily student reminder to concerned students at "([^\"]*)"$/ do |date|
+	SystemMailer.daily_student_reminder_at( date )
+end
+
+When /^the system sends out the daily student reminder to concerned students as (yoyaku|johan) test$/ do |test|
+	SystemMailer.send( "daily_student_reminder_as_#{test}_test".to_sym )
+end
+
+When /^the system sends out the daily student reminder to concerned students from "Automagic Johan"$/ do
+  SystemMailer.daily_student_reminder_from_automagic_johan
+end
+
+When /^the system sends out the daily student reminder to concerned students as (yoyaku|johan) test from "Automagic Johan"$/ do |test|
+	SystemMailer.send( "daily_student_reminder_as_#{test}_test_from_automagic_johan".to_sym )
+end
+
+
+
 When /^the system sends out the weekly schedule to concerned teachers$/ do
   SystemMailer.next_weeks_teacher_schedule
 end
@@ -98,7 +121,7 @@ end
 
 Then /^I should see a link to the reserve section for (user ".+") in the email body$/ do |user|
 	user_id = model( user ).id
-	Then "I should see \"http://www.reserve-gakuwarinet.com/staff/#{user_id}/reserve\" in the email body"
+	Then "I should see \"http://www.reserve-gakuwarinet.com/staff/users/#{user_id}/reserve\" in the email body"
 end
 
 When /^I browse to the "(Daily Mail|Weekly Mail)" page for #{capture_model}(?: of "([^\"]*)")?$/ do |link, teacher, date|
@@ -175,17 +198,23 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in (english|japanese)$/
 	end  
 end
 
-Then /^the "([^\"]*)" field should contain the (.+) mail in (english) in "(.+)"$/ do |id, mail, language, date|
+Then /^the "([^\"]*)" field should contain the (.+) mail in ([Ee]nglish|[Jj]apanese) in "(.+)"$/ do |id, mail, language, date|
 	months = %w(~ January February March April May June July August September October November December)
 	if date == "#last_month"
 		last_month 	= months[(Time.zone.now-1.month).month]
 		this_month 	= months[Time.zone.now.month]
 		confirm_day	= (Time.zone.now.beginning_of_month + 5.day).strftime("%a").downcase
 	else
-		last_month		= date.split[0]
-		year					= date.split[1].to_i+months.index(last_month)/12 || Time.zone.now.year
-		this_month 		= months[months.index(last_month)%12+1]
-		confirm_day		= Time.zone.parse("#{year}-#{this_month}-6").strftime("%a").downcase
+		month_index   	= months.index( date.split[0] )
+		last_month			= (language.downcase=="english" ? date.split[0] : "#{month_index}月")
+		year						= date.split[1].to_i+month_index/12 || Time.zone.now.year
+		this_month 			= (language.downcase=="english" ? months[month_index%12+1] : "#{month_index%12+1}月")
+		day_of_the_week = Time.zone.parse("#{year}-#{this_month}-6").strftime("%w").to_i
+		if language.downcase=="english"
+			confirm_day = %w(sun mon tue wed thu fri sat)[day_of_the_week]
+		elsif language.downcase=="japanese"
+			confirm_day = %w(日 月 火 水 木 金 土)[day_of_the_week]
+		end
 	end
 	File.open "app/views/system_mailer/#{mail.gsub(/\s/,'_')}_in_#{language.downcase}.erb", 'r' do |f|
 		f.readlines.each do |line|

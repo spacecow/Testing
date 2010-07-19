@@ -6,3 +6,6 @@ Yoyaku_Log.csv
 config/database.yml
 ruby/*.*
 config/smtp_gmail.yml
+public/assets
+public/system
+config/newrelic.yml
