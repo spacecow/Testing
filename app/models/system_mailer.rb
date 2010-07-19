@@ -402,6 +402,14 @@ public
 		end
 	end
 
+	def self.reservable_classes_information( address=nil )
+		reservable_classes_information_at( Time.zone.now.strftime( "%Y-%m-%d" ), address )
+	end
+	
+	def self.reservable_classes_information_as_johan_test
+		reservable_classes_information( "jsveholm@gmail.com" )
+	end
+
 	def self.reservable_classes_information_as_johan_test_at( date )
 		reservable_classes_information_at( date, "jsveholm@gmail.com" )
 	end
