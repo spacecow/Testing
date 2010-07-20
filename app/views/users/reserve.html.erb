@@ -46,7 +46,13 @@
 <h2><%= t('header.class_history') %></h2>
 <ul>
 <% @attendance_history.each do |attendance| %>
-	<li <%= attendance.class_attributes if can? :edit, attendance %>><%= attendance.klass.name %></li>
+	<% if attendance.absent || attendance.cancel %>
+		<% if can? :edit, attendance %>
+			<li <%= attendance.class_attributes %>><%= attendance.klass.name %></li>
+		<% end %>
+	<% else %>
+		<li><%= attendance.klass.name %></li>
+	<% end %>
 <% end %>
 </ul>
 </div>

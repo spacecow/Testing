@@ -133,6 +133,7 @@ def get_last_months_salary_teaching_info( user, date, language, mail )
 	mail.gsub!(/<%= @total_cost %>/,total_cost.to_s )
 	mail.gsub!(/<%= @hours %>/,hours.to_s )	
 	mail.gsub!(/<%= @teaching_cost %>/,teaching_cost.to_s )
+	weekday = ""
 	if user.traveling_expenses.to_i > 0
 		if language=="en"
 			mail.gsub!(/<%= @traveling_expenses %>/,"Traveling expenses: #{user.traveling_expenses}y×#{teaching_days.to_s}#{teaching_days==1 ? "day" : "days"}=#{total_traveling_expenses}y" )

@@ -7,10 +7,10 @@
 	<td><%=h user.tel %></td>
 	<td id="links">
 		<% if can? :show, user %>
-	  	<%= link_to t('show'), user %>
+	  	<%= link_to t(:show), user %>
 	  <% end %>
 		<% if can? :edit, user %>
-	  	<%= link_to t('edit'), edit_user_path(user) %>
+	  	<%= link_to t(:edit), edit_user_path(user) %>
 	  <% end %>
 		<% if can? :edit_role, user %>
 	  	<%= link_to t(:role), edit_role_user_path( user ) %>
@@ -19,7 +19,7 @@
 	  	<%= link_to t('courses.title'), edit_courses_user_path( user, :status=>@status ) %>
 	  <% end %>	  
 		<% if can? :destroy, user %>
-	  	<%= link_to t('delete'), user, :confirm => 'Are you sure?', :method => :delete %>
+	  	<%= link_to t(:del), user, :confirm => 'Are you sure?', :method => :delete %>
 	  <% end %>
 	  <% if @status=="teacher" %>
 		  <%= link_to image_tag("weekly_mail.gif", :title => "Weekly Mail", :alt => "Weekly Mail"), mailer_path( :menu_teacher=>user.name, :menu_language=>user.language, :menu_type=>'weekly_teacher_schedule' ) %>

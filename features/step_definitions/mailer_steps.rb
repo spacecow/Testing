@@ -208,8 +208,9 @@ Then /^the "([^\"]*)" field should contain the (.+) mail in ([Ee]nglish|[Jj]apan
 		month_index   	= months.index( date.split[0] )
 		last_month			= (language.downcase=="english" ? date.split[0] : "#{month_index}月")
 		year						= date.split[1].to_i+month_index/12 || Time.zone.now.year
-		this_month 			= (language.downcase=="english" ? months[month_index%12+1] : "#{month_index%12+1}月")
-		day_of_the_week = Time.zone.parse("#{year}-#{this_month}-6").strftime("%w").to_i
+		this_month_i    = month_index%12+1
+		this_month 			= (language.downcase=="english" ? months[this_month_i] : "#{this_month_i}月")
+		day_of_the_week = Time.zone.parse("#{year}-#{this_month_i}-6").strftime("%w").to_i
 		if language.downcase=="english"
 			confirm_day = %w(sun mon tue wed thu fri sat)[day_of_the_week]
 		elsif language.downcase=="japanese"

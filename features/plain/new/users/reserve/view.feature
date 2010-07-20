@@ -33,6 +33,7 @@ Given an attendance exist with student: user "junko", klass: klass "18", cancel:
 	And a user is logged in as "<user>"
 When I go to the reserve page for user: "junko" on "2010-03-17"
 Then I should <canceled> "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reserved"
+Then I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reserved"
 Examples:
 |	user	|	canceled	|
 |	junko	|	not see		|
@@ -47,7 +48,8 @@ Given a klass: "15" exists with date: "2010-03-15", course: course "ruby", start
 	And a user is logged in as "<user>"
 When I go to the reserve page for user: "junko" on "2010-03-20"
 Then I should <away> "3/15(Monday) - Ruby I - 12:00~13:00" within "div.history"
-Then I should <away> "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.history"
+	And I should <away> "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.history"
+	And I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.history"
 Examples:
 |	user	|	away			|
 |	junko	|	not see		|

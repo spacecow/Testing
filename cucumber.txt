@@ -1,46 +1,17 @@
-cucumber features/plain/new/classes/manage_errors.feature:7 # Scenario: Course e
-rrors
-cucumber features/plain/new/classes/manage_new.feature:7 # Scenario: Create a ne
-w class
-cucumber features/plain/new/classes/manage_new.feature:28 # Scenario: New view
-cucumber features/plain/new/courses/edit.feature:42 # Scenario: Edit a course
-cucumber features/plain/new/courses/new.feature:43 # Scenario: Create a course
-cucumber features/plain/new/events/manage_events.feature:61 # Scenario: Events w
-ith no start date/end date should be put in upcoming events (NOT IMPLEMENTED)
-cucumber features/plain/new/events/manage_events.feature:64 # Scenario: Should b
-e able to display only date (NOT IMPLEMENTED)
-cucumber features/plain/new/events/manage_new.feature:6 # Scenario: Create an ev
-ent
-cucumber features/plain/new/glossaries/exceptions.feature:4 # Scenario: Exceptio
-n with kunyomi that does not have a word
-cucumber features/plain/new/invitations/manage_invitations.feature:36 # Scenario
-: Have a version page where updates are listed (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_login.feature:51 # Scenario: If a user
-inputs a wrong url, he should be taken to the root page (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_login.feature:54 # Scenario: No error m
-essages! (NOT IMPLEMENTED)
-cucumber features/plain/new/login/manage_password.feature:24 # Scenario: Try to
-switch language in the middle of an error message (NOT IMPLEMENTED)
-cucumber features/plain/new/registrants/manage_registrants.feature:16 # Scenario
-: Send a confirmation mail (NOT IMPLEMENTED)
-cucumber features/plain/new/teachings/edit_multiple.feature:14 # Scenario: Salar
-y view
-cucumber features/plain/new/teachings/edit_multiple.feature:22 # Scenario: If no
- teaching is selected, admin should be redirected back to the salary page
-cucumber features/plain/new/teachings/edit_multiple.feature:39 # Scenario: Edit
-multiple teachings page
-cucumber features/plain/new/teachings/edit_multiple.feature:53 # Scenario: Edit
-multiple teachings page with an emtpy field and nothing happens
-cucumber features/plain/new/template_classes/manage_edit.feature:96 # Scenario:
-You should not be able to move a class in time and make it interfere with teache
-r/room opitons (NOT IMPLEMENTED)
-cucumber features/plain/new/template_classes/manage_errors.feature:6 # Scenario:
- Visual & Links
-cucumber features/plain/new/template_classes/manage_index.feature:50 # Scenario:
- Links from index page
-cucumber features/plain/new/template_classes/manage_new.feature:16 # Scenario: C
-reate a new template class
-
-401 scenarios (24 failed, 1 skipped, 376 passed)
-5236 steps (24 failed, 104 skipped, 5108 passed)
-4m47.625s
+Failing Scenarios:
+cucumber features/plain/new/classes/manage_edit.feature:9 # Scenario: Edit an existing class
+cucumber features/plain/new/classes/manage_edit.feature:74 # Scenario: Links for authorized users on the edit page of a class
+cucumber features/plain/new/classes/show/manage_show.feature:27 # Scenario: Links from class' show page
+cucumber features/plain/new/glossaries/exceptions.feature:4 # Scenario: Exception with kunyomi that does not have a word
+cucumber features/plain/new/glossaries/exceptions.feature:19 # Scenario: something
+cucumber features/plain/new/glossaries/kanji_meaning.feature:10 # Scenario: When there are no kunyomis, the kanjis meaning is displayed
+cucumber features/plain/new/glossaries/kanji_meaning.feature:14 # Scenario: If a part of the answer is given, you will be continue from there
+cucumber features/plain/new/glossaries/kanji_meaning.feature:21 # Scenario: When there are kunyomis, but no words for them, the kanjis meaning is displayed
+cucumber features/plain/new/glossaries/manage_kunyomi.feature:28 # Scenario: View of kunyomi question
+cucumber features/plain/new/mails/manage_edit.feature:9 # Scenario: Links on edit page (for super users)
+cucumber features/plain/new/mails/manage_edit.feature:29 # Scenario: Edit a mail
+cucumber features/plain/new/mails/manage_edit.feature:57 # Scenario: Subjects or messages can contain # in edit mode, since only the super user can edit
+cucumber features/plain/new/mails/manage_index.feature:56 # Scenario: Links
+cucumber features/plain/new/mails/manage_show.feature:163 # Scenario: Links forgod
+cucumber features/plain/new/template_classes/index/teacher.feature:9 # Scenario: Set teacher for a class
+cucumber features/plain/new/template_classes/index/teacher.feature:16 # Scenario: Unset teacher for a class

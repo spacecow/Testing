@@ -49,13 +49,13 @@
 
 <td id="links">
 	<% if can? :show, klass %>
-		<%= link_to t('show'), klass %>
+		<%= link_to t(:show), klass %>
 	<% end %>
 	<% if can? :edit, klass %>
-		<%= link_to t('edit'), edit_klass_path(klass) %>
+		<%= link_to t(:edit), edit_klass_path(klass) %>
 	<% end %>
 	<% if can? :destroy, klass %>
-		<%= link_to t('delete'), klass, :confirm => klass.teachings.empty? ? t(:sure?) : t(:sure_with_teachings?), :method => :delete %>
+		<%= link_to t(:del), klass, :confirm => klass.teachings.empty? ? t(:sure?) : t(:sure_with_teachings?), :method => :delete %>
 	<% end %>
 </td>	
 <% if can? :edit, klass %>
