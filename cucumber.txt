@@ -1,17 +1,7 @@
 Failing Scenarios:
-cucumber features/plain/new/classes/manage_edit.feature:9 # Scenario: Edit an existing class
-cucumber features/plain/new/classes/manage_edit.feature:74 # Scenario: Links for authorized users on the edit page of a class
-cucumber features/plain/new/classes/show/manage_show.feature:27 # Scenario: Links from class' show page
 cucumber features/plain/new/glossaries/exceptions.feature:4 # Scenario: Exception with kunyomi that does not have a word
 cucumber features/plain/new/glossaries/exceptions.feature:19 # Scenario: something
 cucumber features/plain/new/glossaries/kanji_meaning.feature:10 # Scenario: When there are no kunyomis, the kanjis meaning is displayed
 cucumber features/plain/new/glossaries/kanji_meaning.feature:14 # Scenario: If a part of the answer is given, you will be continue from there
 cucumber features/plain/new/glossaries/kanji_meaning.feature:21 # Scenario: When there are kunyomis, but no words for them, the kanjis meaning is displayed
 cucumber features/plain/new/glossaries/manage_kunyomi.feature:28 # Scenario: View of kunyomi question
-cucumber features/plain/new/mails/manage_edit.feature:9 # Scenario: Links on edit page (for super users)
-cucumber features/plain/new/mails/manage_edit.feature:29 # Scenario: Edit a mail
-cucumber features/plain/new/mails/manage_edit.feature:57 # Scenario: Subjects or messages can contain # in edit mode, since only the super user can edit
-cucumber features/plain/new/mails/manage_index.feature:56 # Scenario: Links
-cucumber features/plain/new/mails/manage_show.feature:163 # Scenario: Links forgod
-cucumber features/plain/new/template_classes/index/teacher.feature:9 # Scenario: Set teacher for a class
-cucumber features/plain/new/template_classes/index/teacher.feature:16 # Scenario: Unset teacher for a class

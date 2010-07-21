@@ -4,8 +4,8 @@
   	<td><%= mail.subject.split('#').size > 1 ? link_to( t( h( mail.subject.split('#')[0] ), :object=>t( h( mail.subject.split('#')[1] )), :no=>h( mail.subject.split('#')[2] )), mail ) : mail.subject=="no_subject" ? link_to( t( h( mail.subject )), mail ) : link_to( h( mail.subject ), mail ) %></td>
   	<td><%= distance_of_time_in_words_to_now( mail.created_at ) %><%= t('ago') %></td>
 	<td id="links">
-			<%= link_to t('show'), mail, :class=>"link" %>
-			<%= link_to t('edit'), edit_mail_path(mail), :class=>"link" %>
-			<%= link_to t('destroy'), mail, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+			<%= link_to t(:show), mail, :class=>"link" %>
+			<%= link_to t(:edit), edit_mail_path(mail), :class=>"link" %>
+			<%= link_to t(:del), mail, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
 	</td>    	
 </tr>

@@ -40,7 +40,7 @@ When I fill in "Capacity" with "6"
 	And I fill in "End time" with "13:00"
 	And I press "Update"
 Then I should be redirected to the klasses page
-	And I should see "Successfully updated Class" as notice flash message
+	And I should see "Successfully updated class" as notice flash message
 	And a klass should exist with date: "2012-3-27 15", course: course "ruby", start_time: "12:00", end_time: "13:00", title: "A funnier title", capacity: 6, cancel: true, description: "A funnier description", note: "A funnier note"
 	And 1 klasses should exist
 
@@ -85,5 +85,5 @@ When I go to the edit page of that klass
 	And I follow "Del" at the bottom of the page
 Then I should be redirected to the klasses page
 	And "March 28, 2012" should be selected as date in the select menu
-	And I should see "Successfully deleted Class" as notice flash message
+	And I should see "Successfully deleted class" as notice flash message
 	And 0 klasses should exist

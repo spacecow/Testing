@@ -850,6 +850,8 @@ table.course tr th { padding: 0 2px 0 2px; }
 table.course tr th.title { font-size: 14px; }
 table.course tr th.subtitle { color: #666666; }
 table.course tr td.late { background: orange; }
+table.course tr td.cancel { background: pink; }
+table.course tr td.absent { background: red; }
 div.salary_info { float: left; }
 table.salary_status {
   float: left;

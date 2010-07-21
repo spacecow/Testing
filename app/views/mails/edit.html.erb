@@ -29,7 +29,7 @@
 	  <%= link_to t(:list,:object=>t('mails.title')), mails_path %>
 	<% end %>
   <% if can? :destroy, @mail %>
-  	<%= link_to t(:delete), @mail, :confirm => t(:sure?), :method => :delete %>
+  	<%= link_to t(:del), @mail, :confirm => t(:sure?), :method => :delete %>
   <% end %>	
 </div>
 

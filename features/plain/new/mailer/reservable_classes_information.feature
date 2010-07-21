@@ -66,4 +66,4 @@ When the system sends out information about reservable classes to concerned stud
 Then "junko@space.com" should receive 0 email
 
 @pending
-Scenario: Translate mail into japanese
+Scenario: Translate Reservable Classes Information & Reservation of Classes mail into japanese

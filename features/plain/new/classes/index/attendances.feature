@@ -34,7 +34,7 @@ Then I should see student "junko" within klass "ruby1"
 Scenario: Cancel a student
 When I browse to the klasses page of "February 28, 2010"
 	And I mark student "junko" as "Cancel" in klass "ruby1"
-Then I should see no students within klass "ruby1"
+Then I should see student "junko" within klass "ruby1"
 	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: true, absent: false, late: false
 	And 1 attendances should exist
 
@@ -42,7 +42,7 @@ Then I should see no students within klass "ruby1"
 Scenario: Mark a student as absent
 When I browse to the klasses page of "February 28, 2010"
 	And I mark student "junko" as "Absent" in klass "ruby1"
-Then I should see no students within klass "ruby1"
+Then I should see student "junko" within klass "ruby1"
 	And an attendance should exist with klass: klass "ruby1", student: user "junko", cancel: false, absent: true, late: false
 	And 1 attendances should exist
 

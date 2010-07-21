@@ -7,14 +7,14 @@ Given a setting exist with name: "main"
 	
 @set_teacher
 Scenario: Set teacher for a class
-Given a template class: "ruby" exists with course: course "ruby"
+Given a template class: "ruby" exists with course: course "ruby", day: "mon"
 When I browse to the template classes page of "Monday"
 	And I set "Johan Sveholm" as teacher within template class "ruby"
 Then 1 template_classes should exist with teacher: user "johan"
 
 @unset_teacher
 Scenario: Unset teacher for a class
-Given a template class: "ruby" exists with course: course "ruby", teacher: user "johan"
+Given a template class: "ruby" exists with course: course "ruby", teacher: user "johan", day: "mon"
 When I browse to the template classes page of "Monday"
 	And I set "" as teacher within template class "ruby"
 Then 1 template_classes should exist with teacher_id: nil

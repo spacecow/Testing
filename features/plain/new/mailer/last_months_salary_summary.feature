@@ -54,6 +54,3 @@ Then I should see the last months salary teacher summary mail in japanese in the
 	And I should see "交通: 400円×1日=400円" in the email body
 	And I should see "講師合計: 2時間=2800円" in the email body
 	And I should see "88:ans bank    12345  " in the email body
-	
-@pending
-Scenario: Confirm day for japanese

@@ -50,7 +50,7 @@ When I go to the show page of that klass
 	And I follow "Del" at the bottom of the page
 Then I should be redirected to the klasses page
 	And "March 28, 2012" should be selected as date in the select menu	
- 	And I should see "Successfully deleted Class." as notice flash message
+ 	And I should see "Successfully deleted class." as notice flash message
 	And 0 klasses should exist
 
 @allow-rescue
