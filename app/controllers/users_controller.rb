@@ -151,7 +151,10 @@ class UsersController < ApplicationController
 	end
 	
 	def confirm
-		todays_date = ( params[:majballe].nil? ? Date.current : Date.parse( params[:majballe] ))
+		todays_date = Time.zone.now
+		unless params[:majballe].nil?
+			todays_date = Time.zone.parse( params[:majballe] ) if can? User, :edit_role
+		end
 
 		sorted_klasses = @user.teacher_klasses.all.
 			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
@@ -191,8 +194,33 @@ class UsersController < ApplicationController
 		@teachers = User.with_role( :teacher ).not_staff
 	end
 	
-	def reserve
-		todays_date = ( params[:majballe].nil? ? Time.zone.now : Time.zone.parse( params[:majballe] ))
+	def reserve	
+		todays_date = Time.zone.now
+		
+		if can?( :edit_role, User ) && !Klass.first.nil?
+			mon_date = Klass.last( :order => "date" ).date
+			mon_date -= 1.day while mon_date.strftime("%a") != "Mon"
+			sat_date = mon_date + 5.day
+			reserve_date = sat_date - 14.day			
+			week_intervals = [""]
+			saturdays = [""]
+			5.times do
+				week_intervals << "#{mon_date.strftime('%m/%d')}～#{sat_date.strftime('%m/%d')}"
+				saturdays << "#{reserve_date.strftime("%Y-%m-%d")}"
+				mon_date -= 7.day
+				sat_date -= 7.day
+				reserve_date -= 7.day
+			end
+			@weeks = week_intervals.zip( saturdays )
+		end
+
+		unless Klass.first.nil?
+			@saturday = params[:saturday]
+			unless @saturday.nil?
+				todays_date = Time.zone.parse( @saturday )
+			end
+		end
+
 		start_date = todays_date + 6.day
 		start_date += 1.day while start_date.strftime("%a") != "Mon"
 		@klasses = {}
@@ -210,6 +238,7 @@ class UsersController < ApplicationController
 	end
 	
 	def update_reserve
+		p params
 		student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
     if !student_klass_ids.empty?
     	klass = nil

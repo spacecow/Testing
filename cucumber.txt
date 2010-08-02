@@ -1,7 +1,2310 @@
+Using the default profile...
+
+
+  Background: 
+    Given a setting exist with name: "main"
+    And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+    And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
+    And a user: "junko" exist with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
+
+  @view @admin
+  Scenario: View of the reserve page for admin, weeks start with the latest week containing a class plus four weeks in the past
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass exists with date: "2010-03-11", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "aya"
+false
+    When I go to the reserve page for user: "johan"
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:37:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:99:in `visit_step'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:98:in `visit_step'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:15:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:14:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:14:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:93:in `visit_steps'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:92:in `visit_steps'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario.rb:45:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario.rb:43:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario.rb:98:in `with_visitor'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario.rb:37:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:14:in `When I go to the reserve page for user: "johan"'
+    Then I should see "Reserve" as title
+    And the "saturday" field should have options "BLANK, 03/15～03/20, 03/08～03/13, 03/01～03/06, 02/22～02/27, 02/15～02/20"
+
+  @view @student
+  Scenario: View of the reserve page for students
+    Given a user is logged in as "junko"
+false
+    When I go to the reserve page for user: "junko"
+    Then I should see "Reserve" as title
+    And I should not see a field "saturday"
+
+  @view @date
+  Scenario Outline: Change the week for admin
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" for "<interval>"
+    Then I should see "<day> - Ruby I - 12:00~13:00" within "div.reservable"
+    And I should see "Reservations can be made from Sat 12am to Tue 5pm." within "div.reservable"
+    And "<interval>" should be selected in the "saturday" field
+
+    Examples: 
+      | date       | interval    | day            |
+      |false
+ 2010-03-18 | 03/15～03/20 | 3/18(Thursday) |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:32:in `When I browse to the reserve page for user: "johan" for "<interval>"'
+      |false
+ 2010-03-11 | 03/08～03/13 | 3/11(Thursday) |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:32:in `When I browse to the reserve page for user: "johan" for "<interval>"'
+      |false
+ 2010-03-04 | 03/01～03/06 | 3/4(Thursday)  |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:32:in `When I browse to the reserve page for user: "johan" for "<interval>"'
+      |false
+ 2010-02-25 | 02/22～02/27 | 2/25(Thursday) |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:32:in `When I browse to the reserve page for user: "johan" for "<interval>"'
+      |false
+ 2010-02-18 | 02/15～02/20 | 2/18(Thursday) |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:32:in `When I browse to the reserve page for user: "johan" for "<interval>"'
+
+  @yes_class
+  Scenario Outline: View of the reserve page when there are classes to reserve
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" for "03/15～03/20"
+    Then I should see "3/<date>(<day>) - Ruby I - 12:00~13:00" within "div.reservable"
+
+    Examples: 
+      | date | day       |
+      |false
+ 15   | Monday    |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 16   | Tuesday   |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 17   | Wednesday |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 18   | Thursday  |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 19   | Friday    |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 20   | Saturday  |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:50:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+
+  @no_class
+  Scenario Outline: View of the reserve page when there are no classes to reserve
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass exists with date: "2010-03-21", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" for "03/15～03/20"
+    Then I should see "You can do no reservations today." within "fieldset.form div.intro"
+
+    Examples: 
+      | date |
+      |false
+ 14   |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:68:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+      |false
+ 21   |
+      You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject (ActionView::TemplateError)
+      On line #9 of app/views/users/reserve.html.erb
+      
+          6: <% if can? :edit_role, User %>
+          7: 	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+          8: 		<label for="saturday">Week</label>
+          9: 		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+          10: 		<%= f.submit "Go!" %>
+          11: 	<%- end -%>
+          12: <% end %>
+      
+          app/views/users/reserve.html.erb:9
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+          searchlogic (2.3.3) lib/searchlogic/rails_helpers.rb:61:in `form_for'
+          app/views/users/reserve.html.erb:7
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `send'
+          webrat (0.5.3) lib/webrat/rails.rb:68:in `do_request'
+          webrat (0.5.3) lib/webrat/rails.rb:37:in `get'
+          (__FORWARDABLE__):3:in `__send__'
+          (__FORWARDABLE__):3:in `get'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `send'
+          webrat (0.5.3) lib/webrat/core/session.rb:282:in `process_request'
+          webrat (0.5.3) lib/webrat/core/session.rb:122:in `request_page'
+          webrat (0.5.3) lib/webrat/core/session.rb:220:in `visit'
+          (eval):2:in `visit'
+          /features/step_definitions/webrat_steps.rb:16:in `__instance_exec1'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:147:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_world.rb:23:in `When'
+          /features/step_definitions/users_steps.rb:34:in `__instance_exec0'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+          cucumber (0.4.3) bin/./lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+          cucumber (0.4.3) bin/./lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/step_match.rb:24:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/step_collection.rb:37:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/step_mother.rb:195:in `before_and_after'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:69:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:17:in `accept'
+          c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/outline_table.rb:13:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/examples.rb:12:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:25:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/feature.rb:24:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:29:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:17:in `each'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/features.rb:28:in `accept'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+          cucumber (0.4.3) bin/./lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:55:in `execute!'
+          cucumber (0.4.3) bin/./lib/cucumber/cli/main.rb:24:in `execute'
+          cucumber (0.4.3) bin/cucumber:8
+          c:/ruby/bin/cucumber:19:in `load'
+          c:/ruby/bin/cucumber:19
+      features/plain/new/users/reserve/basiq.feature:68:in `When I browse to the reserve page for user: "johan" for "03/15～03/20"'
+
+  @days @admin
+  Scenario Outline: Reservations can only be made from Sat to Tue
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "junko"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "johan"
+    When I go to the reserve page for user: "junko" on "2010-03-<day>"
+    Then I should see "<view>" within "fieldset.form div.intro"
+
+    Examples: 
+      | day | view                                  |
+      |false
+ 03  | You can do no reservations today.     |
+      |false
+ 04  | You can do no reservations today.     |
+      |false
+ 05  | You can do no reservations today.     |
+      |false
+ 06  | 3/18(Thursday) - Ruby I - 12:00~13:00 |
+      |false
+ 07  | 3/18(Thursday) - Ruby I - 12:00~13:00 |
+      |false
+ 08  | 3/18(Thursday) - Ruby I - 12:00~13:00 |
+      |false
+ 09  | 3/18(Thursday) - Ruby I - 12:00~13:00 |
+
+  @days @student
+  Scenario Outline: Students cannot change the reserving day
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "junko"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "junko"
+    When I go to the reserve page for user: "junko" on "2010-03-<day>"
+    Then I should see "You can do no reservations today." within "fieldset.form div.intro"
+
+    Examples: 
+      | day |
+      |false
+ 03  |
+      |false
+ 04  |
+      |false
+ 05  |
+      |false
+ 06  |
+      |false
+ 07  |
+      |false
+ 08  |
+      |false
+ 09  |
+
+  @2weeks
+  Scenario Outline: You can only reserve for 2 weeks ahead
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "junko"
+    And a klass exists with date: "2010-03-11", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-25", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "johan"
+    When I browse to the reserve page for user: "junko" on "<date>"
+    Then I <week1> see "3/11(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
+    And I <week2> see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
+    And I <week3> see "3/25(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
+
+    Examples: 
+      | date       | week1      | week2      | week3      |
+      | 2010-02-27 | should     | should not | should not |
+      | 2010-03-06 | should not | should     | should not |
+      | 2010-03-13 | should not | should not | should     |
+
+  @double
+  Scenario: Same class should not be displayed double
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" on "2010-03-06"
+    Then I should see "3/18(Thursday) - Ruby I - 12:00~13:00"
+    And I should not see "3/18(Thursday) - Ruby I - 12:00~13:00 3/18(Thursday) - Ruby I - 12:00~13:00"
+
+  @already_reserved
+  Scenario Outline: If a class exists doubled, the one in use should be displayed
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass: "klass16-1" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass: "klass16-2" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And an attendance exists with student: user "johan", klass: klass "<klass>"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" on "2010-03-06"
+    Then I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reserved"
+    And the page should have no "reservable" section
+
+    Examples: 
+      | klass     |
+      | klass16-1 |
+      | klass16-2 |
+
+  @multiple
+  Scenario: Classes should be displayed in order after day, time interval and only courses belonging to the user
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a course: "rails" exists with name: "Rails II"
+    And a klass exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-18", course: course "rails", start_time: "12:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "11:00", end_time: "12:00"
+    And a klass exists with date: "2010-03-20", course: course "ruby", start_time: "09:00", end_time: "13:00"
+    And a klass exists with date: "2010-03-20", course: course "ruby", start_time: "17:00", end_time: "18:00"
+    And a klass exists with date: "2010-03-19", course: course "ruby", start_time: "09:00", end_time: "13:00"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" on "2010-03-06"
+    Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00 3/19(Friday) - Ruby I - 09:00~13:00 3/19(Friday) - Ruby I - 12:00~13:00 3/20(Saturday) - Ruby I - 09:00~13:00 3/20(Saturday) - Ruby I - 17:00~18:00"
+
+  Scenario: If there are no classes to reserve, that section should not be visable
+    Given a course: "ruby" exists with name: "Ruby I"
+    And a courses_student join model exists with course: "Ruby I", student: "johan"
+    And a klass: "klass17" exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And a klass: "klass16" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
+    And an attendance exists with student: user "johan", klass: klass "klass16"
+    And an attendance exists with student: user "johan", klass: klass "klass17"
+    And a user is logged in as "aya"
+    When I browse to the reserve page for user: "johan" on "2010-03-06"
+    Then the page should have no "reservable" section
+    And I should see "Reserved Classes" within "div.reserved"
+    And I should see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reserved"
+    And I should see "3/19(Friday) - Ruby I - 12:00~13:00" within "div.reserved"
+    And the page should have no "history" section
+
+  @allow-rescue
+  Scenario Outline: Regular users can only see their own reservation page, but admins have no limit
+    Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
+    And a user: "prince" exists with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+    And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"
+    And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
+    And a user is logged in as "<user>"
+    When I go to the reserve page for user: "<user>"
+    Then I should be redirected to the <own-page>
+    When I go to the reserve page for user: "prince"
+    Then I should be redirected to the <other-page>
+
+    Examples: 
+      | user   | own-page                       | other-page                      |
+      | thomas | events page                    | events page                     |
+      | prince | events page                    | events page                     |
+      |false
+ junko  | reserve page for user: "junko" | events page                     |
+      | mika   | events page                    | events page                     |
+      |false
+ reiko  | reserve page for user: "reiko" | events page                     |
+      |false
+ aya    | reserve page for user: "aya"   | reserve page for user: "prince" |
+      Page load was not successful (Code: 500):
+      <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <title>Action Controller: Exception caught</title>
+        <style>
+          body { background-color: #fff; color: #333; }
+      
+          body, p, ol, ul, td {
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size:   13px;
+            line-height: 18px;
+          }
+      
+          pre {
+            background-color: #eee;
+            padding: 10px;
+            font-size: 11px;
+          }
+      
+          a { color: #000; }
+          a:visited { color: #666; }
+          a:hover { color: #fff; background-color:#000; }
+        </style>
+      </head>
+      <body>
+      
+      <h1>
+        NoMethodError in
+        Users#reserve
+      </h1>
+      
+      <p>
+        Showing <i>app/views/users/reserve.html.erb</i> where line <b>#9</b> raised:
+        <pre><code>You have a nil object when you didn't expect it!
+      You might have expected an instance of Array.
+      The error occurred while evaluating nil.inject</code></pre>
+      </p>
+      
+      <p>Extracted source (around line <b>#9</b>):
+      <pre><code>6: &lt;% if can? :edit_role, User %&gt;
+      7: 	&lt;%- form_for :user, :url =&gt; { :action=&gt;'reserve' }, :html =&gt; { :method=&gt;'get' } do |f| -%&gt;
+      8: 		&lt;label for=&quot;saturday&quot;&gt;Week&lt;/label&gt;
+      9: 		&lt;%= select_tag :saturday, options_for_select( @weeks, @saturday ) %&gt;
+      10: 		&lt;%= f.submit &quot;Go!&quot; %&gt;
+      11: 	&lt;%- end -%&gt;
+      12: &lt;% end %&gt;
+      </code></pre></p>
+      
+      <p></p>
+      
+      
+      
+      
+      <p><code>RAILS_ROOT: C:/Johan/Ruby/Rails/yoyaku</code></p>
+      
+      <div id="traces">
+        
+          
+          <a href="#" onclick="document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Application-Trace').style.display='block';; return false;">Application Trace</a> |
+        
+          
+          <a href="#" onclick="document.getElementById('Application-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='block';; return false;">Framework Trace</a> |
+        
+          
+          <a href="#" onclick="document.getElementById('Application-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='block';; return false;">Full Trace</a> 
+        
+      
+        
+          <div id="Application-Trace" style="display: block;">
+            <pre><code>c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_options_helper.rb:292:in `options_for_select'
+      C:/Johan/Ruby/Rails/yoyaku/app/views/users/reserve.html.erb:9:in `_run_erb_app47views47users47reserve46html46erb'
+      C:/Johan/Ruby/Rails/yoyaku/app/views/users/reserve.html.erb:7:in `_run_erb_app47views47users47reserve46html46erb'</code></pre>
+          </div>
+        
+          <div id="Framework-Trace" style="display: none;">
+            <pre><code>c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_options_helper.rb:292:in `options_for_select'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_helper.rb:490:in `fields_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/searchlogic-2.3.3/lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_helper.rb:282:in `form_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/searchlogic-2.3.3/lib/searchlogic/rails_helpers.rb:61:in `form_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:34:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:34:in `render_without_template_tracking'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:301:in `with_template'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:30:in `render_without_template_tracking'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/test_case.rb:20:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/template.rb:199:in `render_template'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:260:in `render_without_mock_proxy'
+      c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:343:in `_render_with_layout'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:257:in `render_without_mock_proxy'
+      c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1250:in `render_for_file'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:945:in `render_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:51:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:51:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1326:in `default_render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1332:in `perform_action_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:617:in `call_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/rescue.rb:160:in `perform_action_without_flash'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/flash.rb:146:in `perform_action'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `process_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:606:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:391:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:386:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:437:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/methodoverride.rb:24:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/abstract_store.rb:122:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:29:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:9:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:28:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `synchronize'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:106:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:47:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:35:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:313:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:196:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `__send__'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `do_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:37:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `process_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:122:in `request_page'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:220:in `visit'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_match.rb:24:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_mother.rb:195:in `before_and_after'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:69:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:17:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/examples.rb:12:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:25:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:29:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:28:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:55:in `execute!'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:24:in `execute'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/bin/cucumber:8
+      c:/ruby/bin/cucumber:19:in `load'
+      c:/ruby/bin/cucumber:19</code></pre>
+          </div>
+        
+          <div id="Full-Trace" style="display: none;">
+            <pre><code>c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_options_helper.rb:292:in `options_for_select'
+      C:/Johan/Ruby/Rails/yoyaku/app/views/users/reserve.html.erb:9:in `_run_erb_app47views47users47reserve46html46erb'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_helper.rb:490:in `fields_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/searchlogic-2.3.3/lib/searchlogic/rails_helpers.rb:72:in `fields_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/helpers/form_helper.rb:282:in `form_for'
+      c:/ruby/lib/ruby/gems/1.8/gems/searchlogic-2.3.3/lib/searchlogic/rails_helpers.rb:61:in `form_for'
+      C:/Johan/Ruby/Rails/yoyaku/app/views/users/reserve.html.erb:7:in `_run_erb_app47views47users47reserve46html46erb'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:34:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:34:in `render_without_template_tracking'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:301:in `with_template'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/renderable.rb:30:in `render_without_template_tracking'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/test_case.rb:20:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/template.rb:199:in `render_template'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:260:in `render_without_mock_proxy'
+      c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:343:in `_render_with_layout'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/base.rb:257:in `render_without_mock_proxy'
+      c:/ruby/lib/ruby/gems/1.8/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1250:in `render_for_file'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:945:in `render_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:51:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:51:in `render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1326:in `default_render'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1332:in `perform_action_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:617:in `call_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/rescue.rb:160:in `perform_action_without_flash'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/flash.rb:146:in `perform_action'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `process_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:606:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:391:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:386:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:437:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/methodoverride.rb:24:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/abstract_store.rb:122:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:29:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:9:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:28:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `synchronize'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:106:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:47:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:35:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:313:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:196:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `__send__'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `do_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:37:in `get'
+      (__FORWARDABLE__):3:in `__send__'
+      (__FORWARDABLE__):3:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `process_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:122:in `request_page'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:220:in `visit'
+      (eval):2:in `visit'
+      features/step_definitions/webrat_steps.rb:16:in `__instance_exec0'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_match.rb:24:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_mother.rb:195:in `before_and_after'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:69:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:17:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/examples.rb:12:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:25:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:29:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:28:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:55:in `execute!'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:24:in `execute'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/bin/cucumber:8
+      c:/ruby/bin/cucumber:19:in `load'
+      c:/ruby/bin/cucumber:19</code></pre>
+          </div>
+        
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      <h2 style="margin-top: 30px">Request</h2>
+      <p><b>Parameters</b>: <pre>{&quot;id&quot;=&gt;&quot;1547&quot;}</pre></p>
+      
+      <p><a href="#" onclick="document.getElementById('session_dump').style.display='block'; return false;">Show session dump</a></p>
+      <div id="session_dump" style="display:none"><pre class='debug_dump'>--- 
+      </pre></div>
+      
+      
+      <h2 style="margin-top: 30px">Response</h2>
+      <p><b>Headers</b>: <pre>{&quot;Content-Type&quot;=&gt;&quot;text/html&quot;,
+       &quot;Cache-Control&quot;=&gt;&quot;no-cache&quot;}</pre></p>
+      
+      
+      
+      </body>
+      </html> (Webrat::PageLoadError)
+      (eval):2:in `visit'
+      ./features/step_definitions/webrat_steps.rb:16:in `/^I go to (.+)$/'
+      features/plain/new/users/reserve/basiq.feature:193:in `When I go to the reserve page for user: "<user>"'
+      |false
+ johan  | reserve page for user: "johan" | reserve page for user: "prince" |
+      Page load was not successful (Code: 500):
+      <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <title>Action Controller: Exception caught</title>
+        <style>
+          body { background-color: #fff; color: #333; }
+      
+          body, p, ol, ul, td {
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size:   13px;
+            line-height: 18px;
+          }
+      
+          pre {
+            background-color: #eee;
+            padding: 10px;
+            font-size: 11px;
+          }
+      
+          a { color: #000; }
+          a:visited { color: #666; }
+          a:hover { color: #fff; background-color:#000; }
+        </style>
+      </head>
+      <body>
+      
+      <h1>
+        NoMethodError
+        
+          in UsersController#reserve
+        
+      </h1>
+      <pre>You have a nil object when you didn't expect it!
+      The error occurred while evaluating nil.date</pre>
+      
+      
+      
+      <p><code>RAILS_ROOT: C:/Johan/Ruby/Rails/yoyaku</code></p>
+      
+      <div id="traces">
+        
+          
+          <a href="#" onclick="document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Application-Trace').style.display='block';; return false;">Application Trace</a> |
+        
+          
+          <a href="#" onclick="document.getElementById('Application-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='block';; return false;">Framework Trace</a> |
+        
+          
+          <a href="#" onclick="document.getElementById('Application-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='block';; return false;">Full Trace</a> 
+        
+      
+        
+          <div id="Application-Trace" style="display: block;">
+            <pre><code>C:/Johan/Ruby/Rails/yoyaku/app/controllers/users_controller.rb:202:in `reserve'</code></pre>
+          </div>
+        
+          <div id="Framework-Trace" style="display: none;">
+            <pre><code>c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1331:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1331:in `perform_action_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:617:in `call_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/rescue.rb:160:in `perform_action_without_flash'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/flash.rb:146:in `perform_action'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `process_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:606:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:391:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:386:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:437:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/methodoverride.rb:24:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/abstract_store.rb:122:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:29:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:9:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:28:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `synchronize'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:106:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:47:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:35:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:313:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:196:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `__send__'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `do_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:37:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `process_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:122:in `request_page'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:220:in `visit'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_match.rb:24:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_mother.rb:195:in `before_and_after'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:69:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:17:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/examples.rb:12:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:25:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:29:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:28:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:55:in `execute!'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:24:in `execute'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/bin/cucumber:8
+      c:/ruby/bin/cucumber:19:in `load'
+      c:/ruby/bin/cucumber:19</code></pre>
+          </div>
+        
+          <div id="Full-Trace" style="display: none;">
+            <pre><code>C:/Johan/Ruby/Rails/yoyaku/app/controllers/users_controller.rb:202:in `reserve'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1331:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:1331:in `perform_action_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:617:in `call_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+      c:/ruby/lib/ruby/gems/1.8/gems/activesupport-2.3.4/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/rescue.rb:160:in `perform_action_without_flash'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/flash.rb:146:in `perform_action'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:532:in `process_without_filters'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/filters.rb:606:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:391:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/base.rb:386:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:437:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/methodoverride.rb:24:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/abstract_store.rb:122:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:29:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:9:in `cache'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/query_cache.rb:28:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/activerecord-2.3.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `synchronize'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:106:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:47:in `_call'
+      c:/ruby/lib/ruby/gems/1.8/gems/rack-1.0.0/lib/rack/lint.rb:35:in `call'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:313:in `process'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:196:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `__send__'
+      c:/ruby/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/integration.rb:491:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:68:in `do_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/rails.rb:37:in `get'
+      (__FORWARDABLE__):3:in `__send__'
+      (__FORWARDABLE__):3:in `get'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:282:in `process_request'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:122:in `request_page'
+      c:/ruby/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/core/session.rb:220:in `visit'
+      (eval):2:in `visit'
+      features/step_definitions/webrat_steps.rb:16:in `__instance_exec0'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `send'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:26:in `instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:48:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:69:in `cucumber_run_with_backtrace_filtering'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/core_ext/instance_exec.rb:36:in `cucumber_instance_exec'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/rb_support/rb_step_definition.rb:55:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_match.rb:24:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_invocation.rb:58:in `invoke'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:81:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/step_collection.rb:37:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:80:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/step_mother.rb:195:in `before_and_after'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:79:in `accept_plain'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:69:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:131:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:130:in `visit_table_row'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:17:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/win32console-1.2.0-x86-mswin32-60/lib/Win32/Console.rb:189:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `each_with_index'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/outline_table.rb:13:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:83:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:82:in `visit_outline_table'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/examples.rb:12:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:73:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:72:in `visit_examples'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:10:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:9:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:67:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:66:in `visit_examples_array'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/scenario_outline.rb:49:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:51:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:50:in `visit_feature_element'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:25:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/feature.rb:24:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:20:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:19:in `visit_feature'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:29:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:17:in `each'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/features.rb:28:in `accept'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:14:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:164:in `broadcast'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/ast/tree_walker.rb:13:in `visit_features'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:55:in `execute!'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/lib/cucumber/cli/main.rb:24:in `execute'
+      c:/ruby/lib/ruby/gems/1.8/gems/cucumber-0.4.3/bin/cucumber:8
+      c:/ruby/bin/cucumber:19:in `load'
+      c:/ruby/bin/cucumber:19</code></pre>
+          </div>
+        
+      </div>
+      
+      
+      
+      
+      
+      
+      <h2 style="margin-top: 30px">Request</h2>
+      <p><b>Parameters</b>: <pre>{&quot;id&quot;=&gt;&quot;1553&quot;}</pre></p>
+      
+      <p><a href="#" onclick="document.getElementById('session_dump').style.display='block'; return false;">Show session dump</a></p>
+      <div id="session_dump" style="display:none"><pre class='debug_dump'>--- 
+      </pre></div>
+      
+      
+      <h2 style="margin-top: 30px">Response</h2>
+      <p><b>Headers</b>: <pre>{&quot;Content-Type&quot;=&gt;&quot;&quot;,
+       &quot;Cache-Control&quot;=&gt;&quot;no-cache&quot;}</pre></p>
+      
+      
+      
+      </body>
+      </html> (Webrat::PageLoadError)
+      (eval):2:in `visit'
+      ./features/step_definitions/webrat_steps.rb:16:in `/^I go to (.+)$/'
+      features/plain/new/users/reserve/basiq.feature:193:in `When I go to the reserve page for user: "<user>"'
+
+  @pending
+  Scenario: Links on reservation page (NOT IMPLEMENTED)
+
+  @pending
+  Scenario: Include time, 12 from sat to 17 on tue (NOT IMPLEMENTED)
+
+  @pending
+  Scenario: Implement mailing (NOT IMPLEMENTED)
+
 Failing Scenarios:
-cucumber features/plain/new/glossaries/exceptions.feature:4 # Scenario: Exception with kunyomi that does not have a word
-cucumber features/plain/new/glossaries/exceptions.feature:19 # Scenario: something
-cucumber features/plain/new/glossaries/kanji_meaning.feature:10 # Scenario: When there are no kunyomis, the kanjis meaning is displayed
-cucumber features/plain/new/glossaries/kanji_meaning.feature:14 # Scenario: If a part of the answer is given, you will be continue from there
-cucumber features/plain/new/glossaries/kanji_meaning.feature:21 # Scenario: When there are kunyomis, but no words for them, the kanjis meaning is displayed
-cucumber features/plain/new/glossaries/manage_kunyomi.feature:28 # Scenario: View of kunyomi question
+cucumber features/plain/new/users/reserve/basiq.feature:8 # Scenario: View of the reserve page for admin, weeks start with the latest week containing a class plus four weeks in the past
+
+47 scenarios (16 failed, 8 undefined, 23 passed)
+523 steps (16 failed, 52 skipped, 8 undefined, 447 passed)
+1m2.811s
+
+You can implement step definitions for undefined steps with these snippets:
+
+When /^I browse to the reserve page for user: "([^\"]*)" on "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+

@@ -23,6 +23,14 @@ Then I should automatically browse to the klasses page of "March 15, 2010"
 	#And a recipient should exist with user: user "junko", mail: that mail
 	#And 1 recipients should exist
 	
+@reserve
+Scenario: Students cannot reserve a class if the reserve-date is modified
+Given a klass exists with todays date
+	And a user is logged in as "junko"
+When I go to the reserve page for user: "junko"
+	Then show me the page
+	And I reserve that klass
+	
 @response
 Scenario Outline: When a reservation is made an email response is sent to the staff in the user's language
 Given a user: "reiko" exist with username: "reiko", role: "registrant, student", language: "ja", name: "Reiko Arikawa"

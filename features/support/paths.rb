@@ -31,7 +31,7 @@ module NavigationHelpers
 			params = $2.split(" on ")
 			path = path.downcase.gsub(' ','_')
 			mdl  = params[0]
-			date = params.size == 1 ? "" : "?majballe=#{params[1].gsub('"','')}"
+			date = params.size == 1 ? "" : "?saturday=#{params[1].gsub('"','')}"
 			polymorphic_path( model(mdl) )+"/#{path}#{date}"
 
 #		when /^the delete page (?:for|of) (.+)$/

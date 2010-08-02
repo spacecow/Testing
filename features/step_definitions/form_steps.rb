@@ -50,6 +50,10 @@ Then /^I should (not )?see a button "([^\"]*)"$/ do |negative, label|
   Then "the xpath \"//input[@value='#{label}']\" should #{negative}exist"
 end
 
+Then /^I should (not )?see a field "([^\"]*)"$/ do |negative, field|
+  Then "the xpath \"//li[@id='#{field.downcase}']\" should #{negative}exist"
+end
+
 Then /^I should (not )?see a field "([^\"]*)" for (.+)$/ do |negative, field, model|
   Then "the xpath \"//li[@id='#{model}_#{field.downcase}_input']\" should #{negative}exist"
 end

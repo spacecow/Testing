@@ -3,6 +3,13 @@
 <legend class="form"><%= @user.name %> - <%= t( :reserve ) %></legend>
 
 <div class="intro">
+<% if can?( :edit_role, User ) && !Klass.first.nil? %>
+	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
+		<label for="saturday">Week</label>
+		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+		<%= f.submit "Go!" %>
+	<%- end -%>
+<% end %>
 <% if @reservable_klasses.empty? %>
 <%= t('message.no_reservations_today') %>
 <% else %>
@@ -12,6 +19,7 @@
 	<% f.inputs do %>
 		<%= f.input :student_klasses, :as=>:check_boxes, :label=>false,
 								:collection => @reservable_klasses, :required=>false %>
+		<%= hidden_field_tag :saturday, @saturday %>
 		<%# @reserved_klasses.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
 		<%# @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
 	<% end %>

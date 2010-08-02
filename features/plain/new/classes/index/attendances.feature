@@ -89,3 +89,9 @@ Then I should see student "reiko" within klass "ruby1"
 	And I should see student "junko" within klass "ruby2"
 	And I should see student "junko" within klass "ruby3"
 	And I should see student "reiko" within klass "ruby4"
+
+@pending
+Scenario: With Japanaese as language, you should still be able to do the commands
+
+@pending
+Scenario: Cancel&Absent should have a counter version
