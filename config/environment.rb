@@ -30,14 +30,15 @@ Rails::Initializer.run do |config|
   config.gem "searchlogic"
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
   config.gem "formtastic", :lib => "formtastic"
-	config.gem "authlogic"
+  config.gem "authlogic"
   #config.gem "declarative_authorization", :source => "http://gemcutter.org"
   config.gem "cancan"
   config.gem "sanitize"
   config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
   config.gem 'collectiveidea-delayed_job', :lib => 'delayed_job', :source => 'http://gems.github.com'
-	#config.gem "newrelic_rpm" 
-	
+  config.gem 'mysql', :version => "2.7"
+#  config.gem 'smtp_tls'
+  #config.gem "newrelic_rpm" 
   #config.gem 'laserlemon-vestal_versions', :lib => 'vestal_versions', :source => 'http://gems.github.com'
 
 

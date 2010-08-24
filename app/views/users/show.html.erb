@@ -2,7 +2,10 @@
 <fieldset class="show">
 <legend><%= @user.name %></legend>
 
-<%= image_tag @user.avatar.url(:large) %>
+<%= render "student_options" if current_user.role? :student %>
+<%= render "teacher_options" if current_user.role? :teacher %>
+
+<%= render @page unless @page.nil? %>
 
 </fieldset>
 </div>

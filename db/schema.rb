@@ -210,18 +210,6 @@ ActiveRecord::Schema.define(:version => 20100709042630) do
     t.datetime "updated_at"
   end
 
-  create_table "mail_queue", :force => true do |t|
-    t.text     "mail"
-    t.text     "error_info"
-    t.datetime "read_at"
-    t.datetime "sent_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "mail_queue", ["read_at"], :name => "index_mail_queue_on_read_at"
-  add_index "mail_queue", ["sent_at"], :name => "index_mail_queue_on_sent_at"
-
   create_table "mails", :force => true do |t|
     t.integer  "sender_id"
     t.string   "subject"

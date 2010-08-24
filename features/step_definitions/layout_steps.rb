@@ -109,6 +109,16 @@ Then /^the "([^\"]*)" id should not exist for "(.+)"$/ do |id, tag|
   assert_have_no_xpath( "//#{tag}[@id='#{id}']" )
 end
 
+#---------- BUTTONS
+
+Then /^I should see a button labeled "([^\"]*)"$/ do |label|
+  assert_have_xpath("//input[@value='#{label}']")
+end
+
+Then /^I should not see a button labeled "([^\"]*)"$/ do |label|
+  assert_have_no_xpath("//input[@value='#{label}']")
+end
+
 #--------------------
 
 def get_scope( model )

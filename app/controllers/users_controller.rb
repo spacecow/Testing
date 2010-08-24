@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 class UsersController < ApplicationController
 	before_filter :find_multiple_users, :only => [:edit_multiple, :update_multiple]
   load_and_authorize_resource
 
-	def show
-		@user = User.find( params[:id] )
-	end
+  def show
+    @user = User.find( params[:id] )
+    @page = params[:commit].blank? ? nil : params[:commit].downcase
+  end
 
 	def index
 		@status = params[:status] || "all"
