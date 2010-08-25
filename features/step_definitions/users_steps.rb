@@ -30,12 +30,6 @@ Then /^I should automatically browse to the (teachers|students) page$/ do |categ
 	And "\"#{category.capitalize}\" should be selected in the \"Sort\" field"
 end
 
-When /^I browse to the reserve page for user: "([^\"]*)" for "([^\"]*)"$/ do |user_s, interval|
-	When "I go to the reserve page for user: \"#{user_s}\""
-	And "I select \"#{interval}\" from \"Week\""
-	And "I press \"Go!\""
-end
-
 #---------------------- Reserve Page
 
 When /^I reserve #{capture_model}$/ do |klass_model|

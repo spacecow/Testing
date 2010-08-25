@@ -2,10 +2,10 @@
 <fieldset class="show">
 <legend><%= @user.name %></legend>
 
-<%= render "student_options" if current_user.role? :student %>
-<%= render "teacher_options" if current_user.role? :teacher %>
+<%= render "student_options" if can? :reserve, @user %>
+<%= render "teacher_options" if can? :confirm, @user %>
 
-<%= render @page unless @page.nil? %>
+<%= render @page, :user => @user unless @page.nil? %>
 
 </fieldset>
 </div>

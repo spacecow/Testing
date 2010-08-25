@@ -4,65 +4,6 @@ Given a setting exist with name: "main"
 	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
 	And a user: "junko" exist with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 
-@view @admin
-Scenario: View of the reserve page for admin, weeks start with the latest week containing a class plus four weeks in the past
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-11", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I go to the reserve page for user: "johan"
-Then I should see "Reserve" as title
-	And the "saturday" field should have options "BLANK, 03/15～03/20, 03/08～03/13, 03/01～03/06, 02/22～02/27, 02/15～02/20"
-
-@view @admin @no_classes
-Scenario: If there are no classes in the database, the code should not break
-Given a user is logged in as "johan"
-When I go to the reserve page for user: "junko"
-Then I should see "Reserve" as title	
-
-@view @student
-Scenario: View of the reserve page for students
-Given a user is logged in as "junko"
-When I go to the reserve page for user: "junko"
-Then I should see "Reserve" as title
-	And I should not see a field "saturday"
-
-@view @date
-Scenario Outline: Change the week for admin
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I browse to the reserve page for user: "johan" for "<interval>"
-Then I should see "<day> - Ruby I - 12:00~13:00" within "div.reservable"
-	And I should see "Reservations can be made from Sat 12am to Tue 5pm." within "div.reservable"
-	And "<interval>" should be selected in the "saturday" field
-Examples:
-|	date				|	interval		|	day							|
-|	2010-03-18	|	03/15～03/20	|	3/18(Thursday)	|
-|	2010-03-11	|	03/08～03/13	|	3/11(Thursday)	|
-|	2010-03-04	|	03/01～03/06	|	3/4(Thursday)		|
-|	2010-02-25	|	02/22～02/27	|	2/25(Thursday)	|
-|	2010-02-18	|	02/15～02/20	|	2/18(Thursday)	|
-
-@yes_class
-Scenario Outline: View of the reserve page when there are classes to reserve
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I browse to the reserve page for user: "johan" for "03/15～03/20"
-Then I should see "3/<date>(<day>) - Ruby I - 12:00~13:00" within "div.reservable"
-Examples:
-|	date	|	day				|
-|	15		|	Monday		|
-|	16		|	Tuesday		|
-|	17		|	Wednesday	|
-|	18		|	Thursday	|
-|	19		|	Friday		|
-|	20		|	Saturday	|
 
 @no_class
 Scenario Outline: View of the reserve page when there are no classes to reserve

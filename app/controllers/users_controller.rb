@@ -5,7 +5,57 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find( params[:id] )
-    @page = params[:commit].blank? ? nil : params[:commit].downcase
+    params[:commit] = "Reserve" if params[:commit] == "Go!"
+    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
+
+#    @page = params[:commit].blank? ? nil : params[:commit].downcase
+
+    todays_date = Time.zone.now.beginning_of_day
+
+    if can?( :edit_role, User ) && !Klass.first.nil?
+      mon_date = Klass.last( :order => "date" ).date
+      mon_date -= 1.day while mon_date.strftime("%a") != "Mon"
+      sat_date = mon_date + 5.day
+      reserve_date = sat_date - 14.day			
+      week_intervals = [""]
+      saturdays = [""]
+      5.times do
+        week_intervals << "#{mon_date.strftime('%m/%d')}～#{sat_date.strftime('%m/%d')}"
+        saturdays << "#{reserve_date.strftime("%Y-%m-%d")}"
+        mon_date -= 7.day
+        sat_date -= 7.day
+        reserve_date -= 7.day
+      end
+      @weeks = week_intervals.zip( saturdays )
+    end
+    
+    unless Klass.first.nil?
+      @saturday = params[:saturday]
+      unless @saturday.nil?
+        todays_date = Time.zone.parse( @saturday )
+      end
+    end
+
+    start_date = todays_date + 6.day
+    start_date += 1.day while start_date.strftime("%a") != "Mon"
+    
+    @klasses = {}
+    Klass.all(
+      :conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
+      :include=>:course ).
+      reject{|e| !@user.student_courses.include?( e.course )}.each do |e|
+      @klasses[e.name] ||= e
+      @klasses[e.name] = [@klasses[e.name],e][rand(2)]
+      # @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]))
+      end
+
+    @reservable_klasses = []
+    if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
+      @reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    end	
+		# @reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+		# @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+
   end
 
 	def index

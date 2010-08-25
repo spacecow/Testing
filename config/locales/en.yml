@@ -235,8 +235,8 @@ en:
     already_confirmed_classes: "Already Confirmed Classes"
     already_reserved_classes: "Already Reserved Classes"
     class_history: "Class History"
-    classes_to_confirm: "Classes to Confirm"
-    classes_to_reserve: "Classes to Reserve"
+    classes_to_confirm: "Classes to confirm"
+    classes_to_reserve: "Classes to reserve"
     declined_classes: "Declined Classes"
     teaching_history: "Teaching History"
   message:

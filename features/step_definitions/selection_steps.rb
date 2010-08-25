@@ -50,10 +50,10 @@ end
 
 Then /^"(.*)" should be selected in the "(.*)" (?:box|field|menu)$/ do |option_text,select_id| 
   begin
-  	field = field_labeled(select_id) 
-	rescue Webrat::NotFoundError
-		field = field_with_id(select_id)
-	end
+    field = field_labeled(select_id)
+  rescue Webrat::NotFoundError
+    field = field_by_xpath("//select[@id='#{select_id}']")
+  end
   selected_value = field.value[0] 
   state = :nothing_selected 
   field.options.each do |option| 

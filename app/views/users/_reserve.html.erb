@@ -1,0 +1,25 @@
+<fieldset class="intro">
+<legend><%= t(:reserve) %></legend>
+<% if can?( :edit_role, User ) && !Klass.first.nil? %>
+  <%- form_for :user, :url => @user, :html => { :method=>'get' } do |f| -%>
+    <label for="saturday">Week</label>
+    <%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+    <%= f.submit "Go!" %>
+  <%- end -%>
+<% end %>
+<% if @reservable_klasses.empty? %>
+<%= t('message.no_reservations_today') %>
+<% else %>
+<div class="reservable">
+<h2><%= t('header.classes_to_reserve') %></h2>
+<% semantic_form_for @user, :url => update_reserve_user_path( @user ), :method => :put do |f| %>
+  <% f.inputs do %>
+    <%= f.input :student_klasses, :as=>:check_boxes, :label=>false,
+                :collection => @reservable_klasses, :required=>false %>
+    <%= hidden_field_tag :saturday, @saturday %>
+  <% end %>
+  <%= t('message.time_for_reservation') %>
+<% end %>
+</div>
+<% end %>
+</fieldset>

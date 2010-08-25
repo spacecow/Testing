@@ -31,7 +31,11 @@ end
 #-------------------- PAGE
 
 Then /^I should see "([^\"]*)" as title$/ do |title|
-	Then "I should see \"#{title}\" within \"legend\""
+  Then "I should see \"#{title}\" within \"legend\""
+end
+
+Then /^I should see "([^\"]*)" as second title$/ do |title|
+  Then "I should see \"#{title}\" within \"fieldset.intro legend\""
 end
 
 When /^I check #{capture_model}$/ do |model|

@@ -1,7 +1,3 @@
-Given /#{capture_model} is one of #{capture_model}'s (\w+)/ do |owned, owner, assoc|
-   model!(owner).send(assoc) << model!(owned)
-end 
-
 Given /(\w+) "(.+)" are #{capture_model}'s (\w+)/ do |model, names, owner, assoc|
 	names.split(", ").each do |name|
 		Given "#{model} \"#{name}\" is one of #{owner}'s #{assoc}"
