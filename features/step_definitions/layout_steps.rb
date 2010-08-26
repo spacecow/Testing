@@ -113,6 +113,12 @@ Then /^the "([^\"]*)" id should not exist for "(.+)"$/ do |id, tag|
   assert_have_no_xpath( "//#{tag}[@id='#{id}']" )
 end
 
+#---------- SECTIONS
+
+Then /^the page should have a "([^\"]*)" section$/ do |section|
+  assert_have_xpath( "//div[@id='#{section}']" )
+end
+
 #---------- BUTTONS
 
 Then /^I should see a button labeled "([^\"]*)"$/ do |label|
@@ -122,6 +128,8 @@ end
 Then /^I should not see a button labeled "([^\"]*)"$/ do |label|
   assert_have_no_xpath("//input[@value='#{label}']")
 end
+
+
 
 #--------------------
 

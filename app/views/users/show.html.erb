@@ -2,8 +2,19 @@
 <fieldset class="show">
 <legend><%= @user.name %></legend>
 
-<%= render "student_options" if can? :reserve, @user %>
-<%= render "teacher_options" if can? :confirm, @user %>
+<%- form_for :user, :url => @user, :html => { :method=>'get' } do |f| -%>
+<%= render "student_options", :f => f if can? :reserve, @user and
+@user.role? :student %>
+<%= render "teacher_options", :f => f if can? :confirm, @user and
+@user.role? :teacher %>
+
+<% if can?( :edit_role, User ) && !Klass.first.nil? %>
+  <label for="saturday">Week</label>
+  <%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+  <%= f.submit "Go!", :name => "reserve" %>
+<%- end -%>
+
+<% end %>
 
 <%= render @page, :user => @user unless @page.nil? %>
 

@@ -1,4 +1,4 @@
-<% form_for @user, :url => @user, :html => {:method => :get} do |f| %>
-<%= submit_tag t(:reserved) %>
-<%= submit_tag t(:reserve) %>
-<% end %>
+<%= submit_tag t(:reserve_history), :name => "reserve_history" %>
+<%= submit_tag t(:already_reserved), :name => "already_reserved" %>
+<%= submit_tag t(:reserve), :name => "reserve" %>
+

@@ -5,8 +5,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find( params[:id] )
-    params[:commit] = "Reserve" if params[:commit] == "Go!"
-    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
+    if !params[:reserve].nil?; @page = "reserve"
+    elsif !params[:already_reserved].nil?; @page = "already_reserved"
+    elsif !params[:reserve_history].nil?; @page = "reserve_history"
+    elsif !params[:confirm].nil?; @page = "confirm"
+    elsif !params[:already_confirmed].nil?; @page = "already_confirmed"
+    elsif !params[:confirm_history].nil?; @page = "confirm_history"
+    end
+#    params[:commit] = "Reserve" if params[:commit] == "Go!"
+#    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
 
 #    @page = params[:commit].blank? ? nil : params[:commit].downcase
 
@@ -31,7 +38,7 @@ class UsersController < ApplicationController
     
     unless Klass.first.nil?
       @saturday = params[:saturday]
-      unless @saturday.nil?
+      unless @saturday.blank?
         todays_date = Time.zone.parse( @saturday )
       end
     end
@@ -44,8 +51,10 @@ class UsersController < ApplicationController
       :conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
       :include=>:course ).
       reject{|e| !@user.student_courses.include?( e.course )}.each do |e|
-      @klasses[e.name] ||= e
-      @klasses[e.name] = [@klasses[e.name],e][rand(2)]
+      unless @user.student_klasses.include?( e.name )
+        @klasses[e.name] ||= e
+        @klasses[e.name] = [@klasses[e.name],e][rand(2)]
+      end
       # @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]))
       end
 
@@ -53,9 +62,28 @@ class UsersController < ApplicationController
     if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
       @reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
     end	
-		# @reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		# @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    @reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
 
+
+    # Confirmatin for teachers
+    sorted_klasses = @user.teacher_klasses.all.
+      sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    coming_klasses = sorted_klasses.
+      reject{|e| e.teaching.nil? }.
+      reject{|e| e.date < todays_date}
+    
+    @confirmable_classes = coming_klasses.
+      reject{|e| e.teaching.status?( :confirmed )}.
+      reject{|e| e.teaching.status?( :declined )}
+    @confirmed_classes = coming_klasses.
+      reject{|e| !e.teaching.status?( :confirmed )}
+    @teaching_history = sorted_klasses.
+      reject{|e| e.teaching.nil? }.
+      reject{|e| e.date >= todays_date}.
+      reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
+    @declined_classes = sorted_klasses.
+      reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
   end
 
 	def index

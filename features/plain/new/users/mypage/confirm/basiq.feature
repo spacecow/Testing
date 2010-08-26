@@ -1,29 +1,28 @@
 Background:
 Given a setting exist with name: "main"
-	And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
-	And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
-	And a user: "prince" exist with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
+And a user: "johan" exist with username: "johan", role: "god, teacher", language: "en", name: "Johan Sveholm"
+And a user: "aya" exist with username: "aya", role: "admin, teacher", language: "en", name: "Aya Komatsu"
+And a user: "prince" exist with username: "prince", role: "registrant, teacher", language: "en", name: "Prince Philip"
 
 @pending
 Scenario: Links on confirmation page (NOT IMPLEMENTED)
 
-@view_confirmable
+@view @confirmable
 Scenario: View of classes that can be confirmed
 Given a klass: "klass18" exists with date: "2010-03-18"
-	And a klass: "klass19" exists with date: "2010-03-19"
-	And a klass: "klass20" exists with date: "2010-03-20"
-	And a teaching exists with klass: klass "klass18", teacher: user "johan"
-	And a teaching exists with klass: klass "klass20", teacher: user "aya"
+And a klass: "klass19" exists with date: "2010-03-19"
+And a klass: "klass20" exists with date: "2010-03-20"
+And a teaching exists with klass: klass "klass18", teacher: user "johan"
+And a teaching exists with klass: klass "klass20", teacher: user "aya"
 Given a user is logged in as "johan"
-When I go to the confirm page for user: "johan" on "2010-03-06"
-Then I should see "Confirm" as title
-	And I should see "Classes to Confirm" within "div.confirmable"
-	And I should see "3/18(Thursday)" within "div.confirmable"
-	And I should not see "3/19(Friday)" within "div.confirmable"
-	And I should not see "3/20(Saturday)" within "div.confirmable"
-	And the page should have no "confirmed" section
-	And the page should have no "taught" section
-	And the page should have no "declined" section
+When I browse to the confirm page for user: "johan" for "03/15～03/20"
+Then I should see "Confirm" as second title
+And I should see "3/18(Thursday)" within "div.confirmable"
+And I should not see "3/19(Friday)" within "div.confirmable"
+And I should not see "3/20(Saturday)" within "div.confirmable"
+And the page should have no "confirmed" section
+And the page should have no "taught" section
+And the page should have no "declined" section
 
 @view_confirmed
 Scenario: View of confirmed classes
