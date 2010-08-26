@@ -5,66 +5,9 @@ Given a setting exist with name: "main"
 	And a user: "junko" exist with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
 
 
-@no_class
-Scenario Outline: View of the reserve page when there are no classes to reserve
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-21", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2010-03-<date>", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I browse to the reserve page for user: "johan" for "03/15～03/20"
-Then I should see "You can do no reservations today." within "fieldset.form div.intro"
-Examples:
-|	date	|
-|	14		|
-|	21		|
 
-@days @admin
-Scenario Outline: Reservations can only be made from Sat to Tue
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "junko"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "johan"
-When I go to the reserve page for user: "junko" on "2010-03-<day>"
-Then I should see "<view>" within "fieldset.form div.intro"
-Examples:
-|	day	|	view																	|
-|	03	|	You can do no reservations today.			|
-|	04	|	You can do no reservations today.			|
-|	05	|	You can do no reservations today.			|
-|	06	|	3/18(Thursday) - Ruby I - 12:00~13:00	|
-|	07	|	3/18(Thursday) - Ruby I - 12:00~13:00	|
-|	08	|	3/18(Thursday) - Ruby I - 12:00~13:00	|
-|	09	|	3/18(Thursday) - Ruby I - 12:00~13:00	|
 
-@2weeks
-Scenario Outline: You can only reserve for 2 weeks ahead
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "junko"
-	And a klass exists with date: "2010-03-11", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2010-03-25", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "johan"
-When I browse to the reserve page for user: "junko" for "<interval>"
-Then I <week1> see "3/11(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I <week2> see "3/18(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
-	And I <week3> see "3/25(Thursday) - Ruby I - 12:00~13:00" within "div.reservable"
-Examples:
-|	interval		|	week1				|	week2				|	week3				|
-|	03/08～03/13	|	should			|	should not	|	should not	|
-|	03/15～03/20	|	should not	|	should			|	should not	|
-|	03/22～03/27	|	should not	|	should not	|	should			|
 
-@double
-Scenario: Same class should not be displayed double
-Given a course: "ruby" exists with name: "Ruby I"
-	And a courses_student join model exists with course: "Ruby I", student: "johan"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a user is logged in as "aya"
-When I browse to the reserve page for user: "johan" for "03/15～03/20"
-Then I should see "3/18(Thursday) - Ruby I - 12:00~13:00"
-	And I should not see "3/18(Thursday) - Ruby I - 12:00~13:00 3/18(Thursday) - Ruby I - 12:00~13:00"
 
 @already_reserved
 Scenario Outline: If a class exists doubled, the one in use should be displayed

@@ -27,6 +27,6 @@ config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http:/
 config.gem "rspec", :lib => false, :version => ">=1.2.9"
 config.gem "rspec-rails", :lib => false, :version => ">=1.2.9"
 config.gem "webrat", :lib => false, :version => "=0.5.3"
-#config.gem "cucumber", :lib => false, :version => "=0.4.4"
-config.gem "cucumber", :lib => false, :version => "=0.8.5"
+config.gem "cucumber", :lib => false, :version => "=0.4.4"
+#onfig.gem "cucumber", :lib => false, :version => "=0.8.5"
 config.gem "pickle", :lib => false, :version => ">=0.1.21"

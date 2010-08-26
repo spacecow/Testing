@@ -20,6 +20,56 @@ Examples:
 |   19 | Friday    |
 |   20 | Saturday  |
 
+@no_classes
+Scenario Outline: View of the reserve page when there are no classes to reserve
+Given a course: "ruby" exists with name: "Ruby I"
+And a course: "ruby" is one of user: "reiko"'s student_courses
+And a klass exists with date: "2010-03-21", course: course "ruby"
+And a klass exists with date: "2010-03-<date>", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "03/15～03/20"
+Then I should see "You can do no reservations today."
+Examples:
+|	date	|
+|	14		|
+|	21		|
+
+@days @admin
+Scenario Outline: Reservations can only be made from Sat to Tue
+Given a course: "ruby" exists with name: "Ruby I"
+And a course: "ruby" is one of user: "reiko"'s student_courses
+And a klass exists with date: "2010-03-18", course: course "ruby"
+And a user is logged in as "johan"
+When I go to the reserve page for user: "reiko" on "2010-03-<day>"
+Then I should see "<view>"
+Examples:
+|	day	|	view																	|
+|	03	|	You can do no reservations today.			|
+|	04	|	You can do no reservations today.			|
+|	05	|	You can do no reservations today.			|
+|	06	|	3/18(Thursday) - Ruby I - 12:00~15:00	|
+|	07	|	3/18(Thursday) - Ruby I - 12:00~15:00	|
+|	08	|	3/18(Thursday) - Ruby I - 12:00~15:00	|
+|	09	|	3/18(Thursday) - Ruby I - 12:00~15:00	|
+
+@2weeks
+Scenario Outline: You can only reserve for 2 weeks ahead
+Given a course: "ruby" exists with name: "Ruby I"
+And a course: "ruby" is one of user: "reiko"'s student_courses
+And a klass exists with date: "2010-03-11", course: course "ruby"
+And a klass exists with date: "2010-03-18", course: course "ruby"
+And a klass exists with date: "2010-03-25", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "<interval>"
+Then I <week1> see "3/11(Thursday) - Ruby I - 12:00~15:00"
+And I <week2> see "3/18(Thursday) - Ruby I - 12:00~15:00"
+And I <week3> see "3/25(Thursday) - Ruby I - 12:00~15:00"
+Examples:
+|	interval		|	week1				|	week2				|	week3				|
+|	03/08～03/13	|	should			|	should not	|	should not	|
+|	03/15～03/20	|	should not	|	should			|	should not	|
+|	03/22～03/27	|	should not	|	should not	|	should			|
+
 @view @classes
 Scenario: Regular view of the reserve page when there are classes to reserve
 Given a course: "ruby" exists with name: "Ruby I"
@@ -32,13 +82,6 @@ And I should see "Classes to reserve"
 And "03/15～03/20" should be selected in the "saturday" field
 And I should see "3/18(Thursday) - Ruby I - 12:00~15:00"
 And I should see "Reservations can be made from Sat 12am to Tue 5pm."
-
-@view @no_classes
-Scenario: Reserve View without classes
-Given a user is logged in as "johan"
-When I browse to the reserve page for user: "reiko"
-Then I should see "Reserve" as second title
-And I should see "You can do no reservations today."
 
 @view @admin
 Scenario: View of the reserve page for admin, weeks start with the latest week containing a class plus four weeks in the past
