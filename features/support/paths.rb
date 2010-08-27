@@ -26,7 +26,7 @@ module NavigationHelpers
 		when /^the edit page (?:for|of) (.+)$/
 			edit_polymorphic_path( model($1) )
 
-		when /^the (confirm|reserve|edit courses|edit role) page (?:for|of) (.+)$/
+		when /^the (already reserved|confirm|reserve|edit courses|edit role) page (?:for|of) (.+)$/
 			path = $1
 			params = $2.split(" on ")
 			path = path.downcase.gsub(' ','_')

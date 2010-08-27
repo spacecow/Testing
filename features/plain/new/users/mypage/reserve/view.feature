@@ -60,3 +60,15 @@ Given a klass exists with date: "2010-03-18", course: course "ruby"
 And a user is logged in as "johan"
 When I browse to the reserve page for user: "reiko" for "03/15～03/20"
 Then I should not see "3/18(Thursday) - Ruby I - 12:00~15:00 3/18(Thursday) - Ruby I - 12:00~15:00"
+And I should see "3/18(Thursday) - Ruby I - 12:00~15:00"
+
+@sort
+Scenario: Classes should be displayed in order after day and then time interval
+And a klass exists with date: "2010-03-19", course: course "ruby", start_time: "12:00", end_time: "13:00"
+And a klass exists with date: "2010-03-18", course: course "ruby", start_time: "11:00", end_time: "12:00"
+And a klass exists with date: "2010-03-20", course: course "ruby", start_time: "09:00", end_time: "13:00"
+And a klass exists with date: "2010-03-20", course: course "ruby", start_time: "17:00", end_time: "18:00"
+And a klass exists with date: "2010-03-19", course: course "ruby", start_time: "09:00", end_time: "13:00"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "03/15～03/20"
+Then I should see "3/18(Thursday) - Ruby I - 11:00~12:00 3/18(Thursday) - Ruby I - 12:00~15:00 3/19(Friday) - Ruby I - 09:00~13:00 3/19(Friday) - Ruby I - 12:00~13:00 3/20(Saturday) - Ruby I - 09:00~13:00 3/20(Saturday) - Ruby I - 17:00~18:00"

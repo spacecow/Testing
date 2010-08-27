@@ -291,11 +291,24 @@ class UsersController < ApplicationController
   end
 
   def reject_not_enrolled_courses( array )
-    array.reject!{|e| !@user.student_courses.include?( e.course )}
+    array.reject!{|e| @user.not_enrolled?( e.course )}
   end
 
   def reject_already_reserved_classes( array )
-    array.reject!{|e| @user.student_klasses.include?(e)}
+    array.reject!{|e| @user.already_reserved?(e)}
+  end
+
+  def reject_duplicates_and_randomize_instances( array )
+    klass_hash = {}
+    array.each do |e|
+      klass_hash[e.name] ||= e
+      klass_hash[e.name] = [klass_hash[e.name],e][rand(2)]
+    end
+    klass_hash.values
+  end
+
+  def sort_after_date_and_time_interval( array )
+    array.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
   end
   
   def reserve
@@ -308,9 +321,14 @@ class UsersController < ApplicationController
     end
 
     start_date = monday_after_next(todays_date)
-    @klasses = Klass.between_dates( start_date, start_date+6.day )
-    reject_not_enrolled_courses(@klasses)
-    reject_already_reserved_classes(@klasses)
+    temp_classes = Klass.between_dates( start_date, start_date+6.day )
+    reject_not_enrolled_courses(temp_classes)
+    reject_already_reserved_classes(temp_classes)
+    temp_classes = reject_duplicates_and_randomize_instances(temp_classes)
+    @klasses = sort_after_date_and_time_interval(temp_classes)
+  end
+
+  def already_reserved
   end
   
   def reserve2
@@ -362,7 +380,7 @@ class UsersController < ApplicationController
             klass = nil
             student_klass_ids.reverse.each do |klass_id|
               klass = Klass.find( klass_id )
-              @user.student_klasses << klass
+              @user.student_klasses << klass unless @user.already_reserved?( klass ) || @user.not_enrolled?( klass.course ) || @user.already_reserved_instance?( klass.to_s )
             end
             flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
             SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
@@ -374,7 +392,7 @@ class UsersController < ApplicationController
 	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
 	    #redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
           end
-          redirect_to user_path(current_user,:already_reserved=>"ok") and return if !staff?
+          redirect_to already_reserved_user_path(@user) and return #if !staff?
           redirect_to users_path( :status => "student" )
 	end
 	

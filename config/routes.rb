@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   :member => {
     :edit_courses=>:get,
     :reserve=>:get,
+    :already_reserved=>:get,
     :update_reserve=>:put,
     :confirm=>:get,
     :update_confirm=>:put,
