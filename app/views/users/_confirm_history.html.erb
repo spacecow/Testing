@@ -1,5 +1,12 @@
 <fieldset class="intro">
 <legend><%= t(:confirm_history) %></legend>
 <div id="confirm_history">
+<% unless @teaching_history.empty? %>
+  <ul>
+  <% @teaching_history.each do |klass| %>
+    <li><%= klass.name %></li>
+  <% end %>
+  </ul>
+<% end %>
 </div>
 </fieldset>

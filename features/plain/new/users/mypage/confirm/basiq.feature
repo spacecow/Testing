@@ -8,41 +8,67 @@ And a user: "prince" exist with username: "prince", role: "registrant, teacher",
 Scenario: Links on confirmation page (NOT IMPLEMENTED)
 
 @view @confirmable
-Scenario: View of classes that can be confirmed
-Given a klass: "klass18" exists with date: "2010-03-18"
-And a klass: "klass19" exists with date: "2010-03-19"
-And a klass: "klass20" exists with date: "2010-03-20"
-And a teaching exists with klass: klass "klass18", teacher: user "johan"
-And a teaching exists with klass: klass "klass20", teacher: user "aya"
-Given a user is logged in as "johan"
-When I browse to the confirm page for user: "johan" for "03/15～03/20"
-Then I should see "Confirm" as second title
-And I should see "3/18(Thursday)" within "div.confirmable"
-And I should not see "3/19(Friday)" within "div.confirmable"
-And I should not see "3/20(Saturday)" within "div.confirmable"
-And the page should have no "confirmed" section
-And the page should have no "taught" section
-And the page should have no "declined" section
+Scenario Outline: View of classes that can be confirmed
+Given a klass: "04" exists with date: "2010-03-04"
+Given a klass: "18" exists with date: "2010-03-18"
+Given a klass: "19" exists with date: "2010-03-19"
+And a teaching exists with klass: klass "04", teacher: user "prince", status_mask: 4
+And a teaching exists with klass: klass "18", teacher: user "prince", status_mask: <status>
+And a teaching exists with klass: klass "19", teacher: user "johan", status_mask: 4
+And a user is logged in as "johan"
+When I browse to the confirm page for user: "prince" for "03/15～03/20"
+Then I should not see "3/4(Thursday)"
+And I should <view> "3/18(Thursday)"
+And I should not see "3/19(Friday)"
+Examples:
+|status|view|
+|4|see|
+|33|not see|
+|2|not see|
+|9|not see|
+|17|not see|
 
-@view_confirmed
-Scenario: View of confirmed classes
-Given a klass: "klass18" exists with date: "2010-03-18"
-	And a klass: "klass19" exists with date: "2010-03-19"
-	And a klass: "klass20" exists with date: "2010-03-20"
-	And a teaching exists with klass: klass "klass18", teacher: user "johan", status_mask: 4
-	And a teaching exists with klass: klass "klass19", teacher: user "johan", status_mask: 33
-	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 33
+@view @confirmed
+Scenario Outline: View of confirmed classes
+Given a klass: "04" exists with date: "2010-03-04"
+Given a klass: "18" exists with date: "2010-03-18"
+Given a klass: "19" exists with date: "2010-03-19"
+And a teaching exists with klass: klass "04", teacher: user "prince", status_mask: 33
+And a teaching exists with klass: klass "18", teacher: user "prince", status_mask: <status>
+And a teaching exists with klass: klass "19", teacher: user "johan", status_mask: 33
 Given a user is logged in as "johan"
-When I go to the confirm page for user: "johan" on "2010-03-06"
-Then I should see "Classes to Confirm" within "div.confirmable"
-	And I should see "3/18(Thursday)" within "div.confirmable"
-	And I should not see "3/19(Friday)" within "div.confirmable"
-	And I should not see "3/20(Saturday)" within "div.confirmable"
-	And I should see "Already Confirmed Classes" within "div.confirmed"
-	And I should see "3/19(Friday)" within "div.confirmed"
-	And I should not see "3/20(Saturday)" within "div.confirmed"
-	And the page should have no "taught" section
-	And the page should have no "declined" section
+When I browse to the already confirmed page for user: "prince" for "03/15～03/20"
+Then I should not see "3/4(Thursday)"
+And I should <view> "3/18(Thursday)"
+And I should not see "3/19(Friday)"
+Examples:
+|status|view|
+|4|not see|
+|33|see|
+|2|not see|
+|9|see|
+|17|see|
+
+@view @history
+Scenario Outline: View of confirmed classes
+Given a klass: "18" exists with date: "2010-03-18"
+Given a klass: "19" exists with date: "2010-03-19"
+Given a klass: "29" exists with date: "2010-03-29"
+And a teaching exists with klass: klass "18", teacher: user "prince", status_mask: <status>
+And a teaching exists with klass: klass "19", teacher: user "johan", status_mask: 33
+And a teaching exists with klass: klass "29", teacher: user "prince", status_mask: 33
+Given a user is logged in as "johan"
+When I browse to the confirm history page for user: "prince" for "03/29～04/03"
+And I should <view> "3/18(Thursday)"
+And I should not see "3/19(Friday)"
+And I should not see "3/29(Monday)"
+Examples:
+|status|view|
+|4|not see|
+|33|see|
+|2|not see|
+|9|see|
+|17|see|
 
 @view_history
 Scenario: View of classes taught

@@ -1,5 +1,12 @@
 <fieldset class="intro">
 <legend><%= t(:already_confirmed) %></legend>
 <div id="already_confirmed">
+<% unless @confirmed_classes.empty? %>
+  <ul>
+  <% @confirmed_classes.each do |klass| %>
+    <li><%= klass.name %></li>
+  <% end %>
+  </ul>
+<% end %>
 </div>
 </fieldset>

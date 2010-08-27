@@ -4,19 +4,6 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def show
-    @user = User.find( params[:id] )
-    if !params[:reserve].nil?; @page = "reserve"
-    elsif !params[:already_reserved].nil?; @page = "already_reserved"
-    elsif !params[:reserve_history].nil?; @page = "reserve_history"
-    elsif !params[:confirm].nil?; @page = "confirm"
-    elsif !params[:already_confirmed].nil?; @page = "already_confirmed"
-    elsif !params[:confirm_history].nil?; @page = "confirm_history"
-    end
-#    params[:commit] = "Reserve" if params[:commit] == "Go!"
-#    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
-
-#    @page = params[:commit].blank? ? nil : params[:commit].downcase
-
     todays_date = Time.zone.now.beginning_of_day
 
     if can?( :edit_role, User ) && !Klass.first.nil?
@@ -42,6 +29,22 @@ class UsersController < ApplicationController
         todays_date = Time.zone.parse( @saturday )
       end
     end
+
+    @user = User.find( params[:id] )
+    if !params[:reserve].nil?; @page = "reserve"
+    elsif !params[:already_reserved].nil?; @page = "already_reserved"
+    elsif !params[:reserve_history].nil?; @page = "reserve_history"
+    elsif !params[:confirm].nil?
+      @page = "confirm"
+    elsif !params[:already_confirmed].nil?; @page = "already_confirmed"
+    elsif !params[:confirm_history].nil?; @page = "confirm_history"
+    end
+#    params[:commit] = "Reserve" if params[:commit] == "Go!"
+#    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
+
+#    @page = params[:commit].blank? ? nil : params[:commit].downcase
+
+
 
     start_date = todays_date + 6.day
     start_date += 1.day while start_date.strftime("%a") != "Mon"
