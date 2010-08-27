@@ -1,73 +1,36 @@
-<div class="form">
-<fieldset class="form">
-<legend class="form"><%= @user.name %> - <%= t( :reserve ) %></legend>
+<div class="show">
+<fieldset class="show">
+<legend><%= @user.name %></legend>
 
-<div class="intro">
-<% if can?( :edit_role, User ) && !Klass.first.nil? %>
-	<%- form_for :user, :url => { :action=>'reserve' }, :html => { :method=>'get' } do |f| -%>
-		<label for="saturday">Week</label>
-		<%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
-		<%= f.submit "Go!" %>
-	<%- end -%>
+<fieldset class="intro">
+<legend><%= t(:reserve) %></legend>
+<div id="reservable">
+<p>
+<% form_for :user, :url=>reserve_user_path(@user), :html=>{:method=>:get} do |f| %>
+  <% if can?( :edit_role, User ) && !Klass.first.nil? %>
+    <label for="saturday">Week</label>
+    <%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
+    <%= f.submit "Go!", :name => "reserve" %>
+  <%- end -%>
 <% end %>
-<% if @reservable_klasses.empty? %>
-<%= t('message.no_reservations_today') %>
+</p>
+<% if @klasses.empty? %>
+  <%= t('message.no_reservations_today') %>
 <% else %>
-<div class="reservable">
-<h2><%= t('header.classes_to_reserve') %></h2>
-<% semantic_form_for @user, :url => update_reserve_user_path( @user ), :method => :put do |f| %>
-	<% f.inputs do %>
-		<%= f.input :student_klasses, :as=>:check_boxes, :label=>false,
-								:collection => @reservable_klasses, :required=>false %>
-		<%= hidden_field_tag :saturday, @saturday %>
-		<%# @reserved_klasses.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
-		<%# @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
-	<% end %>
-	<% f.buttons do %>
-		<%= f.commit_button t(:reserve) %>
-	<% end %>
-	<%= t('message.time_for_reservation') %>
+<% semantic_form_for @user, :url=>update_reserve_user_path(@user), :method=>:put do |f| %>
+  <% f.inputs do %>
+    <%= f.input :student_klasses, :as=>:check_boxes, :label=>false,
+                :collection => @klasses, :required=>false %>
+    <%= hidden_field_tag :saturday, @saturday %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button t(:reserve) %>
+  <% end %>
+  <%= t('message.time_for_reservation') %>
+<% end %>
 <% end %>
 </div>
-<% end %>
-</div>
-
-<% unless @reserved_attendances.empty? %>
-<div class="reserved">
-<h2><%= t('header.already_reserved_classes') %></h2>
-<ul>
-<% @reserved_attendances.each do |attendance| %>
-	<% if attendance.cancel %>
-		<% if can? :edit, attendance %>
-			<li class="cancel"><%= attendance.klass.name %></li>
-		<% end %>
-	<% else %>
-		<li><%= attendance.klass.name %></li>
-	<% end %>
-<% end %>
-</ul>
-</div>
-<% end %>
-
-<% unless @attendance_history.empty? %>
-<div class="history">
-<h2><%= t('header.class_history') %></h2>
-<ul>
-<% @attendance_history.each do |attendance| %>
-	<% if attendance.absent || attendance.cancel %>
-		<% if can? :edit, attendance %>
-			<li <%= attendance.class_attributes %>><%= attendance.klass.name %></li>
-		<% end %>
-	<% else %>
-		<li><%= attendance.klass.name %></li>
-	<% end %>
-<% end %>
-</ul>
-</div>
-<% end %>
-
-<div id="links">
-</div>
+</fieldset>
 
 </fieldset>
 </div>

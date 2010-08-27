@@ -92,92 +92,92 @@ class UsersController < ApplicationController
     @declined_classes = sorted_klasses.
       reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
   end
-
-	def index
-		@status = params[:status] || "all"
-		@users = @status=="all" ? User.all : User.with_role( @status )
-	end
-
+  
+  def index
+    @status = params[:status] || "all"
+    @users = @status=="all" ? User.all : User.with_role( @status )
+  end
+  
   def new
-  	@user = User.new(
-  		:nationality => ( japanese? ? "日本" : "" ),
-  		:invitation_token => params[:invitation_token]
-  	)
-  	@user.email = @user.invitation.recipient_email if @user.invitation
+    @user = User.new(
+                     :nationality => ( japanese? ? "日本" : "" ),
+                     :invitation_token => params[:invitation_token]
+                     )
+    @user.email = @user.invitation.recipient_email if @user.invitation
   end
   
   def create
-  	@user = User.new( params[:user] )
-  	@user.invitation_limit = 0
+    @user = User.new( params[:user] )
+    @user.invitation_limit = 0
     if @user.save
       if( params[:user][:avatar].blank? )
       	flash[:notice] = t('users.notice.new_registration')
-	    	god = User.with_role(:god).first
-	    	mail = Mail.create!(
-	      	:sender_id => god.id,
-	      	:subject => "registered#user",
-	      	:message => "users.registered#Mafumafu"
-	      )
-	      Recipient.create!( :mail_id=>mail.id, :user_id=>god.id )
+        god = User.with_role(:god).first
+        mail = Mail.create!(
+                            :sender_id => god.id,
+                            :subject => "registered#user",
+                            :message => "users.registered#Mafumafu"
+                            )
+        Recipient.create!( :mail_id=>mail.id, :user_id=>god.id )
       	redirect_to events_path
-    	else
-    		render :action => "crop"
-  		end
+      else
+        render :action => "crop"
+      end
     else
       render :action => 'new'
     end
   end
   
   def edit
-  	@user = User.find( params[:id] )
-  	@user.bank.build if @user.bank.empty?
+    @user = User.find( params[:id] )
+    @user.bank.build if @user.bank.empty?
   end
   
   def update
-		unless params[:user][:courses_teachers_attributes].nil?
-	  	params[:user][:courses_teachers_attributes].each do |k,v|
-				v.merge!( :_delete =>true ) if v[:chosen] == "0"
-			end
-		end
-  	@user = User.find( params[:id] )
-  	params[:user].delete(:occupation) if params[:user][:occupation].blank?
+    unless params[:user][:courses_teachers_attributes].nil?
+      params[:user][:courses_teachers_attributes].each do |k,v|
+        v.merge!( :_delete =>true ) if v[:chosen] == "0"
+      end
+    end
+    @user = User.find( params[:id] )
+    params[:user].delete(:occupation) if params[:user][:occupation].blank?
     
     if @user.update_attributes(params[:user])
       if( params[:user][:avatar].blank? )
-      	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
-      		flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase )
-    		else
-      		flash[:notice] = t('notice.update_success',:object=>t(:user).downcase )
-      	end
-      	if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
-      		redirect_to users_path( :status => "teacher" )
-      	else
-      		redirect_to mypage_path
-      	end
-    	else
-    		render :action => "crop"
-  		end
-    else
-    	if !params[:user][:courses_teachers_attributes].blank?
-		  	params[:user][:courses_teachers_attributes].each do |k,v|
-		  		@user.courses_teachers.select{|e| e.id == v[:id].to_i}.map{|e| e.chosen = false} if v[:chosen] == "0"
-				end
-				@status = params[:status]
-				@courses = sort_courses @user.courses_teachers.map(&:course)
-    		render :action => 'edit_courses'
+        if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
+          flash[:notice] = t('notice.update_success',:object=>t('courses.title').downcase )
+        else
+          flash[:notice] = t('notice.update_success',:object=>t(:user).downcase )
+        end
+        if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
+          redirect_to users_path( :status => "teacher" )
+        else
+          redirect_to mypage_path
+        end
       else
-      	render :action => 'edit'
-    	end
+        render :action => "crop"
+      end
+    else
+      if !params[:user][:courses_teachers_attributes].blank?
+        params[:user][:courses_teachers_attributes].each do |k,v|
+          @user.courses_teachers.select{|e| e.id == v[:id].to_i}.map{|e| e.chosen = false} if v[:chosen] == "0"
+        end
+        @status = params[:status]
+        @courses = sort_courses @user.courses_teachers.map(&:course)
+        render :action => 'edit_courses'
+      else
+        render :action => 'edit'
+      end
     end
   end
-
+  
   def destroy
-  	@user = User.find( params[:id] )
+    @user = User.find( params[:id] )
     @user.destroy
     flash[:notice] = t('notice.delete_success',:object=>t(:user).downcase )
     redirect_to users_url
   end
-    
+  
   def new_event_register
     @user = current_user2
     @event = Event.find( params[:event_id] )
@@ -284,7 +284,33 @@ class UsersController < ApplicationController
     @teachers = User.with_role( :teacher ).not_staff
   end
 
+  def monday_after_next( todays_date )
+    start_date = todays_date + 6.day
+    start_date += 1.day while start_date.strftime("%a") != "Mon"
+    start_date
+  end
+
+  def reject_not_enrolled_courses( array )
+    array.reject!{|e| !@user.student_courses.include?( e.course )}
+  end
+
+  def reject_already_reserved_classes( array )
+    array.reject!{|e| @user.student_klasses.include?(e)}
+  end
+  
   def reserve
+    todays_date = Time.zone.now.beginning_of_day
+    if can?( :edit_role, User ) && Klass.count != 0
+      mon = Klass.last_monday
+      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+      @saturday = params[:saturday]
+      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+    end
+
+    start_date = monday_after_next(todays_date)
+    @klasses = Klass.between_dates( start_date, start_date+6.day )
+    reject_not_enrolled_courses(@klasses)
+    reject_already_reserved_classes(@klasses)
   end
   
   def reserve2

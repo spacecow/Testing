@@ -117,11 +117,11 @@ end
 
 Then /^the "(.*)" field should have options "(.*)"$/ do |select_id, options| 
   begin
-  	field = field_with_id(select_id)
+    field = field_by_xpath("//select[@id='#{select_id}']")
   rescue Webrat::NotFoundError
-  	field = field_labeled(select_id) 
-	end
-	field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
+    field = field_labeled(select_id) 
+  end
+  field.options.map{|e| e.element.inner_html.blank? ? "BLANK" : e.element.inner_html }.join(", ").should == options
 end
 
 Then /^"(.*)" should have no blank option$/ do |select_id| 

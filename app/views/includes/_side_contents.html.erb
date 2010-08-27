@@ -14,7 +14,7 @@
       <li><%= link_to t(:confirm), mypage_path( current_user.username ) %></li>
       <% end %>
       <% if current_user.role? :student %>
-      <li><%= link_to t(:reserve), mypage_path( current_user.username ) %></li>
+      <li><%= link_to t(:reserve), reserve_user_path( current_user ) %></li>
       <% end %>				
       <li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
       <li><%= link_to t( 'logout.text' ), logout_user_path %></li>

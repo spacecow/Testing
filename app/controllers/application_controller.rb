@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
  
@@ -19,7 +20,8 @@ class ApplicationController < ActionController::Base
   helper_method :teacher?
   helper_method :association_delete_error_messages
   helper_method :association_delete_error_message
-	helper_method :units_per_schedule
+  helper_method :units_per_schedule
+  helper_method :week_range
  
   session :session_key => '_yoyaku_session_id'
   layout "courses"
@@ -92,6 +94,19 @@ class ApplicationController < ActionController::Base
     I18n.locale == 'ja'
   end
   
+  def week_range(start_date, end_date, todays_date, range)
+    week_intervals = [""]
+    todays = [""]
+    range.times do
+      week_intervals << "#{start_date.strftime('%m/%d')}～#{end_date.strftime('%m/%d')}"
+      todays << "#{todays_date.strftime("%Y-%m-%d")}"
+      start_date -= 7.day
+      end_date -= 7.day
+      todays_date -= 7.day
+    end
+    week_intervals.zip( todays )
+  end  
+
   def set_default_user_language
     #@current_settings ||= Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
