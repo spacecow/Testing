@@ -10,79 +10,82 @@
   <%= yield(:head) %>
 </head>
 <body>
-	<div id="container">	
-	  <%- flash.each do |key, msg| -%>  
-      <div id="<%= key %>">
-        <% if false %><p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p><% end %>
-        <p><%= msg %></p>    
-      </div>
-      <div class="clear"></div>
+  <div id="container">	
+    <%- flash.each do |key, msg| -%>  
+    <div id="<%= key %>">
+      <% if false %><p style="float:right;"><%= link_to_function 'X', "Effect.Fade('#{key}')" %></p><% end %>
+      <p><%= msg %></p>    
+    </div>
+    <div class="clear"></div>
     <%- end -%>
-		<% if can? :index, Event %>
-			<% cache current_user2 ? "banner_#{current_user2.cache_key}" : (japanese? ? 'japanese_banner' : 'english_banner') do %>
-		  <div id="banner">
-			  <table border="0" align="center"><tr><td>
-				  <ul id="nav">
-						<% if can? :index, Todo %>
-							<li><%= link_to t('todos.title'), todos_path %>
-							<% if can? :index, Vote %>	
-								<ul>
-									<li>------------------</li>
-									<li><%= link_to t('votes.title'), votes_path %></li>							
-								</ul>
-							<% end %>							
-							</li>
-						<% end %>
-						
-						<% if can? :index, Klass %>
-							<li><%= link_to t('klasses.title'), klasses_path %>
-							<% if can? :index, TemplateClass %>	
-								<ul>
-									<li>------------------</li>
-									<li><%= link_to t('template_klasses.title'), template_classes_path %></li>
-									<li><%= link_to t('courses.title'), courses_path %></li>
-								</ul>
-							<% end %>							
-							</li>
-						<% end %>
-
-						<li><%= link_to t('events.title'), events_path %>
-							<% if can? :index, Registrant %>	
-								<ul>
-									<li>------------------</li>
-									<li><%= link_to t('registrants.title'), registrants_path %></li>							
-								</ul>
-							<% end %>
-						</li>				
-						
-						<% if can? :index, User %>	
-							<li><%= link_to t('users.title'), users_path %>
-								<ul>
-									<li>------------------</li>
-									<li><%= link_to t('teachers.title'), users_path(:status=>'teacher') %></li>
-									<li><%= link_to t('students.title'), users_path(:status=>'student') %></li>
-								</ul>
-							</li>							
-						<% end %>
-						
-						<% if can? :index, Kanji %>	
-							<li><%= link_to t('kanjis.title'), kanjis_path %></li>									
-						<% end %>
-					</ul>
-				</td></tr></table>
-			</div>
-			<% end %>
+    <% if staff? %>
+    <%# if can? :index, Event %>
+    <% cache current_user2 ? "banner_#{current_user2.cache_key}" : (japanese? ? 'japanese_banner' : 'english_banner') do %>
+    <div id="banner">
+      <table border="0" align="center"><tr><td>
+	    <ul id="nav">
+	      <% if can? :index, Todo %>
+	      <li><%= link_to t('todos.title'), todos_path %>
+		<% if can? :index, Vote %>	
+		<ul>
+		  <li>------------------</li>
+		  <li><%= link_to t('votes.title'), votes_path %></li>							
+		</ul>
+		<% end %>							
+	      </li>
+	      <% end %>
+	      
+	      <% if can? :index, Klass %>
+	      <li><%= link_to t('klasses.title'), klasses_path %>
+		<% if can? :index, TemplateClass %>	
+		<ul>
+		  <li>------------------</li>
+		  <li><%= link_to t('template_klasses.title'), template_classes_path %></li>
+		  <li><%= link_to t('courses.title'), courses_path %></li>
+		</ul>
+		<% end %>							
+	      </li>
+	      <% end %>
+              
+	      <li><%= link_to t('events.title'), events_path %>
+		<% if can? :index, Registrant %>	
+		<ul>
+		  <li>------------------</li>
+		  <li><%= link_to t('registrants.title'), registrants_path %></li>							
+		</ul>
 		<% end %>
-		<div id="right_column">
-			<%= render :partial => "/includes/side_contents" %>
-		</div>
-		<div id="main">
-	    <%= yield :layout %>
-			<div id="footer">
-				Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	
-			</div>
-	  </div>
-		<div class="clear"></div>
-	</div>    
+	      </li>				
+	      
+	      <% if can? :index, User %>	
+	      <li><%= link_to t('users.title'), users_path %>
+		<ul>
+		  <li>------------------</li>
+		  <li><%= link_to t('teachers.title'), users_path(:status=>'teacher') %></li>
+		  <li><%= link_to t('students.title'), users_path(:status=>'student') %></li>
+		</ul>
+	      </li>							
+	      <% end %>
+	      
+	      <% if can? :index, Kanji %>	
+	      <li><%= link_to t('kanjis.title'), kanjis_path %></li>									
+	      <% end %>
+	    </ul>
+      </td></tr></table>
+    </div>
+    <% end %>
+    <% end %>
+    <% if true %>
+    <div id="right_column">
+      <%= render :partial => "/includes/side_contents" %>
+    </div>
+    <% end %>
+    <div id="main">
+      <%= yield :layout %>
+      <div id="footer">
+	Questions/suggestions/corrections are sent to: johan@reserve-gakuwarinet.com	
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>    
 </body>
 </html>

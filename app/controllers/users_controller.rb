@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
-	before_filter :find_multiple_users, :only => [:edit_multiple, :update_multiple]
+  before_filter :find_multiple_users, :only => [:edit_multiple, :update_multiple]
+  before_filter :find_user_by_username, :only => :show
   load_and_authorize_resource
 
   def show
@@ -29,8 +30,7 @@ class UsersController < ApplicationController
         todays_date = Time.zone.parse( @saturday )
       end
     end
-
-    @user = User.find( params[:id] )
+    
     if !params[:reserve].nil?; @page = "reserve"
     elsif !params[:already_reserved].nil?; @page = "already_reserved"
     elsif !params[:reserve_history].nil?; @page = "reserve_history"
@@ -38,6 +38,10 @@ class UsersController < ApplicationController
       @page = "confirm"
     elsif !params[:already_confirmed].nil?; @page = "already_confirmed"
     elsif !params[:confirm_history].nil?; @page = "confirm_history"
+    end
+    if @page.blank?
+      @page = "reserve" if student?
+      @page = "confirm" if teacher?
     end
 #    params[:commit] = "Reserve" if params[:commit] == "Go!"
 #    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
@@ -53,13 +57,13 @@ class UsersController < ApplicationController
     Klass.all(
       :conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
       :include=>:course ).
-      reject{|e| !@user.student_courses.include?( e.course )}.each do |e|
-      unless @user.student_klasses.include?( e.name )
-        @klasses[e.name] ||= e
-        @klasses[e.name] = [@klasses[e.name],e][rand(2)]
-      end
-      # @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]))
-      end
+      reject{|e| !@user.student_courses.include?( e.course )}.map{|e| @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]))}
+      #.each do |e|
+      #unless @user.student_klasses.include?( e.name )
+      #  @klasses[e.name] ||= e
+      #  @klasses[e.name] = [@klasses[e.name],e][rand(2)]
+      #end
+      #end
 
     @reservable_klasses = []
     if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
@@ -175,172 +179,177 @@ class UsersController < ApplicationController
   end
     
   def new_event_register
-  	@user = current_user2
-		@event = Event.find( params[:event_id] )
-		#@user.registrants.build( :event_id => @event.id )
-	end
-	
-	def create_event_register
-		@user = current_user2
-		@event = Event.find( params[:event_id] )
-		if @user.update_attributes(params[:user])
+    @user = current_user2
+    @event = Event.find( params[:event_id] )
+    #@user.registrants.build( :event_id => @event.id )
+  end
+  
+  def create_event_register
+    @user = current_user2
+    @event = Event.find( params[:event_id] )
+    if @user.update_attributes(params[:user])
       flash[:notice] = t('users.notice.successful_registration_for', :event => @event.title( japanese? ))
       redirect_to @event
     else
       render :action => 'new_event_register'
     end
-	end
-	
-	def edit_role
-		@user = User.find( params[:id] )
-	end
-	
-	#:roles are not updated if :invitation_id is nil, why?
-	def update_role
-		@user = User.find( params[:id] )
-		@user.update_attributes(params[:user])
-		redirect_to users_path	
-	end
-	
-	def change_password
-		@token = params[:token]
-		@reset_password = ResetPassword.find_by_token( @token )
-		@user = @reset_password.user unless @reset_password.nil?
-		if @user.nil?
-			flash[:error] = t('error.no_pass_key')
-			redirect_to root_path
-		elsif @reset_password.used
-			flash[:error] = t('error.used_pass_key')
-			redirect_to root_path			
-		end
-	end
-	
-	def update_password
-		@token = params[:token]
-		@reset_password = ResetPassword.find_by_token( params[:token] )
-		@user = @reset_password.user unless @reset_password.nil?
-		if @user.nil?
-			flash[:error] = t('error.pass_key')
-			redirect_to root_path
-		end
-		if @user.update_attributes(params[:user])
-    	flash[:notice] = t('notice.change_success', :object => t(:password).downcase )
-    	@reset_password.update_attribute( :used, true )
-    	#@reset_password.destroy
-    	redirect_to root_path
+  end
+  
+  def edit_role
+    @user = User.find( params[:id] )
+  end
+  
+  #:roles are not updated if :invitation_id is nil, why?
+  def update_role
+    @user = User.find( params[:id] )
+    @user.update_attributes(params[:user])
+    redirect_to users_path	
+  end
+  
+  def change_password
+    @token = params[:token]
+    @reset_password = ResetPassword.find_by_token( @token )
+    @user = @reset_password.user unless @reset_password.nil?
+    if @user.nil?
+      flash[:error] = t('error.no_pass_key')
+      redirect_to root_path
+    elsif @reset_password.used
+      flash[:error] = t('error.used_pass_key')
+      redirect_to root_path			
+    end
+  end
+  
+  def update_password
+    @token = params[:token]
+    @reset_password = ResetPassword.find_by_token( params[:token] )
+    @user = @reset_password.user unless @reset_password.nil?
+    if @user.nil?
+      flash[:error] = t('error.pass_key')
+      redirect_to root_path
+    end
+    if @user.update_attributes(params[:user])
+      flash[:notice] = t('notice.change_success', :object => t(:password).downcase )
+      @reset_password.update_attribute( :used, true )
+      #@reset_password.destroy
+      redirect_to root_path
     else
       render :action => 'change_password'
     end
-	end
-	
-	def confirm
-		todays_date = Time.zone.now
-		unless params[:majballe].nil?
-			todays_date = Time.zone.parse( params[:majballe] ) if can? User, :edit_role
-		end
-
-		sorted_klasses = @user.teacher_klasses.all.
-			sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		coming_klasses = sorted_klasses.
-			reject{|e| e.teaching.nil? }.
-			reject{|e| e.date < todays_date}
-
-		@confirmable_classes = coming_klasses.
-			reject{|e| e.teaching.status?( :confirmed )}.
-			reject{|e| e.teaching.status?( :declined )}
-		@confirmed_classes = coming_klasses.
-			reject{|e| !e.teaching.status?( :confirmed )}
-		@teaching_history = sorted_klasses.
-			reject{|e| e.teaching.nil? }.
-			reject{|e| e.date >= todays_date}.
-			reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
-		@declined_classes = sorted_klasses.
-			reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
-	end
-	
-	def update_confirm
-		if @user.update_attributes(params[:user])
-			flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
-		end
-    redirect_to mypage_path and return if current_user.role? :teacher
+  end
+  
+  def confirm
+  end
+        
+  def confirm2
+    todays_date = Time.zone.now
+    unless params[:majballe].nil?
+      todays_date = Time.zone.parse( params[:majballe] ) if can? User, :edit_role
+    end
+    
+    sorted_klasses = @user.teacher_klasses.all.
+      sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    coming_klasses = sorted_klasses.
+      reject{|e| e.teaching.nil? }.
+      reject{|e| e.date < todays_date}
+    
+    @confirmable_classes = coming_klasses.
+      reject{|e| e.teaching.status?( :confirmed )}.
+      reject{|e| e.teaching.status?( :declined )}
+    @confirmed_classes = coming_klasses.
+      reject{|e| !e.teaching.status?( :confirmed )}
+    @teaching_history = sorted_klasses.
+      reject{|e| e.teaching.nil? }.
+      reject{|e| e.date >= todays_date}.
+      reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
+    @declined_classes = sorted_klasses.
+      reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
+  end
+  
+  def update_confirm
+    if @user.update_attributes(params[:user])
+      flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
+    end
+    redirect_to user_path(current_user,:already_confirmed=>"ok") and return unless staff?
     redirect_to users_path( :status => "teacher" )
-	end
-	
-	def salary
-		@months = t('date.month_names').compact.zip((1..12).to_a )
-		@salary_month = params[:salary_month] || Time.zone.now.month
-		
-		@start_date = Time.zone.parse( "#{Date.current.year}-#{@salary_month}-01" )
-		end_month = (@salary_month.to_i+1)%12
-		end_year  = Time.zone.now.year+(@salary_month.to_i+1)/12
-		@end_date = Time.zone.parse( "#{end_year}-#{end_month}-01" )
-		@teachers = User.with_role( :teacher ).not_staff
-	end
-	
-	def reserve	
-		todays_date = Time.zone.now
-		
-		if can?( :edit_role, User ) && !Klass.first.nil?
-			mon_date = Klass.last( :order => "date" ).date
-			mon_date -= 1.day while mon_date.strftime("%a") != "Mon"
-			sat_date = mon_date + 5.day
-			reserve_date = sat_date - 14.day			
-			week_intervals = [""]
-			saturdays = [""]
-			5.times do
-				week_intervals << "#{mon_date.strftime('%m/%d')}～#{sat_date.strftime('%m/%d')}"
-				saturdays << "#{reserve_date.strftime("%Y-%m-%d")}"
-				mon_date -= 7.day
-				sat_date -= 7.day
-				reserve_date -= 7.day
-			end
-			@weeks = week_intervals.zip( saturdays )
-		end
+  end
+  
+  def salary
+    @months = t('date.month_names').compact.zip((1..12).to_a )
+    @salary_month = params[:salary_month] || Time.zone.now.month
+    
+    @start_date = Time.zone.parse( "#{Date.current.year}-#{@salary_month}-01" )
+    end_month = (@salary_month.to_i+1)%12
+    end_year  = Time.zone.now.year+(@salary_month.to_i+1)/12
+    @end_date = Time.zone.parse( "#{end_year}-#{end_month}-01" )
+    @teachers = User.with_role( :teacher ).not_staff
+  end
 
-		unless Klass.first.nil?
-			@saturday = params[:saturday]
-			unless @saturday.nil?
-				todays_date = Time.zone.parse( @saturday )
-			end
-		end
-
-		start_date = todays_date + 6.day
-		start_date += 1.day while start_date.strftime("%a") != "Mon"
-		@klasses = {}
-		Klass.all(
-			:conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
-			:include=>:course ).
-				reject{|e| !@user.student_courses.include?( e.course )}.
-				map{|e| @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
-		@reservable_klasses = []
-		if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
-			@reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		end	
-		@reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-		@attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-	end
-	
-	def update_reserve
-		p params
-		student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
-    if !student_klass_ids.empty?
-    	klass = nil
-    	student_klass_ids.reverse.each do |klass_id|
-  			klass = Klass.find( klass_id )
-  			@user.student_klasses << klass
-  		end
-  		flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
-	  	SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
-	  	#mail = Mail.create!(
+  def reserve
+  end
+  
+  def reserve2
+    todays_date = Time.zone.now
+    
+    if can?( :edit_role, User ) && !Klass.first.nil?
+      mon_date = Klass.last( :order => "date" ).date
+      mon_date -= 1.day while mon_date.strftime("%a") != "Mon"
+      sat_date = mon_date + 5.day
+      reserve_date = sat_date - 14.day			
+      week_intervals = [""]
+      saturdays = [""]
+      5.times do
+        week_intervals << "#{mon_date.strftime('%m/%d')}～#{sat_date.strftime('%m/%d')}"
+        saturdays << "#{reserve_date.strftime("%Y-%m-%d")}"
+        mon_date -= 7.day
+        sat_date -= 7.day
+        reserve_date -= 7.day
+      end
+      @weeks = week_intervals.zip( saturdays )
+    end
+    
+    unless Klass.first.nil?
+      @saturday = params[:saturday]
+      unless @saturday.nil?
+        todays_date = Time.zone.parse( @saturday )
+      end
+    end
+    
+    start_date = todays_date + 6.day
+    start_date += 1.day while start_date.strftime("%a") != "Mon"
+    @klasses = {}
+    Klass.all(
+              :conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
+              :include=>:course ).
+      reject{|e| !@user.student_courses.include?( e.course )}.
+      map{|e| @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)])) }
+    @reservable_klasses = []
+    if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
+      @reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    end	
+    @reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+    @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
+  end
+  
+  def update_reserve
+    student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
+          if !student_klass_ids.empty?
+            klass = nil
+            student_klass_ids.reverse.each do |klass_id|
+              klass = Klass.find( klass_id )
+              @user.student_klasses << klass
+            end
+            flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+            SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
+            #mail = Mail.create!(
 	    #	:sender_id => User.first.id,
 	    #	:subject => "Reservation",
 	    #	:message => "You have reserved a class!"
 	    #)
 	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-	    redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
-		end
-    redirect_to mypage_path and return if current_user.role? :student
-    redirect_to users_path( :status => "student" )
+	    #redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
+          end
+          redirect_to user_path(current_user,:already_reserved=>"ok") and return if !staff?
+          redirect_to users_path( :status => "student" )
 	end
 	
 	def edit_courses
@@ -383,20 +392,29 @@ class UsersController < ApplicationController
 
 
 private
-
+        
   def find_multiple_users
     @users = User.find( params[:user_ids] )
   end
+  
+  def find_user_by_username
+    if params[:id].nil?
+      @user = User.find_by_username( params[:username] )
+    else
+      @user = User.find( params[:id] )
+    end
+  end
 
-	def sort_courses( courses=Course.all )
-  	@courses = []
-  	@sorting = Sorting.new
-  	@courses_groups = courses.sort_by(&:name).group_by(&:category)
-		@sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
-			@courses_groups[key].map{|course| @courses.push course }
-		end
-		@courses		
-	end
+
+  def sort_courses( courses=Course.all )
+    @courses = []
+    @sorting = Sorting.new
+    @courses_groups = courses.sort_by(&:name).group_by(&:category)
+    @sorting.sort_in_mogi_order( @courses_groups.keys ).each do |key|
+      @courses_groups[key].map{|course| @courses.push course }
+    end
+    @courses		
+  end
 end
 
 

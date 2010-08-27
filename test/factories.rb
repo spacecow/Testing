@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Factory.define :attendance do |f|
 end
 
@@ -147,7 +148,7 @@ end
 Factory.define :user do |f|
 	f.sequence(:username) { |n| "username#{n}" }
 	f.sequence(:email) { |n| "bar#{n}@example.com" }
-	f.language "ja"
+	f.language "en"
 	f.role "registrant"
 	f.male true
 	f.name "Fake Fakeson"

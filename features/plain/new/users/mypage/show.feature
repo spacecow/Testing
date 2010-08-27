@@ -37,6 +37,7 @@ And a user is logged in as "reiko"
 When I go to the show page of that user
 And I press "<button>"
 Then the page should have a "<section>" section
+And I should see "<button>" as second title
 Examples:
 | button                 | section          |
 | Reserve                | reservable       |
@@ -44,15 +45,16 @@ Examples:
 | History of Reservation | reserve_history  |
 
 @actions @teacher
-Scenario Outline:
+Scenario Outline: Actions for teacher
 Given a user exists with username: "prince", role: "registrant, teacher", language: "en"
 And a user is logged in as "prince"
 When I go to the show page of that user
 And I press "<button>"
 Then the page should have a "<section>" section
+And I should see "<button>" as second title
 Examples:
 | button                  | section           |
-| Confirm                 | confirfmable      |
+| Confirm                 | confirmable       |
 | Already Confirmed       | already_confirmed |
 | History of Confirmation | confirm_history   |
 
@@ -77,7 +79,15 @@ Examples:
 | aya   | show page for user: "aya"   | show page for user: "prince" |
 | johan | show page for user: "johan" | show page for user: "prince" |
 
-
+@default
+Scenario Outline: The default page should be Reserve&Confirm
+Given a user exists with username: "<user>", role: "<role>"
+And a user is logged in as "<user>"
+Then the page should have a "<section>" section
+Examples:
+| user   | role    | section     |
+| reiko  | student | reservable  |
+| prince | teacher | confirmable |
 
 
 

@@ -8,58 +8,58 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mails, :collection => { :box => :get }
 
   map.resources :reset_passwords
-
-	map.resources :votes
+  
+  map.resources :votes
   map.resources :todos, :member => {:add_comment => :put, :edit_comment => :get, :toggle_close => :get}
-	map.resources :events, :member => {:add_comment => :put, :edit_comment => :get, :move_comment => :get}
-
+  map.resources :events, :member => {:add_comment => :put, :edit_comment => :get, :move_comment => :get}
+  
   map.resources :invitations, :collection => { :deliver => :get }
-	map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
-	map.reset_password '/change_password/:token', :controller => 'users', :action => 'change_password'
-
+  map.signup '/signup/:invitation_token', :controller => 'users', :action => 'new'
+  map.reset_password '/change_password/:token', :controller => 'users', :action => 'change_password'
+  
   map.resources :galleries
   map.resources :photos
-
+  
   map.resources :kanjis
-	map.resources :onyomis
-	map.resources :kunyomis
-	map.resources :meanings
-
+  map.resources :onyomis
+  map.resources :kunyomis
+  map.resources :meanings
+  
   map.resources :glossaries, :collection => { :quiz => :get, :quiz_init => :get }, :member => { :check => :put }
-
-	map.login_user '/login_user/:username', :controller => 'user_sessions', :action => 'new'
-	map.login_user '/login_user', :controller => "user_sessions", :action => "new"
-	map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
-	map.mypage '/mypage', :controller => "events", :action => "index"
-	
-	map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
-
+  
+  map.login_user '/login_user/:username', :controller => 'user_sessions', :action => 'new'
+  map.login_user '/login_user', :controller => "user_sessions", :action => "new"
+  map.logout_user "logout_user", :controller => "user_sessions", :action => "destroy"
+  map.mypage '/mypage/:username', :controller => "users", :action => "show"
+  
+  map.toggle_user_language "toggle_user_language", :controller => "settings", :action => "toggle_user_language", :method => :put
+  
   map.resources :user_sessions
-
+  
   map.resources :users,
   :member => {
-  	:edit_courses=>:get,
-  	:reserve=>:get,
-  	:update_reserve=>:put,
-  	:confirm=>:get,
-  	:update_confirm=>:put,
-  	:new_event_register => :post,
-  	:create_event_register => :put,
-  	:edit_role => :get,
-  	:update_role => :put,
-  	:daily_teacher_reminder => :get,
-  	:weekly_teacher_schedule => :get,},
+    :edit_courses=>:get,
+    :reserve=>:get,
+    :update_reserve=>:put,
+    :confirm=>:get,
+    :update_confirm=>:put,
+    :new_event_register => :post,
+    :create_event_register => :put,
+    :edit_role => :get,
+    :update_role => :put,
+    :daily_teacher_reminder => :get,
+    :weekly_teacher_schedule => :get,},
   :collection => {
-  	:edit_multiple => :post,
-  	:update_multiple =>:put,
-  	:salary => :get,
-  	:change_password => :get,
-  	:update_password => :put }
-
-	map.resources :comments
+    :edit_multiple => :post,
+    :update_multiple =>:put,
+    :salary => :get,
+    :change_password => :get,
+    :update_password => :put }
+  
+  map.resources :comments
   map.resources :registrants
   map.resources :kanjis, :member => {:check => :get}
-	map.resources :scheduled_units
+  map.resources :scheduled_units
   map.resources :schedules
   map.resources :settings
   map.resources :schedules
@@ -72,20 +72,20 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :klasses, :collection => { :add_course => :get, :update_individual => :put }
   map.resources :people
   map.resources :students, :collection => { :edit_multiple => :get, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put, :edit_klasses => :get, :update_klasses => :put }
-	map.resources :tags
+  map.resources :tags
   map.resources :teachers, :collection => { :edit_multiple => :get, :update_multiple => :put }, :member => { :edit_courses => :get, :update_courses => :put }
   map.resources :teachings,
-    :collection => {
-	  	:edit_multiple => :post,
-	  	:update_multiple =>:put
-  	}
+  :collection => {
+    :edit_multiple => :post,
+    :update_multiple =>:put
+  }
   map.resources :template_classes, :collection => { :add_course => :get }
   map.login 'login', :controller => 'admin', :action => 'login'
   map.logout 'logout', :controller => 'admin', :action => 'logout'
   map.root :login_user
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
-
+  
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action

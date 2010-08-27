@@ -16,6 +16,8 @@
 
 <% end %>
 
+<%= link_to t(:reserve), reserve_user_path(@user) %>
+
 <%= render @page, :user => @user unless @page.nil? %>
 
 </fieldset>

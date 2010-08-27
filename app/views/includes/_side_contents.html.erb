@@ -1,60 +1,60 @@
 <% cache current_user2 ? current_user2.cache_key : (japanese? ? 'japanese_non_user_nav' : 'english_non_user_nav') do %>
 <div id="user_nav">
-	<div class="commands">
-		<ul>
-			<% if !current_user2 %>
-				<% if I18n.locale == 'ja' %>
-					<li><%= link_to 'English', toggle_user_language_url %></li>
-				<% else %>
-					<li><%= link_to '日本語', toggle_user_language_url %></li>
-				<% end %>
-			<% end %>
-			<% if current_user2 %>
-				<% if current_user.role? :teacher %>
-					<li><%= link_to t(:confirm), confirm_user_path( current_user2 ) %></li>
-				<% end %>
-				<% if current_user.role? :student %>
-					<li><%= link_to t(:reserve), reserve_user_path( current_user2 ) %></li>
-				<% end %>				
-				<li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
-				<li><%= link_to t( 'logout.text' ), logout_user_path %></li>
-				<% if can? :box, Mail %>
-					<li class=<%= current_user.unread_mail? ? "mail" : "" %>><%= link_to t( :mail ), box_mails_path %></li>
-				<% end %>
-				<% if can? :new, Invitation %>
-		      <li><%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %></li>
-		    <% end %>
-			<% else %>
-				<li><%= link_to t( 'login.text' ), login_user_path %></li>
-			<% end %>
-		</ul>
-	</div>
-	<% if current_user2 %>
-		<%= image_tag avatar_mini_url( current_user2 ) %>
-		<div class="info">    
-			<%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
-		</div>
-	<% end %>
-	<div class="clear"></div>
+  <div class="commands">
+    <ul>
+      <% if !current_user2 %>
+      <% if I18n.locale == 'ja' %>
+      <li><%= link_to 'English', toggle_user_language_url %></li>
+      <% else %>
+      <li><%= link_to '日本語', toggle_user_language_url %></li>
+      <% end %>
+      <% end %>
+      <% if current_user2 %>
+      <% if current_user.role? :teacher %>
+      <li><%= link_to t(:confirm), mypage_path( current_user.username ) %></li>
+      <% end %>
+      <% if current_user.role? :student %>
+      <li><%= link_to t(:reserve), mypage_path( current_user.username ) %></li>
+      <% end %>				
+      <li><%= link_to t( 'edit_profile' ), edit_user_path( current_user2 ) %></li>
+      <li><%= link_to t( 'logout.text' ), logout_user_path %></li>
+      <% if can? :box, Mail %>
+      <li class=<%= current_user.unread_mail? ? "mail" : "" %>><%= link_to t( :mail ), box_mails_path %></li>
+      <% end %>
+      <% if can? :new, Invitation %>
+      <li><%= link_to t('invitations.send').gsub(/\s/, "&nbsp;"), new_invitation_path %></li>
+      <% end %>
+      <% else %>
+      <li><%= link_to t( 'login.text' ), login_user_path %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% if current_user2 %>
+  <%= image_tag avatar_mini_url( current_user2 ) %>
+  <div class="info">    
+    <%= t('login.message.logged_in_as', :username => current_user2.username ) %></i>
 </div>
 <% end %>
-<% if current_user %>
-	<div id="beta_testers">
-		<div class="title">Beta Testers</div>
-		<% if current_user.role == "god" %>
-			<ul>
-			<% User.beta_testers.each do |e| %>
-			  <li>
-			  	<%= link_to e.name, e %>
-			  	<% if !e.current_login_at.nil? %>
-			  		<%= distance_of_time_in_words_to_now( e.current_login_at ) %><%= t(:ago) %>
-			  	<% end %>
-			  </li>
-			<% end %>
-			</ul>  
-		<% else %>
-			<ul><%= User.all.map{|e| "<li>"+( link_to e.name, e )+"</li>"} %></ul>
-		<% end %>
-		<div class="clear"></div>
-	</div>    	              
+<div class="clear"></div>
+</div>
+<% end %>
+<% if staff? %>
+<div id="beta_testers">
+  <div class="title">Beta Testers</div>
+  <% if current_user.role == "god" %>
+  <ul>
+    <% User.beta_testers.each do |e| %>
+    <li>
+      <%= link_to e.name, e %>
+      <% if !e.current_login_at.nil? %>
+      <%= distance_of_time_in_words_to_now( e.current_login_at ) %><%= t(:ago) %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>  
+  <% else %>
+  <ul><%= User.all.map{|e| "<li>"+( link_to e.name, e )+"</li>"} %></ul>
+  <% end %>
+  <div class="clear"></div>
+</div>    	              
 <% end %>

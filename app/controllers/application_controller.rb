@@ -2,18 +2,21 @@
 # Likewise, all the methods added will be available for all controllers.
  
 class ApplicationController < ActionController::Base
-	rescue_from CanCan::AccessDenied do |exception|
+  rescue_from CanCan::AccessDenied do |exception|
     session[:original_uri] = request.request_uri
-	  flash[:error] = t( 'access_denied' )
-	  redirect_to login_user_path		
-	end
-	#before_filter { |c| Authorization.current_user = c.current_user2 }
+    flash[:error] = t( 'access_denied' )
+    redirect_to mypage_path( current_user.username )
+  end
+  #before_filter { |c| Authorization.current_user = c.current_user2 }
   #before_filter :authorize, :except=>[:login,:logout,:index,:show,:live_search]
   #before_filter :authorize_view, :only=>[:index,:show,:live_search]
   before_filter :set_default_user_language
   helper_method :clearance, :avatar_mini_url, :avatar_micro_url
   helper_method :clearance?
   helper_method :current_user
+  helper_method :staff?
+  helper_method :student?
+  helper_method :teacher?
   helper_method :association_delete_error_messages
   helper_method :association_delete_error_message
 	helper_method :units_per_schedule
@@ -30,25 +33,35 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password
- 
-	helper_method :current_user2, :japanese?
- 
-	def current_user_session2
-		return @current_user_session2 if defined?( @current_user_session2 )
-		@current_user_session2 = UserSession.find
-	end
- 
-	def current_user2
-		return @current_user2 if defined?( @current_user2 )
-		@current_user2 = current_user_session2 && current_user_session2.record
-	end
- 
-	def current_user
-		return current_user2
-	end	
-	
-	def avatar_mini_url( user )
-	  if user
+  
+  helper_method :current_user2, :japanese?
+  
+  def current_user_session2
+    return @current_user_session2 if defined?( @current_user_session2 )
+    @current_user_session2 = UserSession.find
+  end
+  
+  def current_user2
+    return @current_user2 if defined?( @current_user2 )
+    @current_user2 = current_user_session2 && current_user_session2.record
+  end
+  
+  def current_user
+    return current_user2
+  end	
+
+  def staff?
+    return false if current_user.nil?
+    return current_user.role?( :god ) ||
+      current_user.role?( :admin ) ||
+      current_user.role?( :observer )
+  end
+
+  def student?() current_user.role? :student end
+  def teacher?() current_user.role? :teacher end
+  
+  def avatar_mini_url( user )
+    if user
       if user.avatar?    	    
         user.avatar.url(:mini)
       else
@@ -58,9 +71,9 @@ class ApplicationController < ActionController::Base
       "/images/mafumafu.jpg"
     end
   end
- 
- 	def avatar_micro_url( user )
-	  if user
+  
+  def avatar_micro_url( user )
+    if user
       if user.avatar?    	    
         user.avatar.url(:micro)
       else
@@ -70,34 +83,34 @@ class ApplicationController < ActionController::Base
       "/images/mafumafu.jpg"
     end
   end
- 
+  
   def logged_in2?
     current_user2 != nil
   end
- 
-	def japanese?
-		I18n.locale == 'ja'
-	end
-
+  
+  def japanese?
+    I18n.locale == 'ja'
+  end
+  
   def set_default_user_language
-		#@current_settings ||= Setting.find_by_name( 'main' )
+    #@current_settings ||= Setting.find_by_name( 'main' )
     #I18n.locale = logged_in? ? current_user.language : ( @current_settings ? @current_settings.language : "ja" )
-  	
-  	#I18n.locale = "en" 
+    
+    #I18n.locale = "en" 
     
     I18n.locale = ( current_user2 ? current_user2.language : ( session[:language] ? session[:language] : "ja" )) #( @setting ? @setting.language : "ja" )))
   end  
-
-protected
- 
-	def permission_denied
-	  flash[:error] = t( 'access_denied' )
-	  redirect_to login_user_path
-	end
-
-#	def login
-#	end
-#
+  
+  protected
+  
+  def permission_denied
+    flash[:error] = t( 'access_denied' )
+    redirect_to login_user_path
+  end
+  
+  #	def login
+  #	end
+  #
   def authorize
     if !logged_in?
       login_redirection
@@ -108,12 +121,12 @@ protected
   
   def authorize_view
     if !logged_in?
-			login_redirection
+      login_redirection
     elsif clearance >= 4
       redirect_to current_user.student.nil? ? current_user.teacher : edit_klasses_student_path( current_user.student.id )
     end
-	end
-#    
+  end
+  #    
 #  def clearance?(level)
 #    if level>=1 && session[:user_name] == "johan_sveholm"
 #      return true

@@ -21,12 +21,12 @@ Then I should not see "3/4(Thursday)"
 And I should <view> "3/18(Thursday)"
 And I should not see "3/19(Friday)"
 Examples:
-|status|view|
-|4|see|
-|33|not see|
-|2|not see|
-|9|not see|
-|17|not see|
+| status | view    |
+|      4 | see     |
+|     33 | not see |
+|      2 | not see |
+|      9 | not see |
+|     17 | not see |
 
 @view @confirmed
 Scenario Outline: View of confirmed classes
@@ -42,15 +42,15 @@ Then I should not see "3/4(Thursday)"
 And I should <view> "3/18(Thursday)"
 And I should not see "3/19(Friday)"
 Examples:
-|status|view|
-|4|not see|
-|33|see|
-|2|not see|
-|9|see|
-|17|see|
+| status | view    |
+|      4 | not see |
+|     33 | see     |
+|      2 | not see |
+|      9 | see     |
+|     17 | see     |
 
 @view @history
-Scenario Outline: View of confirmed classes
+Scenario Outline: View of confirm history
 Given a klass: "18" exists with date: "2010-03-18"
 Given a klass: "19" exists with date: "2010-03-19"
 Given a klass: "29" exists with date: "2010-03-29"
@@ -63,86 +63,30 @@ And I should <view> "3/18(Thursday)"
 And I should not see "3/19(Friday)"
 And I should not see "3/29(Monday)"
 Examples:
-|status|view|
-|4|not see|
-|33|see|
-|2|not see|
-|9|see|
-|17|see|
-
-@view_history
-Scenario: View of classes taught
-Given a klass: "klass18" exists with date: "2010-03-18"
-	And a klass: "klass19" exists with date: "2010-03-19"
-	And a klass: "klass20" exists with date: "2010-03-20"
-	And a teaching exists with klass: klass "klass18", teacher: user "johan", status_mask: 4
-	And a teaching exists with klass: klass "klass19", teacher: user "johan", status_mask: 33
-	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 33 
-Given a user is logged in as "johan"	
-When I go to the confirm page for user: "johan" on "2010-03-26"
-	Then the page should have no "confirmable" section
-	And the page should have no "confirmed" section
-	And I should see "Teaching History" within "div.taught"
-	And I should see "3/19(Friday)" within "div.taught"
-	And I should not see "3/20(Saturday)"
-	And I should not see "3/18(Thursday)"
-	And the page should have no "declined" section
-
-@view_declined
-Scenario: View of classes taught
-Given a klass: "klass04" exists with date: "2010-03-04"
-	And a klass: "klass05" exists with date: "2010-03-05"
-	And a klass: "klass19" exists with date: "2010-03-19"
-	And a klass: "klass20" exists with date: "2010-03-20"
-	And a teaching exists with klass: klass "klass04", teacher: user "aya", status_mask: 33
-	And a teaching exists with klass: klass "klass05", teacher: user "aya", status_mask: 2
-	And a teaching exists with klass: klass "klass19", teacher: user "aya", status_mask: 33
-	And a teaching exists with klass: klass "klass20", teacher: user "aya", status_mask: 2
-Given a user is logged in as "johan"	
-When I go to the confirm page for user: "aya" on "2010-03-10"
-	Then the page should have no "confirmable" section
-	And I should see "Already Confirmed Classes" within "div.confirmed"
-	And I should see "3/19(Friday)" within "div.confirmed"
-	And I should see "Teaching History" within "div.taught"
-	And I should see "3/4(Thursday)" within "div.taught"
-	And I should see "Declined Classes" within "div.declined"
-	And I should see "3/5(Friday)" within "div.declined"
-	And I should see "3/20(Saturday)" within "div.declined"
+| status | view    |
+|      4 | not see |
+|     33 | see     |
+|      2 | not see |
+|      9 | see     |
+|     17 | see     |
 
 @pending
 Scenario: Only show classes that have been confirmed taught in the history? (NOT IMPLEMENTED)
 
-@view-late
-Scenario: Confirmations can only be made before the class starts
-Given a course: "ruby" exists with name: "Ruby I"
-	And a klass: "klass18" exists with date: "2010-03-18", course: course "ruby", start_time: "12:00", end_time: "13:00"
-	And a teaching exists with klass: klass "klass18", teacher: user "johan"
-Given a user is logged in as "johan"
-When I go to the confirm page for user: "johan" on "2010-03-26"
-Then I should see "Confirm" as title
-	And the page should have no "confirmable" section
-	And I should see "You have no classes to confirm." within "div.intro"
-	
 @allow-rescue
 Scenario Outline: Regular teachers can only see their own confiration page, but admins have no limit
-Given a user: "thomas" exists with username: "thomas", role: "observer, teacher", language: "en", name: "Thomas Osburg"
-	And a user: "junko" exist with username: "junko", role: "registrant, student", language: "en", name: "Junko Sumii"
-	And a user: "mika" exists with username: "mika", role: "registrant", language: "en", name: "Mika Mikachan"	
-	And a user: "reiko" exists with username: "reiko", role: "registrant, student, beta-tester", language: "en", name: "Reiko Arikawa"
-	And a user is logged in as "<user>"
-When I go to the confirm page for user: "<user>"
+Given a user: "thomas" exists with username: "thomas", role: "observer, teacher"
+And a user is logged in as "<user>"
+When I browse to the confirm page for user: "<user>"
 Then I should be redirected to the <own-page>
-When I go to the confirm page for user: "junko"
+When I browse to the confirm page for user: "thomas"
 Then I should be redirected to the <other-page>
 Examples:
-|	user		|	own-page												|	other-page											|
-|	thomas	|	confirm page for user: "thomas"	|	events page											|
-|	prince	|	confirm page for user: "prince"	|	events page											|
-|	junko 	|	events page											|	events page											|
-|	mika		|	events page											|	events page											|
-|	reiko 	|	events page											|	events page											|
-|	johan 	|	confirm page for user: "johan"	|	confirm page for user: "junko"	|
-|	aya		 	|	confirm page for user: "aya"		|	confirm page for user: "junko"	|
+| user   | own-page                     | other-page                      |
+| thomas | show page for user: "thomas" | show page for user: "thomas"    |
+| prince | show page for user: "prince" | show page for user: "prince"    |
+| johan  | show page for user: "johan"  | show page for user: "thomas" |
+| aya    | show page for user: "aya"    | show page for user: "thomas" |
 
 @pending
 Scenario: Classes should be displayed in order after day, time interval

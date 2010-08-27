@@ -11,6 +11,9 @@
                 :collection => @reservable_klasses, :required=>false %>
     <%= hidden_field_tag :saturday, @saturday %>
   <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button t(:reserve) %>
+  <% end %>
   <%= t('message.time_for_reservation') %>
 <% end %>
 <% end %>
