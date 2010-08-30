@@ -9,6 +9,13 @@
 <fieldset class="intro">
 <legend><%= t(:already_confirmed) %></legend>
 <div id="already_confirmed">
+  <% unless @klasses.empty? %>
+    <ul>
+      <% @klasses.each do |klass| %>
+	<li><%= klass.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 </fieldset>
 <% end %>

@@ -1,9 +1,10 @@
 <div class="show">
 <fieldset class="show">
 <legend><%= @user.name %></legend>
-
+<% if !@user.role? :student %>
+  <%= t("message.no_student",:name=>@user.name) %>
+<% else %>
 <%= render "reserve_top_links" %>
-
 <fieldset class="intro">
 <legend><%= t(:already_reserved) %></legend>
 <div id="already_reserved">
@@ -22,6 +23,7 @@
 <% end %>
 </div>
 </fieldset>
+<% end %>
 
 </fieldset>
 </div>

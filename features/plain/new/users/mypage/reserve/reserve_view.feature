@@ -22,9 +22,9 @@ When I go to the reserve page for user: "reiko"
 And I follow "<link>" within "#top_links"
 Then I should be redirected to the <path> page for user: "reiko"
 Examples:
-|link|path|
-|Reserve|reserve|
-|Already Reserved|already reserved|
+| link             | path             |
+| Reserve          | reserve          |
+| Already Reserved | already reserved |
 
 @admin @no_classes
 Scenario: View for the admin when there are no classes
@@ -110,3 +110,6 @@ Examples:
 |  07 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
 |  08 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
 |  09 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
+
+@pending
+Scenario: Put the include course in the controller instead of named scope

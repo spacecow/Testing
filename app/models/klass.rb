@@ -18,6 +18,9 @@ class Klass < ActiveRecord::Base
   
   named_scope :course_name, lambda { |name| { :conditions=>["courses.name=?",name], :include=>:course }}
   named_scope :between_dates, lambda {|start,stop|{:conditions=>["date>=? and date<?",start,stop], :include=>:course}}
+  named_scope :confirmed, {:conditions=>"teachings.status_mask & #{2**Teaching::STATUS.index('confirmed')} > 0", :include=>:teaching}
+  named_scope :not_confirmed, {:conditions=>"teachings.status_mask & #{2**Teaching::STATUS.index('confirmed')} = 0", :include=>:teaching}
+  named_scope :not_declined, {:conditions=>"teachings.status_mask & #{2**Teaching::STATUS.index('declined')} = 0", :include=>:teaching}
   
   validates_inclusion_of :cancel, :in => [false, true]
   validates_presence_of :course, :date
@@ -27,7 +30,7 @@ class Klass < ActiveRecord::Base
   validate :capacity_cannot_be_zero
   
   after_update :save_teachings
-  
+
   def self.last_monday
     mon = Klass.last( :order => "date" ).date
     mon -= 1.day while mon.strftime("%a") != "Mon"

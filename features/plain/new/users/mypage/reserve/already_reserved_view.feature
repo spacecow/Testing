@@ -8,6 +8,13 @@ And a course: "ruby" is one of user: "reiko"'s student_courses
 And a klass: "18" exists with date: "2010-03-18", course: course "ruby"
 And a user: "johan" exists with username: "johan", role: "god"
 
+@teacher
+Scenario: A teacher should not have a reserve page
+Given a user is logged in as "johan"
+And a user exists with role: "teacher", name: "Prince Philip"
+When I go to the reserve page for that user
+Then I should see "Prince Philip is not a student."
+
 @links
 Scenario Outline: Links on the already reserved page
 Given a user is logged in as "reiko"
@@ -15,9 +22,9 @@ When I go to the already reserved page for user: "reiko"
 And I follow "<link>" within "#top_links"
 Then I should be redirected to the <path> page for user: "reiko"
 Examples:
-|link|path|
-|Reserve|reserve|
-|Already Reserved|already reserved|
+| link             | path             |
+| Reserve          | reserve          |
+| Already Reserved | already reserved |
 
 @student
 Scenario: List already reserved classes for students

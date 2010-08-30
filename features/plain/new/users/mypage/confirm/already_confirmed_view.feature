@@ -21,3 +21,38 @@ Examples:
 |link|path|
 |Confirm|confirm|
 |Already confirmed|already confirmed|
+
+@list @confirmed
+Scenario Outline: Only confirmed classes show up at the already confirmed page
+Given a user is logged in as "johan"
+And a course exists with name: "Ruby I"
+And a klass exists with date: "2010-08-20", course: that course
+And a teaching exists with klass: that klass, teacher: user "prince", status_mask: <status>
+When I go to the already confirmed page for user: "prince" on "2010-08-19"
+Then I should <view> "8/20(Friday) - Ruby I - 12:00~15:00"
+Examples:
+| status | view    |
+|      4 | not see |
+|     33 | see     |
+|      2 | not see |
+|      9 | see     |
+|     17 | see     |
+
+@list @ahead
+Scenario Outline: Only classes ahead in time are listed on the already confirmed page
+Given a user is logged in as "johan"
+And a course exists with name: "Ruby I"
+And a klass exists with date: "2010-08-20", course: that course
+And a teaching exists with klass: that klass, teacher: user "prince", status_mask: 33
+When I go to the already confirmed page for user: "prince" on "<date>"
+Then I should <view> "8/20(Friday) - Ruby I - 12:00~15:00"
+Examples:
+|       date | view    |
+| 2010-08-19 | see     |
+| 2010-08-21 | not see |
+
+@pending
+Scenario: Only admin can see canceled etc...
+
+@pending
+Scenario: Teachers should not be able to jump in time

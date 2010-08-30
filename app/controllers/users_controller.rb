@@ -240,7 +240,7 @@ class UsersController < ApplicationController
     end
   end
 
-    def reserve
+  def reserve
     todays_date = Time.zone.now.beginning_of_day
     if can?( :edit_role, User ) && Klass.count != 0
       mon = Klass.last_monday
@@ -280,10 +280,23 @@ class UsersController < ApplicationController
       @saturday = params[:saturday]
       todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
     end
-    @klasses = @user.teacher_klasses.all(:conditions=>["date > ?",todays_date])
+    @klasses = @user.teacher_klasses.
+      not_confirmed.
+      not_declined.
+      all(:conditions=>["date > ?",todays_date])
   end
 
   def already_confirmed
+    todays_date = Time.zone.now.beginning_of_day
+    if can?( :edit_role, User ) && Klass.count != 0
+      mon = Klass.last_monday
+      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+      @saturday = params[:saturday]
+      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+    end
+    @klasses = @user.teacher_klasses.
+      confirmed.
+      all(:conditions=>["date > ?",todays_date])
   end
         
   def confirm2
@@ -315,8 +328,9 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
     end
-    redirect_to user_path(current_user,:already_confirmed=>"ok") and return unless staff?
-    redirect_to users_path( :status => "teacher" )
+    redirect_to already_confirmed_user_path(@user) and return #if !staff?
+#    redirect_to user_path(current_user,:already_confirmed=>"ok") and return unless staff?
+#    redirect_to users_path( :status => "teacher" )
   end
   
   def salary

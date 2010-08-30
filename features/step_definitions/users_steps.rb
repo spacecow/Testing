@@ -39,15 +39,19 @@ end
 
 #---------------------- Confirm Page
 
+When /^I (confirmed|declined) the klass$/ do |status|
+  field_with_id("user_teachings_attributes_0_confirm_#{status}").choose
+end
+
 When /^I (confirmed|declined) #{capture_model} for #{capture_model} from "([^\"]*)"$/ do |action, klass_model, user_model, date|
   klass = model( klass_model )
   user = model( user_model )
   index = Klass.all(
-		:conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", date, user.id],
-		:include=>:teaching
-		).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
-		  index( klass )
-	field_with_id( "user_teachings_attributes_#{index}_confirm_#{action}" ).choose
+                    :conditions=>["date >= ? and klasses.id = teachings.klass_id and teachings.teacher_id = ?", date, user.id],
+                    :include=>:teaching
+                    ).sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}.
+    index( klass )
+  field_with_id( "user_teachings_attributes_#{index}_confirm_#{action}" ).choose
 end
 
 #Then /^I should see "([^\"]*)" within the confirmable section$/ do |text|
