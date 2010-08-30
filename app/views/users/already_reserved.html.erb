@@ -1,5 +1,27 @@
+<div class="show">
+<fieldset class="show">
+<legend><%= @user.name %></legend>
+
+<%= render "reserve_top_links" %>
+
 <fieldset class="intro">
 <legend><%= t(:already_reserved) %></legend>
 <div id="already_reserved">
+<% unless @attendances.empty? %>
+  <ul>
+    <% @attendances.each do |attendance| %>
+      <% if attendance.cancel %>
+        <% if can? :edit, attendance %>
+          <li class="cancel"><%= attendance.klass.name %></li>
+        <% end %>
+      <% else %>
+        <li><%= attendance.klass.name %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
 </div>
 </fieldset>
+
+</fieldset>
+</div>

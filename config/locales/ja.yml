@@ -247,6 +247,7 @@ ja:
     no_confirmations: "確認するクラスがありません"
     no_reservations_today: "今日はクラスを予約出来ません"
     no_students: "生徒さんがいない"
+    no_teacher: "{{name}}は講師ではありません"
     provide_username_or_email: "登録時に設定したユーザー名かメールアドレスを入力して「送信」をクリックしてください。登録していただいたメールアドレス宛てにパスワードの変更方法をお送りします"
     time_for_reservation: "予約時間は土曜日午前12時から火曜日午後5時まで"
     which_language: "このサイトはどんな言語で利用する？"

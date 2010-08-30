@@ -5,6 +5,9 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def show
+    redirect_to reserve_user_path(@user) and return if student?
+    redirect_to confirm_user_path(@user) and return if teacher?
+    
     todays_date = Time.zone.now.beginning_of_day
 
     if can?( :edit_role, User ) && !Klass.first.nil?
@@ -152,7 +155,7 @@ class UsersController < ApplicationController
         if !params[:user][:student_course_ids].blank? || !params[:user][:courses_teachers_attributes].blank?
           redirect_to users_path( :status => "teacher" )
         else
-          redirect_to mypage_path
+          redirect_to mypage_path(@user.username)
         end
       else
         render :action => "crop"
@@ -236,8 +239,51 @@ class UsersController < ApplicationController
       render :action => 'change_password'
     end
   end
+
+    def reserve
+    todays_date = Time.zone.now.beginning_of_day
+    if can?( :edit_role, User ) && Klass.count != 0
+      mon = Klass.last_monday
+      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+      @saturday = params[:saturday]
+      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+    end
+
+    @klasses = []
+    if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a"))
+      start_date = monday_after_next(todays_date)
+      temp_classes = Klass.between_dates( start_date, start_date+6.day )
+      reject_not_enrolled_courses(temp_classes)
+      reject_already_reserved_classes(temp_classes)
+      temp_classes = reject_duplicates_and_randomize_instances(temp_classes)
+      @klasses = sort_after_date_and_time_interval(temp_classes)
+    end
+  end
+
+  def already_reserved
+    todays_date = Time.zone.now.beginning_of_day
+    if can?( :edit_role, User ) && Klass.count != 0
+      mon = Klass.last_monday
+      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+      @saturday = params[:saturday]
+      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+    end    
+    temp_attendances = @user.attendances.reject{|e| e.date > todays_date }
+    @attendances = sort_after_date_and_time_interval(temp_attendances)
+  end
   
   def confirm
+    todays_date = Time.zone.now.beginning_of_day
+    if can?( :edit_role, User ) && Klass.count != 0
+      mon = Klass.last_monday
+      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+      @saturday = params[:saturday]
+      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+    end
+    @klasses = @user.teacher_klasses.all(:conditions=>["date > ?",todays_date])
+  end
+
+  def already_confirmed
   end
         
   def confirm2
@@ -309,26 +355,6 @@ class UsersController < ApplicationController
 
   def sort_after_date_and_time_interval( array )
     array.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-  end
-  
-  def reserve
-    todays_date = Time.zone.now.beginning_of_day
-    if can?( :edit_role, User ) && Klass.count != 0
-      mon = Klass.last_monday
-      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
-      @saturday = params[:saturday]
-      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
-    end
-
-    start_date = monday_after_next(todays_date)
-    temp_classes = Klass.between_dates( start_date, start_date+6.day )
-    reject_not_enrolled_courses(temp_classes)
-    reject_already_reserved_classes(temp_classes)
-    temp_classes = reject_duplicates_and_randomize_instances(temp_classes)
-    @klasses = sort_after_date_and_time_interval(temp_classes)
-  end
-
-  def already_reserved
   end
   
   def reserve2

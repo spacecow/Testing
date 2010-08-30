@@ -1,72 +1,39 @@
-<div class="form">
-<fieldset class="form">
-<legend class="form"><%= t( :confirm ) %></legend>
+<div class="show">
+<fieldset class="show">
+<legend><%= @user.name %></legend>
 
-<div class="intro">
-<% if @confirmable_classes.empty? %>
-<%= t('message.no_confirmations') %>
+<% if !@user.role? :teacher %>
+  <%= t("message.no_teacher",:name=>@user.name) %>
 <% else %>
-<div class="confirmable">
-<h2><%= t('header.classes_to_confirm') %></h2>
-<div style="width:3em;float:left;text-align:right;">Yes</div>
-<div style="width:3em;float:left;margin-left:0.3em;">No</div>
-<div class="clear"></div>
-<% semantic_form_for @user, :url => update_confirm_user_path( @user ), :method => :put do |f| %>
-	<% f.inputs do %>
-		<% @confirmable_classes.map(&:teaching).each do |teaching| %>
-			<% f.inputs :for => [:teachings, teaching] do |builder| %>
-				<span id="klass"><%= teaching.klass %></span>
-				<%= builder.input :confirm, :label => false, :as => :radio, :collection => [['','confirmed'],['','declined']] %>				
-			<% end %>
-		<% end %>
-		<%# f.input :teacher_classes, :as=>:check_boxes, :label=>false,
-								:collection => @confirmable_classes, :required=>false %>
-		<%# @reserved_classes.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
-		<%# @class_history.map{|klass| hidden_field_tag "user[student_klass_ids][]", klass.id} %>
-	<% end %>
-	<% f.buttons do %>
-		<%= f.commit_button t(:confirm) %>
-	<% end %>
+<%= render "confirm_top_links" %>
+<fieldset class="intro">
+<legend><%= t(:confirm) %></legend>
+  <div id="confirmable">
+  <% if @klasses.empty? %>
+    <%= t('message.no_confirmations') %>
+  <% else %>
+    <div class="confirmable">
+      <div style="width:3em;float:left;text-align:right;">Yes</div>
+      <div style="width:3em;float:left;margin-left:0.3em;">No</div>
+      <div class="clear"></div>
+      <% semantic_form_for @user, :url => update_confirm_user_path( @user ), :method => :put do |f| %>
+        <% f.inputs do %>
+          <% @klasses.map(&:teaching).each do |teaching| %>
+            <% f.inputs :for => [:teachings, teaching] do |builder| %>
+              <span id="klass"><%= teaching.klass %></span>
+              <%= builder.input :confirm, :label => false, :as => :radio, :collection => [['','confirmed'],['','declined']] %>				
+	    <% end %>
+          <% end %>
+        <% end %>
+        <% f.buttons do %>
+          <%= f.commit_button t(:confirm) %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</fieldset>
 <% end %>
-</div>
-<% end %>
-</div>
-
-<% unless @confirmed_classes.empty? %>
-<div class="confirmed">
-<h2><%= t('header.already_confirmed_classes') %></h2>
-<ul>
-<% @confirmed_classes.each do |klass| %>
-	<li><%= klass.name %></li>
-<% end %>
-</ul>
-</div>
-<% end %>
-
-<% unless @teaching_history.empty? %>
-<div class="taught">
-<h2><%= t('header.teaching_history') %></h2>
-<ul>
-<% @teaching_history.each do |klass| %>
-	<li><%= klass.name %></li>
-<% end %>
-</ul>
-</div>
-<% end %>
-
-<% unless @declined_classes.empty? %>
-<div class="declined">
-<h2><%= t('header.declined_classes') %></h2>
-<ul>
-<% @declined_classes.each do |klass| %>
-	<li><%= klass.name %></li>
-<% end %>
-</ul>
-</div>
-<% end %>
-
-<div id="links">
-</div>
 
 </fieldset>
 </div>

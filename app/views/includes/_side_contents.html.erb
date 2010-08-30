@@ -11,7 +11,7 @@
       <% end %>
       <% if current_user2 %>
       <% if current_user.role? :teacher %>
-      <li><%= link_to t(:confirm), mypage_path( current_user.username ) %></li>
+      <li><%= link_to t(:confirm), confirm_user_path( current_user ) %></li>
       <% end %>
       <% if current_user.role? :student %>
       <li><%= link_to t(:reserve), reserve_user_path( current_user ) %></li>

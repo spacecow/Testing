@@ -1,0 +1,17 @@
+<div class="show">
+<fieldset class="show">
+<legend><%= @user.name %></legend>
+
+<% if !@user.role? :teacher %>
+  <%= t("message.no_teacher",:name=>@user.name) %>
+<% else %>
+<%= render "confirm_top_links" %>
+<fieldset class="intro">
+<legend><%= t(:already_confirmed) %></legend>
+<div id="already_confirmed">
+</div>
+</fieldset>
+<% end %>
+
+</fieldset>
+</div>
