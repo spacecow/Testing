@@ -272,6 +272,29 @@ class UsersController < ApplicationController
     @attendances = sort_after_date_and_time_interval(temp_attendances)
   end
   
+  def update_reserve
+    student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
+    if !student_klass_ids.empty?
+      klass = nil
+      student_klass_ids.reverse.each do |klass_id|
+        klass = Klass.find( klass_id )
+        @user.student_klasses << klass unless @user.already_reserved?( klass ) || @user.not_enrolled?( klass.course ) || @user.already_reserved_instance?( klass.to_s )
+      end
+      flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
+      SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
+      #mail = Mail.create!(
+      #	:sender_id => User.first.id,
+      #	:subject => "Reservation",
+      #	:message => "You have reserved a class!"
+      #)
+      #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
+      #redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
+    end
+    redirect_to already_reserved_user_path(@user) and return #if !staff?
+    redirect_to users_path( :status => "student" )
+  end
+
+
   def confirm
     todays_date = Time.zone.now.beginning_of_day
     if can?( :edit_role, User ) && Klass.count != 0
@@ -280,10 +303,12 @@ class UsersController < ApplicationController
       @saturday = params[:saturday]
       todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
     end
-    @klasses = @user.teacher_klasses.
+    unsorted_klasses = @user.teacher_klasses.
       not_confirmed.
       not_declined.
+      current.
       all(:conditions=>["date > ?",todays_date])
+    @klasses = sort_after_date_and_time_interval( unsorted_klasses )
   end
 
   def already_confirmed
@@ -294,43 +319,34 @@ class UsersController < ApplicationController
       @saturday = params[:saturday]
       todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
     end
-    @klasses = @user.teacher_klasses.
+    unsorted_klasses = @user.teacher_klasses.
       confirmed.
       all(:conditions=>["date > ?",todays_date])
-  end
-        
-  def confirm2
-    todays_date = Time.zone.now
-    unless params[:majballe].nil?
-      todays_date = Time.zone.parse( params[:majballe] ) if can? User, :edit_role
-    end
-    
-    sorted_klasses = @user.teacher_klasses.all.
-      sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-    coming_klasses = sorted_klasses.
-      reject{|e| e.teaching.nil? }.
-      reject{|e| e.date < todays_date}
-    
-    @confirmable_classes = coming_klasses.
-      reject{|e| e.teaching.status?( :confirmed )}.
-      reject{|e| e.teaching.status?( :declined )}
-    @confirmed_classes = coming_klasses.
-      reject{|e| !e.teaching.status?( :confirmed )}
-    @teaching_history = sorted_klasses.
-      reject{|e| e.teaching.nil? }.
-      reject{|e| e.date >= todays_date}.
-      reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
-    @declined_classes = sorted_klasses.
-      reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
+    @klasses = sort_after_date_and_time_interval( unsorted_klasses )
   end
   
   def update_confirm
-    if @user.update_attributes(params[:user])
-      flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
+    now = params[:saturday].blank? ? Time.zone.now : Time.zone.parse( params[:saturday] )
+    teachings_attributes = params[:user]["teachings_attributes"]
+    teachings_attributes.each do |e|
+      next if e[1]["confirm"].nil?
+      teaching = Teaching.find(e[1]["id"])
+      if teaching.status? :declined
+        flash[:error] = "You cannot confirm an already declined class."
+      elsif !teaching.current
+        flash[:error] = "You cannot confirm a class you do not have."
+      elsif teaching.klass.start_date < now
+        flash[:error] = "You cannot confirm a class that already is over."
+      else
+        teaching.confirm = e[1]["confirm"]
+      end
     end
-    redirect_to already_confirmed_user_path(@user) and return #if !staff?
-#    redirect_to user_path(current_user,:already_confirmed=>"ok") and return unless staff?
-#    redirect_to users_path( :status => "teacher" )
+    if flash[:error].blank?
+      flash[:notice] = t('notice.confirm_success',:object=>t(:klass_es).downcase)
+      redirect_to already_confirmed_user_path(@user)  #unless staff?
+    else
+      redirect_to confirm_user_path(@user)
+    end
   end
   
   def salary
@@ -414,27 +430,6 @@ class UsersController < ApplicationController
     @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
   end
   
-  def update_reserve
-    student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
-          if !student_klass_ids.empty?
-            klass = nil
-            student_klass_ids.reverse.each do |klass_id|
-              klass = Klass.find( klass_id )
-              @user.student_klasses << klass unless @user.already_reserved?( klass ) || @user.not_enrolled?( klass.course ) || @user.already_reserved_instance?( klass.to_s )
-            end
-            flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
-            SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
-            #mail = Mail.create!(
-	    #	:sender_id => User.first.id,
-	    #	:subject => "Reservation",
-	    #	:message => "You have reserved a class!"
-	    #)
-	    #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
-	    #redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
-          end
-          redirect_to already_reserved_user_path(@user) and return #if !staff?
-          redirect_to users_path( :status => "student" )
-	end
 	
 	def edit_courses
 		@user = User.find(params[:id], :include => :teacher_courses )

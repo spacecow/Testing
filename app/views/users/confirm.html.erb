@@ -18,9 +18,11 @@
       <div class="clear"></div>
       <% semantic_form_for @user, :url => update_confirm_user_path( @user ), :method => :put do |f| %>
         <% f.inputs do %>
+        <%= hidden_field_tag :saturday, @saturday %>
           <% @klasses.map(&:teaching).each do |teaching| %>
             <% f.inputs :for => [:teachings, teaching] do |builder| %>
-              <span id="klass"><%= teaching.klass %></span>
+              <span id="klass"><%= teaching.klass unless teaching.nil?
+              %></span>
               <%= builder.input :confirm, :label => false, :as => :radio, :collection => [['','confirmed'],['','declined']] %>				
 	    <% end %>
           <% end %>
