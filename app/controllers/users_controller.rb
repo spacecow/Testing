@@ -242,7 +242,7 @@ class UsersController < ApplicationController
 
   def reserve
     todays_date = Time.zone.now.beginning_of_day
-    if can?( :edit_role, User ) && Klass.count != 0
+    if can?( :edit_time, User ) && Klass.count != 0
       mon = Klass.last_monday
       @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
       @saturday = params[:saturday]
@@ -260,15 +260,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def now( date, time )
+    now = date.blank? ? Time.zone.now : Time.zone.parse(date)
+    unless time.blank?
+      time_instance = Time.zone.parse(time)
+      now += time_instance.hour.hour + time_instance.min.minute
+    end
+    now
+  end
+
+  def edit_time() end
+  
   def already_reserved
-    todays_date = Time.zone.now.beginning_of_day
-    if can?( :edit_role, User ) && Klass.count != 0
-      mon = Klass.last_monday
-      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
-      @saturday = params[:saturday]
-      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
-    end    
-    temp_attendances = @user.attendances.reject{|e| e.date > todays_date }
+    now = can?( :edit_time, User ) ? now(params[:saturday], params[:time]) : Time.zone.now
+    temp_attendances = @user.attendances.reject{|e| e.start_date < now }
     @attendances = sort_after_date_and_time_interval(temp_attendances)
   end
   
@@ -296,32 +301,25 @@ class UsersController < ApplicationController
 
 
   def confirm
-    todays_date = Time.zone.now.beginning_of_day
+    now = Time.zone.now.beginning_of_day
     if can?( :edit_role, User ) && Klass.count != 0
       mon = Klass.last_monday
       @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
       @saturday = params[:saturday]
-      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
+      now = can?( :edit_time, User ) ? now(params[:saturday], params[:time]) : Time.zone.now
     end
     unsorted_klasses = @user.teacher_klasses.
       not_confirmed.
       not_declined.
-      current.
-      all(:conditions=>["date > ?",todays_date])
+      current
+    unsorted_klasses.reject!{|e| e.start_date < now}
     @klasses = sort_after_date_and_time_interval( unsorted_klasses )
   end
 
   def already_confirmed
-    todays_date = Time.zone.now.beginning_of_day
-    if can?( :edit_role, User ) && Klass.count != 0
-      mon = Klass.last_monday
-      @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
-      @saturday = params[:saturday]
-      todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
-    end
-    unsorted_klasses = @user.teacher_klasses.
-      confirmed.
-      all(:conditions=>["date > ?",todays_date])
+    now = can?( :edit_time, User ) ? now(params[:saturday], params[:time]) : Time.zone.now
+    unsorted_klasses = @user.teacher_klasses.confirmed
+    unsorted_klasses.reject!{|e| e.start_date < now}
     @klasses = sort_after_date_and_time_interval( unsorted_klasses )
   end
   

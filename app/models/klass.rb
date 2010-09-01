@@ -33,7 +33,7 @@ class Klass < ActiveRecord::Base
   after_update :save_teachings
 
   def start_date
-    date + start_time.hour.hour
+    date + start_time.hour.hour + start_time.min.minute
   end
   
   def self.last_monday

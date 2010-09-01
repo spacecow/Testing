@@ -5,6 +5,8 @@ class Attendance < ActiveRecord::Base
 	named_scope :between_dates, lambda { |start,stop| {:conditions => ["klass_id = klasses.id and klasses.date >= ? and klasses.date < ?", start, stop], :include=>[:klass,:student]}}  
 	named_scope :not_canceled, {:conditions => "attendances.cancel = false"}
   
+  def start_date() klass.start_date end
+
   def student_id=(student)
     super(student) unless student==""
   end

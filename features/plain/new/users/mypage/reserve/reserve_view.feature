@@ -8,24 +8,6 @@ And a course: "ruby" is one of user: "reiko"'s student_courses
 And a klass: "18" exists with date: "2010-03-18", course: course "ruby"
 And a user: "johan" exists with username: "johan", role: "god"
 
-@teacher
-Scenario: A teacher should not have a reserve page
-Given a user is logged in as "johan"
-And a user exists with role: "teacher", name: "Prince Philip"
-When I go to the reserve page for that user
-Then I should see "Prince Philip is not a student."
-
-@links
-Scenario Outline: Links on the reserve page
-Given a user is logged in as "reiko"
-When I go to the reserve page for user: "reiko"
-And I follow "<link>" within "#top_links"
-Then I should be redirected to the <path> page for user: "reiko"
-Examples:
-| link             | path             |
-| Reserve          | reserve          |
-| Already Reserved | already reserved |
-
 @admin @no_classes
 Scenario: View for the admin when there are no classes
 Given a user is logged in as "johan"
@@ -110,6 +92,58 @@ Examples:
 |  07 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
 |  08 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
 |  09 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
+
+@no_time_jump
+Scenario Outline: A regular student cannot jump in time
+Given a user is logged in as "<user>"
+When I go to the reserve page for user: "reiko" on "2010-03-06"
+Then I should <view> "3/18(Thursday) - Ruby I - 12:00~15:00"
+Examples:
+| user  | view    |
+| johan | see     |
+| reiko | not see |
+
+@days
+Scenario Outline: View of the reserve page  when there are classes to reserve for different days
+And a klass exists with date: "2010-03-<date>", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "03/22～03/27"
+Then I should see "3/<date>(<day>) - Ruby I - 12:00~15:00"
+Examples:
+| date | day       |
+|   22 | Monday    |
+|   23 | Tuesday   |
+|   24 | Wednesday |
+|   25 | Thursday  |
+|   26 | Friday    |
+|   27 | Saturday  |
+
+@no_classes
+Scenario Outline: View of the reserve page when there are no classes to reserve
+Given a klass exists with date: "2010-03-28", course: course "ruby"
+And a klass exists with date: "2010-03-<date>", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "03/22～03/27"
+Then I should see "You can do no reservations today."
+Examples:
+| date |
+|   21 |
+|   28 |
+
+@date
+Scenario Outline: Change the week for admin
+And a klass exists with date: "<date>", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "<interval>"
+Then I should see "<day> - Ruby I - 12:00~15:00"
+And "<interval>" should be selected in the "saturday" field
+Examples:
+|       date | interval     | day            |
+| 2010-03-18 | 03/15～03/20 | 3/18(Thursday) |
+| 2010-03-11 | 03/08～03/13 | 3/11(Thursday) |
+| 2010-03-04 | 03/01～03/06 | 3/4(Thursday)  |
+| 2010-02-25 | 02/22～02/27 | 2/25(Thursday) |
+| 2010-02-18 | 02/15～02/20 | 2/18(Thursday) |
 
 @pending
 Scenario: Put the include course in the controller instead of named scope

@@ -21,6 +21,9 @@ Examples:
 |     17 | see     |
 
 @pending
+Scenario: Only classes that has not yet started are listed on the already confirmed page
+
+@pending
 Scenario: Only admin can see canceled etc...
 
 @pending

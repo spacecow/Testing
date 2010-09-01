@@ -18,11 +18,11 @@ Examples:
 @links
 Scenario Outline: Links on the confirm page
 Given a user is logged in as "prince"
-When I go to the <path> page for user: "prince"
+When I go to the <main_path> page for user: "prince"
 And I follow "<link>" within "#top_links"
-Then I should be redirected to the <path> page for user: "prince"
+Then I should be redirected to the <second_path> page for user: "prince"
 Examples:
-| path              | link              | path              |
+| main_path         | link              | second_path       |
 | confirm           | Confirm           | confirm           |
 | confirm           | Already confirmed | already confirmed |
 | already confirmed | Confirm           | confirm           |
@@ -41,16 +41,18 @@ Examples:
 
 @no_time_jump
 Scenario Outline: A regular teacher cannot jump in time
-Given a user is logged in as "prince"
+Given a user is logged in as "<user>"
 And a course "ruby" exists with name: "Ruby I"
 And a klass exists with date: "2010-08-20", course: course "ruby"
 And a teaching exists with klass: that klass, teacher: user "prince", status_mask: <status>
 When I go to the <path> page for user: "prince" on "2010-08-19"
-Then I should not see "8/20(Friday) - Ruby I - 12:00~15:00"
+Then I should <view> "8/20(Friday) - Ruby I - 12:00~15:00"
 Examples:
-| status | path              |
-|     33 | already confirmed |
-|      4 | confirm           |
+| status | path              | user   | view    |
+|     33 | already confirmed | prince | not see |
+|      4 | confirm           | prince | not see |
+|     33 | already confirmed | johan  | see     |
+|      4 | confirm           | johan  | see     |
 
 @too_late
 Scenario Outline: Only classes ahead in time are listed on the confirm page
@@ -61,11 +63,11 @@ And a teaching exists with klass: that klass, teacher: user "prince", status_mas
 When I go to the <path> page for user: "prince" on "<date>"
 Then I should <view> "8/20(Friday) - Ruby I - 12:00~15:00"
 Examples:
-| status | path              |       date | view    |
-|     33 | already confirmed | 2010-08-19 | see     |
-|     33 | already confirmed | 2010-08-21 | not see |
-|      4 | confirm           | 2010-08-19 | see     |
-|      4 | confirm           | 2010-08-21 | not see |
+| status | path              | date             | view    |
+|     33 | already confirmed | 2010-08-20 11:59 | see     |
+|     33 | already confirmed | 2010-08-20 12:01 | not see |
+|      4 | confirm           | 2010-08-20 11:59 | see     |
+|      4 | confirm           | 2010-08-20 12:01 | not see |
 
 # @sort
 # Scenario Outline: Classes should be displayed in order after day, time interval
