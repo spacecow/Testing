@@ -48,6 +48,7 @@ class Ability
         can [:reserve,:already_reserved,:update_reserve], User do |u|
           u == user
         end
+        can :edit_time_secretly, User
       end
       if user.role? :teacher
         can [:confirm,:already_confirmed,:update_confirm], User do |u|

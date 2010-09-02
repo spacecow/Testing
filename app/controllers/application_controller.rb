@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
       current_user.role?( :observer )
   end
 
+  def admin?() current_user.role?( :god ) || current_user.role?( :admin ) end
   def student?() current_user.role? :student end
   def teacher?() current_user.role? :teacher end
   

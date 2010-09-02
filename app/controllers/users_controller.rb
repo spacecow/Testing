@@ -7,93 +7,6 @@ class UsersController < ApplicationController
   def show
     redirect_to reserve_user_path(@user) and return if student?
     redirect_to confirm_user_path(@user) and return if teacher?
-    
-    todays_date = Time.zone.now.beginning_of_day
-
-    if can?( :edit_role, User ) && !Klass.first.nil?
-      mon_date = Klass.last( :order => "date" ).date
-      mon_date -= 1.day while mon_date.strftime("%a") != "Mon"
-      sat_date = mon_date + 5.day
-      reserve_date = sat_date - 14.day			
-      week_intervals = [""]
-      saturdays = [""]
-      5.times do
-        week_intervals << "#{mon_date.strftime('%m/%d')}～#{sat_date.strftime('%m/%d')}"
-        saturdays << "#{reserve_date.strftime("%Y-%m-%d")}"
-        mon_date -= 7.day
-        sat_date -= 7.day
-        reserve_date -= 7.day
-      end
-      @weeks = week_intervals.zip( saturdays )
-    end
-    
-    unless Klass.first.nil?
-      @saturday = params[:saturday]
-      unless @saturday.blank?
-        todays_date = Time.zone.parse( @saturday )
-      end
-    end
-    
-    if !params[:reserve].nil?; @page = "reserve"
-    elsif !params[:already_reserved].nil?; @page = "already_reserved"
-    elsif !params[:reserve_history].nil?; @page = "reserve_history"
-    elsif !params[:confirm].nil?
-      @page = "confirm"
-    elsif !params[:already_confirmed].nil?; @page = "already_confirmed"
-    elsif !params[:confirm_history].nil?; @page = "confirm_history"
-    end
-    if @page.blank?
-      @page = "reserve" if student?
-      @page = "confirm" if teacher?
-    end
-#    params[:commit] = "Reserve" if params[:commit] == "Go!"
-#    @page = %w(Reserve Confirm).include?( params[:commit]) ? params[:commit].downcase : nil
-
-#    @page = params[:commit].blank? ? nil : params[:commit].downcase
-
-
-
-    start_date = todays_date + 6.day
-    start_date += 1.day while start_date.strftime("%a") != "Mon"
-    
-    @klasses = {}
-    Klass.all(
-      :conditions=>["date >= ? and date < ?", start_date, start_date+6.day],
-      :include=>:course ).
-      reject{|e| !@user.student_courses.include?( e.course )}.map{|e| @klasses[e.name] = @user.student_klasses.include?(@klasses[e.name]) ? @klasses[e.name] : (@user.student_klasses.include?(e) ? e : ( @klasses[e.name].nil? ? e : [@klasses[e.name],e][rand(2)]))}
-      #.each do |e|
-      #unless @user.student_klasses.include?( e.name )
-      #  @klasses[e.name] ||= e
-      #  @klasses[e.name] = [@klasses[e.name],e][rand(2)]
-      #end
-      #end
-
-    @reservable_klasses = []
-    if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a") )
-      @reservable_klasses = @klasses.values.reject{|e| @user.student_klasses.include?(e)}.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-    end	
-    @reserved_attendances = @user.attendances.reject{|e| e.date < todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-    @attendance_history = @user.attendances.reject{|e| e.date >= todays_date }.sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-
-
-    # Confirmatin for teachers
-    sorted_klasses = @user.teacher_klasses.all.
-      sort{|a,b| a.date==b.date ? a.time_interval<=>b.time_interval : a.date<=>b.date}
-    coming_klasses = sorted_klasses.
-      reject{|e| e.teaching.nil? }.
-      reject{|e| e.date < todays_date}
-    
-    @confirmable_classes = coming_klasses.
-      reject{|e| e.teaching.status?( :confirmed )}.
-      reject{|e| e.teaching.status?( :declined )}
-    @confirmed_classes = coming_klasses.
-      reject{|e| !e.teaching.status?( :confirmed )}
-    @teaching_history = sorted_klasses.
-      reject{|e| e.teaching.nil? }.
-      reject{|e| e.date >= todays_date}.
-      reject{|e| !e.teaching.nil? && !e.teaching.status?( :confirmed )}
-    @declined_classes = sorted_klasses.
-      reject{|e| !e.teaching.nil? && !e.teaching.status?( :declined )}
   end
   
   def index
@@ -240,23 +153,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_time_secretly
+  end
+  
   def reserve
     todays_date = Time.zone.now.beginning_of_day
-    if can?( :edit_time, User ) && Klass.count != 0
+    if can?( :edit_time_secretly, User ) && Klass.count != 0
       mon = Klass.last_monday
       @weeks = week_range(mon, mon+5.day, mon-9.day, 5)
+    end
+    if can? :edit_time_secretly, User
       @saturday = params[:saturday]
       todays_date = Time.zone.parse(@saturday) unless @saturday.nil?
     end
 
+    @message = t('message.no_reservations')
     @klasses = []
     if %w( Sat Sun Mon Tue ).include?( todays_date.strftime("%a"))
       start_date = monday_after_next(todays_date)
       temp_classes = Klass.between_dates( start_date, start_date+6.day )
       reject_not_enrolled_courses(temp_classes)
-      reject_already_reserved_classes(temp_classes)
+      reject_instances_of_already_reserved_classes(temp_classes)
+      reject_already_reserved_classes(temp_classes) unless admin?
       temp_classes = reject_duplicates_and_randomize_instances(temp_classes)
       @klasses = sort_after_date_and_time_interval(temp_classes)
+    else
+      @message = t('message.time_for_reservation')
     end
   end
 
@@ -270,20 +192,43 @@ class UsersController < ApplicationController
   end
 
   def edit_time() end
-  
+
+  def get_date( string, date, category )
+    return string unless string.nil?
+    return Time.zone.parse(date).send("strftime",category) unless date.nil?
+    Time.zone.now.send("strftime",category)
+  end
   def already_reserved
-    now = can?( :edit_time, User ) ? now(params[:saturday], params[:time]) : Time.zone.now
+    @saturday = params[:saturday]
+    @months = t('date.month_names').compact.zip((1..12).to_a )
+    @days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
+    @years  = (2009..2020).map{|e| e.to_s+t(:klass_year)}.zip((2009..2020).to_a )
+    @menu_month = get_date( params[:menu_month], @saturday, "%m" )
+    @menu_day   = get_date( params[:menu_day], @saturday, "%d" )
+    @menu_year  = get_date( params[:menu_year], @saturday, "%Y" )
+
+    @saturday = @menu_year.to_s+"-"+@menu_month.to_s+"-"+@menu_day.to_s
+    now = can?( :edit_time, User ) ? now(@saturday, params[:time]) : Time.zone.now
     temp_attendances = @user.attendances.reject{|e| e.start_date < now }
     @attendances = sort_after_date_and_time_interval(temp_attendances)
   end
   
   def update_reserve
+    start_date = monday_after_next( Time.zone.parse( params[:saturday] ))
+    klass_ids = @user.student_klasses.between_dates( start_date, start_date+6.day ).map(&:id) if admin?
+
     student_klass_ids = params[:user].delete("student_klass_ids").reject{|e| e.blank?} || {}
     if !student_klass_ids.empty?
       klass = nil
       student_klass_ids.reverse.each do |klass_id|
         klass = Klass.find( klass_id )
-        @user.student_klasses << klass unless @user.already_reserved?( klass ) || @user.not_enrolled?( klass.course ) || @user.already_reserved_instance?( klass.to_s )
+        unless @user.not_enrolled?( klass.course ) || @user.already_reserved_instance?( klass.to_s, klass.id )
+          if @user.already_reserved?( klass )
+            klass_ids.delete( klass.id ) if admin?
+          else
+            @user.student_klasses << klass
+          end
+        end
       end
       flash[:notice] = t('notice.reserve_success',:object=>t(:klass_es).downcase)
       SystemMailer.send_reservation_of_classes_by_ids( student_klass_ids, @user )
@@ -295,6 +240,7 @@ class UsersController < ApplicationController
       #Recipient.create!( :mail_id=>mail.id, :user_id=>@user.id )
       #redirect_to klasses_path( :menu_year=>klass.year, :menu_month=>klass.month, :menu_day=>klass.day ) and return
     end
+    klass_ids.each{|id| @user.student_klasses.delete( Klass.find(id) )} if admin?
     redirect_to already_reserved_user_path(@user) and return #if !staff?
     redirect_to users_path( :status => "student" )
   end
@@ -370,6 +316,15 @@ class UsersController < ApplicationController
 
   def reject_already_reserved_classes( array )
     array.reject!{|e| @user.already_reserved?(e)}
+  end
+
+  def reject_instances_of_already_reserved_classes( array )
+    klass_ids = @user.student_klasses.map(&:id)
+    klass_group = array.group_by(&:to_s)
+    klass_group.each do |key,value|
+      klass = klass_group[key].select{|e| klass_ids.include?(e.id)}.first
+      array.reject!{|e| e.to_s == klass.to_s && e != klass }
+    end
   end
 
   def reject_duplicates_and_randomize_instances( array )

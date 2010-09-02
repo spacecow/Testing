@@ -10,7 +10,7 @@
 <div id="reservable">
 <p>
 <% form_for :user, :url=>reserve_user_path(@user), :html=>{:method=>:get} do |f| %>
-  <% if can?( :edit_role, User ) && !Klass.first.nil? %>
+  <% if can?( :edit_time, User ) && Klass.count != 0 %>
     <label for="saturday">Week</label>
     <%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
     <%= f.submit "Go!", :name => "reserve" %>
@@ -18,7 +18,7 @@
 <% end %>
 </p>
 <% if @klasses.empty? %>
-  <%= t('message.no_reservations_today') %>
+  <%= @message %>
 <% else %>
 <% semantic_form_for @user, :url=>update_reserve_user_path(@user), :method=>:put do |f| %>
   <% f.inputs do %>

@@ -11,4 +11,7 @@ module ApplicationHelper
       page[link2].toggle
     end
   end
+
+  def date_menu
+  end    
 end

@@ -1,4 +1,6 @@
 <div id="top_links">
-  <%= link_to t(:already_reserved), already_reserved_user_path(@user) %>
-  <%= link_to t(:reserve), reserve_user_path(@user) %>
+  <%= link_to t(:already_reserved), already_reserved_user_path(@user,
+  :saturday=>@saturday ) %>
+  <%= link_to t(:reserve), reserve_user_path(@user,
+  :saturday=>@saturday ) %>
 </div>

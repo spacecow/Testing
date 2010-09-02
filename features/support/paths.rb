@@ -32,7 +32,10 @@ module NavigationHelpers
       path = path.downcase.gsub(' ','_')
       mdl  = params[0]
       sat  = params.size == 2 ? params[1].split : []
-      date = params.size == 1 ? "" : "?saturday=#{sat[0].gsub('"','')}"
+      date = ""
+      if params.size == 2
+        date = "?saturday=#{sat[0].gsub(/\"/,'')}"
+      end
       time = sat.size == 2 ? "&time=#{sat[1].gsub(/\"/,'')}" : ""
       polymorphic_path( model(mdl) )+"/#{path}#{date}#{time}"
       

@@ -8,12 +8,6 @@ And a course: "ruby" is one of user: "reiko"'s student_courses
 And a klass: "18" exists with date: "2010-03-18", course: course "ruby"
 And a user: "johan" exists with username: "johan", role: "god"
 
-@admin @no_classes
-Scenario: View for the admin when there are no classes
-Given a user is logged in as "johan"
-When I go to the reserve page for user: "reiko"
-Then I should see "Reserve" as second title
-
 @student @no_classes
 Scenario: View of the reserve page for students
 Given a user is logged in as "reiko"
@@ -52,12 +46,27 @@ When I browse to the reserve page for user: "reiko" for "03/15～03/20"
 Then I should see "3/18(Thursday) - Ruby I - 12:00~15:00"
 And I should not see "3/19(Friday) - Rails II - 12:00~15:00"
 
-@already_reserved
-Scenario: If a student have reserved a class, he can not reserve it again
+@student @already_reserved
+Scenario: If a student has reserved a class, he can not reserve it again
+Given an attendance exists with student: user "reiko", klass: klass "18"
+And a user is logged in as "reiko"
+When I go to the reserve page for user: "reiko" on "2010-03-06"
+Then I should not see "3/18(Thursday) - Ruby I - 12:00~15:00"
+
+@admin @already_reserved
+Scenario: If a student has reserved a class, admin can still see it
 Given an attendance exists with student: user "reiko", klass: klass "18"
 And a user is logged in as "johan"
 When I browse to the reserve page for user: "reiko" for "03/15～03/20"
-Then I should not see "3/18(Thursday) - Ruby I - 12:00~15:00"
+Then the "3/18(Thursday) - Ruby I - 12:00~15:00" checkbox should be checked
+
+@admin @already_reserved @instance
+Scenario: If a student has reserved a class, admin can still see it even if it has instances
+Given an attendance exists with student: user "reiko", klass: klass "18"
+And a klass exists with date: "2010-03-18", course: course "ruby"
+And a user is logged in as "johan"
+When I browse to the reserve page for user: "reiko" for "03/15～03/20"
+Then the "3/18(Thursday) - Ruby I - 12:00~15:00" checkbox should be checked
 
 @one_instance
 Scenario: A student can only see one instance of the same class
@@ -84,24 +93,25 @@ And a user is logged in as "johan"
 When I go to the reserve page for user: "reiko" on "2010-03-<day>"
 Then I should see "<view>"
 Examples:
-| day | view                                  |
-|  03 | You can do no reservations today.     |
-|  04 | You can do no reservations today.     |
-|  05 | You can do no reservations today.     |
-|  06 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
-|  07 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
-|  08 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
-|  09 | 3/18(Thursday) - Ruby I - 12:00~15:00 |
+| day | view                                               |
+|  03 | Reservations can be made from Sat 12am to Tue 5pm. |
+|  04 | Reservations can be made from Sat 12am to Tue 5pm. |
+|  05 | Reservations can be made from Sat 12am to Tue 5pm. |
+|  06 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
+|  07 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
+|  08 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
+|  09 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
 
 @no_time_jump
 Scenario Outline: A regular student cannot jump in time
-Given a user is logged in as "<user>"
-When I go to the reserve page for user: "reiko" on "2010-03-06"
-Then I should <view> "3/18(Thursday) - Ruby I - 12:00~15:00"
-Examples:
-| user  | view    |
-| johan | see     |
-| reiko | not see |
+# #This is working during the test phase
+# Given a user is logged in as "<user>"
+# When I go to the reserve page for user: "reiko" on "2010-03-06"
+# Then I should <view> "3/18(Thursday) - Ruby I - 12:00~15:00"
+# Examples:
+# | user  | view    |
+# | johan | see     |
+# | reiko | not see |
 
 @days
 Scenario Outline: View of the reserve page  when there are classes to reserve for different days
@@ -124,7 +134,7 @@ Given a klass exists with date: "2010-03-28", course: course "ruby"
 And a klass exists with date: "2010-03-<date>", course: course "ruby"
 And a user is logged in as "johan"
 When I browse to the reserve page for user: "reiko" for "03/22～03/27"
-Then I should see "You can do no reservations today."
+Then I should see "You have no classes to reserve."
 Examples:
 | date |
 |   21 |

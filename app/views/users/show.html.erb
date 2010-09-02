@@ -1,24 +1,5 @@
 <div class="show">
 <fieldset class="show">
 <legend><%= @user.name %></legend>
-
-<%- form_for :user, :url => @user, :html => { :method=>'get' } do |f| -%>
-<%= render "student_options", :f => f if can? :reserve, @user and
-@user.role? :student %>
-<%= render "teacher_options", :f => f if can? :confirm, @user and
-@user.role? :teacher %>
-
-<% if can?( :edit_role, User ) && !Klass.first.nil? %>
-  <label for="saturday">Week</label>
-  <%= select_tag :saturday, options_for_select( @weeks, @saturday ) %>
-  <%= f.submit "Go!", :name => "reserve" %>
-<%- end -%>
-
-<% end %>
-
-<%= link_to t(:reserve), reserve_user_path(@user) %>
-
-<%= render @page, :user => @user unless @page.nil? %>
-
 </fieldset>
 </div>

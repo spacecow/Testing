@@ -251,7 +251,7 @@ en:
     forgotten_password: "I have forgotten my password!"
     info_update: "I would like to forward my internal mail to my external."
     no_confirmations: "You have no classes to confirm."
-    no_reservations_today: "You can do no reservations today."
+    no_reservations: "You have no classes to reserve."
     no_students: "No students"
     no_student: "{{name}} is not a student."
     no_teacher: "{{name}} is not a teacher."
