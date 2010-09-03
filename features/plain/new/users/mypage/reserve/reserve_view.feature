@@ -68,6 +68,14 @@ And a user is logged in as "johan"
 When I browse to the reserve page for user: "reiko" for "03/15～03/20"
 Then the "3/18(Thursday) - Ruby I - 12:00~15:00" checkbox should be checked
 
+@student @already_reserved @instance
+Scenario: If a student has reserved a class, he cannot reserve any of its instances
+Given an attendance exists with student: user "reiko", klass: klass "18"
+And a klass exists with date: "2010-03-18", course: course "ruby"
+And a user is logged in as "reiko"
+When I go to the reserve page for user: "reiko" on "2010-03-06"
+Then I should not see "3/18(Thursday) - Ruby I - 12:00~15:00"
+
 @one_instance
 Scenario: A student can only see one instance of the same class
 Given a klass exists with date: "2010-03-18", course: course "ruby"
@@ -102,9 +110,9 @@ Examples:
 |  08 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
 |  09 | 3/18(Thursday) - Ruby I - 12:00~15:00              |
 
+#This is working during test phase
 @no_time_jump
 Scenario Outline: A regular student cannot jump in time
-# #This is working during the test phase
 # Given a user is logged in as "<user>"
 # When I go to the reserve page for user: "reiko" on "2010-03-06"
 # Then I should <view> "3/18(Thursday) - Ruby I - 12:00~15:00"

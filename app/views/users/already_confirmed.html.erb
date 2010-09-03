@@ -9,6 +9,9 @@
 <fieldset class="intro">
 <legend><%= t(:already_confirmed) %></legend>
 <div id="already_confirmed">
+
+  <%= render "date_menu", :path => already_confirmed_user_path(@user) if can? :edit_time, User %>
+
   <% unless @klasses.empty? %>
     <ul>
       <% @klasses.each do |klass| %>

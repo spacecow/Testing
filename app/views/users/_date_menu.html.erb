@@ -1,0 +1,10 @@
+<% form_for :menu, :url=>path, :html=>{:method=>'get'} do |f| %>
+  <div id="select_menu">
+    <label for="menu_date"><%= t(:klass_date) %>: </label>
+      <%= select_tag :menu_year,  options_for_select( @years,  @menu_year.to_i ) %>
+      <%= select_tag :menu_month, options_for_select( @months, @menu_month.to_i ) %>
+      <%= select_tag :menu_day,   options_for_select( @days,   @menu_day.to_i ) %>
+      <span id="day"></span>
+      <%= f.submit "Go!"%>
+  </div>
+<% end %>

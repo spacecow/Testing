@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
   end
 
   def already_reserved_instance?( string,id )
-    student_klasses.reject(&:id).map(&:to_s).include?( string )
+    student_klasses.reject{|e| e.id==id }.map(&:to_s).include?( string )
   end
   
   #--------------------

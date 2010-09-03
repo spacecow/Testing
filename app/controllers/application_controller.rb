@@ -22,7 +22,8 @@ class ApplicationController < ActionController::Base
   helper_method :association_delete_error_message
   helper_method :units_per_schedule
   helper_method :week_range
- 
+  helper_method :today
+  
   session :session_key => '_yoyaku_session_id'
   layout "courses"
   helper :all # include all helpers, all the time
@@ -93,6 +94,13 @@ class ApplicationController < ActionController::Base
   
   def japanese?
     I18n.locale == 'ja'
+  end
+
+  def today( date )
+    return nil if date.nil?
+    date = date.strftime("%Y-%m-%d") unless date.instance_of? String
+    return nil if Time.zone.now.strftime("%Y-%m-%d") == date
+    return date
   end
   
   def week_range(start_date, end_date, todays_date, range)
