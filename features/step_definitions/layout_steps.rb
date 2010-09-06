@@ -119,6 +119,10 @@ Then /^the page should have a "([^\"]*)" section$/ do |section|
   assert_have_xpath( "//div[@id='#{section}']" )
 end
 
+Then /^the page should have no "([^\"]*)" section$/ do |section|
+  assert_have_no_xpath( "//div[@id='#{section}']" )
+end
+
 #---------- BUTTONS
 
 Then /^I should see a button labeled "([^\"]*)"$/ do |label|

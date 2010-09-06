@@ -4,7 +4,7 @@ Given a setting exists with name: "main"
 Given a user: "prince" exists with username: "prince", role: "teacher"
 Given a user exists with username: "johan", role: "god"
 
-@list @confirmed
+@list @confirmed @admin
 Scenario Outline: Only confirmed classes show up at the already confirmed page
 Given a user is logged in as "johan"
 And a course exists with name: "Ruby I"
@@ -19,6 +19,16 @@ Examples:
 |      2 | not see |
 |      9 | see     |
 |     17 | see     |
+
+@date
+Scenario Outline: Only admin can see the date selection menu
+Given a user is logged in as "<user>"
+When I go to the already confirmed page for user: "prince"
+Then the page should have <view> "select_menu" section
+Examples:
+| user   | view |
+| johan  | a    |
+| prince | no   |
 
 @pending
 Scenario: Only classes that has not yet started are listed on the already confirmed page

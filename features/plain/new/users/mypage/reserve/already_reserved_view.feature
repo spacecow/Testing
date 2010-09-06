@@ -7,8 +7,18 @@ And a course: "ruby" is one of user: "reiko"'s student_courses
 And a klass: "18" exists with date: "2010-03-18", course: course "ruby"
 And a user: "johan" exists with username: "johan", role: "god"
 
+@date
+Scenario Outline: Only admin can see the date selection menu
+Given a user is logged in as "<user>"
+When I go to the already reserved page for user: "reiko"
+Then the page should have <view> "select_menu" section
+Examples:
+| user  | view |
+| johan | a    |
+| reiko | no   |
+
 @admin
-Scenario: List already reserved classes before a certain date
+Scenario: List already reserved classes before a certain date for admin
 And a user is logged in as "johan"
 And a klass: "18-2" exists with date: "2010-03-18", course: course "ruby", start_time: "12:02"
 And an attendance exists with klass: klass "18", student: user "reiko"
@@ -16,6 +26,7 @@ And an attendance exists with klass: klass "18-2", student: user "reiko"
 When I go to the already reserved page for user: "reiko" on "2010-03-18 12:01"
 Then I should not see "3/18(Thursday) - Ruby I - 12:00~15:00"
 And I should see "3/18(Thursday) - Ruby I - 12:02~15:00"
+And the page should have a "select_menu" section
 
 #This is working during the test phase
 @no_time_jump
