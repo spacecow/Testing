@@ -1,5 +1,5 @@
 <div id="top_links">
-  <%= link_to image_tag("button.gif"),
+  <%= link_to t(:already_confirmed),
   already_confirmed_user_path(@user, :saturday=>today(@saturday)) %>
   <%= link_to t(:confirm), confirm_user_path(@user, :saturday=>today(@saturday)) %>
 </div>
