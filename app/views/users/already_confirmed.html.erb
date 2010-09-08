@@ -1,13 +1,13 @@
 <div class="show">
 <fieldset class="show">
-<legend><%= @user.name %></legend>
+<legend class="show"><%= @user.name %></legend>
 
 <% if !@user.role? :teacher %>
   <%= t("message.no_teacher",:name=>@user.name) %>
 <% else %>
 <%= render "confirm_top_links" %>
 <fieldset class="intro">
-<legend><%= t(:already_confirmed) %></legend>
+<legend class="show"><%= t(:already_confirmed) %></legend>
 <div id="already_confirmed">
 
   <%= render "date_menu", :path => already_confirmed_user_path(@user) if can? :edit_time, User %>

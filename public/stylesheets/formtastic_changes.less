@@ -1,277 +1,277 @@
-@fine_gray:					#9c9c9c;
-@label_width:				140px;
+@fine_gray:                                     #9c9c9c;
+@label_width:                           140px;
 
 @border_radius: 5px;
 .border_xtras{
-	-moz-border-radius: @border_radius;
-	-webkit-border-radius: @border_radius;		
+    -moz-border-radius: @border_radius;
+    -webkit-border-radius: @border_radius;
 }
 
 .global_width{ width:300px; }
 .label_mixin{
-	width: @label_width;
-	text-align: right;
-	margin-right: 0.5em;	
+    width: @label_width;
+    text-align: right;
+    margin-right: 0.5em;
 }
 .numeric_mixin{ width: 10em; }
 
 
-div.reservable{
-	form.user{
-		fieldset.inputs{
-			ol{
-				li{
-					fieldset{
-						ol{
-							padding:0;
-						}
-					}
-				}
-			}
-		}
-		fieldset.buttons{
-			padding-left:0;
-		}
-	}
+div#reservable{
+    form.user{
+        fieldset.inputs{
+            ol{
+                li{
+                    fieldset{
+                        ol{
+                            padding:0;
+                        }
+                    }
+                }
+            }
+        }
+        fieldset.buttons{
+            padding-left:0;
+        }
+    }
 }
 td#teacher{
-	fieldset.inputs{
-		float:left;
-		margin-top:1px;
-	}
+    fieldset.inputs{
+        float:left;
+        margin-top:1px;
+    }
 }
 form.comment{
-	fieldset.inputs{
-		ol{
-			li{
-				label{
-					display:none;
-				}
-			}
-		}
-	}
+    fieldset.inputs{
+        ol{
+            li{
+                label{
+                    display:none;
+                }
+            }
+        }
+    }
 }
 form.todo{
-	fieldset.buttons{
-		margin-top:5px;
-	}
+    fieldset.buttons{
+        margin-top:5px;
+    }
 }
 form.user{
-	fieldset.inputs{
-		ol{
-			div#teacher_cost{
-				fieldset.inputs{
-					ol{
-						span#cost{
-							li{
-								width:7em;
-								float:left;
-								label{
-									float:right;
-									width:3em;
-								}
-								input{
-									width:3em;
-								}
-								ul.errors{
-									margin:0.3em 0 0 0;
-								}
-							}
-						}
-						span#course{
-							li{
-								width:10em;
-								label{
-									width:10em;
-								}
-							}
-						}				
-					}
-				}
-			}			
-			fieldset.inputs{
-				ol{
-					padding:0;
-					margin:0 0 0 0.9em;
-					li.radio{
-						fieldset{
-							ol{								
-								li{
-									float:left;
-									label{
-										padding:0;
-										margin:0 0 0 0.2em;
-										input{
-											
-										}
-									}
-								}
-							}
-						}
-					}
-					li.boolean{
-						width:2em;
-						float:left;
-						label{
-							padding:0;
-							margin:0;
-							width:2em;
-						}
-					}
-					span#klass{
-						float:right;
-						margin-right:20em;
-						li.string{
-							margin-right:14em;
-							float:right;
-							input{
-								background:#efe;
-								border:0;
-								color:#000;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    fieldset.inputs{
+        ol{
+            div#teacher_cost{
+                fieldset.inputs{
+                    ol{
+                        span#cost{
+                            li{
+                                width:7em;
+                                float:left;
+                                label{
+                                    float:right;
+                                    width:3em;
+                                }
+                                input{
+                                    width:3em;
+                                }
+                                ul.errors{
+                                    margin:0.3em 0 0 0;
+                                }
+                            }
+                        }
+                        span#course{
+                            li{
+                                width:10em;
+                                label{
+                                    width:10em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            fieldset.inputs{
+                ol{
+                    padding:0;
+                    margin:0 0 0 0.9em;
+                    li.radio{
+                        fieldset{
+                            ol{
+                                li{
+                                    float:left;
+                                    label{
+                                        padding:0;
+                                        margin:0 0 0 0.2em;
+                                        input{
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    li.boolean{
+                        width:2em;
+                        float:left;
+                        label{
+                            padding:0;
+                            margin:0;
+                            width:2em;
+                        }
+                    }
+                    span#klass{
+                        float:right;
+                        margin-right:20em;
+                        li.string{
+                            margin-right:14em;
+                            float:right;
+                            input{
+                                background:#efe;
+                                border:0;
+                                color:#000;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 form.formtastic{
-	fieldset.buttons{
-		padding-left:0;
-		ol{
-			li.normal{
-				padding:0.5em 0 0 1.2em;
-			}
-			li{
-				padding-left:@label_width + 5px;
-			}
-		}
-	}
-	fieldset{
-		ol{
-		 li{ margin-bottom:0px; }
-		 }
-	}
-	fieldset.inputs{
-		ol{
-			.subjects{
-				padding-left:@label_width + 5px;
-				label{
-					border:1px solid black;
-					padding:2px 0 0 2px;
-					float:left;
-					width:97px;
-					.border_xtras;
-				}
-				label.bug{ background:red; }
-				label.spelling{	background:orange; }
-				label.feature{ background:green; }				
-				input{ 
-					float:left; }
-				span.text{
-					margin-left: 2px;
-					float:left;
-					font-weight:bold;
-				}
-			}
-			li{
-				margin-bottom:5px;
-				label{ .label_mixin; }
-				p.inline-hints{
-					color:@fine_gray;
-					font-size:10px;
-					font-style:italic;
-					margin-left:@label_width + 5px;
-				}
-				ul.errors{
-					margin-left:12.2em;
-				}				
-			}
-			li.boolean{
-				label{
-					padding-left:@label_width + 4px;
-					width:410px;
-					text-align:left;
-				}
-			}
-			li.radio{
-				fieldset{
-					legend{
-						span.label{ .label_mixin; }
-					}
-					ol{
-						li{
-						label{
-							text-align:left;
-							}
-						}
-					}
-				}
-			}
-			li.check_boxes{
-				fieldset{
-					legend{
-						label{	
-						}
-					}
-					ol{
-						li{
-							margin-left:0.8em;
-							label{
-								text-align:left;
-							}
-						}
-					}
-				}				
-			}
-			span.horizontal{
-				li.radio{
-					fieldset{
-						legend{
-							position:absolute;
-						}
-						ol{
-							li{
-								float:left;
-								margin:0.4em 0 1em 0.6em;
-							}
-						}
-					}
-				}
-			}
-			li.text{
-				textarea{
-					.global_width;
-					height:70px;
-					resize:none;
-				}
-			}
-			li.numeric{
-				input{ .numeric_mixin; }
-			}
-			li.string{
-				input{ .global_width; }
-				input.numeric{ .numeric_mixin; }
-				input.non-japanese{
-					ime-mode: disabled;
-				}
-			}
-			li.password{ input{ .global_width; }}
-			li.datetime, li.date{
-				fieldset{
-					legend{
-						position:absolute;
-						span.label{
-							width:@label_width;
-						}
-					}
-					ol{
-						text-align:right;
-						padding-left:@label_width + 6px;
-					}
-				}
-			}
-		}
-	}
+    fieldset.buttons{
+        padding-left:0;
+        ol{
+            li.normal{
+                padding:0.5em 0 0 1.2em;
+            }
+            li{
+                padding-left:@label_width + 5px;
+            }
+        }
+    }
+    fieldset{
+        ol{
+            li{ margin-bottom:0px; }
+        }
+    }
+    fieldset.inputs{
+        ol{
+            .subjects{
+                padding-left:@label_width + 5px;
+                label{
+                    border:1px solid black;
+                    padding:2px 0 0 2px;
+                    float:left;
+                    width:97px;
+                    .border_xtras;
+                }
+                label.bug{ background:red; }
+                label.spelling{ background:orange; }
+                label.feature{ background:green; }
+                input{
+                    float:left; }
+                span.text{
+                    margin-left: 2px;
+                    float:left;
+                    font-weight:bold;
+                }
+            }
+            li{
+                margin-bottom:5px;
+                label{ .label_mixin; }
+                p.inline-hints{
+                    color:@fine_gray;
+                    font-size:10px;
+                    font-style:italic;
+                    margin-left:@label_width + 5px;
+                }
+                ul.errors{
+                    margin-left:12.2em;
+                }
+            }
+            li.boolean{
+                label{
+                    padding-left:@label_width + 4px;
+                    width:410px;
+                    text-align:left;
+                }
+            }
+            li.radio{
+                fieldset{
+                    legend{
+                        span.label{ .label_mixin; }
+                    }
+                    ol{
+                        li{
+                            label{
+                                text-align:left;
+                            }
+                        }
+                    }
+                }
+            }
+            li.check_boxes{
+                fieldset{
+                    legend{
+                        label{
+                        }
+                    }
+                    ol{
+                        li{
+                            margin-left:0.8em;
+                            label{
+                                text-align:left;
+                            }
+                        }
+                    }
+                }
+            }
+            span.horizontal{
+                li.radio{
+                    fieldset{
+                        legend{
+                            position:absolute;
+                        }
+                        ol{
+                            li{
+                                float:left;
+                                margin:0.4em 0 1em 0.6em;
+                            }
+                        }
+                    }
+                }
+            }
+            li.text{
+                textarea{
+                    .global_width;
+                    height:70px;
+                    resize:none;
+                }
+            }
+            li.numeric{
+                input{ .numeric_mixin; }
+            }
+            li.string{
+                input{ .global_width; }
+                input.numeric{ .numeric_mixin; }
+                input.non-japanese{
+                    ime-mode: disabled;
+                }
+            }
+            li.password{ input{ .global_width; }}
+            li.datetime, li.date{
+                fieldset{
+                    legend{
+                        position:absolute;
+                        span.label{
+                            width:@label_width;
+                        }
+                    }
+                    ol{
+                        text-align:right;
+                        padding-left:@label_width + 6px;
+                    }
+                }
+            }
+        }
+    }
 }
