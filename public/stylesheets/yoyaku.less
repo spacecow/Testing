@@ -759,3 +759,39 @@ div.history{
     list-style:square;
     margin-left:15px;
 }
+
+.conspicuous_link{
+    margin-left:auto;
+    margin-right:10px;
+    display:block;
+    text-align:center;
+    width:190px;
+    color: @menu_fg;
+    background: @global_bg;
+    font-weight:bold;
+    float:left;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    .shadow_xtras;
+}
+.conspicuous_link_not_chosen{
+    .conspicuous_link;
+    padding:10px;
+    margin-top: 20px;
+    font-size:120%;
+}
+.conspicuous_link_chosen{
+    .conspicuous_link;
+    padding:18px;
+    font-size:150%;
+}
+
+
+div#top_links{
+    span.chosen{
+        a{ .conspicuous_link_chosen; }
+    }
+    span.not_chosen{
+        a{ .conspicuous_link_not_chosen; }
+    }
+}
