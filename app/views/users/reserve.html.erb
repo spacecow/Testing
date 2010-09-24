@@ -6,7 +6,6 @@
 <% else %>
 <%= render "reserve_top_links" %>
 <fieldset class="intro">
-<legend class="show"><%= t(:reserve) %></legend>
 <div id="reservable">
 <p>
 <% form_for :user, :url=>reserve_user_path(@user), :html=>{:method=>:get} do |f| %>

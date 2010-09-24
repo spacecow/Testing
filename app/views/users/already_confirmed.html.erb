@@ -7,7 +7,6 @@
 <% else %>
 <%= render "confirm_top_links" %>
 <fieldset class="intro">
-<legend class="show"><%= t(:already_confirmed) %></legend>
 <div id="already_confirmed">
 
   <%= render "date_menu", :path => already_confirmed_user_path(@user) if can? :edit_time, User %>

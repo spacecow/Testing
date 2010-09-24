@@ -1,6 +1,6 @@
 <div id="top_links">
-  <%= link_to t(:already_reserved),
-    already_reserved_user_path(@user,:saturday=>today(@saturday)) %>
-  <%= link_to t(:reserve), reserve_user_path(@user,
-    :saturday=>today(@saturday)) %>
+  <span id="already_reserved" class="<%= @chosen ==
+:already_reserved ? "chosen" : "not_chosen" %>"><%= link_to t(:already_reserved), already_reserved_user_path(@user,:saturday=>today(@saturday)) %></span>
+  <span id="reserve" class="<%= @chosen == :reserve ? "chosen" : "not_chosen" %>"><%= link_to t(:reserve), reserve_user_path(@user, :saturday=>today(@saturday)) %></span>
 </div>
+<div class="clear"></div>

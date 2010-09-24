@@ -157,6 +157,7 @@ class UsersController < ApplicationController
   end
 
   def reserve
+    @chosen = :reserve
     todays_date = Time.zone.now.beginning_of_day
     if can?( :edit_time_secretly, User ) && Klass.count != 0
       mon = Klass.last_monday
@@ -200,6 +201,7 @@ class UsersController < ApplicationController
   end
 
   def already_reserved
+    @chosen = :already_reserved
     @saturday = params[:saturday]
     @months = t('date.month_names').compact.zip((1..12).to_a )
     @days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )
@@ -253,6 +255,7 @@ class UsersController < ApplicationController
   end
 
   def confirm
+    @chosen = :confirm
     now = Time.zone.now.beginning_of_day
     if can?( :edit_role, User ) && Klass.count != 0
       mon = Klass.last_monday
@@ -269,6 +272,7 @@ class UsersController < ApplicationController
   end
 
   def already_confirmed
+    @chosen = :already_confirmed
     @saturday = params[:saturday]
     @months = t('date.month_names').compact.zip((1..12).to_a )
     @days   =      (1..31).map{|e| e.to_s+t(:klass_day)}.zip((1..31).to_a )

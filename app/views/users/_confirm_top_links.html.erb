@@ -1,6 +1,7 @@
 <div id="top_links">
-  <span id="already_confirmed" class="chosen"><%= link_to t(:already_confirmed),
+  <span id="already_confirmed" class="<%= @chosen ==
+  :already_confirmed ? "chosen" : "not_chosen" %>"><%= link_to t(:already_confirmed),
   already_confirmed_user_path(@user, :saturday=>today(@saturday)) %></span>
-  <span id="confirm" class="not_chosen"><%= link_to t(:confirm), confirm_user_path(@user, :saturday=>today(@saturday)) %></span>
+  <span id="confirm" class="<%= @chosen == :confirm ? "chosen" : "not_chosen" %>"><%= link_to t(:confirm), confirm_user_path(@user, :saturday=>today(@saturday)) %></span>
 </div>
 <div class="clear"></div>
