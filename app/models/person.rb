@@ -74,3 +74,35 @@ private
     Digest::SHA1.hexdigest( string_to_hash )
   end  
 end
+
+# == Schema Information
+#
+# Table name: people
+#
+#  id                  :integer(4)      not null, primary key
+#  user_name           :string(255)
+#  family_name         :string(255)
+#  first_name          :string(255)
+#  family_name_kana    :string(255)
+#  first_name_kana     :string(255)
+#  gender              :integer(1)
+#  address1            :string(255)
+#  address2            :string(255)
+#  home_phone          :string(10)
+#  mobile_phone        :string(11)
+#  mail_address_mobile :string(255)
+#  mail_address_pc     :string(255)
+#  ritei               :boolean(1)
+#  last_login          :datetime
+#  note                :text
+#  created_at          :datetime
+#  updated_at          :datetime
+#  inactive            :boolean(1)
+#  status              :integer(2)
+#  tostring            :string(255)
+#  hashed_password     :string(255)
+#  salt                :string(255)
+#  check               :string(255)
+#  language            :string(255)     default("ja")
+#
+

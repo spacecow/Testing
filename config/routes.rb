@@ -25,7 +25,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :kunyomis
   map.resources :meanings
   
-  map.resources :glossaries, :collection => { :quiz => :get, :quiz_init => :get }, :member => { :check => :put }
+  map.resources :glossaries,
+    :collection => { :quiz_init => :get, :check => :put, :quiz => :get }
   
   map.login_user '/login_user/:username', :controller => 'user_sessions', :action => 'new'
   map.login_user '/login_user', :controller => "user_sessions", :action => "new"

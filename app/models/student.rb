@@ -50,3 +50,14 @@ class Student < ActiveRecord::Base
 		person.user_name
 	end  
 end
+
+# == Schema Information
+#
+# Table name: students
+#
+#  id         :integer(4)      not null, primary key
+#  person_id  :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

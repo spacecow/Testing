@@ -6,3 +6,12 @@ class KanjisOnyomisTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: kanjis_onyomis
+#
+#  kanji_id  :integer(4)
+#  onyomi_id :integer(4)
+#
+

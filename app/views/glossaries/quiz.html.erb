@@ -1,3 +1,22 @@
+<%= javascript_include_tag "check_answer_glossary.js" %>
+
+<div class="form">
+<fieldset class="form">
+<legend class="form"><%= t('quiz') %></legend>
+<div id="part"><%= @part_answer %></div>
+<div id="correct" style="color: #efe;"><%= @correct_answer %></div>
+
+<% form_for :glossary, :url => check_glossaries_path, :html => { :method => :put } do |f| %>
+  <%= text_field_tag :question, @question %>
+  <%= text_field_tag :answer, nil, :class=>:focus, :size=>80 %>
+  <%= hidden_field_tag :part_answer, @part_answer %>
+  <%= f.submit "Check" %>
+<% end %>
+
+</fieldset>
+</div>
+
+<% if false %>
 <%= javascript_include_tag "check_answer.js" %>
 
 <div class="form">
@@ -26,3 +45,5 @@
 </div>
 </fieldset>
 </div>
+
+<% end %>

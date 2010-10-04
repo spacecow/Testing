@@ -6,3 +6,14 @@ class KunyomiTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: kunyomis
+#
+#  id         :integer(4)      not null, primary key
+#  reading    :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

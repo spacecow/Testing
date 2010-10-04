@@ -18,3 +18,14 @@ class Teacher < ActiveRecord::Base
     "#{person}"
   end
 end
+
+# == Schema Information
+#
+# Table name: teachers
+#
+#  id         :integer(4)      not null, primary key
+#  person_id  :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

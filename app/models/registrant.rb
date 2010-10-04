@@ -40,3 +40,16 @@ class Registrant < ActiveRecord::Base
 	  ["Over 60","age_60"]
 	]
 end
+
+# == Schema Information
+#
+# Table name: registrants
+#
+#  id         :integer(4)      not null, primary key
+#  event_id   :integer(4)
+#  note       :text
+#  created_at :datetime
+#  updated_at :datetime
+#  user_id    :integer(4)
+#
+

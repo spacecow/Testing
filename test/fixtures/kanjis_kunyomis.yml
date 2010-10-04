@@ -7,3 +7,12 @@ one:
 two:
   kanji_id: 1
   kunyomi_id: 1
+
+# == Schema Information
+#
+# Table name: kanjis_kunyomis
+#
+#  kanji_id   :integer(4)
+#  kunyomi_id :integer(4)
+#
+

@@ -7,3 +7,12 @@ one:
 two:
   kanji_id: 1
   onyomi_id: 1
+
+# == Schema Information
+#
+# Table name: kanjis_onyomis
+#
+#  kanji_id  :integer(4)
+#  onyomi_id :integer(4)
+#
+

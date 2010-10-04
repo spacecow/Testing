@@ -5,3 +5,16 @@ class Doc < ActiveRecord::Base
     title
   end
 end
+
+# == Schema Information
+#
+# Table name: docs
+#
+#  id         :integer(4)      not null, primary key
+#  title      :string(255)
+#  url        :string(255)
+#  contents   :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+

@@ -38,3 +38,22 @@ private
   end
   
 end
+
+# == Schema Information
+#
+# Table name: courses
+#
+#  id                     :integer(4)      not null, primary key
+#  name                   :string(255)
+#  description            :text
+#  inactive               :boolean(1)      default(FALSE)
+#  note                   :text
+#  created_at             :datetime
+#  updated_at             :datetime
+#  klasses_count          :integer(4)      default(0)
+#  template_classes_count :integer(4)      default(0)
+#  level_ja               :string(255)
+#  level_en               :string(255)
+#  capacity               :string(255)
+#
+

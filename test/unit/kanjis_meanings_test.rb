@@ -6,3 +6,12 @@ class KanjisMeaningsTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: kanjis_meanings
+#
+#  kanji_id   :integer(4)
+#  meaning_id :integer(4)
+#
+

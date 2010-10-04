@@ -19,3 +19,14 @@ class StudentTest < ActiveSupport::TestCase
     assert_equal student.is_canceled?( klass ), true
   end  
 end
+
+# == Schema Information
+#
+# Table name: students
+#
+#  id         :integer(4)      not null, primary key
+#  person_id  :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

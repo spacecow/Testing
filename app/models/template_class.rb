@@ -139,3 +139,25 @@ protected
 		errors.add :course, "cannot be changed" if TemplateClass.find( id ).course != course	
 	end
 end
+# == Schema Information
+#
+# Table name: template_classes
+#
+#  id             :integer(4)      not null, primary key
+#  course_id      :integer(4)
+#  course_time_id :integer(4)
+#  day            :string(255)
+#  title          :string(255)
+#  description    :text
+#  inactive       :boolean(1)      default(FALSE)
+#  note           :text
+#  created_at     :datetime
+#  updated_at     :datetime
+#  teacher_id     :integer(4)
+#  classroom_id   :integer(4)
+#  start_time     :time
+#  end_time       :time
+#  mail_sending   :integer(1)      default(0)
+#  capacity       :string(255)
+#
+
