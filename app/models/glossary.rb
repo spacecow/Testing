@@ -8,45 +8,33 @@ class Glossary < ActiveRecord::Base
 
   before_validation :find_word
 
-  def state
-    @state ||= 0
+  def answer
+    case state
+    when 0: japanese
+    when 1: word.meaning.gsub(/\(.+?\)/,"")
+    when 2: word.reading
+    else state%2==0 ? relations[(state-3)/2].reading : relations[(state-3)/2].meaning.gsub(/\(.+?\)/,"")
+    end
   end
 
-  def relations
-    @relations ||= []
-  end
-  
-  def state=( no )
-    @state = no
-  end
-  
+  def correct_answer?( part_answer ); part_answer == answer end
+
+  def next_question; self.state += 1 end
+  def next_question?; state < relations.size*2 + 2 end
+
   def question
     case state
     when 0: english
     when 1: word.japanese
-    else relations[state-2].japanese
+    when 2: word.japanese
+    else relations[(state-3)/2].japanese
     end
   end
 
-  def answer
-    case state
-    when 0: japanese
-    when 1: word.reading
-    else relations[state-2].reading
-    end
-  end
+  def relations; @relations ||= [] end
 
-  def correct_answer?( part_answer )
-    part_answer == answer
-  end
-
-  def next_question?
-    state < relations.size + 1
-  end
-
-  def next_question
-    self.state += 1
-  end
+  def state; @state ||= 0 end
+  def state=( no ); @state = no end
 
   private
 

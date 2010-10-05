@@ -1,33 +1,33 @@
 <div id="list">
-<h1><%= t('glossaries.title') %></h1>
+  <h1><%= t('glossaries.title') %></h1>
 
-<table cellpadding="2" cellspacing="1">
-	<tr>
-			<th class="list-topics"><%= t('japanese') %></th>		
-			<th class="list-topics"><%= t('hiragana') %></th>		
-			<th class="list-topics"><%= t('kanji') %></th>		
-			<th class="list-topics"><%= t('english') %></th>		
-	</tr>
-	<% for glossary in @glossaries %>
-		<tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
-      	<td><%=h glossary.japanese %></td>
-      	<td><%=h glossary.hiragana %></td>
-      	<td><%=h glossary.kanji %></td>
-      	<td><%=h glossary.english %></td>
-  		<td>
-    			<%= link_to t('show'), glossary, :class=>"link" %>
-    			<%= link_to t('edit'), edit_glossary_path(glossary), :class=>"link" %>
-    			<%= link_to t('delete'), glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
-			</td>    	
-		</tr>
-	<% end %>
-</table>
+  <table cellpadding="2" cellspacing="1" class="listing">
+    <tr>
+      <th class="list-topics"><%= t('japanese') %></th>
+      <th class="list-topics"><%= t('hiragana') %></th>
+      <th class="list-topics"><%= t('kanji') %></th>
+      <th class="list-topics"><%= t('english') %></th>
+    </tr>
+    <% for glossary in @glossaries %>
+    <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      <td><%=h glossary.japanese %></td>
+      <td><%=h glossary.word.reading %></td>
+      <td><%=h glossary.word.japanese %></td>
+      <td><%=h glossary.english %></td>
+      <td>
+        <%= link_to t('show'), glossary, :class=>"link" %>
+        <%= link_to t('edit'), edit_glossary_path(glossary), :class=>"link" %>
+        <%= link_to t('delete'), glossary, :confirm => 'Are you sure?', :method => :delete, :class=>"link" %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
 
-<div class="links">
-<p>
-  <%= link_to t('glossaries.new'), new_glossary_path, :class=>"link" %> |
-  <%= link_to t('quiz'), quiz_init_glossaries_path, :class=>"link" %>
-</p>
+  <div class="links">
+    <p>
+      <%= link_to t('glossaries.new'), new_glossary_path, :class=>"link" %> |
+      <%= link_to t('quiz'), quiz_init_glossaries_path, :class=>"link" %>
+    </p>
 
-</div>
+  </div>
 </div>
