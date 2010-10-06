@@ -75,7 +75,7 @@ class GlossariesController < ApplicationController
         glossary_hits =
           Glossary.all(:conditions => ["words.japanese like (?)", "%#{kanji}%"],
                        :include => :word ).reject{|e| e == glossary}
-        glossary_hits.each{|g| glossary.relations << g.word }
+        glossary_hits.each{|g| glossary.relations << g }
       end
       glossary
     end

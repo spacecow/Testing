@@ -13,7 +13,7 @@ class Glossary < ActiveRecord::Base
     when 0: japanese
     when 1: word.meaning.gsub(/\(.+?\)/,"")
     when 2: word.reading
-    else state%2==0 ? relations[(state-3)/2].reading : relations[(state-3)/2].meaning.gsub(/\(.+?\)/,"")
+    else state%2==0 ? relations[(state-3)/2].word.reading : relations[(state-3)/2].word.meaning.gsub(/\(.+?\)/,"")
     end
   end
 
@@ -22,12 +22,16 @@ class Glossary < ActiveRecord::Base
   def next_question; self.state += 1 end
   def next_question?; state < relations.size*2 + 2 end
 
+  def highlight( text, word )
+    text.gsub(word, "<font color=\"red\">#{word}</font>")
+  end
+  
   def question
     case state
     when 0: english
-    when 1: word.japanese
-    when 2: word.japanese
-    else relations[(state-3)/2].japanese
+    when 1: highlight( japanese, word.japanese )
+    when 2: highlight( japanese, word.japanese )
+    else highlight( relations[(state-3)/2].japanese, relations[(state-3)/2].word.japanese)
     end
   end
 

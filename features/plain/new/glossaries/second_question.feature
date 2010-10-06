@@ -10,36 +10,36 @@ When I go to the quiz init glossaries page
 
 Scenario: First glossary - Relation question, English
 When I answer with "母と二人で童謡を歌った, children's song, どうよう"
-Then the "question" field should contain "童話"
+Then I should see "アンデルセン童話を読んだ" as question
 And I should see "fairy tale" as correct answer
 
 Scenario: First glossary - Relation question, Reading
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale"
-Then the "question" field should contain "童話"
+Then I should see "アンデルセン童話を読んだ" as question
 And I should see "どうわ" as correct answer
 
 Scenario: Second glossary - Sentence question
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale, どうわ"
-Then the "question" field should contain "I read an Andersen fairy tale"
+Then I should see "I read an Andersen fairy tale" as question
 
 Scenario: Second glossary - English question
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale, どうわ, アンデルセン童話を読んだ"
-Then the "question" field should contain "童話"
+Then I should see "アンデルセン童話を読んだ" as question
 And I should see "fairy tale" as correct answer
 
 Scenario: Second glossary - Reading question
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale, どうわ, アンデルセン童話を読んだ, fairy tale"
-Then the "question" field should contain "童話"
+Then I should see "アンデルセン童話を読んだ" as question
 And I should see "どうわ" as correct answer
 
 Scenario: Second glossary - Relation question, English
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale, どうわ, アンデルセン童話を読んだ, fairy tale, どうわ"
-Then the "question" field should contain "童謡"
+Then I should see "母と二人で童謡を歌った" as question
 And I should see "children's song" as correct answer
 
 Scenario: Second glossary - Relation question, Reading
 When I answer with "母と二人で童謡を歌った, children's song, どうよう, fairy tale, どうわ, アンデルセン童話を読んだ, fairy tale, どうわ, children's song"
-Then the "question" field should contain "童謡"
+Then I should see "母と二人で童謡を歌った" as question
 And I should see "どうよう" as correct answer
 
 Scenario: Glossaries finished
