@@ -2,10 +2,14 @@
 class GlossariesController < ApplicationController
   load_and_authorize_resource
 
+  def new
+    @glossary = Glossary.new(:theme_id => params[:theme_id])
+  end
+  
   def create
     if @glossary.save
       flash[:notice] = t('notice.create_success', :object=>t(:glossary).downcase)
-      redirect_to new_glossary_path
+      redirect_to new_glossary_path(:theme_id => @glossary.theme_id)
     else
       render :new
     end
@@ -15,6 +19,14 @@ class GlossariesController < ApplicationController
     @glossaries = Glossary.all
   end
 
+  def update
+    if @glossary.update_attributes( params[:glossary] )
+      redirect_to glossaries_path
+    else
+      render :edit
+    end
+  end
+  
   def quiz_init
     session[:glossaries] = Glossary.all #.shuffle
     session[:glossary] = init_glossary( session[:glossaries].shift )

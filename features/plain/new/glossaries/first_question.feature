@@ -17,6 +17,15 @@ Then I should see "I sang a children's song with my mother" as question
 And I should see "母と二人で童謡を歌った" as correct answer
 And I should see "＊＊二人で＊＊＊＊＊＊" as part answer
 
+@partly
+Scenario: First question - Correct answer after a partly answer
+When I answer with "母と二人で"
+Then I should see "I sang a children's song with my mother" as question
+And I should see "母と二人で童謡を歌った" as correct answer
+And I should see "母と二人で＊＊＊＊＊＊" as part answer
+When I answer with "童謡を歌った"
+Then I should see "children's song" as correct answer
+
 Scenario: First question - Sentence question
 When I answer with "母と二人で童謡を歌った"
 Then I should see "母と二人で童謡を歌った" as question

@@ -1,9 +1,9 @@
 class Glossary < ActiveRecord::Base
   belongs_to :word
   
-  attr_accessible :japanese, :english, :kanji, :hiragana, :state
+  attr_accessible :japanese, :english, :kanji, :hiragana, :state, :theme_id
   attr_accessor :kanji, :hiragana
-  validates_presence_of :japanese, :word_id
+  validates_presence_of :japanese, :word_id, :theme_id
   validates_uniqueness_of :japanese
 
   before_validation :find_word

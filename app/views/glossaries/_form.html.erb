@@ -3,6 +3,7 @@
   <%= f.input :kanji, :label => t('kanji') %>
   <%= f.input :hiragana, :label => t('hiragana') %>
   <%= f.input :english, :required => false, :label => t('english') %>
+  <%= f.input :theme_id, :as => :hidden %>
 <% end %>
 <% f.buttons do %>
   <%= f.commit_button label_text %>

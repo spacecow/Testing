@@ -26,7 +26,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :meanings
   
   map.resources :glossaries,
-    :collection => { :quiz_init => :get, :check => :put, :quiz => :get }
+  :collection => { :quiz_init => :get, :check => :put, :quiz => :get }
+  map.resources :themes
   
   map.login_user '/login_user/:username', :controller => 'user_sessions', :action => 'new'
   map.login_user '/login_user', :controller => "user_sessions", :action => "new"

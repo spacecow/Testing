@@ -1,0 +1,27 @@
+<div id="list">
+  <h1><%= t('themes.title') %></h1>
+
+  <table cellpadding="2" cellspacing="1" class="listing">
+    <tr>
+      <th class="list-topics"><%= t('title') %></th>
+    </tr>
+    <% for theme in @themes %>
+    <tr class="<%= cycle( 'list-line-odd', 'list-line-even' ) %>" >
+      <td><%=h theme.title %></td>
+      <td>
+        <%= link_to t('show'), theme %>
+        <%= link_to t('edit'), edit_theme_path(theme) %>
+        <%= link_to t('delete'), theme, :confirm => 'Are you sure?',
+        :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <div class="links">
+    <p>
+      <%= link_to t('themes.new'), new_theme_path %>
+    </p>
+
+  </div>
+</div>
