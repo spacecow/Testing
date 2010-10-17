@@ -84,10 +84,14 @@ class GlossariesController < ApplicationController
     def init_glossary( glossary )
       kanjis = glossary.word.japanese
       kanjis.split(//).each do |kanji|
+        glossary.relations << Kanji.find_by_title(kanji)
         glossary_hits =
           Glossary.all(:conditions => ["words.japanese like (?)", "%#{kanji}%"],
                        :include => :word ).reject{|e| e == glossary}
-        glossary_hits.each{|g| glossary.relations << g }
+        glossary_hits.each do |g|
+          glossary.relations << g
+          glossary.relations << g
+        end
       end
       glossary
     end

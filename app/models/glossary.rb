@@ -1,5 +1,6 @@
 class Glossary < ActiveRecord::Base
   belongs_to :word
+  belongs_to :theme
   
   attr_accessible :japanese, :english, :kanji, :hiragana, :state, :theme_id
   attr_accessor :kanji, :hiragana
@@ -8,19 +9,23 @@ class Glossary < ActiveRecord::Base
 
   before_validation :find_word
 
+  def index; @index || 1 end
+  
+  def kanji_no; word.kanji_no end
+  
   def answer
     case state
     when 0: japanese
     when 1: word.meaning.gsub(/\(.+?\)/,"")
     when 2: word.reading
-    else state%2==0 ? relations[(state-3)/2].word.reading : relations[(state-3)/2].word.meaning.gsub(/\(.+?\)/,"")
+    else relations[state-3].second_answer(state)
     end
   end
 
   def correct_answer?( part_answer ); part_answer == answer end
 
   def next_question; self.state += 1 end
-  def next_question?; state < relations.size*2 + 2 end
+  def next_question?; state < relations.size + 2 end
 
   def highlight( text, word )
     text.gsub(word, "<font color=\"red\">#{word}</font>")
@@ -31,12 +36,21 @@ class Glossary < ActiveRecord::Base
     when 0: english
     when 1: highlight( japanese, word.japanese )
     when 2: highlight( japanese, word.japanese )
-    else highlight( relations[(state-3)/2].japanese, relations[(state-3)/2].word.japanese)
+    else relations[state-3].second_question(japanese)
     end
   end
 
   def relations; @relations ||= [] end
 
+  def second_answer(index)
+    @index ||= index
+    @index == index ? word.reading : word.meaning 
+  end
+
+  def second_question( question )
+    highlight( japanese, word.japanese )
+  end
+  
   def state; @state ||= 0 end
   def state=( no ); @state = no end
 
