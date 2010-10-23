@@ -26,6 +26,9 @@ module NavigationHelpers
     when /^the edit page (?:for|of) (.+)$/
       edit_polymorphic_path( model($1) )
       
+    when /^the quiz init glossaries page with state "(.+)"$/
+      quiz_init_glossaries_path(:state=>$1)
+      
     when /^the (already reserved|already confirmed|confirm|reserve|edit courses|edit role) page (?:for|of) (.+)$/
       path = $1
       params = $2.split(" on ")

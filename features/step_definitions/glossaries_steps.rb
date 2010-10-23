@@ -20,13 +20,17 @@ Then /^"([^\"]*)" should be marked$/ do |word|
 end
 
 Then /^I should see "([^\"]*)" as question$/ do |reading|
-  Then "I should see /^#{reading}$/ within \"div#question\""
+  Then %(I should see /^#{reading}$/ within "div#question")
+end
+
+Then /^I should see \/([^\/]*)\/ as correct answer$/ do |answer|
+  Then %(I should see /^#{answer}$/ within "div#correct")
 end
 
 Then /^I should see "([^\"]*)" as correct answer$/ do |answer|
-  Then "I should see /^#{answer}$/ within \"div#correct\""
+  Then %(I should see "#{answer}" within "div#correct")
 end
 
 Then /^I should see "([^\"]*)" as part answer$/ do |answer|
-  Then "I should see \"#{answer}\" within \"div#part\""
+  Then %(I should see "#{answer}" within "div#part")
 end

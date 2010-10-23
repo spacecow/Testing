@@ -9,8 +9,9 @@ class Kanji < ActiveRecord::Base
     generate_models( "data/kanjidic.utf" )
   end
 
-  def second_answer(state); meanings.map(&:title).join(', ') end
-  def second_question(question); highlight( question, title ) end
+  def add_question(q); @question = q end
+  def answer(state); meanings.map(&:title).join(', ') end
+  def question; highlight( @question, title ) end
   
   private
 

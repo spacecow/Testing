@@ -3,6 +3,15 @@ class Word < ActiveRecord::Base
 
   attr_accessible :japanese, :reading, :meaning
 
+  def answer(index)
+    @index ||= index
+    @index == index ? reading : meaning.gsub(/\(.+?\)/,"") 
+  end
+  def add_question(q); @question = q end
+  def question
+    highlight( @question, japanese )
+  end
+  
   def self.generate_default_csv
     generate_csv( "data/edict.utf" )
   end
@@ -25,6 +34,10 @@ class Word < ActiveRecord::Base
         end
       end
     end
+
+    def highlight( text, word )
+      text.gsub(word, "<font color=\"red\">#{word}</font>")
+    end    
 end
 # == Schema Information
 #

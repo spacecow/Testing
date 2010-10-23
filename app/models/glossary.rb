@@ -9,23 +9,25 @@ class Glossary < ActiveRecord::Base
 
   before_validation :find_word
 
-  def index; @index || 1 end
-  
+  def add_question(word,question=nil)
+    word.add_question(question || japanese)
+    relations << word
+  end
   def kanji_no; word.kanji_no end
   
   def answer
     case state
     when 0: japanese
-    when 1: word.meaning.gsub(/\(.+?\)/,"")
-    when 2: word.reading
-    else relations[state-3].second_answer(state)
+#    when 1: word.meaning.gsub(/\(.+?\)/,"")
+#    when 2: word.reading
+    else relations[state-1].answer(state)
     end
   end
 
   def correct_answer?( part_answer ); part_answer == answer end
 
   def next_question; self.state += 1 end
-  def next_question?; state < relations.size + 2 end
+  def next_question?; state < relations.size end
 
   def highlight( text, word )
     text.gsub(word, "<font color=\"red\">#{word}</font>")
@@ -34,22 +36,13 @@ class Glossary < ActiveRecord::Base
   def question
     case state
     when 0: english
-    when 1: highlight( japanese, word.japanese )
-    when 2: highlight( japanese, word.japanese )
-    else relations[state-3].second_question(japanese)
+#    when 1: highlight( japanese, word.japanese )
+#    when 2: highlight( japanese, word.japanese )
+    else relations[state-1].question
     end
   end
 
   def relations; @relations ||= [] end
-
-  def second_answer(index)
-    @index ||= index
-    @index == index ? word.reading : word.meaning 
-  end
-
-  def second_question( question )
-    highlight( japanese, word.japanese )
-  end
   
   def state; @state ||= 0 end
   def state=( no ); @state = no end

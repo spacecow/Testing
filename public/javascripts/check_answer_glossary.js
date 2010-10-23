@@ -25,6 +25,7 @@ $( function(){
     $("div#part").html( new_part_answer );
 
     if( new_part_answer == correct_answer ){
+      $("input#glossary_submit").focus();
       $("input#answer").val( correct_answer );
       $("input#glossary_submit").click();
     }

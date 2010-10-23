@@ -26,7 +26,7 @@
   <div class="links">
     <p>
       <%= link_to t('glossaries.new'), new_glossary_path(:theme_id => @theme.id) %> |
-      <%= link_to t('quiz'), quiz_init_glossaries_path %>
+      <%= link_to t('quiz'), quiz_init_glossaries_path(:theme_id => @theme.id) %>
     </p>
 
   </div>

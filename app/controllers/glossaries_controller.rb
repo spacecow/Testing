@@ -28,8 +28,13 @@ class GlossariesController < ApplicationController
   end
   
   def quiz_init
-    session[:glossaries] = Glossary.all #.shuffle
+    if params[:theme_id].nil?
+      session[:glossaries] = Glossary.all.sort_by{ rand }
+    else
+      session[:glossaries] = Glossary.find_all_by_theme_id(params[:theme_id].to_i).sort_by{ rand }
+    end
     session[:glossary] = init_glossary( session[:glossaries].shift )
+    session[:glossary].state = params[:state].to_i
     redirect_to quiz_glossaries_path
   end
 
@@ -81,9 +86,41 @@ class GlossariesController < ApplicationController
       end
     end
     
-    def init_glossary( glossary )
+    def init_glossary(glossary)
+      chars = glossary.japanese.split(//)
+      length = chars.length
+      length.times do |j|
+        (length-j).times do |i|
+          word_s = chars[j..length-i-1].join
+          if word_s.length == 3
+            kanji = Kanji.find_by_title(word_s)
+            unless kanji.nil?
+              glossary.add_question(kanji)
+              glossary_hits =
+                Glossary.all(
+                  :conditions => ["words.japanese like (?)", "%#{kanji.title}%"],
+                  :include => :word ).reject{|e| e == glossary}
+              glossary_hits.each do |g|
+                glossary.add_question(g.word,g.japanese)
+                glossary.add_question(g.word,g.japanese)
+              end
+            end
+          else
+            word = Word.find_by_japanese(word_s)
+            unless word.nil?
+              glossary.add_question(word)
+              glossary.add_question(word)
+            end
+          end
+        end
+      end
+      glossary
+    end
+    
+    def init_glossary_old( glossary )
       kanjis = glossary.word.japanese
-      kanjis.split(//).each do |kanji|
+      kanjis.split(//).each do |kanji|       
+        next unless is_kanji?(kanji)
         glossary.relations << Kanji.find_by_title(kanji)
         glossary_hits =
           Glossary.all(:conditions => ["words.japanese like (?)", "%#{kanji}%"],
@@ -94,5 +131,9 @@ class GlossariesController < ApplicationController
         end
       end
       glossary
+    end
+
+    def is_kanji?(kanji)
+      !('あ'..'ん').to_a.include?(kanji)
     end
 end
